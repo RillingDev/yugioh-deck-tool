@@ -8234,12 +8234,157 @@ return Vue$3;
 })));
 });
 
-const myApp = new vue$1({
+const deckParts = [{
+    id: "main",
+    name: "Main",
+    size: [40, 60],
+    color: "#b99273"
+}, {
+    id: "extra",
+    name: "Extra",
+    size: [0, 15],
+    color: "#c786c7"
+}, {
+    id: "side",
+    name: "Side",
+    size: [0, 15],
+    color: "#65af6c"
+}];
+
+const deckParse = function(fileContent) {
+    const trim = function(item) {
+        return item.length > 2;
+    };
+    const arr = fileContent.split(/[#!].+/g).filter(trim);
+    const result = {};
+
+
+    //Loop over deck parts
+    deckParts.forEach((deckpart, index) => {
+        const currentEntry = arr[index];
+
+        //Push if deck has data for deckpart
+        if (currentEntry) {
+            result[deckpart.id] = currentEntry.split("\n").filter(trim).map(card => Number(card));
+        }
+    });
+
+    return result;
+};
+
+const eachObject = function(object, fn) {
+    const keys = Object.keys(object);
+    const l = keys.length;
+    let i = 0;
+
+    while (i < l) {
+        const currentKey = keys[i];
+
+        fn(object[currentKey], currentKey, i);
+        i++;
+    }
+};
+
+const deckUnique = function(deckData) {
+    const result = [];
+
+    //push every value to result that doesnt already exist
+    eachObject(deckData, deckPart => {
+        deckPart.forEach(card => {
+            if (result.indexOf(card) === -1) {
+                result.push(card);
+            }
+        });
+    });
+
+    //return sorted by lowest to highest
+    return result.sort((a, b) => a - b);
+};
+
+const uriDeckEncode = function(deckData) {
+    const deckUri = btoa(JSON.stringify(deckData));
+
+    return `?d=${deckUri}`;
+};
+
+const deckRead = function(fileContent) {
+    const deckData = deckParse(fileContent);
+    const deckUniqueCards = deckUnique(deckData);
+    const deckShareLink = uriDeckEncode(deckData);
+    const result = {
+        file: fileContent,
+        data: deckData,
+        unique: deckUniqueCards,
+        link: deckShareLink
+    };
+
+    console.log(result);
+
+    return result;
+};
+
+const uriDeckDecode = function(deckUri) {
+    return JSON.parse(atob(deckUri.replace("?d=", "")));
+};
+
+const deckReadUri = function(uriDeck) {
+    const deckData = uriDeckDecode(uriDeck);
+    const deckUniqueCards = deckUnique(deckData);
+
+    const result = {
+        file: "",
+        data: deckData,
+        unique: deckUniqueCards,
+        link: uriDeck
+    };
+
+    console.log(result);
+
+    return result;
+};
+
+const uriLocationNoParam = function() {
+    return location.origin + location.pathname;
+};
+
+const priceApp = new vue$1({
     el: "#app",
     data: {
-        message: "Hello VEB!"
+        deck: {
+            file: "",
+            link: "",
+            data: {},
+            unique: []
+        }
+    },
+    methods: {
+        uriLocationNoParam,
+        onFileChange(e) {
+            const vm = this;
+            const files = e.target.files || e.dataTransfer.files;
+
+            vm.deckLoad(files[0]);
+        },
+        deckLoad(file) {
+            const reader = new FileReader();
+            const vm = this;
+
+            reader.onload = e => {
+                vm.deck = deckRead(e.target.result);
+            };
+            reader.readAsText(file);
+        },
+        deckLoadUri(uriDeck) {
+            const vm = this;
+
+            vm.deck = deckReadUri(uriDeck);
+        }
     }
 });
+
+if (location.search) {
+    priceApp.deckLoadUri(location.search);
+}
 
 }());
 

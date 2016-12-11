@@ -25,13 +25,13 @@
                             <div class="form-group row">
                                 <label class="col-xs-12 col-md-3 col-form-label" for="formUploadDeck">Upload Deck:</label>
                                 <div class="col-xs-12 col-md-9">
-                                    <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" on-read-file="main.onUpload($fileContent,$fileName)" value="Select Deck">
+                                    <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" value="Select Deck" @change="onFileChange">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-xs-12 col-md-3 col-form-label" for="formLinkShare">Share Link:</label>
                                 <div class="col-xs-12 col-md-9">
-                                    <input class="form-control" id="formLinkShare" type="url" value="main.data.cards.deck.sharelink">
+                                    <input class="form-control" id="formLinkShare" type="url" v-bind:value="uriLocationNoParam() + deck.link">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -50,37 +50,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12">
-                        <div class="deck">
-                            <div class="deck-part deck-main">
-                                <div class="deck-title">
-                                    <h3>Total:</h3>
-                                    <div class="deck-total"><span>main.data.price.modes[$index].name: main.calcPrice(price)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="deck-part">
-                                <div class="deck-title">
-                                    <h3>deckpart.name:</h3>
-                                    <div class="deck-total"><span style="background-color:main.data.price.modes[$index].color">main.data.price.modes[$index].name: main.calcPrice(price)</span>
-                                    </div>
-                                </div>
-                                <div class="deck-content" style="background-color:deckpart.color">
-                                    <a class="deck-card" target="_blank">
-                                        <div class="deck-card-image">
-                                            <img width="150" height="220">
-                                        </div>
-                                        <div class="deck-card-text">
-                                            <div class="deck-card-name">card.name</div>
-                                            <div class="deck-card-price">
-                                                <p style="background-color:main.data.price.modes[$index].color">i main.calcPrice(price)</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-xs-12"></div>
                 </div>
             </main>
             <footer>
