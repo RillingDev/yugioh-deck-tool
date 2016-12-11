@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YGODeckPrice</title>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="css/lib/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="priceapp" id="app">
+            <header>
+                <h1>YuGiOh Deck Price v2.0</h1>
+                <h2>Check the average price for your YgoPro/DevPro .ydk files</h2>
+            </header>
+            <main>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form class="form">
+                            <div class="form-group row">
+                                <label class="col-xs-12 col-md-3 col-form-label" for="formUploadDeck">Upload Deck:</label>
+                                <div class="col-xs-12 col-md-9">
+                                    <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" on-read-file="main.onUpload($fileContent,$fileName)" value="Select Deck">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-12 col-md-3 col-form-label" for="formLinkShare">Share Link:</label>
+                                <div class="col-xs-12 col-md-9">
+                                    <input class="form-control" id="formLinkShare" type="url" value="main.data.cards.deck.sharelink">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-12 col-md-3 col-form-label">Price Settings:</label>
+                                <div class="col-xs-12 col-md-5">
+                                    <select class="form-control">
+                                        <option value="currency.id">currency.name</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="btn btn-primary form-control"><span>Load Prices</span><span><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="deck">
+                            <div class="deck-part deck-main">
+                                <div class="deck-title">
+                                    <h3>Total:</h3>
+                                    <div class="deck-total"><span>main.data.price.modes[$index].name: main.calcPrice(price)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="deck-part">
+                                <div class="deck-title">
+                                    <h3>deckpart.name:</h3>
+                                    <div class="deck-total"><span style="background-color:main.data.price.modes[$index].color">main.data.price.modes[$index].name: main.calcPrice(price)</span>
+                                    </div>
+                                </div>
+                                <div class="deck-content" style="background-color:deckpart.color">
+                                    <a class="deck-card" target="_blank">
+                                        <div class="deck-card-image">
+                                            <img width="150" height="220">
+                                        </div>
+                                        <div class="deck-card-text">
+                                            <div class="deck-card-name">card.name</div>
+                                            <div class="deck-card-price">
+                                                <p style="background-color:main.data.price.modes[$index].color">i main.calcPrice(price)</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <p>Price data and Images from the <a href="http://yugiohprices.com/" target="_blank">yugiohprices.com</a> API</p>
+            </footer>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

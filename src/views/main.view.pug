@@ -1,0 +1,14 @@
+.container
+    #app.priceapp
+        header
+            h1 YuGiOh Deck Price v2.0
+            h2 Check the average price for your YgoPro/DevPro .ydk files
+        main
+            .row
+                .col-xs-12
+                    include ../templates/form.template.pug
+            .row
+                .col-xs-12
+                    include ../templates/deck.template.pug
+        footer
+            p Price data and Images from the #[a(href="http://yugiohprices.com/",target="_blank") yugiohprices.com] API

@@ -1,0 +1,36 @@
+.deck {
+    .deck-part {
+        margin-bottom: 40px;
+
+        .deck-title {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+
+            h3 {
+                margin: 0;
+            }
+
+            .deck-total {
+                margin-left: 15px;
+                display: flex;
+                flex-direction: row;
+
+                span {
+                    display: block;
+                    line-height: 30px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+            }
+        }
+
+        .deck-content {
+            padding: 5px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+    }
+}

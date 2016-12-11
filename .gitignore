@@ -1,0 +1,7 @@
+.git/
+.tmp/
+node_modules/
+release/
+cache/
+.DS_Store
+npm-debug.*
