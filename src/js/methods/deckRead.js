@@ -5,17 +5,17 @@ import deckUnique from "./deckUnique";
 import uriDeckEncode from "./uriDeckEncode";
 import apiLoadNames from "./apiLoadNames";
 
-const deckRead = function(fileContent) {
+const deckRead = function(fileContent, cb) {
     const deckList = deckParse(fileContent);
     const deckUniqueCards = deckUnique(deckList);
     const deckShareLink = uriDeckEncode(deckList);
-    const deckData = apiLoadNames(deckUniqueCards);
+
+    apiLoadNames(deckUniqueCards, cb);
+
     const result = {
         link: deckShareLink,
-        file: fileContent,
         unique: deckUniqueCards,
-        list: deckList,
-        data: deckData
+        list: deckList
     };
 
     return result;

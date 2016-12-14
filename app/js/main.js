@@ -8340,6 +8340,47 @@ return Vue$3;
 })));
 });
 
+const priceCurrencies = [{
+    id: "dollar_us",
+    name: "US Dollar",
+    label: "$",
+    factor: 1
+}, {
+    id: "euro",
+    name: "Euro",
+    label: "€",
+    factor: 0.94251
+}, {
+    id: "pound",
+    name: "Pound",
+    label: "£",
+    factor: 0.78688
+}, {
+    id: "dollar_ca",
+    name: "Canadian Dollar",
+    label: "$",
+    factor: 1.3121
+}, {
+    id: "dollar_au",
+    name: "Australian Dollar",
+    label: "$",
+    factor: 1.3341
+}];
+
+const priceModes = [{
+    id: "low",
+    name: "Low",
+    color: "#caf9ae"
+}, {
+    id: "average",
+    name: "Average",
+    color: "#fff6a1"
+}, {
+    id: "high",
+    name: "High",
+    color: "#fdc1b0"
+}];
+
 const deckParts = [{
     id: "main",
     name: "Main",
@@ -8356,6 +8397,28 @@ const deckParts = [{
     size: [0, 15],
     color: "#65af6c"
 }];
+
+const appData = {
+    deckparts: deckParts,
+    deck: {
+        link: "",
+        list: {}
+    },
+    cards: {
+        unique: [],
+        data: {}
+    },
+    price: {
+        activeMode: "dollar_us",
+        modes: priceModes,
+        currencies: priceCurrencies
+    },
+    ajax: {
+        currentlyLoading: false,
+        namesLoaded: false,
+        pricesLoaded: false
+    }
+};
 
 const deckParse = function(fileContent) {
     const trim = function(item) {
@@ -8413,11 +8476,11 @@ const uriDeckEncode = function(deckData) {
     return `?d=${deckUri}`;
 };
 
-const nameAPI = "../api/texts.min.json";
+const nameAPI = "../api/names.min.json";
 
 const imageAPI = "https://ygoprodeck.com/pics";
 
-const apiLoadNames = function(idArr) {
+const apiLoadNames = function(idArr, cb) {
     const result = {};
 
     fetch(nameAPI)
@@ -8428,25 +8491,25 @@ const apiLoadNames = function(idArr) {
             idArr.forEach(id => {
                 result[id] = {
                     name: json[id],
-                    image: `${imageAPI}/${id}.jpg`
+                    img: `${imageAPI}/${id}.jpg`
                 };
             });
-        });
 
-    return result;
+            cb(result);
+        });
 };
 
-const deckRead = function(fileContent) {
+const deckRead = function(fileContent, cb) {
     const deckList = deckParse(fileContent);
     const deckUniqueCards = deckUnique(deckList);
     const deckShareLink = uriDeckEncode(deckList);
-    const deckData = apiLoadNames(deckUniqueCards);
+
+    apiLoadNames(deckUniqueCards, cb);
+
     const result = {
         link: deckShareLink,
-        file: fileContent,
         unique: deckUniqueCards,
-        list: deckList,
-        data: deckData
+        list: deckList
     };
 
     return result;
@@ -8456,17 +8519,16 @@ const uriDeckDecode = function(deckUri) {
     return JSON.parse(atob(deckUri.replace("?d=", "")));
 };
 
-const deckReadUri = function(uriDeck) {
+const deckReadUri = function(uriDeck, cb) {
     const deckList = uriDeckDecode(uriDeck);
     const deckUniqueCards = deckUnique(deckList);
-    const deckData = apiLoadNames(deckUniqueCards);
+
+    apiLoadNames(deckUniqueCards, cb);
 
     const result = {
-        file: "",
         link: uriDeck,
         unique: deckUniqueCards,
-        list: deckList,
-        data: deckData
+        list: deckList
     };
 
     return result;
@@ -8476,89 +8538,45 @@ const uriLocationNoParam = function() {
     return location.origin + location.pathname;
 };
 
-const priceCurrencies = [{
-    id: "dollar_us",
-    name: "US Dollar",
-    label: "$",
-    factor: 1
-}, {
-    id: "euro",
-    name: "Euro",
-    label: "€",
-    factor: 0.89
-}, {
-    id: "pound",
-    name: "Pound",
-    label: "£",
-    factor: 0.77
-}, {
-    id: "dollar_ca",
-    name: "Canadian Dollar",
-    label: "$",
-    factor: 1.32
-}, {
-    id: "dollar_au",
-    name: "Australian Dollar",
-    label: "$",
-    factor: 1.31
-}];
+const appMethods = {
+    uriLocationNoParam,
+    onFileChange(e) {
+        const vm = this;
+        const files = e.target.files || e.dataTransfer.files;
 
-const priceModes = [{
-    id: "low",
-    name: "Low",
-    color: "#caf9ae"
-}, {
-    id: "average",
-    name: "Average",
-    color: "#fff6a1"
-}, {
-    id: "high",
-    name: "High",
-    color: "#fdc1b0"
-}];
+        vm.deckLoad(files[0]);
+    },
+    deckLoad(file) {
+        const reader = new FileReader();
+        const vm = this;
+
+        reader.onload = e => {
+            const deck = deckRead(e.target.result, data => {
+                vm.cards.data = data;
+            });
+
+            vm.deck.link = deck.link;
+            vm.deck.list = deck.list;
+            vm.cards.unique = deck.unique;
+        };
+        reader.readAsText(file);
+    },
+    deckLoadUri(uriDeck) {
+        const vm = this;
+        const deck = deckReadUri(uriDeck, data => {
+            vm.cards.data = data;
+        });
+
+        vm.deck.link = deck.link;
+        vm.deck.list = deck.list;
+        vm.cards.unique = deck.unique;
+    }
+};
 
 const priceApp = new vue$1({
     el: "#app",
-    data: {
-        deck: {
-            file: "",
-            link: "",
-            unique: [],
-            list: {},
-            data: {}
-        },
-        price: {
-            activeMode: "dollar_us",
-            modes: priceModes,
-            currencies: priceCurrencies
-        },
-        ajax: {
-            currentlyLoading: false
-        }
-    },
-    methods: {
-        uriLocationNoParam,
-        onFileChange(e) {
-            const vm = this;
-            const files = e.target.files || e.dataTransfer.files;
-
-            vm.deckLoad(files[0]);
-        },
-        deckLoad(file) {
-            const reader = new FileReader();
-            const vm = this;
-
-            reader.onload = e => {
-                vm.deck = deckRead(e.target.result);
-            };
-            reader.readAsText(file);
-        },
-        deckLoadUri(uriDeck) {
-            const vm = this;
-
-            vm.deck = deckReadUri(uriDeck);
-        }
-    }
+    data: appData,
+    methods: appMethods
 });
 
 if (location.search) {

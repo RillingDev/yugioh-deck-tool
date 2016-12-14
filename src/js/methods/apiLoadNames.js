@@ -5,7 +5,7 @@ import {
     imageAPI
 } from "../data/apiURLs";
 
-const apiLoadNames = function(idArr) {
+const apiLoadNames = function(idArr, cb) {
     const result = {};
 
     fetch(nameAPI)
@@ -16,12 +16,12 @@ const apiLoadNames = function(idArr) {
             idArr.forEach(id => {
                 result[id] = {
                     name: json[id],
-                    image: `${imageAPI}/${id}.jpg`
+                    img: `${imageAPI}/${id}.jpg`
                 };
             });
-        });
 
-    return result;
+            cb(result);
+        });
 };
 
 export default apiLoadNames;

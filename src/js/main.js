@@ -1,56 +1,13 @@
 "use strict";
 
 import Vue from "vue/dist/vue.js";
-
-import deckRead from "./methods/deckRead";
-import deckReadUri from "./methods/deckReadUri";
-import uriLocationNoParam from "./methods/uriLocationNoParam";
-
-import dataPriceCurrencies from "./data/priceCurrencies";
-import dataPriceModes from "./data/priceModes";
+import appData from "./appData";
+import appMethods from "./appMethods";
 
 const priceApp = new Vue({
     el: "#app",
-    data: {
-        deck: {
-            file: "",
-            link: "",
-            unique: [],
-            list: {},
-            data: {}
-        },
-        price: {
-            activeMode: "dollar_us",
-            modes: dataPriceModes,
-            currencies: dataPriceCurrencies
-        },
-        ajax: {
-            currentlyLoading: false
-        }
-    },
-    methods: {
-        uriLocationNoParam,
-        onFileChange(e) {
-            const vm = this;
-            const files = e.target.files || e.dataTransfer.files;
-
-            vm.deckLoad(files[0]);
-        },
-        deckLoad(file) {
-            const reader = new FileReader();
-            const vm = this;
-
-            reader.onload = e => {
-                vm.deck = deckRead(e.target.result);
-            };
-            reader.readAsText(file);
-        },
-        deckLoadUri(uriDeck) {
-            const vm = this;
-
-            vm.deck = deckReadUri(uriDeck);
-        }
-    }
+    data: appData,
+    methods: appMethods
 });
 
 if (location.search) {

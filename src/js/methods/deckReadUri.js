@@ -4,17 +4,16 @@ import uriDeckDecode from "./uriDeckDecode";
 import deckUnique from "./deckUnique";
 import apiLoadNames from "./apiLoadNames";
 
-const deckReadUri = function(uriDeck) {
+const deckReadUri = function(uriDeck, cb) {
     const deckList = uriDeckDecode(uriDeck);
     const deckUniqueCards = deckUnique(deckList);
-    const deckData = apiLoadNames(deckUniqueCards);
+
+    apiLoadNames(deckUniqueCards, cb);
 
     const result = {
-        file: "",
         link: uriDeck,
         unique: deckUniqueCards,
-        list: deckList,
-        data: deckData
+        list: deckList
     };
 
     return result;

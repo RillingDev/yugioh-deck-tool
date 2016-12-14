@@ -1,13 +1,13 @@
-//-.deck
-    .deck-part.deck-main
+.deck(v-bind:if="cards.unique")
+    .deck-part.deck-part-total
         .deck-title
             h3 Total:
-            .deck-total
-                span() main.data.price.modes[$index].name: main.calcPrice(price)
-    .deck-part()
+            .deck-price.deck-price-total
+                span.deck-price-item(v-for="mode in price.modes",v-bind:style="'background-color:'+mode.color") 1.05$
+    .deck-part(v-for="deckpart in deckparts",v-if="deck.list[deckpart.id]")
         .deck-title
-            h3 deckpart.name:
-            .deck-total()
-                span(style="background-color:main.data.price.modes[$index].color") main.data.price.modes[$index].name: main.calcPrice(price)
-        .deck-content(style="background-color:deckpart.color")
+            h3 {{deckpart.name}}:
+            .deck-price
+                span.deck-price-item(v-for="mode in price.modes",v-bind:style="'background-color:'+mode.color") 1.05$
+        .deck-content(v-bind:style="'background-color:'+deckpart.color",v-if="cards.data")
             include ./deck/card.template.pug
