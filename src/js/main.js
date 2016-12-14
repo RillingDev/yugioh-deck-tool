@@ -6,6 +6,9 @@ import deckRead from "./methods/deckRead";
 import deckReadUri from "./methods/deckReadUri";
 import uriLocationNoParam from "./methods/uriLocationNoParam";
 
+import dataPriceCurrencies from "./data/priceCurrencies";
+import dataPriceModes from "./data/priceModes";
+
 const priceApp = new Vue({
     el: "#app",
     data: {
@@ -14,6 +17,16 @@ const priceApp = new Vue({
             link: "",
             data: {},
             unique: []
+        },
+        price: {
+            activeMode: "dollar_us",
+            modes: dataPriceModes,
+            currencies: dataPriceCurrencies
+        },
+        api: {
+            currentlyLoading: false,
+            nameAPI: "../api/texts.min.json",
+            priceAPI: ""
         }
     },
     methods: {

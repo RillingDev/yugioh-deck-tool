@@ -8,7 +8,9 @@
     },
     "electron": {
         "version": "v1.4.12",
-        "platforms": ["win32-x64"]
+        "platforms": [
+            "win32-x64"
+        ]
     },
     "scripts": {
         "start": "electron ./app"

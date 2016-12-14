@@ -37,12 +37,12 @@
                             <div class="form-group row">
                                 <label class="col-xs-12 col-md-3 col-form-label">Price Settings:</label>
                                 <div class="col-xs-12 col-md-5">
-                                    <select class="form-control">
-                                        <option value="currency.id">currency.name</option>
+                                    <select class="form-control" v-model="price.activeMode">
+                                        <option v-for="currency in price.currencies" v-bind:value="currency.id">{{currency.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-12 col-md-4">
-                                    <div class="btn btn-primary form-control"><span>Load Prices</span><span><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
+                                    <div class="btn btn-primary form-control"><span v-bind:hidden="api.currentlyLoading">Load Prices</span><span v-bind:hidden="!api.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
                                     </div>
                                 </div>
                             </div>
