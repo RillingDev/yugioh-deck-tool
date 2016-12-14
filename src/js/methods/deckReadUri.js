@@ -2,19 +2,20 @@
 
 import uriDeckDecode from "./uriDeckDecode";
 import deckUnique from "./deckUnique";
+import apiLoadNames from "./apiLoadNames";
 
 const deckReadUri = function(uriDeck) {
-    const deckData = uriDeckDecode(uriDeck);
-    const deckUniqueCards = deckUnique(deckData);
+    const deckList = uriDeckDecode(uriDeck);
+    const deckUniqueCards = deckUnique(deckList);
+    const deckData = apiLoadNames(deckUniqueCards);
 
     const result = {
         file: "",
-        data: deckData,
+        link: uriDeck,
         unique: deckUniqueCards,
-        link: uriDeck
+        list: deckList,
+        data: deckData
     };
-
-    console.log(result);
 
     return result;
 };

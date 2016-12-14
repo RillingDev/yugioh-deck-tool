@@ -8413,18 +8413,41 @@ const uriDeckEncode = function(deckData) {
     return `?d=${deckUri}`;
 };
 
-const deckRead = function(fileContent) {
-    const deckData = deckParse(fileContent);
-    const deckUniqueCards = deckUnique(deckData);
-    const deckShareLink = uriDeckEncode(deckData);
-    const result = {
-        file: fileContent,
-        data: deckData,
-        unique: deckUniqueCards,
-        link: deckShareLink
-    };
+const nameAPI = "../api/texts.min.json";
 
-    console.log(result);
+const imageAPI = "https://ygoprodeck.com/pics";
+
+const apiLoadNames = function(idArr) {
+    const result = {};
+
+    fetch(nameAPI)
+        .then(response => {
+            return response.json();
+        })
+        .then(function(json) {
+            idArr.forEach(id => {
+                result[id] = {
+                    name: json[id],
+                    image: `${imageAPI}/${id}.jpg`
+                };
+            });
+        });
+
+    return result;
+};
+
+const deckRead = function(fileContent) {
+    const deckList = deckParse(fileContent);
+    const deckUniqueCards = deckUnique(deckList);
+    const deckShareLink = uriDeckEncode(deckList);
+    const deckData = apiLoadNames(deckUniqueCards);
+    const result = {
+        link: deckShareLink,
+        file: fileContent,
+        unique: deckUniqueCards,
+        list: deckList,
+        data: deckData
+    };
 
     return result;
 };
@@ -8434,17 +8457,17 @@ const uriDeckDecode = function(deckUri) {
 };
 
 const deckReadUri = function(uriDeck) {
-    const deckData = uriDeckDecode(uriDeck);
-    const deckUniqueCards = deckUnique(deckData);
+    const deckList = uriDeckDecode(uriDeck);
+    const deckUniqueCards = deckUnique(deckList);
+    const deckData = apiLoadNames(deckUniqueCards);
 
     const result = {
         file: "",
-        data: deckData,
+        link: uriDeck,
         unique: deckUniqueCards,
-        link: uriDeck
+        list: deckList,
+        data: deckData
     };
-
-    console.log(result);
 
     return result;
 };
@@ -8500,18 +8523,17 @@ const priceApp = new vue$1({
         deck: {
             file: "",
             link: "",
-            data: {},
-            unique: []
+            unique: [],
+            list: {},
+            data: {}
         },
         price: {
             activeMode: "dollar_us",
             modes: priceModes,
             currencies: priceCurrencies
         },
-        api: {
-            currentlyLoading: false,
-            nameAPI: "../api/texts.min.json",
-            priceAPI: ""
+        ajax: {
+            currentlyLoading: false
         }
     },
     methods: {

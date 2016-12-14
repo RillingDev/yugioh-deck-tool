@@ -15,18 +15,17 @@ const priceApp = new Vue({
         deck: {
             file: "",
             link: "",
-            data: {},
-            unique: []
+            unique: [],
+            list: {},
+            data: {}
         },
         price: {
             activeMode: "dollar_us",
             modes: dataPriceModes,
             currencies: dataPriceCurrencies
         },
-        api: {
-            currentlyLoading: false,
-            nameAPI: "../api/texts.min.json",
-            priceAPI: ""
+        ajax: {
+            currentlyLoading: false
         }
     },
     methods: {

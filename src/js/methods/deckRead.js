@@ -3,19 +3,20 @@
 import deckParse from "./deckParse";
 import deckUnique from "./deckUnique";
 import uriDeckEncode from "./uriDeckEncode";
+import apiLoadNames from "./apiLoadNames";
 
 const deckRead = function(fileContent) {
-    const deckData = deckParse(fileContent);
-    const deckUniqueCards = deckUnique(deckData);
-    const deckShareLink = uriDeckEncode(deckData);
+    const deckList = deckParse(fileContent);
+    const deckUniqueCards = deckUnique(deckList);
+    const deckShareLink = uriDeckEncode(deckList);
+    const deckData = apiLoadNames(deckUniqueCards);
     const result = {
+        link: deckShareLink,
         file: fileContent,
-        data: deckData,
         unique: deckUniqueCards,
-        link: deckShareLink
+        list: deckList,
+        data: deckData
     };
-
-    console.log(result);
 
     return result;
 };

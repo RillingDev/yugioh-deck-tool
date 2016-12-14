@@ -6,6 +6,6 @@ label.col-xs-12.col-md-3.col-form-label Price Settings:
 //-Price load
 .col-xs-12.col-md-4
     .btn.btn-primary.form-control()
-        span(v-bind:hidden="api.currentlyLoading") Load Prices
-        span(v-bind:hidden="!api.currentlyLoading")
+        span(v-bind:hidden="ajax.currentlyLoading") Load Prices
+        span(v-bind:hidden="!ajax.currentlyLoading")
             i.fa.fa-circle-o-notch.fa-spin.fa-fw
