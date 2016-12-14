@@ -40,19 +40,6 @@
     margin: 0;
 }
 
-.priceapp .deck .deck-part .deck-title .deck-total {
-    margin-left: 15px;
-    display: flex;
-    flex-direction: row;
-}
-
-.priceapp .deck .deck-part .deck-title .deck-total span {
-    display: block;
-    line-height: 30px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
 .priceapp .deck .deck-part .deck-content {
     padding: 5px;
     display: flex;
@@ -63,7 +50,7 @@
 
 .priceapp .deck-card {
     max-width: 150px;
-    min-width: 80px;
+    min-width: 100px;
     width: calc(10% - 10px);
     position: relative;
     margin: 5px;
@@ -101,4 +88,30 @@
     margin-bottom: 0;
     padding-top: 4px;
     padding-bottom: 4px;
+}
+
+.priceapp .deck-price {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.priceapp .deck-price .deck-price-item {
+    display: block;
+    line-height: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.priceapp .deck-price.deck-price--sm {
+    height: auto;
+    margin-left: 0;
+    flex-direction: column;
+}
+
+.priceapp .deck-price.deck-price--sm .deck-price-item {
+    line-height: 22px;
 }

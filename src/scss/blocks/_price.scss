@@ -1,0 +1,25 @@
+.deck-price {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 30px;
+    margin-left: 10px;
+
+    .deck-price-item {
+        display: block;
+        line-height: 30px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    &.deck-price--sm {
+        height: auto;
+        margin-left: 0;
+        flex-direction: column;
+
+        .deck-price-item {
+            line-height: 22px;
+        }
+    }
+}

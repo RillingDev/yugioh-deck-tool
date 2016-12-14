@@ -2,7 +2,8 @@
 
 import {
     nameAPI,
-    imageAPI
+    imageAPI,
+    buyAPI
 } from "../data/apiURLs";
 
 const apiLoadNames = function(idArr, cb) {
@@ -14,9 +15,12 @@ const apiLoadNames = function(idArr, cb) {
         })
         .then(function(json) {
             idArr.forEach(id => {
+                const name = json[id];
+
                 result[id] = {
-                    name: json[id],
-                    img: `${imageAPI}/${id}.jpg`
+                    name: name,
+                    img: `${imageAPI}/${id}.jpg`,
+                    link: `${buyAPI}${encodeURI(name)}`
                 };
             });
 

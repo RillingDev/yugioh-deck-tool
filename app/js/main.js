@@ -8479,6 +8479,7 @@ const uriDeckEncode = function(deckData) {
 const nameAPI = "../api/names.min.json";
 
 const imageAPI = "https://ygoprodeck.com/pics";
+const buyAPI = "http://yugiohprices.com/card_price?name=";
 
 const apiLoadNames = function(idArr, cb) {
     const result = {};
@@ -8489,9 +8490,12 @@ const apiLoadNames = function(idArr, cb) {
         })
         .then(function(json) {
             idArr.forEach(id => {
+                const name = json[id];
+
                 result[id] = {
-                    name: json[id],
-                    img: `${imageAPI}/${id}.jpg`
+                    name: name,
+                    img: `${imageAPI}/${id}.jpg`,
+                    link: `${buyAPI}${encodeURI(name)}`
                 };
             });
 

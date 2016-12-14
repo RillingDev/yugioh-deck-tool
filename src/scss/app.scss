@@ -1,7 +1,8 @@
 .priceapp {
-    @import "_variables";
-    @import "main/_general";
-    @import "main/_typo";
-    @import "blocks/_deck";
-    @import "blocks/_card";
+    @import "variables";
+    @import "main/general";
+    @import "main/typo";
+    @import "blocks/deck";
+    @import "blocks/card";
+    @import "blocks/price";
 }

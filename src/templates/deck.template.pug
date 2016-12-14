@@ -1,8 +1,8 @@
-.deck(v-bind:if="cards.unique")
+.deck(v-bind:if="cards.unique.length")
     .deck-part.deck-part-total
         .deck-title
             h3 Total:
-            .deck-price.deck-price-total
+            .deck-price
                 span.deck-price-item(v-for="mode in price.modes",v-bind:style="'background-color:'+mode.color") 1.05$
     .deck-part(v-for="deckpart in deckparts",v-if="deck.list[deckpart.id]")
         .deck-title

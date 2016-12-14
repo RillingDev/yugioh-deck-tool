@@ -51,11 +51,11 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="deck" v-bind:if="cards.unique">
+                        <div class="deck" v-bind:if="cards.unique.length">
                             <div class="deck-part deck-part-total">
                                 <div class="deck-title">
                                     <h3>Total:</h3>
-                                    <div class="deck-price deck-price-total"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">1.05$</span>
+                                    <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">1.05$</span>
                                     </div>
                                 </div>
                             </div>
@@ -66,13 +66,13 @@
                                     </div>
                                 </div>
                                 <div class="deck-content" v-bind:style="'background-color:'+deckpart.color" v-if="cards.data">
-                                    <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]">
+                                    <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link">
                                         <div class="deck-card-image">
                                             <img width="150" height="220" v-bind:src="cards.data[cardId].img">
                                         </div>
                                         <div class="deck-card-text">
                                             <div class="deck-card-name">{{cards.data[cardId].name}}</div>
-                                            <div class="deck-card-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">1.0$</span>
+                                            <div class="deck-price deck-price--sm"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">1.0$</span>
                                             </div>
                                         </div>
                                     </a>

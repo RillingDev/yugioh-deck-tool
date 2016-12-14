@@ -1,7 +1,7 @@
-a.deck-card(target="_blank",v-for="cardId in deck.list[deckpart.id]",v-if="cards.data[cardId]")
+a.deck-card(target="_blank",v-for="cardId in deck.list[deckpart.id]",v-if="cards.data[cardId]",v-bind:href="cards.data[cardId].link")
     .deck-card-image
         img(width="150",height="220",v-bind:src="cards.data[cardId].img")
     .deck-card-text
         .deck-card-name {{cards.data[cardId].name}}
-        .deck-card-price
+        .deck-price.deck-price--sm
             span.deck-price-item(v-for="mode in price.modes",v-bind:style="'background-color:'+mode.color") 1.0$
