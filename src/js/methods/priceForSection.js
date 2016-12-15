@@ -7,10 +7,9 @@ const priceForSection = function(section, mode) {
         let result = 0;
 
         arr.forEach(id => {
-            const price = vm.cards.data[id].price[mode];
-
-            if (price) {
-                result += price;
+            const cardData = vm.cards.data[id];
+            if (cardData && cardData.price && cardData.price[mode]) {
+                result += cardData.price[mode];
             }
         });
 

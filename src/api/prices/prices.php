@@ -5,9 +5,9 @@ $cardNames = json_decode(base64_decode($cardUri));
 $requests = [];
 $result = [];
 
+
 /**
- * Creates a curl object for every name we wanna query
- * @var [type]
+ * Creates a curl object for every name we query
  */
 foreach($cardNames as $currentIndex=>$cardName) {
   $url = "http://yugiohprices.com/api/get_card_prices/".urlencode($cardName);
@@ -50,7 +50,7 @@ foreach ($requests as $request) {
 
   if($response && $response->status==="success"){
     //We only need the price data of the first entry
-    $data = $response//$response->data[0]->price_data->data->prices;
+    $data = $response->data[0]->price_data->data->prices;
   }
 
   array_push($result,$data);
