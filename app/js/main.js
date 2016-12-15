@@ -8344,27 +8344,27 @@ const priceCurrencies = [{
     id: "dollar_us",
     name: "US Dollar",
     label: "$",
-    factor: 1
+    val: 1
 }, {
     id: "euro",
     name: "Euro",
     label: "€",
-    factor: 0.94251
+    val: 0.94251
 }, {
     id: "pound",
     name: "Pound",
     label: "£",
-    factor: 0.78688
+    val: 0.78688
 }, {
     id: "dollar_ca",
     name: "Canadian Dollar",
     label: "$",
-    factor: 1.3121
+    val: 1.3121
 }, {
     id: "dollar_au",
     name: "Australian Dollar",
     label: "$",
-    factor: 1.3341
+    val: 1.3341
 }];
 
 const priceModes = [{
@@ -8402,14 +8402,14 @@ const appData = {
     deckparts: deckParts,
     deck: {
         link: "",
+        unique: [],
         list: {}
     },
     cards: {
-        unique: [],
         data: {}
     },
     price: {
-        activeMode: "dollar_us",
+        activeCurrency: "dollar_us",
         modes: priceModes,
         currencies: priceCurrencies
     },
@@ -8418,6 +8418,92 @@ const appData = {
         namesLoaded: false,
         pricesLoaded: false
     }
+};
+
+const uriLocationNoParam = function() {
+    return location.origin + location.pathname;
+};
+
+const nameAPI = "./api/names/names.min.json";
+const priceAPI = "./api/prices/prices.php?n=";
+const imageAPI = "https://ygoprodeck.com/pics";
+const buyAPI = "http://yugiohprices.com/card_price?name=";
+
+const eachObject = function(object, fn) {
+    const keys = Object.keys(object);
+    const l = keys.length;
+    let i = 0;
+
+    while (i < l) {
+        const currentKey = keys[i];
+
+        fn(object[currentKey], currentKey, i);
+        i++;
+    }
+};
+
+const apiLoadNames = function() {
+    const vm = this;
+    const result = {};
+
+    vm.ajax.currentlyLoading = true;
+    vm.ajax.namesLoaded = false;
+
+    fetch(nameAPI)
+        .then(response => {
+            return response.json();
+        })
+        .then(function(json) {
+            eachObject(json, (name, id) => {
+                result[id] = {
+                    name,
+                    img: `${imageAPI}/${id}.jpg`,
+                    link: `${buyAPI}${encodeURI(name)}`,
+                    price: false
+                };
+            });
+
+            vm.cards.data = result;
+
+            vm.ajax.currentlyLoading = false;
+            vm.ajax.namesLoaded = true;
+        });
+};
+
+//import utilEachObject from "./utilEachObject";
+
+const apiLoadPrices = function() {
+    const vm = this;
+    const uniqueNames = vm.deck.unique.map(id => {
+        if (vm.cards.data[id]) {
+            return vm.cards.data[id].name;
+        } else {
+            return false;
+        }
+    });
+    const priceQuery = btoa(JSON.stringify(uniqueNames));
+
+    vm.ajax.currentlyLoading = true;
+    vm.ajax.pricesLoaded = false;
+
+    fetch(priceAPI + priceQuery)
+        .then(response => {
+            return response.json();
+        })
+        .then(function(json) {
+            vm.deck.unique.forEach((id, index) => {
+                const priceData = json[index];
+
+                vm.cards.data[id].price = {
+                    low: priceData.low,
+                    average: priceData.average,
+                    high: priceData.high
+                };
+            });
+
+            vm.ajax.currentlyLoading = false;
+            vm.ajax.pricesLoaded = true;
+        });
 };
 
 const deckParse = function(fileContent) {
@@ -8439,19 +8525,6 @@ const deckParse = function(fileContent) {
     });
 
     return result;
-};
-
-const eachObject = function(object, fn) {
-    const keys = Object.keys(object);
-    const l = keys.length;
-    let i = 0;
-
-    while (i < l) {
-        const currentKey = keys[i];
-
-        fn(object[currentKey], currentKey, i);
-        i++;
-    }
 };
 
 const deckUnique = function(deckData) {
@@ -8486,7 +8559,8 @@ const deckLoad = function(file) {
 
         vm.deck.list = deckList;
         vm.deck.link = uriDeckEncode(deckList);
-        vm.cards.unique = deckUnique(deckList);
+        vm.deck.unique = deckUnique(deckList);
+        vm.ajax.pricesLoaded = false;
     };
 
     reader.readAsText(file);
@@ -8502,44 +8576,66 @@ const deckLoadUri = function(uriDeck) {
 
     vm.deck.list = deckList;
     vm.deck.link = uriDeck;
-    vm.cards.unique = deckUnique(deckList);
+    vm.deck.unique = deckUnique(deckList);
+    vm.ajax.pricesLoaded = false;
 };
 
-const uriLocationNoParam = function() {
-    return location.origin + location.pathname;
-};
-
-const nameAPI = "../api/names/names.min.json";
-
-const imageAPI = "https://ygoprodeck.com/pics";
-const buyAPI = "http://yugiohprices.com/card_price?name=";
-
-const apiLoadNames = function(cb) {
+const priceConvert = function(price) {
     const vm = this;
-    const result = {};
+    const currency = vm.price.currencies.find(item => item.id === vm.price.activeCurrency);
+    const val = (price * currency.val).toFixed(2);
 
-    fetch(nameAPI)
-        .then(response => {
-            return response.json();
-        })
-        .then(function(json) {
-            eachObject(json, (name, id) => {
-                result[id] = {
-                    name,
-                    img: `${imageAPI}/${id}.jpg`,
-                    link: `${buyAPI}${encodeURI(name)}`
-                };
-            });
+    return `${val}${currency.label}`;
+};
 
-            vm.cards.data = result;
+const priceForCard = function(id, mode) {
+    const vm = this;
+    const price = vm.cards.data[id].price[mode];
+
+    if (price) {
+        return vm.priceConvert(price);
+    } else {
+        return "Not found";
+    }
+};
+
+const priceForSection = function(section, mode) {
+    const priceSum = function(arr) {
+        let result = 0;
+
+        arr.forEach(id => {
+            const price = vm.cards.data[id].price[mode];
+
+            if (price) {
+                result += price;
+            }
         });
+
+        return result;
+    };
+    const vm = this;
+    let price = 0;
+
+    if (section === "*") {
+        eachObject(vm.deck.list, deckpart => {
+            price += priceSum(deckpart);
+        });
+    } else {
+        price = priceSum(vm.deck.list[section]);
+    }
+
+    return vm.priceConvert(price);
 };
 
 const appMethods = {
     uriLocationNoParam,
     apiLoadNames,
+    apiLoadPrices,
     deckLoad,
     deckLoadUri,
+    priceConvert,
+    priceForCard,
+    priceForSection,
     onFileChange(e) {
         const vm = this;
         const files = e.target.files || e.dataTransfer.files;

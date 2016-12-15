@@ -14,7 +14,8 @@ const deckLoad = function(file) {
 
         vm.deck.list = deckList;
         vm.deck.link = uriDeckEncode(deckList);
-        vm.cards.unique = deckUnique(deckList);
+        vm.deck.unique = deckUnique(deckList);
+        vm.ajax.pricesLoaded = false;
     };
 
     reader.readAsText(file);

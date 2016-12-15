@@ -8,14 +8,14 @@ const appData = {
     deckparts: dataDeckParts,
     deck: {
         link: "",
+        unique: [],
         list: {}
     },
     cards: {
-        unique: [],
         data: {}
     },
     price: {
-        activeMode: "dollar_us",
+        activeCurrency: "dollar_us",
         modes: dataPriceModes,
         currencies: dataPriceCurrencies
     },

@@ -1,11 +1,11 @@
 label.col-xs-12.col-md-3.col-form-label Price Settings:
 //-Price currency
 .col-xs-12.col-md-5
-    select.form-control(v-model="price.activeMode")
+    select.form-control(v-model="price.activeCurrency")
         option(v-for="currency in price.currencies",v-bind:value="currency.id") {{currency.name}}
 //-Price load
 .col-xs-12.col-md-4
-    .btn.btn-primary.form-control()
+    .btn.btn-primary.form-control(@click="apiLoadPrices()")
         span(v-bind:hidden="ajax.currentlyLoading") Load Prices
         span(v-bind:hidden="!ajax.currentlyLoading")
             i.fa.fa-circle-o-notch.fa-spin.fa-fw

@@ -7,9 +7,12 @@ import {
 } from "../data/apiURLs";
 import utilEachObject from "./utilEachObject";
 
-const apiLoadNames = function(cb) {
+const apiLoadNames = function() {
     const vm = this;
     const result = {};
+
+    vm.ajax.currentlyLoading = true;
+    vm.ajax.namesLoaded = false;
 
     fetch(nameAPI)
         .then(response => {
@@ -20,11 +23,15 @@ const apiLoadNames = function(cb) {
                 result[id] = {
                     name,
                     img: `${imageAPI}/${id}.jpg`,
-                    link: `${buyAPI}${encodeURI(name)}`
+                    link: `${buyAPI}${encodeURI(name)}`,
+                    price: false
                 };
             });
 
             vm.cards.data = result;
+
+            vm.ajax.currentlyLoading = false;
+            vm.ajax.namesLoaded = true;
         });
 };
 

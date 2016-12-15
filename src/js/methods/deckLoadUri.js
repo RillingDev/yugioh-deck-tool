@@ -9,7 +9,8 @@ const deckLoadUri = function(uriDeck) {
 
     vm.deck.list = deckList;
     vm.deck.link = uriDeck;
-    vm.cards.unique = deckUnique(deckList);
+    vm.deck.unique = deckUnique(deckList);
+    vm.ajax.pricesLoaded = false;
 };
 
 export default deckLoadUri;

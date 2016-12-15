@@ -3,7 +3,7 @@
     min-width: 100px;
     width: calc(10% - 10px);
     position: relative;
-    margin: 5px;
+    margin: 4px;
 
     .deck-card-image {
         img {
@@ -27,8 +27,8 @@
         text-align: center;
         color: $gray-dark;
         word-wrap: break-word;
-        line-height: 1.2em;
-        font-size: 14px;
+        line-height: 1.15em;
+        font-size: 13px;
 
         &:focus,
         &:hover {

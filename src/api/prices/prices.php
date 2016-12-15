@@ -50,7 +50,7 @@ foreach ($requests as $request) {
 
   if($response && $response->status==="success"){
     //We only need the price data of the first entry
-    $data = $response->data[0]->price_data->data->prices;
+    $data = $response//$response->data[0]->price_data->data->prices;
   }
 
   array_push($result,$data);

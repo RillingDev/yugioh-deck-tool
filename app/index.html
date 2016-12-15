@@ -37,12 +37,12 @@
                             <div class="form-group row">
                                 <label class="col-xs-12 col-md-3 col-form-label">Price Settings:</label>
                                 <div class="col-xs-12 col-md-5">
-                                    <select class="form-control" v-model="price.activeMode">
+                                    <select class="form-control" v-model="price.activeCurrency">
                                         <option v-for="currency in price.currencies" v-bind:value="currency.id">{{currency.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-12 col-md-4">
-                                    <div class="btn btn-primary form-control"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
+                                    <div class="btn btn-primary form-control" @click="apiLoadPrices()"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -51,18 +51,18 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="deck" v-bind:if="cards.unique.length">
-                            <div class="deck-part deck-part-total">
+                        <div class="deck" v-if="ajax.namesLoaded">
+                            <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
                                 <div class="deck-title">
                                     <h3>Total:</h3>
-                                    <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">1.05$</span>
+                                    <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection("*",mode.id)}}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="deck-part" v-for="deckpart in deckparts" v-if="deck.list[deckpart.id]">
                                 <div class="deck-title">
                                     <h3>{{deckpart.name}}:</h3>
-                                    <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">1.05$</span>
+                                    <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection(deckpart.id,mode.id)}}</span>
                                     </div>
                                 </div>
                                 <div class="deck-content" v-bind:style="'background-color:'+deckpart.color" v-if="cards.data">
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="deck-card-text">
                                             <div class="deck-card-name">{{cards.data[cardId].name}}</div>
-                                            <div class="deck-price deck-price--sm"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">1.0$</span>
+                                            <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForCard(cardId,mode.id)}}</span>
                                             </div>
                                         </div>
                                     </a>
