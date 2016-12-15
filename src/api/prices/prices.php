@@ -5,7 +5,6 @@ $cardNames = json_decode(base64_decode($cardUri));
 $requests = [];
 $result = [];
 
-
 /**
  * Creates a curl object for every name we wanna query
  * @var [type]

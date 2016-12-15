@@ -5,8 +5,10 @@ import {
     imageAPI,
     buyAPI
 } from "../data/apiURLs";
+import utilEachObject from "./utilEachObject";
 
-const apiLoadNames = function(idArr, cb) {
+const apiLoadNames = function(cb) {
+    const vm = this;
     const result = {};
 
     fetch(nameAPI)
@@ -14,17 +16,15 @@ const apiLoadNames = function(idArr, cb) {
             return response.json();
         })
         .then(function(json) {
-            idArr.forEach(id => {
-                const name = json[id];
-
+            utilEachObject(json, (name, id) => {
                 result[id] = {
-                    name: name,
+                    name,
                     img: `${imageAPI}/${id}.jpg`,
                     link: `${buyAPI}${encodeURI(name)}`
                 };
             });
 
-            cb(result);
+            vm.cards.data = result;
         });
 };
 

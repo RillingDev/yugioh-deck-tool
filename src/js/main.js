@@ -10,6 +10,9 @@ const priceApp = new Vue({
     methods: appMethods
 });
 
+
+priceApp.apiLoadNames();
+
 if (location.search) {
     priceApp.deckLoadUri(location.search);
 }
