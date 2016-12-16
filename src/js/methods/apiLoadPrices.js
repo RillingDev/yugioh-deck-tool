@@ -16,18 +16,12 @@ const apiLoadPrices = function() {
     });
     const priceQuery = btoa(JSON.stringify(uniqueNames));
 
-    console.log(priceQuery);
-
     vm.ajax.currentlyLoading = true;
     vm.ajax.pricesLoaded = false;
 
     fetch(priceAPI + priceQuery)
         .then(response => {
-            try {
-                return response.json();
-            } catch (e) {
-                throw e;
-            }
+            return response.json();
         })
         .then(function(json) {
             vm.deck.unique.forEach((id, index) => {
