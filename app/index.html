@@ -50,36 +50,42 @@
                             </div>
                         </form>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="deck" v-if="ajax.namesLoaded">
-                            <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
-                                <div class="deck-title">
-                                    <h3>Total:</h3>
-                                    <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection("*",mode.id)}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="deck-part" v-for="deckpart in deckparts" v-if="deck.list[deckpart.id]">
-                                <div class="deck-title">
-                                    <h3>{{deckpart.name}}:</h3>
-                                    <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection(deckpart.id,mode.id)}}</span>
-                                    </div>
-                                </div>
-                                <div class="deck-content" v-bind:style="'background-color:'+deckpart.color" v-if="cards.data">
-                                    <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link">
-                                        <div class="deck-card-image">
-                                            <img width="150" height="220" v-bind:src="cards.data[cardId].img">
+                    <div class="col-xs-12 col-md-9">
+                        <div v-if="ajax.namesLoaded">
+                            <h3>Decklist:</h3>
+                            <div class="deck">
+                                <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
+                                    <div class="deck-title">
+                                        <h4>Total:</h4>
+                                        <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection("*",mode.id)}}</span>
                                         </div>
-                                        <div class="deck-card-text">
-                                            <div class="deck-card-name">{{cards.data[cardId].name}}</div>
-                                            <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForCard(cardId,mode.id)}}</span>
+                                    </div>
+                                </div>
+                                <div class="deck-part" v-for="deckpart in deckparts">
+                                    <div class="deck-title">
+                                        <h4>{{deckpart.name}}:</h4>
+                                        <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection(deckpart.id,mode.id)}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="deck-content" v-bind:style="'background-color:'+deckpart.color" v-if="cards.data">
+                                        <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link">
+                                            <div class="deck-card-image">
+                                                <img width="150" height="220" v-bind:src="cards.data[cardId].img">
                                             </div>
-                                        </div>
-                                    </a>
+                                            <div class="deck-card-text">
+                                                <div class="deck-card-name">{{cards.data[cardId].name}}</div>
+                                                <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForCard(cardId,mode.id)}}</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-3">
+                        <div v-if="ajax.namesLoaded">
+                            <h3>Deckbuilder:</h3>
                         </div>
                     </div>
                 </div>

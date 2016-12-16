@@ -456,6 +456,10 @@ template {
     margin-bottom: 60px;
 }
 
+.priceapp main {
+    min-height: 83vh;
+}
+
 .priceapp h1,
 .priceapp h2 {
     text-align: center;
@@ -470,7 +474,13 @@ template {
 }
 
 .priceapp h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.priceapp h4 {
     padding-bottom: 0;
+    margin: 0;
 }
 
 .priceapp .deck .deck-part {
@@ -483,11 +493,9 @@ template {
     margin-bottom: 10px;
 }
 
-.priceapp .deck .deck-part .deck-title h3 {
-    margin: 0;
-}
-
 .priceapp .deck .deck-part .deck-content {
+    border: 3px solid #ababab;
+    min-height: 130px;
     padding: 5px;
     display: flex;
     flex-direction: row;
@@ -498,7 +506,7 @@ template {
 .priceapp .deck-card {
     max-width: 120px;
     min-width: 80px;
-    width: calc(10% - 8px);
+    width: calc(12% - 4px);
     position: relative;
     margin: 4px;
 }
@@ -542,15 +550,15 @@ template {
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
-    height: 30px;
-    margin-left: 10px;
+    height: 26px;
+    margin-left: 6px;
 }
 
 .priceapp .deck-price .deck-price-item {
     display: block;
-    line-height: 30px;
-    padding-left: 5px;
-    padding-right: 5px;
+    line-height: 26px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .priceapp .deck-price.deck-price--sm {

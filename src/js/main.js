@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     priceApp.apiLoadNames();
 
-    if (location.search) {
+    if (location.search.indexOf("?d") !== -1) {
         priceApp.deckLoadUri(location.search);
     }
 });

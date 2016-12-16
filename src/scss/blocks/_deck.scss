@@ -6,13 +6,11 @@
             display: flex;
             flex-direction: row;
             margin-bottom: 10px;
-
-            h3 {
-                margin: 0;
-            }
         }
 
         .deck-content {
+            border: 3px solid #ababab;
+            min-height: 130px;
             padding: 5px;
             display: flex;
             flex-direction: row;
