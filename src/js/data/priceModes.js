@@ -3,15 +3,15 @@
 const priceModes = [{
     id: "low",
     name: "Low",
-    color: "#caf9ae"
+    color: "#ddffc9"
 }, {
     id: "average",
     name: "Average",
-    color: "#fff6a1"
+    color: "#fff8b7"
 }, {
     id: "high",
     name: "High",
-    color: "#fdc1b0"
+    color: "#ffdad0"
 }];
 
 export default priceModes;

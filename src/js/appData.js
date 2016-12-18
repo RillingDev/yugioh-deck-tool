@@ -12,6 +12,9 @@ const appData = {
         list: {}
     },
     cards: {
+        filter: "",
+        names: [],
+        filteredNames: [],
         data: {}
     },
     price: {

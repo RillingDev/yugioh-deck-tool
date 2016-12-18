@@ -163,7 +163,7 @@ dl.row > dd + dt {
 
 @media (min-width: 768px) {
     .container {
-        width: 720px;
+        width: 700px;
         max-width: 100%;
     }
 }
@@ -177,7 +177,7 @@ dl.row > dd + dt {
 
 @media (min-width: 1200px) {
     .container {
-        width: 1120px;
+        width: 1140px;
         max-width: 100%;
     }
 }

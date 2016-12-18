@@ -10,5 +10,21 @@
 }
 
 main {
-    min-height: 83vh;
+    min-height: 82vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .main-form {
+        width: 100%;
+    }
+
+    .main-deck {
+        width: calc(100% - 360px);
+    }
+
+    .main-builder {
+        width: 320px;
+    }
 }

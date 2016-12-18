@@ -8,7 +8,7 @@ import deckLoadUri from "./methods/deckLoadUri";
 import priceConvert from "./methods/priceConvert";
 import priceForCard from "./methods/priceForCard";
 import priceForSection from "./methods/priceForSection";
-
+import builderUpdateNames from "./methods/builderUpdateNames";
 const appMethods = {
     uriLocationNoParam,
     apiLoadNames,
@@ -18,6 +18,7 @@ const appMethods = {
     priceConvert,
     priceForCard,
     priceForSection,
+    builderUpdateNames,
     onFileChange(e) {
         const vm = this;
         const files = e.target.files || e.dataTransfer.files;

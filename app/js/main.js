@@ -8370,32 +8370,32 @@ const priceCurrencies = [{
 const priceModes = [{
     id: "low",
     name: "Low",
-    color: "#caf9ae"
+    color: "#ddffc9"
 }, {
     id: "average",
     name: "Average",
-    color: "#fff6a1"
+    color: "#fff8b7"
 }, {
     id: "high",
     name: "High",
-    color: "#fdc1b0"
+    color: "#ffdad0"
 }];
 
 const deckParts = [{
     id: "main",
     name: "Main",
     size: [40, 60],
-    color: "#b99273"
+    color: "#907057"
 }, {
     id: "extra",
     name: "Extra",
     size: [0, 15],
-    color: "#c786c7"
+    color: "#935293"
 }, {
     id: "side",
     name: "Side",
     size: [0, 15],
-    color: "#65af6c"
+    color: "#54925a"
 }];
 
 const appData = {
@@ -8406,6 +8406,9 @@ const appData = {
         list: {}
     },
     cards: {
+        filter: "",
+        names: [],
+        filteredNames: [],
         data: {}
     },
     price: {
@@ -8454,6 +8457,8 @@ const apiLoadNames = function() {
             return response.json();
         })
         .then(function(json) {
+            let resultNames;
+
             eachObject(json, (name, id) => {
                 result[id] = {
                     name,
@@ -8463,7 +8468,11 @@ const apiLoadNames = function() {
                 };
             });
 
+            resultNames = Object.values(result).map(item => item.name).sort();
+
             vm.cards.data = result;
+            vm.cards.names = resultNames;
+            vm.cards.filteredNames = resultNames;
 
             vm.ajax.currentlyLoading = false;
             vm.ajax.namesLoaded = true;
@@ -8633,6 +8642,14 @@ const priceForSection = function(section, mode) {
     return vm.priceConvert(price);
 };
 
+const builderUpdateNames = function() {
+    const vm = this;
+
+    vm.cards.filteredNames = vm.cards.names.filter(str => {
+        return str.indexOf(vm.cards.filter) !== -1;
+    });
+};
+
 const appMethods = {
     uriLocationNoParam,
     apiLoadNames,
@@ -8642,6 +8659,7 @@ const appMethods = {
     priceConvert,
     priceForCard,
     priceForSection,
+    builderUpdateNames,
     onFileChange(e) {
         const vm = this;
         const files = e.target.files || e.dataTransfer.files;
