@@ -22,32 +22,32 @@
             </header>
             <main>
                 <div class="main-form">
-                    <form class="form">
+                    <div class="form form-main">
                         <div class="form-group row">
                             <label class="col-xs-12 col-md-3 col-form-label" for="formUploadDeck">Upload Deck:</label>
                             <div class="col-xs-12 col-md-9">
-                                <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" value="Select Deck" @change="onFileChange">
+                                <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" value="Select Deck" @change="onFileChange" title="Upload Deck">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-xs-12 col-md-3 col-form-label" for="formLinkShare">Share Link:</label>
                             <div class="col-xs-12 col-md-9">
-                                <input class="form-control" id="formLinkShare" type="url" v-bind:value="uriLocationNoParam() + deck.link">
+                                <input class="form-control" id="formLinkShare" type="url" v-bind:value="uriLocationNoParam() + deck.link" title="Shareable Link">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-xs-12 col-md-3 col-form-label">Price Settings:</label>
                             <div class="col-xs-12 col-md-5">
-                                <select class="form-control" v-model="price.activeCurrency">
+                                <select class="form-control" v-model="price.activeCurrency" title="Price Currency">
                                     <option v-for="currency in price.currencies" v-bind:value="currency.id">{{currency.name}}</option>
                                 </select>
                             </div>
                             <div class="col-xs-12 col-md-4">
-                                <div class="btn btn-primary form-control" @click="apiLoadPrices()"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
+                                <div class="btn btn-primary form-control" @click="apiLoadPrices()" title="Load Prices"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="main-deck">
                     <div v-if="ajax.namesLoaded">
@@ -60,14 +60,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="deck-part" v-for="deckpart in deckparts" v-if="deck.list[deckpart.id]">
+                            <div class="deck-part" v-for="deckpart in deckparts" v-if="deck.list[deckpart.id] &amp;&amp; deck.list[deckpart.id].length">
                                 <div class="deck-title">
                                     <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
                                     <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection(deckpart.id,mode.id)}}</span>
                                     </div>
                                 </div>
                                 <div class="deck-content" v-bind:style="'background-color:'+deckpart.color" v-if="cards.data">
-                                    <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link">
+                                    <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link" @contextmenu.prevent="builderDeckRemove(cardId,deckpart.id)">
                                         <div class="deck-card-image">
                                             <img width="100" height="134" v-bind:src="cards.data[cardId].img">
                                         </div>
@@ -86,10 +86,17 @@
                     <div v-if="ajax.namesLoaded">
                         <h3>Deckbuilder:</h3>
                         <div class="builder">
-                            <p>Showing {{cards.filteredNames.length}} of {{cards.names.length}} Cards</p>
-                            <input class="form-control builder-search" id="builderSearch" type="text" placeholder="Search" v-model="cards.filter" @input="builderUpdateNames">
+                            <p>Showing {{builder.filteredNames.length}} of {{cards.names.length}} Cards</p>
+                            <div class="form">
+                                <input class="form-control builder-search" id="builderSearch" type="text" placeholder="Search" v-model="builder.filter" @input="builderUpdateNames()">
+                            </div>
                             <ul class="builder-list">
-                                <li class="builder-card" v-for="card in cards.filteredNames">{{card}}</li>
+                                <li class="builder-card" v-for="card in builder.filteredNames">
+                                    <div class="builder-card-action">
+                                        <div class="fa fa-plus" v-for="deckpart in deckparts" v-bind:style="'color:'+deckpart.color" @click="builderDeckAdd(card,deckpart.id)" v-bind:title="'Add Card to '+deckpart.name+' Deck'"></div>
+                                    </div>
+                                    <div class="builder-card-name">{{card}}</div>
+                                </li>
                             </ul>
                         </div>
                     </div>

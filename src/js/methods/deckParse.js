@@ -13,11 +13,13 @@ const deckParse = function(fileContent) {
     //Loop over deck parts
     deckParts.forEach((deckpart, index) => {
         const currentEntry = arr[index];
+        let data = [];
 
-        //Push if deck has data for deckpart
         if (currentEntry) {
-            result[deckpart.id] = currentEntry.split("\n").filter(trim).map(card => Number(card));
+            data = currentEntry.split("\n").filter(trim).map(card => Number(card));
         }
+
+        result[deckpart.id] = data;
     });
 
     return result;

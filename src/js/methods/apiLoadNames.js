@@ -19,7 +19,9 @@ const apiLoadNames = function() {
             return response.json();
         })
         .then(function(json) {
+            let resultIds;
             let resultNames;
+            let resultMap;
 
             utilEachObject(json, (name, id) => {
                 result[id] = {
@@ -30,11 +32,16 @@ const apiLoadNames = function() {
                 };
             });
 
-            resultNames = Object.values(result).map(item => item.name).sort();
+            resultIds = Object.keys(result);
+            resultNames = Object.values(result).map(item => item.name);
+            resultMap = new Map(resultNames.map((item, index) => {
+                return [item, resultIds[index]];
+            }));
 
             vm.cards.data = result;
-            vm.cards.names = resultNames;
-            vm.cards.filteredNames = resultNames;
+            vm.cards.names = resultNames.sort();
+            vm.cards.mapNameToId = resultMap;
+            vm.builderUpdateNames();
 
             vm.ajax.currentlyLoading = false;
             vm.ajax.namesLoaded = true;

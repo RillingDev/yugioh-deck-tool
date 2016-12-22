@@ -451,7 +451,7 @@ template {
     box-sizing: border-box;
 }
 
-.priceapp .form {
+.priceapp .form-main {
     margin-top: 40px;
     margin-bottom: 60px;
 }
@@ -584,13 +584,13 @@ template {
 }
 
 .priceapp .builder .builder-list {
-    height: 60vh;
+    max-height: 60vh;
     width: 100%;
     overflow-y: scroll;
     list-style: none;
     padding: 0;
     margin: 0;
-    resize: horizontal;
+    resize: both;
 }
 
 .priceapp .builder .builder-list .builder-card {
@@ -598,8 +598,18 @@ template {
     padding: 5px 0;
     cursor: pointer;
     word-break: break-all;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
 }
 
-.priceapp .builder .builder-list .builder-card:hover {
-    background-color: #f7f7f9;
+.priceapp .builder .builder-list .builder-card .builder-card-action {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 8px;
+}
+
+.priceapp .builder .builder-list .builder-card .builder-card-action .fa-plus {
+    padding: 0 4px;
 }

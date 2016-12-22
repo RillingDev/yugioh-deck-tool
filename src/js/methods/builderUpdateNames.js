@@ -2,10 +2,18 @@
 
 const builderUpdateNames = function() {
     const vm = this;
+    const filter = vm.builder.filter.toLowerCase();
+    let result = [];
 
-    vm.cards.filteredNames = vm.cards.names.filter(str => {
-        return str.indexOf(vm.cards.filter) !== -1;
+    //console.log(vm.cards.names);
+
+    //if (vm.cards.filter.length >= 3) {
+    result = vm.cards.names.filter(str => {
+        return str.toLowerCase().indexOf(filter) !== -1;
     });
+    //}
+
+    vm.builder.filteredNames = result;
 };
 
 export default builderUpdateNames;

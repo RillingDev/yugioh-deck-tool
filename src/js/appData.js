@@ -12,10 +12,14 @@ const appData = {
         list: {}
     },
     cards: {
-        filter: "",
         names: [],
+        data: {},
+        //mapIdName: null,
+        mapNameToId: new Map(),
+    },
+    builder: {
+        filter: "Fluffal",
         filteredNames: [],
-        data: {}
     },
     price: {
         activeCurrency: "dollar_us",

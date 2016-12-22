@@ -1,1 +1,4 @@
-li.builder-card(v-for="card in cards.filteredNames") {{card}}
+li.builder-card(v-for="card in builder.filteredNames")
+    .builder-card-action
+        .fa.fa-plus(v-for="deckpart in deckparts",v-bind:style="'color:'+deckpart.color",@click="builderDeckAdd(card,deckpart.id)",v-bind:title="'Add Card to '+deckpart.name+' Deck'")
+    .builder-card-name {{card}}

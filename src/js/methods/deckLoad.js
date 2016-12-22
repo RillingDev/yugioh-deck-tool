@@ -1,8 +1,6 @@
 "use strict";
 
 import deckParse from "./deckParse";
-import deckUnique from "./deckUnique";
-import uriDeckEncode from "./uriDeckEncode";
 
 const deckLoad = function(file) {
     const reader = new FileReader();
@@ -13,9 +11,7 @@ const deckLoad = function(file) {
         const deckList = deckParse(fileContent);
 
         vm.deck.list = deckList;
-        vm.deck.link = uriDeckEncode(deckList);
-        vm.deck.unique = deckUnique(deckList);
-        vm.ajax.pricesLoaded = false;
+        vm.deckUpdate(deckList);
     };
 
     reader.readAsText(file);

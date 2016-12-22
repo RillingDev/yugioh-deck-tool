@@ -4,22 +4,32 @@
     }
 
     .builder-list {
-        height: 60vh;
+        max-height: 60vh;
         width: 100%;
         overflow-y: scroll;
         list-style: none;
         padding: 0;
         margin: 0;
-        resize: horizontal;
+        resize: both;
 
         .builder-card {
             border-bottom: 1px solid $gray-lighter;
             padding: 5px 0;
             cursor: pointer;
             word-break: break-all;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
 
-            &:hover {
-                background-color: $gray-lightest;
+            .builder-card-action {
+                display: flex;
+                justify-content: space-between;
+                margin-right: 8px;
+
+                .fa-plus {
+                    padding: 0 4px;
+                }
             }
         }
     }

@@ -6,7 +6,7 @@ div(v-if="ajax.namesLoaded")
                 h4 Total:
                 .deck-price
                     span.deck-price-item(v-for="mode in price.modes",v-bind:style="'background-color:'+mode.color") {{priceForSection("*",mode.id)}}
-        .deck-part(v-for="deckpart in deckparts",v-if="deck.list[deckpart.id]")
+        .deck-part(v-for="deckpart in deckparts",v-if="deck.list[deckpart.id] && deck.list[deckpart.id].length")
             .deck-title
                 h4 {{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):
                 .deck-price(v-if="ajax.pricesLoaded")
