@@ -9,7 +9,6 @@ import utilEachObject from "./utilEachObject";
 
 const apiLoadNames = function() {
     const vm = this;
-    const result = {};
 
     vm.ajax.currentlyLoading = true;
     vm.ajax.namesLoaded = false;
@@ -19,28 +18,22 @@ const apiLoadNames = function() {
             return response.json();
         })
         .then(function(json) {
-            let resultIds;
-            let resultNames;
-            let resultMap;
+            const resultData = {};
+            const resultPairs = [];
 
             utilEachObject(json, (name, id) => {
-                result[id] = {
+                resultData[id] = {
                     name,
                     img: `${imageAPI}/${id}.jpg`,
                     link: `${buyAPI}${encodeURI(name)}`,
                     price: false
                 };
+
+                resultPairs.push([id, name]);
             });
 
-            resultIds = Object.keys(result);
-            resultNames = Object.values(result).map(item => item.name);
-            resultMap = new Map(resultNames.map((item, index) => {
-                return [item, resultIds[index]];
-            }));
-
-            vm.cards.data = result;
-            vm.cards.names = resultNames.sort();
-            vm.cards.mapNameToId = resultMap;
+            vm.cards.data = resultData;
+            vm.cards.pairs = resultPairs;
             vm.builderUpdateNames();
 
             vm.ajax.currentlyLoading = false;

@@ -16,13 +16,12 @@ const appData = {
         }
     },
     cards: {
-        names: [],
-        data: {},
-        mapNameToId: new Map(),
+        pairs: [],
+        data: {}
     },
     builder: {
         filter: "Fluffal",
-        filteredNames: [],
+        pairsFiltered: [],
     },
     price: {
         activeCurrency: "dollar_us",

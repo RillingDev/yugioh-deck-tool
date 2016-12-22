@@ -8410,13 +8410,12 @@ const appData = {
         }
     },
     cards: {
-        names: [],
-        data: {},
-        mapNameToId: new Map(),
+        pairs: [],
+        data: {}
     },
     builder: {
         filter: "Fluffal",
-        filteredNames: [],
+        pairsFiltered: [],
     },
     price: {
         activeCurrency: "dollar_us",
@@ -8454,7 +8453,6 @@ const eachObject = function(object, fn) {
 
 const apiLoadNames = function() {
     const vm = this;
-    const result = {};
 
     vm.ajax.currentlyLoading = true;
     vm.ajax.namesLoaded = false;
@@ -8464,28 +8462,22 @@ const apiLoadNames = function() {
             return response.json();
         })
         .then(function(json) {
-            let resultIds;
-            let resultNames;
-            let resultMap;
+            const resultData = {};
+            const resultPairs = [];
 
             eachObject(json, (name, id) => {
-                result[id] = {
+                resultData[id] = {
                     name,
                     img: `${imageAPI}/${id}.jpg`,
                     link: `${buyAPI}${encodeURI(name)}`,
                     price: false
                 };
+
+                resultPairs.push([id, name]);
             });
 
-            resultIds = Object.keys(result);
-            resultNames = Object.values(result).map(item => item.name);
-            resultMap = new Map(resultNames.map((item, index) => {
-                return [item, resultIds[index]];
-            }));
-
-            vm.cards.data = result;
-            vm.cards.names = resultNames.sort();
-            vm.cards.mapNameToId = resultMap;
+            vm.cards.data = resultData;
+            vm.cards.pairs = resultPairs;
             vm.builderUpdateNames();
 
             vm.ajax.currentlyLoading = false;
@@ -8665,22 +8657,15 @@ const priceForSection = function(section, mode) {
 const builderUpdateNames = function() {
     const vm = this;
     const filter = vm.builder.filter.toLowerCase();
-    let result = [];
 
-    //console.log(vm.cards.names);
-
-    //if (vm.cards.filter.length >= 3) {
-    result = vm.cards.names.filter(str => {
-        return str.toLowerCase().indexOf(filter) !== -1;
+    vm.builder.pairsFiltered = vm.cards.pairs.filter(card => {
+        return card[1].toLowerCase().indexOf(filter) !== -1;
     });
-    //}
-
-    vm.builder.filteredNames = result;
 };
 
-const builderDeckAdd = function(name, part) {
+const builderDeckAdd = function(id, part) {
     const vm = this;
-    const cardId = Number(vm.cards.mapNameToId.get(name));
+    const cardId = Number(id);
 
     vm.deck.list[part].push(cardId);
     vm.deckUpdate(vm.deck.list);

@@ -86,16 +86,16 @@
                     <div v-if="ajax.namesLoaded">
                         <h3>Deckbuilder:</h3>
                         <div class="builder">
-                            <p>Showing {{builder.filteredNames.length}} of {{cards.names.length}} Cards</p>
+                            <p>Showing {{builder.pairsFiltered.length}} of {{cards.pairs.length}} Cards</p>
                             <div class="form">
                                 <input class="form-control builder-search" id="builderSearch" type="text" placeholder="Search" v-model="builder.filter" @input="builderUpdateNames()">
                             </div>
                             <ul class="builder-list">
-                                <li class="builder-card" v-for="card in builder.filteredNames">
+                                <li class="builder-card" v-for="card in builder.pairsFiltered">
                                     <div class="builder-card-action">
-                                        <div class="fa fa-plus" v-for="deckpart in deckparts" v-bind:style="'color:'+deckpart.color" @click="builderDeckAdd(card,deckpart.id)" v-bind:title="'Add Card to '+deckpart.name+' Deck'"></div>
+                                        <div class="fa fa-plus" v-for="deckpart in deckparts" v-bind:style="'color:'+deckpart.color" @click="builderDeckAdd(card[0],deckpart.id)" v-bind:title="'Add Card to '+deckpart.name+' Deck'"></div>
                                     </div>
-                                    <div class="builder-card-name">{{card}}</div>
+                                    <div class="builder-card-name">{{card[1]}}</div>
                                 </li>
                             </ul>
                         </div>

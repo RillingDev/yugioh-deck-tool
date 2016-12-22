@@ -1,7 +1,7 @@
 div(v-if="ajax.namesLoaded")
     h3 Deckbuilder:
     .builder
-        p Showing {{builder.filteredNames.length}} of {{cards.names.length}} Cards
+        p Showing {{builder.pairsFiltered.length}} of {{cards.pairs.length}} Cards
         .form
             input.form-control.builder-search#builderSearch(type="text",placeholder="Search",v-model="builder.filter",@input="builderUpdateNames()")
         ul.builder-list
