@@ -9,12 +9,15 @@ const appData = {
     deck: {
         link: "",
         unique: [],
-        list: {}
+        list: {
+            main: [],
+            extra: [],
+            side: []
+        }
     },
     cards: {
         names: [],
         data: {},
-        //mapIdName: null,
         mapNameToId: new Map(),
     },
     builder: {
