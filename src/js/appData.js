@@ -19,7 +19,7 @@ const appData = {
         data: {}
     },
     builder: {
-        filter: "Fluffal",
+        filter: "",
         pairsFiltered: [],
     },
     price: {

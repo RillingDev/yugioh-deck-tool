@@ -533,11 +533,11 @@ template {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f7f7f9;
+    background-color: #f7f7f7;
     opacity: 0;
     transition: opacity 0.2s;
     text-align: center;
-    color: #373a3c;
+    color: #373737;
     word-wrap: break-word;
     line-height: 1.25em;
     font-size: 13px;
@@ -589,13 +589,13 @@ template {
     overflow-y: scroll;
     list-style: none;
     padding: 0;
-    margin: 0;
-    resize: both;
+    resize: horizontal;
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .priceapp .builder .builder-list .builder-card {
-    border-bottom: 1px solid #eceeef;
-    padding: 5px 0;
+    border-bottom: 1px solid #bbbbbb;
+    padding: 3px 0;
     cursor: pointer;
     word-break: break-all;
     display: flex;
@@ -612,5 +612,10 @@ template {
 }
 
 .priceapp .builder .builder-list .builder-card .builder-card-action .fa-plus {
-    padding: 0 4px;
+    padding: 0 3px;
+    opacity: 0.75;
+}
+
+.priceapp .builder .builder-list .builder-card .builder-card-action .fa-plus:active {
+    opacity: 1;
 }

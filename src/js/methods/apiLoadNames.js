@@ -33,7 +33,7 @@ const apiLoadNames = function() {
             });
 
             vm.cards.data = resultData;
-            vm.cards.pairs = resultPairs;
+            vm.cards.pairs = resultPairs.sort((a, b) => a[1].localeCompare(b[1]));
             vm.builderUpdateNames();
 
             vm.ajax.currentlyLoading = false;

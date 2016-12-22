@@ -8413,7 +8413,7 @@ const appData = {
         data: {}
     },
     builder: {
-        filter: "Fluffal",
+        filter: "",
         pairsFiltered: [],
     },
     price: {
@@ -8476,7 +8476,7 @@ const apiLoadNames = function() {
             });
 
             vm.cards.data = resultData;
-            vm.cards.pairs = resultPairs;
+            vm.cards.pairs = resultPairs.sort((a, b) => a[1].localeCompare(b[1]));
             vm.builderUpdateNames();
 
             vm.ajax.currentlyLoading = false;
@@ -8649,18 +8649,27 @@ const priceForSection = function(section, mode) {
 const builderUpdateNames = function() {
     const vm = this;
     const filter = vm.builder.filter.toLowerCase();
-
-    vm.builder.pairsFiltered = vm.cards.pairs.filter(card => {
+    let result = vm.cards.pairs.filter(card => {
         return card[1].toLowerCase().indexOf(filter) !== -1;
     });
+
+    if (result.length > 500) {
+        result = result.splice(0, 500);
+    }
+
+    vm.builder.pairsFiltered = result;
 };
 
 const builderDeckAdd = function(id, part) {
     const vm = this;
     const cardId = Number(id);
+    const deckPart = vm.deck.list[part];
+    const deckPartMax = vm.deckparts.find(deckpart => deckpart.id === part).size[1];
 
-    vm.deck.list[part].push(cardId);
-    vm.deckUpdate(vm.deck.list);
+    if (deckPart.length < deckPartMax && deckPart.filter(id => id === cardId).length < 3) {
+        deckPart.push(cardId);
+        vm.deckUpdate(vm.deck.list);
+    }
 };
 
 const builderDeckRemove = function(id, part) {

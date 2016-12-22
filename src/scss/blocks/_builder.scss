@@ -9,12 +9,12 @@
         overflow-y: scroll;
         list-style: none;
         padding: 0;
-        margin: 0;
-        resize: both;
+        resize: horizontal;
+        border: 1px solid rgba(0, 0, 0, 0.15);
 
         .builder-card {
-            border-bottom: 1px solid $gray-lighter;
-            padding: 5px 0;
+            border-bottom: 1px solid $gray-light;
+            padding: 3px 0;
             cursor: pointer;
             word-break: break-all;
             display: flex;
@@ -29,7 +29,12 @@
                 align-items: center;
 
                 .fa-plus {
-                    padding: 0 4px;
+                    padding: 0 3px;
+                    opacity: 0.75;
+
+                    &:active {
+                        opacity: 1;
+                    }
                 }
             }
         }
