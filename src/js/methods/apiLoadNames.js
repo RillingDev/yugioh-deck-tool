@@ -20,6 +20,7 @@ const apiLoadNames = function() {
         .then(function(json) {
             const resultData = {};
             const resultPairs = [];
+            const nameStorage = [];
 
             utilEachObject(json, (name, id) => {
                 resultData[id] = {
@@ -29,7 +30,12 @@ const apiLoadNames = function() {
                     price: false
                 };
 
-                resultPairs.push([id, name]);
+                //Only add each card once to pars, skip alternate arts
+                if (nameStorage.indexOf(name) === -1) {
+                    resultPairs.push([id, name]);
+                }
+
+                nameStorage.push(name);
             });
 
             vm.cards.data = resultData;
