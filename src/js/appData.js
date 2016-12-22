@@ -8,7 +8,6 @@ const appData = {
     deckparts: dataDeckParts,
     deck: {
         link: "",
-        unique: [],
         list: {
             main: [],
             extra: [],

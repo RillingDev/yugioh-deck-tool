@@ -7,41 +7,35 @@ import {
 
 const apiLoadPrices = function() {
     const vm = this;
+    //Array of unique ids, minus the ones where prices were already loaded
+    const cardIds = vm.deckCardsWithoutPriceData();
+    const cardNames = cardIds.map(cardId => vm.cards.data[cardId].name);
+    const priceQuery = btoa(JSON.stringify(cardNames));
 
-    if (vm.deck.unique.length) {
-        const uniqueNames = vm.deck.unique.map(id => {
-            if (vm.cards.data[id]) {
-                return encodeURI(vm.cards.data[id].name);
-            } else {
-                return null;
-            }
-        });
-        const priceQuery = btoa(JSON.stringify(uniqueNames));
+    vm.ajax.currentlyLoading = true;
+    vm.ajax.pricesLoaded = false;
 
-        vm.ajax.currentlyLoading = true;
-        vm.ajax.pricesLoaded = false;
+    fetch(priceAPI + priceQuery)
+        .then(response => {
+            return response.json();
+        })
+        .then(function(json) {
+            cardIds.forEach((id, index) => {
+                const priceData = json[index];
+                const card = vm.cards.data[id];
 
-        fetch(priceAPI + priceQuery)
-            .then(response => {
-                return response.json();
-            })
-            .then(function(json) {
-                vm.deck.unique.forEach((id, index) => {
-                    const priceData = json[index];
-
-                    if (vm.cards.data[id]) {
-                        vm.cards.data[id].price = {
-                            low: priceData.low,
-                            average: priceData.average,
-                            high: priceData.high
-                        };
-                    }
-                });
-
-                vm.ajax.currentlyLoading = false;
-                vm.ajax.pricesLoaded = true;
+                if (card) {
+                    card.price = {
+                        low: priceData.low,
+                        average: priceData.average,
+                        high: priceData.high
+                    };
+                }
             });
-    }
+
+            vm.ajax.currentlyLoading = false;
+            vm.ajax.pricesLoaded = true;
+        });
 };
 
 export default apiLoadPrices;

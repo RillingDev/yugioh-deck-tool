@@ -8,6 +8,7 @@ import apiLoadPrices from "./methods/apiLoadPrices";
 import deckLoad from "./methods/deckLoad";
 import deckLoadUri from "./methods/deckLoadUri";
 import deckUpdate from "./methods/deckUpdate";
+import deckCardsWithoutPriceData from "./methods/deckCardsWithoutPriceData";
 
 import priceConvert from "./methods/priceConvert";
 import priceForCard from "./methods/priceForCard";
@@ -19,17 +20,23 @@ import builderDeckRemove from "./methods/builderDeckRemove";
 
 const appMethods = {
     uriLocationNoParam,
+
     apiLoadNames,
     apiLoadPrices,
+
     deckLoad,
     deckLoadUri,
     deckUpdate,
+    deckCardsWithoutPriceData,
+
     priceConvert,
     priceForCard,
     priceForSection,
+
     builderUpdateNames,
     builderDeckAdd,
     builderDeckRemove,
+
     onFileChange(e) {
         const vm = this;
         const files = e.target.files || e.dataTransfer.files;
