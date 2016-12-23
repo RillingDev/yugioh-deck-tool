@@ -5,3 +5,4 @@ release/
 cache/
 .DS_Store
 npm-debug.*
+wp/
