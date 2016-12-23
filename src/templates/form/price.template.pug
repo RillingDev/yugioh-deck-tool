@@ -1,5 +1,4 @@
-label.col-xs-12.col-md-3.col-form-label Price Settings:
-.col-xs-12.col-md-5
+.col-xs-12.col-md-8
     select.form-control(v-model="price.activeCurrency",title="Price Currency")
         option(v-for="currency in price.currencies",v-bind:value="currency.id") {{currency.name}}
 .col-xs-12.col-md-4

@@ -8,7 +8,7 @@ const builderDeckAdd = function(id, part) {
 
     if (deckPart.length < deckPartMax && deckPart.filter(id => id === cardId).length < 3) {
         deckPart.push(cardId);
-        vm.deckUpdate(vm.deck.list);
+        vm.deckUpdate();
     }
 };
 

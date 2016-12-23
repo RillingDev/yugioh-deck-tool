@@ -8562,34 +8562,43 @@ const deckLoad = function(file) {
 
         vm.deck.name = file.name.replace(".ydk", "");
         vm.deck.list = deckList;
-        vm.deckUpdate(deckList);
+        vm.deckUpdate();
     };
 
     reader.readAsText(file);
 };
 
 const uriDeckDecode = function(deckUri) {
-    return JSON.parse(atob(deckUri.replace("?d=", "")));
+    const deckArray = JSON.parse(atob(deckUri.replace("?d=", "")));
+    const deckList = {};
+
+    deckParts.forEach((deckpart, index) => {
+        deckList[deckpart.id] = deckArray[1][index];
+    });
+
+    return [deckArray[0], deckList];
 };
 
 const deckLoadUri = function(uriDeck) {
     const vm = this;
-    const deckList = uriDeckDecode(uriDeck);
+    const deckArray = uriDeckDecode(uriDeck);
 
-    vm.deck.list = deckList;
-    vm.deckUpdate(deckList, uriDeck);
+    vm.deck.name = deckArray[0];
+    vm.deck.list = deckArray[1];
+    vm.deckUpdate(uriDeck);
 };
 
-const uriDeckEncode = function(deckData) {
-    const deckUri = btoa(JSON.stringify(deckData));
+const uriDeckEncode = function(deck) {
+    const deckArray = [deck.name, Object.values(deck.list)];
+    const deckUri = btoa(JSON.stringify(deckArray));
 
     return `?d=${deckUri}`;
 };
 
-const deckUpdate = function(deckList, deckLink) {
+const deckUpdate = function(deckLink) {
     const vm = this;
 
-    vm.deck.link = deckLink || uriDeckEncode(deckList);
+    vm.deck.link = deckLink || uriDeckEncode(vm.deck);
     vm.ajax.pricesLoaded = false;
 };
 
@@ -8679,7 +8688,7 @@ const builderDeckAdd = function(id, part) {
 
     if (deckPart.length < deckPartMax && deckPart.filter(id => id === cardId).length < 3) {
         deckPart.push(cardId);
-        vm.deckUpdate(vm.deck.list);
+        vm.deckUpdate();
     }
 };
 
@@ -8696,7 +8705,7 @@ const builderDeckRemove = function(id, part) {
         }
         return true;
     });
-    vm.deckUpdate(vm.deck.list);
+    vm.deckUpdate();
 };
 
 var FileSaver = createCommonjsModule(function (module) {
@@ -8902,7 +8911,7 @@ const convertDeckToFile = function(deckList) {
 const fileDownloadDeck = function() {
     const vm = this;
     const fileData = convertDeckToFile(vm.deck.list);
-    const file = new File([fileData], "customDeck.ydk", {
+    const file = new File([fileData], vm.deck.name + ".ydk", {
         type: "text/ydk"
     });
 

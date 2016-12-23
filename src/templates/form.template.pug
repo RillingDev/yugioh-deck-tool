@@ -1,10 +1,16 @@
 .form.form-main
     //-Deck file
     .form-group.row
-        include ./form/file.template.pug
-    //-Share link
-    .form-group.row
-        include ./form/share.template.pug
+        label.col-xs-12.col-md-3.col-form-label Deck:
+        .col-xs-12.col-md-9
+            .row
+                include ./form/upload.template.pug
+                include ./form/name.template.pug
+                include ./form/share.template.pug
+                include ./form/download.template.pug
     //-Price settings
     .form-group.row
-        include ./form/price.template.pug
+        label.col-xs-12.col-md-3.col-form-label Price:
+        .col-xs-12.col-md-9
+            .row
+                include ./form/price.template.pug

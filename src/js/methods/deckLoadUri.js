@@ -4,10 +4,11 @@ import uriDeckDecode from "./uriDeckDecode";
 
 const deckLoadUri = function(uriDeck) {
     const vm = this;
-    const deckList = uriDeckDecode(uriDeck);
+    const deckArray = uriDeckDecode(uriDeck);
 
-    vm.deck.list = deckList;
-    vm.deckUpdate(deckList, uriDeck);
+    vm.deck.name = deckArray[0];
+    vm.deck.list = deckArray[1];
+    vm.deckUpdate(uriDeck);
 };
 
 export default deckLoadUri;

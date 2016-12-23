@@ -13,7 +13,7 @@ const builderDeckRemove = function(id, part) {
         }
         return true;
     });
-    vm.deckUpdate(vm.deck.list);
+    vm.deckUpdate();
 };
 
 export default builderDeckRemove;

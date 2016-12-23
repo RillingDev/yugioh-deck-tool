@@ -12,7 +12,7 @@ const deckLoad = function(file) {
 
         vm.deck.name = file.name.replace(".ydk", "");
         vm.deck.list = deckList;
-        vm.deckUpdate(deckList);
+        vm.deckUpdate();
     };
 
     reader.readAsText(file);
