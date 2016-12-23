@@ -18,6 +18,8 @@ import builderUpdateNames from "./methods/builderUpdateNames";
 import builderDeckAdd from "./methods/builderDeckAdd";
 import builderDeckRemove from "./methods/builderDeckRemove";
 
+import fileDownloadDeck from "./methods/fileDownloadDeck";
+
 const appMethods = {
     uriLocationNoParam,
 
@@ -36,6 +38,8 @@ const appMethods = {
     builderUpdateNames,
     builderDeckAdd,
     builderDeckRemove,
+
+    fileDownloadDeck,
 
     onFileChange(e) {
         const vm = this;

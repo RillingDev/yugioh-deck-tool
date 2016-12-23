@@ -1,0 +1,5 @@
+label.col-xs-12.col-md-3.col-form-label(for="formUploadDeck") Deck:
+.col-xs-12.col-md-7
+    input.form-control#formUploadDeck(type="file",accept=".ydk",value="Select Deck",@change="onFileChange",title="Upload Deck")
+.col-xs-12.col-md-2
+    a.btn.btn-primary.form-control(download,@click="fileDownloadDeck()") Download

@@ -1,20 +1,18 @@
-.deck {
-    .deck-part {
-        margin-bottom: 40px;
+.deck-part {
+    margin-bottom: 40px;
 
-        .deck-title {
-            display: flex;
-            flex-direction: row;
-            margin-bottom: 10px;
-        }
+    .deck-title {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+    }
 
-        .deck-content {
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            padding: 5px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
+    .deck-content {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
     }
 }

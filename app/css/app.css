@@ -451,11 +451,6 @@ template {
     box-sizing: border-box;
 }
 
-.priceapp .form-main {
-    margin-top: 40px;
-    margin-bottom: 60px;
-}
-
 .priceapp main {
     min-height: 82vh;
     display: flex;
@@ -500,17 +495,27 @@ template {
     margin: 0;
 }
 
-.priceapp .deck .deck-part {
+.priceapp input[type="file"] {
+    padding-top: 0.31rem;
+    padding-bottom: 0.31rem;
+}
+
+.priceapp .form-main {
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.priceapp .deck-part {
     margin-bottom: 40px;
 }
 
-.priceapp .deck .deck-part .deck-title {
+.priceapp .deck-part .deck-title {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
 }
 
-.priceapp .deck .deck-part .deck-content {
+.priceapp .deck-part .deck-content {
     border: 1px solid rgba(0, 0, 0, 0.15);
     padding: 5px;
     display: flex;
@@ -579,11 +584,11 @@ template {
     line-height: 22px;
 }
 
-.priceapp .builder .builder-search {
+.priceapp .builder-search {
     margin-bottom: 20px;
 }
 
-.priceapp .builder .builder-list {
+.priceapp .builder-list {
     max-height: 60vh;
     width: 100%;
     overflow-y: scroll;
@@ -593,7 +598,7 @@ template {
     border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.priceapp .builder .builder-list .builder-card {
+.priceapp .builder-list .builder-card {
     border-bottom: 1px solid #bbbbbb;
     padding: 3px 0;
     cursor: pointer;
@@ -604,18 +609,18 @@ template {
     justify-content: flex-start;
 }
 
-.priceapp .builder .builder-list .builder-card .builder-card-action {
+.priceapp .builder-list .builder-card .builder-card-action {
     display: flex;
     justify-content: space-between;
     margin-right: 8px;
     align-items: center;
 }
 
-.priceapp .builder .builder-list .builder-card .builder-card-action .fa-plus {
+.priceapp .builder-list .builder-card .builder-card-action .fa-plus {
     padding: 0 3px;
     opacity: 0.75;
 }
 
-.priceapp .builder .builder-list .builder-card .builder-card-action .fa-plus:active {
+.priceapp .builder-list .builder-card .builder-card-action .fa-plus:active {
     opacity: 1;
 }

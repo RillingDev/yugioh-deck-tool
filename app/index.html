@@ -24,9 +24,11 @@
                 <div class="main-form">
                     <div class="form form-main">
                         <div class="form-group row">
-                            <label class="col-xs-12 col-md-3 col-form-label" for="formUploadDeck">Upload Deck:</label>
-                            <div class="col-xs-12 col-md-9">
+                            <label class="col-xs-12 col-md-3 col-form-label" for="formUploadDeck">Deck:</label>
+                            <div class="col-xs-12 col-md-7">
                                 <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" value="Select Deck" @change="onFileChange" title="Upload Deck">
+                            </div>
+                            <div class="col-xs-12 col-md-2"><a class="btn btn-primary form-control" download @click="fileDownloadDeck()">Download</a>
                             </div>
                         </div>
                         <div class="form-group row">

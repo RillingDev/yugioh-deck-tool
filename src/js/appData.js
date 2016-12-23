@@ -7,6 +7,7 @@ import dataDeckParts from "./data/deckParts";
 const appData = {
     deckparts: dataDeckParts,
     deck: {
+        name: "",
         link: "",
         list: {
             main: [],

@@ -3,18 +3,21 @@
 const deckParts = [{
     id: "main",
     name: "Main",
-    size: [40, 60],
-    color: "#907057"
+    fileId: "#main",
+    color: "#907057",
+    size: [40, 60]
 }, {
     id: "extra",
     name: "Extra",
-    size: [0, 15],
-    color: "#935293"
+    fileId: "#extra",
+    color: "#935293",
+    size: [0, 15]
 }, {
     id: "side",
     name: "Side",
-    size: [0, 15],
-    color: "#54925a"
+    fileId: "!side",
+    color: "#54925a",
+    size: [0, 15]
 }];
 
 export default deckParts;

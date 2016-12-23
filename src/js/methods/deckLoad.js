@@ -1,15 +1,16 @@
 "use strict";
 
-import deckParse from "./deckParse";
+import convertFileToDeck from "./convertFileToDeck";
 
 const deckLoad = function(file) {
     const reader = new FileReader();
     const vm = this;
 
-    reader.onload = e => {
+    reader.onload = function(e) {
         const fileContent = e.target.result;
-        const deckList = deckParse(fileContent);
+        const deckList = convertFileToDeck(fileContent);
 
+        vm.deck.name = file.name.replace(".ydk", "");
         vm.deck.list = deckList;
         vm.deckUpdate(deckList);
     };

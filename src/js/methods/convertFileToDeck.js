@@ -2,7 +2,7 @@
 
 import deckParts from "../data/deckParts";
 
-const deckParse = function(fileContent) {
+const convertFileToDeck = function(fileContent) {
     const trim = function(item) {
         return item.length > 2;
     };
@@ -25,4 +25,4 @@ const deckParse = function(fileContent) {
     return result;
 };
 
-export default deckParse;
+export default convertFileToDeck;
