@@ -12,7 +12,7 @@
     border: 1px solid rgba(0, 0, 0, 0.15);
 
     .builder-card {
-        border-bottom: 1px solid $gray-light;
+        border-top: 1px solid $gray-light;
         padding: 3px 0;
         cursor: pointer;
         word-break: break-all;
@@ -20,6 +20,10 @@
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-start;
+        
+        &:first-child{
+            border-top-width: 0px;
+        }
 
         .builder-card-action {
             display: flex;

@@ -1,8 +1,0 @@
-.col-xs-12.col-md-8
-    select.form-control(v-model="price.activeCurrency",title="Price Currency")
-        option(v-for="currency in price.currencies",v-bind:value="currency.id") {{currency.name}}
-.col-xs-12.col-md-4
-    .btn.btn-primary.form-control(@click="apiLoadPrices()",title="Load Prices")
-        span(v-bind:hidden="ajax.currentlyLoading") Load Prices
-        span(v-bind:hidden="!ajax.currentlyLoading")
-            i.fa.fa-circle-o-notch.fa-spin.fa-fw

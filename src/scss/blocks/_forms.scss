@@ -1,9 +1,23 @@
-.form-main {
-    margin-top: 40px;
-    margin-bottom: 40px;
-
-    .form-control {
-        margin-bottom: 8px;
+.form-app-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    align-items: center;
+    > div{
+        height: 100%;
+    }
+    .form-app-label {
+        width: 15%;
+    }
+    .form-app-field-primary {
+        width: 55%;
+    }
+    .form-app-field-secondary {
+        width: 30%;
+        padding-left: 8px;
+        max-width: 320px;
     }
 }
 
@@ -11,6 +25,7 @@ input[type="file"] {
     padding-top: 0.31rem;
     padding-bottom: 0.31rem;
 }
+
 //Monkey-patching style overwrite on ygoprodeck.com
 input[type=text] {
     margin: 0;

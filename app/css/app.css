@@ -453,14 +453,18 @@ template {
 
 .priceapp main {
     min-height: 82vh;
+}
+
+.priceapp main .main-form {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.priceapp main .main-row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-}
-
-.priceapp main .main-form {
-    width: 100%;
 }
 
 .priceapp main .main-deck {
@@ -495,13 +499,31 @@ template {
     margin: 0;
 }
 
-.priceapp .form-main {
-    margin-top: 40px;
-    margin-bottom: 40px;
+.priceapp .form-app-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    align-items: center;
 }
 
-.priceapp .form-main .form-control {
-    margin-bottom: 8px;
+.priceapp .form-app-group > div {
+    height: 100%;
+}
+
+.priceapp .form-app-group .form-app-label {
+    width: 15%;
+}
+
+.priceapp .form-app-group .form-app-field-primary {
+    width: 55%;
+}
+
+.priceapp .form-app-group .form-app-field-secondary {
+    width: 30%;
+    padding-left: 8px;
+    max-width: 320px;
 }
 
 .priceapp input[type="file"] {
@@ -617,7 +639,7 @@ template {
 }
 
 .priceapp .builder-list .builder-card {
-    border-bottom: 1px solid #bbbbbb;
+    border-top: 1px solid #bbbbbb;
     padding: 3px 0;
     cursor: pointer;
     word-break: break-all;
@@ -625,6 +647,10 @@ template {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
+}
+
+.priceapp .builder-list .builder-card:first-child {
+    border-top-width: 0px;
 }
 
 .priceapp .builder-list .builder-card .builder-card-action {
