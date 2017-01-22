@@ -5,8 +5,13 @@ html(lang="en")
         meta(charset="utf-8")
         meta(http-equiv="X-UA-Compatible",content="IE=edge")
         meta(name="viewport",content="width=device-width, initial-scale=1")
+        meta(name="robots",content="index,follow")
         //-Title
         title YGODeckPrice
+        meta(name="description",content="A tool to calculate the price of your YuGiOh & YGOPro decks. It also includes the ability to modify and share decks.")
+        meta(name="keywords" content="ygo, YuGiOh, Deck, Deckprice, ygopro")
+        meta(name="author" content="Felix Rilling")
+        link(rel="canonical" href="https://f-rilling.com/projects/YuGiOhDeckPrice/")
         link(rel="apple-touch-icon" sizes="180x180" href="icon.png")
         link(rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32")
         //-Stylesheets
@@ -15,6 +20,14 @@ html(lang="en")
         link(type="text/css",rel="stylesheet",href="css/lib/bootstrap.css")
         //-  App
         link(type="text/css",rel="stylesheet",href="css/app.css")
+
+        script
+            | (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            | (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            | m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            | })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            | ga('create', 'UA-56958424-1', 'auto');
+            | ga('send', 'pageview');
     body
         //-Content
         include ./views/main.view.pug
