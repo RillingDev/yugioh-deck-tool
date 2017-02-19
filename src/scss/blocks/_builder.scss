@@ -10,31 +10,25 @@
     padding: 0;
     resize: horizontal;
     border: 1px solid rgba(0, 0, 0, 0.15);
-
     .builder-card {
         border-top: 1px solid $gray-light;
         padding: 3px 0;
-        cursor: pointer;
         word-break: break-all;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-start;
-        
-        &:first-child{
+        &:first-child {
             border-top-width: 0px;
         }
-
         .builder-card-action {
             display: flex;
             justify-content: space-between;
             margin-right: 8px;
             align-items: center;
-
             .fa-plus {
                 padding: 0 3px;
                 opacity: 0.75;
-
                 &:active {
                     opacity: 1;
                 }

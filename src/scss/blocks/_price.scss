@@ -5,19 +5,16 @@
     justify-content: space-between;
     height: 26px;
     margin-left: 6px;
-
     .deck-price-item {
         display: block;
         line-height: 26px;
         padding-left: 6px;
         padding-right: 6px;
     }
-
     &.deck-price--sm {
         height: auto;
         margin-left: 0;
         flex-direction: column;
-
         .deck-price-item {
             line-height: 22px;
         }

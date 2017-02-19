@@ -1,7 +1,6 @@
 .deck-card {
     position: relative;
     margin: 2px 4px;
-
     .deck-card-text {
         position: absolute;
         width: 100%;
@@ -19,12 +18,10 @@
         word-wrap: break-word;
         line-height: 1.25em;
         font-size: 13px;
-
         &:focus,
         &:hover {
             opacity: 1;
         }
-
         .deck-card-price {
             p {
                 margin-bottom: 0;
