@@ -2,7 +2,7 @@
 
 import utilEachObject from "./utilEachObject";
 
-const deckCardsWithoutPriceData = function() {
+const deckCardsWithoutPriceData = function () {
     const vm = this;
     const data = vm.cards.data;
     const result = [];

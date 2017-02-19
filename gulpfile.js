@@ -25,7 +25,7 @@ gulp.task("connect", [], task_connect);
 gulp.task("sync", [], task_sync);
 gulp.task("clean", [], task_clean);
 
-gulp.task("watch", function() {
+gulp.task("watch", function () {
     gulp.watch("./src/img/*.*", ["img"]);
     gulp.watch(["./src/scss/bootstrap.scss", "./src/scss/_variables.scss"], ["bootstrap", "css"]);
 
@@ -37,7 +37,7 @@ gulp.task("watch", function() {
 
 gulp.task("dev", ["connect", "watch"]);
 gulp.task("build", ["html", "bootstrap", "css", "js", "img"]);
-gulp.task("dist", function(cb) {
+gulp.task("dist", function (cb) {
     gulpSequence("clean", "sync", "build", "js-dist", cb);
 });
 gulp.task("default", ["dist"]);

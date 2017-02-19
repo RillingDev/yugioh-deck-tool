@@ -1,6 +1,6 @@
 "use strict";
 
-const uriLocationNoParam = function() {
+const uriLocationNoParam = function () {
     return location.origin + location.pathname;
 };
 

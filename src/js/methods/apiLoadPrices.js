@@ -5,7 +5,7 @@ import {
 } from "../data/apiURLs";
 //import utilEachObject from "./utilEachObject";
 
-const apiLoadPrices = function() {
+const apiLoadPrices = function () {
     const vm = this;
     //Array of unique ids, minus the ones where prices were already loaded
     const cardIds = vm.deckCardsWithoutPriceData();
@@ -19,7 +19,7 @@ const apiLoadPrices = function() {
         .then(response => {
             return response.json();
         })
-        .then(function(json) {
+        .then(json => {
             cardIds.forEach((id, index) => {
                 const priceData = json[index];
                 const card = vm.cards.data[id];

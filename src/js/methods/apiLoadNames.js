@@ -7,7 +7,7 @@ import {
 } from "../data/apiURLs";
 import utilEachObject from "./utilEachObject";
 
-const apiLoadNames = function() {
+const apiLoadNames = function () {
     const vm = this;
 
     vm.ajax.currentlyLoading = true;
@@ -17,7 +17,7 @@ const apiLoadNames = function() {
         .then(response => {
             return response.json();
         })
-        .then(function(json) {
+        .then(json => {
             const resultData = {};
             const resultPairs = [];
             const nameStorage = [];

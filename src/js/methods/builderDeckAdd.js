@@ -1,6 +1,6 @@
 "use strict";
 
-const builderDeckAdd = function(id, part) {
+const builderDeckAdd = function (id, part) {
     const vm = this;
     const cardId = Number(id);
     const deckPart = vm.deck.list[part];

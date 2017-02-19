@@ -2,8 +2,8 @@
 
 import utilEachObject from "./utilEachObject";
 
-const priceForSection = function(section, mode) {
-    const priceSum = function(arr) {
+const priceForSection = function (section, mode) {
+    const priceSum = function (arr) {
         let result = 0;
 
         if (arr && arr.length) {

@@ -2,7 +2,7 @@
 
 import uriDeckDecode from "./uriDeckDecode";
 
-const deckLoadUri = function(uriDeck) {
+const deckLoadUri = function (uriDeck) {
     const vm = this;
     const deckArray = uriDeckDecode(uriDeck);
 

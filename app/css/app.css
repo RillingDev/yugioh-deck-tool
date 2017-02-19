@@ -578,11 +578,11 @@ template {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f7f7f7;
+    background-color: #f7f7f9;
     opacity: 0;
     transition: opacity 0.2s;
     text-align: center;
-    color: #373737;
+    color: #292b2c;
     word-wrap: break-word;
     line-height: 1.25em;
     font-size: 13px;
@@ -639,7 +639,7 @@ template {
 }
 
 .priceapp .builder-list .builder-card {
-    border-top: 1px solid #bbbbbb;
+    border-top: 1px solid #636c72;
     padding: 3px 0;
     cursor: pointer;
     word-break: break-all;

@@ -1,6 +1,6 @@
 "use strict";
 
-const builderUpdateNames = function() {
+const builderUpdateNames = function () {
     const vm = this;
     const filter = vm.builder.filter.toLowerCase();
     let result = vm.cards.pairs.filter(card => {

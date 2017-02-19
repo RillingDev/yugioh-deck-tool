@@ -2,7 +2,7 @@
 
 import uriDeckEncode from "./uriDeckEncode";
 
-const deckUpdate = function(deckLink) {
+const deckUpdate = function (deckLink) {
     const vm = this;
 
     vm.deck.link = deckLink || uriDeckEncode(vm.deck);

@@ -2,11 +2,11 @@
 
 import convertFileToDeck from "./convertFileToDeck";
 
-const deckLoad = function(file) {
+const deckLoad = function (file) {
     const reader = new FileReader();
     const vm = this;
 
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         const fileContent = e.target.result;
         const deckList = convertFileToDeck(fileContent);
 

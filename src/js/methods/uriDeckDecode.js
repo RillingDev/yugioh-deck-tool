@@ -2,7 +2,7 @@
 
 import deckParts from "../data/deckParts";
 
-const uriDeckDecode = function(deckUri) {
+const uriDeckDecode = function (deckUri) {
     const deckArray = JSON.parse(atob(deckUri.replace("?d=", "")));
     const deckList = {};
 

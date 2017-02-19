@@ -9,22 +9,22 @@ const priceCurrencies = [{
     id: "euro",
     name: "Euro",
     label: "€",
-    val: 0.94251
+    val: 0.941925
 }, {
     id: "pound",
     name: "Pound",
     label: "£",
-    val: 0.78688
+    val: 0.805737
 }, {
     id: "dollar_ca",
     name: "Canadian Dollar",
     label: "$",
-    val: 1.3121
+    val: 1.30955
 }, {
     id: "dollar_au",
     name: "Australian Dollar",
     label: "$",
-    val: 1.3341
+    val: 1.30480
 }];
 
 export default priceCurrencies;

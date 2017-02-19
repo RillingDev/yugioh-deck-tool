@@ -2,7 +2,7 @@
 
 import deckParts from "../data/deckParts";
 
-const convertDeckToFile = function(deckList) {
+const convertDeckToFile = function (deckList) {
     let result = [];
 
     deckParts.forEach(deckpart => {
