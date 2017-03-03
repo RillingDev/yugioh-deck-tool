@@ -4,6 +4,7 @@ import Vue from "vue/dist/vue.min.js";
 import appData from "./appData";
 import appMethods from "./appMethods";
 
+//ready-event required because ygoprodeck.com loads script in head
 document.addEventListener("DOMContentLoaded", () => {
     const priceApp = new Vue({
         el: "#app",

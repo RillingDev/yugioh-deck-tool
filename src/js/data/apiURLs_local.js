@@ -1,4 +1,4 @@
-"us strict";
+"use strict";
 
 export const nameAPI = "./api/names/names.min.json";
 export const priceAPI = "./api/prices/prices.php?n=";

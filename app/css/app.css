@@ -20,12 +20,23 @@
     justify-content: space-between;
 }
 
-.priceapp main .main-deck {
+.priceapp main .main-row .main-deck {
     width: calc(100% - 360px);
 }
 
-.priceapp main .main-builder {
+.priceapp main .main-row .main-builder {
     width: 320px;
+}
+
+@media (max-width: 768px) {
+    .priceapp main .main-row {
+        flex-direction: column-reverse;
+    }
+
+    .priceapp main .main-row .main-deck,
+        .priceapp main .main-row .main-builder {
+        width: 100%;
+    }
 }
 
 .priceapp .btn,

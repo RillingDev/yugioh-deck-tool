@@ -15,12 +15,19 @@ main {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-    }
-    .main-deck {
-        width: calc(100% - 360px);
-    }
-    .main-builder {
-        width: 320px;
+        .main-deck {
+            width: calc(100% - 360px);
+        }
+        .main-builder {
+            width: 320px;
+        }
+        @media (max-width: 768px) {
+            flex-direction: column-reverse;
+            .main-deck,
+            .main-builder {
+                width: 100%;
+            }
+        }
     }
 }
 
