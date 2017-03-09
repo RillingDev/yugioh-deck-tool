@@ -1,11 +1,12 @@
 "use strict";
 
-import Vue from "vue/dist/vue.min.js";
+import Vue from "Vue/dist/vue.esm.js";
 import appData from "./appData";
 import appMethods from "./appMethods";
 
 //ready-event required because ygoprodeck.com loads script in head
 document.addEventListener("DOMContentLoaded", () => {
+    const urlQuery = location.search;
     const priceApp = new Vue({
         el: "#app",
         data: appData,
@@ -14,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     priceApp.apiLoadNames();
 
-    if (location.search.indexOf("?d") !== -1) {
-        priceApp.deckLoadUri(location.search);
+    if (urlQuery.indexOf("?d") !== -1) {
+        priceApp.deckLoadUri(urlQuery);
     }
 });
