@@ -1,8 +1,10 @@
-.git/
-.tmp/
-node_modules/
-release/
-cache/
+# System Files
 .DS_Store
+
+# Vendor Files
+node_modules/
+bower_components/
+
+# Debug Files
+.tmp/
 npm-debug.*
-wp/
