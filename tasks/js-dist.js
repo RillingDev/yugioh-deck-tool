@@ -28,6 +28,6 @@ module.exports = function () {
             ],
             moduleName: packageJson.namespace.module
         })
-        .pipe(source(`main.js`))
+        .pipe(source("main.js"))
         .pipe(gulp.dest("./app/js/"));
 };
