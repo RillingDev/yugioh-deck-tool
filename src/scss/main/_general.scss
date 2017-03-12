@@ -16,10 +16,10 @@ main {
         flex-wrap: wrap;
         justify-content: space-between;
         .main-deck {
-            width: calc(100% - 360px);
+            width: calc(100% - 398px);
         }
         .main-builder {
-            width: 320px;
+            width: 366px;
         }
         @media (max-width: 768px) {
             flex-direction: column-reverse;

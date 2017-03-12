@@ -21,11 +21,11 @@
 }
 
 .priceapp main .main-row .main-deck {
-    width: calc(100% - 360px);
+    width: calc(100% - 398px);
 }
 
 .priceapp main .main-row .main-builder {
-    width: 320px;
+    width: 366px;
 }
 
 @media (max-width: 768px) {
@@ -126,16 +126,15 @@
 
 .priceapp .deck-part .deck-content {
     border: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 5px;
+    padding: 6px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: 20px;
 }
 
 .priceapp .deck-card {
     position: relative;
-    margin: 2px 4px;
+    margin: 2px;
 }
 
 .priceapp .deck-card .deck-card-text {
