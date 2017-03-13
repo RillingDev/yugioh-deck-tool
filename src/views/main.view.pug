@@ -7,9 +7,9 @@
             .main-form
                 include ../templates/form.template.pug
             .main-row
-                .main-deck(v-if="ajax.namesLoaded")
+                .main-deck
                     include ../templates/deck.template.pug
-                .main-builder(v-if="ajax.namesLoaded")
+                .main-builder
                     include ../templates/builder.template.pug
         footer
             p Price data and Images from the #[a(href="http://yugiohprices.com/",target="_blank") yugiohprices.com] API

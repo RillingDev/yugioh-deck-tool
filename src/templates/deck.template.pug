@@ -1,5 +1,5 @@
 h3 Decklist:
-.deck
+.deck(v-if="ajax.namesLoaded")
     .deck-part.deck-part-total(v-if="ajax.pricesLoaded")
         .deck-title
             h4 Total:
