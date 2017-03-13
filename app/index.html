@@ -74,59 +74,55 @@
                     </div>
                 </div>
                 <div class="main-row">
-                    <div class="main-deck">
-                        <div v-if="ajax.namesLoaded">
-                            <h3>Decklist:</h3>
-                            <div class="deck">
-                                <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
-                                    <div class="deck-title">
-                                        <h4>Total:</h4>
-                                        <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection("*",mode.id)}}</span>
-                                        </div>
+                    <div class="main-deck" v-if="ajax.namesLoaded">
+                        <h3>Decklist:</h3>
+                        <div class="deck">
+                            <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
+                                <div class="deck-title">
+                                    <h4>Total:</h4>
+                                    <div class="deck-price"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection("*",mode.id)}}</span>
                                     </div>
                                 </div>
-                                <div class="deck-part" v-for="deckpart in deckparts" v-if="deck.list[deckpart.id] &amp;&amp; deck.list[deckpart.id].length">
-                                    <div class="deck-title">
-                                        <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
-                                        <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection(deckpart.id,mode.id)}}</span>
+                            </div>
+                            <div class="deck-part" v-for="deckpart in deckparts" v-if="deck.list[deckpart.id] &amp;&amp; deck.list[deckpart.id].length">
+                                <div class="deck-title">
+                                    <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
+                                    <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForSection(deckpart.id,mode.id)}}</span>
+                                    </div>
+                                </div>
+                                <div class="deck-content" v-bind:style="'background-color:'+deckpart.color" v-if="cards.data">
+                                    <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link" @contextmenu.prevent="builderDeckRemove(cardId,deckpart.id)">
+                                        <div class="deck-card-image">
+                                            <img width="100" height="144" v-bind:src="cards.data[cardId].img">
                                         </div>
-                                    </div>
-                                    <div class="deck-content" v-bind:style="'background-color:'+deckpart.color" v-if="cards.data">
-                                        <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link" @contextmenu.prevent="builderDeckRemove(cardId,deckpart.id)">
-                                            <div class="deck-card-image">
-                                                <img width="100" height="144" v-bind:src="cards.data[cardId].img">
+                                        <div class="deck-card-text">
+                                            <div class="deck-card-name">{{cards.data[cardId].name}}</div>
+                                            <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForCard(cardId,mode.id)}}</span>
                                             </div>
-                                            <div class="deck-card-text">
-                                                <div class="deck-card-name">{{cards.data[cardId].name}}</div>
-                                                <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded"><span class="deck-price-item" v-for="mode in price.modes" v-bind:style="'background-color:'+mode.color">{{priceForCard(cardId,mode.id)}}</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="main-builder">
-                        <div v-if="ajax.namesLoaded">
-                            <h3>Deckbuilder:</h3>
-                            <div class="builder">
-                                <p>Showing {{builder.pairsFiltered.length}} of {{cards.pairs.length}} Cards</p>
-                                <div class="form">
-                                    <input class="form-control builder-search" id="builderSearch" type="text" placeholder="Search" v-model="builder.filter" @input="builderUpdateNames()">
-                                </div>
-                                <ul class="builder-list">
-                                    <li class="builder-card" v-for="card in builder.pairsFiltered">
-                                        <div class="builder-card-action">
-                                            <div class="fa fa-plus" v-for="deckpart in deckparts" v-bind:style="'color:'+deckpart.color" @click="builderDeckAdd(card[0],deckpart.id)" v-bind:title="'Add Card to '+deckpart.name+' Deck'"></div>
-                                        </div>
-                                        <div class="builder-card-name">{{card[1]}}</div>
-                                    </li>
-                                </ul>
-                                <div class="builder-description">
-                                    <p>- Click the pluses in the list to add a card.</p>
-                                    <p>- Right-click a card in the deck to remove it.</p>
-                                </div>
+                    <div class="main-builder" v-if="ajax.namesLoaded">
+                        <h3>Deckbuilder:</h3>
+                        <div class="builder">
+                            <p>Showing {{builder.pairsFiltered.length}} of {{cards.pairs.length}} Cards</p>
+                            <div class="form">
+                                <input class="form-control builder-search" id="builderSearch" type="text" placeholder="Search" v-model="builder.filter" @input="builderUpdateNames()">
+                            </div>
+                            <ul class="builder-list">
+                                <li class="builder-card" v-for="card in builder.pairsFiltered">
+                                    <div class="builder-card-action">
+                                        <div class="fa fa-plus" v-for="deckpart in deckparts" v-bind:style="'color:'+deckpart.color" @click="builderDeckAdd(card[0],deckpart.id)" v-bind:title="'Add Card to '+deckpart.name+' Deck'"></div>
+                                    </div>
+                                    <div class="builder-card-name">{{card[1]}}</div>
+                                </li>
+                            </ul>
+                            <div class="builder-description">
+                                <p>- Click the pluses in the list to add a card.</p>
+                                <p>- Right-click a card in the deck to remove it.</p>
                             </div>
                         </div>
                     </div>
