@@ -4,4 +4,4 @@ a.deck-card(target="_blank",v-for="cardId in deck.list[deckpart.id]",v-if="cards
     .deck-card-text
         .deck-card-name {{cards.data[cardId].name}}
         .deck-price.deck-price--sm(v-if="ajax.pricesLoaded")
-            span.deck-price-item(v-for="mode in price.modes",v-bind:style="'background-color:'+mode.color") {{priceForCard(cardId,mode.id)}}
+            span.deck-price-item.pricemode(v-for="mode in price.modes",v-bind:class="'pricemode-'+mode.id") {{priceForCard(cardId,mode.id)}}

@@ -32,6 +32,17 @@
                 &:active {
                     opacity: 1;
                 }
+                &.deck-part {
+                    &-main {
+                        color: $color-deckpart-main;
+                    }
+                    &-extra {
+                        color: $color-deckpart-extra;
+                    }
+                    &-side {
+                        color: $color-deckpart-side;
+                    }
+                }
             }
         }
     }

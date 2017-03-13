@@ -1,4 +1,4 @@
-.deck-part {
+.deck .deck-part {
     margin-bottom: 40px;
     .deck-title {
         display: flex;
@@ -11,5 +11,20 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+    }
+    &-main {
+        .deck-content {
+            background-color: $color-deckpart-main;
+        }
+    }
+    &-extra {
+        .deck-content {
+            background-color: $color-deckpart-extra;
+        }
+    }
+    &-side {
+        .deck-content {
+            background-color: $color-deckpart-side;
+        }
     }
 }

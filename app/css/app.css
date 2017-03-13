@@ -114,22 +114,34 @@
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-.priceapp .deck-part {
+.priceapp .deck .deck-part {
     margin-bottom: 40px;
 }
 
-.priceapp .deck-part .deck-title {
+.priceapp .deck .deck-part .deck-title {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
 }
 
-.priceapp .deck-part .deck-content {
+.priceapp .deck .deck-part .deck-content {
     border: 1px solid rgba(0, 0, 0, 0.15);
     padding: 6px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.priceapp .deck .deck-part-main .deck-content {
+    background-color: #907057;
+}
+
+.priceapp .deck .deck-part-extra .deck-content {
+    background-color: #935293;
+}
+
+.priceapp .deck .deck-part-side .deck-content {
+    background-color: #54925a;
 }
 
 .priceapp .deck-card {
@@ -168,28 +180,35 @@
 
 .priceapp .deck-price {
     display: flex;
-    align-items: center;
-    flex-direction: row;
     justify-content: space-between;
-    height: 26px;
     margin-left: 6px;
 }
 
 .priceapp .deck-price .deck-price-item {
-    display: block;
     line-height: 26px;
     padding-left: 6px;
     padding-right: 6px;
 }
 
 .priceapp .deck-price.deck-price--sm {
-    height: auto;
     margin-left: 0;
     flex-direction: column;
 }
 
 .priceapp .deck-price.deck-price--sm .deck-price-item {
     line-height: 22px;
+}
+
+.priceapp .pricemode-low {
+    background-color: #ddffc9;
+}
+
+.priceapp .pricemode-average {
+    background-color: #fff8b7;
+}
+
+.priceapp .pricemode-high {
+    background-color: #ffdad0;
 }
 
 .priceapp .builder-search {
@@ -234,4 +253,16 @@
 
 .priceapp .builder-list .builder-card .builder-card-action .fa-plus:active {
     opacity: 1;
+}
+
+.priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-main {
+    color: #907057;
+}
+
+.priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-extra {
+    color: #935293;
+}
+
+.priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-side {
+    color: #54925a;
 }
