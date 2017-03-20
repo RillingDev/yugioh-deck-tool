@@ -1,268 +1,267 @@
 .priceapp *,
 .priceapp *::after,
 .priceapp *::before {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .priceapp main {
-    min-height: 82vh;
+  min-height: 82vh;
 }
 
 .priceapp main .main-form {
-    margin-top: 40px;
-    margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .priceapp main .main-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .priceapp main .main-row .main-deck {
-    width: calc(100% - 398px);
+  width: calc(100% - 398px);
 }
 
 .priceapp main .main-row .main-builder {
-    width: 366px;
+  width: 366px;
 }
 
 @media (max-width: 768px) {
-    .priceapp main .main-row {
-        flex-direction: column-reverse;
-    }
-
-    .priceapp main .main-row .main-deck,
-        .priceapp main .main-row .main-builder {
-        width: 100%;
-    }
+  .priceapp main .main-row {
+    flex-direction: column-reverse;
+  }
+  .priceapp main .main-row .main-deck,
+  .priceapp main .main-row .main-builder {
+    width: 100%;
+  }
 }
 
 .priceapp .btn,
 .priceapp .builder-card-action {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .priceapp h1,
 .priceapp h2 {
-    text-align: center;
+  text-align: center;
 }
 
 .priceapp h1 {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .priceapp h2 {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 
 .priceapp h3 {
-    margin-top: 0;
-    margin-bottom: 8px;
+  margin-top: 0;
+  margin-bottom: 8px;
 }
 
 .priceapp h4 {
-    font-size: 1.25rem;
-    padding-bottom: 0;
-    margin: 0;
+  font-size: 1.25rem;
+  padding-bottom: 0;
+  margin: 0;
 }
 
 .priceapp .form-app-group {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding-bottom: 20px;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  align-items: center;
 }
 
 .priceapp .form-app-group > div {
-    height: 100%;
+  height: 100%;
 }
 
 .priceapp .form-app-group .form-app-label {
-    width: 15%;
+  width: 15%;
 }
 
 .priceapp .form-app-group .form-app-field-primary {
-    width: 55%;
+  width: 55%;
 }
 
 .priceapp .form-app-group .form-app-field-secondary {
-    width: 30%;
-    padding-left: 14px;
-    max-width: 320px;
+  width: 30%;
+  padding-left: 14px;
+  max-width: 320px;
 }
 
 .priceapp input[type="file"] {
-    padding-top: 0.31rem;
-    padding-bottom: 0.31rem;
+  padding-top: 0.31rem;
+  padding-bottom: 0.31rem;
 }
 
 .priceapp input[type=text] {
-    margin: 0;
-    display: block;
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.25;
-    color: #555555;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  margin: 0;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #555555;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
 .priceapp .deck .deck-part {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .priceapp .deck .deck-part .deck-title {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .priceapp .deck .deck-part .deck-content {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 6px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 6px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .priceapp .deck .deck-part-main .deck-content {
-    background-color: #907057;
+  background-color: #907057;
 }
 
 .priceapp .deck .deck-part-extra .deck-content {
-    background-color: #935293;
+  background-color: #935293;
 }
 
 .priceapp .deck .deck-part-side .deck-content {
-    background-color: #54925a;
+  background-color: #54925a;
 }
 
 .priceapp .deck-card {
-    position: relative;
-    margin: 2px;
+  position: relative;
+  margin: 2px;
 }
 
 .priceapp .deck-card .deck-card-text {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #f7f7f9;
-    opacity: 0;
-    transition: opacity 0.2s;
-    text-align: center;
-    color: #292b2c;
-    word-wrap: break-word;
-    line-height: 1.25em;
-    font-size: 13px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f7f7f9;
+  opacity: 0;
+  transition: opacity 0.2s;
+  text-align: center;
+  color: #292b2c;
+  word-wrap: break-word;
+  line-height: 1.25em;
+  font-size: 13px;
 }
 
 .priceapp .deck-card .deck-card-text:focus, .priceapp .deck-card .deck-card-text:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .priceapp .deck-card .deck-card-text .deck-card-price p {
-    margin-bottom: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
+  margin-bottom: 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .priceapp .deck-price {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 6px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 6px;
 }
 
 .priceapp .deck-price .deck-price-item {
-    line-height: 26px;
-    padding-left: 6px;
-    padding-right: 6px;
+  line-height: 26px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .priceapp .deck-price.deck-price--sm {
-    margin-left: 0;
-    flex-direction: column;
+  margin-left: 0;
+  flex-direction: column;
 }
 
 .priceapp .deck-price.deck-price--sm .deck-price-item {
-    line-height: 22px;
+  line-height: 22px;
 }
 
 .priceapp .pricemode-low {
-    background-color: #ddffc9;
+  background-color: #ddffc9;
 }
 
 .priceapp .pricemode-average {
-    background-color: #fff8b7;
+  background-color: #fff8b7;
 }
 
 .priceapp .pricemode-high {
-    background-color: #ffdad0;
+  background-color: #ffdad0;
 }
 
 .priceapp .builder-search {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .priceapp .builder-list {
-    max-height: 60vh;
-    width: 100%;
-    overflow-y: scroll;
-    list-style: none;
-    padding: 0;
-    resize: horizontal;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+  max-height: 60vh;
+  width: 100%;
+  overflow-y: scroll;
+  list-style: none;
+  padding: 0;
+  resize: horizontal;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .priceapp .builder-list .builder-card {
-    border-top: 1px solid #636c72;
-    padding: 3px 0;
-    word-break: break-all;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+  border-top: 1px solid #636c72;
+  padding: 3px 0;
+  word-break: break-all;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
 }
 
 .priceapp .builder-list .builder-card:first-child {
-    border-top-width: 0px;
+  border-top-width: 0px;
 }
 
 .priceapp .builder-list .builder-card .builder-card-action {
-    display: flex;
-    justify-content: space-between;
-    margin-right: 8px;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 8px;
+  align-items: center;
 }
 
 .priceapp .builder-list .builder-card .builder-card-action .fa-plus {
-    padding: 0 3px;
-    opacity: 0.75;
+  padding: 0 3px;
+  opacity: 0.75;
 }
 
 .priceapp .builder-list .builder-card .builder-card-action .fa-plus:active {
-    opacity: 1;
+  opacity: 1;
 }
 
 .priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-main {
-    color: #907057;
+  color: #907057;
 }
 
 .priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-extra {
-    color: #935293;
+  color: #935293;
 }
 
 .priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-side {
-    color: #54925a;
+  color: #54925a;
 }

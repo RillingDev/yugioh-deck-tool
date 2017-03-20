@@ -12,30 +12,32 @@ const task_img = require("./tasks/img");
 const task_connect = require("./tasks/connect");
 const task_sync = require("./tasks/sync");
 const task_clean = require("./tasks/clean");
+const task_electron = require("./tasks/electron");
 
 gulp.task("js", [], task_js);
 gulp.task("js-dist", [], task_js_dist);
 gulp.task("html", [], task_html);
 gulp.task("css", [], task_css);
-gulp.task("bootstrap", [], task_bootstrap);
+gulp.task("bootstrap:prepareCfg", task_bootstrap.pre_cfg);
+gulp.task("bootstrap:prepareVars", task_bootstrap.pre_vars);
+gulp.task("bootstrap", ["bootstrap:prepareCfg", "bootstrap:prepareVars"], task_bootstrap.main);
 gulp.task("img", [], task_img);
 gulp.task("connect", [], task_connect);
 gulp.task("sync", [], task_sync);
 gulp.task("clean", [], task_clean);
+gulp.task("electron", [], task_electron);
 
 gulp.task("watch", function () {
-    gulp.watch("./src/img/*.*", ["img"]);
-    gulp.watch(["./src/scss/bootstrap.scss", "./src/scss/_variables.scss"], ["bootstrap", "css"]);
-
-    gulp.watch("./src/scss/**/*.scss", ["css"]);
     gulp.watch("./src/**/*.pug", ["html"]);
     gulp.watch("./src/js/**/*.js", ["js"]);
+    gulp.watch(["./src/scss/bootstrap.scss", "./src/scss/_variables.scss"], ["bootstrap"]);
+    gulp.watch("./src/scss/**/*.scss", ["css"]);
 });
 
 
 gulp.task("dev", ["connect", "watch"]);
-gulp.task("build", ["html", "bootstrap", "css", "js", "img"]);
+gulp.task("build", ["html", "js", "bootstrap", "css"]);
 gulp.task("dist", function (cb) {
-    gulpSequence("clean", "sync", "build", "js-dist", cb);
+    gulpSequence("clean", ["sync", "img", "build"], "js-dist", cb);
 });
 gulp.task("default", ["dist"]);

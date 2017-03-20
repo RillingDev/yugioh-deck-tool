@@ -7,4 +7,6 @@ bower_components/
 
 # Debug Files
 .tmp/
+cache/
+release/
 npm-debug.*

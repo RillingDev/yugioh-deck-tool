@@ -12,7 +12,7 @@ const packageJson = require("../package.json");
 
 module.exports = function () {
     return rollup({
-            entry: "./src/js/main.js",
+            entry: "./src/js/app.js",
             format: "iife",
             plugins: [
                 nodeResolve({
@@ -26,7 +26,7 @@ module.exports = function () {
             ],
             moduleName: packageJson.namespace.module
         })
-        .pipe(source(`main.js`))
+        .pipe(source("app.js"))
         .pipe(buffer())
         .pipe(sourcemaps.init({
             loadMaps: true

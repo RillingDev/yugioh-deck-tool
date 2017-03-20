@@ -6,12 +6,12 @@
 
 const gulp = require("gulp");
 const sass = require("gulp-sass");
-const cssBeautify = require("gulp-cssbeautify");
 
-module.exports = function() {
+module.exports = function () {
     return gulp
         .src("./src/scss/app.scss")
-        .pipe(sass().on("error", sass.logError))
-        .pipe(cssBeautify())
+        .pipe(sass({
+            outputStyle: "expanded"
+        }).on("error", sass.logError))
         .pipe(gulp.dest("./app/css"));
 };
