@@ -34,41 +34,39 @@
                 <h2>Check the average price for your YgoPro/DevPro .ydk files</h2>
             </header>
             <main id="app">
-                <div class="main-form">
-                    <div class="form">
-                        <div class="form-app-group">
-                            <div class="form-app-label">
-                                <label>Deck:</label>
-                            </div>
-                            <div class="form-app-field-primary">
-                                <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" @change="onFileChange" title="Upload Deck">
-                            </div>
-                            <div class="form-app-field-secondary">
-                                <input class="form-control" type="text" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
-                            </div>
+                <div class="main-form form">
+                    <div class="form-app-group">
+                        <div class="form-app-label">
+                            <label>Deck:</label>
                         </div>
-                        <div class="form-app-group">
-                            <div class="form-app-label">
-                                <label>Share:</label>
-                            </div>
-                            <div class="form-app-field-primary">
-                                <input class="form-control" id="formLinkShare" type="url" v-bind:value="uriLocationNoParam() + deck.link" title="Shareable Link">
-                            </div>
-                            <div class="form-app-field-secondary"><a class="btn btn-primary form-control" download @click="fileDownloadDeck()">Download</a>
-                            </div>
+                        <div class="form-app-field-primary">
+                            <input class="form-control" id="formUploadDeck" type="file" accept=".ydk" @change="onFileChange" title="Upload Deck">
                         </div>
-                        <div class="form-app-group">
-                            <div class="form-app-label">
-                                <label>Price:</label>
-                            </div>
-                            <div class="form-app-field-primary">
-                                <select class="form-control" v-model="price.activeCurrency" title="Price Currency">
-                                    <option v-for="currency in price.currencies" v-bind:value="currency.id">{{currency.name}}</option>
-                                </select>
-                            </div>
-                            <div class="form-app-field-secondary">
-                                <div class="btn btn-primary form-control" @click="apiLoadPrices()" title="Load Prices"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
-                                </div>
+                        <div class="form-app-field-secondary">
+                            <input class="form-control" type="text" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
+                        </div>
+                    </div>
+                    <div class="form-app-group">
+                        <div class="form-app-label">
+                            <label>Share:</label>
+                        </div>
+                        <div class="form-app-field-primary">
+                            <input class="form-control" id="formLinkShare" type="url" v-bind:value="uriLocationNoParam() + deck.link" title="Shareable Link">
+                        </div>
+                        <div class="form-app-field-secondary"><a class="btn btn-primary form-control" download @click="fileDownloadDeck()">Download</a>
+                        </div>
+                    </div>
+                    <div class="form-app-group">
+                        <div class="form-app-label">
+                            <label>Price:</label>
+                        </div>
+                        <div class="form-app-field-primary">
+                            <select class="form-control" v-model="price.activeCurrency" title="Price Currency">
+                                <option v-for="currency in price.currencies" v-bind:value="currency.id">{{currency.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-app-field-secondary">
+                            <div class="btn btn-primary form-control" @click="apiLoadPrices()" title="Load Prices"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
                             </div>
                         </div>
                     </div>
