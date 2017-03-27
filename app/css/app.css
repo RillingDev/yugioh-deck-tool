@@ -81,6 +81,7 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   padding-bottom: 20px;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -93,13 +94,27 @@
 }
 
 .priceapp .form-app-group .form-app-field-primary {
-  width: 55%;
+  width: 50%;
+  padding-right: 6px;
 }
 
 .priceapp .form-app-group .form-app-field-secondary {
-  width: 30%;
-  padding-left: 14px;
+  width: 35%;
+  padding-left: 6px;
   max-width: 320px;
+}
+
+@media (max-width: 768px) {
+  .priceapp .form-app-group .form-app-label {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+  .priceapp .form-app-group .form-app-field-primary {
+    width: 50%;
+  }
+  .priceapp .form-app-group .form-app-field-secondary {
+    width: 50%;
+  }
 }
 
 .priceapp input[type="file"] {

@@ -1,19 +1,10 @@
 {
     "name": "ygoprodeckprice",
-    "version": "v3.1.0",
+    "version": "v3.2.0",
     "description": "ygodeckprice app for ygoprodeck.com",
     "main": "main.js",
     "namespace": {
         "module": "ygoprodeckprice"
-    },
-    "electron": {
-        "version": "v1.6.4",
-        "platforms": [
-            "win32-x64"
-        ]
-    },
-    "scripts": {
-        "start": "electron ./app"
     },
     "repository": {
         "type": "git",
@@ -54,8 +45,5 @@
         "bootstrap": "4.0.0-alpha.6",
         "file-saver": "^1.3.3",
         "vue": "^2.2.4"
-    },
-    "optionalDependencies": {
-        "electron": "^1.6.4"
     }
 }

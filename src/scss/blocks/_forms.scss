@@ -4,6 +4,7 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     padding-bottom: 20px;
+    flex-wrap: wrap;
     align-items: center;
     >div {
         height: 100%;
@@ -12,12 +13,25 @@
         width: 15%;
     }
     .form-app-field-primary {
-        width: 55%;
+        width: 50%;
+        padding-right: 6px;
     }
     .form-app-field-secondary {
-        width: 30%;
-        padding-left: 14px;
+        width: 35%;
+        padding-left: 6px;
         max-width: 320px;
+    }
+    @media (max-width: 768px) {
+        .form-app-label {
+            width: 100%;
+            margin-bottom: 6px;
+        }
+        .form-app-field-primary {
+            width: 50%;
+        }
+        .form-app-field-secondary {
+            width: 50%;
+        }
     }
 }
 
