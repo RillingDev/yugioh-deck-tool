@@ -5,7 +5,7 @@ h3 Decklist:
             h4 Total:
             .deck-price
                 span.deck-price-item.pricemode(v-for="mode in price.modes",v-bind:class="'pricemode-'+mode.id") {{priceForSection("*",mode.id)}}
-    .deck-part(v-for="deckpart in deckparts",v-if="deck.list[deckpart.id] && deck.list[deckpart.id].length",v-bind:class="'deck-part-'+deckpart.id")
+    .deck-part(v-for="deckpart in deckparts",v-bind:class="'deck-part-'+deckpart.id")
         .deck-title
             h4 {{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):
             .deck-price(v-if="ajax.pricesLoaded")

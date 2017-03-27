@@ -2,24 +2,24 @@
     .form-app-label
         label Deck:
     .form-app-field-primary
-        input.form-control#formUploadDeck(type="file",accept=".ydk",@change="onFileChange",title="Upload Deck")
+        input.form-control#formUploadDeck(title="Upload Deck",type="file",accept=".ydk",@change="onFileChange")
     .form-app-field-secondary
-        input.form-control(type="text",placeholder="Deck Title",v-model="deck.name",@input="deckUpdate()")
+        input.form-control(title="Deck Title",placeholder="Deck Title",type="text",v-model="deck.name",@input="deckUpdate()")
 .form-app-group
     .form-app-label
         label Share:
     .form-app-field-primary
-        input.form-control#formLinkShare(type="url",v-bind:value="uriLocationNoParam() + deck.link",title="Shareable Link")
+        input.form-control#formLinkShare(title="Shareable Link",type="url",v-bind:value="uriLocationNoParam() + deck.link")
     .form-app-field-secondary
-        a.btn.btn-primary.form-control(download,@click="fileDownloadDeck()") Download
+        a.btn.btn-primary.form-control(title="Download Deck",download,@click="fileDownloadDeck()") Download
 .form-app-group
     .form-app-label
         label Price:
     .form-app-field-primary
-        select.form-control(v-model="price.activeCurrency",title="Price Currency")
+        select.form-control(title="Price Currency",v-model="price.activeCurrency")
             option(v-for="currency in price.currencies",v-bind:value="currency.id") {{currency.name}}
     .form-app-field-secondary
-        .btn.btn-primary.form-control(@click="apiLoadPrices()",title="Load Prices")
+        .btn.btn-primary.form-control(title="Load Prices",@click="apiLoadPrices()")
             span(v-bind:hidden="ajax.currentlyLoading") Load Prices
             span(v-bind:hidden="!ajax.currentlyLoading")
                 i.fa.fa-circle-o-notch.fa-spin.fa-fw

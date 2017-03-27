@@ -2,8 +2,8 @@ h3 Deckbuilder:
 .builder
     p Showing {{builder.pairsFiltered.length}} of {{cards.pairs.length}} Cards
     .form
-        input.form-control.builder-search#builderSearch(type="text",placeholder="Search",v-model="builder.filter",@input="builderUpdateNames()")
-    ul.builder-list(v-if="ajax.namesLoaded")
+        input.form-control.builder-search#builderSearch(title="Search Query",placeholder="Search",type="text",v-model="builder.filter",@input="builderUpdateNames()")
+    ul.builder-list
         include ./builder/card.template.pug
     .builder-description
         p - Click the pluses in the list to add a card.
