@@ -420,21 +420,21 @@ mark,
 
 @media (min-width: 576px) {
   .container {
-    width: 92vw;
+    width: 90vw;
     max-width: 100%;
   }
 }
 
 @media (min-width: 768px) {
   .container {
-    width: 92vw;
+    width: 90vw;
     max-width: 100%;
   }
 }
 
 @media (min-width: 992px) {
   .container {
-    width: 92vw;
+    width: 90vw;
     max-width: 100%;
   }
 }

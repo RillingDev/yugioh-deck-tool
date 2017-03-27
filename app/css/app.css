@@ -4,37 +4,45 @@
   box-sizing: border-box;
 }
 
-.priceapp main {
-  min-height: 82vh;
-}
-
-.priceapp main .main-form {
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-.priceapp main .main-row {
+.priceapp .main {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
-.priceapp main .main-row .main-deck {
-  width: calc(100% - 398px);
+.priceapp .main .main-form,
+.priceapp .main .main-deck,
+.priceapp .main .main-builder {
+  width: 100%;
 }
 
-.priceapp main .main-row .main-builder {
-  width: 366px;
+.priceapp .main .main-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  order: 0;
+}
+
+.priceapp .main .main-deck {
+  order: 2;
+  width: 100%;
+  max-width: calc(100% - 330px - 20px);
+}
+
+.priceapp .main .main-builder {
+  width: 100%;
+  max-width: 330px;
+  order: 3;
 }
 
 @media (max-width: 768px) {
-  .priceapp main .main-row {
-    flex-direction: column-reverse;
+  .priceapp .main .main-deck,
+  .priceapp .main .main-builder {
+    max-width: 100%;
   }
-  .priceapp main .main-row .main-deck,
-  .priceapp main .main-row .main-builder {
-    width: 100%;
+  .priceapp .main .main-builder {
+    order: 1;
   }
 }
 
@@ -226,7 +234,7 @@
 
 .priceapp .builder-list .builder-card {
   border-top: 1px solid #636c72;
-  padding: 3px 0;
+  padding: 5px 0;
   word-break: break-all;
   display: flex;
   flex-direction: row;
@@ -246,7 +254,7 @@
 }
 
 .priceapp .builder-list .builder-card .builder-card-action .fa-plus {
-  padding: 0 3px;
+  padding: 0 5px;
   opacity: 0.75;
 }
 
