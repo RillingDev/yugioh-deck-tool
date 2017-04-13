@@ -8,7 +8,7 @@ const gulp = require("gulp");
 const pug = require("gulp-pug");
 const prettify = require("gulp-html-prettify");
 
-module.exports = function() {
+module.exports = function () {
     return gulp
         .src("./src/index.pug")
         .pipe(pug())

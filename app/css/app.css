@@ -12,36 +12,36 @@
   align-items: flex-start;
 }
 
-.priceapp .main .main-form,
-.priceapp .main .main-deck,
-.priceapp .main .main-builder {
+.priceapp .main-form,
+.priceapp .main-deck,
+.priceapp .main-builder {
   width: 100%;
 }
 
-.priceapp .main .main-form {
+.priceapp .main-form {
   margin-top: 40px;
   margin-bottom: 40px;
   order: 0;
 }
 
-.priceapp .main .main-deck {
+.priceapp .main-deck {
   order: 2;
   width: 100%;
   max-width: calc(100% - 330px - 20px);
 }
 
-.priceapp .main .main-builder {
+.priceapp .main-builder {
   width: 100%;
   max-width: 330px;
   order: 3;
 }
 
 @media (max-width: 768px) {
-  .priceapp .main .main-deck,
-  .priceapp .main .main-builder {
+  .priceapp .main-deck,
+  .priceapp .main-builder {
     max-width: 100%;
   }
-  .priceapp .main .main-builder {
+  .priceapp .main-builder {
     order: 1;
   }
 }
@@ -89,30 +89,31 @@
   height: 100%;
 }
 
-.priceapp .form-app-group .form-app-label {
+.priceapp .form-app-label {
   width: 15%;
 }
 
-.priceapp .form-app-group .form-app-field-primary {
+.priceapp .form-app-field-primary {
   width: 50%;
   padding-right: 6px;
 }
 
-.priceapp .form-app-group .form-app-field-secondary {
+.priceapp .form-app-field-secondary {
   width: 35%;
   padding-left: 6px;
   max-width: 320px;
+  color: #fff;
 }
 
 @media (max-width: 768px) {
-  .priceapp .form-app-group .form-app-label {
+  .priceapp .form-app-label {
     width: 100%;
     margin-bottom: 6px;
   }
-  .priceapp .form-app-group .form-app-field-primary {
+  .priceapp .form-app-field-primary {
     width: 50%;
   }
-  .priceapp .form-app-group .form-app-field-secondary {
+  .priceapp .form-app-field-secondary {
     width: 50%;
   }
 }
@@ -140,20 +141,6 @@
   margin-bottom: 40px;
 }
 
-.priceapp .deck .deck-part .deck-title {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-}
-
-.priceapp .deck .deck-part .deck-content {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  padding: 6px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .priceapp .deck .deck-part-main .deck-content {
   background-color: #907057;
 }
@@ -166,12 +153,26 @@
   background-color: #54925a;
 }
 
+.priceapp .deck-title {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.priceapp .deck-content {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 6px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .priceapp .deck-card {
   position: relative;
   margin: 2px;
 }
 
-.priceapp .deck-card .deck-card-text {
+.priceapp .deck-card-text {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -190,11 +191,11 @@
   font-size: 13px;
 }
 
-.priceapp .deck-card .deck-card-text:focus, .priceapp .deck-card .deck-card-text:hover {
+.priceapp .deck-card-text:focus, .priceapp .deck-card-text:hover {
   opacity: 1;
 }
 
-.priceapp .deck-card .deck-card-text .deck-card-price p {
+.priceapp .deck-card-price p {
   margin-bottom: 0;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -206,12 +207,6 @@
   margin-left: 6px;
 }
 
-.priceapp .deck-price .deck-price-item {
-  line-height: 26px;
-  padding-left: 6px;
-  padding-right: 6px;
-}
-
 .priceapp .deck-price.deck-price--sm {
   margin-left: 0;
   flex-direction: column;
@@ -219,6 +214,12 @@
 
 .priceapp .deck-price.deck-price--sm .deck-price-item {
   line-height: 22px;
+}
+
+.priceapp .deck-price-item {
+  line-height: 26px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .priceapp .pricemode-low {
@@ -247,7 +248,7 @@
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.priceapp .builder-list .builder-card {
+.priceapp .builder-card {
   border-top: 1px solid #636c72;
   padding: 5px 0;
   word-break: break-all;
@@ -257,34 +258,34 @@
   justify-content: flex-start;
 }
 
-.priceapp .builder-list .builder-card:first-child {
+.priceapp .builder-card:first-child {
   border-top-width: 0px;
 }
 
-.priceapp .builder-list .builder-card .builder-card-action {
+.priceapp .builder-card-action {
   display: flex;
   justify-content: space-between;
   margin-right: 8px;
   align-items: center;
 }
 
-.priceapp .builder-list .builder-card .builder-card-action .fa-plus {
+.priceapp .builder-card-action .fa-plus {
   padding: 0 5px;
   opacity: 0.75;
 }
 
-.priceapp .builder-list .builder-card .builder-card-action .fa-plus:active {
+.priceapp .builder-card-action .fa-plus:active {
   opacity: 1;
 }
 
-.priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-main {
+.priceapp .builder-card-action .fa-plus.deck-part-main {
   color: #907057;
 }
 
-.priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-extra {
+.priceapp .builder-card-action .fa-plus.deck-part-extra {
   color: #935293;
 }
 
-.priceapp .builder-list .builder-card .builder-card-action .fa-plus.deck-part-side {
+.priceapp .builder-card-action .fa-plus.deck-part-side {
   color: #54925a;
 }

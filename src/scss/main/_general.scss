@@ -10,34 +10,39 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    .main-form,
+}
+
+.main-form,
+.main-deck,
+.main-builder {
+    width: 100%;
+}
+
+.main-form {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    order: 0;
+}
+
+.main-deck {
+    order: 2;
+    width: 100%;
+    max-width: calc(100% - 330px - 20px);
+}
+
+.main-builder {
+    width: 100%;
+    max-width: 330px;
+    order: 3;
+}
+
+@media (max-width: 768px) {
     .main-deck,
     .main-builder {
-        width: 100%;
-    }
-    .main-form {
-        margin-top: 40px;
-        margin-bottom: 40px;
-        order: 0;
-    }
-    .main-deck {
-        order: 2;
-        width: 100%;
-        max-width: calc(100% - 330px - 20px);
+        max-width: 100%;
     }
     .main-builder {
-        width: 100%;
-        max-width: 330px;
-        order: 3;
-    }
-    @media (max-width: 768px) {
-        .main-deck,
-        .main-builder {
-            max-width: 100%;
-        }
-        .main-builder {
-            order: 1;
-        }
+        order: 1;
     }
 }
 

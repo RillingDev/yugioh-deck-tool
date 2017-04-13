@@ -2,11 +2,6 @@
     display: flex;
     justify-content: space-between;
     margin-left: 6px;
-    .deck-price-item {
-        line-height: 26px;
-        padding-left: 6px;
-        padding-right: 6px;
-    }
     &.deck-price--sm {
         margin-left: 0;
         flex-direction: column;
@@ -14,6 +9,12 @@
             line-height: 22px;
         }
     }
+}
+
+.deck-price-item {
+    line-height: 26px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .pricemode {

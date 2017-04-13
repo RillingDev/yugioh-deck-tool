@@ -1,33 +1,35 @@
 .deck-card {
     position: relative;
     margin: 2px;
-    .deck-card-text {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        padding: 6px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: $gray-lightest;
-        opacity: 0;
-        transition: opacity 0.2s;
-        text-align: center;
-        color: $gray-dark;
-        word-wrap: break-word;
-        line-height: 1.25em;
-        font-size: 13px;
-        &:focus,
-        &:hover {
-            opacity: 1;
-        }
-        .deck-card-price {
-            p {
-                margin-bottom: 0;
-                padding-top: 4px;
-                padding-bottom: 4px;
-            }
-        }
+}
+
+.deck-card-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $gray-lightest;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-align: center;
+    color: $gray-dark;
+    word-wrap: break-word;
+    line-height: 1.25em;
+    font-size: 13px;
+    &:focus,
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.deck-card-price {
+    p {
+        margin-bottom: 0;
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
 }

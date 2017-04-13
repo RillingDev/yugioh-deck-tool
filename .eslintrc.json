@@ -9,6 +9,9 @@
         "sourceType": "module"
     },
     "rules": {
+        "no-console": [
+            "warn"
+        ],
         "indent": [
             "warn",
             4

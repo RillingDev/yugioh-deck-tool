@@ -9,29 +9,34 @@
     >div {
         height: 100%;
     }
+}
+
+.form-app-label {
+    width: 15%;
+}
+
+.form-app-field-primary {
+    width: 50%;
+    padding-right: 6px;
+}
+
+.form-app-field-secondary {
+    width: 35%;
+    padding-left: 6px;
+    max-width: 320px;
+    color: $white;
+}
+
+@media (max-width: 768px) {
     .form-app-label {
-        width: 15%;
+        width: 100%;
+        margin-bottom: 6px;
     }
     .form-app-field-primary {
         width: 50%;
-        padding-right: 6px;
     }
     .form-app-field-secondary {
-        width: 35%;
-        padding-left: 6px;
-        max-width: 320px;
-    }
-    @media (max-width: 768px) {
-        .form-app-label {
-            width: 100%;
-            margin-bottom: 6px;
-        }
-        .form-app-field-primary {
-            width: 50%;
-        }
-        .form-app-field-secondary {
-            width: 50%;
-        }
+        width: 50%;
     }
 }
 
