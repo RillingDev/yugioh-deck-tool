@@ -1,10 +1,5 @@
 "use strict";
 
-/**
- * Start dev server
- */
-
-const gulp = require("gulp");
 const connect = require("gulp-connect");
 const packageJson = require("../package.json");
 

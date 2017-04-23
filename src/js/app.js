@@ -1,6 +1,6 @@
 "use strict";
 
-import Vue from "Vue/dist/vue.esm.js";
+import Vue from "vue/dist/vue.esm.js";
 import appData from "./appData";
 import appMethods from "./appMethods";
 
