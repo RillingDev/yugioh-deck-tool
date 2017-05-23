@@ -9,30 +9,34 @@
     list-style: none;
     padding: 0;
     resize: horizontal;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid $gray-lighter;
+    margin-top: 20px;
 }
 
 .builder-card {
-    border-top: 1px solid $gray-light;
-    padding: 5px 0;
-    word-break: break-all;
+    border-top: 1px solid $gray-lighter;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
+    align-items: center;
     &:first-child {
         border-top-width: 0px;
     }
 }
 
+.builder-card-action .fa,
+.builder-card-name {
+    padding: 10px 0;
+}
+
 .builder-card-action {
-    display: flex;
-    justify-content: space-between;
-    margin-right: 8px;
-    align-items: center;
-    .fa-plus {
-        padding: 0 5px;
-        opacity: 0.75;
+    width: 108px;
+    .fa {
+        width: 34px;
+        text-align: center;
+        opacity: 0.9;
+        font-size: 1.2em;
         &:active {
             opacity: 1;
         }
@@ -49,3 +53,8 @@
         }
     }
 }
+
+.builder-card-name {
+    width:calc(100% - 108px);
+}
+

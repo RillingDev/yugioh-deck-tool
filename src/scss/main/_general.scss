@@ -27,16 +27,25 @@
 .main-deck {
     order: 2;
     width: 100%;
-    max-width: calc(100% - 330px - 20px);
+    max-width: calc(100% - 440px - 20px);
 }
 
 .main-builder {
     width: 100%;
-    max-width: 330px;
+    max-width: 440px;
     order: 3;
 }
 
-@media (max-width: 768px) {
+@media (max-width: map-get($grid-breakpoints, lg)) {
+    .main-deck {
+        max-width: calc(100% - 340px - 20px);
+    }
+    .main-builder {
+        max-width: 340px;
+    }
+}
+
+@media (max-width: map-get($grid-breakpoints, md)) {
     .main-deck,
     .main-builder {
         max-width: 100%;

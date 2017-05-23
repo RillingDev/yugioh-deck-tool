@@ -4,7 +4,7 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     padding-bottom: 20px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     >div {
         height: 100%;
@@ -16,27 +16,42 @@
 }
 
 .form-app-field-primary {
-    width: 50%;
-    padding-right: 12px;
+    width: 100%;
+    padding-right: 10px;
 }
 
 .form-app-field-secondary {
-    width: 35%;
-    padding-left: 12px;
+    width: 100%;
+    padding-left: 10px;
     max-width: 320px;
     color: $white;
 }
 
-@media (max-width: 768px) {
+@media (max-width: map-get($grid-breakpoints,md)) {
+    .form-app-group{
+        flex-wrap: wrap;
+    }
     .form-app-label {
         width: 100%;
         margin-bottom: 10px;
     }
-    .form-app-field-primary {
+    .form-app-field-primary,
+    .form-app-field-secondary {
         width: 50%;
     }
     .form-app-field-secondary {
-        width: 50%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: map-get($grid-breakpoints,sm)) {
+    .form-app-field-primary,
+    .form-app-field-secondary {
+        width: 100%;
+        padding: 0;
+    }
+    .form-app-field-primary {
+        margin-bottom: 6px;
     }
 }
 

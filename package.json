@@ -1,6 +1,6 @@
 {
     "name": "ygoprodeckprice",
-    "version": "v3.5.0",
+    "version": "v3.6.0",
     "description": "ygodeckprice app for ygoprodeck.com",
     "main": "main.js",
     "scripts": {
