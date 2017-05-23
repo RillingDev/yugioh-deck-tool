@@ -2,14 +2,14 @@
     .form-app-label
         label Deck:
     .form-app-field-primary
-        input.form-control#formUploadDeck(title="Upload Deck",type="file",accept=".ydk",@change="onFileChange")
+        input.form-control#formUploadDeck(type="file",title="Upload Deck",accept=".ydk",@change="onFileChange")
     .form-app-field-secondary
-        input.form-control(title="Deck Title",placeholder="Deck Title",type="text",v-model="deck.name",@input="deckUpdate()")
+        input.form-control(type="text",title="Deck Title",placeholder="Deck Title",v-model="deck.name",@input="deckUpdate()")
 .form-app-group
     .form-app-label
         label Share:
     .form-app-field-primary
-        input.form-control#formLinkShare(title="Shareable Link",type="url",v-bind:value="uriLocationNoParam() + deck.link")
+        input.form-control#formLinkShare(type="url",title="Shareable Link",v-bind:value="uriLocationNoParam() + deck.link")
     .form-app-field-secondary
         a.btn.btn-primary.form-control(title="Download Deck",download,@click="fileDownloadDeck()") Download
 .form-app-group

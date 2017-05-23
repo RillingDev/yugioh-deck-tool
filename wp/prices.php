@@ -20,7 +20,7 @@ function register_priceapp_assets(){
 
     //Scripts
 
-    wp_register_script('priceapp-js-app','https://ygoprodeck.com/priceapp/js/main.js');
+    wp_register_script('priceapp-js-app','https://ygoprodeck.com/priceapp/js/app.js');
     wp_enqueue_script('priceapp-js-app');
 
 }

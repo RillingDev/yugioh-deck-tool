@@ -17,12 +17,12 @@
 
 .form-app-field-primary {
     width: 50%;
-    padding-right: 6px;
+    padding-right: 12px;
 }
 
 .form-app-field-secondary {
     width: 35%;
-    padding-left: 6px;
+    padding-left: 12px;
     max-width: 320px;
     color: $white;
 }
@@ -30,7 +30,7 @@
 @media (max-width: 768px) {
     .form-app-label {
         width: 100%;
-        margin-bottom: 6px;
+        margin-bottom: 10px;
     }
     .form-app-field-primary {
         width: 50%;

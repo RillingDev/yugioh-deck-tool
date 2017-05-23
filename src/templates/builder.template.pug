@@ -2,7 +2,7 @@ h3 Deckbuilder:
 .builder
     p Showing {{builder.pairsFiltered.length}} of {{cards.pairs.length}} Cards
     .form
-        input.form-control.builder-search#builderSearch(title="Search Query",placeholder="Search",type="text",v-model="builder.filter",@input="builderUpdateNames()")
+        input.form-control.builder-search#builderSearch(type="text",title="Search Query",placeholder="Search",v-model="builder.filter",@input="builderUpdateNames()")
     ul.builder-list
         include ./builder/card.template.pug
     .builder-description
