@@ -1,20 +1,13 @@
 "use strict";
 
-/**
- * Compile Jade/Pug to HTML
- */
+const pug = require("pug");
+const pretty = require("pretty");
+const saveOutput = require("./lib/saveOutput");
+const {
+    DIR_SRC,
+    DIR_DIST
+} = require("./lib/constants");
 
-const gulp = require("gulp");
-const pug = require("gulp-pug");
-const prettify = require("gulp-html-prettify");
+const compiled = pretty(pug.compileFile(`${DIR_SRC}/index.pug`)());
 
-module.exports = function () {
-    return gulp
-        .src("./src/index.pug")
-        .pipe(pug())
-        .pipe(prettify({
-            indent_char: " ",
-            indent_size: 4
-        }))
-        .pipe(gulp.dest("./app"));
-};
+saveOutput(`${DIR_DIST}/index.html`, compiled, "HTML");
