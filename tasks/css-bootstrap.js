@@ -12,7 +12,7 @@ sass.render({
     outputStyle: "expanded"
 }, (err, result) => {
     if (err) {
-        console.log(err);
+        console.log(err.formatted);
     } else {
         saveOutput(`${DIR_DIST}/css/lib/bootstrap.css`, result.css, "CSS:Bootstrap");
     }

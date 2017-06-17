@@ -37,8 +37,8 @@
         "vue": "^2.3.4"
     },
     "devDependencies": {
-        "babel-core": "7.0.0-alpha.12",
-        "babel-preset-es2015": "7.0.0-alpha.12",
+        "babel-core": "^7.0.0-alpha.12",
+        "babel-preset-es2015": "^7.0.0-alpha.12",
         "eslint": "^4.0.0",
         "node-sass": "^4.5.3",
         "npm-run-all": "^4.0.2",

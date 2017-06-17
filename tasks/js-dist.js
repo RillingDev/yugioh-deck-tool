@@ -32,18 +32,15 @@ rollup
         console.log(err);
     })
     .then(bundle => {
-        const result = bundle.generate({
-            moduleName: packageJson.namespace.module,
-            format: "iife"
-        }).code;
-        const result_min = uglify.minify(
-            babel.transform(result).code, {
-                compress: {
-                    dead_code: true,
-                    properties: true
-                }
-            }
+        const result = uglify.minify(
+            babel.transform(
+                bundle.generate({
+                    moduleName: packageJson.namespace.module,
+                    format: "iife"
+                }).code, {
+                    compact: false
+                }).code
         ).code;
 
-        saveOutput(`${DIR_DIST}/js/app.js`, result_min, "JS:Dist");
+        saveOutput(`${DIR_DIST}/js/app.js`, result, "JS:Dist");
     });
