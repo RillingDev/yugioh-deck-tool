@@ -30,8 +30,8 @@ const apiLoadNames = function () {
                     price: false
                 };
 
-                //Only add each card once to pars, skip alternate arts
-                if (nameStorage.indexOf(name) === -1) {
+                //Only add each card once to parts, skip alternate arts
+                if (name.length > 0 && nameStorage.indexOf(name) === -1) {
                     resultPairs.push([id, name]);
                 }
 

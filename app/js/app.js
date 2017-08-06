@@ -10201,8 +10201,8 @@ const apiLoadNames = function () {
                     price: false
                 };
 
-                //Only add each card once to pars, skip alternate arts
-                if (nameStorage.indexOf(name) === -1) {
+                //Only add each card once to parts, skip alternate arts
+                if (name.length > 0 && nameStorage.indexOf(name) === -1) {
                     resultPairs.push([id, name]);
                 }
 
@@ -10388,9 +10388,7 @@ const priceForSection = function (section, mode) {
 const builderUpdateNames = function () {
     const vm = this;
     const filter = vm.builder.filter.toLowerCase();
-    let result = vm.cards.pairs.filter(card => {
-        return card[1].toLowerCase().indexOf(filter) !== -1;
-    });
+    let result = vm.cards.pairs.filter(card => card[1].toLowerCase().includes(filter));
 
     if (result.length > 500) {
         result = result.splice(0, 500);
