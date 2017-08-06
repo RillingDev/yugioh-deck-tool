@@ -34,20 +34,21 @@
     "dependencies": {
         "bootstrap": "^4.0.0-alpha.6",
         "file-saver": "^1.3.3",
-        "vue": "^2.3.4"
+        "vue": "^2.4.2"
     },
     "devDependencies": {
         "babel-core": "^7.0.0-alpha.12",
         "babel-preset-es2015": "^7.0.0-alpha.12",
-        "eslint": "^4.0.0",
+        "eslint": "^4.3.0",
+        "eslint-plugin-unicorn": "^2.1.2",
         "node-sass": "^4.5.3",
         "npm-run-all": "^4.0.2",
         "pretty": "^2.0.0",
         "pug": "^2.0.0-rc.2",
-        "rollup": "^0.43.0",
-        "rollup-plugin-commonjs": "^8.0.2",
+        "rollup": "^0.45.2",
+        "uglify-es": "^3.0.27",
+        "rollup-plugin-commonjs": "^8.1.0",
         "rollup-plugin-node-resolve": "^3.0.0",
-        "rollup-plugin-replace": "^1.1.1",
-        "uglify-es": "^3.0.17"
+        "rollup-plugin-replace": "^1.1.1"
     }
 }
