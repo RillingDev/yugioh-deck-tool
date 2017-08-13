@@ -9,7 +9,7 @@ const deckCardsWithoutPriceData = function () {
 
     utilEachObject(vm.deck.list, deckpart => {
         deckpart.forEach(cardId => {
-            if (result.indexOf(cardId) === -1 && !data[cardId].price) {
+            if (!result.includes(cardId) && (data[cardId] && !data[cardId].price)) {
                 result.push(cardId);
             }
         });

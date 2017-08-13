@@ -7,28 +7,32 @@ const deckToText = function (vm) {
 
     vm.deckparts.forEach(deckpart => {
         const cards = vm.deck.list[deckpart.id];
-        const cardAmount = {};
-        const cardCache=[];
 
-        result.push(`${deckpart.name}:`);
+        if (cards.length > 0) {
+            const cardAmount = {};
+            const cardCache = [];
 
-        cards.forEach(cardId => {
-            if (cardAmount[cardId]) {
-                cardAmount[cardId]++;
-            } else {
-                cardAmount[cardId] = 1;
-            }
-        });
+            result.push(`${deckpart.name}:`);
 
-        utilEachObject(cardAmount, (amount, cardId) => {
-            const cardName = vm.cards.pairs.find(pair => pair[0] === cardId)[1];
+            cards.forEach(cardId => {
+                if (cardAmount[cardId]) {
+                    cardAmount[cardId]++;
+                } else {
+                    cardAmount[cardId] = 1;
+                }
+            });
 
-            cardCache.push(`${cardName} x${amount}`);
-        });
+            utilEachObject(cardAmount, (amount, cardId) => {
+                const card = vm.cards.pairs.find(pair => pair[0] === cardId);
+                const cardName = card ? card[1] : `[${cardId}]`;
 
-        result.push(...cardCache.sort());
+                cardCache.push(`${cardName} x${amount}`);
+            });
 
-        result.push("");
+            result.push(...cardCache.sort());
+
+            result.push("");
+        }
     });
 
     return result.join("\n").trim();
