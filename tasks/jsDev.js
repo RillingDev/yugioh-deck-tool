@@ -7,7 +7,7 @@ const bundle = require("./lib/bundle");
 
 bundle([{
     id: "iife",
-    file: "",
+    ext: "",
     name: "IIFE",
     fn: code => code
 }], [

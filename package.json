@@ -2,19 +2,39 @@
     "name": "ygoprodeckprice",
     "version": "v3.7.0",
     "description": "ygodeckprice app for ygoprodeck.com",
-    "main": "main.js",
-    "scripts": {
-        "build": "npm-run-all --parallel html css js:dev",
-        "dist": "npm-run-all --parallel html css js:dist",
-        "html": "node tasks/html",
-        "css": "npm-run-all --parallel css:app css:bootstrap",
-        "css:app": "node tasks/css-app",
-        "css:bootstrap": "node tasks/css-bootstrap",
-        "js:dev": "node tasks/js-dev",
-        "js:dist": "node tasks/js-dist"
+    "main": "app/js/app.js",
+    "constants": {
+        "dirBase": {
+            "input": "./src",
+            "output": "./app"
+        },
+        "js": {
+            "input": "js/app",
+            "namespace": {
+                "module": "ygodeckprice",
+                "file": "js/app"
+            }
+        },
+        "css": {
+            "input": "scss/app",
+            "output": "css/app"
+        },
+        "html": {
+            "input": "index",
+            "output": "index"
+        }
     },
-    "namespace": {
-        "module": "ygoprodeckprice"
+    "scripts": {
+        "start": "npm-run-all lint build",
+        "build": "npm-run-all --parallel html:dev css:dev js:dev",
+        "dist": "npm-run-all --parallel html:dist css:dist js:dist",
+        "html:dev": "node tasks/htmlDev",
+        "html:dist": "node tasks/htmlDist",
+        "css:dev": "node tasks/cssDev",
+        "css:dist": "node tasks/cssDist",
+        "js:dev": "node tasks/jsDev",
+        "js:dist": "node tasks/jsDist",
+        "lint": "eslint src/"
     },
     "repository": {
         "type": "git",
@@ -32,14 +52,14 @@
     },
     "homepage": "https://github.com/FelixRilling/ygodeckprice3#readme",
     "dependencies": {
-        "bootstrap": "^4.0.0-alpha.6",
+        "bootstrap": "^4.0.0-beta",
         "file-saver": "^1.3.3",
         "vue": "^2.4.2"
     },
     "devDependencies": {
-        "babel-core": "^7.0.0-alpha.12",
-        "babel-preset-es2015": "^7.0.0-alpha.12",
-        "eslint": "^4.3.0",
+        "babel-core": "^7.0.0-alpha.18",
+        "babel-preset-es2016": "^7.0.0-alpha.18",
+        "eslint": "^4.4.0",
         "eslint-plugin-unicorn": "^2.1.2",
         "node-sass": "^4.5.3",
         "npm-run-all": "^4.0.2",

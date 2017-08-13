@@ -6,7 +6,16 @@ $color-pricemode-low:#ddffc9;
 $color-pricemode-average:#fff8b7;
 $color-pricemode-high:#ffdad0;
 
+@import "node_modules/bootstrap/scss/functions";
 @import "variables";
+
+@import "main/normalize";
+@import "bootstrap";
+
+html {
+    font-family: sans-serif; // 2
+    line-height: 1.15; // 3
+  }
 
 .priceapp {
     @import "main/general";

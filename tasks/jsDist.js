@@ -9,7 +9,7 @@ const bundle = require("./lib/bundle");
 
 bundle([{
     id: "iife",
-    file: "",
+    ext: "",
     name: "IIFE:min",
     fn: code => uglify.minify(
         babel.transform(code, {

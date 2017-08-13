@@ -1,43 +1,62 @@
 "use strict";
 
+/* eslint no-console: "off" */
+const fs = require("fs");
 const rollup = require("rollup");
-const saveOutput = require("./saveOutput");
-const {
-    DIR_SRC,
-    DIR_DIST
-} = require("./constants");
-const packageJson = require("../../package.json");
+const CONSTANTS = require("../../package.json").constants;
 
 /**
  * Bundles project with given formats
  * @param {Array} formats
+ * @param {Array} plugins
  */
 module.exports = function (formats, plugins) {
+    const promises = [];
+
     rollup
         .rollup({
-            entry: `${DIR_SRC}/js/app.js`,
-            plugins: plugins
+            plugins,
+            entry: `${CONSTANTS.dirBase.input}/${CONSTANTS.js.input}.js`,
         })
         .catch(err => {
-            throw err;
+            console.log(err);
         })
         .then(bundle => {
             formats.forEach(format => {
-                bundle
-                    .generate({
-                        moduleName: packageJson.namespace.module,
-                        format: format.id
-                    })
-                    .catch(err => {
-                        throw err;
-                    })
-                    .then(result => {
-                        saveOutput(
-                            `${DIR_DIST}/js/app${format.file}.js`,
-                            format.fn(result.code),
-                            `JS:${format.name}`
-                        );
-                    });
+                const bundleFormat = new Promise((resolve, reject) => {
+                    bundle
+                        .generate({
+                            moduleName: CONSTANTS.js.namespace.module,
+                            format: format.id
+                        })
+                        .catch(err => {
+                            reject(err);
+                        })
+                        .then(result => {
+                            fs.writeFile(
+                                `${CONSTANTS.dirBase.output}/${CONSTANTS.js.namespace.file}${format.ext}.js`,
+                                format.fn(result.code),
+                                err => {
+                                    if (err) {
+                                        reject(err);
+                                    } else {
+                                        resolve();
+                                    }
+                                }
+                            );
+                        });
+                });
+
+                promises.push(bundleFormat);
             });
+
+            Promise
+                .all(promises)
+                .catch(err => {
+                    console.log("One or more errors were encountered during bundling", err);
+                })
+                .then(() => {
+                    console.log("Bundling complete");
+                });
         });
 };

@@ -7,14 +7,13 @@
 * @package ThemeGrill
 * @subpackage ColorMag
 * @since ColorMag 1.0
+* @version 6
 */
 ?>
 
   <?php
 function register_priceapp_assets(){
     //CSS
-    wp_register_style('priceapp-css-bootstrap', 'https://ygoprodeck.com/priceapp/css/lib/bootstrap.css');
-    wp_enqueue_style('priceapp-css-bootstrap' );
     wp_register_style('priceapp-css-main', 'https://ygoprodeck.com/priceapp/css/app.css');
     wp_enqueue_style('priceapp-css-main' );
 
@@ -22,7 +21,6 @@ function register_priceapp_assets(){
 
     wp_register_script('priceapp-js-app','https://ygoprodeck.com/priceapp/js/app.js');
     wp_enqueue_script('priceapp-js-app');
-
 }
 
 add_action('wp_enqueue_scripts', 'register_priceapp_assets');
@@ -48,10 +46,10 @@ add_action('wp_enqueue_scripts', 'register_priceapp_assets');
                       <label>Deck:</label>
                     </div>
                     <div class="form-app-field-primary">
-                      <input class="form-control" id="formUploadDeck" title="Upload Deck" type="file" accept=".ydk" @change="onFileChange">
+                      <input class="form-control" id="formUploadDeck" type="file" title="Upload Deck" accept=".ydk" @change="onFileChange">
                     </div>
                     <div class="form-app-field-secondary">
-                      <input class="form-control" title="Deck Title" placeholder="Deck Title" type="text" v-model="deck.name" @input="deckUpdate()">
+                      <input class="form-control" type="text" title="Deck Title" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
                     </div>
                   </div>
                   <div class="form-app-group">
@@ -59,9 +57,10 @@ add_action('wp_enqueue_scripts', 'register_priceapp_assets');
                       <label>Share:</label>
                     </div>
                     <div class="form-app-field-primary">
-                      <input class="form-control" id="formLinkShare" title="Shareable Link" type="url" v-bind:value="uriLocationNoParam() + deck.link">
+                      <input class="form-control" id="formLinkShare" type="url" title="Shareable Link" v-bind:value="uriLocationNoParam() + deck.link">
                     </div>
-                    <div class="form-app-field-secondary"><a class="btn btn-primary form-control" title="Download Deck" download @click="fileDownloadDeck()">Download</a>
+                    <div class="form-app-field-secondary">
+                      <a class="btn btn-primary form-control" title="Download Deck" download @click="fileDownloadDeck()">Download</a>
                     </div>
                   </div>
                   <div class="form-app-group">
@@ -74,8 +73,7 @@ add_action('wp_enqueue_scripts', 'register_priceapp_assets');
                       </select>
                     </div>
                     <div class="form-app-field-secondary">
-                      <div class="btn btn-primary form-control" title="Load Prices" @click="apiLoadPrices()"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
-                      </div>
+                      <div class="btn btn-primary form-control" title="Load Prices" @click="apiLoadPrices()"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span></div>
                     </div>
                   </div>
                 </div>
@@ -85,15 +83,13 @@ add_action('wp_enqueue_scripts', 'register_priceapp_assets');
                     <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
                       <div class="deck-title">
                         <h4>Total:</h4>
-                        <div class="deck-price"><span class="deck-price-item pricemode" v-for="mode in price.modes" v-bind:class="'pricemode-'+mode.id">{{priceForSection("*",mode.id)}}</span>
-                        </div>
+                        <div class="deck-price"><span class="deck-price-item pricemode" v-for="mode in price.modes" v-bind:class="'pricemode-'+mode.id">{{priceForSection("*",mode.id)}}</span></div>
                       </div>
                     </div>
                     <div class="deck-part" v-for="deckpart in deckparts" v-bind:class="'deck-part-'+deckpart.id">
                       <div class="deck-title">
                         <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
-                        <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item pricemode" v-for="mode in price.modes" v-bind:class="'pricemode-'+mode.id">{{priceForSection(deckpart.id,mode.id)}}</span>
-                        </div>
+                        <div class="deck-price" v-if="ajax.pricesLoaded"><span class="deck-price-item pricemode" v-for="mode in price.modes" v-bind:class="'pricemode-'+mode.id">{{priceForSection(deckpart.id,mode.id)}}</span></div>
                       </div>
                       <div class="deck-content" v-if="cards.data">
                         <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" v-if="cards.data[cardId]" v-bind:href="cards.data[cardId].link" @contextmenu.prevent="builderDeckRemove(cardId,deckpart.id)">
@@ -102,8 +98,7 @@ add_action('wp_enqueue_scripts', 'register_priceapp_assets');
                           </div>
                           <div class="deck-card-text">
                             <div class="deck-card-name">{{cards.data[cardId].name}}</div>
-                            <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded"><span class="deck-price-item pricemode" v-for="mode in price.modes" v-bind:class="'pricemode-'+mode.id">{{priceForCard(cardId,mode.id)}}</span>
-                            </div>
+                            <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded"><span class="deck-price-item pricemode" v-for="mode in price.modes" v-bind:class="'pricemode-'+mode.id">{{priceForCard(cardId,mode.id)}}</span></div>
                           </div>
                         </a>
                       </div>
@@ -115,7 +110,7 @@ add_action('wp_enqueue_scripts', 'register_priceapp_assets');
                   <div class="builder">
                     <p>Showing {{builder.pairsFiltered.length}} of {{cards.pairs.length}} Cards</p>
                     <div class="form">
-                      <input class="form-control builder-search" id="builderSearch" title="Search Query" placeholder="Search" type="text" v-model="builder.filter" @input="builderUpdateNames()">
+                      <input class="form-control builder-search" id="builderSearch" type="text" title="Search Query" placeholder="Search" v-model="builder.filter" @input="builderUpdateNames()">
                     </div>
                     <ul class="builder-list">
                       <li class="builder-card" v-for="card in builder.pairsFiltered">
@@ -126,13 +121,14 @@ add_action('wp_enqueue_scripts', 'register_priceapp_assets');
                       </li>
                     </ul>
                     <div class="builder-description">
-                      <p>- Click the pluses in the list to add a card.</p>
+                      <p>- Use the pluses to add a card.</p>
                       <p>- Right-click a card in the deck to remove it.</p>
                     </div>
                   </div>
                 </div>
               </main>
               <footer>
+                <p>Made by <a href="https://f-rilling.com/" target="_blank">Felix Rilling</a></p>
                 <p>Price data and Images from the <a href="http://yugiohprices.com/" target="_blank">yugiohprices.com</a> API</p>
               </footer>
             </div>
