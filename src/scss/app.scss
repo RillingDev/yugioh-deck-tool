@@ -1,13 +1,15 @@
 //CSS is a bit hacky due to how ygoprodecks is structured
-
 @import "node_modules/bootstrap/scss/functions";
 @import "variables";
-
 @import "main/normalize";
 @import "bootstrap";
 
 html {
     font-family: sans-serif;
+}
+
+.container {
+    width: auto;
 }
 
 .priceapp {

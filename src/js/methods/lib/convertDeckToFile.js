@@ -1,6 +1,6 @@
 "use strict";
 
-import deckParts from "../data/deckParts";
+import deckParts from "../../data/deckParts";
 
 const convertDeckToFile = function (deckList) {
     let result = [];

@@ -5,10 +5,11 @@
 .builder-list {
     max-height: 60vh;
     width: 100%;
+    overflow-x: auto;
     overflow-y: scroll;
     list-style: none;
     padding: 0;
-    resize: horizontal;
+    resize: vertical;
     border: 1px solid $gray-lighter;
     margin-top: 20px;
 }

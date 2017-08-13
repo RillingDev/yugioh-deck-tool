@@ -2079,53 +2079,12 @@ html {
   font-family: sans-serif;
 }
 
+.container {
+  width: auto;
+}
+
 .priceapp {
-  /*.form-app-group {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding-bottom: 20px;
-    flex-wrap: nowrap;
-    align-items: center;
-    >div {
-        height: 100%;
-    }
-}
-
-.form-app-label {
-    width: 15%;
-}
-
-.form-app-field-primary {
-    width: 100%;
-    padding-right: 10px;
-}
-
-.form-app-field-secondary {
-    width: 100%;
-    padding-left: 10px;
-    max-width: 320px;
-    color: $white;
-}
-
-@media (max-width: map-get($grid-breakpoints,md)) {
-    .form-app-group{
-        flex-wrap: wrap;
-    }
-    .form-app-label {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    .form-app-field-primary,
-    .form-app-field-secondary {
-        width: 50%;
-    }
-    .form-app-field-secondary {
-        max-width: 100%;
-    }
-}
-
+  /*
 @media (max-width: map-get($grid-breakpoints,sm)) {
     .form-app-field-primary,
     .form-app-field-secondary {
@@ -2135,26 +2094,6 @@ html {
     .form-app-field-primary {
         margin-bottom: 6px;
     }
-}
-
-input[type="file"] {
-    padding-top: 0.31rem;
-    padding-bottom: 0.31rem;
-}
-
-//Monkey-patching style overwrite on ygoprodeck.com
-input[type=text] {
-    margin: 0;
-    display: block;
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.25;
-    color: #555555;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 */
 }
@@ -2243,6 +2182,80 @@ input[type=text] {
   font-size: 1.25rem;
   padding-bottom: 0;
   margin: 0;
+}
+
+.priceapp .form-app-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.priceapp .form-app-wrapper .btn {
+  max-width: 260px;
+  margin-left: 18px;
+}
+
+.priceapp .form-app-label {
+  flex: 1;
+}
+
+.priceapp input[type="file"] {
+  padding: 5px;
+}
+
+.priceapp .deck-name {
+  max-width: 220px;
+}
+
+.priceapp .form-app-item {
+  display: flex;
+  width: 60%;
+}
+
+.priceapp .form-app-item input,
+.priceapp .form-app-item select {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .priceapp .form-app-wrapper {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .priceapp .form-app-label {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .priceapp .form-app-item {
+    flex-direction: column;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+  .priceapp .form-app-item:first-child {
+    margin-bottom: 12px;
+  }
+  .priceapp .deck-name,
+  .priceapp .form-app-wrapper .btn {
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
+
+.priceapp input[type=text] {
+  margin: 0;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #555555;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
 .priceapp .deck .deck-part {
@@ -2349,10 +2362,11 @@ input[type=text] {
 .priceapp .builder-list {
   max-height: 60vh;
   width: 100%;
+  overflow-x: auto;
   overflow-y: scroll;
   list-style: none;
   padding: 0;
-  resize: horizontal;
+  resize: vertical;
   border: 1px solid #dbdbdb;
   margin-top: 20px;
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-import convertFileToDeck from "./convertFileToDeck";
+import convertFileToDeck from "./lib/convertFileToDeck";
 
 const deckLoad = function (file) {
     const reader = new FileReader();

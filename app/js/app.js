@@ -10156,26 +10156,17 @@ const appData = {
     }
 };
 
-const uriLocationNoParam = function () {
-    return location.origin + location.pathname;
-};
+const uriLocationNoParam = () => location.origin + location.pathname;
 
 const nameAPI = "./api/names/names.min.json";
 const priceAPI = "./api/prices/prices.php?n=";
 const imageAPI = "https://ygoprodeck.com/pics";
 const buyAPI = "http://yugiohprices.com/card_price?name=";
 
-const eachObject = function (object, fn) {
-    const keys = Object.keys(object);
-    const l = keys.length;
-    let i = 0;
-
-    while (i < l) {
-        const currentKey = keys[i];
-
-        fn(object[currentKey], currentKey, i);
-        i++;
-    }
+const eachObject = (obj, fn) => {
+    Object.entries(obj).forEach((entry, index) => {
+        fn(entry[1], entry[0], index);
+    });
 };
 
 const apiLoadNames = function () {
@@ -10360,7 +10351,7 @@ const priceForSection = function (section, mode) {
     const priceSum = function (arr) {
         let result = 0;
 
-        if (arr && arr.length) {
+        if (arr && arr.length > 0) {
             arr.forEach(id => {
                 const cardData = vm.cards.data[id];
                 if (cardData && cardData.price && cardData.price[mode]) {
@@ -10645,6 +10636,13 @@ const fileDownloadDeck = function () {
     return FileSaver.saveAs(file);
 };
 
+const onFileChange = function (e) {
+    const vm = this;
+    const files = e.target.files || e.dataTransfer.files;
+
+    vm.deckLoad(files[0]);
+};
+
 const appMethods = {
     uriLocationNoParam,
 
@@ -10665,13 +10663,7 @@ const appMethods = {
     builderDeckRemove,
 
     fileDownloadDeck,
-
-    onFileChange(e) {
-        const vm = this;
-        const files = e.target.files || e.dataTransfer.files;
-
-        vm.deckLoad(files[0]);
-    }
+    fileOnUpload: onFileChange
 };
 
 //ready-event required because ygoprodeck.com loads scripts in head

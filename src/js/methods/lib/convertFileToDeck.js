@@ -1,6 +1,6 @@
 "use strict";
 
-import deckParts from "../data/deckParts";
+import deckParts from "../../data/deckParts";
 
 const convertFileToDeck = function (fileContent) {
     const fileContentTrimmed = fileContent.replace(/#created.+/, "").trim();

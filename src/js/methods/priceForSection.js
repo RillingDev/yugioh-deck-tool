@@ -1,6 +1,6 @@
 "use strict";
 
-import utilEachObject from "./utilEachObject";
+import utilEachObject from "./lib/utilEachObject";
 
 const priceForSection = function (section, mode) {
     const priceSum = function (arr) {

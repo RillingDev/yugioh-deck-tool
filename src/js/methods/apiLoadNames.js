@@ -5,7 +5,7 @@ import {
     imageAPI,
     buyAPI
 } from "../data/apiURLs";
-import utilEachObject from "./utilEachObject";
+import utilEachObject from "./lib/utilEachObject";
 
 const apiLoadNames = function () {
     const vm = this;

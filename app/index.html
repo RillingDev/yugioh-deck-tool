@@ -41,41 +41,29 @@
         </header>
         <main class="main" id="app">
           <div class="main-form">
-            <div class="form-app-group">
-              <div class="form-app-label">
-                <label>Deck:</label>
+            <div class="form-app-wrapper form-group">
+              <label class="form-app-label">Deck:</label>
+              <div class="form-app-item">
+                <input class="form-control" id="formUploadDeck" type="file" title="Upload Deck" accept=".ydk" @change="fileOnUpload">
+                <input class="form-control deck-name" type="text" title="Deck Title" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
               </div>
-              <div class="form-app-field-primary">
-                <input class="form-control" id="formUploadDeck" type="file" title="Upload Deck" accept=".ydk" @change="onFileChange">
-              </div>
-              <div class="form-app-field-secondary">
-                <input class="form-control" type="text" title="Deck Title" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
-                <a class="btn btn-primary form-control" title="Download Deck" download @click="fileDownloadDeck()">Download</a>
-              </div>
+              <a class="btn btn-primary form-control" title="Download Deck" download @click="fileDownloadDeck()">Download</a>
             </div>
-            <div class="form-app-group">
-              <div class="form-app-label">
-                <label>Share:</label>
-              </div>
-              <div class="form-app-field-primary">
+            <div class="form-app-wrapper form-group">
+              <label class="form-app-label">Share:</label>
+              <div class="form-app-item">
                 <input class="form-control" id="formLinkShare" type="url" title="Shareable Link" v-bind:value="uriLocationNoParam() + deck.link">
               </div>
-              <div class="form-app-field-secondary">
-                <a class="btn btn-primary form-control" title="Copy Decklist to Clipboard" @click="fileDownloadDeck()">Copy Decklist to Clipboard</a>
-              </div>
+              <a class="btn btn-primary form-control" title="Copy Decklist to Clipboard" @click="fileDownloadDeck()">Copy Decklist to Clipboard</a>
             </div>
-            <div class="form-app-group">
-              <div class="form-app-label">
-                <label>Price:</label>
-              </div>
-              <div class="form-app-field-primary">
-                <select class="form-control" title="Price Currency" v-model="price.activeCurrency">
+            <div class="form-app-wrapper form-group">
+              <label class="form-app-label">Price:</label>
+              <div class="form-app-item">
+                <select class="form-control deck-currency" title="Price Currency" v-model="price.activeCurrency">
                   <option v-for="currency in price.currencies" v-bind:value="currency.id">{{currency.name}}</option>
                 </select>
               </div>
-              <div class="form-app-field-secondary">
-                <div class="btn btn-primary form-control" title="Load Prices" @click="apiLoadPrices()"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span></div>
-              </div>
+              <div class="btn btn-primary form-control" title="Load Prices" @click="apiLoadPrices()"><span v-bind:hidden="ajax.currentlyLoading">Load Prices</span><span v-bind:hidden="!ajax.currentlyLoading"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span></div>
             </div>
           </div>
           <div class="main-deck">

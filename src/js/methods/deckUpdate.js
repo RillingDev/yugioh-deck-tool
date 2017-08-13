@@ -1,6 +1,6 @@
 "use strict";
 
-import uriDeckEncode from "./uriDeckEncode";
+import uriDeckEncode from "./lib/uriDeckEncode";
 
 const deckUpdate = function (deckLink) {
     const vm = this;

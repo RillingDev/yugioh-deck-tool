@@ -1,49 +1,64 @@
-/*.form-app-group {
+.form-app-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    padding-bottom: 20px;
     flex-wrap: nowrap;
     align-items: center;
-    >div {
-        height: 100%;
-    }
+}
+
+.form-app-wrapper .btn {
+    max-width: 260px;
+    margin-left: 18px;
 }
 
 .form-app-label {
-    width: 15%;
+    flex: 1;
 }
 
-.form-app-field-primary {
-    width: 100%;
-    padding-right: 10px;
+input[type="file"] {
+    padding: 5px; //max-width: 260px;
 }
 
-.form-app-field-secondary {
-    width: 100%;
-    padding-left: 10px;
-    max-width: 320px;
-    color: $white;
+.deck-name {
+    max-width: 220px;
 }
 
-@media (max-width: map-get($grid-breakpoints,md)) {
-    .form-app-group{
+.form-app-item {
+    display: flex;
+    width: 60%;
+    input,
+    select {
+        width: 100%;
+    }
+}
+
+@media (max-width: map-get($grid-breakpoints, md)) {
+    .form-app-wrapper {
+        flex-direction: column;
         flex-wrap: wrap;
     }
     .form-app-label {
         width: 100%;
         margin-bottom: 10px;
     }
-    .form-app-field-primary,
-    .form-app-field-secondary {
-        width: 50%;
+    .form-app-item {
+        flex-direction: column;
+        margin-bottom: 8px;
+        width: 100%;
+        &:first-child{
+            margin-bottom: 12px;
+        }
     }
-    .form-app-field-secondary {
+    .deck-name,
+    .form-app-wrapper .btn {
         max-width: 100%;
+        margin-left: 0;
     }
 }
 
+
+/*
 @media (max-width: map-get($grid-breakpoints,sm)) {
     .form-app-field-primary,
     .form-app-field-secondary {
@@ -54,11 +69,7 @@
         margin-bottom: 6px;
     }
 }
-
-input[type="file"] {
-    padding-top: 0.31rem;
-    padding-bottom: 0.31rem;
-}
+*/
 
 //Monkey-patching style overwrite on ygoprodeck.com
 input[type=text] {
@@ -74,4 +85,3 @@ input[type=text] {
     border-radius: 0;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-*/

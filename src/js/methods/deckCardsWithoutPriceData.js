@@ -1,6 +1,6 @@
 "use strict";
 
-import utilEachObject from "./utilEachObject";
+import utilEachObject from "./lib/utilEachObject";
 
 const deckCardsWithoutPriceData = function () {
     const vm = this;

@@ -19,6 +19,7 @@ import builderDeckAdd from "./methods/builderDeckAdd";
 import builderDeckRemove from "./methods/builderDeckRemove";
 
 import fileDownloadDeck from "./methods/fileDownloadDeck";
+import fileOnUpload from "./methods/fileOnUpload";
 
 const appMethods = {
     uriLocationNoParam,
@@ -40,13 +41,7 @@ const appMethods = {
     builderDeckRemove,
 
     fileDownloadDeck,
-
-    onFileChange(e) {
-        const vm = this;
-        const files = e.target.files || e.dataTransfer.files;
-
-        vm.deckLoad(files[0]);
-    }
+    fileOnUpload
 };
 
 export default appMethods;

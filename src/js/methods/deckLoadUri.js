@@ -1,6 +1,6 @@
 "use strict";
 
-import uriDeckDecode from "./uriDeckDecode";
+import uriDeckDecode from "./lib/uriDeckDecode";
 
 const deckLoadUri = function (uriDeck) {
     const vm = this;

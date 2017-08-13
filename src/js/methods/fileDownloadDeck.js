@@ -1,8 +1,7 @@
 "use strict";
 
-import FileSaver from "file-saver/FileSaver.js";
-
-import convertDeckToFile from "./convertDeckToFile.js";
+import FileSaver from "file-saver/FileSaver";
+import convertDeckToFile from "./lib/convertDeckToFile";
 
 const fileDownloadDeck = function () {
     const vm = this;
