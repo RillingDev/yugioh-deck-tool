@@ -8,6 +8,7 @@ const deckToText = function (vm) {
     vm.deckparts.forEach(deckpart => {
         const cards = vm.deck.list[deckpart.id];
         const cardAmount = {};
+        const cardCache=[];
 
         result.push(`${deckpart.name}:`);
 
@@ -22,8 +23,10 @@ const deckToText = function (vm) {
         utilEachObject(cardAmount, (amount, cardId) => {
             const cardName = vm.cards.pairs.find(pair => pair[0] === cardId)[1];
 
-            result.push(`${amount}x ${cardName}`);
+            cardCache.push(`${cardName} x${amount}`);
         });
+
+        result.push(...cardCache.sort());
 
         result.push("");
     });
