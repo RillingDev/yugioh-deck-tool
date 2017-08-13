@@ -1,12 +1,13 @@
 "use strict";
 
 import clipboard from "clipboard-js/clipboard";
+import deckToText from "./lib/deckToText";
 
 const shareText = function () {
     const vm = this;
 
     clipboard.copy({
-        "text/plain": "Markup text. Paste me into a rich text editor.",
+        "text/plain": deckToText(vm),
     });
 };
 
