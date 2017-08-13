@@ -1,10 +1,4 @@
-$color-deckpart-main:#907057;
-$color-deckpart-extra:#935293;
-$color-deckpart-side:#54925a;
-
-$color-pricemode-low:#ddffc9;
-$color-pricemode-average:#fff8b7;
-$color-pricemode-high:#ffdad0;
+//CSS is a bit hacky due to how ygoprodecks is structured
 
 @import "node_modules/bootstrap/scss/functions";
 @import "variables";
@@ -13,11 +7,17 @@ $color-pricemode-high:#ffdad0;
 @import "bootstrap";
 
 html {
-    font-family: sans-serif; // 2
-    line-height: 1.15; // 3
-  }
+    font-family: sans-serif;
+}
 
 .priceapp {
+    $color-deckpart-main: #907057;
+    $color-deckpart-extra: #935293;
+    $color-deckpart-side: #54925a;
+    $color-pricemode-low: #ddffc9;
+    $color-pricemode-average: #fff8b7;
+    $color-pricemode-high: #ffdad0;
+
     @import "main/general";
     @import "main/typo";
     @import "blocks/forms";

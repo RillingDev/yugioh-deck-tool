@@ -50,6 +50,7 @@
               </div>
               <div class="form-app-field-secondary">
                 <input class="form-control" type="text" title="Deck Title" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
+                <a class="btn btn-primary form-control" title="Download Deck" download @click="fileDownloadDeck()">Download</a>
               </div>
             </div>
             <div class="form-app-group">
@@ -60,7 +61,7 @@
                 <input class="form-control" id="formLinkShare" type="url" title="Shareable Link" v-bind:value="uriLocationNoParam() + deck.link">
               </div>
               <div class="form-app-field-secondary">
-                <a class="btn btn-primary form-control" title="Download Deck" download @click="fileDownloadDeck()">Download</a>
+                <a class="btn btn-primary form-control" title="Copy Decklist to Clipboard" @click="fileDownloadDeck()">Copy Decklist to Clipboard</a>
               </div>
             </div>
             <div class="form-app-group">

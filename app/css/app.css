@@ -2077,7 +2077,86 @@ tbody.collapse.show {
 
 html {
   font-family: sans-serif;
-  line-height: 1.15;
+}
+
+.priceapp {
+  /*.form-app-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    flex-wrap: nowrap;
+    align-items: center;
+    >div {
+        height: 100%;
+    }
+}
+
+.form-app-label {
+    width: 15%;
+}
+
+.form-app-field-primary {
+    width: 100%;
+    padding-right: 10px;
+}
+
+.form-app-field-secondary {
+    width: 100%;
+    padding-left: 10px;
+    max-width: 320px;
+    color: $white;
+}
+
+@media (max-width: map-get($grid-breakpoints,md)) {
+    .form-app-group{
+        flex-wrap: wrap;
+    }
+    .form-app-label {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .form-app-field-primary,
+    .form-app-field-secondary {
+        width: 50%;
+    }
+    .form-app-field-secondary {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: map-get($grid-breakpoints,sm)) {
+    .form-app-field-primary,
+    .form-app-field-secondary {
+        width: 100%;
+        padding: 0;
+    }
+    .form-app-field-primary {
+        margin-bottom: 6px;
+    }
+}
+
+input[type="file"] {
+    padding-top: 0.31rem;
+    padding-bottom: 0.31rem;
+}
+
+//Monkey-patching style overwrite on ygoprodeck.com
+input[type=text] {
+    margin: 0;
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #555555;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+*/
 }
 
 .priceapp *,
@@ -2164,83 +2243,6 @@ html {
   font-size: 1.25rem;
   padding-bottom: 0;
   margin: 0;
-}
-
-.priceapp .form-app-group {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  padding-bottom: 20px;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-
-.priceapp .form-app-group > div {
-  height: 100%;
-}
-
-.priceapp .form-app-label {
-  width: 15%;
-}
-
-.priceapp .form-app-field-primary {
-  width: 100%;
-  padding-right: 10px;
-}
-
-.priceapp .form-app-field-secondary {
-  width: 100%;
-  padding-left: 10px;
-  max-width: 320px;
-  color: #fff;
-}
-
-@media (max-width: 768px) {
-  .priceapp .form-app-group {
-    flex-wrap: wrap;
-  }
-  .priceapp .form-app-label {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  .priceapp .form-app-field-primary,
-  .priceapp .form-app-field-secondary {
-    width: 50%;
-  }
-  .priceapp .form-app-field-secondary {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 576px) {
-  .priceapp .form-app-field-primary,
-  .priceapp .form-app-field-secondary {
-    width: 100%;
-    padding: 0;
-  }
-  .priceapp .form-app-field-primary {
-    margin-bottom: 6px;
-  }
-}
-
-.priceapp input[type="file"] {
-  padding-top: 0.31rem;
-  padding-bottom: 0.31rem;
-}
-
-.priceapp input[type=text] {
-  margin: 0;
-  display: block;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: #555555;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
 .priceapp .deck .deck-part {
