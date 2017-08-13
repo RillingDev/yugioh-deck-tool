@@ -21,6 +21,8 @@ import builderDeckRemove from "./methods/builderDeckRemove";
 import fileDownloadDeck from "./methods/fileDownloadDeck";
 import fileOnUpload from "./methods/fileOnUpload";
 
+import shareText from "./methods/shareText";
+
 const appMethods = {
     uriLocationNoParam,
 
@@ -41,7 +43,9 @@ const appMethods = {
     builderDeckRemove,
 
     fileDownloadDeck,
-    fileOnUpload
+    fileOnUpload,
+
+    shareText
 };
 
 export default appMethods;
