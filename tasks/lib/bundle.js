@@ -16,7 +16,7 @@ module.exports = function (formats, plugins) {
     rollup
         .rollup({
             plugins,
-            entry: `${CONSTANTS.dirBase.input}/${CONSTANTS.js.input}.js`,
+            input: `${CONSTANTS.dirBase.input}/${CONSTANTS.js.input}.js`,
         })
         .catch(err => {
             console.log(err);
@@ -26,7 +26,7 @@ module.exports = function (formats, plugins) {
                 const bundleFormat = new Promise((resolve, reject) => {
                     bundle
                         .generate({
-                            moduleName: CONSTANTS.js.namespace.module,
+                            name: CONSTANTS.js.namespace.module,
                             format: format.id
                         })
                         .catch(err => {
