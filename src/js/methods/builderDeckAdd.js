@@ -1,5 +1,3 @@
-"use strict";
-
 const builderDeckAdd = function (id, part) {
     const vm = this;
     const cardId = Number(id);

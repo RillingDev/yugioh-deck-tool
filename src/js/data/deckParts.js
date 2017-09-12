@@ -1,5 +1,3 @@
-"use strict";
-
 const deckParts = [{
     id: "main",
     name: "Main",

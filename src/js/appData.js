@@ -1,5 +1,3 @@
-"use strict";
-
 import dataPriceCurrencies from "./data/priceCurrencies";
 import dataPriceModes from "./data/priceModes";
 import dataDeckParts from "./data/deckParts";

@@ -1,5 +1,3 @@
-"use strict";
-
 import convertFileToDeck from "./lib/convertFileToDeck";
 
 const deckLoad = function (file) {

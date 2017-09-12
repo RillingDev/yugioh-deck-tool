@@ -1,5 +1,3 @@
-"use strict";
-
 const priceConvert = function (price) {
     const vm = this;
     const currency = vm.price.currencies.find(item => item.id === vm.price.activeCurrency);

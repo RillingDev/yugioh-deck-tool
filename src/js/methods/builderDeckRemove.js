@@ -1,5 +1,3 @@
-"use strict";
-
 const builderDeckRemove = function (id, part) {
     const vm = this;
     let foundCard = false;

@@ -1,5 +1,3 @@
-"use strict";
-
 import deckParts from "../../data/deckParts";
 
 const convertFileToDeck = function (fileContent) {

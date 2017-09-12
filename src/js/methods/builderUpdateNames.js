@@ -1,5 +1,3 @@
-"use strict";
-
 const builderUpdateNames = function () {
     const vm = this;
     const filter = vm.builder.filter.toLowerCase();

@@ -1,5 +1,3 @@
-"use strict";
-
 const priceModes = [{
     id: "low",
     name: "Low",

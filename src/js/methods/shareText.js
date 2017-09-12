@@ -1,5 +1,3 @@
-"use strict";
-
 import clipboard from "clipboard-js/clipboard";
 import deckToText from "./lib/deckToText";
 

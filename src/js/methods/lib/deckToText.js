@@ -1,7 +1,3 @@
-"use strict";
-
-import utilEachObject from "./utilEachObject";
-
 const deckToText = function (vm) {
     const result = [];
 
@@ -9,29 +5,27 @@ const deckToText = function (vm) {
         const cards = vm.deck.list[deckpart.id];
 
         if (cards.length > 0) {
-            const cardAmount = {};
+            const cardAmount = new Map();
             const cardCache = [];
 
             result.push(`${deckpart.name}:`);
 
             cards.forEach(cardId => {
-                if (cardAmount[cardId]) {
-                    cardAmount[cardId]++;
+                if (cardAmount.has(cardId)) {
+                    cardAmount.set(cardId, cardAmount.get(cardId) + 1);
                 } else {
-                    cardAmount[cardId] = 1;
+                    cardAmount.set(cardId, 1);
                 }
             });
 
-            utilEachObject(cardAmount, (amount, cardId) => {
-                const card = vm.cards.pairs.find(pair => pair[0] === cardId);
+            cardAmount.forEach((amount, cardId) => {
+                const card = vm.cards.pairs.find(pair => pair[0] === String(cardId));
                 const cardName = card ? card[1] : `[${cardId}]`;
 
                 cardCache.push(`${cardName} x${amount}`);
             });
 
-            result.push(...cardCache.sort());
-
-            result.push("");
+            result.push(...cardCache, "");
         }
     });
 

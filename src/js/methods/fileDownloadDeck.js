@@ -1,5 +1,3 @@
-"use strict";
-
 import FileSaver from "file-saver/FileSaver";
 import convertDeckToFile from "./lib/convertDeckToFile";
 

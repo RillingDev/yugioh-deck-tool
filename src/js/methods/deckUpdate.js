@@ -1,5 +1,3 @@
-"use strict";
-
 import uriDeckEncode from "./lib/uriDeckEncode";
 
 const deckUpdate = function (deckLink) {

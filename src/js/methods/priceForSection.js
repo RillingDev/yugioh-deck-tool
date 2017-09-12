@@ -1,5 +1,3 @@
-"use strict";
-
 import utilEachObject from "./lib/utilEachObject";
 
 const priceForSection = function (section, mode) {

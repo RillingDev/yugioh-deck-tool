@@ -1,5 +1,3 @@
-"use strict";
-
 import uriLocationNoParam from "./methods/uriLocationNoParam";
 
 import apiLoadNames from "./methods/apiLoadNames";

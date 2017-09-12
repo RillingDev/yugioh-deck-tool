@@ -1,5 +1,3 @@
-"use strict";
-
 const priceForCard = function (id, mode) {
     const vm = this;
     const price = vm.cards.data[id].price[mode];

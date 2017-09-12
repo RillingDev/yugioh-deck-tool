@@ -1,5 +1,3 @@
-"use strict";
-
 import uriDeckDecode from "./lib/uriDeckDecode";
 
 const deckLoadUri = function (uriDeck) {
