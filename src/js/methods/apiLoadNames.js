@@ -2,7 +2,7 @@ import {
     nameAPI,
     imageAPI,
     buyAPI
-} from "../data/apiURLs";
+} from "../data/urls";
 import utilEachObject from "./lib/utilEachObject";
 
 const apiLoadNames = function () {

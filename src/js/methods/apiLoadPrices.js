@@ -1,7 +1,6 @@
 import {
     priceAPI
-} from "../data/apiURLs";
-//import utilEachObject from "./utilEachObject";
+} from "../data/urls";
 
 const apiLoadPrices = function () {
     const vm = this;
