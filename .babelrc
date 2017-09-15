@@ -1,3 +1,12 @@
 {
-    "presets": ["es2015"]
+    "presets": [
+        ["env", {
+            "targets": {
+                "browsers": ["last 2 versions", "chrome >= 58"],
+                "uglify": false
+            },
+            "modules": false,
+            "loose": true
+        }]
+    ]
 }

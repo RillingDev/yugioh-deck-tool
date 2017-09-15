@@ -19,6 +19,8 @@
         "semi": ["error", "always"],
         "no-console": "warn",
 
-        "unicorn/filename-case": "off"
+        "unicorn/filename-case": ["warn", {
+            "case": "camelCase"
+        }]
     }
 }
