@@ -2,7 +2,7 @@
     "presets": [
         ["env", {
             "targets": {
-                "browsers": ["last 2 versions", "chrome >= 58"],
+                "browsers": ["last 4 versions", "chrome >= 56"],
                 "uglify": false
             },
             "modules": false,
