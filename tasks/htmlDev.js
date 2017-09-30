@@ -6,7 +6,7 @@ const pretty = require("pretty");
 const fs = require("fs");
 const CONSTANTS = require("../package.json").constants;
 
-const result = pug.compileFile(`${CONSTANTS.dirBase.input}/${CONSTANTS.html.input}.pug`)();
+const result = pretty(pug.compileFile(`${CONSTANTS.dirBase.input}/${CONSTANTS.html.input}.pug`)());
 
 fs.writeFile(
     `${CONSTANTS.dirBase.output}/${CONSTANTS.html.output}.html`,
