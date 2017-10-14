@@ -3,12 +3,14 @@
 /* eslint no-console: "off" */
 const fs = require("fs");
 const rollup = require("rollup");
+
 const CONSTANTS = require("../../package.json").constants;
 
 /**
  * Bundles project with given formats
- * @param {Array} formats
- * @param {Array} plugins
+ *
+ * @param {Array<Object>} formats
+ * @param {Array<Object>} plugins
  */
 module.exports = function (formats, plugins) {
     const promises = [];
@@ -18,9 +20,6 @@ module.exports = function (formats, plugins) {
             plugins,
             input: `${CONSTANTS.dirBase.input}/${CONSTANTS.js.input}.js`,
         })
-        .catch(err => {
-            console.log(err);
-        })
         .then(bundle => {
             formats.forEach(format => {
                 const bundleFormat = new Promise((resolve, reject) => {
@@ -29,22 +28,23 @@ module.exports = function (formats, plugins) {
                             name: CONSTANTS.js.namespace.module,
                             format: format.id
                         })
-                        .catch(err => {
-                            reject(err);
-                        })
                         .then(result => {
+                            const path = `${CONSTANTS.dirBase.output}/${CONSTANTS.js.namespace.file}${format.ext}.js`;
+
                             fs.writeFile(
-                                `${CONSTANTS.dirBase.output}/${CONSTANTS.js.namespace.file}${format.ext}.js`,
-                                format.fn(result.code),
+                                path,
+                                result.code,
                                 err => {
                                     if (err) {
                                         reject(err);
                                     } else {
+                                        console.log(`Completed bundling ${path}`);
                                         resolve();
                                     }
                                 }
                             );
-                        });
+                        })
+                        .catch(reject);
                 });
 
                 promises.push(bundleFormat);
@@ -52,11 +52,16 @@ module.exports = function (formats, plugins) {
 
             Promise
                 .all(promises)
-                .catch(err => {
-                    console.log("One or more errors were encountered during bundling", err);
-                })
                 .then(() => {
-                    console.log("Bundling complete");
+                    return 0;
+                })
+                .catch(err => {
+                    console.log("One or more errors were encountered during generation");
+                    console.log(err.message);
                 });
+        })
+        .catch(err => {
+            console.log("One or more errors were encountered during bundling");
+            console.log(err.message);
         });
 };

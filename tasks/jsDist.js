@@ -1,21 +1,22 @@
 "use strict";
 
-const nodeResolve = require("rollup-plugin-node-resolve");
+const bundle = require("./lib/bundle");
 const commonjs = require("rollup-plugin-commonjs");
 const replace = require("rollup-plugin-replace");
-const babel = require("babel-core");
-const uglify = require("uglify-es");
-const bundle = require("./lib/bundle");
+const resolve = require("rollup-plugin-node-resolve");
+const babel = require("rollup-plugin-babel");
+const uglify = require("rollup-plugin-uglify-es");
+const targets = require("../package.json").constants.js.targets;
 
-const OPTIONS_BABEL = {
-    compact: false,
-    ast: false,
+const options_babel = {
     presets: [
         ["env", {
-            targets: {
-                browsers: "chrome >= 58",
-            }
+            modules: false,
+            targets,
         }]
+    ],
+    plugins: [
+        "external-helpers"
     ]
 };
 
@@ -23,14 +24,15 @@ bundle([{
     id: "iife",
     ext: "",
     name: "IIFE:min",
-    fn: code => uglify.minify(babel.transform(code, OPTIONS_BABEL).code).code
 }], [
-    nodeResolve({
+    resolve({
         jsnext: true,
         main: true
     }),
     commonjs(),
     replace({
         "process.env.NODE_ENV": JSON.stringify("production")
-    })
+    }),
+    babel(options_babel),
+    uglify()
 ]);

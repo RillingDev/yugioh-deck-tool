@@ -1,6 +1,6 @@
 "use strict";
 
-const nodeResolve = require("rollup-plugin-node-resolve");
+const resolve = require("rollup-plugin-node-resolve");
 const commonjs = require("rollup-plugin-commonjs");
 const replace = require("rollup-plugin-replace");
 const bundle = require("./lib/bundle");
@@ -9,9 +9,8 @@ bundle([{
     id: "iife",
     ext: "",
     name: "IIFE",
-    fn: code => code
 }], [
-    nodeResolve({
+    resolve({
         jsnext: true,
         main: true
     }),
