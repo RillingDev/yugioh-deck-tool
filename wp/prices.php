@@ -16,7 +16,7 @@
     {
         //CSS
         wp_register_style('priceapp-css-main', 'https://ygoprodeck.com/priceapp/css/app.css');
-        wp_enqueue_style('priceapp-css-main' );
+        wp_enqueue_style('priceapp-css-main');
 
         //Scripts
 
@@ -29,7 +29,7 @@
 
     <?php get_header(); ?>
 
-        <?php do_action( 'colormag_before_body_content' ); ?>
+        <?php do_action('colormag_before_body_content'); ?>
 
         <div id="primary">
           <div id="content" class="clearfix">
@@ -116,6 +116,6 @@
 
         <?php colormag_sidebar_select(); ?>
 
-            <?php do_action( 'colormag_after_body_content' ); ?>
+            <?php do_action('colormag_after_body_content'); ?>
 
             <?php get_footer(); ?>

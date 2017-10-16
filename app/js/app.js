@@ -10599,37 +10599,6 @@ const deckParts = [{
     size: [0, 15]
 }];
 
-const appData = {
-    deckparts: deckParts,
-    deck: {
-        name: "Unnamed",
-        link: "",
-        list: {
-            main: [],
-            extra: [],
-            side: []
-        }
-    },
-    cards: {
-        pairs: [],
-        data: {}
-    },
-    builder: {
-        filter: "",
-        pairsFiltered: [],
-    },
-    price: {
-        activeCurrency: "dollar_us",
-        modes: priceModes,
-        currencies: priceCurrencies
-    },
-    ajax: {
-        currentlyLoading: false,
-        namesLoaded: false,
-        pricesLoaded: false
-    }
-};
-
 const uriLocationNoParam = () => location.origin + location.pathname;
 
 const getUrls = () => {
@@ -11348,31 +11317,6 @@ const shareText = function () {
     });
 };
 
-const appMethods = {
-    uriLocationNoParam,
-
-    apiLoadNames,
-    apiLoadPrices,
-
-    deckLoad,
-    deckLoadUri,
-    deckUpdate,
-    deckCardsWithoutPriceData,
-
-    priceConvert,
-    priceForCard,
-    priceForSection,
-
-    builderUpdateNames,
-    builderDeckAdd,
-    builderDeckRemove,
-
-    fileDownloadDeck,
-    fileOnUpload: onFileChange,
-
-    shareText
-};
-
 "use strict";
 
 //ready-event required because ygoprodeck.com loads scripts in head
@@ -11380,8 +11324,60 @@ document.addEventListener("DOMContentLoaded", () => {
     const urlQuery = location.search;
     const priceApp = new Vue$3({
         el: "#app",
-        data: appData,
-        methods: appMethods
+        data: {
+            deckparts: deckParts,
+            deck: {
+                name: "Unnamed",
+                link: "",
+                list: {
+                    main: [],
+                    extra: [],
+                    side: []
+                }
+            },
+            cards: {
+                pairs: [],
+                data: {}
+            },
+            builder: {
+                filter: "",
+                pairsFiltered: [],
+            },
+            price: {
+                activeCurrency: "dollar_us",
+                modes: priceModes,
+                currencies: priceCurrencies
+            },
+            ajax: {
+                currentlyLoading: false,
+                namesLoaded: false,
+                pricesLoaded: false
+            }
+        },
+        methods: {
+            uriLocationNoParam,
+
+            apiLoadNames,
+            apiLoadPrices,
+
+            deckLoad,
+            deckLoadUri,
+            deckUpdate,
+            deckCardsWithoutPriceData,
+
+            priceConvert,
+            priceForCard,
+            priceForSection,
+
+            builderUpdateNames,
+            builderDeckAdd,
+            builderDeckRemove,
+
+            fileDownloadDeck,
+            fileOnUpload: onFileChange,
+
+            shareText
+        }
     });
 
     priceApp.apiLoadNames();
