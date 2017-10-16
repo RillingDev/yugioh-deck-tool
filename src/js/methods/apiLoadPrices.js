@@ -1,6 +1,4 @@
-import {
-    priceAPI
-} from "../data/urls";
+import getUrls from "../data/urls";
 
 const apiLoadPrices = function () {
     const vm = this;
@@ -14,7 +12,7 @@ const apiLoadPrices = function () {
         vm.ajax.currentlyLoading = true;
         vm.ajax.pricesLoaded = false;
 
-        fetch(priceAPI + priceQuery)
+        fetch(getUrls().priceAPI + priceQuery)
             .then(response => {
                 return response.json();
             })

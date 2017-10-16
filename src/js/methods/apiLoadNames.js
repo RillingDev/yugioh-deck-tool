@@ -1,8 +1,4 @@
-import {
-    nameAPI,
-    imageAPI,
-    buyAPI
-} from "../data/urls";
+import getUrls from "../data/urls";
 import utilEachObject from "./lib/utilEachObject";
 
 const apiLoadNames = function () {
@@ -11,7 +7,7 @@ const apiLoadNames = function () {
     vm.ajax.currentlyLoading = true;
     vm.ajax.namesLoaded = false;
 
-    fetch(nameAPI)
+    fetch(getUrls().nameAPI)
         .then(response => {
             return response.json();
         })
@@ -23,8 +19,8 @@ const apiLoadNames = function () {
             utilEachObject(json, (name, id) => {
                 resultData[id] = {
                     name,
-                    img: `${imageAPI}/${id}.jpg`,
-                    link: `${buyAPI}${encodeURI(name)}`,
+                    img: `${getUrls().imageAPI}/${id}.jpg`,
+                    link: `${getUrls().buyAPI}${encodeURI(name)}`,
                     price: false
                 };
 
