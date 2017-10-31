@@ -1,15 +1,36 @@
 <template>
     <div>
-       <ygo-forms
-            :deckparts="deckparts"
-            :cards="cards"
-            :deck="deck"
-            :ajax="ajax"
-            :price="price"
-
-            :deckFromFile="deckFromFile"
-            :apiLoadPrices="apiLoadPrices"
-        ></ygo-forms>
+        <div class="main-form">
+            <div class="form-app-wrapper form-group">
+                <label class="form-app-label">Deck:</label>
+                <div class="form-app-item">
+                    <input class="form-control" id="formUploadDeck" type="file" title="Upload Deck" accept=".ydk" @change="fileOnUpload">
+                    <input class="form-control deck-name" type="text" title="Deck Title" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
+                </div>
+                <a class="btn btn-primary form-control" title="Download Deck" download @click="deckToFile">Download</a>
+            </div>
+            <div class="form-app-wrapper form-group">
+                <label class="form-app-label">Share:</label>
+                <div class="form-app-item">
+                    <input class="form-control" id="formLinkShare" type="url" title="Shareable Link" :value="shareLink">
+                </div>
+                <a class="btn btn-primary form-control" title="Copy Decklist to Clipboard" @click="copyShareText">Copy Decklist to Clipboard</a>
+            </div>
+            <div class="form-app-wrapper form-group">
+                <label class="form-app-label">Price:</label>
+                <div class="form-app-item">
+                    <select class="form-control deck-currency" title="Price Currency" v-model="price.active">
+                        <option v-for="currency in price.currencies" :key="currency.id" :value="currency.id">{{currency.name}}</option>
+                    </select>
+                </div>
+                <div class="btn btn-primary form-control" title="Load Prices" @click="fetchNames">
+                    <span :hidden="ajax.pricesLoaded">Load Prices</span>
+                    <span :hidden="!ajax.pricesLoaded">
+                        <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
          <!--<ygo-deck
             :deckparts="deckparts"
             :cards="cards"
@@ -28,27 +49,26 @@
 </template>
 
 <script>
-import { forEachEntry } from "lightdash";
-import getCardsWithoutPriceData from "./lib/getCardsWithoutPriceData";
+import FileSaver from "file-saver/FileSaver";
+import clipboard from "clipboard-js/clipboard";
+import apiLoadNames from "./lib/apiLoadNames";
+import apiLoadPrices from "./lib/apiLoadPrices";
 import uriDeckDecode from "./lib/uriDeckDecode";
+import uriDeckEncode from "./lib/uriDeckEncode";
 import convertFileToDeck from "./lib/convertFileToDeck";
+import convertDeckToFile from "./lib/convertDeckToFile";
+import convertDeckToText from "./lib/convertDeckToText";
 
 import deckparts from "./lib/data/deckparts";
 import priceCurrencies from "./lib/data/priceCurrencies";
 import priceModes from "./lib/data/priceModes";
 import getUrls from "./lib/data/urls";
 
-import YgoForms from "./components/YgoForms.vue";
-/* import YgoDeck from "./components/YgoDeck.vue";
-import YgoBuilder from "./components/YgoBuilder.vue";
- */
+const urls = getUrls();
+
 export default {
   name: "app",
-  components: {
-    YgoForms
-    /*   YgoDeck,
-    YgoBuilder */
-  },
+  components: {},
   data: () => {
     return {
       cards: {
@@ -79,77 +99,38 @@ export default {
       }
     };
   },
+  computed: {
+    shareLink() {
+      return location.origin + location.pathname + uriDeckEncode(this.deck);
+    }
+  },
   methods: {
-    apiLoadNames() {
+    fetchNames() {
       const vm = this;
-      const urls = getUrls();
 
-      vm.ajax.namesLoaded = false;
-
-      fetch(urls.nameAPI)
-        .then(response => response.json())
-        .then(json => {
-          const resultData = {};
-          const resultPairs = [];
-          const nameStorage = [];
-
-          forEachEntry(json, (name, id) => {
-            resultData[id] = {
-              name,
-              img: `${urls.imageAPI}/${id}.jpg`,
-              link: `${urls.buyAPI}${encodeURI(name)}`,
-              price: null
-            };
-
-            // Only add each card once to parts, skip alternate arts
-            if (name.length > 0 && nameStorage.indexOf(name) === -1) {
-              resultPairs.push([id, name]);
-            }
-
-            nameStorage.push(name);
-          });
-
-          vm.cards.data = resultData;
-          vm.cards.pairs = resultPairs.sort((a, b) => a[1].localeCompare(b[1]));
-
+      apiLoadNames(urls)
+        .then(result => {
+          vm.cards.data = result.data;
+          vm.cards.pairs = result.pairs;
           vm.ajax.namesLoaded = true;
         })
         .catch(console.error);
     },
-    apiLoadPrices() {
+    fetchPrices() {
       const vm = this;
-      const urls = getUrls();
-      const cardIds = getCardsWithoutPriceData(vm.deck.list, vm.cards.data);
 
-      if (cardIds.length > 0) {
-        const cardNames = cardIds.map(cardId => vm.cards.data[cardId].name);
-        const priceQuery = btoa(JSON.stringify(cardNames));
+      apiLoadNames(urls, vm.deck.list, vm.card.data)
+        .then(result => {
+          if (result !== false) {
+            vm.cards.data = result;
+          }
+        })
+        .catch(console.error);
+    },
+    fileOnUpload(e) {
+      const files = e.target.files || e.dataTransfer.files;
 
-        vm.ajax.pricesLoaded = false;
-
-        fetch(urls.priceAPI + priceQuery)
-          .then(response => response.json())
-          .then(json => {
-            cardIds
-              .forEach((id, index) => {
-                const priceData = json[index];
-                const card = vm.cards.data[id];
-
-                if (card) {
-                  card.price = {
-                    low: priceData.low,
-                    average: priceData.average,
-                    high: priceData.high
-                  };
-                }
-              })
-              .catch(console.error);
-
-            vm.ajax.pricesLoaded = true;
-          });
-      } else {
-        vm.ajax.pricesLoaded = true;
-      }
+      this.deckFromFile(files[0]);
     },
     deckFromFile(file) {
       const vm = this;
@@ -162,25 +143,37 @@ export default {
 
       reader.readAsText(file);
     },
-    deckFromUri() {
-      const vm = this;
-      const deckArray = uriDeckDecode(vm.deckparts, uriDeck);
+    deckFromUri(uriDeck) {
+      const deckArray = uriDeckDecode(this.deckparts, uriDeck);
 
-      vm.deck.name = deckArray[0];
-      vm.deck.list = deckArray[1];
+      this.deck.name = deckArray[0];
+      this.deck.list = deckArray[1];
     },
-    deckToFile() {},
+    deckToFile() {
+      const fileData = convertDeckToFile(this.deckparts, this.deck.list);
+      const file = new File([fileData], `${this.deck.name}.ydk`, {
+        type: "text/ydk"
+      });
+
+      return FileSaver.saveAs(file);
+    },
     deckToUri() {},
-    deckToText() {}
+    deckToText() {
+      return convertDeckToText(this.deckparts, this.cards, this.deck);
+    },
+    copyShareText() {
+      clipboard.copy({
+        "text/plain": this.deckToText()
+      });
+    }
   },
   mounted() {
-    const vm = this;
     const urlQuery = location.search;
 
-    vm.apiLoadNames();
+    this.fetchNames();
 
     if (urlQuery.includes("?d")) {
-      vm.deckLoadUri(urlQuery);
+      this.deckLoadUri(urlQuery);
     }
   }
 };

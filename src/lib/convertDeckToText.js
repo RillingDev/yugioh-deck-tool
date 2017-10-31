@@ -1,4 +1,4 @@
-const deckToText = function (deckparts, cards, deck) {
+const convertDeckToText = function (deckparts, cards, deck) {
     const result = [];
 
     deckparts.forEach(deckpart => {
@@ -32,4 +32,4 @@ const deckToText = function (deckparts, cards, deck) {
     return result.join("\n").trim();
 };
 
-export default deckToText;
+export default convertDeckToText;
