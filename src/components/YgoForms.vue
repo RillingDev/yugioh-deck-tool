@@ -33,14 +33,22 @@
 </template>
 
 <script>
-//import deckLoad from "./lib/deckLoad";
 import FileSaver from "file-saver/FileSaver";
-import convertDeckToFile from "../lib/lib/convertDeckToFile";
 import clipboard from "clipboard-js/clipboard";
+import convertDeckToFile from "../lib/convertDeckToFile";
 import deckToText from "../lib/deckToText";
+import uriDeckEncode from "../lib/uriDeckEncode";
 
 export default {
-  props: ["deck", "deckparts", "ajax", "price"],
+  props: [
+    "deck",
+    "deckparts",
+    "cards",
+    "ajax",
+    "price",
+    "apiLoadPrices",
+    "deckFromFile"
+  ],
   data: () => {
     return {};
   },
@@ -48,9 +56,7 @@ export default {
     fileOnUpload(e) {
       const files = e.target.files || e.dataTransfer.files;
 
-      console.log(files);
-
-      //this.deckLoad(files[0]);
+      this.deckFromFile(files[0]);
     },
     fileDownloadDeck() {
       const fileData = convertDeckToFile(this.deckparts, this.deck.list);
@@ -64,12 +70,11 @@ export default {
       clipboard.copy({
         "text/plain": deckToText(this.deckparts, this.cards, this.deck)
       });
-    },
-    apiLoadPrices() {}
+    }
   },
   computed: {
     shareLink() {
-      return location.origin + location.pathname + this.deck.link;
+      return location.origin + location.pathname + uriDeckEncode(this.deck);
     }
   }
 };

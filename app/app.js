@@ -7742,6 +7742,109 @@ Vue$3.nextTick(function () {
   }
 }, 0);
 
+/**
+ * Checks if a value is an array
+ *
+ * @function isArray
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @returns {boolean}
+ * @example
+ * // returns true
+ * isArray([]);
+ * isArray([1, 2, 3]);
+ *
+ * @example
+ * // returns false
+ * isArray({});
+ */
+/**
+ * Returns an array of the objects entries
+ *
+ * @function objEntries
+ * @memberof Object
+ * @since 1.0.0
+ * @param {Object} obj
+ * @returns {any[]} Array<[key: any, val: any]>]
+ * @example
+ * //returns [["a",1],["b",2],["c",3]]
+ * objEntries({a:1,b:2,c:3})
+ */
+const objEntries = Object.entries;
+
+/**
+ * Iterates over each element in an array
+ *
+ * @function forEach
+ * @memberof For
+ * @param {any[]} arr
+ * @param {function} fn fn(val: any, index: number, arr: any[])
+ * @example
+ * //returns a = [0,2,6]
+ * const a = [1,2,3];
+ *
+ * forEach(a,(val,index)=>a[index]=val*index)
+ */
+const forEach = (arr, fn) => arr.forEach(fn);
+
+/**
+ * Iterates over each entry of an object
+ *
+ * @function forEachEntry
+ * @memberof For
+ * @param {object} obj
+ * @param {function} fn fn(val: any, key: any, index: number, arr: any[])
+ * @example
+ * //returns a = {a:0, b: 2}
+ * const a = {a:1, b:2};
+ *
+ * forEachEntry(a,(val,key,index)=>a[key]=val*index)
+ */
+const forEachEntry = (obj, fn) => {
+    forEach(objEntries(obj), (entry, index) => {
+        fn(entry[1], entry[0], index, obj);
+    });
+};
+
+const getCardsWithoutPriceData = function (deckList, cardData) {
+    const result = [];
+
+    forEachEntry(deckList, deckpart => {
+        deckpart.forEach(cardId => {
+            if (!result.includes(cardId) && (cardData[cardId] && !cardData[cardId].price)) {
+                result.push(cardId);
+            }
+        });
+    });
+
+    return result;
+};
+
+const uriDeckDecode = function (deckParts, deckUri) {
+    const deckArray = JSON.parse(atob(deckUri.replace("?d=", "")));
+    const deckList = {};
+
+    deckParts.forEach((deckpart, index) => {
+        deckList[deckpart.id] = deckArray[1][index];
+    });
+
+    return [deckArray[0], deckList];
+};
+
+const convertFileToDeck = function (deckParts, fileContent) {
+    const fileContentTrimmed = fileContent.replace(/#created.+/, "").trim();
+    const arr = fileContentTrimmed.split(/[#!].+/g).splice(1);
+    const arrParts = arr.map(part => part.split("\n").filter(line => line.length > 1).map(Number));
+    const result = {};
+
+    deckParts.forEach((deckpart, index) => {
+        result[deckpart.id] = arrParts[index];
+    });
+
+    return result;
+};
+
 const deckparts = [{
         id: "main",
         name: "Main",
@@ -7824,131 +7927,6 @@ const getUrls = () => {
             buyAPI: "http://yugiohprices.com/card_price?name=",
         };
     }
-};
-
-/**
- * Checks if a value is an array
- *
- * @function isArray
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @returns {boolean}
- * @example
- * // returns true
- * isArray([]);
- * isArray([1, 2, 3]);
- *
- * @example
- * // returns false
- * isArray({});
- */
-/**
- * Returns an array of the objects entries
- *
- * @function objEntries
- * @memberof Object
- * @since 1.0.0
- * @param {Object} obj
- * @returns {any[]} Array<[key: any, val: any]>]
- * @example
- * //returns [["a",1],["b",2],["c",3]]
- * objEntries({a:1,b:2,c:3})
- */
-const objEntries = Object.entries;
-
-/**
- * Iterates over each element in an array
- *
- * @function forEach
- * @memberof For
- * @param {any[]} arr
- * @param {function} fn fn(val: any, index: number, arr: any[])
- * @example
- * //returns a = [0,2,6]
- * const a = [1,2,3];
- *
- * forEach(a,(val,index)=>a[index]=val*index)
- */
-const forEach = (arr, fn) => arr.forEach(fn);
-
-/**
- * Iterates over each entry of an object
- *
- * @function forEachEntry
- * @memberof For
- * @param {object} obj
- * @param {function} fn fn(val: any, key: any, index: number, arr: any[])
- * @example
- * //returns a = {a:0, b: 2}
- * const a = {a:1, b:2};
- *
- * forEachEntry(a,(val,key,index)=>a[key]=val*index)
- */
-const forEachEntry = (obj, fn) => {
-    forEach(objEntries(obj), (entry, index) => {
-        fn(entry[1], entry[0], index, obj);
-    });
-};
-
-const apiLoadNames = function () {
-    const vm = this;
-    const urls = getUrls();
-
-    vm.ajax.namesLoaded = false;
-
-    fetch(urls.nameAPI)
-        .then(response => response.json())
-        .then(json => {
-            const resultData = {};
-            const resultPairs = [];
-            const nameStorage = [];
-
-            forEachEntry(json, (name, id) => {
-                resultData[id] = {
-                    name,
-                    img: `${urls.imageAPI}/${id}.jpg`,
-                    link: `${urls.buyAPI}${encodeURI(name)}`,
-                    price: null
-                };
-
-                // Only add each card once to parts, skip alternate arts
-                if (name.length > 0 && nameStorage.indexOf(name) === -1) {
-                    resultPairs.push([id, name]);
-                }
-
-                nameStorage.push(name);
-            });
-
-            vm.cards.data = resultData;
-            vm.cards.pairs = resultPairs.sort((a, b) => a[1].localeCompare(b[1]));
-            // vm.builderUpdateNames();
-
-            console.log(vm.cards);
-
-            vm.ajax.namesLoaded = true;
-        })
-        .catch(console.error);
-};
-
-const uriDeckDecode = function (deckParts, deckUri) {
-    const deckArray = JSON.parse(atob(deckUri.replace("?d=", "")));
-    const deckList = {};
-
-    deckParts.forEach((deckpart, index) => {
-        deckList[deckpart.id] = deckArray[1][index];
-    });
-
-    return [deckArray[0], deckList];
-};
-
-const deckLoadUri = function (uriDeck) {
-    const vm = this;
-    const deckArray = uriDeckDecode(this.deckparts, uriDeck);
-
-    vm.deck.name = deckArray[0];
-    vm.deck.list = deckArray[1];
-    vm.deckUpdate(uriDeck);
 };
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -8150,17 +8128,6 @@ if ('object' !== "undefined" && module.exports) {
 }
 });
 
-const convertDeckToFile = function (deckParts, deckList) {
-    let result = [];
-
-    deckParts.forEach(deckpart => {
-        result.push(deckpart.fileId);
-        result = result.concat(deckList[deckpart.id]);
-    });
-
-    return result.join("\n");
-};
-
 var clipboard = createCommonjsModule(function (module) {
 //  Import support https://stackoverflow.com/questions/13673346/supporting-both-commonjs-and-amd
 (function(name, definition) {
@@ -8339,6 +8306,17 @@ var clipboard = createCommonjsModule(function (module) {
 }));
 });
 
+const convertDeckToFile = function (deckParts, deckList) {
+    let result = [];
+
+    deckParts.forEach(deckpart => {
+        result.push(deckpart.fileId);
+        result = result.concat(deckList[deckpart.id]);
+    });
+
+    return result.join("\n");
+};
+
 const deckToText = function (deckparts, cards, deck) {
     const result = [];
 
@@ -8373,9 +8351,23 @@ const deckToText = function (deckparts, cards, deck) {
     return result.join("\n").trim();
 };
 
-//import deckLoad from "./lib/deckLoad";
+const uriDeckEncode = function (deck) {
+    const deckArray = [deck.name, Object.values(deck.list)];
+    const deckUri = btoa(JSON.stringify(deckArray));
+
+    return "?d=" + deckUri;
+};
+
 var YgoForms = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-form"},[_c('div',{staticClass:"form-app-wrapper form-group"},[_c('label',{staticClass:"form-app-label"},[_vm._v("Deck:")]),_c('div',{staticClass:"form-app-item"},[_c('input',{staticClass:"form-control",attrs:{"id":"formUploadDeck","type":"file","title":"Upload Deck","accept":".ydk"},on:{"change":_vm.fileOnUpload}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.deck.name),expression:"deck.name"}],staticClass:"form-control deck-name",attrs:{"type":"text","title":"Deck Title","placeholder":"Deck Title"},domProps:{"value":(_vm.deck.name)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.deck, "name", $event.target.value);},function($event){_vm.deckUpdate();}]}})]),_c('a',{staticClass:"btn btn-primary form-control",attrs:{"title":"Download Deck","download":""},on:{"click":_vm.fileDownloadDeck}},[_vm._v("Download")])]),_c('div',{staticClass:"form-app-wrapper form-group"},[_c('label',{staticClass:"form-app-label"},[_vm._v("Share:")]),_c('div',{staticClass:"form-app-item"},[_c('input',{staticClass:"form-control",attrs:{"id":"formLinkShare","type":"url","title":"Shareable Link"},domProps:{"value":_vm.shareLink}})]),_c('a',{staticClass:"btn btn-primary form-control",attrs:{"title":"Copy Decklist to Clipboard"},on:{"click":_vm.copyShareText}},[_vm._v("Copy Decklist to Clipboard")])]),_c('div',{staticClass:"form-app-wrapper form-group"},[_c('label',{staticClass:"form-app-label"},[_vm._v("Price:")]),_c('div',{staticClass:"form-app-item"},[_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.price.active),expression:"price.active"}],staticClass:"form-control deck-currency",attrs:{"title":"Price Currency"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.price, "active", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);}}},_vm._l((_vm.price.currencies),function(currency){return _c('option',{key:currency.id,domProps:{"value":currency.id}},[_vm._v(_vm._s(currency.name))])}))]),_c('div',{staticClass:"btn btn-primary form-control",attrs:{"title":"Load Prices"},on:{"click":_vm.apiLoadPrices}},[_c('span',{attrs:{"hidden":_vm.ajax.pricesLoaded}},[_vm._v("Load Prices")]),_c('span',{attrs:{"hidden":!_vm.ajax.pricesLoaded}},[_c('i',{staticClass:"fa fa-circle-o-notch fa-spin fa-fw"})])])])])},staticRenderFns: [],
-  props: ["deck", "deckparts", "ajax", "price"],
+  props: [
+    "deck",
+    "deckparts",
+    "cards",
+    "ajax",
+    "price",
+    "apiLoadPrices",
+    "deckFromFile"
+  ],
   data: () => {
     return {};
   },
@@ -8383,9 +8375,7 @@ var YgoForms = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
     fileOnUpload(e) {
       const files = e.target.files || e.dataTransfer.files;
 
-      console.log(files);
-
-      //this.deckLoad(files[0]);
+      this.deckFromFile(files[0]);
     },
     fileDownloadDeck() {
       const fileData = convertDeckToFile(this.deckparts, this.deck.list);
@@ -8399,48 +8389,24 @@ var YgoForms = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       clipboard.copy({
         "text/plain": deckToText(this.deckparts, this.cards, this.deck)
       });
-    },
-    apiLoadPrices() {}
+    }
   },
   computed: {
     shareLink() {
-      return location.origin + location.pathname + this.deck.link;
+      return location.origin + location.pathname + uriDeckEncode(this.deck);
     }
   }
 };
 
-/*import priceConvert from "./lib/priceConvert";
-import priceForCard from "./lib/priceForCard";
-import priceForSection from "./lib/priceForSection"; */
-var YgoDeck = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-deck"})},staticRenderFns: [],
-  props: ["cards", "deckparts", "deck", "price", "ajax"],
-  data: () => {
-    return {};
-  },
-  computed: {}
-};
-
-/* import builderUpdateNames from "./lib/builderUpdateNames";
-import builderDeckAdd from "./lib/builderDeckAdd";
-import builderDeckRemove from "./lib/builderDeckRemove"; */
-
-var YgoBuilder = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-builder"})},staticRenderFns: [],
-  props: ["cards", "deckparts", "deck", "builder", "ajax"],
-  data: () => {
-    return {};
-  },
-  computed: {}
-};
-
-//import apiLoadPrices from "./lib/apiLoadPrices";
-//import deckUpdate from "./lib/deckUpdate";
-//import deckCardsWithoutPriceData from "./lib/deckCardsWithoutPriceData";
-var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('ygo-forms',{attrs:{"deckparts":"deckparts","deck":_vm.deck,"ajax":_vm.ajax,"price":_vm.price}},[_vm._v(">")]),_c('ygo-deck',{attrs:{"deckparts":"deckparts","cards":_vm.cards,"deck":_vm.deck,"ajax":_vm.ajax,"price":_vm.price}}),_c('ygo-builder',{attrs:{"deckparts":"deckparts","cards":_vm.cards,"deck":_vm.deck,"ajax":_vm.ajax,"builder":_vm.builder}})],1)},staticRenderFns: [],
+/* import YgoDeck from "./components/YgoDeck.vue";
+import YgoBuilder from "./components/YgoBuilder.vue";
+ */
+var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('ygo-forms',{attrs:{"deckparts":_vm.deckparts,"cards":_vm.cards,"deck":_vm.deck,"ajax":_vm.ajax,"price":_vm.price,"deckFromFile":_vm.deckFromFile,"apiLoadPrices":_vm.apiLoadPrices}})],1)},staticRenderFns: [],
   name: "app",
   components: {
-    YgoForms,
-    YgoDeck,
-    YgoBuilder
+    YgoForms
+    /*   YgoDeck,
+    YgoBuilder */
   },
   data: () => {
     return {
@@ -8460,7 +8426,6 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       },
       deck: {
         name: "Unnamed",
-        link: "",
         list: {
           main: [],
           extra: [],
@@ -8474,41 +8439,108 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
     };
   },
   methods: {
-    //uriLocationNoParam,
+    apiLoadNames() {
+      const vm = this;
+      const urls = getUrls();
 
-    apiLoadNames,
-    //apiLoadPrices,
+      vm.ajax.namesLoaded = false;
 
-    //deckLoad,
-    deckLoadUri,
-    //deckUpdate,
-    // deckCardsWithoutPriceData
+      fetch(urls.nameAPI)
+        .then(response => response.json())
+        .then(json => {
+          const resultData = {};
+          const resultPairs = [];
+          const nameStorage = [];
 
-    /*     priceConvert,
-    priceForCard,
-    priceForSection,
+          forEachEntry(json, (name, id) => {
+            resultData[id] = {
+              name,
+              img: `${urls.imageAPI}/${id}.jpg`,
+              link: `${urls.buyAPI}${encodeURI(name)}`,
+              price: null
+            };
 
-    builderUpdateNames,
-    builderDeckAdd,
-    builderDeckRemove,
+            // Only add each card once to parts, skip alternate arts
+            if (name.length > 0 && nameStorage.indexOf(name) === -1) {
+              resultPairs.push([id, name]);
+            }
 
-    fileDownloadDeck,
-    fileOnUpload,
+            nameStorage.push(name);
+          });
 
-    shareText */
-    deckUpdate() {
-      console.log("update called");
-    }
+          vm.cards.data = resultData;
+          vm.cards.pairs = resultPairs.sort((a, b) => a[1].localeCompare(b[1]));
+
+          vm.ajax.namesLoaded = true;
+        })
+        .catch(console.error);
+    },
+    apiLoadPrices() {
+      const vm = this;
+      const urls = getUrls();
+      const cardIds = getCardsWithoutPriceData(vm.deck.list, vm.cards.data);
+
+      if (cardIds.length > 0) {
+        const cardNames = cardIds.map(cardId => vm.cards.data[cardId].name);
+        const priceQuery = btoa(JSON.stringify(cardNames));
+
+        vm.ajax.pricesLoaded = false;
+
+        fetch(urls.priceAPI + priceQuery)
+          .then(response => response.json())
+          .then(json => {
+            cardIds
+              .forEach((id, index) => {
+                const priceData = json[index];
+                const card = vm.cards.data[id];
+
+                if (card) {
+                  card.price = {
+                    low: priceData.low,
+                    average: priceData.average,
+                    high: priceData.high
+                  };
+                }
+              })
+              .catch(console.error);
+
+            vm.ajax.pricesLoaded = true;
+          });
+      } else {
+        vm.ajax.pricesLoaded = true;
+      }
+    },
+    deckFromFile(file) {
+      const vm = this;
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        vm.deck.name = file.name.replace(".ydk", "");
+        vm.deck.list = convertFileToDeck(vm.deckparts, e.target.result);
+      };
+
+      reader.readAsText(file);
+    },
+    deckFromUri() {
+      const vm = this;
+      const deckArray = uriDeckDecode(vm.deckparts, uriDeck);
+
+      vm.deck.name = deckArray[0];
+      vm.deck.list = deckArray[1];
+    },
+    deckToFile() {},
+    deckToUri() {},
+    deckToText() {}
   },
   mounted() {
+    const vm = this;
     const urlQuery = location.search;
 
-    this.apiLoadNames();
+    vm.apiLoadNames();
 
     if (urlQuery.includes("?d")) {
-      this.deckLoadUri(urlQuery);
+      vm.deckLoadUri(urlQuery);
     }
-    console.log(this);
   }
 };
 

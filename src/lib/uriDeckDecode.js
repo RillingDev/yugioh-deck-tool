@@ -9,13 +9,4 @@ const uriDeckDecode = function (deckParts, deckUri) {
     return [deckArray[0], deckList];
 };
 
-const deckLoadUri = function (uriDeck) {
-    const vm = this;
-    const deckArray = uriDeckDecode(this.deckparts, uriDeck);
-
-    vm.deck.name = deckArray[0];
-    vm.deck.list = deckArray[1];
-    vm.deckUpdate(uriDeck);
-};
-
-export default deckLoadUri;
+export default uriDeckDecode;
