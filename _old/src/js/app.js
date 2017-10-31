@@ -23,7 +23,7 @@ import fileDownloadDeck from "./methods/fileDownloadDeck";
 import fileOnUpload from "./methods/fileOnUpload";
 import shareText from "./methods/shareText";
 
-//ready-event required because ygoprodeck.com loads scripts in head
+// ready-event required because ygoprodeck.com loads scripts in head
 document.addEventListener("DOMContentLoaded", () => {
     const urlQuery = location.search;
     const priceApp = new Vue({

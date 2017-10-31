@@ -1,0 +1,32 @@
+.deck .deck-part {
+    margin-bottom: 40px;
+    &-main {
+        .deck-content {
+            background-color: $color-deckpart-main;
+        }
+    }
+    &-extra {
+        .deck-content {
+            background-color: $color-deckpart-extra;
+        }
+    }
+    &-side {
+        .deck-content {
+            background-color: $color-deckpart-side;
+        }
+    }
+}
+
+.deck-title {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.deck-content {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 3px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

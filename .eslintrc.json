@@ -1,8 +1,10 @@
 {
     "plugins": [
-        "unicorn"
+        "vue"
     ],
-    "extends": "plugin:unicorn/recommended",
+    "extends": [
+        "vue"
+    ],
     "env": {
         "es6": true,
         "node": true,
@@ -10,7 +12,11 @@
     },
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": 8
+        "ecmaVersion": 8,
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        }
     },
     "rules": {
         "indent": ["warn", 4],
@@ -18,9 +24,7 @@
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
         "no-console": "warn",
-
-        "unicorn/filename-case": ["warn", {
-            "case": "camelCase"
-        }]
+        "comma-dangle": "off",
+        "space-in-parens": "off"
     }
 }

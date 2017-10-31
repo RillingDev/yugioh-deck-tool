@@ -2,66 +2,50 @@
 
 /* eslint no-console: "off" */
 const fs = require("fs");
+const path = require("path");
 const rollup = require("rollup");
-
 const CONSTANTS = require("../../package.json").constants;
 
 /**
- * Bundles project with given formats
+ * Generates and saves bundled file
+ *
+ * @param {Object} format
+ * @param {Object} bundle
+ * @returns {Promise}
+ */
+const createBundle = (format, bundle) => new Promise((resolve, reject) => {
+    bundle
+        .generate({
+            name: CONSTANTS.js.namespace.module,
+            format: format.type
+        })
+        .then(result => {
+            fs.writeFile(
+                path.join(CONSTANTS.dirBase.output, `${CONSTANTS.js.namespace.file}${format.ext}.js`),
+                result.code,
+                err => err ? reject(err) : resolve(0)
+            );
+        })
+        .catch(reject);
+});
+
+/**
+ * Starts rollup and creates multiple bundles
  *
  * @param {Array<Object>} formats
- * @param {Array<Object>} plugins
+ * @param {Array<Function>} plugins
  */
 module.exports = function (formats, plugins) {
-    const promises = [];
-
     rollup
         .rollup({
             plugins,
-            input: `${CONSTANTS.dirBase.input}/${CONSTANTS.js.input}.js`,
+            input: path.join(CONSTANTS.dirBase.input, CONSTANTS.js.input),
         })
         .then(bundle => {
-            formats.forEach(format => {
-                const bundleFormat = new Promise((resolve, reject) => {
-                    bundle
-                        .generate({
-                            name: CONSTANTS.js.namespace.module,
-                            format: format.id
-                        })
-                        .then(result => {
-                            const path = `${CONSTANTS.dirBase.output}/${CONSTANTS.js.namespace.file}${format.ext}.js`;
-
-                            fs.writeFile(
-                                path,
-                                result.code,
-                                err => {
-                                    if (err) {
-                                        reject(err);
-                                    } else {
-                                        console.log(`Completed bundling ${path}`);
-                                        resolve();
-                                    }
-                                }
-                            );
-                        })
-                        .catch(reject);
-                });
-
-                promises.push(bundleFormat);
-            });
-
             Promise
-                .all(promises)
-                .then(() => {
-                    return 0;
-                })
-                .catch(err => {
-                    console.log("One or more errors were encountered during generation");
-                    console.log(err.message);
-                });
+                .all(formats.map(format => createBundle(format, bundle)))
+                .then(() => console.log("Completed bundling"))
+                .catch(err => console.error("Bundling error", err));
         })
-        .catch(err => {
-            console.log("One or more errors were encountered during bundling");
-            console.log(err.message);
-        });
+        .catch(err => console.error("Import errror", err));
 };
