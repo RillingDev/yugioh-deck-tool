@@ -32,7 +32,10 @@ import builderDeckRemove from "./lib/builderDeckRemove"; */
 export default {
   props: ["cards", "deckparts", "deck", "builder", "ajax"],
   data: () => {
-    return {};
+    return {
+      filter: "",
+      pairsFiltered: []
+    };
   },
   computed: {}
 };

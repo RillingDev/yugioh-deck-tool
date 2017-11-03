@@ -1,35 +1,34 @@
 import {
-    forEachEntry
+    forEachEntry,
+    arrClone
 } from "lightdash";
+
+const sortMapEntries = (map, fn) => new Map(arrClone(map.entries()).sort(fn));
 
 const apiLoadNames = (urls) => new Promise((resolve, reject) => {
     fetch(urls.nameAPI)
         .then(response => response.json())
         .then(json => {
-            const data = {};
-            const pairs = [];
-            const nameStorage = [];
+            const nameCache = new Set();
+            const data = new Map();
+            const dataUniquePairs = new Map();
 
             forEachEntry(json, (name, id) => {
-                data[id] = {
-                    name,
-                    id, // : `${urls.imageAPI}/${id}.jpg`
-                    price: null
-                };
+                if (name.length > 0) {
+                    data.set(id, name);
 
-                // Only add each card once to parts, skip alternate arts
-                if (name.length > 0 && nameStorage.indexOf(name) === -1) {
-                    pairs.push([id, name]);
+                    // Only add each card once to parts, skip alternate arts
+                    if (!nameCache.has(name)) {
+                        dataUniquePairs.set(id, name);
+                    }
+
+                    nameCache.add(name);
                 }
-
-                nameStorage.push(name);
             });
-
-            pairs.sort((a, b) => a[1].localeCompare(b[1]));
 
             resolve({
                 data,
-                pairs,
+                pairs: sortMapEntries(dataUniquePairs, (entryA, entryB) => entryA[1].localeCompare(entryB[1])),
             });
         })
         .catch(reject);

@@ -1,14 +1,14 @@
 import {
     forEachEntry,
-    objCloneDeep
+    mapFromObject
 } from "lightdash";
 
-const getCardsWithoutPriceData = function (deckList, cardData) {
+const getCardsWithoutPriceData = function (deckList, priceData) {
     const result = [];
 
     forEachEntry(deckList, deckpart => {
         deckpart.forEach(cardId => {
-            if (!result.includes(cardId) && (cardData[cardId] && !cardData[cardId].price)) {
+            if (!result.includes(cardId) && !priceData.has(cardId)) {
                 result.push(cardId);
             }
         });
@@ -17,36 +17,49 @@ const getCardsWithoutPriceData = function (deckList, cardData) {
     return result;
 };
 
-const apiLoadPrices = (urls, deckList, cardData) => new Promise((resolve, reject) => {
-    const cardIds = getCardsWithoutPriceData(deckList, cardData);
-    const cardDataNew = objCloneDeep(cardData);
+const apiLoadPrices = (urls, deckList, cardData, oldPrices) => new Promise((resolve, reject) => {
+    const result = new Map(oldPrices);
+    const cardIdsToFetch = getCardsWithoutPriceData(deckList, result);
 
-    if (cardIds.length > 0) {
-        const cardNames = cardIds.map(cardId => cardDataNew[cardId].name);
-        const priceQuery = btoa(JSON.stringify(cardNames));
+    console.log({
+        urls,
+        deckList,
+        cardData,
+        result,
+        cardIdsToFetch
+    });
+
+    if (cardIdsToFetch.length > 0) {
+        const cardNamesToFetch = cardIdsToFetch.map(cardId => cardData.get(cardId).name);
+        const priceQuery = btoa(JSON.stringify(cardNamesToFetch));
+
+        console.log({
+            cardNamesToFetch,
+            priceQuery
+        });
 
         fetch(urls.priceAPI + priceQuery)
             .then(response => response.json())
             .then(json => {
-                cardIds
+                cardIdsToFetch
                     .forEach((id, index) => {
                         const priceData = json[index];
-                        const card = cardDataNew[id];
+                        const card = cardData[id];
 
                         if (card) {
-                            card.price = {
+                            result.set(id, {
                                 low: priceData.low,
                                 average: priceData.average,
                                 high: priceData.high
-                            };
+                            });
                         }
                     });
 
-                resolve(cardDataNew);
+                resolve(result);
             })
             .catch(reject);
     } else {
-        resolve(false);
+        resolve(true);
     }
 });
 

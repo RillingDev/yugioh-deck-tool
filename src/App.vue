@@ -19,11 +19,11 @@
             <div class="form-app-wrapper form-group">
                 <label class="form-app-label">Price:</label>
                 <div class="form-app-item">
-                    <select class="form-control deck-currency" title="Price Currency" v-model="price.active">
-                        <option v-for="currency in price.currencies" :key="currency.id" :value="currency.id">{{currency.name}}</option>
+                    <select class="form-control deck-currency" title="Price Currency" v-model="price.activeCurrency">
+                        <option v-for="currency in price.currencies" :key="currency.id" :value="currency">{{currency.name}}</option>
                     </select>
                 </div>
-                <div class="btn btn-primary form-control" title="Load Prices" @click="fetchNames">
+                <div class="btn btn-primary form-control" title="Load Prices" @click="fetchPrices">
                     <span :hidden="ajax.pricesLoaded">Load Prices</span>
                     <span :hidden="!ajax.pricesLoaded">
                         <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
@@ -31,20 +31,44 @@
                 </div>
             </div>
         </div>
-         <!--<ygo-deck
-            :deckparts="deckparts"
-            :cards="cards"
-            :deck="deck"
-            :ajax="ajax"
-            :price="price"
-        ></ygo-deck>
-        <ygo-builder
-            :deckparts="deckparts"
-            :cards="cards"
-            :deck="deck"
-            :ajax="ajax"
-            :builder="builder"
-        ></ygo-builder>-->
+        <div class="main-deck">
+            <h3>Decklist:</h3>
+            <div class="deck" v-if="ajax.namesLoaded">
+                <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
+                    <div class="deck-title">
+                        <h4>Total:</h4>
+                        <!-- <div class="deck-price">
+                            <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForSection("*",mode.id)}}</span>
+                        </div> -->
+                        <ygo-prices :price="price" :items="deck.list"></ygo-prices>
+                    </div>
+                </div>
+
+  <!--               <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
+                    <div class="deck-title">
+                        <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
+                        <div class="deck-price" v-if="ajax.pricesLoaded">
+                            <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForSection(deckpart.id,mode.id)}}</span>
+                        </div>
+                    </div>
+                    <div class="deck-content" v-if="cards.data">
+                        <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" :key="cardId" v-if="cards.data[cardId]" :href="cards.data[cardId].link"
+                            @contextmenu.prevent="builderDeckRemove(cardId,deckpart.id)">
+                            <div class="deck-card-image">
+                                <img width="100" height="144" :src="cards.data[cardId].img">
+                            </div>
+                            <div class="deck-card-text">
+                                <div class="deck-card-name">{{cards.data[cardId].name}}</div>
+                                <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded">
+                                    <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForCard(cardId,mode.id)}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
     </div>
 </template>
 
@@ -64,22 +88,25 @@ import priceCurrencies from "./lib/data/priceCurrencies";
 import priceModes from "./lib/data/priceModes";
 import getUrls from "./lib/data/urls";
 
+import YgoPrices from "./components/YgoPrices.vue";
+
 const urls = getUrls();
 
 export default {
   name: "app",
-  components: {},
+  components: { YgoPrices },
   data: () => {
     return {
       cards: {
         pairs: [],
-        data: {}
+        data: new Map()
       },
       deckparts,
       price: {
-        active: "dollar_us",
+        activeCurrency: priceCurrencies[0],
         currencies: priceCurrencies,
-        modes: priceModes
+        modes: priceModes,
+        data: new Map()
       },
       ajax: {
         namesLoaded: false,
@@ -92,16 +119,12 @@ export default {
           extra: [],
           side: []
         }
-      },
-      builder: {
-        filter: "",
-        pairsFiltered: []
       }
     };
   },
   computed: {
     shareLink() {
-      return location.origin + location.pathname + uriDeckEncode(this.deck);
+      return location.origin + location.pathname + this.deckToUri();
     }
   },
   methods: {
@@ -113,17 +136,23 @@ export default {
           vm.cards.data = result.data;
           vm.cards.pairs = result.pairs;
           vm.ajax.namesLoaded = true;
+
+          console.log(vm.cards);
         })
         .catch(console.error);
     },
     fetchPrices() {
       const vm = this;
 
-      apiLoadNames(urls, vm.deck.list, vm.card.data)
+      vm.ajax.pricesLoaded = false;
+
+      apiLoadPrices(urls, vm.deck.list, vm.cards.data, vm.price.data)
         .then(result => {
           if (result !== false) {
-            vm.cards.data = result;
+            vm.price.data = result;
           }
+
+          vm.ajax.pricesLoaded = true;
         })
         .catch(console.error);
     },
@@ -157,7 +186,9 @@ export default {
 
       return FileSaver.saveAs(file);
     },
-    deckToUri() {},
+    deckToUri() {
+      return uriDeckEncode(this.deck);
+    },
     deckToText() {
       return convertDeckToText(this.deckparts, this.cards, this.deck);
     },
@@ -173,7 +204,7 @@ export default {
     this.fetchNames();
 
     if (urlQuery.includes("?d")) {
-      this.deckLoadUri(urlQuery);
+      this.deckFromUri(urlQuery);
     }
   }
 };

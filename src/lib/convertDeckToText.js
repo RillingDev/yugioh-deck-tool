@@ -2,15 +2,15 @@ const convertDeckToText = function (deckparts, cards, deck) {
     const result = [];
 
     deckparts.forEach(deckpart => {
-        const cards = deck.list[deckpart.id];
+        const deckpartCards = deck.list[deckpart.id];
 
-        if (cards.length > 0) {
+        if (deckpartCards.length > 0) {
             const cardAmount = new Map();
             const cardCache = [];
 
             result.push(`${deckpart.name}:`);
 
-            cards.forEach(cardId => {
+            deckpartCards.forEach(cardId => {
                 if (cardAmount.has(cardId)) {
                     cardAmount.set(cardId, cardAmount.get(cardId) + 1);
                 } else {

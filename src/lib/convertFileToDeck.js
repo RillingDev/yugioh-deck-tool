@@ -1,11 +1,20 @@
-const convertFileToDeck = function (deckParts, fileContent) {
-    const fileContentTrimmed = fileContent.replace(/#created.+/, "").trim();
-    const arr = fileContentTrimmed.split(/[#!].+/g).splice(1);
-    const arrParts = arr.map(part => part.split("\n").filter(line => line.length > 1).map(Number));
+const convertFileToDeck = function (deckparts, fileContent) {
     const result = {};
+    const fileParts = fileContent
+        .replace(/#created.+/, "")
+        .trim()
+        .split(/[#!].+\n?/g)
+        .slice(1);
 
-    deckParts.forEach((deckpart, index) => {
-        result[deckpart.id] = arrParts[index];
+    deckparts.forEach((deckpart, index) => {
+        result[deckpart.id] = fileParts[index]
+            .split(/\n\r?/g)
+            .map(line => line.trim())
+            .filter(line => line.length > 0);
+    });
+
+    console.log({
+        result
     });
 
     return result;
