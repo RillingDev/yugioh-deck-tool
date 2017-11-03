@@ -37,19 +37,14 @@
                 <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
                     <div class="deck-title">
                         <h4>Total:</h4>
-                        <!-- <div class="deck-price">
-                            <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForSection("*",mode.id)}}</span>
-                        </div> -->
-                        <ygo-prices :price="price" :items="deck.list"></ygo-prices>
+                        <ygo-prices :price="price" :items="Object.values(deck.list)"></ygo-prices>
                     </div>
                 </div>
 
                 <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
                     <div class="deck-title">
                         <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
-                       <!--<div class="deck-price" v-if="ajax.pricesLoaded">
-                            <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForSection(deckpart.id,mode.id)}}</span>
-                        </div>-->
+                        <ygo-prices :price="price" :items="deck.list[deckpart.id]"></ygo-prices>
                     </div>
                     <div class="deck-content" v-if="deck.list[deckpart.id].length">
                         <ygo-card
@@ -57,6 +52,7 @@
                             :key="`${cardId}_${index}`"
                             :cardid="cardId"
                             :carddata="cards.data"
+                            :price="price"
                         ></ygo-card>
                     </div>
                 </div>

@@ -9,21 +9,22 @@
         </div>
         <div class="deck-card-text">
             <div class="deck-card-name">{{name}}</div>
-            <!--<div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded">
-                <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForCard(cardId,mode.id)}}</span>
-            </div>-->
+            <ygo-prices :price="price" :items="cardid"></ygo-prices>
         </div>
     </a>
 </template>
 
 <script>
-import { forEachEntry } from "lightdash";
 import getUrls from "../lib/data/urls";
+import YgoPrices from "./YgoPrices.vue";
 
 const urls = getUrls();
 
 export default {
-  props: ["cardid", "carddata"],
+  components: {
+    YgoPrices
+  },
+  props: ["cardid", "carddata", "price"],
   computed: {
     hasData() {
       return this.carddata.has(this.cardid);

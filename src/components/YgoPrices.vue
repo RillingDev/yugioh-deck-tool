@@ -1,5 +1,5 @@
 <template>
-    <div class="deck-price" >
+    <div class="deck-price" v-if="price.data.size>0">
         <span class="deck-price-item pricemode" v-for="pricemode in price.modes" :key="pricemode.id" :class="'pricemode-'+pricemode.id">
             {{priceForSection(pricemode)}}
         </span>
@@ -7,8 +7,9 @@
 </template>
 
 <script>
-import { forEachEntry } from "lightdash";
+import { arrFlattenDeep, arrCompact, isArray } from "lightdash";
 import formatPrice from "../lib/formatPrice";
+import getPriceOfMode from "../lib/getPriceOfMode";
 
 export default {
   props: ["items", "price"],
@@ -16,13 +17,22 @@ export default {
     return {};
   },
   methods: {
-    priceForSection(pricemode) {
-      /*       const val = this.items.reduce(
-        (a, b) => a.price[pricemode.id] + b.price[pricemode.id]
-      ); */
-      console.log(this.items);
+    priceForSection(priceMode) {
+      if (isArray(this.items)) {
+        const listPrices = arrFlattenDeep(this.items).map(cardId =>
+          getPriceOfMode(this.price.data, priceMode, cardId)
+        );
 
-      return formatPrice(123, this.price.activeCurrency);
+        return formatPrice(
+          listPrices.length > 0 ? listPrices.reduce((a, b) => a + b) : 0,
+          this.price.activeCurrency
+        );
+      } else {
+        return formatPrice(
+          getPriceOfMode(this.price.data, priceMode, this.items),
+          this.price.activeCurrency
+        );
+      }
     }
   }
 };
