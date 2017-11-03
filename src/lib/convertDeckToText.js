@@ -19,8 +19,7 @@ const convertDeckToText = function (deckparts, cards, deck) {
             });
 
             cardAmount.forEach((amount, cardId) => {
-                const card = cards.pairs.find(pair => pair[0] === String(cardId));
-                const cardName = card ? card[1] : `[${cardId}]`;
+                const cardName = cards.pairs.has(cardId) ? cards.pairs.get(cardId) : `[${cardId}]`;
 
                 cardCache.push(`${cardName} x${amount}`);
             });

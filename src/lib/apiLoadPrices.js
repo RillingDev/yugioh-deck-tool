@@ -17,49 +17,33 @@ const getCardsWithoutPriceData = function (deckList, priceData) {
     return result;
 };
 
-const apiLoadPrices = (urls, deckList, cardData, oldPrices) => new Promise((resolve, reject) => {
-    const result = new Map(oldPrices);
-    const cardIdsToFetch = getCardsWithoutPriceData(deckList, result);
-
-    console.log({
-        urls,
-        deckList,
-        cardData,
-        result,
-        cardIdsToFetch
-    });
+const apiLoadPrices = (urls, deckList, cardData, priceDataOld) => new Promise((resolve, reject) => {
+    const priceData = new Map(priceDataOld);
+    const cardIdsToFetch = getCardsWithoutPriceData(deckList, priceDataOld);
 
     if (cardIdsToFetch.length > 0) {
-        const cardNamesToFetch = cardIdsToFetch.map(cardId => cardData.get(cardId).name);
+        const cardNamesToFetch = cardIdsToFetch.map(cardId => cardData.get(cardId));
         const priceQuery = btoa(JSON.stringify(cardNamesToFetch));
-
-        console.log({
-            cardNamesToFetch,
-            priceQuery
-        });
 
         fetch(urls.priceAPI + priceQuery)
             .then(response => response.json())
             .then(json => {
                 cardIdsToFetch
-                    .forEach((id, index) => {
-                        const priceData = json[index];
-                        const card = cardData[id];
+                    .forEach((cardId, index) => {
+                        const cardIdPriceData = json[index];
 
-                        if (card) {
-                            result.set(id, {
-                                low: priceData.low,
-                                average: priceData.average,
-                                high: priceData.high
-                            });
-                        }
+                        priceData.set(cardId, {
+                            low: cardIdPriceData.low,
+                            average: cardIdPriceData.average,
+                            high: cardIdPriceData.high
+                        });
                     });
 
-                resolve(result);
+                resolve(priceData);
             })
             .catch(reject);
     } else {
-        resolve(true);
+        resolve(priceData);
     }
 });
 

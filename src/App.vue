@@ -24,8 +24,8 @@
                     </select>
                 </div>
                 <div class="btn btn-primary form-control" title="Load Prices" @click="fetchPrices">
-                    <span :hidden="ajax.pricesLoaded">Load Prices</span>
-                    <span :hidden="!ajax.pricesLoaded">
+                    <span :hidden="!ajax.pricesLoaded">Load Prices</span>
+                    <span :hidden="ajax.pricesLoaded">
                         <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
                     </span>
                 </div>
@@ -110,7 +110,7 @@ export default {
       },
       ajax: {
         namesLoaded: false,
-        pricesLoaded: false
+        pricesLoaded: true
       },
       deck: {
         name: "Unnamed",
@@ -131,13 +131,15 @@ export default {
     fetchNames() {
       const vm = this;
 
+      vm.ajax.namesLoaded = false;
+
       apiLoadNames(urls)
         .then(result => {
           vm.cards.data = result.data;
           vm.cards.pairs = result.pairs;
           vm.ajax.namesLoaded = true;
 
-          console.log(vm.cards);
+          console.log("LOADED NAMES", vm.cards.data);
         })
         .catch(console.error);
     },
@@ -151,6 +153,8 @@ export default {
           if (result !== false) {
             vm.price.data = result;
           }
+
+          console.log("LOADED PRICES", vm.price.data);
 
           vm.ajax.pricesLoaded = true;
         })
