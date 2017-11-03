@@ -1,7 +1,0 @@
-a.deck-card(target="_blank",v-for="cardId in deck.list[deckpart.id]",v-if="cards.data[cardId]",v-bind:href="cards.data[cardId].link",@contextmenu.prevent="builderDeckRemove(cardId,deckpart.id)")
-    .deck-card-image
-        img(width="100",height="144",v-bind:src="cards.data[cardId].img")
-    .deck-card-text
-        .deck-card-name {{cards.data[cardId].name}}
-        .deck-price.deck-price--sm(v-if="ajax.pricesLoaded")
-            span.deck-price-item.pricemode(v-for="mode in price.modes",v-bind:class="'pricemode-'+mode.id") {{priceForCard(cardId,mode.id)}}

@@ -1,51 +1,53 @@
 <template>
-    <div>
-        <div class="main-form">
-            <div class="form-app-wrapper form-group">
-                <label class="form-app-label">Deck:</label>
-                <div class="form-app-item">
-                    <input class="form-control" id="formUploadDeck" type="file" title="Upload Deck" accept=".ydk" @change="fileOnUpload">
-                    <input class="form-control deck-name" type="text" title="Deck Title" placeholder="Deck Title" v-model="deck.name" @input="deckUpdate()">
+    <div class="app">
+
+        <!-- app-forms -->
+        <div class="app-section app-forms">
+            <!-- app-forms-upload -->
+            <div class="form-group">
+                <label>Deck:</label>
+                <div class="form-group-section">
+                    <input class="form-control" type="file" accept=".ydk" @change="fileOnUpload" title="Upload Deck">
+                    <input class="form-control form-deck-name" type="text" v-model="deck.name" @input="deckUpdate()" title="Deck Title" placeholder="Deck Title" >
                 </div>
-                <a class="btn btn-primary form-control" title="Download Deck" download @click="deckToFile">Download</a>
+                <button class="btn btn-primary form-control" download @click="deckToFile" title="Download Deck">Download</button>
             </div>
-            <div class="form-app-wrapper form-group">
-                <label class="form-app-label">Share:</label>
-                <div class="form-app-item">
-                    <input class="form-control" id="formLinkShare" type="url" title="Shareable Link" :value="shareLink">
+             <!-- app-forms-share -->
+            <div class="form-group">
+                <label>Share:</label>
+                <div class="form-group-section">
+                    <input class="form-control" type="url" :value="shareLink" title="Shareable Link">
                 </div>
-                <a class="btn btn-primary form-control" title="Copy Decklist to Clipboard" @click="copyShareText">Copy Decklist to Clipboard</a>
+                <button class="btn btn-primary form-control" @click="copyShareText" title="Copy Decklist to Clipboard">Copy Decklist to Clipboard</button>
             </div>
-            <div class="form-app-wrapper form-group">
-                <label class="form-app-label">Price:</label>
-                <div class="form-app-item">
-                    <select class="form-control deck-currency" title="Price Currency" v-model="price.activeCurrency">
+             <!-- app-forms-price -->
+            <div class="form-group">
+                <label>Price:</label>
+                <div class="form-group-section">
+                    <select class="form-control form-deck-currency" v-model="price.activeCurrency" title="Price Currency">
                         <option v-for="currency in price.currencies" :key="currency.id" :value="currency">{{currency.name}}</option>
                     </select>
                 </div>
-                <div class="btn btn-primary form-control" title="Load Prices" @click="fetchPrices">
+                <button class="btn btn-primary form-control" @click="fetchPrices" title="Load Prices">
                     <span :hidden="!ajax.pricesLoaded">Load Prices</span>
                     <span :hidden="ajax.pricesLoaded">
                         <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
                     </span>
-                </div>
+                </button>
             </div>
         </div>
-        <div class="main-deck">
+
+         <!-- app-deck -->
+        <div class="app-section app-deck">
             <h3>Decklist:</h3>
             <div class="deck" v-if="ajax.namesLoaded">
                 <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
-                    <div class="deck-title">
-                        <h4>Total:</h4>
-                        <ygo-prices :price="price" :items="Object.values(deck.list)"></ygo-prices>
-                    </div>
+                    <h4>Total:</h4>
+                    <ygo-prices :price="price" :items="Object.values(deck.list)"></ygo-prices>
                 </div>
-
                 <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
-                    <div class="deck-title">
-                        <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
-                        <ygo-prices :price="price" :items="deck.list[deckpart.id]"></ygo-prices>
-                    </div>
+                    <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
+                    <ygo-prices :price="price" :items="deck.list[deckpart.id]"></ygo-prices>
                     <div class="deck-content" v-if="deck.list[deckpart.id].length">
                         <ygo-card
                             v-for="(cardId, index) in deck.list[deckpart.id]"
@@ -57,8 +59,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
     </div>
 </template>
 
@@ -217,6 +219,7 @@ $color-pricemode-high: #ffdad0;
 @import "styles/variables";
 @import "styles/bootstrap";
 
+@import "styles/blocks/app";
 /* @import "styles/main/general";
 @import "styles/main/typo";
 @import "styles/blocks/forms";
