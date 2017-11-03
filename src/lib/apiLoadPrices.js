@@ -1,6 +1,5 @@
 import {
-    forEachEntry,
-    mapFromObject
+    forEachEntry
 } from "lightdash";
 
 const getCardsWithoutPriceData = function (deckList, priceData) {

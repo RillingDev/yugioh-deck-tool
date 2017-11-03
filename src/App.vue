@@ -44,29 +44,23 @@
                     </div>
                 </div>
 
-  <!--               <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
+                <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
                     <div class="deck-title">
                         <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
-                        <div class="deck-price" v-if="ajax.pricesLoaded">
+                       <!--<div class="deck-price" v-if="ajax.pricesLoaded">
                             <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForSection(deckpart.id,mode.id)}}</span>
-                        </div>
+                        </div>-->
                     </div>
-                    <div class="deck-content" v-if="cards.data">
-                        <a class="deck-card" target="_blank" v-for="cardId in deck.list[deckpart.id]" :key="cardId" v-if="cards.data[cardId]" :href="cards.data[cardId].link"
-                            @contextmenu.prevent="builderDeckRemove(cardId,deckpart.id)">
-                            <div class="deck-card-image">
-                                <img width="100" height="144" :src="cards.data[cardId].img">
-                            </div>
-                            <div class="deck-card-text">
-                                <div class="deck-card-name">{{cards.data[cardId].name}}</div>
-                                <div class="deck-price deck-price--sm" v-if="ajax.pricesLoaded">
-                                    <span class="deck-price-item pricemode" v-for="mode in price.modes" :key="mode.id" :class="'pricemode-'+mode.id">{{priceForCard(cardId,mode.id)}}</span>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="deck-content" v-if="deck.list[deckpart.id].length">
+                        <ygo-card
+                            v-for="(cardId, index) in deck.list[deckpart.id]"
+                            :key="`${cardId}_${index}`"
+                            :cardid="cardId"
+                            :carddata="cards.data"
+                        ></ygo-card>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
         </div>
     </div>
@@ -89,12 +83,13 @@ import priceModes from "./lib/data/priceModes";
 import getUrls from "./lib/data/urls";
 
 import YgoPrices from "./components/YgoPrices.vue";
+import YgoCard from "./components/YgoCard.vue";
 
 const urls = getUrls();
 
 export default {
   name: "app",
-  components: { YgoPrices },
+  components: { YgoPrices, YgoCard },
   data: () => {
     return {
       cards: {
