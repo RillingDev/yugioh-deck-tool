@@ -6,28 +6,22 @@
             <!-- app-forms-upload -->
             <div class="form-group">
                 <label>Deck:</label>
-                <div class="form-group-section">
-                    <input class="form-control" type="file" accept=".ydk" @change="fileOnUpload" title="Upload Deck">
-                    <input class="form-control form-deck-name" type="text" v-model="deck.name" @input="deckUpdate()" title="Deck Title" placeholder="Deck Title" >
-                </div>
+                <input class="form-control" type="file" accept=".ydk" @change="fileOnUpload" title="Upload Deck">
+                <input class="form-control form-deck-name" type="text" v-model="deck.name" @input="deckUpdate()" title="Deck Title" placeholder="Deck Title" >
                 <button class="btn btn-primary form-control" download @click="deckToFile" title="Download Deck">Download</button>
             </div>
              <!-- app-forms-share -->
             <div class="form-group">
                 <label>Share:</label>
-                <div class="form-group-section">
-                    <input class="form-control" type="url" :value="shareLink" title="Shareable Link">
-                </div>
+                <input class="form-control" type="url" :value="shareLink" title="Shareable Link">
                 <button class="btn btn-primary form-control" @click="copyShareText" title="Copy Decklist to Clipboard">Copy Decklist to Clipboard</button>
             </div>
              <!-- app-forms-price -->
             <div class="form-group">
                 <label>Price:</label>
-                <div class="form-group-section">
-                    <select class="form-control form-deck-currency" v-model="price.activeCurrency" title="Price Currency">
-                        <option v-for="currency in price.currencies" :key="currency.id" :value="currency">{{currency.name}}</option>
-                    </select>
-                </div>
+                <select class="form-control form-deck-currency" v-model="price.activeCurrency" title="Price Currency">
+                    <option v-for="currency in price.currencies" :key="currency.id" :value="currency">{{currency.name}}</option>
+                </select>
                 <button class="btn btn-primary form-control" @click="fetchPrices" title="Load Prices">
                     <span :hidden="!ajax.pricesLoaded">Load Prices</span>
                     <span :hidden="ajax.pricesLoaded">
@@ -39,14 +33,14 @@
 
          <!-- app-deck -->
         <div class="app-section app-deck">
-            <h3>Decklist:</h3>
+            <h2>Decklist:</h2>
             <div class="deck" v-if="ajax.namesLoaded">
                 <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
-                    <h4>Total:</h4>
+                    <h3>Total:</h3>
                     <ygo-prices :price="price" :items="Object.values(deck.list)"></ygo-prices>
                 </div>
                 <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
-                    <h4>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h4>
+                    <h3>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h3>
                     <ygo-prices :price="price" :items="deck.list[deckpart.id]"></ygo-prices>
                     <div class="deck-content" v-if="deck.list[deckpart.id].length">
                         <ygo-card
@@ -219,7 +213,9 @@ $color-pricemode-high: #ffdad0;
 @import "styles/variables";
 @import "styles/bootstrap";
 
+@import "styles/blocks/general";
 @import "styles/blocks/app";
+@import "styles/blocks/forms";
 /* @import "styles/main/general";
 @import "styles/main/typo";
 @import "styles/blocks/forms";

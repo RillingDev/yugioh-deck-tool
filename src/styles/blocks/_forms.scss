@@ -1,0 +1,35 @@
+@import "../mixins/screen";
+.app-forms {
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0;
+    >.form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    label {
+        margin-bottom: 0;
+        line-height: 38px;
+    }
+    input[type="file"] {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+    @include screen(min, md) {
+        >.form-group {
+            flex-direction: row;
+        }
+        input[title="Deck Title"] {
+            max-width: 200px;
+        }
+        .btn {
+            min-width: 220px;
+            max-width: 275px;
+            margin-left: 10px;
+        }
+        label {
+            min-width: 100px;
+            max-width: 150px;
+        }
+    }
+}
