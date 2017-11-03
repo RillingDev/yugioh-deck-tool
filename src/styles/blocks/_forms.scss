@@ -2,7 +2,6 @@
 .app-forms {
     display: flex;
     flex-direction: column;
-    margin: 1em 0;
     >.form-group {
         display: flex;
         flex-direction: column;
@@ -23,7 +22,7 @@
             max-width: 200px;
         }
         .btn {
-            min-width: 220px;
+            min-width: 225px;
             max-width: 275px;
             margin-left: 10px;
         }

@@ -1,0 +1,27 @@
+.app-deck {
+    .deck-part {
+        margin-bottom: 1em;
+        &-main {
+            .deck-content {
+                background-color: $color-deckpart-main;
+            }
+        }
+        &-extra {
+            .deck-content {
+                background-color: $color-deckpart-extra;
+            }
+        }
+        &-side {
+            .deck-content {
+                background-color: $color-deckpart-side;
+            }
+        }
+    }
+    .deck-content {
+        border: 1px solid $gray-300;
+        padding: 3px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

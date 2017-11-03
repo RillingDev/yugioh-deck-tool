@@ -8600,7 +8600,7 @@ var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
       return `${urls$1.imageAPI}/${this.cardid}.jpg`;
     },
     link() {
-      return `${urls$1.buyAPI}${encodeURI(this.name)}`;
+      return `${urls$1.buyAPI}${encodeURI(this.name.replace(/ /g, "+"))}`;
     }
   }
 };

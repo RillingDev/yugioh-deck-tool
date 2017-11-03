@@ -1747,7 +1747,8 @@ tbody.collapse.show {
   flex-direction: row;
   flex-wrap: wrap; }
 
-.app-forms {
+.app-section {
+  margin: 1em 0;
   width: 100%; }
 
 .app-deck {
@@ -1755,8 +1756,7 @@ tbody.collapse.show {
 
 .app-forms {
   display: flex;
-  flex-direction: column;
-  margin: 1em 0; }
+  flex-direction: column; }
   .app-forms > .form-group {
     display: flex;
     flex-direction: column; }
@@ -1772,22 +1772,60 @@ tbody.collapse.show {
     .app-forms input[title="Deck Title"] {
       max-width: 200px; }
     .app-forms .btn {
-      min-width: 220px;
+      min-width: 225px;
       max-width: 275px;
       margin-left: 10px; }
     .app-forms label {
       min-width: 100px;
       max-width: 150px; } }
 
-/* @import "styles/main/general";
-@import "styles/main/typo";
-@import "styles/blocks/forms";
-@import "styles/blocks/deck";
-@import "styles/blocks/card";
-@import "styles/blocks/price";
-@import "styles/blocks/builder"; */
+.app-deck .deck-part {
+  margin-bottom: 1em; }
+  .app-deck .deck-part-main .deck-content {
+    background-color: #907057; }
+  .app-deck .deck-part-extra .deck-content {
+    background-color: #935293; }
+  .app-deck .deck-part-side .deck-content {
+    background-color: #54925a; }
+
+.app-deck .deck-content {
+  border: 1px solid #dee2e6;
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; }
 
 
 /*# sourceMappingURL=YgoPrices.vue.map */
+.deck-card {
+  position: relative;
+  margin: 5px; }
 
-/*# sourceMappingURL=YgoCard.vue.map */
+.deck-card-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f8f9fa;
+  opacity: 0;
+  transition: opacity 0.15s;
+  text-align: center;
+  color: #495057;
+  word-wrap: break-word;
+  line-height: 1.25em;
+  font-size: 0.9em; }
+  .deck-card-text:focus, .deck-card-text:hover {
+    opacity: 1; }
+
+/* .deck-card-price {
+  p {
+    margin-bottom: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+} */
+

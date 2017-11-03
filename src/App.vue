@@ -216,11 +216,5 @@ $color-pricemode-high: #ffdad0;
 @import "styles/blocks/general";
 @import "styles/blocks/app";
 @import "styles/blocks/forms";
-/* @import "styles/main/general";
-@import "styles/main/typo";
-@import "styles/blocks/forms";
 @import "styles/blocks/deck";
-@import "styles/blocks/card";
-@import "styles/blocks/price";
-@import "styles/blocks/builder"; */
 </style>
