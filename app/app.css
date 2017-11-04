@@ -1795,8 +1795,24 @@ tbody.collapse.show {
   flex-direction: row;
   flex-wrap: wrap; }
 
+.price.price--group {
+  margin-bottom: 0.5rem; }
 
-/*# sourceMappingURL=YgoPrices.vue.map */
+.price:not(.price--group) {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column; }
+
+.price-mode {
+  padding: 3px 5px;
+  display: inline-block; }
+  .price-mode-low {
+    background-color: #ddffc9; }
+  .price-mode-average {
+    background-color: #fff8b7; }
+  .price-mode-high {
+    background-color: #ffdad0; }
+
 .deck-card {
   position: relative;
   margin: 5px; }

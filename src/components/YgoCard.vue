@@ -40,6 +40,7 @@ export default {
 <style lang="scss">
 @import "node_modules/bootstrap/scss/functions";
 @import "../styles/variables";
+@import "../styles/variables.app";
 
 .deck-card {
   position: relative;

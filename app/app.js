@@ -8559,7 +8559,7 @@ const priceModes = [{
     }
 ];
 
-var YgoPrices = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.priceData.size>0)?_c('div',{staticClass:"deck-price"},_vm._l((_vm.priceModes),function(priceMode){return _c('span',{key:priceMode.id,staticClass:"deck-price-item pricemode",class:'pricemode-'+priceMode.id},[_vm._v(" "+_vm._s(_vm.isgroup ? _vm.priceForItems(priceMode) : _vm.priceForItem(priceMode))+" ")])})):_vm._e()},staticRenderFns: [],
+var YgoPrices = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.priceData.size>0)?_c('div',{staticClass:"price",class:{'price--group' : _vm.isGroup}},_vm._l((_vm.priceModes),function(priceMode){return _c('span',{key:priceMode.id,staticClass:"price-mode",class:'price-mode-'+priceMode.id},[_vm._v(" "+_vm._s(_vm.isGroup ? _vm.priceForItems(priceMode) : _vm.priceForItem(priceMode))+" ")])})):_vm._e()},staticRenderFns: [],
   props: ["item", "isGroup", "priceData", "priceActiveCurrency"],
   data: () => {
     return {

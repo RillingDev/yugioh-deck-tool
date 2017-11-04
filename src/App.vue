@@ -30,7 +30,6 @@
                 </button>
             </div>
         </div>
-
          <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
@@ -71,7 +70,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -221,15 +219,9 @@ export default {
 </script>
 
 <style lang="scss">
-$color-deckpart-main: #907057;
-$color-deckpart-extra: #935293;
-$color-deckpart-side: #54925a;
-$color-pricemode-low: #ddffc9;
-$color-pricemode-average: #fff8b7;
-$color-pricemode-high: #ffdad0;
-
 @import "node_modules/bootstrap/scss/functions";
 @import "styles/variables";
+@import "styles/variables.app";
 @import "styles/bootstrap";
 
 @import "styles/blocks/general";

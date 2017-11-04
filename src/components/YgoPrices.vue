@@ -1,7 +1,7 @@
 <template>
-    <div class="deck-price" v-if="priceData.size>0">
-        <span class="deck-price-item pricemode" v-for="priceMode in priceModes" :key="priceMode.id" :class="'pricemode-'+priceMode.id">
-            {{isgroup ? priceForItems(priceMode) : priceForItem(priceMode)}}
+    <div class="price" :class="{'price--group' : isGroup}" v-if="priceData.size>0">
+        <span class="price-mode" v-for="priceMode in priceModes" :key="priceMode.id" :class="'price-mode-'+priceMode.id">
+            {{isGroup ? priceForItems(priceMode) : priceForItem(priceMode)}}
         </span>
     </div>
 </template>
@@ -63,5 +63,32 @@ export default {
 </script>
 
 <style lang="scss">
+@import "node_modules/bootstrap/scss/functions";
+@import "../styles/variables";
+@import "../styles/variables.app";
 
+.price {
+  &.price--group {
+    margin-bottom: 0.5rem;
+  }
+  &:not(.price--group) {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+}
+
+.price-mode {
+  padding: 3px 5px;
+  display: inline-block;
+  &-low {
+    background-color: $color-pricemode-low;
+  }
+  &-average {
+    background-color: $color-pricemode-average;
+  }
+  &-high {
+    background-color: $color-pricemode-high;
+  }
+}
 </style>
