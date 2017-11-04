@@ -35,7 +35,7 @@
             <h2>Decklist:</h2>
             <div class="deck" v-if="ajax.namesLoaded">
                 <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
-                    <h3>Total:</h3>
+                    <span>Total:</span>
                     <ygo-prices
                         :item="deck.list"
                         :is-group="true"
@@ -44,7 +44,7 @@
                     ></ygo-prices>
                 </div>
                 <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
-                    <h3>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h3>
+                    <span>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</span>
                     <ygo-prices
                         :item="deck.list[deckpart.id]"
                         :is-group="true"

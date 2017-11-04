@@ -62,8 +62,8 @@ export default {
   text-align: center;
   color: $gray-700;
   word-wrap: break-word;
-  line-height: 1.25em;
-  font-size: 0.9em;
+  line-height: 1.125em;
+  font-size: 0.85em;
   &:focus,
   &:hover {
     opacity: 1;
