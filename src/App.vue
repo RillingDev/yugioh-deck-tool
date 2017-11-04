@@ -33,7 +33,7 @@
          <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
-            <div class="deck" v-if="ajax.namesLoaded">
+            <div class="deck">
                 <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
                     <span>Total:</span>
                     <ygo-prices
@@ -45,30 +45,43 @@
                 </div>
                 <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
                     <span>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</span>
-                    <ygo-prices
-                        :item="deck.list[deckpart.id]"
-                        :is-group="true"
-                        :price-data="price.data"
-                        :price-active-currency="price.activeCurrency"
-                    ></ygo-prices>
-                    <div class="deck-content" v-if="deck.list[deckpart.id].length">
-                        <ygo-card
-                            v-for="(cardId, index) in deck.list[deckpart.id]"
-                            :key="`${cardId}_${index}`"
-                            :card-id="cardId"
-                            :card-name="cards.data.get(cardId)"
-                        >
-                            <ygo-prices
-                                slot="price"
-                                :item="cardId"
-                                :is-group="false"
-                                :price-data="price.data"
-                                :price-active-currency="price.activeCurrency"
-                            ></ygo-prices>
-                        </ygo-card>
+                    <div v-if="deck.list[deckpart.id].length">
+                        <ygo-prices
+                            :item="deck.list[deckpart.id]"
+                            :is-group="true"
+                            :price-data="price.data"
+                            :price-active-currency="price.activeCurrency"
+                        ></ygo-prices>
+                        <div class="deck-content">
+                            <ygo-card
+                                v-for="(cardId, index) in deck.list[deckpart.id]"
+                                :key="`${cardId}_${index}`"
+                                :card-id="cardId"
+                                :card-name="cards.data.get(cardId)"
+                                :deck-card-remove="()=>deckCardRemove(deckpart,cardId)"
+                            >
+                                <ygo-prices
+                                    slot="price"
+                                    :item="cardId"
+                                    :is-group="false"
+                                    :price-data="price.data"
+                                    :price-active-currency="price.activeCurrency"
+                                ></ygo-prices>
+                            </ygo-card>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- app-builder -->
+        <div class="app-section app-builder">
+            <h2>Deckbuilder:</h2>
+            <ygo-builder
+                v-if="ajax.namesLoaded"
+                :pairs-map="cards.pairs"
+                :deckparts="deckparts"
+                :deck-card-add="deckCardAdd"
+            ></ygo-builder>
         </div>
     </div>
 </template>
@@ -83,23 +96,24 @@ import uriDeckEncode from "./lib/uriDeckEncode";
 import convertFileToDeck from "./lib/convertFileToDeck";
 import convertDeckToFile from "./lib/convertDeckToFile";
 import convertDeckToText from "./lib/convertDeckToText";
-
+import filterOutOnce from "./lib/filterOutOnce";
 import deckparts from "./lib/data/deckparts";
 import priceCurrencies from "./lib/data/priceCurrencies";
 import getUrls from "./lib/data/urls";
 
 import YgoPrices from "./components/YgoPrices.vue";
 import YgoCard from "./components/YgoCard.vue";
+import YgoBuilder from "./components/YgoBuilder.vue";
 
 const urls = getUrls();
 
 export default {
   name: "app",
-  components: { YgoPrices, YgoCard },
+  components: { YgoPrices, YgoCard, YgoBuilder },
   data: () => {
     return {
       cards: {
-        pairs: [],
+        pairs: new Map(),
         data: new Map()
       },
       deckparts,
@@ -196,6 +210,25 @@ export default {
     },
     deckToText() {
       return convertDeckToText(this.deckparts, this.cards.data, this.deck);
+    },
+    deckCardAdd(deckpart, cardId) {
+      const activeSection = this.deck.list[deckpart.id];
+
+      if (
+        activeSection.length < deckpart.size[1] &&
+        activeSection.filter(
+          activeSectionCardId => activeSectionCardId === cardId
+        ).length < 3
+      ) {
+        activeSection.push(cardId);
+      }
+    },
+    deckCardRemove(deckpart, cardId) {
+      const activeSection = this.deck.list[deckpart.id];
+
+      if (activeSection.includes(cardId)) {
+        this.deck.list[deckpart.id] = filterOutOnce(activeSection, cardId);
+      }
     },
     fileOnUpload(e) {
       const files = e.target.files || e.dataTransfer.files;

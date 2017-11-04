@@ -1,5 +1,5 @@
 <template>
-    <a class="deck-card" target="_blank" v-if="hasData" :href="link">
+    <a class="deck-card" target="_blank" v-if="hasData" :href="link" @contextmenu.prevent="deckCardRemove()">
         <div class="deck-card-image">
            <img width="100" height="144" :src="image">
         </div>
@@ -22,7 +22,7 @@ export default {
   components: {
     YgoPrices
   },
-  props: ["cardId", "cardName"],
+  props: ["cardId", "cardName", "deckCardRemove"],
   computed: {
     hasData() {
       return isDefined(this.cardName);

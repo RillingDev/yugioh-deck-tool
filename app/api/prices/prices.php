@@ -5,7 +5,6 @@ $cardNames = json_decode(base64_decode($cardUri));
 $requests = [];
 $result = [];
 
-
 /**
 * Creates a curl object for every name we query
 */
@@ -20,7 +19,6 @@ foreach ($cardNames as $currentIndex => $cardName) {
     curl_setopt($requests[$currentIndex], CURLOPT_TIMEOUT, 1000);
 }
 
-
 // build the multi-curl handle, adding all curls
 $mh = curl_multi_init();
 foreach ($requests as $request) {
@@ -33,13 +31,11 @@ do {
     curl_multi_exec($mh, $running);
 } while ($running);
 
-
 //close the handles
 foreach ($requests as $request) {
     curl_multi_remove_handle($mh, $request);
 }
 curl_multi_close($mh);
-
 
 /**
 * Transforms output

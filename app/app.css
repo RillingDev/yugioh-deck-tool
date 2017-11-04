@@ -1804,7 +1804,7 @@ tbody.collapse.show {
   flex-direction: column; }
 
 .price-mode {
-  padding: 3px 5px;
+  padding: 2px 4px;
   display: inline-block; }
   .price-mode-low {
     background-color: #e8fa8e; }
@@ -1845,3 +1845,5 @@ tbody.collapse.show {
   }
 } */
 
+
+/*# sourceMappingURL=YgoBuilder.vue.map */
