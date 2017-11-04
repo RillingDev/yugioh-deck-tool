@@ -1742,6 +1742,13 @@ tbody.collapse.show {
 .priceapp-header {
   text-align: center; }
 
+.btn {
+  cursor: pointer; }
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%; } }
+
 .app {
   display: flex;
   flex-direction: row;
@@ -1751,8 +1758,23 @@ tbody.collapse.show {
   margin-top: 0.5rem;
   width: 100%; }
 
+.app-forms {
+  order: 1; }
+
 .app-deck {
-  width: 100%; }
+  order: 3; }
+  @media (min-width: 768px) {
+    .app-deck {
+      width: calc(100% - 442px);
+      order: 2; } }
+
+.app-builder {
+  order: 2; }
+  @media (min-width: 768px) {
+    .app-builder {
+      width: 422px;
+      margin-left: 20px;
+      order: 3; } }
 
 .app-forms {
   display: flex;
@@ -1845,5 +1867,53 @@ tbody.collapse.show {
   }
 } */
 
+.builder-search {
+  margin-bottom: 1rem; }
 
-/*# sourceMappingURL=YgoBuilder.vue.map */
+.builder-list {
+  max-height: 60vh;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: scroll;
+  list-style: none;
+  padding: 0;
+  resize: vertical;
+  border: 1px solid #cecece; }
+
+.builder-card {
+  border-top: 1px solid #cecece;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 10px; }
+  .builder-card:first-child {
+    border-top: 0; }
+
+.builder-card-name {
+  padding: 10px 0; }
+
+.builder-card-action {
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center; }
+
+.builder-add {
+  width: 34px;
+  text-align: center;
+  opacity: 0.9;
+  font-size: 1.2em;
+  cursor: pointer; }
+  .builder-add:active {
+    opacity: 1; }
+  .builder-add-main {
+    color: #9e7a50; }
+  .builder-add-extra {
+    color: #9b78ac; }
+  .builder-add-side {
+    color: #6aa06a; }
+
+.builder-card-name {
+  width: calc(100% - 108px); }
+

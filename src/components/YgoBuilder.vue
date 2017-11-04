@@ -1,28 +1,26 @@
 <template>
     <div class="builder">
-        <p>Showing {{pairsFiltered.length}} of {{pairs.length}} Cards</p>
+        <span>Showing {{pairsFiltered.length}} of {{pairs.length}} Cards</span>
         <input class="form-control builder-search" type="search" title="Search" placeholder="Search" v-model="filter">
          <ul class="builder-list">
             <li class="builder-card" v-for="pair in pairsFiltered" :key="pair[0]">
+                <div class="builder-card-name">{{pair[1]}}</div>
                 <div class="builder-card-action">
-                    <div class="fa fa-plus builder-add"
+                    <span
+                        class="fa fa-plus builder-add"
                         v-for="deckpart in deckparts"
                         :key="deckpart.id"
                         :class="`builder-add-${deckpart.id}`"
                         :title="`Add Card to ${deckpart.name} Deck`"
                         @click="deckCardAdd(deckpart,pair[0])"
-                    ></div>
+                    ></span>
                 </div>
-                <div class="builder-card-name">{{pair[1]}}</div>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-/* import builderUpdateNames from "./lib/builderUpdateNames";
-import builderDeckAdd from "./lib/builderDeckAdd";
-import builderDeckRemove from "./lib/builderDeckRemove"; */
 import { arrClone } from "lightdash";
 
 export default {
@@ -46,5 +44,67 @@ export default {
 </script>
 
 <style lang="scss">
+@import "node_modules/bootstrap/scss/functions";
+@import "../styles/variables";
+@import "../styles/variables.app";
 
+.builder-search {
+  margin-bottom: 1rem;
+}
+
+.builder-list {
+  max-height: 60vh;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: scroll;
+  list-style: none;
+  padding: 0;
+  resize: vertical;
+  border: 1px solid $gray-400;
+}
+
+.builder-card {
+  border-top: 1px solid $gray-400;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 10px;
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.builder-card-name {
+  padding: 10px 0;
+}
+.builder-card-action {
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.builder-add {
+  width: 34px;
+  text-align: center;
+  opacity: 0.9;
+  font-size: 1.2em;
+  cursor: pointer;
+  &:active {
+    opacity: 1;
+  }
+  &-main {
+    color: $color-deckpart-main;
+  }
+  &-extra {
+    color: $color-deckpart-extra;
+  }
+  &-side {
+    color: $color-deckpart-side;
+  }
+}
+
+.builder-card-name {
+  width: calc(100% - 108px);
+}
 </style>

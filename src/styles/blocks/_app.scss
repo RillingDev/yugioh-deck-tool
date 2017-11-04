@@ -1,3 +1,18 @@
+@import "../mixins/screen";
+.priceapp-header {
+    text-align: center;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.container {
+    @include screen(max, xl) {
+        max-width: 100%;
+    }
+}
+
 .app {
     display: flex;
     flex-direction: row;
@@ -9,6 +24,23 @@
     width: 100%;
 }
 
+.app-forms {
+    order: 1;
+}
+
 .app-deck {
-    width: 100%;
+    order: 3;
+    @include screen(min, md) {
+        width: calc(100% - 442px);
+        order: 2;
+    }
+}
+
+.app-builder {
+    order: 2;
+    @include screen(min, md) {
+        width: 422px;
+        margin-left: 20px;
+        order: 3;
+    }
 }

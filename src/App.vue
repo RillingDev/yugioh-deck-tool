@@ -257,7 +257,6 @@ export default {
 @import "styles/variables.app";
 @import "styles/bootstrap";
 
-@import "styles/blocks/general";
 @import "styles/blocks/app";
 @import "styles/blocks/forms";
 @import "styles/blocks/deck";
