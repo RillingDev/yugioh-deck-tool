@@ -5,7 +5,7 @@ import {
 
 const sortMapEntries = (map, fn) => new Map(arrClone(map.entries()).sort(fn));
 
-const apiLoadNames = (urls) => new Promise((resolve, reject) => {
+const apiLoadNames = urls => new Promise((resolve, reject) => {
     fetch(urls.nameAPI)
         .then(response => response.json())
         .then(json => {

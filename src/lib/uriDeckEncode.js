@@ -1,8 +1,10 @@
-const uriDeckEncode = function (deck) {
-    const deckArray = [deck.name, Object.values(deck.list)];
-    const deckUri = btoa(JSON.stringify(deckArray));
+import {
+    encodeBase64
+} from "./base64";
+import {
+    objValues,
+} from "lightdash";
 
-    return "?d=" + deckUri;
-};
+const uriDeckEncode = deck => "?d=" + encodeBase64([deck.name, objValues(deck.list)]);
 
 export default uriDeckEncode;

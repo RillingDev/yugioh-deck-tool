@@ -1,30 +1,23 @@
-const convertDeckToText = function (deckparts, cards, deck) {
+import {
+    arrCount,
+    arrClone
+} from "lightdash";
+
+const convertDeckToText = function (deckparts, cardData, deck) {
     const result = [];
 
     deckparts.forEach(deckpart => {
         const deckpartCards = deck.list[deckpart.id];
 
         if (deckpartCards.length > 0) {
-            const cardAmount = new Map();
-            const cardCache = [];
+            const deckpartCardsCounted = arrClone(arrCount(deckpartCards).entries())
+                .map(entry => `${cardData.get(entry[0])} x${entry[1]}`);
 
-            result.push(`${deckpart.name}:`);
-
-            deckpartCards.forEach(cardId => {
-                if (cardAmount.has(cardId)) {
-                    cardAmount.set(cardId, cardAmount.get(cardId) + 1);
-                } else {
-                    cardAmount.set(cardId, 1);
-                }
-            });
-
-            cardAmount.forEach((amount, cardId) => {
-                const cardName = cards.pairs.has(cardId) ? cards.pairs.get(cardId) : `[${cardId}]`;
-
-                cardCache.push(`${cardName} x${amount}`);
-            });
-
-            result.push(...cardCache, "");
+            result.push(
+                `${deckpart.name}:`,
+                ...deckpartCardsCounted,
+                ""
+            );
         }
     });
 

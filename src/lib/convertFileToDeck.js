@@ -13,10 +13,6 @@ const convertFileToDeck = function (deckparts, fileContent) {
             .filter(line => line.length > 0);
     });
 
-    console.log({
-        result
-    });
-
     return result;
 };
 

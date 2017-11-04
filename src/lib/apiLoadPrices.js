@@ -1,8 +1,11 @@
 import {
     forEachEntry
 } from "lightdash";
+import {
+    encodeBase64
+} from "./base64";
 
-const getCardsWithoutPriceData = function (deckList, priceData) {
+const getCardsWithoutPriceData = (deckList, priceData) => {
     const result = [];
 
     forEachEntry(deckList, deckpart => {
@@ -21,22 +24,20 @@ const apiLoadPrices = (urls, deckList, cardData, priceDataOld) => new Promise((r
     const cardIdsToFetch = getCardsWithoutPriceData(deckList, priceDataOld);
 
     if (cardIdsToFetch.length > 0) {
-        const cardNamesToFetch = cardIdsToFetch.map(cardId => cardData.get(cardId));
-        const priceQuery = btoa(JSON.stringify(cardNamesToFetch));
+        const priceQuery = encodeBase64(cardIdsToFetch.map(cardId => cardData.get(cardId)));
 
         fetch(urls.priceAPI + priceQuery)
             .then(response => response.json())
             .then(json => {
-                cardIdsToFetch
-                    .forEach((cardId, index) => {
-                        const cardIdPriceData = json[index];
+                cardIdsToFetch.forEach((cardId, index) => {
+                    const cardIdPriceData = json[index];
 
-                        priceData.set(cardId, {
-                            low: cardIdPriceData.low,
-                            average: cardIdPriceData.average,
-                            high: cardIdPriceData.high
-                        });
+                    priceData.set(cardId, {
+                        low: cardIdPriceData.low,
+                        average: cardIdPriceData.average,
+                        high: cardIdPriceData.high
                     });
+                });
 
                 resolve(priceData);
             })

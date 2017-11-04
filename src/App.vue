@@ -23,8 +23,8 @@
                     <option v-for="currency in price.currencies" :key="currency.id" :value="currency">{{currency.name}}</option>
                 </select>
                 <button class="btn btn-primary form-control" @click="fetchPrices" title="Load Prices">
-                    <span :hidden="!ajax.pricesLoaded">Load Prices</span>
-                    <span :hidden="ajax.pricesLoaded">
+                    <span :hidden="ajax.currentlyLoading">Load Prices</span>
+                    <span :hidden="!ajax.currentlyLoading">
                         <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
                     </span>
                 </button>
@@ -47,7 +47,7 @@
                             v-for="(cardId, index) in deck.list[deckpart.id]"
                             :key="`${cardId}_${index}`"
                             :cardid="cardId"
-                            :carddata="cards.data"
+                            :cardname="cards.data.get(cardId)"
                             :price="price"
                         ></ygo-card>
                     </div>
@@ -97,7 +97,8 @@ export default {
       },
       ajax: {
         namesLoaded: false,
-        pricesLoaded: true
+        pricesLoaded: false,
+        currentlyLoading: false
       },
       deck: {
         name: "Unnamed",
@@ -119,12 +120,15 @@ export default {
       const vm = this;
 
       vm.ajax.namesLoaded = false;
+      vm.ajax.currentlyLoading = true;
 
       apiLoadNames(urls)
         .then(result => {
           vm.cards.data = result.data;
           vm.cards.pairs = result.pairs;
+
           vm.ajax.namesLoaded = true;
+          vm.ajax.currentlyLoading = false;
 
           console.log("LOADED NAMES", vm.cards.data);
         })
@@ -134,6 +138,7 @@ export default {
       const vm = this;
 
       vm.ajax.pricesLoaded = false;
+      vm.ajax.currentlyLoading = true;
 
       apiLoadPrices(urls, vm.deck.list, vm.cards.data, vm.price.data)
         .then(result => {
@@ -144,13 +149,9 @@ export default {
           console.log("LOADED PRICES", vm.price.data);
 
           vm.ajax.pricesLoaded = true;
+          vm.ajax.currentlyLoading = false;
         })
         .catch(console.error);
-    },
-    fileOnUpload(e) {
-      const files = e.target.files || e.dataTransfer.files;
-
-      this.deckFromFile(files[0]);
     },
     deckFromFile(file) {
       const vm = this;
@@ -181,7 +182,12 @@ export default {
       return uriDeckEncode(this.deck);
     },
     deckToText() {
-      return convertDeckToText(this.deckparts, this.cards, this.deck);
+      return convertDeckToText(this.deckparts, this.cards.data, this.deck);
+    },
+    fileOnUpload(e) {
+      const files = e.target.files || e.dataTransfer.files;
+
+      this.deckFromFile(files[0]);
     },
     copyShareText() {
       clipboard.copy({
@@ -190,12 +196,10 @@ export default {
     }
   },
   mounted() {
-    const urlQuery = location.search;
-
     this.fetchNames();
 
-    if (urlQuery.includes("?d")) {
-      this.deckFromUri(urlQuery);
+    if (location.search.includes("?d")) {
+      this.deckFromUri(location.search);
     }
   }
 };

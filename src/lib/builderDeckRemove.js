@@ -1,4 +1,4 @@
-const builderDeckRemove = function (id, part) {
+/* const builderDeckRemove = function (id, part) {
     const vm = this;
     let foundCard = false;
 
@@ -15,3 +15,4 @@ const builderDeckRemove = function (id, part) {
 };
 
 export default builderDeckRemove;
+ */

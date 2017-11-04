@@ -8,7 +8,7 @@
            <img width="100" height="144" :src="image">
         </div>
         <div class="deck-card-text">
-            <div class="deck-card-name">{{name}}</div>
+            <div class="deck-card-name">{{cardname}}</div>
             <ygo-prices :price="price" :items="cardid"></ygo-prices>
         </div>
     </a>
@@ -16,6 +16,8 @@
 
 <script>
 import getUrls from "../lib/data/urls";
+import { isDefined } from "lightdash";
+
 import YgoPrices from "./YgoPrices.vue";
 
 const urls = getUrls();
@@ -24,19 +26,16 @@ export default {
   components: {
     YgoPrices
   },
-  props: ["cardid", "carddata", "price"],
+  props: ["cardid", "cardname", "price"],
   computed: {
     hasData() {
-      return this.carddata.has(this.cardid);
-    },
-    name() {
-      return this.carddata.get(this.cardid);
+      return isDefined(this.cardname);
     },
     image() {
       return `${urls.imageAPI}/${this.cardid}.jpg`;
     },
     link() {
-      return `${urls.buyAPI}${encodeURI(this.name.replace(/ /g, "+"))}`;
+      return `${urls.buyAPI}${encodeURI(this.cardname.replace(/ /g, "+"))}`;
     }
   }
 };
