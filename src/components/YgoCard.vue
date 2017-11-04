@@ -1,15 +1,11 @@
 <template>
-    <a
-    class="deck-card"
-    target="_blank"
-    v-if="hasData"
-    :href="link">
+    <a class="deck-card" target="_blank" v-if="hasData" :href="link">
         <div class="deck-card-image">
            <img width="100" height="144" :src="image">
         </div>
         <div class="deck-card-text">
-            <div class="deck-card-name">{{cardname}}</div>
-            <ygo-prices :price="price" :items="cardid"></ygo-prices>
+            <div class="deck-card-name">{{cardName}}</div>
+            <slot class="deck-card-price" name="price"></slot>
         </div>
     </a>
 </template>
@@ -26,16 +22,16 @@ export default {
   components: {
     YgoPrices
   },
-  props: ["cardid", "cardname", "price"],
+  props: ["cardId", "cardName"],
   computed: {
     hasData() {
-      return isDefined(this.cardname);
+      return isDefined(this.cardName);
     },
     image() {
-      return `${urls.imageAPI}/${this.cardid}.jpg`;
+      return `${urls.imageAPI}/${this.cardId}.jpg`;
     },
     link() {
-      return `${urls.buyAPI}${encodeURI(this.cardname.replace(/ /g, "+"))}`;
+      return `${urls.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`;
     }
   }
 };

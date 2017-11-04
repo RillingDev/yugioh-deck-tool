@@ -8527,20 +8527,6 @@ const priceCurrencies = [{
     }
 ];
 
-const priceModes = [{
-        id: "low",
-        name: "Low"
-    },
-    {
-        id: "average",
-        name: "Average"
-    },
-    {
-        id: "high",
-        name: "High"
-    }
-];
-
 const getUrls = () => {
     if (location.host.includes("ygoprodeck")) {
         return {
@@ -8559,67 +8545,88 @@ const getUrls = () => {
     }
 };
 
-const priceConvert = (val, currency) => (val * currency.val).toFixed(2) + currency.label;
-
-const getPriceMode = (priceData, priceMode, cardId) => {
-    if (priceData.has(cardId)) {
-        const val = priceData.get(cardId)[priceMode.id];
-
-        return isDefined(val) ? val : 0;
-    } else {
-        return 0;
+const priceModes = [{
+        id: "low",
+        name: "Low"
+    },
+    {
+        id: "average",
+        name: "Average"
+    },
+    {
+        id: "high",
+        name: "High"
     }
-};
+];
 
-var YgoPrices = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.price.data.size>0)?_c('div',{staticClass:"deck-price"},_vm._l((_vm.price.modes),function(pricemode){return _c('span',{key:pricemode.id,staticClass:"deck-price-item pricemode",class:'pricemode-'+pricemode.id},[_vm._v(" "+_vm._s(_vm.priceForSection(pricemode))+" ")])})):_vm._e()},staticRenderFns: [],
-  props: ["items", "price"],
+var YgoPrices = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.priceData.size>0)?_c('div',{staticClass:"deck-price"},_vm._l((_vm.priceModes),function(priceMode){return _c('span',{key:priceMode.id,staticClass:"deck-price-item pricemode",class:'pricemode-'+priceMode.id},[_vm._v(" "+_vm._s(_vm.isgroup ? _vm.priceForItems(priceMode) : _vm.priceForItem(priceMode))+" ")])})):_vm._e()},staticRenderFns: [],
+  props: ["item", "isGroup", "priceData", "priceActiveCurrency"],
   data: () => {
-    return {};
+    return {
+      priceModes
+    };
   },
   methods: {
-    priceForSection(priceMode) {
-      if (isArray(this.items)) {
-        const listPrices = arrFlattenDeep(this.items).map(cardId =>
-          getPriceMode(this.price.data, priceMode, cardId)
-        );
+    priceForItem(priceMode) {
+      const val = this.getPriceOfMode(priceMode, this.item);
 
-        return priceConvert(
-          listPrices.length > 0 ? listPrices.reduce((a, b) => a + b) : 0,
-          this.price.activeCurrency
-        );
+      return this.formatPrice(val);
+    },
+    priceForItems(priceMode) {
+      const items = isArray(this.item)
+        ? this.item
+        : arrFlattenDeep(objValues(this.item));
+
+      if (items.length > 0) {
+        const val = items
+          .map(cardId => this.getPriceOfMode(priceMode, cardId))
+          .reduce((a, b) => a + b);
+
+        return this.formatPrice(val);
       } else {
-        return priceConvert(
-          getPriceMode(this.price.data, priceMode, this.items),
-          this.price.activeCurrency
-        );
+        return this.formatPrice(0);
       }
+    },
+    getPriceOfMode(priceMode, cardId) {
+      if (this.priceData.has(cardId)) {
+        const val = this.priceData.get(cardId)[priceMode.id];
+
+        return isDefined(val) ? val : 0;
+      } else {
+        return 0;
+      }
+    },
+    formatPrice(val) {
+      const currency = this.priceActiveCurrency;
+
+      return (val * currency.val).toFixed(2) + currency.label;
     }
   }
 };
 
 const urls$1 = getUrls();
 
-var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.hasData)?_c('a',{staticClass:"deck-card",attrs:{"target":"_blank","href":_vm.link}},[_c('div',{staticClass:"deck-card-image"},[_c('img',{attrs:{"width":"100","height":"144","src":_vm.image}})]),_c('div',{staticClass:"deck-card-text"},[_c('div',{staticClass:"deck-card-name"},[_vm._v(_vm._s(_vm.cardname))]),_c('ygo-prices',{attrs:{"price":_vm.price,"items":_vm.cardid}})],1)]):_vm._e()},staticRenderFns: [],
+var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.hasData)?_c('a',{staticClass:"deck-card",attrs:{"target":"_blank","href":_vm.link}},[_c('div',{staticClass:"deck-card-image"},[_c('img',{attrs:{"width":"100","height":"144","src":_vm.image}})]),_c('div',{staticClass:"deck-card-text"},[_c('div',{staticClass:"deck-card-name"},[_vm._v(_vm._s(_vm.cardName))]),_vm._t("price")],2)]):_vm._e()},staticRenderFns: [],
   components: {
     YgoPrices
   },
-  props: ["cardid", "cardname", "price"],
+  props: ["cardId", "cardName"],
   computed: {
     hasData() {
-      return isDefined(this.cardname);
+      return isDefined(this.cardName);
     },
     image() {
-      return `${urls$1.imageAPI}/${this.cardid}.jpg`;
+      return `${urls$1.imageAPI}/${this.cardId}.jpg`;
     },
     link() {
-      return `${urls$1.buyAPI}${encodeURI(this.cardname.replace(/ /g, "+"))}`;
+      return `${urls$1.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`;
     }
   }
 };
 
 const urls = getUrls();
 
-var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app"},[_c('div',{staticClass:"app-section app-forms"},[_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Deck:")]),_c('input',{staticClass:"form-control",attrs:{"type":"file","accept":".ydk","title":"Upload Deck"},on:{"change":_vm.fileOnUpload}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.deck.name),expression:"deck.name"}],staticClass:"form-control form-deck-name",attrs:{"type":"text","title":"Deck Title","placeholder":"Deck Title"},domProps:{"value":(_vm.deck.name)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.deck, "name", $event.target.value);},function($event){_vm.deckUpdate();}]}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"download":"","title":"Download Deck"},on:{"click":_vm.deckToFile}},[_vm._v("Download")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Share:")]),_c('input',{staticClass:"form-control",attrs:{"type":"url","title":"Shareable Link"},domProps:{"value":_vm.shareLink}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Copy Decklist to Clipboard"},on:{"click":_vm.copyShareText}},[_vm._v("Copy Decklist to Clipboard")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Price:")]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.price.activeCurrency),expression:"price.activeCurrency"}],staticClass:"form-control form-deck-currency",attrs:{"title":"Price Currency"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.price, "activeCurrency", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);}}},_vm._l((_vm.price.currencies),function(currency){return _c('option',{key:currency.id,domProps:{"value":currency}},[_vm._v(_vm._s(currency.name))])})),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Load Prices"},on:{"click":_vm.fetchPrices}},[_c('span',{attrs:{"hidden":_vm.ajax.currentlyLoading}},[_vm._v("Load Prices")]),_c('span',{attrs:{"hidden":!_vm.ajax.currentlyLoading}},[_c('i',{staticClass:"fa fa-circle-o-notch fa-spin fa-fw"})])])])]),_c('div',{staticClass:"app-section app-deck"},[_c('h2',[_vm._v("Decklist:")]),(_vm.ajax.namesLoaded)?_c('div',{staticClass:"deck"},[(_vm.ajax.pricesLoaded)?_c('div',{staticClass:"deck-part deck-part-total"},[_c('h3',[_vm._v("Total:")]),_c('ygo-prices',{attrs:{"price":_vm.price,"items":Object.values(_vm.deck.list)}})],1):_vm._e(),_vm._l((_vm.deckparts),function(deckpart){return _c('div',{key:deckpart.id,staticClass:"deck-part",class:'deck-part-'+deckpart.id},[_c('h3',[_vm._v(_vm._s(deckpart.name)+" Deck ("+_vm._s(_vm.deck.list[deckpart.id].length)+" Cards):")]),_c('ygo-prices',{attrs:{"price":_vm.price,"items":_vm.deck.list[deckpart.id]}}),(_vm.deck.list[deckpart.id].length)?_c('div',{staticClass:"deck-content"},_vm._l((_vm.deck.list[deckpart.id]),function(cardId,index){return _c('ygo-card',{key:`${cardId}_${index}`,attrs:{"cardid":cardId,"cardname":_vm.cards.data.get(cardId),"price":_vm.price}})})):_vm._e()],1)})],2):_vm._e()])])},staticRenderFns: [],
+var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app"},[_c('div',{staticClass:"app-section app-forms"},[_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Deck:")]),_c('input',{staticClass:"form-control",attrs:{"type":"file","accept":".ydk","title":"Upload Deck"},on:{"change":_vm.fileOnUpload}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.deck.name),expression:"deck.name"}],staticClass:"form-control form-deck-name",attrs:{"type":"text","title":"Deck Title","placeholder":"Deck Title"},domProps:{"value":(_vm.deck.name)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.deck, "name", $event.target.value);},function($event){_vm.deckUpdate();}]}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"download":"","title":"Download Deck"},on:{"click":_vm.deckToFile}},[_vm._v("Download")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Share:")]),_c('input',{staticClass:"form-control",attrs:{"type":"url","title":"Shareable Link"},domProps:{"value":_vm.shareLink}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Copy Decklist to Clipboard"},on:{"click":_vm.copyShareText}},[_vm._v("Copy Decklist to Clipboard")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Price:")]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.price.activeCurrency),expression:"price.activeCurrency"}],staticClass:"form-control form-deck-currency",attrs:{"title":"Price Currency"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.price, "activeCurrency", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);}}},_vm._l((_vm.price.currencies),function(currency){return _c('option',{key:currency.id,domProps:{"value":currency}},[_vm._v(_vm._s(currency.name))])})),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Load Prices"},on:{"click":_vm.fetchPrices}},[_c('span',{attrs:{"hidden":_vm.ajax.currentlyLoading}},[_vm._v("Load Prices")]),_c('span',{attrs:{"hidden":!_vm.ajax.currentlyLoading}},[_c('i',{staticClass:"fa fa-circle-o-notch fa-spin fa-fw"})])])])]),_c('div',{staticClass:"app-section app-deck"},[_c('h2',[_vm._v("Decklist:")]),(_vm.ajax.namesLoaded)?_c('div',{staticClass:"deck"},[(_vm.ajax.pricesLoaded)?_c('div',{staticClass:"deck-part deck-part-total"},[_c('h3',[_vm._v("Total:")]),_c('ygo-prices',{attrs:{"item":_vm.deck.list,"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}})],1):_vm._e(),_vm._l((_vm.deckparts),function(deckpart){return _c('div',{key:deckpart.id,staticClass:"deck-part",class:'deck-part-'+deckpart.id},[_c('h3',[_vm._v(_vm._s(deckpart.name)+" Deck ("+_vm._s(_vm.deck.list[deckpart.id].length)+" Cards):")]),_c('ygo-prices',{attrs:{"item":_vm.deck.list[deckpart.id],"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}}),(_vm.deck.list[deckpart.id].length)?_c('div',{staticClass:"deck-content"},_vm._l((_vm.deck.list[deckpart.id]),function(cardId,index){return _c('ygo-card',{key:`${cardId}_${index}`,attrs:{"card-id":cardId,"card-name":_vm.cards.data.get(cardId)}},[_c('ygo-prices',{attrs:{"slot":"price","item":cardId,"is-group":false,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency},slot:"price"})],1)})):_vm._e()],1)})],2):_vm._e()])])},staticRenderFns: [],
   name: "app",
   components: { YgoPrices, YgoCard },
   data: () => {
@@ -8632,7 +8639,6 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       price: {
         activeCurrency: priceCurrencies[0],
         currencies: priceCurrencies,
-        modes: priceModes,
         data: new Map()
       },
       ajax: {

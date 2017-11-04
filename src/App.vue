@@ -37,19 +37,36 @@
             <div class="deck" v-if="ajax.namesLoaded">
                 <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
                     <h3>Total:</h3>
-                    <ygo-prices :price="price" :items="Object.values(deck.list)"></ygo-prices>
+                    <ygo-prices
+                        :item="deck.list"
+                        :is-group="true"
+                        :price-data="price.data"
+                        :price-active-currency="price.activeCurrency"
+                    ></ygo-prices>
                 </div>
                 <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
                     <h3>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</h3>
-                    <ygo-prices :price="price" :items="deck.list[deckpart.id]"></ygo-prices>
+                    <ygo-prices
+                        :item="deck.list[deckpart.id]"
+                        :is-group="true"
+                        :price-data="price.data"
+                        :price-active-currency="price.activeCurrency"
+                    ></ygo-prices>
                     <div class="deck-content" v-if="deck.list[deckpart.id].length">
                         <ygo-card
                             v-for="(cardId, index) in deck.list[deckpart.id]"
                             :key="`${cardId}_${index}`"
-                            :cardid="cardId"
-                            :cardname="cards.data.get(cardId)"
-                            :price="price"
-                        ></ygo-card>
+                            :card-id="cardId"
+                            :card-name="cards.data.get(cardId)"
+                        >
+                            <ygo-prices
+                                slot="price"
+                                :item="cardId"
+                                :is-group="false"
+                                :price-data="price.data"
+                                :price-active-currency="price.activeCurrency"
+                            ></ygo-prices>
+                        </ygo-card>
                     </div>
                 </div>
             </div>
@@ -71,7 +88,6 @@ import convertDeckToText from "./lib/convertDeckToText";
 
 import deckparts from "./lib/data/deckparts";
 import priceCurrencies from "./lib/data/priceCurrencies";
-import priceModes from "./lib/data/priceModes";
 import getUrls from "./lib/data/urls";
 
 import YgoPrices from "./components/YgoPrices.vue";
@@ -92,7 +108,6 @@ export default {
       price: {
         activeCurrency: priceCurrencies[0],
         currencies: priceCurrencies,
-        modes: priceModes,
         data: new Map()
       },
       ajax: {
