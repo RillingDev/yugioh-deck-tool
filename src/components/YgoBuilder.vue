@@ -3,7 +3,7 @@
         <span>Showing {{pairsFiltered.length}} of {{pairs.length}} Cards</span>
         <input class="form-control builder-search" type="search" title="Search" placeholder="Search" v-model="filter">
          <ul class="builder-list">
-            <li class="builder-card" v-for="pair in pairsFiltered" :key="pair[0]">
+            <li class="builder-card" v-for="pair in pairsFiltered" :key="pair[0]" :data-name="pair[1]">
                 <div class="builder-card-name">{{pair[1]}}</div>
                 <div class="builder-card-action">
                     <span
