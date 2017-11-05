@@ -1,16 +1,22 @@
 import {
-    decodeBase64
-} from "./base64";
+    decompress
+} from "./compress";
 
 const uriDeckDecode = function (deckParts, deckUri) {
-    const deckArray = decodeBase64(deckUri.replace("?d=", ""));
+    const deckArray = decompress(deckUri.replace("?d=", ""));
     const deckList = {};
 
     deckParts.forEach((deckpart, index) => {
-        deckList[deckpart.id] = deckArray[1][index].map(String);
+        deckList[deckpart.id] = deckArray[index].map(String);
     });
 
-    return [deckArray[0], deckList];
+    console.log({
+        deckUri,
+        deckArray,
+        deckList
+    });
+
+    return deckList;
 };
 
 export default uriDeckDecode;

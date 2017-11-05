@@ -191,12 +191,6 @@ export default {
 
       reader.readAsText(file);
     },
-    deckFromUri(uriDeck) {
-      const deckArray = uriDeckDecode(this.deckparts, uriDeck);
-
-      this.deck.name = deckArray[0];
-      this.deck.list = deckArray[1];
-    },
     deckToFile() {
       const fileData = convertDeckToFile(this.deckparts, this.deck.list);
       const file = new File([fileData], `${this.deck.name}.ydk`, {
@@ -205,8 +199,13 @@ export default {
 
       return FileSaver.saveAs(file);
     },
+    deckFromUri(uriDeck) {
+      const deckArray = uriDeckDecode(this.deckparts, uriDeck);
+
+      this.deck.list = deckArray;
+    },
     deckToUri() {
-      return uriDeckEncode(this.deck);
+      return uriDeckEncode(this.deck.list);
     },
     deckToText() {
       return convertDeckToText(this.deckparts, this.cards.data, this.deck);
@@ -215,7 +214,7 @@ export default {
       const activeSection = this.deck.list[deckpart.id];
 
       if (
-        activeSection.length < deckpart.size[1] &&
+        activeSection.length < deckpart.limit &&
         activeSection.filter(
           activeSectionCardId => activeSectionCardId === cardId
         ).length < 3

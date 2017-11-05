@@ -1,10 +1,10 @@
 import {
-    encodeBase64
-} from "./base64";
+    compress
+} from "./compress";
 import {
     objValues,
 } from "lightdash";
 
-const uriDeckEncode = deck => "?d=" + encodeBase64([deck.name, objValues(deck.list)]);
+const uriDeckEncode = deckList => "?d=" + compress(objValues(deckList).map(deckListPart => deckListPart.map(Number)));
 
 export default uriDeckEncode;

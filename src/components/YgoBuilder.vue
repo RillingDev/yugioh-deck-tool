@@ -87,7 +87,7 @@ export default {
 .builder-add {
   width: 34px;
   text-align: center;
-  opacity: 0.9;
+  opacity: 0.8;
   font-size: 1.2em;
   cursor: pointer;
   &:active {
