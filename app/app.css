@@ -1801,16 +1801,17 @@ tbody.collapse.show {
       min-width: 100px;
       max-width: 150px; } }
 
-.app-deck .deck-part {
+/* .app-deck {} */
+.deck-part {
   margin-bottom: 1em; }
-  .app-deck .deck-part-main .deck-content {
+  .deck-part-main .deck-content {
     background-color: #9e7a50; }
-  .app-deck .deck-part-extra .deck-content {
+  .deck-part-extra .deck-content {
     background-color: #9b78ac; }
-  .app-deck .deck-part-side .deck-content {
+  .deck-part-side .deck-content {
     background-color: #6aa06a; }
 
-.app-deck .deck-content {
+.deck-content {
   border: 1px solid #dedede;
   padding: 3px;
   display: flex;
