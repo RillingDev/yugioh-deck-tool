@@ -8,11 +8,11 @@
                 <div class="builder-card-action">
                     <span
                         class="fa fa-plus builder-add"
-                        v-for="deckpart in deckparts"
-                        :key="deckpart.id"
-                        :class="`builder-add-${deckpart.id}`"
-                        :title="`Add Card to ${deckpart.name} Deck`"
-                        @click="deckCardAdd(deckpart,pair[0])"
+                        v-for="deckPart in deckParts"
+                        :key="deckPart.id"
+                        :class="`builder-add-${deckPart.id}`"
+                        :title="`Add Card to ${deckPart.name} Deck`"
+                        @click="deckCardAdd(deckPart,pair[0])"
                     ></span>
                 </div>
             </li>
@@ -24,7 +24,7 @@
 import { arrClone } from "lightdash";
 
 export default {
-  props: ["pairsMap", "deckparts", "deckCardAdd"],
+  props: ["cardsPairs", "deckParts", "deckCardAdd"],
   data: () => {
     return {
       filter: ""
@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     pairs() {
-      return arrClone(this.pairsMap.entries());
+      return arrClone(this.cardsPairs.entries());
     },
     pairsFiltered() {
       return this.pairs

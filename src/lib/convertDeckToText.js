@@ -3,19 +3,19 @@ import {
     arrClone
 } from "lightdash";
 
-const convertDeckToText = function (deckparts, cardData, deck) {
+const convertDeckToText = function (deckParts, cardData, deck) {
     const result = [];
 
-    deckparts.forEach(deckpart => {
-        const deckpartCards = deck.list[deckpart.id];
+    deckParts.forEach(deckPart => {
+        const deckPartCards = deck.list[deckPart.id];
 
-        if (deckpartCards.length > 0) {
-            const deckpartCardsCounted = arrClone(arrCount(deckpartCards).entries())
+        if (deckPartCards.length > 0) {
+            const deckPartCardsCounted = arrClone(arrCount(deckPartCards).entries())
                 .map(entry => `${cardData.get(entry[0])} x${entry[1]}`);
 
             result.push(
-                `${deckpart.name}:`,
-                ...deckpartCardsCounted,
+                `${deckPart.name}:`,
+                ...deckPartCardsCounted,
                 ""
             );
         }

@@ -15304,14 +15304,8 @@ const uriDeckDecode = function (deckParts, deckUri) {
     const deckArray = decompress(deckUri.replace("?d=", ""));
     const deckList = {};
 
-    deckParts.forEach((deckpart, index) => {
-        deckList[deckpart.id] = deckArray[index].map(String);
-    });
-
-    console.log({
-        deckUri,
-        deckArray,
-        deckList
+    deckParts.forEach((deckPart, index) => {
+        deckList[deckPart.id] = deckArray[index].map(String);
     });
 
     return deckList;
@@ -15319,7 +15313,7 @@ const uriDeckDecode = function (deckParts, deckUri) {
 
 const uriDeckEncode = deckList => "?d=" + compress(objValues(deckList).map(deckListPart => deckListPart.map(Number)));
 
-const convertFileToDeck = function (deckparts, fileContent) {
+const convertFileToDeck = function (deckParts, fileContent) {
     const result = {};
     const fileParts = fileContent
         .replace(/#created.+/, "")
@@ -15327,8 +15321,8 @@ const convertFileToDeck = function (deckparts, fileContent) {
         .split(/[#!].+\n?/g)
         .slice(1);
 
-    deckparts.forEach((deckpart, index) => {
-        result[deckpart.id] = fileParts[index]
+    deckParts.forEach((deckPart, index) => {
+        result[deckPart.id] = fileParts[index]
             .split(/\n\r?/g)
             .map(line => line.trim())
             .filter(line => line.length > 0);
@@ -15340,27 +15334,27 @@ const convertFileToDeck = function (deckparts, fileContent) {
 const convertDeckToFile = function (deckParts, deckList) {
     let result = [];
 
-    deckParts.forEach(deckpart => {
-        result.push(deckpart.indicator);
-        result = result.concat(deckList[deckpart.id]);
+    deckParts.forEach(deckPart => {
+        result.push(deckPart.indicator);
+        result = result.concat(deckList[deckPart.id]);
     });
 
     return result.join("\n");
 };
 
-const convertDeckToText = function (deckparts, cardData, deck) {
+const convertDeckToText = function (deckParts, cardData, deck) {
     const result = [];
 
-    deckparts.forEach(deckpart => {
-        const deckpartCards = deck.list[deckpart.id];
+    deckParts.forEach(deckPart => {
+        const deckPartCards = deck.list[deckPart.id];
 
-        if (deckpartCards.length > 0) {
-            const deckpartCardsCounted = arrClone(arrCount(deckpartCards).entries())
+        if (deckPartCards.length > 0) {
+            const deckPartCardsCounted = arrClone(arrCount(deckPartCards).entries())
                 .map(entry => `${cardData.get(entry[0])} x${entry[1]}`);
 
             result.push(
-                `${deckpart.name}:`,
-                ...deckpartCardsCounted,
+                `${deckPart.name}:`,
+                ...deckPartCardsCounted,
                 ""
             );
         }
@@ -15532,8 +15526,8 @@ var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   }
 };
 
-var YgoBuilder = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"builder"},[_c('span',[_vm._v("Showing "+_vm._s(_vm.pairsFiltered.length)+" of "+_vm._s(_vm.pairs.length)+" Cards")]),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control builder-search",attrs:{"type":"search","title":"Search","placeholder":"Search"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value;}}}),_c('ul',{staticClass:"builder-list"},_vm._l((_vm.pairsFiltered),function(pair){return _c('li',{key:pair[0],staticClass:"builder-card"},[_c('div',{staticClass:"builder-card-name"},[_vm._v(_vm._s(pair[1]))]),_c('div',{staticClass:"builder-card-action"},_vm._l((_vm.deckparts),function(deckpart){return _c('span',{key:deckpart.id,staticClass:"fa fa-plus builder-add",class:`builder-add-${deckpart.id}`,attrs:{"title":`Add Card to ${deckpart.name} Deck`},on:{"click":function($event){_vm.deckCardAdd(deckpart,pair[0]);}}})}))])}))])},staticRenderFns: [],
-  props: ["pairsMap", "deckparts", "deckCardAdd"],
+var YgoBuilder = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"builder"},[_c('span',[_vm._v("Showing "+_vm._s(_vm.pairsFiltered.length)+" of "+_vm._s(_vm.pairs.length)+" Cards")]),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control builder-search",attrs:{"type":"search","title":"Search","placeholder":"Search"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value;}}}),_c('ul',{staticClass:"builder-list"},_vm._l((_vm.pairsFiltered),function(pair){return _c('li',{key:pair[0],staticClass:"builder-card"},[_c('div',{staticClass:"builder-card-name"},[_vm._v(_vm._s(pair[1]))]),_c('div',{staticClass:"builder-card-action"},_vm._l((_vm.deckParts),function(deckPart){return _c('span',{key:deckPart.id,staticClass:"fa fa-plus builder-add",class:`builder-add-${deckPart.id}`,attrs:{"title":`Add Card to ${deckPart.name} Deck`},on:{"click":function($event){_vm.deckCardAdd(deckPart,pair[0]);}}})}))])}))])},staticRenderFns: [],
+  props: ["cardsPairs", "deckParts", "deckCardAdd"],
   data: () => {
     return {
       filter: ""
@@ -15541,7 +15535,7 @@ var YgoBuilder = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   },
   computed: {
     pairs() {
-      return arrClone(this.pairsMap.entries());
+      return arrClone(this.cardsPairs.entries());
     },
     pairsFiltered() {
       return this.pairs
@@ -15553,7 +15547,7 @@ var YgoBuilder = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
 
 const urls = getUrls();
 
-var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app"},[_c('div',{staticClass:"app-section app-forms"},[_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Deck:")]),_c('input',{staticClass:"form-control",attrs:{"type":"file","accept":".ydk","title":"Upload Deck"},on:{"change":_vm.fileOnUpload}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.deck.name),expression:"deck.name"}],staticClass:"form-control form-deck-name",attrs:{"type":"text","title":"Deck Title","placeholder":"Deck Title"},domProps:{"value":(_vm.deck.name)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.deck, "name", $event.target.value);},function($event){_vm.deckUpdate();}]}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"download":"","title":"Download Deck"},on:{"click":_vm.deckToFile}},[_vm._v("Download")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Share:")]),_c('input',{staticClass:"form-control",attrs:{"type":"url","title":"Shareable Link"},domProps:{"value":_vm.shareLink}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Copy Decklist to Clipboard"},on:{"click":_vm.copyShareText}},[_vm._v("Copy Decklist to Clipboard")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Price:")]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.price.activeCurrency),expression:"price.activeCurrency"}],staticClass:"form-control form-deck-currency",attrs:{"title":"Price Currency"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.price, "activeCurrency", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);}}},_vm._l((_vm.price.currencies),function(currency){return _c('option',{key:currency.id,domProps:{"value":currency}},[_vm._v(_vm._s(currency.name))])})),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Load Prices"},on:{"click":_vm.fetchPrices}},[_c('span',{attrs:{"hidden":_vm.ajax.currentlyLoading}},[_vm._v("Load Prices")]),_c('span',{attrs:{"hidden":!_vm.ajax.currentlyLoading}},[_c('i',{staticClass:"fa fa-circle-o-notch fa-spin fa-fw"})])])])]),_c('div',{staticClass:"app-section app-deck"},[_c('h2',[_vm._v("Decklist:")]),_c('div',{staticClass:"deck"},[(_vm.ajax.pricesLoaded)?_c('div',{staticClass:"deck-part deck-part-total"},[_c('span',[_vm._v("Total:")]),_c('ygo-prices',{attrs:{"item":_vm.deck.list,"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}})],1):_vm._e(),_vm._l((_vm.deckparts),function(deckpart){return _c('div',{key:deckpart.id,staticClass:"deck-part",class:'deck-part-'+deckpart.id},[_c('span',[_vm._v(_vm._s(deckpart.name)+" Deck ("+_vm._s(_vm.deck.list[deckpart.id].length)+" Cards):")]),(_vm.deck.list[deckpart.id].length)?_c('div',[_c('ygo-prices',{attrs:{"item":_vm.deck.list[deckpart.id],"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}}),_c('div',{staticClass:"deck-content"},_vm._l((_vm.deck.list[deckpart.id]),function(cardId,index){return _c('ygo-card',{key:`${cardId}_${index}`,attrs:{"card-id":cardId,"card-name":_vm.cards.data.get(cardId),"deck-card-remove":()=>_vm.deckCardRemove(deckpart,cardId)}},[_c('ygo-prices',{attrs:{"slot":"price","item":cardId,"is-group":false,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency},slot:"price"})],1)}))],1):_vm._e()])})],2)]),_c('div',{staticClass:"app-section app-builder"},[_c('h2',[_vm._v("Deckbuilder:")]),(_vm.ajax.namesLoaded)?_c('ygo-builder',{attrs:{"pairs-map":_vm.cards.pairs,"deckparts":_vm.deckparts,"deck-card-add":_vm.deckCardAdd}}):_vm._e()],1)])},staticRenderFns: [],
+var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app"},[_c('div',{staticClass:"app-section app-forms"},[_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Deck:")]),_c('input',{staticClass:"form-control",attrs:{"type":"file","accept":".ydk","title":"Upload Deck"},on:{"change":_vm.fileOnUpload}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.deck.name),expression:"deck.name"}],staticClass:"form-control form-deck-name",attrs:{"type":"text","title":"Deck Title","placeholder":"Deck Title"},domProps:{"value":(_vm.deck.name)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.deck, "name", $event.target.value);},function($event){_vm.deckUpdate();}]}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"download":"","title":"Download Deck"},on:{"click":_vm.deckToFile}},[_vm._v("Download")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Share:")]),_c('input',{staticClass:"form-control",attrs:{"type":"url","title":"Shareable Link"},domProps:{"value":_vm.shareLink}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Copy Decklist to Clipboard"},on:{"click":_vm.copyShareText}},[_vm._v("Copy Decklist to Clipboard")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Price:")]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.price.activeCurrency),expression:"price.activeCurrency"}],staticClass:"form-control form-deck-currency",attrs:{"title":"Price Currency"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.price, "activeCurrency", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);}}},_vm._l((_vm.price.currencies),function(currency){return _c('option',{key:currency.id,domProps:{"value":currency}},[_vm._v(_vm._s(currency.name))])})),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Load Prices"},on:{"click":_vm.fetchPrices}},[_c('span',{attrs:{"hidden":_vm.ajax.currentlyLoading}},[_vm._v("Load Prices")]),_c('span',{attrs:{"hidden":!_vm.ajax.currentlyLoading}},[_c('i',{staticClass:"fa fa-circle-o-notch fa-spin fa-fw"})])])])]),_c('div',{staticClass:"app-section app-deck"},[_c('h2',[_vm._v("Decklist:")]),_c('div',{staticClass:"deck"},[(_vm.ajax.pricesLoaded)?_c('div',{staticClass:"deck-part deck-part-total"},[_c('span',[_vm._v("Total:")]),_c('ygo-prices',{attrs:{"item":_vm.deck.list,"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}})],1):_vm._e(),_vm._l((_vm.deck.parts),function(deckPart){return _c('div',{key:deckPart.id,staticClass:"deck-part",class:'deck-part-'+deckPart.id},[_c('span',[_vm._v(_vm._s(deckPart.name)+" Deck ("+_vm._s(_vm.deck.list[deckPart.id].length)+" Cards):")]),(_vm.deck.list[deckPart.id].length)?_c('div',[_c('ygo-prices',{attrs:{"item":_vm.deck.list[deckPart.id],"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}}),_c('div',{staticClass:"deck-content"},_vm._l((_vm.deck.list[deckPart.id]),function(cardId,index){return _c('ygo-card',{key:`${cardId}_${index}`,attrs:{"card-id":cardId,"card-name":_vm.cards.data.get(cardId),"deck-card-remove":()=>_vm.deckCardRemove(deckPart,cardId)}},[_c('ygo-prices',{attrs:{"slot":"price","item":cardId,"is-group":false,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency},slot:"price"})],1)}))],1):_vm._e()])})],2)]),_c('div',{staticClass:"app-section app-builder"},[_c('h2',[_vm._v("Deckbuilder:")]),(_vm.ajax.namesLoaded)?_c('ygo-builder',{attrs:{"cards-pairs":_vm.cards.pairs,"deck-parts":_vm.deck.parts,"deck-card-add":_vm.deckCardAdd}}):_vm._e()],1)])},staticRenderFns: [],
   name: "app",
   components: { YgoPrices, YgoCard, YgoBuilder },
   data: () => {
@@ -15562,7 +15556,6 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
         pairs: new Map(),
         data: new Map()
       },
-      deckparts,
       price: {
         activeCurrency: priceCurrencies[0],
         currencies: priceCurrencies,
@@ -15575,6 +15568,7 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       },
       deck: {
         name: "Unnamed",
+        parts: deckparts,
         list: {
           main: [],
           extra: [],
@@ -15632,13 +15626,13 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
 
       reader.onload = e => {
         vm.deck.name = file.name.replace(".ydk", "");
-        vm.deck.list = convertFileToDeck(vm.deckparts, e.target.result);
+        vm.deck.list = convertFileToDeck(vm.deck.parts, e.target.result);
       };
 
       reader.readAsText(file);
     },
     deckToFile() {
-      const fileData = convertDeckToFile(this.deckparts, this.deck.list);
+      const fileData = convertDeckToFile(this.deck.parts, this.deck.list);
       const file = new File([fileData], `${this.deck.name}.ydk`, {
         type: "text/ydk"
       });
@@ -15646,7 +15640,7 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       return FileSaver.saveAs(file);
     },
     deckFromUri(uriDeck) {
-      const deckArray = uriDeckDecode(this.deckparts, uriDeck);
+      const deckArray = uriDeckDecode(this.deck.parts, uriDeck);
 
       this.deck.list = deckArray;
     },
@@ -15654,7 +15648,7 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       return uriDeckEncode(this.deck.list);
     },
     deckToText() {
-      return convertDeckToText(this.deckparts, this.cards.data, this.deck);
+      return convertDeckToText(this.deck.parts, this.cards.data, this.deck);
     },
     deckCardAdd(deckpart, cardId) {
       const activeSection = this.deck.list[deckpart.id];

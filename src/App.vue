@@ -43,22 +43,22 @@
                         :price-active-currency="price.activeCurrency"
                     ></ygo-prices>
                 </div>
-                <div class="deck-part" v-for="deckpart in deckparts" :key="deckpart.id" :class="'deck-part-'+deckpart.id">
-                    <span>{{deckpart.name}} Deck ({{deck.list[deckpart.id].length}} Cards):</span>
-                    <div v-if="deck.list[deckpart.id].length">
+                <div class="deck-part" v-for="deckPart in deck.parts" :key="deckPart.id" :class="'deck-part-'+deckPart.id">
+                    <span>{{deckPart.name}} Deck ({{deck.list[deckPart.id].length}} Cards):</span>
+                    <div v-if="deck.list[deckPart.id].length">
                         <ygo-prices
-                            :item="deck.list[deckpart.id]"
+                            :item="deck.list[deckPart.id]"
                             :is-group="true"
                             :price-data="price.data"
                             :price-active-currency="price.activeCurrency"
                         ></ygo-prices>
                         <div class="deck-content">
                             <ygo-card
-                                v-for="(cardId, index) in deck.list[deckpart.id]"
+                                v-for="(cardId, index) in deck.list[deckPart.id]"
                                 :key="`${cardId}_${index}`"
                                 :card-id="cardId"
                                 :card-name="cards.data.get(cardId)"
-                                :deck-card-remove="()=>deckCardRemove(deckpart,cardId)"
+                                :deck-card-remove="()=>deckCardRemove(deckPart,cardId)"
                             >
                                 <ygo-prices
                                     slot="price"
@@ -78,8 +78,8 @@
             <h2>Deckbuilder:</h2>
             <ygo-builder
                 v-if="ajax.namesLoaded"
-                :pairs-map="cards.pairs"
-                :deckparts="deckparts"
+                :cards-pairs="cards.pairs"
+                :deck-parts="deck.parts"
                 :deck-card-add="deckCardAdd"
             ></ygo-builder>
         </div>
@@ -97,7 +97,7 @@ import convertFileToDeck from "./lib/convertFileToDeck";
 import convertDeckToFile from "./lib/convertDeckToFile";
 import convertDeckToText from "./lib/convertDeckToText";
 import filterOutOnce from "./lib/filterOutOnce";
-import deckparts from "./lib/data/deckparts";
+import deckParts from "./lib/data/deckParts";
 import priceCurrencies from "./lib/data/priceCurrencies";
 import getUrls from "./lib/data/urls";
 
@@ -116,7 +116,6 @@ export default {
         pairs: new Map(),
         data: new Map()
       },
-      deckparts,
       price: {
         activeCurrency: priceCurrencies[0],
         currencies: priceCurrencies,
@@ -129,6 +128,7 @@ export default {
       },
       deck: {
         name: "Unnamed",
+        parts: deckParts,
         list: {
           main: [],
           extra: [],
@@ -186,13 +186,13 @@ export default {
 
       reader.onload = e => {
         vm.deck.name = file.name.replace(".ydk", "");
-        vm.deck.list = convertFileToDeck(vm.deckparts, e.target.result);
+        vm.deck.list = convertFileToDeck(vm.deck.parts, e.target.result);
       };
 
       reader.readAsText(file);
     },
     deckToFile() {
-      const fileData = convertDeckToFile(this.deckparts, this.deck.list);
+      const fileData = convertDeckToFile(this.deck.parts, this.deck.list);
       const file = new File([fileData], `${this.deck.name}.ydk`, {
         type: "text/ydk"
       });
@@ -200,7 +200,7 @@ export default {
       return FileSaver.saveAs(file);
     },
     deckFromUri(uriDeck) {
-      const deckArray = uriDeckDecode(this.deckparts, uriDeck);
+      const deckArray = uriDeckDecode(this.deck.parts, uriDeck);
 
       this.deck.list = deckArray;
     },
@@ -208,7 +208,7 @@ export default {
       return uriDeckEncode(this.deck.list);
     },
     deckToText() {
-      return convertDeckToText(this.deckparts, this.cards.data, this.deck);
+      return convertDeckToText(this.deck.parts, this.cards.data, this.deck);
     },
     deckCardAdd(deckpart, cardId) {
       const activeSection = this.deck.list[deckpart.id];
