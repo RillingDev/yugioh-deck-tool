@@ -15296,22 +15296,46 @@ const pakoOptions = {
     to: "string"
 };
 
-const compress = val => btoa(pako_1.deflate(JSON.stringify(val), pakoOptions));
+const compress = val => btoa(pako_1.deflate(val, pakoOptions));
 
-const decompress = val => JSON.parse(pako_1.inflate(atob(val), pakoOptions));
+const decompress = val => pako_1.inflate(atob(val), pakoOptions);
+
+const loadOptimizedList = str => str.split("|")
+    .map(deckListPart => {
+        const result = [];
+
+        deckListPart
+            .split("+")
+            .map(entry => {
+                if (entry.startsWith("x")) {
+                    // Creates a new array of the size of cards, and fills with the card id
+                    result.push(...Array(Number(entry[1])).fill(entry.slice(2)));
+                } else {
+                    result.push(entry);
+                }
+            });
+
+        return result;
+    });
 
 const uriDeckDecode = function (deckParts, deckUri) {
-    const deckArray = decompress(deckUri.replace("?d=", ""));
+    const deckArray = loadOptimizedList(decompress(deckUri));
     const deckList = {};
 
     deckParts.forEach((deckPart, index) => {
-        deckList[deckPart.id] = deckArray[index].map(String);
+        deckList[deckPart.id] = deckArray[index];
     });
 
     return deckList;
 };
 
-const uriDeckEncode = deckList => "?d=" + compress(objValues(deckList).map(deckListPart => deckListPart.map(Number)));
+const optimizeList = deckList => objValues(deckList)
+    .map(deckListPart => arrClone(arrCount(deckListPart))
+        .map(entry => entry[1] > 1 ? `x${entry[1]}${entry[0]}` : entry[0])
+        .join("+"))
+    .join("|");
+
+const uriDeckEncode = deckList => "?d=" + compress(optimizeList(deckList));
 
 const convertFileToDeck = function (deckParts, fileContent) {
     const result = {};
@@ -15676,8 +15700,8 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
   mounted() {
     this.fetchNames();
 
-    if (location.search.includes("?d")) {
-      this.deckFromUri(location.search);
+    if (location.search.includes("?d=")) {
+      this.deckFromUri(location.search.replace("?d=", ""));
     }
   }
 };

@@ -4,9 +4,9 @@ const pakoOptions = {
     to: "string"
 };
 
-const compress = val => btoa(pako.deflate(JSON.stringify(val), pakoOptions));
+const compress = val => btoa(pako.deflate(val, pakoOptions));
 
-const decompress = val => JSON.parse(pako.inflate(atob(val), pakoOptions));
+const decompress = val => pako.inflate(atob(val), pakoOptions);
 
 export {
     compress,

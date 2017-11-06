@@ -243,8 +243,8 @@ export default {
   mounted() {
     this.fetchNames();
 
-    if (location.search.includes("?d")) {
-      this.deckFromUri(location.search);
+    if (location.search.includes("?d=")) {
+      this.deckFromUri(location.search.replace("?d=", ""));
     }
   }
 };
