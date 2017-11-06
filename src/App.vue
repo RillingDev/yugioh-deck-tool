@@ -75,20 +75,24 @@
         </div>
         <!-- app-builder -->
         <div class="app-section app-builder">
-            <h2>Deckbuilder:</h2>
+            <div>
+                <h2>Deckbuilder:</h2>
+                <ygo-draw-sim></ygo-draw-sim>
+            </div>
             <ygo-builder
                 v-if="ajax.namesLoaded"
                 :cards-pairs="cards.pairs"
                 :deck-parts="deck.parts"
                 :deck-card-add="deckCardAdd"
             ></ygo-builder>
+
         </div>
     </div>
 </template>
 
 <script>
 import FileSaver from "file-saver/FileSaver";
-import clipboard from "clipboard-js/clipboard";
+import clipboard from "clipboard-polyfill";
 import { uriDeckDecode, uriDeckEncode } from "./lib/uriDeck";
 import apiLoadNames from "./lib/apiLoadNames";
 import apiLoadPrices from "./lib/apiLoadPrices";
@@ -103,12 +107,13 @@ import getUrls from "./lib/data/urls";
 import YgoPrices from "./components/YgoPrices.vue";
 import YgoCard from "./components/YgoCard.vue";
 import YgoBuilder from "./components/YgoBuilder.vue";
+import YgoDrawSim from "./components/YgoDrawSim.vue";
 
 const urls = getUrls();
 
 export default {
   name: "app",
-  components: { YgoPrices, YgoCard, YgoBuilder },
+  components: { YgoPrices, YgoCard, YgoBuilder, YgoDrawSim },
   data: () => {
     return {
       cards: {
@@ -234,9 +239,7 @@ export default {
       this.deckFromFile(files[0]);
     },
     copyShareText() {
-      clipboard.copy({
-        "text/plain": this.deckToText()
-      });
+      clipboard.writeText(this.deckToText());
     }
   },
   mounted() {
@@ -255,6 +258,7 @@ export default {
 @import "styles/variables.app";
 
 @import "styles/bootstrap";
+@import "node_modules/bootstrap-vue/dist/bootstrap-vue";
 
 @import "styles/blocks/general";
 @import "styles/blocks/app";
