@@ -1792,7 +1792,7 @@ tbody.collapse.show {
     .app-forms > .form-group {
       flex-direction: row; }
     .app-forms input[title="Deck Title"] {
-      max-width: 200px; }
+      max-width: 175px; }
     .app-forms .btn {
       min-width: 225px;
       max-width: 275px;

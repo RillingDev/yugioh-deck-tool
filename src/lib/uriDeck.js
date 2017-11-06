@@ -8,11 +8,21 @@ import {
     arrCount,
 } from "lightdash";
 
-const optimizerDelimiters = ["&", "%", "$"];
+const optimizerDelimiters = [
+    "|", // DeckParts
+    ";", // CardIds
+    "*" // CardAmount
+];
 
 const createOptimizeList = deckList => objValues(deckList)
     .map(deckListPart => arrClone(arrCount(deckListPart))
-        .map(entry => entry[1] > 1 ? `${optimizerDelimiters[2]}${entry[1]}${entry[0]}` : entry[0])
+        .map(entry => {
+            if (entry[1] > 1) {
+                return `${optimizerDelimiters[2]}${entry[1]}${entry[0]}`;
+            } else {
+                return entry[0];
+            }
+        })
         .join(optimizerDelimiters[1]))
     .join(optimizerDelimiters[0]);
 
@@ -24,8 +34,10 @@ const loadOptimizedList = str => str.split(optimizerDelimiters[0])
             .split(optimizerDelimiters[1])
             .map(entry => {
                 if (entry.startsWith(optimizerDelimiters[2])) {
+                    const arrSized = Array(Number(entry[1]));
+
                     // Creates a new array of the size of cards, and fills with the card id
-                    result.push(...Array(Number(entry[1])).fill(entry.slice(2)));
+                    result.push(...arrSized.fill(entry.slice(2)));
                 } else {
                     result.push(entry);
                 }
