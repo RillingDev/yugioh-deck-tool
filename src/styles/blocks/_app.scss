@@ -17,7 +17,7 @@
 .app-deck {
     order: 3;
     @include screen(min, md) {
-        width: calc(100% - 442px);
+        width: calc(100% - 432px);
         order: 2;
     }
 }
@@ -25,7 +25,7 @@
 .app-builder {
     order: 2;
     @include screen(min, md) {
-        width: 422px;
+        width: 412px;
         margin-left: 20px;
         order: 3;
     }
