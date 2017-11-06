@@ -1,18 +1,4 @@
 @import "../mixins/screen";
-.priceapp-header {
-    text-align: center;
-}
-
-.btn {
-    cursor: pointer;
-}
-
-.container {
-    @include screen(max, xl) {
-        max-width: 100%;
-    }
-}
-
 .app {
     display: flex;
     flex-direction: row;
