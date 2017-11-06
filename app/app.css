@@ -4078,6 +4078,14 @@ table.b-table[aria-busy=true] {
       margin-left: 20px;
       order: 3; } }
 
+.app-builder-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem; }
+  .app-builder-intro > h2 {
+    margin-bottom: 0; }
+
 .app-forms {
   display: flex;
   flex-direction: column; }

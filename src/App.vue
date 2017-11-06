@@ -75,7 +75,7 @@
         </div>
         <!-- app-builder -->
         <div class="app-section app-builder">
-            <div>
+            <div class="app-builder-intro">
                 <h2>Deckbuilder:</h2>
                 <ygo-draw-sim></ygo-draw-sim>
             </div>

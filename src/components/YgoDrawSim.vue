@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="btn btn-primary" title="Open Start Hand Simulation" v-b-modal.modalDrawSim>Simulate Start Hand</button>
+        <button class="btn btn-primary" title="Open Start Hand Simulation" v-b-modal.modalDrawSim>Start Hand</button>
 
         <!-- Modal Component -->
         <b-modal id="modalDrawSim" ref="modalDrawSim" hide-footer title="Start Hand Simulation">
