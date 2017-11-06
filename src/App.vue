@@ -89,10 +89,9 @@
 <script>
 import FileSaver from "file-saver/FileSaver";
 import clipboard from "clipboard-js/clipboard";
+import { uriDeckDecode, uriDeckEncode } from "./lib/uriDeck";
 import apiLoadNames from "./lib/apiLoadNames";
 import apiLoadPrices from "./lib/apiLoadPrices";
-import uriDeckDecode from "./lib/uriDeckDecode";
-import uriDeckEncode from "./lib/uriDeckEncode";
 import convertFileToDeck from "./lib/convertFileToDeck";
 import convertDeckToFile from "./lib/convertDeckToFile";
 import convertDeckToText from "./lib/convertDeckToText";
@@ -139,7 +138,7 @@ export default {
   },
   computed: {
     shareLink() {
-      return location.origin + location.pathname + this.deckToUri();
+      return `${location.origin}${location.pathname}?d=${this.deckToUri()}`;
     }
   },
   methods: {

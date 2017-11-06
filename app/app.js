@@ -8152,297 +8152,6 @@ var clipboard = createCommonjsModule(function (module) {
 }));
 });
 
-/**
- * Checks if a value is an array
- *
- * @function isArray
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @returns {boolean}
- * @example
- * // returns true
- * isArray([]);
- * isArray([1, 2, 3]);
- *
- * @example
- * // returns false
- * isArray({});
- */
-const isArray = Array.isArray;
-
-/**
- * Checks if the value has a certain type-string
- *
- * @function isTypeOf
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @param {string} type
- * @returns {boolean}
- * @example
- * //returns true
- * isTypeOf({},"object")
- * isTypeOf([],"object")
- * isTypeOf("foo","string")
- *
- * @example
- * //returns false
- * isTypeOf("foo","number")
- */
-const isTypeOf = (val, type) => typeof val === type;
-
-/**
- * Checks if a value is undefined
- *
- * @function isUndefined
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @returns {boolean}
- * @example
- * //returns false
- * const a = {};
- *
- * isUndefined(a.b)
- * isUndefined(undefined)
- *
- * @example
- * //returns false
- * const a = {};
- *
- * isUndefined(1)
- * isUndefined(a)
- */
-const isUndefined = (val) => isTypeOf(val, "undefined");
-
-/**
- * Checks if a value is not undefined
- *
- * @function isDefined
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @returns {boolean}
- * @example
- * //returns true
- * const a = {};
- *
- * isDefined(1)
- * isDefined(a)
- *
- * @example
- * //returns false
- * const a = {};
- *
- * isDefined(a.b)
- * isDefined(undefined)
- */
-const isDefined = (val) => !isUndefined(val);
-
-/**
- * Returns an array of the objects entries
- *
- * @function objEntries
- * @memberof Object
- * @since 1.0.0
- * @param {Object} obj
- * @returns {any[]} Array<[key: any, val: any]>]
- * @example
- * //returns [["a",1],["b",2],["c",3]]
- * objEntries({a:1,b:2,c:3})
- */
-const objEntries = Object.entries;
-
-/**
- * Iterates over each element in an array
- *
- * @function forEach
- * @memberof For
- * @param {any[]} arr
- * @param {function} fn fn(val: any, index: number, arr: any[])
- * @example
- * //returns a = [0,2,6]
- * const a = [1,2,3];
- *
- * forEach(a,(val,index)=>a[index]=val*index)
- */
-const forEach = (arr, fn) => arr.forEach(fn);
-
-/**
- * Iterates over each entry of an object
- *
- * @function forEachEntry
- * @memberof For
- * @param {object} obj
- * @param {function} fn fn(val: any, key: any, index: number, arr: any[])
- * @example
- * //returns a = {a:0, b: 2}
- * const a = {a:1, b:2};
- *
- * forEachEntry(a,(val,key,index)=>a[key]=val*index)
- */
-const forEachEntry = (obj, fn) => {
-    forEach(objEntries(obj), (entry, index) => {
-        fn(entry[1], entry[0], index, obj);
-    });
-};
-
-/**
- * Creates a new array with the values of the input iterable
- *
- * @function arrClone
- * @memberof Array
- * @since 1.0.0
- * @param {any} arr
- * @returns {any[]}
- * @example
- * //returns a = [1,2,3], b = [1,10,3]
- * const a = [1,2,3];
- * const b = arrClone(a);
- *
- * b[1] = 10;
- */
-const arrClone = Array.from;
-
-/**
- * Counts how many times an element appears in an array and returns a Map<element: any, count: number>
- *
- * @function arrCount
- * @memberof Array
- * @since 2.0.0
- * @param {any[]} arr
- * @returns {Map<any, number>} Map<element: any, count: number>
- * @example
- * //returns Map{1:4, 2:2, 3:1, 4:1}
- * arrCount([1,1,2,2,1,3,4,1])
- */
-const arrCount = (arr) => {
-    const result = new Map();
-    forEach(arr, (val) => {
-        result.set(val, result.has(val) ? result.get(val) + 1 : 1);
-    });
-    return result;
-};
-
-/**
- * Recursively flattens an array
- *
- * @function arrFlattenDeep
- * @memberof Array
- * @since 1.0.0
- * @param {any[]} arr
- * @returns {any[]}
- * @example
- * //returns [1,2,3]
- * arrFlattenDeep([1,2,[3]])
- *
- * @example
- * //returns [1,2,3,5,6,6]
- * arrFlattenDeep([1,2,[3,[[[5]]],[6,[6]]])
- */
-const arrFlattenDeep = (arr) => {
-    const result = [];
-    forEach(arr, (val) => {
-        if (isArray(val)) {
-            result.push(...arrFlattenDeep(val));
-        }
-        else {
-            result.push(val);
-        }
-    });
-    return result;
-};
-
-/**
- * Returns an array of the objects values
- *
- * @function objValues
- * @memberof Object
- * @since 1.0.0
- * @param {Object} obj
- * @returns {any[]}
- * @example
- * //returns [1,2,3]
- * objValues({a:1,b:2,c:3})
- */
-const objValues = Object.values;
-
-const sortMapEntries = (map, fn) => new Map(arrClone(map.entries()).sort(fn));
-
-const apiLoadNames = urls => new Promise((resolve, reject) => {
-    fetch(urls.nameAPI)
-        .then(response => response.json())
-        .then(json => {
-            const nameCache = new Set();
-            const data = new Map();
-            const dataUniquePairs = new Map();
-
-            forEachEntry(json, (name, id) => {
-                if (name.length > 0) {
-                    data.set(id, name);
-
-                    // Only add each card once to parts, skip alternate arts
-                    if (!nameCache.has(name)) {
-                        dataUniquePairs.set(id, name);
-                    }
-
-                    nameCache.add(name);
-                }
-            });
-
-            resolve({
-                data,
-                pairs: sortMapEntries(dataUniquePairs, (entryA, entryB) => entryA[1].localeCompare(entryB[1])),
-            });
-        })
-        .catch(reject);
-});
-
-const encodeBase64 = val => btoa(JSON.stringify(val));
-
-const getCardsWithoutPriceData = (deckList, priceData) => {
-    const result = [];
-
-    forEachEntry(deckList, deckpart => {
-        deckpart.forEach(cardId => {
-            if (!result.includes(cardId) && !priceData.has(cardId)) {
-                result.push(cardId);
-            }
-        });
-    });
-
-    return result;
-};
-
-const apiLoadPrices = (urls, deckList, cardData, priceDataOld) => new Promise((resolve, reject) => {
-    const priceData = new Map(priceDataOld);
-    const cardIdsToFetch = getCardsWithoutPriceData(deckList, priceDataOld);
-
-    if (cardIdsToFetch.length > 0) {
-        const priceQuery = encodeBase64(cardIdsToFetch.map(cardId => cardData.get(cardId)));
-
-        fetch(urls.priceAPI + priceQuery)
-            .then(response => response.json())
-            .then(json => {
-                cardIdsToFetch.forEach((cardId, index) => {
-                    const cardIdPriceData = json[index];
-
-                    priceData.set(cardId, {
-                        low: cardIdPriceData.low,
-                        average: cardIdPriceData.average,
-                        high: cardIdPriceData.high
-                    });
-                });
-
-                resolve(priceData);
-            })
-            .catch(reject);
-    } else {
-        resolve(priceData);
-    }
-});
-
 var common = createCommonjsModule(function (module, exports) {
 'use strict';
 
@@ -15300,14 +15009,238 @@ const compress = val => btoa(pako_1.deflate(val, pakoOptions));
 
 const decompress = val => pako_1.inflate(atob(val), pakoOptions);
 
-const loadOptimizedList = str => str.split("|")
+/**
+ * Checks if a value is an array
+ *
+ * @function isArray
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @returns {boolean}
+ * @example
+ * // returns true
+ * isArray([]);
+ * isArray([1, 2, 3]);
+ *
+ * @example
+ * // returns false
+ * isArray({});
+ */
+const isArray = Array.isArray;
+
+/**
+ * Checks if the value has a certain type-string
+ *
+ * @function isTypeOf
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @param {string} type
+ * @returns {boolean}
+ * @example
+ * //returns true
+ * isTypeOf({},"object")
+ * isTypeOf([],"object")
+ * isTypeOf("foo","string")
+ *
+ * @example
+ * //returns false
+ * isTypeOf("foo","number")
+ */
+const isTypeOf = (val, type) => typeof val === type;
+
+/**
+ * Checks if a value is undefined
+ *
+ * @function isUndefined
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @returns {boolean}
+ * @example
+ * //returns false
+ * const a = {};
+ *
+ * isUndefined(a.b)
+ * isUndefined(undefined)
+ *
+ * @example
+ * //returns false
+ * const a = {};
+ *
+ * isUndefined(1)
+ * isUndefined(a)
+ */
+const isUndefined = (val) => isTypeOf(val, "undefined");
+
+/**
+ * Checks if a value is not undefined
+ *
+ * @function isDefined
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @returns {boolean}
+ * @example
+ * //returns true
+ * const a = {};
+ *
+ * isDefined(1)
+ * isDefined(a)
+ *
+ * @example
+ * //returns false
+ * const a = {};
+ *
+ * isDefined(a.b)
+ * isDefined(undefined)
+ */
+const isDefined = (val) => !isUndefined(val);
+
+/**
+ * Returns an array of the objects entries
+ *
+ * @function objEntries
+ * @memberof Object
+ * @since 1.0.0
+ * @param {Object} obj
+ * @returns {any[]} Array<[key: any, val: any]>]
+ * @example
+ * //returns [["a",1],["b",2],["c",3]]
+ * objEntries({a:1,b:2,c:3})
+ */
+const objEntries = Object.entries;
+
+/**
+ * Iterates over each element in an array
+ *
+ * @function forEach
+ * @memberof For
+ * @param {any[]} arr
+ * @param {function} fn fn(val: any, index: number, arr: any[])
+ * @example
+ * //returns a = [0,2,6]
+ * const a = [1,2,3];
+ *
+ * forEach(a,(val,index)=>a[index]=val*index)
+ */
+const forEach = (arr, fn) => arr.forEach(fn);
+
+/**
+ * Iterates over each entry of an object
+ *
+ * @function forEachEntry
+ * @memberof For
+ * @param {object} obj
+ * @param {function} fn fn(val: any, key: any, index: number, arr: any[])
+ * @example
+ * //returns a = {a:0, b: 2}
+ * const a = {a:1, b:2};
+ *
+ * forEachEntry(a,(val,key,index)=>a[key]=val*index)
+ */
+const forEachEntry = (obj, fn) => {
+    forEach(objEntries(obj), (entry, index) => {
+        fn(entry[1], entry[0], index, obj);
+    });
+};
+
+/**
+ * Creates a new array with the values of the input iterable
+ *
+ * @function arrClone
+ * @memberof Array
+ * @since 1.0.0
+ * @param {any} arr
+ * @returns {any[]}
+ * @example
+ * //returns a = [1,2,3], b = [1,10,3]
+ * const a = [1,2,3];
+ * const b = arrClone(a);
+ *
+ * b[1] = 10;
+ */
+const arrClone = Array.from;
+
+/**
+ * Counts how many times an element appears in an array and returns a Map<element: any, count: number>
+ *
+ * @function arrCount
+ * @memberof Array
+ * @since 2.0.0
+ * @param {any[]} arr
+ * @returns {Map<any, number>} Map<element: any, count: number>
+ * @example
+ * //returns Map{1:4, 2:2, 3:1, 4:1}
+ * arrCount([1,1,2,2,1,3,4,1])
+ */
+const arrCount = (arr) => {
+    const result = new Map();
+    forEach(arr, (val) => {
+        result.set(val, result.has(val) ? result.get(val) + 1 : 1);
+    });
+    return result;
+};
+
+/**
+ * Recursively flattens an array
+ *
+ * @function arrFlattenDeep
+ * @memberof Array
+ * @since 1.0.0
+ * @param {any[]} arr
+ * @returns {any[]}
+ * @example
+ * //returns [1,2,3]
+ * arrFlattenDeep([1,2,[3]])
+ *
+ * @example
+ * //returns [1,2,3,5,6,6]
+ * arrFlattenDeep([1,2,[3,[[[5]]],[6,[6]]])
+ */
+const arrFlattenDeep = (arr) => {
+    const result = [];
+    forEach(arr, (val) => {
+        if (isArray(val)) {
+            result.push(...arrFlattenDeep(val));
+        }
+        else {
+            result.push(val);
+        }
+    });
+    return result;
+};
+
+/**
+ * Returns an array of the objects values
+ *
+ * @function objValues
+ * @memberof Object
+ * @since 1.0.0
+ * @param {Object} obj
+ * @returns {any[]}
+ * @example
+ * //returns [1,2,3]
+ * objValues({a:1,b:2,c:3})
+ */
+const objValues = Object.values;
+
+const optimizerDelimiters = ["&", "%", "$"];
+
+const createOptimizeList = deckList => objValues(deckList)
+    .map(deckListPart => arrClone(arrCount(deckListPart))
+        .map(entry => entry[1] > 1 ? `${optimizerDelimiters[2]}${entry[1]}${entry[0]}` : entry[0])
+        .join(optimizerDelimiters[1]))
+    .join(optimizerDelimiters[0]);
+
+const loadOptimizedList = str => str.split(optimizerDelimiters[0])
     .map(deckListPart => {
         const result = [];
 
         deckListPart
-            .split("+")
+            .split(optimizerDelimiters[1])
             .map(entry => {
-                if (entry.startsWith("x")) {
+                if (entry.startsWith(optimizerDelimiters[2])) {
                     // Creates a new array of the size of cards, and fills with the card id
                     result.push(...Array(Number(entry[1])).fill(entry.slice(2)));
                 } else {
@@ -15317,6 +15250,8 @@ const loadOptimizedList = str => str.split("|")
 
         return result;
     });
+
+const uriDeckEncode = deckList => compress(createOptimizeList(deckList));
 
 const uriDeckDecode = function (deckParts, deckUri) {
     const deckArray = loadOptimizedList(decompress(deckUri));
@@ -15329,13 +15264,80 @@ const uriDeckDecode = function (deckParts, deckUri) {
     return deckList;
 };
 
-const optimizeList = deckList => objValues(deckList)
-    .map(deckListPart => arrClone(arrCount(deckListPart))
-        .map(entry => entry[1] > 1 ? `x${entry[1]}${entry[0]}` : entry[0])
-        .join("+"))
-    .join("|");
+const sortMapEntries = (map, fn) => new Map(arrClone(map.entries()).sort(fn));
 
-const uriDeckEncode = deckList => "?d=" + compress(optimizeList(deckList));
+const apiLoadNames = urls => new Promise((resolve, reject) => {
+    fetch(urls.nameAPI)
+        .then(response => response.json())
+        .then(json => {
+            const nameCache = new Set();
+            const data = new Map();
+            const dataUniquePairs = new Map();
+
+            forEachEntry(json, (name, id) => {
+                if (name.length > 0) {
+                    data.set(id, name);
+
+                    // Only add each card once to parts, skip alternate arts
+                    if (!nameCache.has(name)) {
+                        dataUniquePairs.set(id, name);
+                    }
+
+                    nameCache.add(name);
+                }
+            });
+
+            resolve({
+                data,
+                pairs: sortMapEntries(dataUniquePairs, (entryA, entryB) => entryA[1].localeCompare(entryB[1])),
+            });
+        })
+        .catch(reject);
+});
+
+const encodeBase64 = val => btoa(JSON.stringify(val));
+
+const getCardsWithoutPriceData = (deckList, priceData) => {
+    const result = [];
+
+    forEachEntry(deckList, deckpart => {
+        deckpart.forEach(cardId => {
+            if (!result.includes(cardId) && !priceData.has(cardId)) {
+                result.push(cardId);
+            }
+        });
+    });
+
+    return result;
+};
+
+const apiLoadPrices = (urls, deckList, cardData, priceDataOld) => new Promise((resolve, reject) => {
+    const priceData = new Map(priceDataOld);
+    const cardIdsToFetch = getCardsWithoutPriceData(deckList, priceDataOld);
+
+    if (cardIdsToFetch.length > 0) {
+        const priceQuery = encodeBase64(cardIdsToFetch.map(cardId => cardData.get(cardId)));
+
+        fetch(urls.priceAPI + priceQuery)
+            .then(response => response.json())
+            .then(json => {
+                cardIdsToFetch.forEach((cardId, index) => {
+                    const cardIdPriceData = json[index];
+
+                    priceData.set(cardId, {
+                        low: cardIdPriceData.low,
+                        average: cardIdPriceData.average,
+                        high: cardIdPriceData.high
+                    });
+                });
+
+                resolve(priceData);
+            })
+            .catch(reject);
+    } else {
+        resolve(priceData);
+    }
+});
 
 const convertFileToDeck = function (deckParts, fileContent) {
     const result = {};
@@ -15596,7 +15598,7 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
   },
   computed: {
     shareLink() {
-      return location.origin + location.pathname + this.deckToUri();
+      return `${location.origin}${location.pathname}?d=${this.deckToUri()}`;
     }
   },
   methods: {
