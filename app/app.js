@@ -15376,20 +15376,24 @@ var YgoPrices = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
 
 const urls$1 = getUrls();
 
-var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.hasData)?_c('a',{staticClass:"deck-card",attrs:{"target":"_blank","href":_vm.link,"data-name":_vm.cardName},on:{"contextmenu":function($event){$event.preventDefault();_vm.deckCardRemove();}}},[_c('div',{staticClass:"deck-card-image"},[_c('img',{attrs:{"width":"100","height":"144","src":_vm.image}})]),_c('div',{staticClass:"deck-card-text"},[_c('div',{staticClass:"deck-card-name"},[_vm._v(_vm._s(_vm.cardName))]),_vm._t("price")],2)]):_vm._e()},staticRenderFns: [],
+var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('a',{staticClass:"deck-card",attrs:{"target":"_blank","href":_vm.link,"data-name":_vm.cardName},on:{"contextmenu":function($event){$event.preventDefault();_vm.onRightClick();}}},[_c('div',{staticClass:"deck-card-image"},[_c('img',{attrs:{"width":"100","height":"144","src":_vm.image}})]),_c('div',{staticClass:"deck-card-text"},[_c('div',{staticClass:"deck-card-name"},[_vm._v(_vm._s(_vm.cardName || `[${_vm.cardId}]`))]),_vm._t("price")],2)])},staticRenderFns: [],
   components: {
     YgoPrices
   },
-  props: ["cardId", "cardName", "deckCardRemove"],
+  props: ["cardId", "cardName", "onRightClick"],
   computed: {
     hasData() {
       return isDefined(this.cardName);
     },
     image() {
-      return `${urls$1.imageAPI}/${this.cardId}.jpg`;
+      return this.hasData
+        ? `${urls$1.imageAPI}/${this.cardId}.jpg`
+        : "./unknown.png";
     },
     link() {
-      return `${urls$1.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`;
+      return this.hasData
+        ? `${urls$1.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
+        : "#";
     }
   }
 };
@@ -19476,28 +19480,44 @@ var bModalDirective = {
     }
 };
 
-var YgoDrawSim = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('button',{directives:[{name:"b-modal",rawName:"v-b-modal.modalDrawSim",modifiers:{"modalDrawSim":true}}],staticClass:"btn btn-primary",attrs:{"title":"Open Start Hand Simulation"}},[_vm._v("Start Hand")]),_c('b-modal',{ref:"modalDrawSim",attrs:{"id":"modalDrawSim","hide-footer":"","title":"Start Hand Simulation"}},[_c('p',[_vm._v("Test")]),_c('button',{staticClass:"btn btn-primary",on:{"click":_vm.hideModal}},[_vm._v("Close")])])],1)},staticRenderFns: [],
+const simulateStartingHand = (cardListMain, cardsToDraw) => arrClone(cardListMain)
+    .sort(() => Math.random() < 0.5)
+    .slice(0, cardsToDraw);
+
+var YgoDrawSim = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('button',{directives:[{name:"b-modal",rawName:"v-b-modal.modalDrawSim",modifiers:{"modalDrawSim":true}}],staticClass:"btn btn-primary btn-sm",attrs:{"title":"Open Start Hand Simulation"}},[_vm._v("Start Hand")]),_c('b-modal',{ref:"modalDrawSim",attrs:{"id":"modalDrawSim","size":"lg","hide-footer":"","title":"Start Hand Simulation"}},[_c('div',{staticClass:"drawsim"},[_c('div',{staticClass:"drawsim-drawmode btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-secondary",class:{active: _vm.drawMode==='first'},attrs:{"type":"button button-primary"},on:{"click":function($event){_vm.drawMode='first';}}},[_vm._v("Going First")]),_c('button',{staticClass:"btn btn-secondary",class:{active: _vm.drawMode==='second'},attrs:{"type":"button button-primary"},on:{"click":function($event){_vm.drawMode='second';}}},[_vm._v("Going Second")])]),_c('div',{staticClass:"drawsim-output"},_vm._l((_vm.drawItems),function(drawItemId,index){return _c('ygo-card',{key:`${drawItemId}_${index}`,attrs:{"card-id":drawItemId,"card-name":_vm.cardsData.get(drawItemId),"on-right-click":()=>{}}})})),_c('button',{staticClass:"btn btn-primary",on:{"click":function($event){_vm.draw();}}},[_vm._v("Draw")])])])],1)},staticRenderFns: [],
   components: {
-    bModal: bModal$1
+    bModal: bModal$1,
+    YgoCard
   },
   directives: {
     bModal: bModalDirective
   },
-  props: [],
-  computed: {},
+  props: ["deckListMain", "cardsData"],
+  data() {
+    return {
+      drawMode: "first",
+      drawItems: []
+    };
+  },
   methods: {
     showModal() {
       this.$refs.modalDrawSim.show();
     },
     hideModal() {
       this.$refs.modalDrawSim.hide();
+    },
+    draw() {
+      const cardAmount = this.drawMode === "first" ? 5 : 6;
+
+      this.drawItems = simulateStartingHand(this.deckListMain, cardAmount);
+      console.log(this.drawItems);
     }
   }
 };
 
 const urls = getUrls();
 
-var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app"},[_c('div',{staticClass:"app-section app-forms"},[_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Deck:")]),_c('input',{staticClass:"form-control",attrs:{"type":"file","accept":".ydk","title":"Upload Deck"},on:{"change":_vm.fileOnUpload}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.deck.name),expression:"deck.name"}],staticClass:"form-control form-deck-name",attrs:{"type":"text","title":"Deck Title","placeholder":"Deck Title"},domProps:{"value":(_vm.deck.name)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.deck, "name", $event.target.value);},function($event){_vm.deckUpdate();}]}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"download":"","title":"Download Deck"},on:{"click":_vm.deckToFile}},[_vm._v("Download")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Share:")]),_c('input',{staticClass:"form-control",attrs:{"type":"url","title":"Shareable Link"},domProps:{"value":_vm.shareLink}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Copy Decklist to Clipboard"},on:{"click":_vm.copyShareText}},[_vm._v("Copy Decklist to Clipboard")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Price:")]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.price.activeCurrency),expression:"price.activeCurrency"}],staticClass:"form-control form-deck-currency",attrs:{"title":"Price Currency"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.price, "activeCurrency", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);}}},_vm._l((_vm.price.currencies),function(currency){return _c('option',{key:currency.id,domProps:{"value":currency}},[_vm._v(_vm._s(currency.name))])})),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Load Prices"},on:{"click":_vm.fetchPrices}},[_c('span',{attrs:{"hidden":_vm.ajax.currentlyLoading}},[_vm._v("Load Prices")]),_c('span',{attrs:{"hidden":!_vm.ajax.currentlyLoading}},[_c('i',{staticClass:"fa fa-circle-o-notch fa-spin fa-fw"})])])])]),_c('div',{staticClass:"app-section app-deck"},[_c('h2',[_vm._v("Decklist:")]),_c('div',{staticClass:"deck"},[(_vm.ajax.pricesLoaded)?_c('div',{staticClass:"deck-part deck-part-total"},[_c('span',[_vm._v("Total:")]),_c('ygo-prices',{attrs:{"item":_vm.deck.list,"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}})],1):_vm._e(),_vm._l((_vm.deck.parts),function(deckPart){return _c('div',{key:deckPart.id,staticClass:"deck-part",class:'deck-part-'+deckPart.id},[_c('span',[_vm._v(_vm._s(deckPart.name)+" Deck ("+_vm._s(_vm.deck.list[deckPart.id].length)+" Cards):")]),(_vm.deck.list[deckPart.id].length)?_c('div',[_c('ygo-prices',{attrs:{"item":_vm.deck.list[deckPart.id],"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}}),_c('div',{staticClass:"deck-content"},_vm._l((_vm.deck.list[deckPart.id]),function(cardId,index){return _c('ygo-card',{key:`${cardId}_${index}`,attrs:{"card-id":cardId,"card-name":_vm.cards.data.get(cardId),"deck-card-remove":()=>_vm.deckCardRemove(deckPart,cardId)}},[_c('ygo-prices',{attrs:{"slot":"price","item":cardId,"is-group":false,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency},slot:"price"})],1)}))],1):_vm._e()])})],2)]),_c('div',{staticClass:"app-section app-builder"},[_c('div',{staticClass:"app-builder-intro"},[_c('h2',[_vm._v("Deckbuilder:")]),_c('ygo-draw-sim')],1),(_vm.ajax.namesLoaded)?_c('ygo-builder',{attrs:{"cards-pairs":_vm.cards.pairs,"deck-parts":_vm.deck.parts,"deck-card-add":_vm.deckCardAdd}}):_vm._e()],1)])},staticRenderFns: [],
+var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app"},[_c('div',{staticClass:"app-section app-forms"},[_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Deck:")]),_c('input',{staticClass:"form-control",attrs:{"type":"file","accept":".ydk","title":"Upload Deck"},on:{"change":_vm.fileOnUpload}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.deck.name),expression:"deck.name"}],staticClass:"form-control form-deck-name",attrs:{"type":"text","title":"Deck Title","placeholder":"Deck Title"},domProps:{"value":(_vm.deck.name)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.deck, "name", $event.target.value);},function($event){_vm.deckUpdate();}]}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"download":"","title":"Download Deck"},on:{"click":_vm.deckToFile}},[_vm._v("Download")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Share:")]),_c('input',{staticClass:"form-control",attrs:{"type":"url","title":"Shareable Link"},domProps:{"value":_vm.shareLink}}),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Copy Decklist to Clipboard"},on:{"click":_vm.copyShareText}},[_vm._v("Copy Decklist to Clipboard")])]),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("Price:")]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.price.activeCurrency),expression:"price.activeCurrency"}],staticClass:"form-control form-deck-currency",attrs:{"title":"Price Currency"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.price, "activeCurrency", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);}}},_vm._l((_vm.price.currencies),function(currency){return _c('option',{key:currency.id,domProps:{"value":currency}},[_vm._v(_vm._s(currency.name))])})),_c('button',{staticClass:"btn btn-primary form-control",attrs:{"title":"Load Prices"},on:{"click":_vm.fetchPrices}},[_c('span',{attrs:{"hidden":_vm.ajax.currentlyLoading}},[_vm._v("Load Prices")]),_c('span',{attrs:{"hidden":!_vm.ajax.currentlyLoading}},[_c('i',{staticClass:"fa fa-circle-o-notch fa-spin fa-fw"})])])])]),_c('div',{staticClass:"app-section app-deck"},[_c('h2',[_vm._v("Decklist:")]),_c('div',{staticClass:"deck"},[(_vm.ajax.pricesLoaded)?_c('div',{staticClass:"deck-part deck-part-total"},[_c('span',[_vm._v("Total:")]),_c('ygo-prices',{attrs:{"item":_vm.deck.list,"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}})],1):_vm._e(),_vm._l((_vm.deck.parts),function(deckPart){return _c('div',{key:deckPart.id,staticClass:"deck-part",class:'deck-part-'+deckPart.id},[_c('span',[_vm._v(_vm._s(deckPart.name)+" Deck ("+_vm._s(_vm.deck.list[deckPart.id].length)+" Cards):")]),(_vm.deck.list[deckPart.id].length)?_c('div',[_c('ygo-prices',{attrs:{"item":_vm.deck.list[deckPart.id],"is-group":true,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency}}),_c('div',{staticClass:"deck-content"},_vm._l((_vm.deck.list[deckPart.id]),function(cardId,index){return _c('ygo-card',{key:`${cardId}_${index}`,attrs:{"card-id":cardId,"card-name":_vm.cards.data.get(cardId),"on-right-click":()=>_vm.deckCardRemove(deckPart,cardId)}},[_c('ygo-prices',{attrs:{"slot":"price","item":cardId,"is-group":false,"price-data":_vm.price.data,"price-active-currency":_vm.price.activeCurrency},slot:"price"})],1)}))],1):_vm._e()])})],2)]),_c('div',{staticClass:"app-section app-builder"},[_c('div',{staticClass:"app-builder-intro"},[_c('h2',[_vm._v("Deckbuilder:")]),_c('ygo-draw-sim',{attrs:{"deck-list-main":_vm.deck.list.main,"cards-data":_vm.cards.data}})],1),(_vm.ajax.namesLoaded)?_c('ygo-builder',{attrs:{"cards-pairs":_vm.cards.pairs,"deck-parts":_vm.deck.parts,"deck-card-add":_vm.deckCardAdd}}):_vm._e()],1)])},staticRenderFns: [],
   name: "app",
   components: { YgoPrices, YgoCard, YgoBuilder, YgoDrawSim },
   data: () => {

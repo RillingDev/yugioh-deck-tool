@@ -58,7 +58,7 @@
                                 :key="`${cardId}_${index}`"
                                 :card-id="cardId"
                                 :card-name="cards.data.get(cardId)"
-                                :deck-card-remove="()=>deckCardRemove(deckPart,cardId)"
+                                :on-right-click="()=>deckCardRemove(deckPart,cardId)"
                             >
                                 <ygo-prices
                                     slot="price"
@@ -77,7 +77,10 @@
         <div class="app-section app-builder">
             <div class="app-builder-intro">
                 <h2>Deckbuilder:</h2>
-                <ygo-draw-sim></ygo-draw-sim>
+                <ygo-draw-sim
+                    :deck-list-main="deck.list.main"
+                    :cards-data="cards.data"
+                ></ygo-draw-sim>
             </div>
             <ygo-builder
                 v-if="ajax.namesLoaded"
@@ -85,7 +88,6 @@
                 :deck-parts="deck.parts"
                 :deck-card-add="deckCardAdd"
             ></ygo-builder>
-
         </div>
     </div>
 </template>

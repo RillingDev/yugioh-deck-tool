@@ -1802,12 +1802,12 @@ fieldset[disabled] a.btn {
   .btn-link:disabled, .btn-link.disabled {
     color: #888; }
 
-.btn-lg {
+.btn-lg, .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5; }
 
-.btn-sm {
+.btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5; }
@@ -1847,8 +1847,93 @@ tbody.collapse.show {
   overflow: hidden;
   transition: height 0.35s ease; }
 
+.btn-group,
+.btn-group-vertical {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle; }
+  .btn-group > .btn,
+  .btn-group-vertical > .btn {
+    position: relative;
+    flex: 0 1 auto; }
+    .btn-group > .btn:hover,
+    .btn-group-vertical > .btn:hover {
+      z-index: 2; }
+    .btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active,
+    .btn-group-vertical > .btn:focus,
+    .btn-group-vertical > .btn:active,
+    .btn-group-vertical > .btn.active {
+      z-index: 2; }
+  .btn-group .btn + .btn,
+  .btn-group .btn + .btn-group,
+  .btn-group .btn-group + .btn,
+  .btn-group .btn-group + .btn-group,
+  .btn-group-vertical .btn + .btn,
+  .btn-group-vertical .btn + .btn-group,
+  .btn-group-vertical .btn-group + .btn,
+  .btn-group-vertical .btn-group + .btn-group {
+    margin-left: -1px; }
+
+.btn-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; }
+  .btn-toolbar .input-group {
+    width: auto; }
+
+.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+  border-radius: 0; }
+
+.btn-group > .btn:first-child {
+  margin-left: 0; }
+
+.btn-group > .btn-group {
+  float: left; }
+
+.btn-group > .btn-group:not(:first-child):not(:last-child) > .btn {
+  border-radius: 0; }
+
+.btn + .dropdown-toggle-split {
+  padding-right: 0.5625rem;
+  padding-left: 0.5625rem; }
+  .btn + .dropdown-toggle-split::after {
+    margin-left: 0; }
+
+.btn-sm + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split {
+  padding-right: 0.375rem;
+  padding-left: 0.375rem; }
+
+.btn-lg + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split {
+  padding-right: 0.75rem;
+  padding-left: 0.75rem; }
+
+.btn-group-vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center; }
+  .btn-group-vertical .btn,
+  .btn-group-vertical .btn-group {
+    width: 100%; }
+  .btn-group-vertical > .btn + .btn,
+  .btn-group-vertical > .btn + .btn-group,
+  .btn-group-vertical > .btn-group + .btn,
+  .btn-group-vertical > .btn-group + .btn-group {
+    margin-top: -1px;
+    margin-left: 0; }
+  .btn-group-vertical > .btn:not(:first-child):not(:last-child) {
+    border-radius: 0; }
+  .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn {
+    border-radius: 0; }
+
+[data-toggle="buttons"] > .btn input[type="radio"],
+[data-toggle="buttons"] > .btn input[type="checkbox"],
+[data-toggle="buttons"] > .btn-group > .btn input[type="radio"],
+[data-toggle="buttons"] > .btn-group > .btn input[type="checkbox"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none; }
+
 /* @import "node_modules/bootstrap/scss/dropdown";
-@import "node_modules/bootstrap/scss/button-group";
 @import "node_modules/bootstrap/scss/input-group";
 @import "node_modules/bootstrap/scss/custom-forms";
 @import "node_modules/bootstrap/scss/nav";
@@ -4159,24 +4244,16 @@ table.b-table[aria-busy=true] {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #f8f8f8;
+  background-color: #e9e9e9;
   opacity: 0;
   transition: opacity 0.15s;
   text-align: center;
-  color: #777;
+  color: #555;
   word-wrap: break-word;
   line-height: 1.125em;
   font-size: 0.85em; }
   .deck-card-text:focus, .deck-card-text:hover {
     opacity: 1; }
-
-/* .deck-card-price {
-  p {
-    margin-bottom: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-} */
 
 .builder-search {
   margin-bottom: 1rem; }
@@ -4228,8 +4305,30 @@ table.b-table[aria-busy=true] {
 .builder-card-name {
   width: calc(100% - 108px); }
 
+.priceapp .close {
+  margin: 0;
+  padding: 0;
+  font-size: 1.4em;
+  cursor: pointer; }
 
-/*# sourceMappingURL=YgoDrawSim.vue.map */
+.priceapp .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+.priceapp .modal-title {
+  margin-bottom: 0; }
+
+.drawsim {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+.drawsim-output {
+  margin: 1em 0;
+  display: flex; }
+
 
 
 
