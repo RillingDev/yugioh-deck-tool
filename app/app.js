@@ -19438,79 +19438,36 @@ var bModal$1 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
     }
 };
 
-var all_listen_types = { hover: true, click: true, focus: true };
-
-function targets(vnode, binding, listen_types, fn) {
-
-    var targets = keys(binding.modifiers || {}).filter(function (t) {
-        return !all_listen_types[t];
-    });
-
-    if (binding.value) {
-        targets.push(binding.value);
-    }
-
-    var listener = function listener() {
-        fn({ targets: targets, vnode: vnode });
-    };
-
-    keys(all_listen_types).forEach(function (type) {
-        if (listen_types[type] || binding.modifiers[type]) {
-            vnode.elm.addEventListener(type, listener);
-        }
-    });
-
-    // Return the list of targets
-    return targets;
-}
-
-var listen_types = { click: true };
-
-var bModalDirective = {
-    // eslint-disable-next-line no-shadow-restricted-names
-    bind: function bind(undefined, binding, vnode) {
-        targets(vnode, binding, listen_types, function (_ref) {
-            var targets$$1 = _ref.targets,
-                vnode = _ref.vnode;
-
-            targets$$1.forEach(function (target$$1) {
-                vnode.context.$root.$emit('bv::show::modal', target$$1, vnode.elm);
-            });
-        });
-    }
-};
+// For some reason this is a very weird random in chrome
+const sortShuffle = () => Math.random() < 0.5;
 
 const simulateStartingHand = (cardListMain, cardsToDraw) => arrClone(cardListMain)
-    .sort(() => Math.random() < 0.5)
+    .sort(sortShuffle)
     .slice(0, cardsToDraw);
 
-var YgoDrawSim = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('button',{directives:[{name:"b-modal",rawName:"v-b-modal.modalDrawSim",modifiers:{"modalDrawSim":true}}],staticClass:"btn btn-primary btn-sm",attrs:{"title":"Open Start Hand Simulation"}},[_vm._v("Start Hand")]),_c('b-modal',{ref:"modalDrawSim",attrs:{"id":"modalDrawSim","size":"lg","hide-footer":"","title":"Start Hand Simulation"}},[_c('div',{staticClass:"drawsim"},[_c('div',{staticClass:"drawsim-drawmode btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-secondary",class:{active: _vm.drawMode==='first'},attrs:{"type":"button button-primary"},on:{"click":function($event){_vm.drawMode='first';}}},[_vm._v("Going First")]),_c('button',{staticClass:"btn btn-secondary",class:{active: _vm.drawMode==='second'},attrs:{"type":"button button-primary"},on:{"click":function($event){_vm.drawMode='second';}}},[_vm._v("Going Second")])]),_c('div',{staticClass:"drawsim-output"},_vm._l((_vm.drawItems),function(drawItemId,index){return _c('ygo-card',{key:`${drawItemId}_${index}`,attrs:{"card-id":drawItemId,"card-name":_vm.cardsData.get(drawItemId),"on-right-click":()=>{}}})})),_c('button',{staticClass:"btn btn-primary",on:{"click":function($event){_vm.draw();}}},[_vm._v("Draw")])])])],1)},staticRenderFns: [],
+var YgoDrawSim = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('button',{staticClass:"btn btn-primary btn-sm",attrs:{"title":"Open Start Hand Simulation"},on:{"click":function($event){_vm.showModal();}}},[_vm._v("Start Hand")]),_c('b-modal',{ref:"modalDrawSim",attrs:{"id":"modalDrawSim","size":"lg","hide-footer":"","title":"Start Hand Simulation"}},[_c('div',{staticClass:"drawsim"},[_c('div',{staticClass:"drawsim-drawmode btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-secondary",class:{active: _vm.drawMode===5},attrs:{"type":"button button-primary"},on:{"click":function($event){_vm.setDrawMode(5);}}},[_vm._v("Going First")]),_c('button',{staticClass:"btn btn-secondary",class:{active: _vm.drawMode===6},attrs:{"type":"button button-primary"},on:{"click":function($event){_vm.setDrawMode(6);}}},[_vm._v("Going Second")])]),_c('div',{staticClass:"drawsim-output"},_vm._l((_vm.drawItems),function(drawItemId,index){return _c('ygo-card',{key:`${drawItemId}_${index}`,attrs:{"card-id":drawItemId,"card-name":_vm.cardsData.get(drawItemId),"on-right-click":()=>{}}})})),_c('button',{staticClass:"btn btn-primary",on:{"click":function($event){_vm.draw();}}},[_vm._v("Draw")])])])],1)},staticRenderFns: [],
   components: {
     bModal: bModal$1,
     YgoCard
   },
-  directives: {
-    bModal: bModalDirective
-  },
   props: ["deckListMain", "cardsData"],
   data() {
     return {
-      drawMode: "first",
+      drawMode: 5,
       drawItems: []
     };
   },
   methods: {
     showModal() {
       this.$refs.modalDrawSim.show();
+      this.draw();
     },
-    hideModal() {
-      this.$refs.modalDrawSim.hide();
+    setDrawMode(newMode) {
+      this.drawMode = newMode;
+      this.draw();
     },
     draw() {
-      const cardAmount = this.drawMode === "first" ? 5 : 6;
-
-      this.drawItems = simulateStartingHand(this.deckListMain, cardAmount);
-      console.log(this.drawItems);
+      this.drawItems = simulateStartingHand(this.deckListMain, this.drawMode);
     }
   }
 };

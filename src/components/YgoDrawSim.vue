@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="btn btn-primary btn-sm" title="Open Start Hand Simulation" v-b-modal.modalDrawSim>Start Hand</button>
+        <button class="btn btn-primary btn-sm" title="Open Start Hand Simulation" @click="showModal()">Start Hand</button>
 
         <b-modal id="modalDrawSim" ref="modalDrawSim" size="lg" hide-footer  title="Start Hand Simulation">
             <div class="drawsim">
@@ -8,14 +8,14 @@
                     <button
                         type="button button-primary"
                         class="btn btn-secondary"
-                        :class="{active: drawMode==='first'}"
-                        @click="drawMode='first'"
+                        :class="{active: drawMode===5}"
+                        @click="setDrawMode(5)"
                     >Going First</button>
                     <button
                         type="button button-primary"
                         class="btn btn-secondary"
-                        :class="{active: drawMode==='second'}"
-                        @click="drawMode='second'"
+                        :class="{active: drawMode===6}"
+                        @click="setDrawMode(6)"
                     >Going Second</button>
                 </div>
                 <div class="drawsim-output">
@@ -35,7 +35,6 @@
 
 <script>
 import bModal from "bootstrap-vue/es/components/modal/modal";
-import bModalDirective from "bootstrap-vue/es/directives/modal/modal";
 import YgoCard from "./YgoCard.vue";
 
 import simulateStartingHand from "../lib/simulateStartingHand";
@@ -45,28 +44,24 @@ export default {
     bModal,
     YgoCard
   },
-  directives: {
-    bModal: bModalDirective
-  },
   props: ["deckListMain", "cardsData"],
   data() {
     return {
-      drawMode: "first",
+      drawMode: 5,
       drawItems: []
     };
   },
   methods: {
     showModal() {
       this.$refs.modalDrawSim.show();
+      this.draw();
     },
-    hideModal() {
-      this.$refs.modalDrawSim.hide();
+    setDrawMode(newMode) {
+      this.drawMode = newMode;
+      this.draw();
     },
     draw() {
-      const cardAmount = this.drawMode === "first" ? 5 : 6;
-
-      this.drawItems = simulateStartingHand(this.deckListMain, cardAmount);
-      console.log(this.drawItems);
+      this.drawItems = simulateStartingHand(this.deckListMain, this.drawMode);
     }
   }
 };
