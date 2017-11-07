@@ -4327,7 +4327,9 @@ table.b-table[aria-busy=true] {
 
 .drawsim-output {
   margin: 1em 0;
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; }
 
 
 

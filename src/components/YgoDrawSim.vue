@@ -71,6 +71,7 @@ export default {
 @import "node_modules/bootstrap/scss/functions";
 @import "../styles/variables";
 @import "../styles/variables.app";
+@import "../styles/mixins/screen";
 
 .priceapp {
   .close {
@@ -98,5 +99,7 @@ export default {
 .drawsim-output {
   margin: 1em 0;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
