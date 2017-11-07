@@ -15393,7 +15393,7 @@ var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     link() {
       return this.hasData
         ? `${urls$1.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
-        : "#";
+        : "";
     }
   }
 };

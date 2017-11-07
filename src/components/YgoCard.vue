@@ -35,7 +35,7 @@ export default {
     link() {
       return this.hasData
         ? `${urls.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
-        : "#";
+        : "";
     }
   }
 };

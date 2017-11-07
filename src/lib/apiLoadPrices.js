@@ -1,9 +1,8 @@
 import {
     forEachEntry
 } from "lightdash";
-import {
-    encodeBase64
-} from "./base64";
+
+const encodeBase64 = val => btoa(JSON.stringify(val));
 
 const getCardsWithoutPriceData = (deckList, priceData) => {
     const result = [];
