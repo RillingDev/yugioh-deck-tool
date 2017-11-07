@@ -95,13 +95,15 @@
 <script>
 import FileSaver from "file-saver/FileSaver";
 import clipboard from "clipboard-polyfill";
+import { arrRemoveItem } from "lightdash";
+
 import { uriDeckDecode, uriDeckEncode } from "./lib/uriDeck";
 import apiLoadNames from "./lib/apiLoadNames";
 import apiLoadPrices from "./lib/apiLoadPrices";
 import convertFileToDeck from "./lib/convertFileToDeck";
 import convertDeckToFile from "./lib/convertDeckToFile";
 import convertDeckToText from "./lib/convertDeckToText";
-import filterOutOnce from "./lib/filterOutOnce";
+
 import deckParts from "./lib/data/deckParts";
 import priceCurrencies from "./lib/data/priceCurrencies";
 import getUrls from "./lib/data/urls";
@@ -232,7 +234,7 @@ export default {
       const activeSection = this.deck.list[deckpart.id];
 
       if (activeSection.includes(cardId)) {
-        this.deck.list[deckpart.id] = filterOutOnce(activeSection, cardId);
+        this.deck.list[deckpart.id] = arrRemoveItem(activeSection, cardId);
       }
     },
     fileOnUpload(e) {

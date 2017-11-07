@@ -7989,6 +7989,294 @@ var clipboardPolyfill = createCommonjsModule(function (module, exports) {
 
 var clipboard = unwrapExports(clipboardPolyfill);
 
+/**
+ * Checks if a value is an array
+ *
+ * Array.isArray shorthand
+ *
+ * @function isArray
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @returns {boolean}
+ * @example
+ * // returns true
+ * isArray([]);
+ * isArray([1, 2, 3]);
+ *
+ * @example
+ * // returns false
+ * isArray({});
+ */
+const isArray = Array.isArray;
+
+/**
+ * Checks if the value has a certain type-string
+ *
+ * @function isTypeOf
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @param {string} type
+ * @returns {boolean}
+ * @example
+ * //returns true
+ * isTypeOf({},"object")
+ * isTypeOf([],"object")
+ * isTypeOf("foo","string")
+ *
+ * @example
+ * //returns false
+ * isTypeOf("foo","number")
+ */
+const isTypeOf = (val, type) => typeof val === type;
+
+/**
+ * Checks if a value is undefined
+ *
+ * @function isUndefined
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @returns {boolean}
+ * @example
+ * //returns false
+ * const a = {};
+ *
+ * isUndefined(a.b)
+ * isUndefined(undefined)
+ *
+ * @example
+ * //returns false
+ * const a = {};
+ *
+ * isUndefined(1)
+ * isUndefined(a)
+ */
+const isUndefined = (val) => isTypeOf(val, "undefined");
+
+/**
+ * Checks if a value is not undefined
+ *
+ * @function isDefined
+ * @memberof Is
+ * @since 1.0.0
+ * @param {any} val
+ * @returns {boolean}
+ * @example
+ * //returns true
+ * const a = {};
+ *
+ * isDefined(1)
+ * isDefined(a)
+ *
+ * @example
+ * //returns false
+ * const a = {};
+ *
+ * isDefined(a.b)
+ * isDefined(undefined)
+ */
+const isDefined = (val) => !isUndefined(val);
+
+/**
+ * Returns an array of the objects entries
+ *
+ * Object.entries shorthand
+ *
+ * @function objEntries
+ * @memberof Object
+ * @since 1.0.0
+ * @param {Object} obj
+ * @returns {any[]} Array<[key: any, val: any]>]
+ * @example
+ * //returns [["a",1],["b",2],["c",3]]
+ * objEntries({a:1,b:2,c:3})
+ */
+const objEntries = Object.entries;
+
+/**
+ * Iterates over each element in an array
+ *
+ * @function forEach
+ * @memberof For
+ * @param {any[]} arr
+ * @param {function} fn fn(val: any, index: number, arr: any[])
+ * @example
+ * //returns a = [0,2,6]
+ * const a = [1,2,3];
+ *
+ * forEach(a,(val,index)=>a[index]=val*index)
+ */
+const forEach = (arr, fn) => arr.forEach(fn);
+
+/**
+ * Iterates over each entry of an object
+ *
+ * @function forEachEntry
+ * @memberof For
+ * @param {object} obj
+ * @param {function} fn fn(val: any, key: any, index: number, arr: any[])
+ * @example
+ * //returns a = {a:0, b: 2}
+ * const a = {a:1, b:2};
+ *
+ * forEachEntry(a,(val,key,index)=>a[key]=val*index)
+ */
+const forEachEntry = (obj, fn) => {
+    forEach(objEntries(obj), (entry, index) => {
+        fn(entry[1], entry[0], index, obj);
+    });
+};
+
+/**
+ * Creates a new array with the values of the input iterable
+ *
+ * Array.from shorthand
+ *
+ * @function arrClone
+ * @memberof Array
+ * @since 1.0.0
+ * @param {any} arr
+ * @returns {any[]}
+ * @example
+ * //returns a = [1,2,3], b = [1,10,3]
+ * const a = [1,2,3];
+ * const b = arrClone(a);
+ *
+ * b[1] = 10;
+ */
+const arrClone = Array.from;
+
+/**
+ * Counts how many times an element appears in an array and returns a Map<element: any, count: number>
+ *
+ * @function arrCount
+ * @memberof Array
+ * @since 2.0.0
+ * @param {any[]} arr
+ * @returns {Map<any, number>} Map<element: any, count: number>
+ * @example
+ * //returns Map{1:4, 2:2, 3:1, 4:1}
+ * arrCount([1,1,2,2,1,3,4,1])
+ */
+const arrCount = (arr) => {
+    const result = new Map();
+    forEach(arr, (val) => {
+        result.set(val, result.has(val) ? result.get(val) + 1 : 1);
+    });
+    return result;
+};
+
+/**
+ * Recursively flattens an array
+ *
+ * @function arrFlattenDeep
+ * @memberof Array
+ * @since 1.0.0
+ * @param {any[]} arr
+ * @returns {any[]}
+ * @example
+ * //returns [1,2,3]
+ * arrFlattenDeep([1,2,[3]])
+ *
+ * @example
+ * //returns [1,2,3,5,6,6]
+ * arrFlattenDeep([1,2,[3,[[[5]]],[6,[6]]])
+ */
+const arrFlattenDeep = (arr) => {
+    const result = [];
+    forEach(arr, (val) => {
+        if (isArray(val)) {
+            result.push(...arrFlattenDeep(val));
+        }
+        else {
+            result.push(val);
+        }
+    });
+    return result;
+};
+
+/**
+ * Checks if a number is in the given range
+ *
+ * @function numberInRange
+ * @memberof Number
+ * @since 1.0.0
+ * @param {number} val
+ * @param {number} min
+ * @param {number} max
+ * @returns {boolean}
+ * @example
+ * //returns true
+ * numberInRange(0.5,0,1)
+ * numberInRange(1,0,1)
+ * numberInRange(0,-5,5)
+ *
+ * @example
+ * //returns false
+ * numberInRange(-1,0,5)
+ * numberInRange(10,0,5)
+ */
+const numberInRange = (val, min, max) => val >= min && val <= max;
+
+/**
+ * Returns a new array with the item at the index removed
+ *
+ * @function arrRemoveIndex
+ * @memberof Array
+ * @since 2.8.0
+ * @param {any[]} arr
+ * @param {number} index
+ * @returns {any[]}
+ * @example
+ * //returns ["foo","fizz"]
+ * arrRemoveIndex(["foo","bar","fizz"],1)
+ */
+const arrRemoveIndex = (arr, index) => {
+    if (numberInRange(index, 0, arr.length - 1)) {
+        return index === 0 ?
+            arr.slice(1) :
+            arr.slice(0, index).concat(arr.slice(index + 1));
+    }
+    else {
+        return arr;
+    }
+};
+
+/**
+ * Returns a new array with the first occurence of the item removed
+ *
+ * @function arrRemoveItem
+ * @memberof Array
+ * @since 2.8.0
+ * @param {any[]} arr
+ * @param {any} item
+ * @returns {any[]}
+ * @example
+ * //returns ["foo","fizz"]
+ * arrRemoveItem(["foo","bar","fizz"],"bar")
+ */
+const arrRemoveItem = (arr, item) => arr.includes(item) ?
+    arrRemoveIndex(arr, arr.indexOf(item)) :
+    arr;
+
+/**
+ * Returns an array of the objects values
+ *
+ * Object.values shorthand
+ *
+ * @function objValues
+ * @memberof Object
+ * @since 1.0.0
+ * @param {Object} obj
+ * @returns {any[]}
+ * @example
+ * //returns [1,2,3]
+ * objValues({a:1,b:2,c:3})
+ */
+const objValues = Object.values;
+
 var common = createCommonjsModule(function (module, exports) {
 'use strict';
 
@@ -14846,222 +15134,6 @@ const compress = val => btoa(pako_1.deflate(val, pakoOptions));
 
 const decompress = val => pako_1.inflate(atob(val), pakoOptions);
 
-/**
- * Checks if a value is an array
- *
- * @function isArray
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @returns {boolean}
- * @example
- * // returns true
- * isArray([]);
- * isArray([1, 2, 3]);
- *
- * @example
- * // returns false
- * isArray({});
- */
-const isArray = Array.isArray;
-
-/**
- * Checks if the value has a certain type-string
- *
- * @function isTypeOf
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @param {string} type
- * @returns {boolean}
- * @example
- * //returns true
- * isTypeOf({},"object")
- * isTypeOf([],"object")
- * isTypeOf("foo","string")
- *
- * @example
- * //returns false
- * isTypeOf("foo","number")
- */
-const isTypeOf = (val, type) => typeof val === type;
-
-/**
- * Checks if a value is undefined
- *
- * @function isUndefined
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @returns {boolean}
- * @example
- * //returns false
- * const a = {};
- *
- * isUndefined(a.b)
- * isUndefined(undefined)
- *
- * @example
- * //returns false
- * const a = {};
- *
- * isUndefined(1)
- * isUndefined(a)
- */
-const isUndefined = (val) => isTypeOf(val, "undefined");
-
-/**
- * Checks if a value is not undefined
- *
- * @function isDefined
- * @memberof Is
- * @since 1.0.0
- * @param {any} val
- * @returns {boolean}
- * @example
- * //returns true
- * const a = {};
- *
- * isDefined(1)
- * isDefined(a)
- *
- * @example
- * //returns false
- * const a = {};
- *
- * isDefined(a.b)
- * isDefined(undefined)
- */
-const isDefined = (val) => !isUndefined(val);
-
-/**
- * Returns an array of the objects entries
- *
- * @function objEntries
- * @memberof Object
- * @since 1.0.0
- * @param {Object} obj
- * @returns {any[]} Array<[key: any, val: any]>]
- * @example
- * //returns [["a",1],["b",2],["c",3]]
- * objEntries({a:1,b:2,c:3})
- */
-const objEntries = Object.entries;
-
-/**
- * Iterates over each element in an array
- *
- * @function forEach
- * @memberof For
- * @param {any[]} arr
- * @param {function} fn fn(val: any, index: number, arr: any[])
- * @example
- * //returns a = [0,2,6]
- * const a = [1,2,3];
- *
- * forEach(a,(val,index)=>a[index]=val*index)
- */
-const forEach = (arr, fn) => arr.forEach(fn);
-
-/**
- * Iterates over each entry of an object
- *
- * @function forEachEntry
- * @memberof For
- * @param {object} obj
- * @param {function} fn fn(val: any, key: any, index: number, arr: any[])
- * @example
- * //returns a = {a:0, b: 2}
- * const a = {a:1, b:2};
- *
- * forEachEntry(a,(val,key,index)=>a[key]=val*index)
- */
-const forEachEntry = (obj, fn) => {
-    forEach(objEntries(obj), (entry, index) => {
-        fn(entry[1], entry[0], index, obj);
-    });
-};
-
-/**
- * Creates a new array with the values of the input iterable
- *
- * @function arrClone
- * @memberof Array
- * @since 1.0.0
- * @param {any} arr
- * @returns {any[]}
- * @example
- * //returns a = [1,2,3], b = [1,10,3]
- * const a = [1,2,3];
- * const b = arrClone(a);
- *
- * b[1] = 10;
- */
-const arrClone = Array.from;
-
-/**
- * Counts how many times an element appears in an array and returns a Map<element: any, count: number>
- *
- * @function arrCount
- * @memberof Array
- * @since 2.0.0
- * @param {any[]} arr
- * @returns {Map<any, number>} Map<element: any, count: number>
- * @example
- * //returns Map{1:4, 2:2, 3:1, 4:1}
- * arrCount([1,1,2,2,1,3,4,1])
- */
-const arrCount = (arr) => {
-    const result = new Map();
-    forEach(arr, (val) => {
-        result.set(val, result.has(val) ? result.get(val) + 1 : 1);
-    });
-    return result;
-};
-
-/**
- * Recursively flattens an array
- *
- * @function arrFlattenDeep
- * @memberof Array
- * @since 1.0.0
- * @param {any[]} arr
- * @returns {any[]}
- * @example
- * //returns [1,2,3]
- * arrFlattenDeep([1,2,[3]])
- *
- * @example
- * //returns [1,2,3,5,6,6]
- * arrFlattenDeep([1,2,[3,[[[5]]],[6,[6]]])
- */
-const arrFlattenDeep = (arr) => {
-    const result = [];
-    forEach(arr, (val) => {
-        if (isArray(val)) {
-            result.push(...arrFlattenDeep(val));
-        }
-        else {
-            result.push(val);
-        }
-    });
-    return result;
-};
-
-/**
- * Returns an array of the objects values
- *
- * @function objValues
- * @memberof Object
- * @since 1.0.0
- * @param {Object} obj
- * @returns {any[]}
- * @example
- * //returns [1,2,3]
- * objValues({a:1,b:2,c:3})
- */
-const objValues = Object.values;
-
 const optimizerDelimiters = [
     "|", // DeckParts
     ";", // CardIds
@@ -15236,20 +15308,6 @@ const convertDeckToText = function (deckParts, cardData, deck) {
     });
 
     return result.join("\n").trim();
-};
-
-const filterOutOnce = function (idList, idTarget) {
-    let idWasFound = false;
-
-    return idList.filter(id => {
-        if (!idWasFound && id === idTarget) {
-            idWasFound = true;
-
-            return false;
-        } else {
-            return true;
-        }
-    });
 };
 
 const deckparts = [{
@@ -19593,7 +19651,7 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       const activeSection = this.deck.list[deckpart.id];
 
       if (activeSection.includes(cardId)) {
-        this.deck.list[deckpart.id] = filterOutOnce(activeSection, cardId);
+        this.deck.list[deckpart.id] = arrRemoveItem(activeSection, cardId);
       }
     },
     fileOnUpload(e) {
