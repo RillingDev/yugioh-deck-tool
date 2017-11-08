@@ -15264,6 +15264,21 @@ const apiLoadPrices = (urls, deckList, cardData, priceDataOld) => new Promise((r
     }
 });
 
+const apiLoadRemoteDeck = remoteUri => new Promise((resolve, reject) => {
+    fetch(remoteUri, {
+            mode: "same-origin"
+        })
+        .then(res => {
+            if (res.ok) {
+                res
+                    .text()
+                    .then(resolve);
+            } else {
+                reject(res);
+            }
+        });
+});
+
 const convertFileToDeck = function (deckParts, fileContent) {
     const result = {};
     const fileParts = fileContent
@@ -19679,12 +19694,13 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       this.deckFromUri(uriQuery.replace("?d=", ""));
     } else if (uriQuery.includes("?u=")) {
       //Load remote deck file
-      fetch(uriQuery.replace("?u=", "").trim())
-        .then(res => res.text())
+      apiLoadRemoteDeck(uriQuery.replace("?u=", "").trim())
         .then(text => {
           this.deck.list = convertFileToDeck(this.deck.parts, text);
         })
-        .catch(console.error);
+        .catch(err => {
+          console.error("Remote Deck could not be loaded:", err.statusText);
+        });
     }
   }
 };

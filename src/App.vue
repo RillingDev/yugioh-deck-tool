@@ -102,6 +102,7 @@ import { arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "./lib/uriDeck";
 import apiLoadNames from "./lib/apiLoadNames";
 import apiLoadPrices from "./lib/apiLoadPrices";
+import apiLoadRemoteDeck from "./lib/apiLoadRemoteDeck";
 import convertFileToDeck from "./lib/convertFileToDeck";
 import convertDeckToFile from "./lib/convertDeckToFile";
 import convertDeckToText from "./lib/convertDeckToText";
@@ -260,12 +261,13 @@ export default {
       this.deckFromUri(uriQuery.replace("?d=", ""));
     } else if (uriQuery.includes("?u=")) {
       //Load remote deck file
-      fetch(uriQuery.replace("?u=", "").trim())
-        .then(res => res.text())
+      apiLoadRemoteDeck(uriQuery.replace("?u=", "").trim())
         .then(text => {
           this.deck.list = convertFileToDeck(this.deck.parts, text);
         })
-        .catch(console.error);
+        .catch(err => {
+          console.error("Remote Deck could not be loaded:", err.statusText);
+        });
     }
   }
 };
