@@ -41,6 +41,6 @@ bundle([{
     replace({
         "process.env.NODE_ENV": JSON.stringify("production")
     }),
-    babel(optionsBabel),
+    //babel(optionsBabel),
     uglify()
 ]);

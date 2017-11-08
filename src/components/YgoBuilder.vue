@@ -3,18 +3,20 @@
         <span>Showing {{pairsFiltered.length}} of {{pairs.length}} Cards</span>
         <input class="form-control builder-search" type="search" title="Search" placeholder="Search" v-model="filter">
          <ul class="builder-list" v-if="pairsFiltered.length">
-            <li class="builder-card" v-for="pair in pairsFiltered" :key="pair[0]" :data-name="pair[1]">
-                <div class="builder-card-name">{{pair[1]}}</div>
-                <div class="builder-card-action">
-                    <span
-                        class="fa fa-plus builder-add"
-                        v-for="deckPart in deckParts"
-                        :key="deckPart.id"
-                        :class="`builder-add-${deckPart.id}`"
-                        :title="`Add Card to ${deckPart.name} Deck`"
-                        @click="deckCardAdd(deckPart,pair[0])"
-                    ></span>
-                </div>
+            <li class="builder-card" v-for="pair in pairsFiltered" :key="pair[0]">
+                <a :data-name="pair[1]">
+                    <div class="builder-card-name">{{pair[1]}}</div>
+                    <div class="builder-card-action">
+                        <span
+                            class="fa fa-plus builder-add"
+                            v-for="deckPart in deckParts"
+                            :key="deckPart.id"
+                            :class="`builder-add-${deckPart.id}`"
+                            :title="`Add Card to ${deckPart.name} Deck`"
+                            @click="deckCardAdd(deckPart,pair[0])"
+                        ></span>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>

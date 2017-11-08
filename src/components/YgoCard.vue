@@ -51,6 +51,11 @@ export default {
   margin: 5px;
 }
 
+.deck-card-image,
+.deck-card-image img {
+  height: 100%;
+}
+
 .deck-card-text {
   position: absolute;
   width: 100%;
