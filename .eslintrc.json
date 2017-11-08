@@ -18,10 +18,10 @@
         }
     },
     "rules": {
-        "indent": ["warn", 4],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
+        "indent": "off",
         "no-console": "warn",
         "comma-dangle": "off",
         "space-in-parens": "off"
