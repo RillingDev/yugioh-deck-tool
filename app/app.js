@@ -19675,11 +19675,11 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
     this.fetchNames();
 
     if (uriQuery.includes("?d=")) {
+      //Load encoded uriDeck
       this.deckFromUri(uriQuery.replace("?d=", ""));
     } else if (uriQuery.includes("?u=")) {
-      const remoteDeckUri = uriQuery.replace("?u=", "").trim();
-
-      fetch(remoteDeckUri)
+      //Load remote deck file
+      fetch(uriQuery.replace("?u=", "").trim())
         .then(res => res.text())
         .then(text => {
           this.deck.list = convertFileToDeck(this.deck.parts, text);
