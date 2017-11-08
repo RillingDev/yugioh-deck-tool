@@ -1,4 +1,4 @@
-var myApp = (function () {
+var ygodeckprice = (function () {
 'use strict';
 
 /*!
@@ -15455,7 +15455,7 @@ var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     link() {
       return this.hasData
         ? `${urls$1.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
-        : "";
+        : `http://yugioh.wikia.com/wiki/${this.cardId}`;
     }
   }
 };
@@ -19603,7 +19603,10 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
 
           console.log("LOADED PRICES", this.price.data);
 
-          this.ajax.pricesLoaded = true;
+          if (this.price.data.size > 0) {
+            this.ajax.pricesLoaded = true;
+          }
+
           this.ajax.currentlyLoading = false;
         })
         .catch(console.error);
@@ -19667,10 +19670,21 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
     }
   },
   mounted() {
+    const uriQuery = location.search;
+
     this.fetchNames();
 
-    if (location.search.includes("?d=")) {
-      this.deckFromUri(location.search.replace("?d=", ""));
+    if (uriQuery.includes("?d=")) {
+      this.deckFromUri(uriQuery.replace("?d=", ""));
+    } else if (uriQuery.includes("?u=")) {
+      const remoteDeckUri = uriQuery.replace("?u=", "").trim();
+
+      fetch(remoteDeckUri)
+        .then(res => res.text())
+        .then(text => {
+          this.deck.list = convertFileToDeck(this.deck.parts, text);
+        })
+        .catch(console.error);
     }
   }
 };

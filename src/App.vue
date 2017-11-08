@@ -184,7 +184,10 @@ export default {
 
           console.log("LOADED PRICES", this.price.data);
 
-          this.ajax.pricesLoaded = true;
+          if (this.price.data.size > 0) {
+            this.ajax.pricesLoaded = true;
+          }
+
           this.ajax.currentlyLoading = false;
         })
         .catch(console.error);
@@ -248,10 +251,21 @@ export default {
     }
   },
   mounted() {
+    const uriQuery = location.search;
+
     this.fetchNames();
 
-    if (location.search.includes("?d=")) {
-      this.deckFromUri(location.search.replace("?d=", ""));
+    if (uriQuery.includes("?d=")) {
+      this.deckFromUri(uriQuery.replace("?d=", ""));
+    } else if (uriQuery.includes("?u=")) {
+      const remoteDeckUri = uriQuery.replace("?u=", "").trim();
+
+      fetch(remoteDeckUri)
+        .then(res => res.text())
+        .then(text => {
+          this.deck.list = convertFileToDeck(this.deck.parts, text);
+        })
+        .catch(console.error);
     }
   }
 };

@@ -11,7 +11,7 @@
         "js": {
             "input": "app.js",
             "namespace": {
-                "module": "myApp",
+                "module": "ygodeckprice",
                 "file": "app"
             },
             "targets": {
