@@ -15,7 +15,7 @@
                 "file": "app"
             },
             "targets": {
-                "browsers": "IE >= 10"
+                "browsers": "Chrome >= 50"
             }
         },
         "css": {
