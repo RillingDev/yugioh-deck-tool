@@ -47,6 +47,7 @@
                     <span>{{deckPart.name}} Deck ({{deck.list[deckPart.id].length}} Cards):</span>
                     <div v-if="deck.list[deckPart.id].length">
                         <ygo-prices
+                            v-if="ajax.pricesLoaded"
                             :item="deck.list[deckPart.id]"
                             :is-group="true"
                             :price-data="price.data"
@@ -58,10 +59,11 @@
                                 :key="`${cardId}_${index}`"
                                 :card-id="cardId"
                                 :card-name="cards.data.get(cardId)"
-                                :on-right-click="()=>deckCardRemove(deckPart,cardId)"
+                                :on-right-click="() => deckCardRemove(deckPart,cardId)"
                             >
                                 <ygo-prices
                                     slot="price"
+                                    v-if="ajax.pricesLoaded"
                                     :item="cardId"
                                     :is-group="false"
                                     :price-data="price.data"
@@ -147,54 +149,52 @@ export default {
   },
   computed: {
     shareLink() {
-      return `${location.origin}${location.pathname}?d=${this.deckToUri()}`;
+      const currentUri = location.origin + location.pathname;
+      const deckUri = this.deckToUri();
+
+      return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
     }
   },
   methods: {
     fetchNames() {
-      const vm = this;
-
-      vm.ajax.namesLoaded = false;
-      vm.ajax.currentlyLoading = true;
+      this.ajax.namesLoaded = false;
+      this.ajax.currentlyLoading = true;
 
       apiLoadNames(urls)
         .then(result => {
-          vm.cards.data = result.data;
-          vm.cards.pairs = result.pairs;
+          this.cards.data = result.data;
+          this.cards.pairs = result.pairs;
 
-          vm.ajax.namesLoaded = true;
-          vm.ajax.currentlyLoading = false;
+          this.ajax.namesLoaded = true;
+          this.ajax.currentlyLoading = false;
 
-          console.log("LOADED NAMES", vm.cards.data);
+          console.log("LOADED NAMES", this.cards.data);
         })
         .catch(console.error);
     },
     fetchPrices() {
-      const vm = this;
+      this.ajax.pricesLoaded = false;
+      this.ajax.currentlyLoading = true;
 
-      vm.ajax.pricesLoaded = false;
-      vm.ajax.currentlyLoading = true;
-
-      apiLoadPrices(urls, vm.deck.list, vm.cards.data, vm.price.data)
+      apiLoadPrices(urls, this.deck.list, this.cards.data, this.price.data)
         .then(result => {
           if (result !== false) {
-            vm.price.data = result;
+            this.price.data = result;
           }
 
-          console.log("LOADED PRICES", vm.price.data);
+          console.log("LOADED PRICES", this.price.data);
 
-          vm.ajax.pricesLoaded = true;
-          vm.ajax.currentlyLoading = false;
+          this.ajax.pricesLoaded = true;
+          this.ajax.currentlyLoading = false;
         })
         .catch(console.error);
     },
     deckFromFile(file) {
-      const vm = this;
       const reader = new FileReader();
 
       reader.onload = e => {
-        vm.deck.name = file.name.replace(".ydk", "");
-        vm.deck.list = convertFileToDeck(vm.deck.parts, e.target.result);
+        this.deck.name = file.name.replace(".ydk", "");
+        this.deck.list = convertFileToDeck(this.deck.parts, e.target.result);
       };
 
       reader.readAsText(file);
@@ -228,6 +228,7 @@ export default {
         ).length < 3
       ) {
         activeSection.push(cardId);
+        this.ajax.pricesLoaded = false;
       }
     },
     deckCardRemove(deckpart, cardId) {

@@ -46,7 +46,11 @@ const loadOptimizedList = str => str.split(optimizerDelimiters[0])
         return result;
     });
 
-const uriDeckEncode = deckList => compress(createOptimizeList(deckList));
+const uriDeckEncode = deckList => {
+    const optimized = createOptimizeList(deckList);
+
+    return optimized !== optimizerDelimiters[0].repeat(2) ? compress(optimized) : "";
+};
 
 const uriDeckDecode = function (deckParts, deckUri) {
     const deckArray = loadOptimizedList(decompress(deckUri));
