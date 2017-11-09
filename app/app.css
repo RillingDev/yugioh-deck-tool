@@ -4217,7 +4217,8 @@ table.b-table[aria-busy=true] {
 
 .deck-card-image img {
   height: 140px;
-  width: 100px; }
+  width: 100px;
+  margin-bottom: 0; }
 
 .deck-card-text {
   position: absolute;

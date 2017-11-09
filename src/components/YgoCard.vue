@@ -54,6 +54,7 @@ export default {
 .deck-card-image img {
   height: 140px;
   width: 100px;
+  margin-bottom: 0;
 }
 
 .deck-card-text {
