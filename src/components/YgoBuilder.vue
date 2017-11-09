@@ -38,7 +38,9 @@ export default {
     },
     pairsFiltered() {
       return this.pairs
-        .filter(pair => pair[1].includes(this.filter))
+        .filter(pair =>
+          pair[1].toLowerCase().includes(this.filter.toLowerCase())
+        )
         .slice(0, 100);
     }
   }
