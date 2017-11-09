@@ -15453,7 +15453,7 @@ var YgoPrices = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
 
 const urls$1 = getUrls();
 
-var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('a',{staticClass:"deck-card",attrs:{"target":"_blank","href":_vm.link,"data-name":_vm.cardName},on:{"contextmenu":function($event){$event.preventDefault();_vm.onRightClick();}}},[_c('div',{staticClass:"deck-card-image"},[_c('img',{attrs:{"width":"100","height":"144","src":_vm.image}})]),_c('div',{staticClass:"deck-card-text"},[_c('div',{staticClass:"deck-card-name"},[_vm._v(_vm._s(_vm.cardName || `[${_vm.cardId}]`))]),_vm._t("price")],2)])},staticRenderFns: [],
+var YgoCard = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('a',{staticClass:"deck-card",attrs:{"target":"_blank","href":_vm.link,"data-name":_vm.cardName},on:{"contextmenu":function($event){$event.preventDefault();_vm.onRightClick();}}},[_c('div',{staticClass:"deck-card-image"},[_c('img',{attrs:{"width":"100","height":"140","src":_vm.image}})]),_c('div',{staticClass:"deck-card-text"},[_c('div',{staticClass:"deck-card-name"},[_vm._v(_vm._s(_vm.cardName || `[${_vm.cardId}]`))]),_vm._t("price")],2)])},staticRenderFns: [],
   components: {
     YgoPrices
   },

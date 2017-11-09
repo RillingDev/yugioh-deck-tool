@@ -1,7 +1,7 @@
 <template>
     <a class="deck-card" target="_blank" :href="link" :data-name="cardName" @contextmenu.prevent="onRightClick()">
         <div class="deck-card-image">
-           <img width="100" height="144" :src="image">
+           <img width="100" height="140" :src="image">
         </div>
         <div class="deck-card-text">
             <div class="deck-card-name">{{cardName || `[${cardId}]`}}</div>
@@ -51,9 +51,9 @@ export default {
   margin: 5px;
 }
 
-.deck-card-image,
 .deck-card-image img {
-  height: 100%;
+  height: 140px;
+  width: 100px;
 }
 
 .deck-card-text {
