@@ -3,8 +3,8 @@
         <span>Showing {{pairsFiltered.length}} of {{pairs.length}} Cards</span>
         <input class="form-control builder-search" type="search" title="Search" placeholder="Search" v-model="filter">
          <ul class="builder-list" v-if="pairsFiltered.length">
-            <li class="builder-card" v-for="pair in pairsFiltered" :key="pair[0]">
-                <a :data-name="pair[1]">
+            <li class="builder-card-wrapper" v-for="pair in pairsFiltered" :key="pair[0]">
+                <a class="builder-card" :data-name="pair[1]">
                     <div class="builder-card-name">{{pair[1]}}</div>
                     <div class="builder-card-action">
                         <span
@@ -65,15 +65,18 @@ export default {
   border: 1px solid $gray-400;
 }
 
-.builder-card {
+.builder-card-wrapper {
   border-top: 1px solid $gray-400;
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.builder-card {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0 10px;
-  &:first-child {
-    border-top: 0;
-  }
 }
 
 .builder-card-name {

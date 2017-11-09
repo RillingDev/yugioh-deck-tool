@@ -4252,14 +4252,16 @@ table.b-table[aria-busy=true] {
   resize: vertical;
   border: 1px solid #cecece; }
 
+.builder-card-wrapper {
+  border-top: 1px solid #cecece; }
+  .builder-card-wrapper:first-child {
+    border-top: 0; }
+
 .builder-card {
-  border-top: 1px solid #cecece;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0 10px; }
-  .builder-card:first-child {
-    border-top: 0; }
 
 .builder-card-name {
   padding: 10px 0; }
