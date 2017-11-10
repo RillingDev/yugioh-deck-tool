@@ -1,11 +1,13 @@
 const getUrls = () => {
     const isYgoProDeck = location.host === "ygoprodeck.com";
+    const ygoProDeckAppDir = "https://ygoprodeck.com/priceapp";
 
     return {
-        imageAPI: "https://ygoprodeck.com/pics",
         buyAPI: "http://yugiohprices.com/card_price?name=",
-        nameAPI: isYgoProDeck ? "https://ygoprodeck.com/priceapp/api/names/names.min.json" : "./api/names/names.min.json",
-        priceAPI: isYgoProDeck ? "https://ygoprodeck.com/priceapp/api/prices/prices.php?n=" : "./api/prices/prices.php?n="
+        imageAPI: "https://ygoprodeck.com/pics",
+        imageUnkown: isYgoProDeck ? ygoProDeckAppDir + "/unknown.png" : "./unknown.png",
+        nameAPI: isYgoProDeck ? ygoProDeckAppDir + "/api/names/names.min.json" : "./api/names/names.min.json",
+        priceAPI: isYgoProDeck ? ygoProDeckAppDir + "/api/prices/prices.php?n=" : "./api/prices/prices.php?n="
     };
 };
 

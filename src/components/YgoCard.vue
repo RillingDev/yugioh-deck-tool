@@ -30,7 +30,7 @@ export default {
     image() {
       return this.hasData
         ? `${urls.imageAPI}/${this.cardId}.jpg`
-        : "./unknown.png";
+        : urls.imageUnkown;
     },
     link() {
       return this.hasData
