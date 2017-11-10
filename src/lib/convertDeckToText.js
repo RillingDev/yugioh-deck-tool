@@ -11,7 +11,11 @@ const convertDeckToText = function (deckParts, cardData, deck) {
 
         if (deckPartCards.length > 0) {
             const deckPartCardsCounted = arrClone(arrCount(deckPartCards).entries())
-                .map(entry => `${cardData.get(entry[0])} x${entry[1]}`);
+                .map(entry => {
+                    const cardName = cardData.has(entry[0]) ? cardData.get(entry[0]) : `[${entry[0]}]`;
+
+                    return `${cardName} x${entry[1]}`;
+                });
 
             result.push(
                 `${deckPart.name}:`,
