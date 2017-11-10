@@ -201,7 +201,9 @@ export default {
         this.deck.list = convertFileToDeck(this.deck.parts, e.target.result);
       };
 
-      reader.readAsText(file);
+      if (file) {
+        reader.readAsText(file);
+      }
     },
     deckToFile() {
       const fileData = convertDeckToFile(this.deck.parts, this.deck.list);

@@ -19652,7 +19652,9 @@ var App = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
         this.deck.list = convertFileToDeck(this.deck.parts, e.target.result);
       };
 
-      reader.readAsText(file);
+      if (file) {
+        reader.readAsText(file);
+      }
     },
     deckToFile() {
       const fileData = convertDeckToFile(this.deck.parts, this.deck.list);
