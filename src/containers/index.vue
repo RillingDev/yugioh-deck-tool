@@ -99,28 +99,28 @@ import FileSaver from "file-saver/FileSaver";
 import clipboard from "clipboard-polyfill";
 import { arrRemoveItem } from "lightdash";
 
-import { uriDeckDecode, uriDeckEncode } from "./lib/uriDeck";
-import apiLoadNames from "./lib/apiLoadNames";
-import apiLoadPrices from "./lib/apiLoadPrices";
-import apiLoadRemoteDeck from "./lib/apiLoadRemoteDeck";
-import convertFileToDeck from "./lib/convertFileToDeck";
-import convertDeckToFile from "./lib/convertDeckToFile";
-import convertDeckToText from "./lib/convertDeckToText";
+import { uriDeckDecode, uriDeckEncode } from "../lib/uriDeck";
+import apiLoadNames from "../lib/apiLoadNames";
+import apiLoadPrices from "../lib/apiLoadPrices";
+import apiLoadRemoteDeck from "../lib/apiLoadRemoteDeck";
+import convertFileToDeck from "../lib/convertFileToDeck";
+import convertDeckToFile from "../lib/convertDeckToFile";
+import convertDeckToText from "../lib/convertDeckToText";
 
-import deckParts from "./lib/data/deckParts";
-import priceCurrencies from "./lib/data/priceCurrencies";
-import getUrls from "./lib/data/urls";
+import deckParts from "../lib/data/deckParts";
+import priceCurrencies from "../lib/data/priceCurrencies";
+import getUrls from "../lib/data/urls";
 
-import YgoPrices from "./components/YgoPrices.vue";
-import YgoCard from "./components/YgoCard.vue";
-import YgoBuilder from "./components/YgoBuilder.vue";
-import YgoDrawSim from "./components/YgoDrawSim.vue";
+import ygoPrices from "../components/ygoPrices.vue";
+import ygoCard from "../components/ygoCard.vue";
+import ygoBuilder from "../components/ygoBuilder.vue";
+import ygoDrawSim from "../components/ygoDrawSim.vue";
 
 const urls = getUrls();
 
 export default {
-  name: "app",
-  components: { YgoPrices, YgoCard, YgoBuilder, YgoDrawSim },
+  name: "index",
+  components: { ygoPrices, ygoCard, ygoBuilder, ygoDrawSim },
   data: () => {
     return {
       cards: {
@@ -277,14 +277,14 @@ export default {
 
 <style lang="scss">
 @import "node_modules/bootstrap/scss/functions";
-@import "styles/variables";
-@import "styles/variables.app";
+@import "../styles/variables";
+@import "../styles/variables.app";
 
-@import "styles/bootstrap";
+@import "../styles/bootstrap";
 @import "node_modules/bootstrap-vue/dist/bootstrap-vue";
 
-@import "styles/blocks/general";
-@import "styles/blocks/app";
-@import "styles/blocks/forms";
-@import "styles/blocks/deck";
+@import "../styles/blocks/general";
+@import "../styles/blocks/app";
+@import "../styles/blocks/forms";
+@import "../styles/blocks/deck";
 </style>

@@ -12,10 +12,11 @@ const CONSTANTS = require("../package.json").constants;
 
 const optionsBabel = {
     presets: [
-        ["env", {
-            modules: false,
-            targets: CONSTANTS.js.targets,
-        }]
+        ["vue-app",
+            {
+                useBuiltIns: true
+            }
+        ]
     ],
     plugins: [
         "external-helpers"
@@ -41,6 +42,6 @@ bundle([{
     replace({
         "process.env.NODE_ENV": JSON.stringify("production")
     }),
-    //babel(optionsBabel),
+    babel(optionsBabel),
     uglify()
 ]);

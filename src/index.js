@@ -1,9 +1,9 @@
 import Vue from "vue/dist/vue.runtime.esm";
-import App from "./App.vue";
+import index from "./containers/index.vue";
 
 const app = new Vue({
     el: "#appYgodeckprice",
-    render: fn => fn(App)
+    render: fn => fn(index)
 });
 
 export default app;

@@ -35,14 +35,14 @@
 
 <script>
 import bModal from "bootstrap-vue/es/components/modal/modal";
-import YgoCard from "./YgoCard.vue";
+import ygoCard from "./ygoCard.vue";
 
 import simulateStartingHand from "../lib/simulateStartingHand";
 
 export default {
   components: {
     bModal,
-    YgoCard
+    ygoCard
   },
   props: ["deckListMain", "cardsData"],
   data() {

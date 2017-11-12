@@ -12,18 +12,14 @@
     },
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": 8,
-        "ecmaFeatures": {
-            "jsx": true
-        }
+        "ecmaVersion": 8
     },
     "rules": {
+        "indent": ["warn", 4],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "indent": "off",
         "no-console": "warn",
-        "comma-dangle": "off",
-        "space-in-parens": "off"
+        "comma-dangle": "off"
     }
 }
