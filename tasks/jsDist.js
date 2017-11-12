@@ -22,9 +22,9 @@ const optionsBabel = {
             }
         }]
     ],
-    /*     plugins: [
-            "external-helpers"
-        ] */
+    plugins: [
+        "external-helpers"
+    ]
 };
 
 bundle([{

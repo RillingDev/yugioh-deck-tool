@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 import Vue from "vue/dist/vue.runtime.esm";
 import index from "./containers/index.vue";
 

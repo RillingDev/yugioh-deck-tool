@@ -42,6 +42,7 @@
     },
     "homepage": "https://github.com/FelixRilling/ygodeckprice3#readme",
     "dependencies": {
+        "babel-polyfill": "^6.26.0",
         "bootstrap": "^4.0.0-beta",
         "bootstrap-vue": "^1.0.2",
         "clipboard-polyfill": "^2.3.0",
