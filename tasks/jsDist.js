@@ -12,15 +12,19 @@ const CONSTANTS = require("../package.json").constants;
 
 const optionsBabel = {
     presets: [
-        ["vue-app",
-            {
-                useBuiltIns: true
+        ["env", {
+            modules: false,
+            targets: {
+                browsers: [
+                    "last 2 versions",
+                    "IE >= 11"
+                ]
             }
-        ]
+        }]
     ],
-    plugins: [
-        "external-helpers"
-    ]
+    /*     plugins: [
+            "external-helpers"
+        ] */
 };
 
 bundle([{
