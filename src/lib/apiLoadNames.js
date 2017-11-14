@@ -1,9 +1,9 @@
 import {
     forEachEntry,
-    arrClone
+    arrFrom
 } from "lightdash";
 
-const sortMapEntries = (map, fn) => new Map(arrClone(map.entries()).sort(fn));
+const sortMapEntries = (map, fn) => new Map(arrFrom(map.entries()).sort(fn));
 
 const apiLoadNames = urls => new Promise((resolve, reject) => {
     fetch(urls.nameAPI)

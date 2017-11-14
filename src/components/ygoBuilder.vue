@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { arrClone } from "lightdash";
+import { arrFrom } from "lightdash";
 
 export default {
   props: ["cardsPairs", "deckParts", "deckCardAdd"],
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     pairs() {
-      return arrClone(this.cardsPairs.entries());
+      return arrFrom(this.cardsPairs.entries());
     },
     pairsFiltered() {
       return this.pairs

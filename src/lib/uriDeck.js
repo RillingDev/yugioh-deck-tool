@@ -4,7 +4,7 @@ import {
 } from "./compress";
 import {
     objValues,
-    arrClone,
+    arrFrom,
     arrCount,
 } from "lightdash";
 
@@ -15,7 +15,7 @@ const optimizerDelimiters = {
 };
 
 const createOptimizeList = deckList => objValues(deckList)
-    .map(deckListPart => arrClone(arrCount(deckListPart))
+    .map(deckListPart => arrFrom(arrCount(deckListPart))
         .map(entry => {
             if (entry[1] > 1) {
                 return `${optimizerDelimiters.cardAmount}${entry[1]}${entry[0]}`;

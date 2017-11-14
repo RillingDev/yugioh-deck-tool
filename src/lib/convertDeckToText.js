@@ -1,6 +1,6 @@
 import {
     arrCount,
-    arrClone
+    arrFrom
 } from "lightdash";
 
 const convertDeckToText = function (deckParts, cardData, deck) {
@@ -10,7 +10,7 @@ const convertDeckToText = function (deckParts, cardData, deck) {
         const deckPartCards = deck.list[deckPart.id];
 
         if (deckPartCards.length > 0) {
-            const deckPartCardsCounted = arrClone(arrCount(deckPartCards).entries())
+            const deckPartCardsCounted = arrFrom(arrCount(deckPartCards).entries())
                 .map(entry => {
                     const cardName = cardData.has(entry[0]) ? cardData.get(entry[0]) : `[${entry[0]}]`;
 

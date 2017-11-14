@@ -7,8 +7,8 @@ const encodeBase64 = val => btoa(JSON.stringify(val));
 const getCardsWithoutPriceData = (deckList, priceData) => {
     const result = [];
 
-    forEachEntry(deckList, deckpart => {
-        deckpart.forEach(cardId => {
+    forEachEntry(deckList, deckPart => {
+        deckPart.forEach(cardId => {
             if (!result.includes(cardId) && !priceData.has(cardId)) {
                 result.push(cardId);
             }

@@ -1,5 +1,5 @@
 import {
-    arrClone,
+    arrFrom,
     arrRemoveIndex
 } from "lightdash";
 
@@ -8,7 +8,7 @@ import {
  * Therefore we use a self-built shuffle
  */
 const fisherYatesShuffle = arr => {
-    let input = arrClone(arr);
+    let input = arrFrom(arr);
     const result = [];
 
     while (result.length < arr.length) {
