@@ -3961,58 +3961,59 @@ a.text-dark:focus, a.text-dark:hover {
 .b-form-group.form-group.is-valid .invalid-feedback {
   display: none !important; }
 
+.b-form-group.form-group.is-valid .valid-feedback {
+  display: block !important; }
+
+.b-form-group.form-group.is-invalid .valid-feedback {
+  display: none !important; }
+
 input.form-control[type=color], input.form-control[type=range] {
-  height: 36px;
   height: 2.25rem; }
 
 input.form-control.form-control-sm[type=color], input.form-control.form-control-sm[type=range] {
-  height: 31px;
   height: 1.9375rem; }
 
 input.form-control.form-control-lg[type=color], input.form-control.form-control-lg[type=range] {
-  height: 48px;
   height: 3rem; }
 
 input.form-control[type=color] {
-  padding: 8px 8px;
   padding: .25rem .25rem; }
 
 input.form-control.form-control-sm[type=color] {
-  padding: 4px 5px;
   padding: .125rem .125rem; }
 
-.custom-file-input.focus ~ .custom-file-control[data-v-b939464a], .custom-file-input:focus ~ .custom-file-control[data-v-b939464a] {
+.b-form-file.custom-file .custom-file-input.focus ~ .custom-file-control, .b-form-file.custom-file .custom-file-input:focus ~ .custom-file-control {
   color: #495057;
   background-color: #fff;
   border-color: #80bdff;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   outline: 0; }
 
-.custom-file-input.is-invalid.focus ~ .custom-file-control[data-v-b939464a], .custom-file-input.is-invalid:focus ~ .custom-file-control[data-v-b939464a], .was-validated .custom-file-input:invalid.focus ~ .custom-file-control[data-v-b939464a], .was-validated .custom-file-input:invalid:focus ~ .custom-file-control[data-v-b939464a] {
+.b-form-file.custom-file .custom-file-input.is-invalid.focus ~ .custom-file-control, .b-form-file.custom-file .custom-file-input.is-invalid:focus ~ .custom-file-control, .was-validated .b-form-file.custom-file .custom-file-input:invalid.focus ~ .custom-file-control, .was-validated .b-form-file.custom-file .custom-file-input:invalid:focus ~ .custom-file-control {
   box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
   border-color: #dc3545; }
 
-.custom-file-input.is-valid.focus ~ .custom-file-control[data-v-b939464a], .custom-file-input.is-valid:focus ~ .custom-file-control[data-v-b939464a], .was-validated .custom-file-input:valid.focus ~ .custom-file-control[data-v-b939464a], .was-validated .custom-file-input:valid:focus ~ .custom-file-control[data-v-b939464a] {
+.b-form-file.custom-file .custom-file-input.is-valid.focus ~ .custom-file-control, .b-form-file.custom-file .custom-file-input.is-valid:focus ~ .custom-file-control, .was-validated .b-form-file.custom-file .custom-file-input:valid.focus ~ .custom-file-control, .was-validated .b-form-file.custom-file .custom-file-input:valid:focus ~ .custom-file-control {
   box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
   border-color: #28a745; }
 
-.custom-file-control[data-v-b939464a] {
+.b-form-file.custom-file .custom-file-control {
   overflow: hidden; }
 
-.custom-file-control[data-v-b939464a] {
+.b-form-file.custom-file .custom-file-control {
   overflow: hidden; }
 
-.custom-file-control.dragging[data-v-b939464a] {
+.b-form-file.custom-file .custom-file-control.dragging {
   overflow: hidden;
   filter: blur(3px); }
 
-.custom-file-control[data-selected][data-v-b939464a]::after {
+.b-form-file.custom-file .custom-file-control[data-selected]::after {
   content: attr(data-selected); }
 
-.custom-file-control[data-choose][data-v-b939464a]::before {
+.b-form-file.custom-file .custom-file-control[data-choose]::before {
   content: attr(data-choose); }
 
-.custom-file .drop-here[data-v-b939464a] {
+.b-form-file.custom-file .drop-here {
   position: absolute;
   left: 0;
   right: 0;
@@ -4025,7 +4026,7 @@ input.form-control.form-control-sm[type=color] {
   justify-content: center;
   align-items: center; }
 
-.custom-file .drop-here[data-v-b939464a]::before {
+.b-form-file.custom-file .drop-here::before {
   color: #fff;
   content: attr(data-drop); }
 
@@ -4039,31 +4040,28 @@ input.form-control.form-control-sm[type=color] {
 .modal-dialog-centered .modal-content {
   width: 100%; }
 
-.page-item[data-v-440179cf] {
+.b-pagination .page-item {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; }
 
-.page-item.disabled[data-v-440179cf] {
+.b-pagination .page-item.disabled {
   cursor: not-allowed;
   opacity: .65; }
 
-.page-item .page-link.active[data-v-440179cf]:focus {
+.b-pagination .page-item .page-link.active:focus {
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
   z-index: 1; }
 
-.page-item[data-v-0ebab88f] {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+.b-pagination .page-item {
   user-select: none; }
 
-.page-item.disabled[data-v-0ebab88f] {
+.b-pagination .page-item.disabled {
   cursor: not-allowed;
   opacity: .65; }
 
-.page-item .page-link.active[data-v-0ebab88f]:focus {
+.b-pagination .page-item .page-link.active:focus {
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
   z-index: 1; }
 
@@ -4073,6 +4071,19 @@ input.form-control.form-control-sm[type=color] {
 table.b-table.table-fixed {
   table-layout: fixed; }
 
+table.b-table[aria-busy=false] {
+  opacity: 1; }
+
+table.b-table[aria-busy=true] {
+  opacity: .6; }
+
+table.b-table > tbody > tr.b-table-has-details > td {
+  border-bottom: none; }
+
+table.b-table > tbody > tr.b-table-details > td {
+  border-top: none;
+  padding-top: 0; }
+
 table.b-table > tfoot > tr > th, table.b-table > thead > tr > th {
   position: relative; }
 
@@ -4080,7 +4091,7 @@ table.b-table > tfoot > tr > th.sorting, table.b-table > thead > tr > th.sorting
   padding-right: 1.5em;
   cursor: pointer; }
 
-table.b-table tfoot > tr > th.sorting:after, table.b-table tfoot > tr > th.sorting:before, table.b-table thead > tr > th.sorting:after, table.b-table thead > tr > th.sorting:before {
+table.b-table tfoot > tr > th.sorting::after, table.b-table tfoot > tr > th.sorting::before, table.b-table thead > tr > th.sorting::after, table.b-table thead > tr > th.sorting::before {
   position: absolute;
   bottom: 0;
   display: block;
@@ -4089,22 +4100,16 @@ table.b-table tfoot > tr > th.sorting:after, table.b-table tfoot > tr > th.sorti
   font-size: inherit;
   line-height: 180%; }
 
-table.b-table > tfoot > tr > th.sorting:before, table.b-table > thead > tr > th.sorting:before {
+table.b-table > tfoot > tr > th.sorting::before, table.b-table > thead > tr > th.sorting::before {
   right: .75em;
   content: "\2191"; }
 
-table.b-table > tfoot > tr > th.sorting:after, table.b-table > thead > tr > th.sorting:after {
+table.b-table > tfoot > tr > th.sorting::after, table.b-table > thead > tr > th.sorting::after {
   right: .25em;
   content: "\2193"; }
 
-table.b-table > tfoot > tr > th.sorting_asc:after, table.b-table > tfoot > tr > th.sorting_desc:before, table.b-table > thead > tr > th.sorting_asc:after, table.b-table > thead > tr > th.sorting_desc:before {
+table.b-table > tfoot > tr > th.sorting_asc::after, table.b-table > tfoot > tr > th.sorting_desc::before, table.b-table > thead > tr > th.sorting_asc::after, table.b-table > thead > tr > th.sorting_desc::before {
   opacity: 1; }
-
-table.b-table[aria-busy=false] {
-  opacity: 1; }
-
-table.b-table[aria-busy=true] {
-  opacity: .6; }
 
 .priceapp-header {
   text-align: center; }
@@ -4319,94 +4324,11 @@ table.b-table[aria-busy=true] {
   justify-content: center; }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
-  This can be removed once Bootstrap V4.beta.3 is released
+  This CSS can be removed once Bootstrap V4.beta.3 is released
   https://github.com/twbs/bootstrap/pull/24510
   Vertically centered modals are not suited to tall content (the header gets cut off)
+  Once BSV4.beta.3 is released, the script section can be moved into the modal.js file
 */
 .modal-dialog-centered {
     display: flex;
