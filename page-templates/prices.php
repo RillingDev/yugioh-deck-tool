@@ -15,7 +15,7 @@
     function register_priceapp_assets()
     {
         //CSS
-        wp_register_style('priceapp-css-main', 'https://ygoprodeck.com/priceapp/build/app.css',[],"v4.1.0",true);
+        wp_register_style('priceapp-css-main', 'https://ygoprodeck.com/priceapp/build/app.css');
         wp_enqueue_style('priceapp-css-main');
 
         //Scripts
