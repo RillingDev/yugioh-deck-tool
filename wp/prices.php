@@ -15,12 +15,12 @@
     function register_priceapp_assets()
     {
         //CSS
-        wp_register_style('priceapp-css-main', 'https://ygoprodeck.com/priceapp/app.css');
+        wp_register_style('priceapp-css-main', 'https://ygoprodeck.com/priceapp/build/app.css',[],"v4.1.0",true);
         wp_enqueue_style('priceapp-css-main');
 
         //Scripts
 
-        wp_register_script('priceapp-js-app', 'https://ygoprodeck.com/priceapp/app.js',[],"v4.0.0",true);
+        wp_register_script('priceapp-js-app', 'https://ygoprodeck.com/priceapp/build/app.js',[],"v4.1.0",true);
         wp_enqueue_script('priceapp-js-app');
     }
 
