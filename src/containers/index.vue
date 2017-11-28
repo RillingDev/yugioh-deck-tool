@@ -124,16 +124,17 @@
             <div class="app-builder-intro">
                 <h2>Deckbuilder:</h2>
                 <ygo-draw-sim
+                    v-if="deck.list.main.length"
                     :deck-list-main="deck.list.main"
                     :cards-data="cards.data"
-                ></ygo-draw-sim>
+                />
             </div>
             <ygo-builder
                 v-if="ajax.namesLoaded"
                 :cards-pairs="cards.pairs"
                 :deck-parts="deck.parts"
                 :deck-card-add="deckCardAdd"
-            ></ygo-builder>
+            />
         </div>
     </div>
 </template>

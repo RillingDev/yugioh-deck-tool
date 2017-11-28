@@ -37,7 +37,6 @@
                         :key="`${drawItemId}_${index}`"
                         :card-id="drawItemId"
                         :card-name="cardsData.get(drawItemId)"
-                        :on-right-click="()=>{}"
                     />
                 </div>
                 <button

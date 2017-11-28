@@ -4,7 +4,7 @@
         target="_blank"
         :href="link"
         :data-name="cardName"
-        @contextmenu.prevent="onRightClick()"
+        @contextmenu="contextEvent"
     >
         <div class="deck-card-image">
            <img
@@ -25,7 +25,7 @@
 
 <script>
 import getUrls from "../lib/data/urls";
-import { isDefined } from "lightdash";
+import { isDefined, isFunction } from "lightdash";
 
 const urls = getUrls();
 
@@ -44,7 +44,7 @@ export default {
     onRightClick: {
       type: Function,
       required: false,
-      default: () => {}
+      default: null
     }
   },
   computed: {
@@ -60,6 +60,17 @@ export default {
       return this.hasData
         ? `${urls.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
         : `http://yugioh.wikia.com/wiki/${this.cardId}`;
+    }
+  },
+  methods: {
+    contextEvent(e) {
+      /**
+       * as the event prop is optional, we cannot use .preventdefault in the directive and need to do it manually
+       */
+      if (isFunction(this.onRightClick)) {
+        e.preventDefault();
+        this.onRightClick();
+      }
     }
   }
 };
