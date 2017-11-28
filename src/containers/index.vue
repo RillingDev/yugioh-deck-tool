@@ -46,29 +46,29 @@
                 <div class="deck-part" v-for="deckPart in deck.parts" :key="deckPart.id" :class="'deck-part-'+deckPart.id">
                     <span>{{deckPart.name}} Deck ({{deck.list[deckPart.id].length}} Cards):</span>
                     <div v-if="deck.list[deckPart.id].length">
-                        <ygo-prices
+                        <ygo-price-view
                             v-if="ajax.pricesLoaded"
                             :item="deck.list[deckPart.id]"
                             :is-group="true"
                             :price-data="price.data"
                             :price-active-currency="price.activeCurrency"
-                        ></ygo-prices>
+                        ></ygo-price-view>
                         <div class="deck-content">
                             <ygo-card
                                 v-for="(cardId, index) in deck.list[deckPart.id]"
                                 :key="`${cardId}_${index}`"
                                 :card-id="cardId"
                                 :card-name="cards.data.get(cardId)"
-                                :on-right-click="() => deckCardRemove(deckPart,cardId)"
+                                :on-right-click="() => deckCardRemove(deckPart, cardId)"
                             >
-                                <ygo-prices
+                                <ygo-price-view
                                     slot="price"
                                     v-if="ajax.pricesLoaded"
                                     :item="cardId"
                                     :is-group="false"
                                     :price-data="price.data"
                                     :price-active-currency="price.activeCurrency"
-                                ></ygo-prices>
+                                ></ygo-price-view>
                             </ygo-card>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ import deckParts from "../lib/data/deckParts";
 import priceCurrencies from "../lib/data/priceCurrencies";
 import getUrls from "../lib/data/urls";
 
-import ygoPrices from "../components/ygoPrices.vue";
+import ygoPriceView from "../components/ygoPriceView.vue";
 import ygoCard from "../components/ygoCard.vue";
 import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
@@ -120,7 +120,7 @@ const urls = getUrls();
 
 export default {
   name: "index",
-  components: { ygoPrices, ygoCard, ygoBuilder, ygoDrawSim },
+  components: { ygoPriceView, ygoCard, ygoBuilder, ygoDrawSim },
   data: () => {
     return {
       cards: {

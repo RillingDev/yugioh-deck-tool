@@ -14,14 +14,10 @@
 import getUrls from "../lib/data/urls";
 import { isDefined } from "lightdash";
 
-import ygoPrices from "./ygoPrices.vue";
-
 const urls = getUrls();
 
 export default {
-  components: {
-    ygoPrices
-  },
+  components: {},
   props: ["cardId", "cardName", "onRightClick"],
   computed: {
     hasData() {
