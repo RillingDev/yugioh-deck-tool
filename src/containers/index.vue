@@ -79,8 +79,7 @@
                 >
                     <span>Total:</span>
                     <ygo-prices
-                        :item="deck.list"
-                        :is-group="true"
+                        :item="Object.values(deck.list)"
                         :price-data="price.data"
                         :price-active-currency="price.activeCurrency"
                     />
@@ -96,7 +95,6 @@
                         <ygo-price-view
                             v-if="ajax.pricesLoaded"
                             :item="deck.list[deckPart.id]"
-                            :is-group="true"
                             :price-data="price.data"
                             :price-active-currency="price.activeCurrency"
                         />
@@ -112,7 +110,6 @@
                                     slot="price"
                                     v-if="ajax.pricesLoaded"
                                     :item="cardId"
-                                    :is-group="false"
                                     :price-data="price.data"
                                     :price-active-currency="price.activeCurrency"
                                 />

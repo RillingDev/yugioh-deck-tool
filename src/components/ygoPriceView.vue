@@ -27,7 +27,11 @@ import priceModes from "../lib/data/priceModes";
 
 export default {
   props: {
-    item: {},
+    item: {
+      type: [String, Array],
+      required: true,
+      default: () => ""
+    },
     priceData: {
       type: Map,
       required: true,
@@ -44,17 +48,17 @@ export default {
           val: 1
         };
       }
-    },
-    isGroup: {
-      type: Boolean,
-      required: true,
-      default: () => false
     }
   },
   data: () => {
     return {
       priceModes
     };
+  },
+  computed: {
+    isGroup() {
+      return isArray(this.item);
+    }
   },
   methods: {
     priceForItem(priceMode) {
@@ -63,9 +67,7 @@ export default {
       return this.formatPrice(val);
     },
     priceForItems(priceMode) {
-      const items = isArray(this.item)
-        ? this.item
-        : arrFlattenDeep(objValues(this.item));
+      const items = arrFlattenDeep(this.item);
 
       if (items.length > 0) {
         const val = items
