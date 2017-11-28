@@ -5,7 +5,7 @@ import {
 import {
   objValues,
   arrFrom,
-  arrCount,
+  arrCount
 } from "lightdash";
 
 const optimizerDelimiters = {

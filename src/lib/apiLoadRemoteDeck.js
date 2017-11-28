@@ -1,7 +1,9 @@
+const fetchOptions = {
+  mode: "same-origin"
+};
+
 const apiLoadRemoteDeck = remoteUri => new Promise((resolve, reject) => {
-  fetch(remoteUri, {
-      mode: "same-origin"
-    })
+  fetch(remoteUri, fetchOptions)
     .then(res => {
       if (res.ok) {
         res

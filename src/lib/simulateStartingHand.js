@@ -4,7 +4,7 @@ import {
 } from "lightdash";
 
 /**
- * Chrome seems to have a very weird behavior when trying to shuffle the array that seems to be very un-random
+ * Chrome seems to have a very weird behavior when trying to shuffle the array that seems to be very un-random.
  * Therefore we use a self-built shuffle
  */
 const fisherYatesShuffle = arr => {

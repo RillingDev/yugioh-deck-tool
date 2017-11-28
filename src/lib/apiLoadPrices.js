@@ -1,20 +1,12 @@
+import {
+  arrUniq
+} from "lightdash";
+
 const encodeBase64 = val => btoa(JSON.stringify(val));
-
-const getCardsWithoutPriceData = (deckListAll, priceData) => {
-  const result = [];
-
-  deckListAll.forEach(cardId => {
-    if (!result.includes(cardId) && !priceData.has(cardId)) {
-      result.push(cardId);
-    }
-  });
-
-  return result;
-};
 
 const apiLoadPrices = (urls, deckListAll, cardData, priceDataOld) => new Promise((resolve, reject) => {
   const priceData = new Map(priceDataOld);
-  const cardIdsToFetch = getCardsWithoutPriceData(deckListAll, priceDataOld);
+  const cardIdsToFetch = arrUniq(deckListAll).filter(cardId => !priceDataOld.has(cardId));
 
   if (cardIdsToFetch.length > 0) {
     const priceQuery = encodeBase64(cardIdsToFetch.map(cardId => cardData.get(cardId)));
