@@ -16,13 +16,7 @@
 </template>
 
 <script>
-import {
-  arrFlattenDeep,
-  arrCompact,
-  isArray,
-  objValues,
-  isDefined
-} from "lightdash";
+import { arrCompact, isString, isDefined } from "lightdash";
 import priceModes from "../lib/data/priceModes";
 
 export default {
@@ -57,7 +51,7 @@ export default {
   },
   computed: {
     isGroup() {
-      return isArray(this.item);
+      return !isString(this.item);
     }
   },
   methods: {
@@ -67,10 +61,8 @@ export default {
       return this.formatPrice(val);
     },
     priceForItems(priceMode) {
-      const items = arrFlattenDeep(this.item);
-
-      if (items.length > 0) {
-        const val = items
+      if (this.item.length > 0) {
+        const val = this.item
           .map(cardId => this.getPriceOfMode(priceMode, cardId))
           .reduce((a, b) => a + b);
 

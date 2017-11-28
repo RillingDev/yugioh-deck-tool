@@ -78,8 +78,8 @@
                     v-if="ajax.pricesLoaded"
                 >
                     <span>Total:</span>
-                    <ygo-prices
-                        :item="Object.values(deck.list)"
+                    <ygo-price-view
+                        :item="deckListAll"
                         :price-data="price.data"
                         :price-active-currency="price.activeCurrency"
                     />
@@ -88,7 +88,7 @@
                     class="deck-part"
                     v-for="deckPart in deck.parts"
                     :key="deckPart.id"
-                    :class="'deck-part-'+deckPart.id"
+                    :class="`deck-part-${deckPart.id}`"
                 >
                     <span>{{ deckPart.name }} Deck ({{ deck.list[deckPart.id].length }} Cards):</span>
                     <div v-if="deck.list[deckPart.id].length">
@@ -142,7 +142,7 @@
 <script>
 import FileSaver from "file-saver/FileSaver";
 import clipboard from "clipboard-polyfill";
-import { arrRemoveItem } from "lightdash";
+import { arrRemoveItem, objValues } from "lightdash";
 
 import { uriDeckDecode, uriDeckEncode } from "../lib/uriDeck";
 import apiLoadNames from "../lib/apiLoadNames";
@@ -199,6 +199,9 @@ export default {
       const deckUri = this.deckToUri();
 
       return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
+    },
+    deckListAll() {
+      return [].concat(...objValues(this.deck.list));
     }
   },
   mounted() {
@@ -241,7 +244,7 @@ export default {
       this.ajax.pricesLoaded = false;
       this.ajax.currentlyLoading = true;
 
-      apiLoadPrices(urls, this.deck.list, this.cards.data, this.price.data)
+      apiLoadPrices(urls, this.deckListAll, this.cards.data, this.price.data)
         .then(result => {
           if (result !== false) {
             this.price.data = result;
