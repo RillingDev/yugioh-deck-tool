@@ -1,12 +1,12 @@
 const convertDeckToFile = function (deckParts, deckList) {
-    let result = [];
+  let result = [];
 
-    deckParts.forEach(deckPart => {
-        result.push(deckPart.indicator);
-        result = result.concat(deckList[deckPart.id]);
-    });
+  deckParts.forEach(deckPart => {
+    result.push(deckPart.indicator);
+    result = result.concat(deckList[deckPart.id]);
+  });
 
-    return result.join("\n");
+  return result.join("\n");
 };
 
 export default convertDeckToFile;

@@ -6,26 +6,65 @@
             <!-- app-forms-upload -->
             <div class="form-group">
                 <label>Deck:</label>
-                <input class="form-control" type="file" accept=".ydk" @change="fileOnUpload" title="Upload Deck">
-                <input class="form-control form-deck-name" type="text" v-model="deck.name" @input="deckUpdate()" title="Deck Title" placeholder="Deck Title" >
-                <button class="btn btn-primary form-control" download @click="deckToFile" title="Download Deck">Download</button>
+                <input
+                    class="form-control"
+                    type="file"
+                    accept=".ydk"
+                    @change="fileOnUpload"
+                    title="Upload Deck"
+                >
+                <input
+                    class="form-control form-deck-name"
+                    type="text"
+                    v-model="deck.name"
+                    @input="deckUpdate()"
+                    title="Deck Title"
+                    placeholder="Deck Title"
+                >
+                <button
+                    class="btn btn-primary form-control"
+                    download
+                    @click="deckToFile"
+                    title="Download Deck"
+                >Download</button>
             </div>
              <!-- app-forms-share -->
             <div class="form-group">
                 <label>Share:</label>
-                <input class="form-control" type="url" :value="shareLink" title="Shareable Link">
-                <button class="btn btn-primary form-control" @click="copyShareText" title="Copy Decklist to Clipboard">Copy Decklist to Clipboard</button>
+                <input
+                    class="form-control"
+                    type="url"
+                    :value="shareLink"
+                    title="Shareable Link"
+                >
+                <button
+                    class="btn btn-primary form-control"
+                    @click="copyShareText"
+                    title="Copy Decklist to Clipboard"
+                >Copy Decklist to Clipboard</button>
             </div>
              <!-- app-forms-price -->
             <div class="form-group">
                 <label>Price:</label>
-                <select class="form-control form-deck-currency" v-model="price.activeCurrency" title="Price Currency">
-                    <option v-for="currency in price.currencies" :key="currency.id" :value="currency">{{currency.name}}</option>
+                <select
+                    class="form-control form-deck-currency"
+                    v-model="price.activeCurrency"
+                    title="Price Currency"
+                >
+                    <option
+                        v-for="currency in price.currencies"
+                        :key="currency.id"
+                        :value="currency"
+                    >{{ currency.name }}</option>
                 </select>
-                <button class="btn btn-primary form-control" @click="fetchPrices" title="Load Prices">
+                <button
+                    class="btn btn-primary form-control"
+                    @click="fetchPrices"
+                    title="Load Prices"
+                >
                     <span :hidden="ajax.currentlyLoading">Load Prices</span>
                     <span :hidden="!ajax.currentlyLoading">
-                        <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                        <i class="fa fa-circle-o-notch fa-spin fa-fw"><!----></i>
                     </span>
                 </button>
             </div>
@@ -34,17 +73,25 @@
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
             <div class="deck">
-                <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
+                <div
+                    class="deck-part deck-part-total"
+                    v-if="ajax.pricesLoaded"
+                >
                     <span>Total:</span>
                     <ygo-prices
                         :item="deck.list"
                         :is-group="true"
                         :price-data="price.data"
                         :price-active-currency="price.activeCurrency"
-                    ></ygo-prices>
+                    />
                 </div>
-                <div class="deck-part" v-for="deckPart in deck.parts" :key="deckPart.id" :class="'deck-part-'+deckPart.id">
-                    <span>{{deckPart.name}} Deck ({{deck.list[deckPart.id].length}} Cards):</span>
+                <div
+                    class="deck-part"
+                    v-for="deckPart in deck.parts"
+                    :key="deckPart.id"
+                    :class="'deck-part-'+deckPart.id"
+                >
+                    <span>{{ deckPart.name }} Deck ({{ deck.list[deckPart.id].length }} Cards):</span>
                     <div v-if="deck.list[deckPart.id].length">
                         <ygo-price-view
                             v-if="ajax.pricesLoaded"
@@ -52,7 +99,7 @@
                             :is-group="true"
                             :price-data="price.data"
                             :price-active-currency="price.activeCurrency"
-                        ></ygo-price-view>
+                        />
                         <div class="deck-content">
                             <ygo-card
                                 v-for="(cardId, index) in deck.list[deckPart.id]"
@@ -68,7 +115,7 @@
                                     :is-group="false"
                                     :price-data="price.data"
                                     :price-active-currency="price.activeCurrency"
-                                ></ygo-price-view>
+                                />
                             </ygo-card>
                         </div>
                     </div>
@@ -119,7 +166,7 @@ import ygoDrawSim from "../components/ygoDrawSim.vue";
 const urls = getUrls();
 
 export default {
-  name: "index",
+  name: "Index",
   components: { ygoPriceView, ygoCard, ygoBuilder, ygoDrawSim },
   data: () => {
     return {
@@ -154,6 +201,25 @@ export default {
       const deckUri = this.deckToUri();
 
       return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
+    }
+  },
+  mounted() {
+    const uriQuery = location.search;
+
+    this.fetchNames();
+
+    if (uriQuery.includes("?d=")) {
+      //Load encoded uriDeck
+      this.deckFromUri(uriQuery.replace("?d=", ""));
+    } else if (uriQuery.includes("?u=")) {
+      //Load remote deck file
+      apiLoadRemoteDeck(uriQuery.replace("?u=", "").trim())
+        .then(text => {
+          this.deck.list = convertFileToDeck(this.deck.parts, text);
+        })
+        .catch(err => {
+          console.error("Remote Deck could not be loaded:", err.statusText);
+        });
     }
   },
   methods: {
@@ -251,25 +317,6 @@ export default {
     },
     copyShareText() {
       clipboard.writeText(this.deckToText());
-    }
-  },
-  mounted() {
-    const uriQuery = location.search;
-
-    this.fetchNames();
-
-    if (uriQuery.includes("?d=")) {
-      //Load encoded uriDeck
-      this.deckFromUri(uriQuery.replace("?d=", ""));
-    } else if (uriQuery.includes("?u=")) {
-      //Load remote deck file
-      apiLoadRemoteDeck(uriQuery.replace("?u=", "").trim())
-        .then(text => {
-          this.deck.list = convertFileToDeck(this.deck.parts, text);
-        })
-        .catch(err => {
-          console.error("Remote Deck could not be loaded:", err.statusText);
-        });
     }
   }
 };

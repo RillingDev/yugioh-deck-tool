@@ -1,6 +1,6 @@
 {
     "extends": [
-        "eslint:recommended"
+        "plugin:vue/recommended"
     ],
     "plugins": [
         "vue"
@@ -15,11 +15,12 @@
         "ecmaVersion": 8
     },
     "rules": {
-        "indent": ["warn", 4],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
         "no-console": "warn",
-        "comma-dangle": "off"
+        "comma-dangle": "warn",
+        "indent": ["warn", 2],
+        "vue/html-indent": ["warn", 4]
     }
 }

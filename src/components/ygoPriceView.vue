@@ -1,7 +1,16 @@
 <template>
-    <div class="price" :class="{'price--group' : isGroup}" v-if="priceData.size>0">
-        <span class="price-mode" v-for="priceMode in priceModes" :key="priceMode.id" :class="'price-mode-'+priceMode.id">
-            {{isGroup ? priceForItems(priceMode) : priceForItem(priceMode)}}
+    <div
+        class="price"
+        :class="{'price--group' : isGroup}"
+        v-if="priceData.size>0"
+      >
+        <span
+          class="price-mode"
+          v-for="priceMode in priceModes"
+          :key="priceMode.id"
+          :class="'price-mode-'+priceMode.id"
+        >
+            {{ isGroup ? priceForItems(priceMode) : priceForItem(priceMode) }}
         </span>
     </div>
 </template>
@@ -17,7 +26,31 @@ import {
 import priceModes from "../lib/data/priceModes";
 
 export default {
-  props: ["item", "isGroup", "priceData", "priceActiveCurrency"],
+  props: {
+    item: {},
+    priceData: {
+      type: Map,
+      required: true,
+      default: () => new Map()
+    },
+    priceActiveCurrency: {
+      type: Object,
+      required: true,
+      default: () => {
+        return {
+          id: "null",
+          name: "null",
+          label: "null",
+          val: 1
+        };
+      }
+    },
+    isGroup: {
+      type: Boolean,
+      required: true,
+      default: () => false
+    }
+  },
   data: () => {
     return {
       priceModes

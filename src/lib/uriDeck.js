@@ -1,71 +1,71 @@
 import {
-    compress,
-    decompress
+  compress,
+  decompress
 } from "./compress";
 import {
-    objValues,
-    arrFrom,
-    arrCount,
+  objValues,
+  arrFrom,
+  arrCount,
 } from "lightdash";
 
 const optimizerDelimiters = {
-    deckPart: "|",
-    cardId: ";",
-    cardAmount: "*"
+  deckPart: "|",
+  cardId: ";",
+  cardAmount: "*"
 };
 
 const createOptimizeList = deckList => objValues(deckList)
-    .map(deckListPart => arrFrom(arrCount(deckListPart))
-        .map(entry => {
-            if (entry[1] > 1) {
-                return `${optimizerDelimiters.cardAmount}${entry[1]}${entry[0]}`;
-            } else {
-                return entry[0];
-            }
-        })
-        .join(optimizerDelimiters.cardId))
-    .join(optimizerDelimiters.deckPart);
+  .map(deckListPart => arrFrom(arrCount(deckListPart))
+    .map(entry => {
+      if (entry[1] > 1) {
+        return `${optimizerDelimiters.cardAmount}${entry[1]}${entry[0]}`;
+      } else {
+        return entry[0];
+      }
+    })
+    .join(optimizerDelimiters.cardId))
+  .join(optimizerDelimiters.deckPart);
 
 const loadOptimizedList = str => str.split(optimizerDelimiters.deckPart)
-    .map(deckListPart => {
-        const result = [];
+  .map(deckListPart => {
+    const result = [];
 
-        if (deckListPart.length > 0) {
-            deckListPart
-                .split(optimizerDelimiters.cardId)
-                .map(entry => {
-                    if (entry.startsWith(optimizerDelimiters.cardAmount)) {
-                        const arrSized = Array(Number(entry[1]));
+    if (deckListPart.length > 0) {
+      deckListPart
+        .split(optimizerDelimiters.cardId)
+        .map(entry => {
+          if (entry.startsWith(optimizerDelimiters.cardAmount)) {
+            const arrSized = Array(Number(entry[1]));
 
-                        // Creates a new array of the size of cards, and fills with the card id
-                        result.push(...arrSized.fill(entry.slice(2)));
-                    } else {
-                        result.push(entry);
-                    }
-                });
-        }
+            // Creates a new array of the size of cards, and fills with the card id
+            result.push(...arrSized.fill(entry.slice(2)));
+          } else {
+            result.push(entry);
+          }
+        });
+    }
 
-        return result;
-    });
+    return result;
+  });
 
 const uriDeckEncode = deckList => {
-    const optimized = createOptimizeList(deckList);
+  const optimized = createOptimizeList(deckList);
 
-    return optimized !== optimizerDelimiters.deckPart.repeat(2) ? compress(optimized) : "";
+  return optimized !== optimizerDelimiters.deckPart.repeat(2) ? compress(optimized) : "";
 };
 
 const uriDeckDecode = function (deckParts, deckUri) {
-    const deckArray = loadOptimizedList(decompress(deckUri));
-    const deckList = {};
+  const deckArray = loadOptimizedList(decompress(deckUri));
+  const deckList = {};
 
-    deckParts.forEach((deckPart, index) => {
-        deckList[deckPart.id] = deckArray[index];
-    });
+  deckParts.forEach((deckPart, index) => {
+    deckList[deckPart.id] = deckArray[index];
+  });
 
-    return deckList;
+  return deckList;
 };
 
 export {
-    uriDeckEncode,
-    uriDeckDecode
+  uriDeckEncode,
+  uriDeckDecode
 };

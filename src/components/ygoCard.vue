@@ -1,11 +1,24 @@
 <template>
-    <a class="deck-card" target="_blank" :href="link" :data-name="cardName" @contextmenu.prevent="onRightClick()">
+    <a
+        class="deck-card"
+        target="_blank"
+        :href="link"
+        :data-name="cardName"
+        @contextmenu.prevent="onRightClick()"
+    >
         <div class="deck-card-image">
-           <img width="100" height="140" :src="image">
+           <img
+              width="100"
+              height="140"
+              :src="image"
+           >
         </div>
         <div class="deck-card-text">
-            <div class="deck-card-name">{{cardName || `[${cardId}]`}}</div>
-            <slot class="deck-card-price" name="price"></slot>
+            <div class="deck-card-name">{{ cardName || `[${cardId}]` }}</div>
+            <slot
+              class="deck-card-price"
+              name="price"
+            />
         </div>
     </a>
 </template>
@@ -17,8 +30,23 @@ import { isDefined } from "lightdash";
 const urls = getUrls();
 
 export default {
-  components: {},
-  props: ["cardId", "cardName", "onRightClick"],
+  props: {
+    cardId: {
+      type: String,
+      required: true,
+      default: () => ""
+    },
+    cardName: {
+      type: String,
+      required: false,
+      default: () => ""
+    },
+    onRightClick: {
+      type: Function,
+      required: false,
+      default: () => {}
+    }
+  },
   computed: {
     hasData() {
       return isDefined(this.cardName);

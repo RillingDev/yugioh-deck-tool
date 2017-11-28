@@ -1,20 +1,36 @@
 <template>
     <div class="builder">
-        <span>Showing {{pairsFiltered.length}} of {{pairs.length}} Cards</span>
-        <input class="form-control builder-search" type="search" title="Search" placeholder="Search" v-model="filter">
-         <ul class="builder-list" v-if="pairsFiltered.length">
-            <li class="builder-card-wrapper" v-for="pair in pairsFiltered" :key="pair[0]">
-                <a class="builder-card" :data-name="pair[1]">
-                    <div class="builder-card-name">{{pair[1]}}</div>
+        <span>Showing {{ pairsFiltered.length }} of {{ pairs.length }} Cards</span>
+        <input
+            class="form-control builder-search"
+            type="search"
+            v-model="filter"
+            title="Search"
+            placeholder="Search"
+        >
+         <ul
+            class="builder-list"
+            v-if="pairsFiltered.length"
+         >
+            <li
+                class="builder-card-wrapper"
+                v-for="pair in pairsFiltered"
+                :key="pair[0]"
+            >
+                <a
+                    class="builder-card"
+                    :data-name="pair[1]"
+                >
+                    <div class="builder-card-name">{{ pair[1] }}</div>
                     <div class="builder-card-action">
                         <span
                             class="fa fa-plus builder-add"
                             v-for="deckPart in deckParts"
                             :key="deckPart.id"
+                            @click="deckCardAdd(deckPart,pair[0])"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
-                            @click="deckCardAdd(deckPart,pair[0])"
-                        ></span>
+                        ><!----></span>
                     </div>
                 </a>
             </li>
@@ -26,7 +42,22 @@
 import { arrFrom } from "lightdash";
 
 export default {
-  props: ["cardsPairs", "deckParts", "deckCardAdd"],
+  props: {
+    cardsPairs: {
+      type: Map,
+      required: true,
+      default: () => new Map()
+    },
+    deckParts: {
+      type: Array,
+      required: true,
+      default: () => []
+    },
+    deckCardAdd: {
+      type: Function,
+      default: () => {}
+    }
+  },
   data: () => {
     return {
       filter: ""

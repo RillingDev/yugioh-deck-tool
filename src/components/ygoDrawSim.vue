@@ -1,10 +1,23 @@
 <template>
     <div>
-        <button class="btn btn-primary btn-sm" title="Open Start Hand Simulation" @click="showModal()">Start Hand</button>
+        <button
+          class="btn btn-primary btn-sm"
+          title="Open Start Hand Simulation"
+          @click="showModal()"
+        >Start Hand</button>
 
-        <b-modal id="modalDrawSim" ref="modalDrawSim" size="lg" hide-footer  title="Start Hand Simulation">
+        <b-modal
+          id="modalDrawSim"
+          ref="modalDrawSim"
+          size="lg"
+          hide-footer
+          title="Start Hand Simulation"
+        >
             <div class="drawsim">
-                <div class="drawsim-drawmode btn-group" role="group">
+                <div
+                  class="drawsim-drawmode btn-group"
+                  role="group"
+                >
                     <button
                         type="button button-primary"
                         class="btn btn-secondary"
@@ -25,9 +38,12 @@
                         :card-id="drawItemId"
                         :card-name="cardsData.get(drawItemId)"
                         :on-right-click="()=>{}"
-                    ></ygo-card>
+                    />
                 </div>
-                <button class="btn btn-primary" @click="draw()">Draw</button>
+                <button
+                    class="btn btn-primary"
+                    @click="draw()"
+                >Draw</button>
             </div>
         </b-modal>
     </div>
@@ -44,7 +60,18 @@ export default {
     bModal,
     ygoCard
   },
-  props: ["deckListMain", "cardsData"],
+  props: {
+    deckListMain: {
+      type: Array,
+      required: true,
+      default: () => []
+    },
+    cardsData: {
+      type: Map,
+      required: false,
+      default: () => new Map()
+    }
+  },
   data() {
     return {
       drawMode: 5,
