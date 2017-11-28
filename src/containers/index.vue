@@ -28,7 +28,7 @@
                     title="Download Deck"
                 >Download</button>
             </div>
-             <!-- app-forms-share -->
+            <!-- app-forms-share -->
             <div class="form-group">
                 <label>Share:</label>
                 <input
@@ -43,7 +43,7 @@
                     title="Copy Decklist to Clipboard"
                 >Copy Decklist to Clipboard</button>
             </div>
-             <!-- app-forms-price -->
+            <!-- app-forms-price -->
             <div class="form-group">
                 <label>Price:</label>
                 <select
@@ -69,7 +69,7 @@
                 </button>
             </div>
         </div>
-         <!-- app-deck -->
+        <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
             <div class="deck">
@@ -262,6 +262,8 @@ export default {
     },
     deckFromFile(file) {
       const reader = new FileReader();
+
+      this.ajax.pricesLoaded = false;
 
       reader.onload = e => {
         this.deck.name = file.name.replace(".ydk", "");

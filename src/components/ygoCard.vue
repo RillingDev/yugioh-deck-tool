@@ -7,17 +7,17 @@
         @contextmenu="contextEvent"
     >
         <div class="deck-card-image">
-           <img
-              width="100"
-              height="140"
-              :src="image"
-           >
+            <img
+                width="100"
+                height="140"
+                :src="image"
+            >
         </div>
         <div class="deck-card-text">
             <div class="deck-card-name">{{ cardName || `[${cardId}]` }}</div>
             <slot
-              class="deck-card-price"
-              name="price"
+                class="deck-card-price"
+                name="price"
             />
         </div>
     </a>

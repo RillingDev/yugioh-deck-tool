@@ -3,12 +3,12 @@
         class="price"
         :class="{'price--group' : isGroup}"
         v-if="priceData.size>0"
-      >
+    >
         <span
-          class="price-mode"
-          v-for="priceMode in priceModes"
-          :key="priceMode.id"
-          :class="'price-mode-'+priceMode.id"
+            class="price-mode"
+            v-for="priceMode in priceModes"
+            :key="priceMode.id"
+            :class="'price-mode-'+priceMode.id"
         >
             {{ isGroup ? priceForItems(priceMode) : priceForItem(priceMode) }}
         </span>

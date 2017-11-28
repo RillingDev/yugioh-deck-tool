@@ -1,22 +1,22 @@
 <template>
     <div>
         <button
-          class="btn btn-primary btn-sm"
-          title="Open Start Hand Simulation"
-          @click="showModal()"
+            class="btn btn-primary btn-sm"
+            title="Open Start Hand Simulation"
+            @click="showModal()"
         >Start Hand</button>
 
         <b-modal
-          id="modalDrawSim"
-          ref="modalDrawSim"
-          size="lg"
-          hide-footer
-          title="Start Hand Simulation"
+            id="modalDrawSim"
+            ref="modalDrawSim"
+            size="lg"
+            hide-footer
+            title="Start Hand Simulation"
         >
             <div class="drawsim">
                 <div
-                  class="drawsim-drawmode btn-group"
-                  role="group"
+                    class="drawsim-drawmode btn-group"
+                    role="group"
                 >
                     <button
                         type="button button-primary"

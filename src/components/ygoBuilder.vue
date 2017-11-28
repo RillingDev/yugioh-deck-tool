@@ -8,10 +8,10 @@
             title="Search"
             placeholder="Search"
         >
-         <ul
+        <ul
             class="builder-list"
             v-if="pairsFiltered.length"
-         >
+        >
             <li
                 class="builder-card-wrapper"
                 v-for="pair in pairsFiltered"
