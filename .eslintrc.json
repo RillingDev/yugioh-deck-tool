@@ -18,9 +18,9 @@
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
+        "comma-dangle": "error",
         "no-console": "warn",
-        "comma-dangle": "warn",
-        "indent": ["warn", 2],
+        "indent": ["warn", 4],
         "vue/html-indent": ["warn", 4]
     }
 }
