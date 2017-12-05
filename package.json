@@ -35,8 +35,8 @@
         "vue": "^2.5.9"
     },
     "devDependencies": {
-        "@babel/core": "^7.0.0-beta.33",
-        "@babel/preset-env": "^7.0.0-beta.33",
+        "@babel/core": "^7.0.0-beta.34",
+        "@babel/preset-env": "^7.0.0-beta.34",
         "babel-loader": "^8.0.0-beta.0",
         "cross-env": "^5.1.1",
         "css-loader": "^0.28.7",
@@ -47,11 +47,11 @@
         "npm-run-all": "^4.1.2",
         "rimraf": "^2.6.2",
         "sass-loader": "^6.0.6",
-        "uglify-es": "^3.2.0",
-        "uglifyjs-webpack-plugin": "^1.1.1",
+        "uglify-es": "^3.2.1",
+        "uglifyjs-webpack-plugin": "^1.1.2",
         "vue-loader": "^13.5.0",
         "vue-template-compiler": "^2.5.9",
-        "webpack": "^3.9.1",
+        "webpack": "^3.10.0",
         "webpack-dev-server": "^2.9.5"
     }
 }
