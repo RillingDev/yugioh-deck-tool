@@ -43,10 +43,12 @@ import { arrFrom } from "lightdash";
 
 export default {
     props: {
-        cardsPairs: {
-            type: Map,
+        cardDb: {
+            type: Object,
             required: true,
-            default: () => new Map()
+            default: () => {
+                return {};
+            }
         },
         deckParts: {
             type: Array,
@@ -65,7 +67,9 @@ export default {
     },
     computed: {
         pairs() {
-            return arrFrom(this.cardsPairs.entries());
+            const unique = this.cardDb.getAllUnique(true);
+
+            return arrFrom(unique).map(entry => [entry[0], entry[1].name]);
         },
         pairsFiltered() {
             return this.pairs

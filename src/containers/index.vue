@@ -103,7 +103,7 @@
                                 v-for="(cardId, index) in deck.list[deckPart.id]"
                                 :key="`${cardId}_${index}`"
                                 :card-id="cardId"
-                                :card-name="cards.data.get(cardId)"
+                                :card-name="cardDb.getName(cardId)"
                                 :on-right-click="() => deckCardRemove(deckPart, cardId)"
                             >
                                 <ygo-price-view
@@ -126,12 +126,12 @@
                 <ygo-draw-sim
                     v-if="deck.list.main.length"
                     :deck-list-main="deck.list.main"
-                    :cards-data="cards.data"
+                    :card-db="cardDb"
                 />
             </div>
             <ygo-builder
-                v-if="ajax.namesLoaded"
-                :cards-pairs="cards.pairs"
+                v-if="ajax.cardsLoaded"
+                :card-db="cardDb"
                 :deck-parts="deck.parts"
                 :deck-card-add="deckCardAdd"
             />
@@ -145,7 +145,7 @@ import clipboard from "clipboard-polyfill";
 import { arrRemoveItem, objValues } from "lightdash";
 
 import { uriDeckDecode, uriDeckEncode } from "../lib/uriDeck";
-import apiLoadNames from "../lib/apiLoadNames";
+import apiLoadCards from "../lib/apiLoadCards";
 import apiLoadPrices from "../lib/apiLoadPrices";
 import apiLoadRemoteDeck from "../lib/apiLoadRemoteDeck";
 import convertFileToDeck from "../lib/convertFileToDeck";
@@ -168,17 +168,14 @@ export default {
     components: { ygoPriceView, ygoCard, ygoBuilder, ygoDrawSim },
     data: () => {
         return {
-            cards: {
-                pairs: new Map(),
-                data: new Map()
-            },
+            cardDb: null,
             price: {
                 activeCurrency: priceCurrencies[0],
                 currencies: priceCurrencies,
                 data: new Map()
             },
             ajax: {
-                namesLoaded: false,
+                cardsLoaded: false,
                 pricesLoaded: false,
                 currentlyLoading: false
             },
@@ -207,7 +204,7 @@ export default {
     mounted() {
         const uriQuery = location.search;
 
-        this.fetchNames();
+        this.fetchCards();
 
         if (uriQuery.includes("?d=")) {
             //Load encoded uriDeck
@@ -227,19 +224,18 @@ export default {
         }
     },
     methods: {
-        fetchNames() {
-            this.ajax.namesLoaded = false;
+        fetchCards() {
+            this.ajax.cardsLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadNames(urls)
+            apiLoadCards(urls)
                 .then(result => {
-                    this.cards.data = result.data;
-                    this.cards.pairs = result.pairs;
+                    this.cardDb = result;
 
-                    this.ajax.namesLoaded = true;
+                    this.ajax.cardsLoaded = true;
                     this.ajax.currentlyLoading = false;
 
-                    console.log("LOADED NAMES", this.cards.data);
+                    console.log("LOADED Cards", this.cardDb);
                 })
                 .catch(console.error);
         },
@@ -247,7 +243,7 @@ export default {
             this.ajax.pricesLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadPrices(
+            /*  apiLoadPrices(
                 urls,
                 this.deckListAll,
                 this.cards.data,
@@ -266,7 +262,7 @@ export default {
 
                     this.ajax.currentlyLoading = false;
                 })
-                .catch(console.error);
+                .catch(console.error); */
         },
         deckFromFile(file) {
             const reader = new FileReader();

@@ -36,7 +36,7 @@
                         v-for="(drawItemId, index) of drawItems"
                         :key="`${drawItemId}_${index}`"
                         :card-id="drawItemId"
-                        :card-name="cardsData.get(drawItemId)"
+                        :card-name="cardDb.getName(drawItemId)"
                     />
                 </div>
                 <button
@@ -65,10 +65,12 @@ export default {
             required: true,
             default: () => []
         },
-        cardsData: {
-            type: Map,
-            required: false,
-            default: () => new Map()
+        cardDb: {
+            type: Object,
+            required: true,
+            default: () => {
+                return {};
+            }
         }
     },
     data() {
@@ -100,7 +102,6 @@ export default {
 @import "node_modules/bootstrap/scss/functions";
 @import "../styles/variables";
 @import "../styles/variables.app";
-@import "../styles/mixins/screen";
 
 .priceapp {
     .close {
