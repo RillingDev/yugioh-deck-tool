@@ -4,8 +4,10 @@ const pakoOptions = {
     to: "string"
 };
 
-const compress = val => btoa(pako.deflate(val, pakoOptions));
+const deflate = val => pako.deflate(val, pakoOptions);
+const inflate = val => pako.inflate(val, pakoOptions);
 
-const decompress = val => pako.inflate(atob(val), pakoOptions);
+const compress = val => btoa(deflate(val));
+const decompress = val => inflate(atob(val));
 
-export { compress, decompress };
+export { deflate, inflate, compress, decompress };

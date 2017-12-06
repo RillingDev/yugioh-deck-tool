@@ -1,15 +1,10 @@
 "use strict";
 
 const fs = require("fs");
-const pako = require("pako");
-const pakoOptions = {
-    to: "string"
-};
+const deflate = require("zlib").deflateSync;
 const input = require("./input.json");
 const inputCards = input[2].data;
 const output = {};
-let outputJSON;
-let outputJSONCompressed;
 
 inputCards.forEach(entry => {
     output[entry.id] = {
@@ -25,15 +20,14 @@ inputCards.forEach(entry => {
         race: entry.race,
         attribute: entry.attribute,
 
-        times: entry.times,
-        timesWeek: entry.timesperweek,
+        times: [entry.times, entry.timesperweek],
 
-        ratingUp: entry.rating_up,
-        ratingDown: entry.rating_down
+        rating: [entry.rating_up, entry.rating_down]
     };
 });
 
-outputJSON = JSON.stringify(output, null, "");
-outputJSONCompressed = pako.deflate(outputJSON);
-
-fs.writeFileSync("./names.json.gz", outputJSONCompressed);
+fs.writeFileSync(
+    "./names.json.gz",
+    deflate(JSON.stringify(output, null, "")),
+    "binary"
+);
