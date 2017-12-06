@@ -1,4 +1,5 @@
-const priceModes = [{
+const priceModes = [
+    {
         id: "low",
         name: "Low"
     },

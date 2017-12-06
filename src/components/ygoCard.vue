@@ -30,49 +30,49 @@ import { isDefined, isFunction } from "lightdash";
 const urls = getUrls();
 
 export default {
-  props: {
-    cardId: {
-      type: String,
-      required: true,
-      default: () => ""
+    props: {
+        cardId: {
+            type: String,
+            required: true,
+            default: () => ""
+        },
+        cardName: {
+            type: String,
+            required: false,
+            default: () => ""
+        },
+        onRightClick: {
+            type: Function,
+            required: false,
+            default: null
+        }
     },
-    cardName: {
-      type: String,
-      required: false,
-      default: () => ""
+    computed: {
+        hasData() {
+            return isDefined(this.cardName);
+        },
+        image() {
+            return this.hasData
+                ? `${urls.imageAPI}/${this.cardId}.jpg`
+                : urls.imageUnkown;
+        },
+        link() {
+            return this.hasData
+                ? `${urls.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
+                : `http://yugioh.wikia.com/wiki/${this.cardId}`;
+        }
     },
-    onRightClick: {
-      type: Function,
-      required: false,
-      default: null
-    }
-  },
-  computed: {
-    hasData() {
-      return isDefined(this.cardName);
-    },
-    image() {
-      return this.hasData
-        ? `${urls.imageAPI}/${this.cardId}.jpg`
-        : urls.imageUnkown;
-    },
-    link() {
-      return this.hasData
-        ? `${urls.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
-        : `http://yugioh.wikia.com/wiki/${this.cardId}`;
-    }
-  },
-  methods: {
-    contextEvent(e) {
-      /**
+    methods: {
+        contextEvent(e) {
+            /**
        * as the event prop is optional, we cannot use .preventdefault in the directive and need to do it manually
        */
-      if (isFunction(this.onRightClick)) {
-        e.preventDefault();
-        this.onRightClick();
-      }
+            if (isFunction(this.onRightClick)) {
+                e.preventDefault();
+                this.onRightClick();
+            }
+        }
     }
-  }
 };
 </script>
 
@@ -82,36 +82,36 @@ export default {
 @import "../styles/variables.app";
 
 .deck-card {
-  position: relative;
-  margin: 5px;
+    position: relative;
+    margin: 5px;
 }
 
 .deck-card-image img {
-  height: 140px;
-  width: 100px;
-  margin-bottom: 0;
+    height: 140px;
+    width: 100px;
+    margin-bottom: 0;
 }
 
 .deck-card-text {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: $gray-200;
-  opacity: 0;
-  transition: opacity 0.15s;
-  text-align: center;
-  color: $gray-800;
-  word-wrap: break-word;
-  line-height: 1.125em;
-  font-size: 0.85em;
-  &:focus,
-  &:hover {
-    opacity: 1;
-  }
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $gray-200;
+    opacity: 0;
+    transition: opacity 0.15s;
+    text-align: center;
+    color: $gray-800;
+    word-wrap: break-word;
+    line-height: 1.125em;
+    font-size: 0.85em;
+    &:focus,
+    &:hover {
+        opacity: 1;
+    }
 }
 </style>

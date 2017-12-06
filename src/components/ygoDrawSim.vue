@@ -55,41 +55,44 @@ import ygoCard from "./ygoCard.vue";
 import simulateStartingHand from "../lib/simulateStartingHand";
 
 export default {
-  components: {
-    bModal,
-    ygoCard
-  },
-  props: {
-    deckListMain: {
-      type: Array,
-      required: true,
-      default: () => []
+    components: {
+        bModal,
+        ygoCard
     },
-    cardsData: {
-      type: Map,
-      required: false,
-      default: () => new Map()
+    props: {
+        deckListMain: {
+            type: Array,
+            required: true,
+            default: () => []
+        },
+        cardsData: {
+            type: Map,
+            required: false,
+            default: () => new Map()
+        }
+    },
+    data() {
+        return {
+            drawMode: 5,
+            drawItems: []
+        };
+    },
+    methods: {
+        showModal() {
+            this.$refs.modalDrawSim.show();
+            this.draw();
+        },
+        setDrawMode(newMode) {
+            this.drawMode = newMode;
+            this.draw();
+        },
+        draw() {
+            this.drawItems = simulateStartingHand(
+                this.deckListMain,
+                this.drawMode
+            );
+        }
     }
-  },
-  data() {
-    return {
-      drawMode: 5,
-      drawItems: []
-    };
-  },
-  methods: {
-    showModal() {
-      this.$refs.modalDrawSim.show();
-      this.draw();
-    },
-    setDrawMode(newMode) {
-      this.drawMode = newMode;
-      this.draw();
-    },
-    draw() {
-      this.drawItems = simulateStartingHand(this.deckListMain, this.drawMode);
-    }
-  }
 };
 </script>
 
@@ -100,32 +103,32 @@ export default {
 @import "../styles/mixins/screen";
 
 .priceapp {
-  .close {
-    margin: 0;
-    padding: 0;
-    font-size: 1.4em;
-    cursor: pointer;
-  }
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .modal-title {
-    margin-bottom: 0;
-  }
+    .close {
+        margin: 0;
+        padding: 0;
+        font-size: 1.4em;
+        cursor: pointer;
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .modal-title {
+        margin-bottom: 0;
+    }
 }
 
 .drawsim {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 }
 .drawsim-output {
-  margin: 1em 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+    margin: 1em 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 </style>

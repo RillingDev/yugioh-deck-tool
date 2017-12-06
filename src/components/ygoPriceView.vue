@@ -20,72 +20,72 @@ import { arrCompact, isString, isDefined } from "lightdash";
 import priceModes from "../lib/data/priceModes";
 
 export default {
-  props: {
-    item: {
-      type: [String, Array],
-      required: true,
-      default: () => ""
+    props: {
+        item: {
+            type: [String, Array],
+            required: true,
+            default: () => ""
+        },
+        priceData: {
+            type: Map,
+            required: true,
+            default: () => new Map()
+        },
+        priceActiveCurrency: {
+            type: Object,
+            required: true,
+            default: () => {
+                return {
+                    id: "null",
+                    name: "null",
+                    label: "null",
+                    val: 1
+                };
+            }
+        }
     },
-    priceData: {
-      type: Map,
-      required: true,
-      default: () => new Map()
-    },
-    priceActiveCurrency: {
-      type: Object,
-      required: true,
-      default: () => {
+    data: () => {
         return {
-          id: "null",
-          name: "null",
-          label: "null",
-          val: 1
+            priceModes
         };
-      }
-    }
-  },
-  data: () => {
-    return {
-      priceModes
-    };
-  },
-  computed: {
-    isGroup() {
-      return !isString(this.item);
-    }
-  },
-  methods: {
-    priceForItem(priceMode) {
-      const val = this.getPriceOfMode(priceMode, this.item);
-
-      return this.formatPrice(val);
     },
-    priceForItems(priceMode) {
-      if (this.item.length > 0) {
-        const val = this.item
-          .map(cardId => this.getPriceOfMode(priceMode, cardId))
-          .reduce((a, b) => a + b);
-
-        return this.formatPrice(val);
-      } else {
-        return this.formatPrice(0);
-      }
+    computed: {
+        isGroup() {
+            return !isString(this.item);
+        }
     },
-    getPriceOfMode(priceMode, cardId) {
-      if (this.priceData.has(cardId)) {
-        const val = this.priceData.get(cardId)[priceMode.id];
+    methods: {
+        priceForItem(priceMode) {
+            const val = this.getPriceOfMode(priceMode, this.item);
 
-        return isDefined(val) ? val : 0;
-      } else {
-        return 0;
-      }
-    },
-    formatPrice(val) {
-      const currency = this.priceActiveCurrency;
+            return this.formatPrice(val);
+        },
+        priceForItems(priceMode) {
+            if (this.item.length > 0) {
+                const val = this.item
+                    .map(cardId => this.getPriceOfMode(priceMode, cardId))
+                    .reduce((a, b) => a + b);
 
-      return (val * currency.val).toFixed(2) + currency.label;
+                return this.formatPrice(val);
+            } else {
+                return this.formatPrice(0);
+            }
+        },
+        getPriceOfMode(priceMode, cardId) {
+            if (this.priceData.has(cardId)) {
+                const val = this.priceData.get(cardId)[priceMode.id];
+
+                return isDefined(val) ? val : 0;
+            } else {
+                return 0;
+            }
+        },
+        formatPrice(val) {
+            const currency = this.priceActiveCurrency;
+
+            return (val * currency.val).toFixed(2) + currency.label;
+        }
     }
-  }
 };
 </script>
 
@@ -95,27 +95,27 @@ export default {
 @import "../styles/variables.app";
 
 .price {
-  &.price--group {
-    margin-bottom: 0.5rem;
-  }
-  &:not(.price--group) {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-  }
+    &.price--group {
+        margin-bottom: 0.5rem;
+    }
+    &:not(.price--group) {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
 }
 
 .price-mode {
-  padding: 2px 4px;
-  display: inline-block;
-  &-low {
-    background-color: $color-pricemode-low;
-  }
-  &-average {
-    background-color: $color-pricemode-average;
-  }
-  &-high {
-    background-color: $color-pricemode-high;
-  }
+    padding: 2px 4px;
+    display: inline-block;
+    &-low {
+        background-color: $color-pricemode-low;
+    }
+    &-average {
+        background-color: $color-pricemode-average;
+    }
+    &-high {
+        background-color: $color-pricemode-high;
+    }
 }
 </style>

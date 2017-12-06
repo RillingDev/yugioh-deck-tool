@@ -1,4 +1,5 @@
-const deckparts = [{
+const deckparts = [
+    {
         id: "main",
         name: "Main",
         indicator: "#main",

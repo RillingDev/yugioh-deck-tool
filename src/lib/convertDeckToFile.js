@@ -1,4 +1,4 @@
-const convertDeckToFile = function (deckParts, deckList) {
+const convertDeckToFile = function(deckParts, deckList) {
     let result = [];
 
     deckParts.forEach(deckPart => {

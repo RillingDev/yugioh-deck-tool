@@ -1,7 +1,4 @@
-import {
-    arrFrom,
-    arrRemoveIndex
-} from "lightdash";
+import { arrFrom, arrRemoveIndex } from "lightdash";
 
 /**
  * Chrome seems to have a very weird behavior when trying to shuffle the array that seems to be very un-random.
@@ -22,6 +19,7 @@ const fisherYatesShuffle = arr => {
     return result;
 };
 
-const simulateStartingHand = (cardListMain, cardsToDraw) => fisherYatesShuffle(cardListMain).slice(0, cardsToDraw);
+const simulateStartingHand = (cardListMain, cardsToDraw) =>
+    fisherYatesShuffle(cardListMain).slice(0, cardsToDraw);
 
 export default simulateStartingHand;

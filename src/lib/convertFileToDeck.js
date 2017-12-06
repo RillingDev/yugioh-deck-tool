@@ -1,4 +1,4 @@
-const convertFileToDeck = function (deckParts, fileContent) {
+const convertFileToDeck = function(deckParts, fileContent) {
     const result = {};
     const fileParts = fileContent
         .replace(/#created.+/, "")

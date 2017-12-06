@@ -42,39 +42,39 @@
 import { arrFrom } from "lightdash";
 
 export default {
-  props: {
-    cardsPairs: {
-      type: Map,
-      required: true,
-      default: () => new Map()
+    props: {
+        cardsPairs: {
+            type: Map,
+            required: true,
+            default: () => new Map()
+        },
+        deckParts: {
+            type: Array,
+            required: true,
+            default: () => []
+        },
+        deckCardAdd: {
+            type: Function,
+            default: () => {}
+        }
     },
-    deckParts: {
-      type: Array,
-      required: true,
-      default: () => []
+    data: () => {
+        return {
+            filter: ""
+        };
     },
-    deckCardAdd: {
-      type: Function,
-      default: () => {}
+    computed: {
+        pairs() {
+            return arrFrom(this.cardsPairs.entries());
+        },
+        pairsFiltered() {
+            return this.pairs
+                .filter(pair =>
+                    pair[1].toLowerCase().includes(this.filter.toLowerCase())
+                )
+                .slice(0, 100);
+        }
     }
-  },
-  data: () => {
-    return {
-      filter: ""
-    };
-  },
-  computed: {
-    pairs() {
-      return arrFrom(this.cardsPairs.entries());
-    },
-    pairsFiltered() {
-      return this.pairs
-        .filter(pair =>
-          pair[1].toLowerCase().includes(this.filter.toLowerCase())
-        )
-        .slice(0, 100);
-    }
-  }
 };
 </script>
 
@@ -84,65 +84,65 @@ export default {
 @import "../styles/variables.app";
 
 .builder-search {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .builder-list {
-  max-height: 60vh;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: scroll;
-  list-style: none;
-  padding: 0;
-  resize: vertical;
-  border: 1px solid $gray-400;
+    max-height: 60vh;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: scroll;
+    list-style: none;
+    padding: 0;
+    resize: vertical;
+    border: 1px solid $gray-400;
 }
 
 .builder-card-wrapper {
-  border-top: 1px solid $gray-400;
-  &:first-child {
-    border-top: 0;
-  }
+    border-top: 1px solid $gray-400;
+    &:first-child {
+        border-top: 0;
+    }
 }
 
 .builder-card {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 10px;
 }
 
 .builder-card-name {
-  padding: 10px 0;
+    padding: 10px 0;
 }
 .builder-card-action {
-  width: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
+    width: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 }
 .builder-add {
-  width: 34px;
-  text-align: center;
-  opacity: 0.8;
-  font-size: 1.2em;
-  cursor: pointer;
-  &:active {
-    opacity: 1;
-  }
-  &-main {
-    color: $color-deckpart-main;
-  }
-  &-extra {
-    color: $color-deckpart-extra;
-  }
-  &-side {
-    color: $color-deckpart-side;
-  }
+    width: 34px;
+    text-align: center;
+    opacity: 0.8;
+    font-size: 1.2em;
+    cursor: pointer;
+    &:active {
+        opacity: 1;
+    }
+    &-main {
+        color: $color-deckpart-main;
+    }
+    &-extra {
+        color: $color-deckpart-extra;
+    }
+    &-side {
+        color: $color-deckpart-side;
+    }
 }
 
 .builder-card-name {
-  width: calc(100% - 108px);
+    width: calc(100% - 108px);
 }
 </style>

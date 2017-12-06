@@ -1,4 +1,5 @@
-const priceCurrencies = [{
+const priceCurrencies = [
+    {
         id: "dollar_us",
         name: "US Dollar",
         label: "$",
@@ -25,7 +26,7 @@ const priceCurrencies = [{
     {
         id: "dollar_au",
         name: "Australian Dollar",
-        label: "$",
+      label: "$",
         val: 1.31469
     }
 ];

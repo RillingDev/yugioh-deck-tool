@@ -164,164 +164,182 @@ import ygoDrawSim from "../components/ygoDrawSim.vue";
 const urls = getUrls();
 
 export default {
-  name: "Index",
-  components: { ygoPriceView, ygoCard, ygoBuilder, ygoDrawSim },
-  data: () => {
-    return {
-      cards: {
-        pairs: new Map(),
-        data: new Map()
-      },
-      price: {
-        activeCurrency: priceCurrencies[0],
-        currencies: priceCurrencies,
-        data: new Map()
-      },
-      ajax: {
-        namesLoaded: false,
-        pricesLoaded: false,
-        currentlyLoading: false
-      },
-      deck: {
-        name: "Unnamed",
-        parts: deckParts,
-        list: {
-          main: [],
-          extra: [],
-          side: []
+    name: "Index",
+    components: { ygoPriceView, ygoCard, ygoBuilder, ygoDrawSim },
+    data: () => {
+        return {
+            cards: {
+                pairs: new Map(),
+                data: new Map()
+            },
+            price: {
+                activeCurrency: priceCurrencies[0],
+                currencies: priceCurrencies,
+                data: new Map()
+            },
+            ajax: {
+                namesLoaded: false,
+                pricesLoaded: false,
+                currentlyLoading: false
+            },
+            deck: {
+                name: "Unnamed",
+                parts: deckParts,
+                list: {
+                    main: [],
+                    extra: [],
+                    side: []
+                }
+            }
+        };
+    },
+    computed: {
+        shareLink() {
+            const currentUri = location.origin + location.pathname;
+            const deckUri = this.deckToUri();
+
+            return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
+        },
+        deckListAll() {
+            return [].concat(...objValues(this.deck.list));
         }
-      }
-    };
-  },
-  computed: {
-    shareLink() {
-      const currentUri = location.origin + location.pathname;
-      const deckUri = this.deckToUri();
-
-      return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
     },
-    deckListAll() {
-      return [].concat(...objValues(this.deck.list));
+    mounted() {
+        const uriQuery = location.search;
+
+        this.fetchNames();
+
+        if (uriQuery.includes("?d=")) {
+            //Load encoded uriDeck
+            this.deckFromUri(uriQuery.replace("?d=", ""));
+        } else if (uriQuery.includes("?u=")) {
+            //Load remote deck file
+            apiLoadRemoteDeck(uriQuery.replace("?u=", "").trim())
+                .then(text => {
+                    this.deck.list = convertFileToDeck(this.deck.parts, text);
+                })
+                .catch(err => {
+                    console.error(
+                        "Remote Deck could not be loaded:",
+                        err.statusText
+                    );
+                });
+        }
+    },
+    methods: {
+        fetchNames() {
+            this.ajax.namesLoaded = false;
+            this.ajax.currentlyLoading = true;
+
+            apiLoadNames(urls)
+                .then(result => {
+                    this.cards.data = result.data;
+                    this.cards.pairs = result.pairs;
+
+                    this.ajax.namesLoaded = true;
+                    this.ajax.currentlyLoading = false;
+
+                    console.log("LOADED NAMES", this.cards.data);
+                })
+                .catch(console.error);
+        },
+        fetchPrices() {
+            this.ajax.pricesLoaded = false;
+            this.ajax.currentlyLoading = true;
+
+            apiLoadPrices(
+                urls,
+                this.deckListAll,
+                this.cards.data,
+                this.price.data
+            )
+                .then(result => {
+                    if (result !== false) {
+                        this.price.data = result;
+                    }
+
+                    console.log("LOADED PRICES", this.price.data);
+
+                    if (this.price.data.size > 0) {
+                        this.ajax.pricesLoaded = true;
+                    }
+
+                    this.ajax.currentlyLoading = false;
+                })
+                .catch(console.error);
+        },
+        deckFromFile(file) {
+            const reader = new FileReader();
+
+            this.ajax.pricesLoaded = false;
+
+            reader.onload = e => {
+                this.deck.name = file.name.replace(".ydk", "");
+                this.deck.list = convertFileToDeck(
+                    this.deck.parts,
+                    e.target.result
+                );
+            };
+
+            if (file) {
+                reader.readAsText(file);
+            }
+        },
+        deckToFile() {
+            const fileData = convertDeckToFile(this.deck.parts, this.deck.list);
+            const file = new File([fileData], `${this.deck.name}.ydk`, {
+                type: "text/ydk"
+            });
+
+            return FileSaver.saveAs(file);
+        },
+        deckFromUri(uriDeck) {
+            const deckArray = uriDeckDecode(this.deck.parts, uriDeck);
+
+            this.deck.list = deckArray;
+        },
+        deckToUri() {
+            return uriDeckEncode(this.deck.list);
+        },
+        deckToText() {
+            return convertDeckToText(
+                this.deck.parts,
+                this.cards.data,
+                this.deck
+            );
+        },
+        deckCardAdd(deckpart, cardId) {
+            const activeSection = this.deck.list[deckpart.id];
+
+            if (
+                activeSection.length < deckpart.limit &&
+                activeSection.filter(
+                    activeSectionCardId => activeSectionCardId === cardId
+                ).length < 3
+            ) {
+                activeSection.push(cardId);
+                this.ajax.pricesLoaded = false;
+            }
+        },
+        deckCardRemove(deckpart, cardId) {
+            const activeSection = this.deck.list[deckpart.id];
+
+            if (activeSection.includes(cardId)) {
+                this.deck.list[deckpart.id] = arrRemoveItem(
+                    activeSection,
+                    cardId
+                );
+            }
+        },
+        fileOnUpload(e) {
+            const files = e.target.files || e.dataTransfer.files;
+
+            this.deckFromFile(files[0]);
+        },
+        copyShareText() {
+            clipboard.writeText(this.deckToText());
+        }
     }
-  },
-  mounted() {
-    const uriQuery = location.search;
-
-    this.fetchNames();
-
-    if (uriQuery.includes("?d=")) {
-      //Load encoded uriDeck
-      this.deckFromUri(uriQuery.replace("?d=", ""));
-    } else if (uriQuery.includes("?u=")) {
-      //Load remote deck file
-      apiLoadRemoteDeck(uriQuery.replace("?u=", "").trim())
-        .then(text => {
-          this.deck.list = convertFileToDeck(this.deck.parts, text);
-        })
-        .catch(err => {
-          console.error("Remote Deck could not be loaded:", err.statusText);
-        });
-    }
-  },
-  methods: {
-    fetchNames() {
-      this.ajax.namesLoaded = false;
-      this.ajax.currentlyLoading = true;
-
-      apiLoadNames(urls)
-        .then(result => {
-          this.cards.data = result.data;
-          this.cards.pairs = result.pairs;
-
-          this.ajax.namesLoaded = true;
-          this.ajax.currentlyLoading = false;
-
-          console.log("LOADED NAMES", this.cards.data);
-        })
-        .catch(console.error);
-    },
-    fetchPrices() {
-      this.ajax.pricesLoaded = false;
-      this.ajax.currentlyLoading = true;
-
-      apiLoadPrices(urls, this.deckListAll, this.cards.data, this.price.data)
-        .then(result => {
-          if (result !== false) {
-            this.price.data = result;
-          }
-
-          console.log("LOADED PRICES", this.price.data);
-
-          if (this.price.data.size > 0) {
-            this.ajax.pricesLoaded = true;
-          }
-
-          this.ajax.currentlyLoading = false;
-        })
-        .catch(console.error);
-    },
-    deckFromFile(file) {
-      const reader = new FileReader();
-
-      this.ajax.pricesLoaded = false;
-
-      reader.onload = e => {
-        this.deck.name = file.name.replace(".ydk", "");
-        this.deck.list = convertFileToDeck(this.deck.parts, e.target.result);
-      };
-
-      if (file) {
-        reader.readAsText(file);
-      }
-    },
-    deckToFile() {
-      const fileData = convertDeckToFile(this.deck.parts, this.deck.list);
-      const file = new File([fileData], `${this.deck.name}.ydk`, {
-        type: "text/ydk"
-      });
-
-      return FileSaver.saveAs(file);
-    },
-    deckFromUri(uriDeck) {
-      const deckArray = uriDeckDecode(this.deck.parts, uriDeck);
-
-      this.deck.list = deckArray;
-    },
-    deckToUri() {
-      return uriDeckEncode(this.deck.list);
-    },
-    deckToText() {
-      return convertDeckToText(this.deck.parts, this.cards.data, this.deck);
-    },
-    deckCardAdd(deckpart, cardId) {
-      const activeSection = this.deck.list[deckpart.id];
-
-      if (
-        activeSection.length < deckpart.limit &&
-        activeSection.filter(
-          activeSectionCardId => activeSectionCardId === cardId
-        ).length < 3
-      ) {
-        activeSection.push(cardId);
-        this.ajax.pricesLoaded = false;
-      }
-    },
-    deckCardRemove(deckpart, cardId) {
-      const activeSection = this.deck.list[deckpart.id];
-
-      if (activeSection.includes(cardId)) {
-        this.deck.list[deckpart.id] = arrRemoveItem(activeSection, cardId);
-      }
-    },
-    fileOnUpload(e) {
-      const files = e.target.files || e.dataTransfer.files;
-
-      this.deckFromFile(files[0]);
-    },
-    copyShareText() {
-      clipboard.writeText(this.deckToText());
-    }
-  }
 };
 </script>
 
