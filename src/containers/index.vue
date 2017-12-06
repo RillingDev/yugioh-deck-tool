@@ -48,11 +48,11 @@
                 <label>Price:</label>
                 <select
                     class="form-control form-deck-currency"
-                    v-model="price.activeCurrency"
+                    v-model="priceDb.activeCurrency"
                     title="Price Currency"
                 >
                     <option
-                        v-for="currency in price.currencies"
+                        v-for="currency in priceDb.currencies"
                         :key="currency.id"
                         :value="currency"
                     >{{ currency.name }}</option>
@@ -78,11 +78,11 @@
                     v-if="ajax.pricesLoaded"
                 >
                     <span>Total:</span>
-                    <ygo-price-view
+                    <!-- <ygo-price-view
                         :item="deckListAll"
                         :price-data="price.data"
                         :price-active-currency="price.activeCurrency"
-                    />
+                    /> -->
                 </div>
                 <div
                     class="deck-part"
@@ -92,12 +92,12 @@
                 >
                     <span>{{ deckPart.name }} Deck ({{ deck.list[deckPart.id].length }} Cards):</span>
                     <div v-if="deck.list[deckPart.id].length">
-                        <ygo-price-view
+                        <!-- <ygo-price-view
                             v-if="ajax.pricesLoaded"
                             :item="deck.list[deckPart.id]"
                             :price-data="price.data"
                             :price-active-currency="price.activeCurrency"
-                        />
+                        /> -->
                         <div class="deck-content">
                             <ygo-card
                                 v-for="(cardId, index) in deck.list[deckPart.id]"
@@ -106,13 +106,13 @@
                                 :card-name="cardDb.getName(cardId)"
                                 :on-right-click="() => deckCardRemove(deckPart, cardId)"
                             >
-                                <ygo-price-view
+                                <!-- <ygo-price-view
                                     slot="price"
                                     v-if="ajax.pricesLoaded"
                                     :item="cardId"
                                     :price-data="price.data"
                                     :price-active-currency="price.activeCurrency"
-                                />
+                                /> -->
                             </ygo-card>
                         </div>
                     </div>
@@ -145,6 +145,7 @@ import clipboard from "clipboard-polyfill";
 import { arrRemoveItem, objValues } from "lightdash";
 
 import CardDatabase from "../lib/classes/cardDatabase";
+import PriceDatabase from "../lib/classes/priceDatabase";
 
 import { uriDeckDecode, uriDeckEncode } from "../lib/uriDeck";
 import apiLoadCards from "../lib/apiLoadCards";
@@ -170,11 +171,7 @@ export default {
     data: () => {
         return {
             cardDb: new CardDatabase(),
-            price: {
-                activeCurrency: priceCurrencies[0],
-                currencies: priceCurrencies,
-                data: new Map()
-            },
+            priceDb: new PriceDatabase(),
             ajax: {
                 cardsLoaded: false,
                 pricesLoaded: false,

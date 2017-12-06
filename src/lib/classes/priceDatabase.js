@@ -48,13 +48,16 @@ const PRICE_CURRENCIES = [
 
 const PriceDatabase = class {
     constructor() {
-        this.PRICE_MODES = PRICE_MODES;
-        this.PRICE_CURRENCIES = PRICE_CURRENCIES;
+        this.modes = PRICE_MODES;
+        this.currencies = PRICE_CURRENCIES;
 
+        this.activeCurrency = this.currencies[0];
         this.prices = new Map();
+
+        console.log(this);
     }
     fetchPrices(cardIdArr) {}
     getPrice() {}
 };
 
-export default CardDatabase;
+export default PriceDatabase;
