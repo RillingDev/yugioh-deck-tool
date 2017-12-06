@@ -144,6 +144,8 @@ import FileSaver from "file-saver/FileSaver";
 import clipboard from "clipboard-polyfill";
 import { arrRemoveItem, objValues } from "lightdash";
 
+import CardDatabase from "../lib/classes/cardDatabase";
+
 import { uriDeckDecode, uriDeckEncode } from "../lib/uriDeck";
 import apiLoadCards from "../lib/apiLoadCards";
 import apiLoadPrices from "../lib/apiLoadPrices";
@@ -151,7 +153,6 @@ import apiLoadRemoteDeck from "../lib/apiLoadRemoteDeck";
 import convertFileToDeck from "../lib/convertFileToDeck";
 import convertDeckToFile from "../lib/convertDeckToFile";
 import convertDeckToText from "../lib/convertDeckToText";
-
 import deckParts from "../lib/data/deckParts";
 import priceCurrencies from "../lib/data/priceCurrencies";
 import getUrls from "../lib/data/urls";
@@ -168,7 +169,7 @@ export default {
     components: { ygoPriceView, ygoCard, ygoBuilder, ygoDrawSim },
     data: () => {
         return {
-            cardDb: null,
+            cardDb: new CardDatabase(),
             price: {
                 activeCurrency: priceCurrencies[0],
                 currencies: priceCurrencies,
@@ -230,7 +231,7 @@ export default {
 
             apiLoadCards(urls)
                 .then(result => {
-                    this.cardDb = result;
+                    this.cardDb = new CardDatabase(result);
 
                     this.ajax.cardsLoaded = true;
                     this.ajax.currentlyLoading = false;

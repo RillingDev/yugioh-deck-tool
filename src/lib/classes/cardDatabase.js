@@ -1,7 +1,7 @@
 import { forEachEntry, arrFrom } from "lightdash";
 
 const CardDatabase = class {
-    constructor(obj) {
+    constructor(obj = {}) {
         const nameCache = new Set();
 
         this.cards = new Map();
