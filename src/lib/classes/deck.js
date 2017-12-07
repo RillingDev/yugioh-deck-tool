@@ -7,7 +7,7 @@ import {
 } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 
-const EXTRA_DECK_TYPE_REGEX = /Synchro|XYZ|Fusion/;
+const EXTRA_DECK_TYPE_REGEX = /Fusion|Synchro|XYZ|Link/;
 
 const DECKPARTS = [
     {

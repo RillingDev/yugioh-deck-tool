@@ -8,6 +8,20 @@
             title="Search"
             placeholder="Search"
         >
+        <div class="form-group">
+            <label>Sort:</label>
+            <select
+                class="form-control"
+                v-model="sort.active"
+                title="Active Sorting"
+            >
+                <option
+                    v-for="(mode, index) in sort.modes"
+                    :key="mode.name"
+                    :value="index"
+                >{{ mode.name }}</option>
+            </select>
+        </div>
         <ul
             class="builder-list"
             v-if="pairsFiltered.length"
@@ -21,7 +35,7 @@
                     class="builder-card"
                     :data-name="pair[1]"
                 >
-                    <div class="builder-card-name">{{ pair[1] }}</div>
+                    <div class="builder-card-name">{{ pair[1].name }}</div>
                     <div class="builder-card-action">
                         <span
                             class="fa fa-plus builder-add"
@@ -63,20 +77,65 @@ export default {
     },
     data: () => {
         return {
-            filter: ""
+            filter: "",
+            sort: {
+                active: 0,
+                modes: [
+                    {
+                        name: "Alphabetical (A-Z)",
+                        fn: (a, b) => a.name.localeCompare(b.name)
+                    },
+                    {
+                        name: "Alphabetical (Z-A)",
+                        fn: (a, b) => b.name.localeCompare(a.name)
+                    },
+
+                    {
+                        name: "ATK",
+                        fn: (a, b) => Number(b.atk) - Number(a.atk)
+                    },
+                    {
+                        name: "DEF",
+                        fn: (a, b) => Number(b.def) - Number(a.def)
+                    },
+                    {
+                        name: "Level",
+                        fn: (a, b) => Number(b.level) - Number(a.level)
+                    },
+                    {
+                        name: "Upvotes",
+                        fn: (a, b) => Number(b.rating[0]) - Number(a.rating[0])
+                    },
+                    {
+                        name: "Downvotes",
+                        fn: (a, b) => Number(b.rating[1]) - Number(a.rating[1])
+                    },
+                    {
+                        name: "Views",
+                        fn: (a, b) => Number(b.views[0]) - Number(a.views[1])
+                    },
+                    {
+                        name: "Newest",
+                        fn: (a, b) =>
+                            new Date(b.date).getTime() -
+                            new Date(a.date).getTime()
+                    }
+                ]
+            }
         };
     },
     computed: {
         pairs() {
-            const unique = this.cardDb.getAllUnique(true);
-
-            return arrFrom(unique).map(entry => [entry[0], entry[1].name]);
+            return arrFrom(this.cardDb.getAllUnique().entries());
         },
         pairsFiltered() {
+            const filterFn = pair =>
+                pair[1].name.toLowerCase().includes(this.filter.toLowerCase());
+            const sortFn = this.sort.modes[this.sort.active].fn;
+
             return this.pairs
-                .filter(pair =>
-                    pair[1].toLowerCase().includes(this.filter.toLowerCase())
-                )
+                .filter(filterFn)
+                .sort((a, b) => sortFn(a[1], b[1]))
                 .slice(0, 100);
         }
     }

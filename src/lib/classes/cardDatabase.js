@@ -37,16 +37,8 @@ const CardDatabase = class {
     getAll() {
         return this.cards;
     }
-    getAllUnique(sort = false) {
-        if (sort) {
-            return new Map(
-                arrFrom(this.unique.entries()).sort((a, b) =>
-                    a[1].name.localeCompare(b[1].name)
-                )
-            );
-        } else {
-            return this.unique;
-        }
+    getAllUnique() {
+        return this.unique;
     }
 };
 
