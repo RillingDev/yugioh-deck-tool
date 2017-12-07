@@ -102,7 +102,7 @@
                                 :key="`${cardId}_${cardIndex}`"
                                 :card-id="cardId"
                                 :card-name="cardDb.getName(cardId)"
-                                :on-right-click="() => deck.cardRemove(deckPart, cardId)"
+                                :on-right-click="() => deckCardRemove(deckPart, cardId)"
                             >
                                 <ygo-price-view
                                     slot="price"
@@ -131,7 +131,7 @@
                 v-if="ajax.cardsLoaded"
                 :card-db="cardDb"
                 :deck-parts="deck.parts"
-                :deck-card-add="(deckPart, cardId)=> deck.cardAdd(deckPart, cardId)"
+                :deck-card-add="(deckPart,cardId) => deckCardAdd(deckPart,cardId)"
             />
         </div>
     </div>
@@ -225,6 +225,13 @@ export default {
         },
         deckToFile() {
             FileSaver.saveAs(this.deck.toFile());
+        },
+        deckCardAdd(deckPart, cardId) {
+            this.deck.cardAdd(deckPart, cardId);
+            this.ajax.pricesLoaded = false;
+        },
+        deckCardRemove(deckPart, cardId) {
+            this.deck.cardRemove(deckPart, cardId);
         },
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;
