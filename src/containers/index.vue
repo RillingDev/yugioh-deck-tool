@@ -155,6 +155,7 @@ import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
 
 const urls = getUrls();
+const stderr = console.error;
 
 export default {
     name: "Index",
@@ -191,7 +192,7 @@ export default {
             //Load remote deck file
             Deck.fromRemoteFile(uriQuery.replace("?d=", ""))
                 .then(deck => (this.deck = deck))
-                .catch(console.error);
+                .catch(stderr);
         }
     },
     methods: {
@@ -208,7 +209,7 @@ export default {
 
                     console.log("LOADED Cards", this.cardDb);
                 })
-                .catch(console.error);
+                .catch(stderr);
         },
         fetchPrices() {
             this.ajax.pricesLoaded = false;
@@ -221,13 +222,13 @@ export default {
                     this.ajax.pricesLoaded = true;
                     this.ajax.currentlyLoading = false;
                 })
-                .catch(console.error);
+                .catch(stderr);
         },
         deckToFile() {
             FileSaver.saveAs(this.deck.toFile());
         },
         deckCardAdd(deckPart, cardId) {
-            this.deck.cardAdd(deckPart, cardId);
+            this.deck.cardAdd(deckPart, cardId, this.cardDb);
             this.ajax.pricesLoaded = false;
         },
         deckCardRemove(deckPart, cardId) {
@@ -238,7 +239,7 @@ export default {
 
             Deck.fromFile(files[0])
                 .then(deck => (this.deck = deck))
-                .catch(console.error);
+                .catch(stderr);
         },
         copyShareText() {
             clipboard.writeText(this.deck.toText(this.cardDb));

@@ -7,24 +7,29 @@ import {
 } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 
+const EXTRA_DECK_TYPE_REGEX = /Synchro|XYZ|Fusion/;
+
 const DECKPARTS = [
     {
         id: "main",
         name: "Main",
         indicator: "#main",
-        limit: 60
+        limit: 60,
+        check: card => !EXTRA_DECK_TYPE_REGEX.test(card.type)
     },
     {
         id: "extra",
         name: "Extra",
         indicator: "#extra",
-        limit: 15
+        limit: 15,
+        check: card => EXTRA_DECK_TYPE_REGEX.test(card.type)
     },
     {
         id: "side",
         name: "Side",
         indicator: "!side",
-        limit: 15
+        limit: 15,
+        check: () => true
     }
 ];
 
@@ -128,10 +133,11 @@ const Deck = class {
     toText(cardDb) {
         return listToText(this.getList(), cardDb);
     }
-    cardAdd(deckPart, cardId) {
+    cardAdd(deckPart, cardId, cardDb) {
         const activeSection = this[deckPart.id];
 
         if (
+            deckPart.check(cardDb.get(cardId)) &&
             activeSection.length < deckPart.limit &&
             activeSection.filter(
                 activeSectionCardId => activeSectionCardId === cardId
