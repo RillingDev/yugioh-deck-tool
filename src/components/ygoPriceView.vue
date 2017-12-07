@@ -2,22 +2,21 @@
     <div
         class="price"
         :class="{'price--group' : isGroup}"
-        v-if="priceData.size>0"
+        v-if="priceDb.prices.size>0"
     >
         <span
             class="price-mode"
-            v-for="priceMode in priceModes"
+            v-for="(priceMode, index) in priceDb.modes"
             :key="priceMode.id"
             :class="'price-mode-'+priceMode.id"
         >
-            {{ isGroup ? priceForItems(priceMode) : priceForItem(priceMode) }}
+            {{ priceDb.formatPrice(priceValues[index]) }}
         </span>
     </div>
 </template>
 
 <script>
-import { arrCompact, isString, isDefined } from "lightdash";
-import priceModes from "../lib/data/priceModes";
+import { isString } from "lightdash";
 
 export default {
     props: {
@@ -26,64 +25,22 @@ export default {
             required: true,
             default: () => ""
         },
-        priceData: {
-            type: Map,
-            required: true,
-            default: () => new Map()
-        },
-        priceActiveCurrency: {
+        priceDb: {
             type: Object,
             required: true,
             default: () => {
-                return {
-                    id: "null",
-                    name: "null",
-                    label: "null",
-                    val: 1
-                };
+                return {};
             }
         }
-    },
-    data: () => {
-        return {
-            priceModes
-        };
     },
     computed: {
         isGroup() {
             return !isString(this.item);
-        }
-    },
-    methods: {
-        priceForItem(priceMode) {
-            const val = this.getPriceOfMode(priceMode, this.item);
-
-            return this.formatPrice(val);
         },
-        priceForItems(priceMode) {
-            if (this.item.length > 0) {
-                const val = this.item
-                    .map(cardId => this.getPriceOfMode(priceMode, cardId))
-                    .reduce((a, b) => a + b);
-
-                return this.formatPrice(val);
-            } else {
-                return this.formatPrice(0);
-            }
-        },
-        getPriceOfMode(priceMode, cardId) {
-            if (this.priceData.has(cardId)) {
-                const val = this.priceData.get(cardId)[priceMode.id];
-
-                return isDefined(val) ? val : 0;
-            } else {
-                return 0;
-            }
-        },
-        formatPrice(val) {
-            const currency = this.priceActiveCurrency;
-
-            return (val * currency.val).toFixed(2) + currency.label;
+        priceValues() {
+            return this.isGroup
+                ? this.priceDb.getPriceSelection(this.item)
+                : this.priceDb.getPrice(this.item);
         }
     }
 };

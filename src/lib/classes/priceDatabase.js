@@ -53,11 +53,44 @@ const PriceDatabase = class {
 
         this.activeCurrency = this.currencies[0];
         this.prices = new Map();
-
-        console.log(this);
     }
-    fetchPrices(cardIdArr) {}
-    getPrice() {}
+    getCardsWithoutData(cardIdArr) {
+        return cardIdArr.filter(cardId => !this.hasPrice(cardId));
+    }
+    setPrice(cardId, val) {
+        this.prices.set(cardId, {
+            low: val.low,
+            average: val.average,
+            high: val.high
+        });
+    }
+    hasPrice(cardId) {
+        return this.prices.has(cardId);
+    }
+    getPrice(cardId) {
+        if (this.hasPrice(cardId)) {
+            const item = this.prices.get(cardId);
+
+            return [item.low, item.average, item.high];
+        } else {
+            return [0, 0, 0];
+        }
+    }
+    getPriceSelection(cardIdArr) {
+        const items = cardIdArr.map(cardId => this.getPrice(cardId));
+
+        return items.reduce((accumulator, val) => [
+            accumulator[0] + val[0],
+            accumulator[1] + val[1],
+            accumulator[2] + val[2]
+        ]);
+    }
+    formatPrice(val) {
+        return (
+            (val * this.activeCurrency.val).toFixed(2) +
+            this.activeCurrency.label
+        );
+    }
 };
 
 export default PriceDatabase;

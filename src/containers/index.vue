@@ -78,11 +78,10 @@
                     v-if="ajax.pricesLoaded"
                 >
                     <span>Total:</span>
-                    <!-- <ygo-price-view
+                    <ygo-price-view
                         :item="deckListAll"
-                        :price-data="price.data"
-                        :price-active-currency="price.activeCurrency"
-                    /> -->
+                        :price-db="priceDb"
+                    />
                 </div>
                 <div
                     class="deck-part"
@@ -92,12 +91,11 @@
                 >
                     <span>{{ deckPart.name }} Deck ({{ deck.list[deckPart.id].length }} Cards):</span>
                     <div v-if="deck.list[deckPart.id].length">
-                        <!-- <ygo-price-view
+                        <ygo-price-view
                             v-if="ajax.pricesLoaded"
                             :item="deck.list[deckPart.id]"
-                            :price-data="price.data"
-                            :price-active-currency="price.activeCurrency"
-                        /> -->
+                            :price-db="priceDb"
+                        />
                         <div class="deck-content">
                             <ygo-card
                                 v-for="(cardId, index) in deck.list[deckPart.id]"
@@ -106,13 +104,12 @@
                                 :card-name="cardDb.getName(cardId)"
                                 :on-right-click="() => deckCardRemove(deckPart, cardId)"
                             >
-                                <!-- <ygo-price-view
+                                <ygo-price-view
                                     slot="price"
                                     v-if="ajax.pricesLoaded"
                                     :item="cardId"
-                                    :price-data="price.data"
-                                    :price-active-currency="price.activeCurrency"
-                                /> -->
+                                    :price-db="priceDb"
+                                />
                             </ygo-card>
                         </div>
                     </div>
@@ -241,26 +238,14 @@ export default {
             this.ajax.pricesLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            /*  apiLoadPrices(
-                urls,
-                this.deckListAll,
-                this.cards.data,
-                this.price.data
-            )
-                .then(result => {
-                    if (result !== false) {
-                        this.price.data = result;
-                    }
+            apiLoadPrices(urls, this.deckListAll, this.cardDb, this.priceDb)
+                .then(() => {
+                    console.log("LOADED PRICES", this.priceDb);
 
-                    console.log("LOADED PRICES", this.price.data);
-
-                    if (this.price.data.size > 0) {
-                        this.ajax.pricesLoaded = true;
-                    }
-
+                    this.ajax.pricesLoaded = true;
                     this.ajax.currentlyLoading = false;
                 })
-                .catch(console.error); */
+                .catch(console.error);
         },
         deckFromFile(file) {
             const reader = new FileReader();
