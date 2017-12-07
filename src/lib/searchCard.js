@@ -4,6 +4,13 @@ const searchCard = (cardArr, filter, sortFn) => {
 
         return name.toLowerCase().includes(filter.name.toLowerCase());
     };
+    const filterType = pair => {
+        if (filter.type.active === "Any") {
+            return true;
+        } else {
+            return pair[1][3] === filter.type.active;
+        }
+    };
     const filterDuplicates = pair => {
         const name = pair[1];
 
@@ -27,6 +34,7 @@ const searchCard = (cardArr, filter, sortFn) => {
      */
     return cardArr
         .filter(filterText)
+        .filter(filterType)
         .sort((a, b) => sortFn(a[1], b[1]))
         .map(pair => [pair[0], pair[1][0]])
         .filter(filterDuplicates)

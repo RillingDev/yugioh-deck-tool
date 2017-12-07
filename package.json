@@ -7,18 +7,17 @@
         "start": "npm-run-all lint build",
         "build": "npm run dev",
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-        "dist": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+        "dist-mock":
+            "cross-env NODE_ENV=development webpack --progress --hide-modules",
+        "dist":
+            "cross-env NODE_ENV=production webpack --progress --hide-modules",
         "lint": "eslint src/lib/ src/**/*.vue"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/FelixRilling/ygodeckprice3.git"
     },
-    "keywords": [
-        "yugioh",
-        "deck",
-        "app"
-    ],
+    "keywords": ["yugioh", "deck", "app"],
     "author": "FelixRilling",
     "license": "MIT",
     "bugs": {

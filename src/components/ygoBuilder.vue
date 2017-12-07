@@ -18,9 +18,9 @@
                 title="Types"
             >
                 <option
-                    v-for="(option, index) in filter.type.options"
+                    v-for="option in filter.type.options"
                     :key="option"
-                    :value="index"
+                    :value="option"
                 >{{ option }}</option>
             </select>
         </div>
@@ -94,7 +94,7 @@ export default {
             filter: {
                 name: "",
                 type: {
-                    active: 0,
+                    active: "Any",
                     options: [
                         "Any",
                         "Normal Monster",
