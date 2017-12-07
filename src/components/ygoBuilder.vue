@@ -1,14 +1,16 @@
 <template>
     <div class="builder">
         <span>Showing {{ pairsFiltered.length }} of {{ pairsArr.length }} Cards</span>
-        <input
-            class="form-control builder-search"
-            type="search"
-            v-model="filter"
-            title="Search"
-            placeholder="Search"
-        >
         <div class="form-group">
+            <input
+                class="form-control builder-search"
+                type="search"
+                v-model="filter"
+                title="Search"
+                placeholder="Search"
+            >
+        </div>
+        <div class="form-group builder-sort">
             <label>Sort:</label>
             <select
                 class="form-control"
@@ -53,8 +55,6 @@
 </template>
 
 <script>
-import { arrFrom } from "lightdash";
-
 export default {
     props: {
         pairsArr: {
@@ -111,6 +111,10 @@ export default {
                     {
                         name: "Views",
                         fn: (a, b) => Number(b[10]) - Number(a[10])
+                    },
+                    {
+                        name: "Latest",
+                        fn: (a, b) => Number(b[13]) - Number(a[13])
                     }
                 ]
             }
@@ -132,13 +136,12 @@ export default {
                     return true;
                 }
             };
-
             const nameCache = new Set();
 
             return this.pairsArr
                 .filter(filterFnPrimary) // Filter Text search
                 .sort((a, b) => sortFn(a[1], b[1])) // Apply sorting
-                .map(entry => [entry[0], entry[1][0]]) // Drop everything but name and id
+                .map(entry => [entry[0], entry[1][0]]) // Drop everything but id and name
                 .filter(filterFnSecondary) // Drop duplicates
                 .slice(0, 100); // Take 100 first results
         }
@@ -150,10 +153,6 @@ export default {
 @import "node_modules/bootstrap/scss/functions";
 @import "../styles/variables";
 @import "../styles/variables.app";
-
-.builder-search {
-    margin-bottom: 1rem;
-}
 
 .builder-list {
     max-height: 60vh;
@@ -212,5 +211,15 @@ export default {
 
 .builder-card-name {
     width: calc(100% - 108px);
+}
+
+.builder-sort {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    label {
+        padding-right: 0.5rem;
+        margin-bottom: 0;
+    }
 }
 </style>
