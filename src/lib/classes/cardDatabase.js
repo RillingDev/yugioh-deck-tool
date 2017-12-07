@@ -20,11 +20,14 @@ const CardDatabase = class {
             }
         });
     }
+    has(cardId) {
+        return this.cards.has(cardId);
+    }
     get(cardId) {
         return this.cards.get(cardId);
     }
     getName(cardId) {
-        return this.cards.has(cardId) ? this.cards.get(cardId).name : "unnamed";
+        return this.has(cardId) ? this.get(cardId).name : `[${cardId}]`;
     }
     getAll() {
         return this.cards;

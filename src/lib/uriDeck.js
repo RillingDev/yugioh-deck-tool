@@ -8,7 +8,7 @@ const optimizerDelimiters = {
 };
 
 const createOptimizeList = deckList =>
-    objValues(deckList)
+    deckList
         .map(deckListPart =>
             arrFrom(arrCount(deckListPart))
                 .map(entry => {
@@ -52,15 +52,6 @@ const uriDeckEncode = deckList => {
         : "";
 };
 
-const uriDeckDecode = function(deckParts, deckUri) {
-    const deckArray = loadOptimizedList(decompress(deckUri));
-    const deckList = {};
-
-    deckParts.forEach((deckPart, index) => {
-        deckList[deckPart.id] = deckArray[index];
-    });
-
-    return deckList;
-};
+const uriDeckDecode = deckUri => loadOptimizedList(decompress(deckUri));
 
 export { uriDeckEncode, uriDeckDecode };

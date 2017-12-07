@@ -17,7 +17,6 @@
                     class="form-control form-deck-name"
                     type="text"
                     v-model="deck.name"
-                    @input="deckUpdate()"
                     title="Deck Title"
                     placeholder="Deck Title"
                 >
@@ -79,26 +78,27 @@
                 >
                     <span>Total:</span>
                     <ygo-price-view
-                        :item="deckListAll"
+                        :item="deck.listAll"
                         :price-db="priceDb"
                     />
                 </div>
                 <div
                     class="deck-part"
-                    v-for="deckPart in deck.parts"
+                    v-for="(deckPart,index) in deck.parts"
+                    v-if="deck.list[index].length"
                     :key="deckPart.id"
                     :class="`deck-part-${deckPart.id}`"
                 >
-                    <span>{{ deckPart.name }} Deck ({{ deck.list[deckPart.id].length }} Cards):</span>
-                    <div v-if="deck.list[deckPart.id].length">
+                    <span>{{ deckPart.name }} Deck ({{ deck.list[index].length }} Cards):</span>
+                    <div>
                         <ygo-price-view
                             v-if="ajax.pricesLoaded"
-                            :item="deck.list[deckPart.id]"
+                            :item="deck.list[index]"
                             :price-db="priceDb"
                         />
                         <div class="deck-content">
                             <ygo-card
-                                v-for="(cardId, index) in deck.list[deckPart.id]"
+                                v-for="(cardId, index) in deck.list[index]"
                                 :key="`${cardId}_${index}`"
                                 :card-id="cardId"
                                 :card-name="cardDb.getName(cardId)"
@@ -121,8 +121,8 @@
             <div class="app-builder-intro">
                 <h2>Deckbuilder:</h2>
                 <ygo-draw-sim
-                    v-if="deck.list.main.length"
-                    :deck-list-main="deck.list.main"
+                    v-if="deck.list[0] && deck.list[0].length"
+                    :deck-list-main="deck.list[0]"
                     :card-db="cardDb"
                 />
             </div>
@@ -139,19 +139,15 @@
 <script>
 import FileSaver from "file-saver/FileSaver";
 import clipboard from "clipboard-polyfill";
-import { arrRemoveItem, objValues } from "lightdash";
+import { arrRemoveItem } from "lightdash";
 
 import CardDatabase from "../lib/classes/cardDatabase";
 import PriceDatabase from "../lib/classes/priceDatabase";
+import Deck from "../lib/classes/deck";
 
 import { uriDeckDecode, uriDeckEncode } from "../lib/uriDeck";
 import apiLoadCards from "../lib/apiLoadCards";
 import apiLoadPrices from "../lib/apiLoadPrices";
-import apiLoadRemoteDeck from "../lib/apiLoadRemoteDeck";
-import convertFileToDeck from "../lib/convertFileToDeck";
-import convertDeckToFile from "../lib/convertDeckToFile";
-import convertDeckToText from "../lib/convertDeckToText";
-import deckParts from "../lib/data/deckParts";
 import getUrls from "../lib/data/urls";
 
 import ygoPriceView from "../components/ygoPriceView.vue";
@@ -168,31 +164,20 @@ export default {
         return {
             cardDb: new CardDatabase(),
             priceDb: new PriceDatabase(),
+            deck: new Deck(),
             ajax: {
                 cardsLoaded: false,
                 pricesLoaded: false,
                 currentlyLoading: false
-            },
-            deck: {
-                name: "Unnamed",
-                parts: deckParts,
-                list: {
-                    main: [],
-                    extra: [],
-                    side: []
-                }
             }
         };
     },
     computed: {
         shareLink() {
             const currentUri = location.origin + location.pathname;
-            const deckUri = this.deckToUri();
+            const deckUri = this.deck.toUri();
 
             return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
-        },
-        deckListAll() {
-            return [].concat(...objValues(this.deck.list));
         }
     },
     mounted() {
@@ -202,19 +187,12 @@ export default {
 
         if (uriQuery.includes("?d=")) {
             //Load encoded uriDeck
-            this.deckFromUri(uriQuery.replace("?d=", ""));
+            this.deck = Deck.fromUri(uriQuery.replace("?d=", ""));
         } else if (uriQuery.includes("?u=")) {
             //Load remote deck file
-            apiLoadRemoteDeck(uriQuery.replace("?u=", "").trim())
-                .then(text => {
-                    this.deck.list = convertFileToDeck(this.deck.parts, text);
-                })
-                .catch(err => {
-                    console.error(
-                        "Remote Deck could not be loaded:",
-                        err.statusText
-                    );
-                });
+            Deck.fromRemoteFile(uriQuery.replace("?d=", ""))
+                .then(deck => (this.deck = deck))
+                .catch(console.error);
         }
     },
     methods: {
@@ -237,7 +215,7 @@ export default {
             this.ajax.pricesLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadPrices(urls, this.deckListAll, this.cardDb, this.priceDb)
+            apiLoadPrices(urls, this.deck.listAll, this.cardDb, this.priceDb)
                 .then(() => {
                     console.log("LOADED PRICES", this.priceDb);
 
@@ -246,48 +224,11 @@ export default {
                 })
                 .catch(console.error);
         },
-        deckFromFile(file) {
-            const reader = new FileReader();
-
-            this.ajax.pricesLoaded = false;
-
-            reader.onload = e => {
-                this.deck.name = file.name.replace(".ydk", "");
-                this.deck.list = convertFileToDeck(
-                    this.deck.parts,
-                    e.target.result
-                );
-            };
-
-            if (file) {
-                reader.readAsText(file);
-            }
-        },
         deckToFile() {
-            const fileData = convertDeckToFile(this.deck.parts, this.deck.list);
-            const file = new File([fileData], `${this.deck.name}.ydk`, {
-                type: "text/ydk"
-            });
-
-            return FileSaver.saveAs(file);
-        },
-        deckFromUri(uriDeck) {
-            const deckArray = uriDeckDecode(this.deck.parts, uriDeck);
-
-            this.deck.list = deckArray;
-        },
-        deckToUri() {
-            return uriDeckEncode(this.deck.list);
-        },
-        deckToText() {
-            return convertDeckToText(
-                this.deck.parts,
-                this.cards.data,
-                this.deck
-            );
+            FileSaver.saveAs(this.deck.toFile());
         },
         deckCardAdd(deckpart, cardId) {
-            const activeSection = this.deck.list[deckpart.id];
+            /*             const activeSection = this.deck.list[deckpart.id];
 
             if (
                 activeSection.length < deckpart.limit &&
@@ -297,25 +238,27 @@ export default {
             ) {
                 activeSection.push(cardId);
                 this.ajax.pricesLoaded = false;
-            }
+            } */
         },
         deckCardRemove(deckpart, cardId) {
-            const activeSection = this.deck.list[deckpart.id];
+            /*             const activeSection = this.deck.list[deckpart.id];
 
             if (activeSection.includes(cardId)) {
                 this.deck.list[deckpart.id] = arrRemoveItem(
                     activeSection,
                     cardId
                 );
-            }
+            } */
         },
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;
 
-            this.deckFromFile(files[0]);
+            Deck.fromFile(files[0])
+                .then(deck => (this.deck = deck))
+                .catch(console.error);
         },
         copyShareText() {
-            clipboard.writeText(this.deckToText());
+            clipboard.writeText(this.deck.toText(this.cardDb));
         }
     }
 };
