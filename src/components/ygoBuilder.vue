@@ -5,12 +5,26 @@
             <input
                 class="form-control builder-search"
                 type="search"
-                v-model="filter"
+                v-model="filter.name"
                 title="Search"
                 placeholder="Search"
             >
         </div>
-        <div class="form-group builder-sort">
+        <div class="form-group builder-select">
+            <label>Type:</label>
+            <select
+                class="form-control"
+                v-model="filter.type.active"
+                title="Types"
+            >
+                <option
+                    v-for="(option, index) in filter.type.options"
+                    :key="option"
+                    :value="index"
+                >{{ option }}</option>
+            </select>
+        </div>
+        <div class="form-group builder-select">
             <label>Sort:</label>
             <select
                 class="form-control"
@@ -18,10 +32,10 @@
                 title="Active Sorting"
             >
                 <option
-                    v-for="(mode, index) in sort.modes"
-                    :key="mode.name"
+                    v-for="(option, index) in sort.options"
+                    :key="option.name"
                     :value="index"
-                >{{ mode.name }}</option>
+                >{{ option.name }}</option>
             </select>
         </div>
         <ul
@@ -55,6 +69,8 @@
 </template>
 
 <script>
+import searchCard from "../lib/searchCard";
+
 export default {
     props: {
         pairsArr: {
@@ -75,10 +91,36 @@ export default {
     },
     data: () => {
         return {
-            filter: "",
+            filter: {
+                name: "",
+                type: {
+                    active: 0,
+                    options: [
+                        "Any",
+                        "Normal Monster",
+                        "Effect Monster",
+                        "Toon Monster",
+                        "Fusion Monster",
+                        "Ritual Monster",
+                        "Ritual Effect Monster",
+                        "Synchro Monster",
+                        "Synchro Tuner Monster",
+                        "Synchro Pendulum Effect Monster",
+                        "XYZ Monster",
+                        "XYZ Pendulum Effect Monster",
+                        "Pendulum Normal Monster",
+                        "Pendulum Effect Monster",
+                        "Pendulum Tuner Effect Monster",
+                        "Pendulum Effect Fusion Monster",
+                        "Link Monster",
+                        "Spell Card",
+                        "Trap Card"
+                    ]
+                }
+            },
             sort: {
                 active: 0,
-                modes: [
+                options: [
                     {
                         name: "Alphabetical (A-Z)",
                         fn: (a, b) => a[0].localeCompare(b[0])
@@ -122,28 +164,9 @@ export default {
     },
     computed: {
         pairsFiltered() {
-            const sortFn = this.sort.modes[this.sort.active].fn;
-            const filterFnPrimary = entry =>
-                entry[1][0].toLowerCase().includes(this.filter.toLowerCase());
-            const filterFnSecondary = entry => {
-                const name = entry[1];
+            const sortFn = this.sort.options[this.sort.active].fn;
 
-                if (nameCache.has(name)) {
-                    return false;
-                } else {
-                    nameCache.add(name);
-
-                    return true;
-                }
-            };
-            const nameCache = new Set();
-
-            return this.pairsArr
-                .filter(filterFnPrimary) // Filter Text search
-                .sort((a, b) => sortFn(a[1], b[1])) // Apply sorting
-                .map(entry => [entry[0], entry[1][0]]) // Drop everything but id and name
-                .filter(filterFnSecondary) // Drop duplicates
-                .slice(0, 100); // Take 100 first results
+            return searchCard(this.pairsArr, this.filter, sortFn);
         }
     }
 };
@@ -213,7 +236,7 @@ export default {
     width: calc(100% - 108px);
 }
 
-.builder-sort {
+.builder-select {
     display: flex;
     justify-content: space-between;
     align-items: center;
