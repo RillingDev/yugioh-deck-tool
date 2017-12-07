@@ -237,9 +237,11 @@ export default {
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;
 
-            Deck.fromFile(files[0])
-                .then(deck => (this.deck = deck))
-                .catch(stderr);
+            if (files.length > 0) {
+                Deck.fromFile(files[0])
+                    .then(deck => (this.deck = deck))
+                    .catch(stderr);
+            }
         },
         copyShareText() {
             clipboard.writeText(this.deck.toText(this.cardDb));

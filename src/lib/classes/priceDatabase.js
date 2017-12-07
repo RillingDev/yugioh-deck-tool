@@ -1,3 +1,5 @@
+import { isDefined } from "lightdash";
+
 const PRICE_MODES = [
     {
         id: "low",
@@ -58,11 +60,15 @@ const PriceDatabase = class {
         return cardIdArr.filter(cardId => !this.has(cardId));
     }
     set(cardId, val) {
-        this.prices.set(cardId, {
-            low: val.low,
-            average: val.average,
-            high: val.high
-        });
+        if (isDefined(val.low)) {
+            return this.prices.set(cardId, {
+                low: val.low,
+                average: val.average,
+                high: val.high
+            });
+        } else {
+            return false;
+        }
     }
     has(cardId) {
         return this.prices.has(cardId);

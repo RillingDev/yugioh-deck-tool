@@ -84,7 +84,7 @@ const Deck = class {
     static fromFile(file) {
         const reader = new FileReader();
 
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             reader.onload = e => {
                 const name = file.name.replace(".ydk", "");
                 const list = fileToList(e.target.result);

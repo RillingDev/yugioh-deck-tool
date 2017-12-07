@@ -244,5 +244,8 @@ export default {
         padding-right: 0.5rem;
         margin-bottom: 0;
     }
+    select {
+        max-width: 85%;
+    }
 }
 </style>
