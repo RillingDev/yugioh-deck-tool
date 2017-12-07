@@ -68,6 +68,7 @@
                 </button>
             </div>
         </div>
+
         <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
@@ -78,30 +79,30 @@
                 >
                     <span>Total:</span>
                     <ygo-price-view
-                        :item="deck.listAll"
+                        :item="deck.all"
                         :price-db="priceDb"
                     />
                 </div>
                 <div
                     class="deck-part"
-                    v-for="(deckPart,index) in deck.parts"
+                    v-for="deckPart in deck.parts"
                     :key="deckPart.id"
                     :class="`deck-part-${deckPart.id}`"
                 >
-                    <span>{{ deckPart.name }} Deck ({{ deck.list[index].length }} Cards):</span>
-                    <div v-if="deck.list[index].length">
+                    <span>{{ deckPart.name }} Deck ({{ deck[deckPart.id].length }} Cards):</span>
+                    <div v-if="deck[deckPart.id].length">
                         <ygo-price-view
                             v-if="ajax.pricesLoaded"
-                            :item="deck.list[index]"
+                            :item="deck[deckPart.id]"
                             :price-db="priceDb"
                         />
                         <div class="deck-content">
                             <ygo-card
-                                v-for="(cardId, index) in deck.list[index]"
-                                :key="`${cardId}_${index}`"
+                                v-for="(cardId, cardIndex) in deck[deckPart.id]"
+                                :key="`${cardId}_${cardIndex}`"
                                 :card-id="cardId"
                                 :card-name="cardDb.getName(cardId)"
-                                :on-right-click="() => deckCardRemove(deckPart, cardId)"
+                                :on-right-click="() => deck.cardRemove(deckPart, cardId)"
                             >
                                 <ygo-price-view
                                     slot="price"
@@ -115,13 +116,14 @@
                 </div>
             </div>
         </div>
+
         <!-- app-builder -->
         <div class="app-section app-builder">
             <div class="app-builder-intro">
                 <h2>Deckbuilder:</h2>
                 <ygo-draw-sim
-                    v-if="deck.list[0] && deck.list[0].length"
-                    :deck-list-main="deck.list[0]"
+                    v-if="deck.main.length"
+                    :deck-list-main="deck.main"
                     :card-db="cardDb"
                 />
             </div>
@@ -129,7 +131,7 @@
                 v-if="ajax.cardsLoaded"
                 :card-db="cardDb"
                 :deck-parts="deck.parts"
-                :deck-card-add="deckCardAdd"
+                :deck-card-add="(deckPart, cardId)=> deck.cardAdd(deckPart, cardId)"
             />
         </div>
     </div>
@@ -138,13 +140,11 @@
 <script>
 import FileSaver from "file-saver/FileSaver";
 import clipboard from "clipboard-polyfill";
-import { arrRemoveItem } from "lightdash";
 
 import CardDatabase from "../lib/classes/cardDatabase";
 import PriceDatabase from "../lib/classes/priceDatabase";
 import Deck from "../lib/classes/deck";
 
-import { uriDeckDecode, uriDeckEncode } from "../lib/uriDeck";
 import apiLoadCards from "../lib/apiLoadCards";
 import apiLoadPrices from "../lib/apiLoadPrices";
 import getUrls from "../lib/data/urls";
@@ -214,7 +214,7 @@ export default {
             this.ajax.pricesLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadPrices(urls, this.deck.listAll, this.cardDb, this.priceDb)
+            apiLoadPrices(urls, this.deck.all, this.cardDb, this.priceDb)
                 .then(() => {
                     console.log("LOADED PRICES", this.priceDb);
 
@@ -225,29 +225,6 @@ export default {
         },
         deckToFile() {
             FileSaver.saveAs(this.deck.toFile());
-        },
-        deckCardAdd(deckpart, cardId) {
-            /*             const activeSection = this.deck.list[deckpart.id];
-
-            if (
-                activeSection.length < deckpart.limit &&
-                activeSection.filter(
-                    activeSectionCardId => activeSectionCardId === cardId
-                ).length < 3
-            ) {
-                activeSection.push(cardId);
-                this.ajax.pricesLoaded = false;
-            } */
-        },
-        deckCardRemove(deckpart, cardId) {
-            /*             const activeSection = this.deck.list[deckpart.id];
-
-            if (activeSection.includes(cardId)) {
-                this.deck.list[deckpart.id] = arrRemoveItem(
-                    activeSection,
-                    cardId
-                );
-            } */
         },
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;

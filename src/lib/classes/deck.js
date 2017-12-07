@@ -1,4 +1,10 @@
-import { forEachEntry, arrFrom, objValues, arrCount } from "lightdash";
+import {
+    forEachEntry,
+    arrFrom,
+    objValues,
+    arrCount,
+    arrRemoveItem
+} from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 
 const DECKPARTS = [
@@ -55,14 +61,15 @@ const listToText = function(list, cardDb) {
     return result.join("\n").trim();
 };
 
-const getListAll = list => [].concat(...objValues(list));
-
 const Deck = class {
     constructor(list = [[], [], []], name = "Unnamed") {
         this.name = name;
         this.parts = DECKPARTS;
-        this.list = list;
-        this.listAll = getListAll(list);
+
+        this.main = list[0];
+        this.extra = list[1];
+        this.side = list[2];
+        this.all = this.getAll();
 
         console.log("CREATED Deck", this);
     }
@@ -105,13 +112,13 @@ const Deck = class {
         });
     }
     toUri() {
-        return uriDeckEncode(this.list);
+        return uriDeckEncode(this.getList());
     }
     toFile() {
         const fileParts = [];
 
         DECKPARTS.forEach((deckPart, index) => {
-            fileParts.push(deckPart.indicator, ...this.list[index], "");
+            fileParts.push(deckPart.indicator, ...this[deckPart.id], "");
         });
 
         return new File([fileParts.join("\n").trim()], `${this.name}.ydk`, {
@@ -119,7 +126,34 @@ const Deck = class {
         });
     }
     toText(cardDb) {
-        return listToText(this.list, cardDb);
+        return listToText(this.getList(), cardDb);
+    }
+    cardAdd(deckPart, cardId) {
+        const activeSection = this[deckPart.id];
+
+        if (
+            activeSection.length < deckPart.limit &&
+            activeSection.filter(
+                activeSectionCardId => activeSectionCardId === cardId
+            ).length < 3
+        ) {
+            activeSection.push(cardId);
+            this.all = this.getAll();
+        }
+    }
+    cardRemove(deckPart, cardId) {
+        const activeSection = this[deckPart.id];
+
+        if (activeSection.includes(cardId)) {
+            this[deckPart.id] = arrRemoveItem(activeSection, cardId);
+            this.all = this.getAll();
+        }
+    }
+    getList() {
+        return [this.main, this.extra, this.side];
+    }
+    getAll() {
+        return [...this.main, ...this.extra, ...this.side];
     }
 };
 

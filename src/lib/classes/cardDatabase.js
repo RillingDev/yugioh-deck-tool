@@ -19,6 +19,11 @@ const CardDatabase = class {
                 nameCache.add(val.name);
             }
         });
+
+        /**
+         * The arrays dont need to be modified again, freezing improves performance
+         */
+        Object.freeze(this);
     }
     has(cardId) {
         return this.cards.has(cardId);

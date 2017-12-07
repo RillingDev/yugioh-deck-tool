@@ -27,7 +27,7 @@
                             class="fa fa-plus builder-add"
                             v-for="deckPart in deckParts"
                             :key="deckPart.id"
-                            @click="deckCardAdd(deckPart,pair[0])"
+                            @click="deckCardAdd(deckPart, pair[0])"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
                         ><!----></span>
@@ -57,6 +57,7 @@ export default {
         },
         deckCardAdd: {
             type: Function,
+            required: true,
             default: () => {}
         }
     },
