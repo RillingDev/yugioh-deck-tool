@@ -16,13 +16,14 @@ inputCards.forEach(entry => {
 
         atk: entry.atk,
         def: entry.def,
+        level: entry.level,
         type: entry.type,
         race: entry.race,
         attribute: entry.attribute,
 
-        times: [entry.times, entry.timesperweek],
-
-        rating: [entry.rating_up, entry.rating_down]
+        views: [entry.times, entry.timesperweek],
+        rating: [entry.rating_up, entry.rating_down],
+        date: entry.date
     };
 });
 
