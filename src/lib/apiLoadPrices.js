@@ -16,7 +16,7 @@ const apiLoadPrices = (urls, deckListAll, cardDb, priceDb) =>
                 .then(response => response.json())
                 .then(json => {
                     cardsWithoutData.forEach((cardId, index) => {
-                        priceDb.setPrice(cardId, json[index]);
+                        priceDb.set(cardId, json[index]);
                     });
 
                     resolve(true);

@@ -55,20 +55,20 @@ const PriceDatabase = class {
         this.prices = new Map();
     }
     getCardsWithoutData(cardIdArr) {
-        return cardIdArr.filter(cardId => !this.hasPrice(cardId));
+        return cardIdArr.filter(cardId => !this.has(cardId));
     }
-    setPrice(cardId, val) {
+    set(cardId, val) {
         this.prices.set(cardId, {
             low: val.low,
             average: val.average,
             high: val.high
         });
     }
-    hasPrice(cardId) {
+    has(cardId) {
         return this.prices.has(cardId);
     }
-    getPrice(cardId) {
-        if (this.hasPrice(cardId)) {
+    get(cardId) {
+        if (this.has(cardId)) {
             const item = this.prices.get(cardId);
 
             return [item.low, item.average, item.high];
@@ -76,8 +76,8 @@ const PriceDatabase = class {
             return [0, 0, 0];
         }
     }
-    getPriceSelection(cardIdArr) {
-        const items = cardIdArr.map(cardId => this.getPrice(cardId));
+    getSelection(cardIdArr) {
+        const items = cardIdArr.map(cardId => this.get(cardId));
 
         return items.reduce((accumulator, val) => [
             accumulator[0] + val[0],
@@ -85,7 +85,7 @@ const PriceDatabase = class {
             accumulator[2] + val[2]
         ]);
     }
-    formatPrice(val) {
+    format(val) {
         const currency = this.activeCurrency;
 
         return (val * currency.val).toFixed(2) + currency.label;

@@ -85,12 +85,11 @@
                 <div
                     class="deck-part"
                     v-for="(deckPart,index) in deck.parts"
-                    v-if="deck.list[index].length"
                     :key="deckPart.id"
                     :class="`deck-part-${deckPart.id}`"
                 >
                     <span>{{ deckPart.name }} Deck ({{ deck.list[index].length }} Cards):</span>
-                    <div>
+                    <div v-if="deck.list[index].length">
                         <ygo-price-view
                             v-if="ajax.pricesLoaded"
                             :item="deck.list[index]"

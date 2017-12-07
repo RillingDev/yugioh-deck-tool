@@ -10,7 +10,7 @@
             :key="priceMode.id"
             :class="'price-mode-'+priceMode.id"
         >
-            {{ priceDb.formatPrice(priceValues[index]) }}
+            {{ priceDb.format(priceValues[index]) }}
         </span>
     </div>
 </template>
@@ -39,8 +39,8 @@ export default {
         },
         priceValues() {
             return this.isGroup
-                ? this.priceDb.getPriceSelection(this.item)
-                : this.priceDb.getPrice(this.item);
+                ? this.priceDb.getSelection(this.item)
+                : this.priceDb.get(this.item);
         }
     }
 };
