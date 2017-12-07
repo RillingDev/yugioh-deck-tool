@@ -1,6 +1,6 @@
 <template>
     <div class="builder">
-        <span>Showing {{ pairsFiltered.length }} of {{ pairs.length }} Cards</span>
+        <span>Showing {{ pairsFiltered.length }} of {{ pairsArr.length }} Cards</span>
         <input
             class="form-control builder-search"
             type="search"
@@ -57,12 +57,10 @@ import { arrFrom } from "lightdash";
 
 export default {
     props: {
-        cardDb: {
-            type: Object,
+        pairsArr: {
+            type: Array,
             required: true,
-            default: () => {
-                return {};
-            }
+            default: () => []
         },
         deckParts: {
             type: Array,
@@ -119,9 +117,6 @@ export default {
         };
     },
     computed: {
-        pairs() {
-            return arrFrom(this.cardDb.getAll().entries());
-        },
         pairsFiltered() {
             const sortFn = this.sort.modes[this.sort.active].fn;
             const filterFnPrimary = entry =>
@@ -140,7 +135,7 @@ export default {
 
             const nameCache = new Set();
 
-            return this.pairs
+            return this.pairsArr
                 .filter(filterFnPrimary) // Filter Text search
                 .sort((a, b) => sortFn(a[1], b[1])) // Apply sorting
                 .map(entry => [entry[0], entry[1][0]]) // Drop everything but name and id

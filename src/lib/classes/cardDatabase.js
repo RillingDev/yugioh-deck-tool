@@ -5,6 +5,7 @@ const CardDatabase = class {
         const entries = objEntries(obj);
 
         this.cards = new Map();
+        this.pairsArr = [];
 
         entries.forEach(entry => {
             const id = entry[0];
@@ -14,6 +15,8 @@ const CardDatabase = class {
                 this.cards.set(id, val);
             }
         });
+
+        this.pairsArr = arrFrom(this.cards.entries());
 
         /**
          * The arrays dont need to be modified again, freezing improves performance

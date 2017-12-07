@@ -15,14 +15,14 @@ const DECKPARTS = [
         name: "Main",
         indicator: "#main",
         limit: 60,
-        check: card => !EXTRA_DECK_TYPE_REGEX.test(card.type)
+        check: card => !EXTRA_DECK_TYPE_REGEX.test(card[3])
     },
     {
         id: "extra",
         name: "Extra",
         indicator: "#extra",
         limit: 15,
-        check: card => EXTRA_DECK_TYPE_REGEX.test(card.type)
+        check: card => EXTRA_DECK_TYPE_REGEX.test(card[3])
     },
     {
         id: "side",

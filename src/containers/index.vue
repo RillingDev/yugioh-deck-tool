@@ -129,7 +129,7 @@
             </div>
             <ygo-builder
                 v-if="ajax.cardsLoaded"
-                :card-db="cardDb"
+                :pairs-arr="cardDb.pairsArr"
                 :deck-parts="deck.parts"
                 :deck-card-add="(deckPart,cardId) => deckCardAdd(deckPart,cardId)"
             />
