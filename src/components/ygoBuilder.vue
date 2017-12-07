@@ -35,7 +35,7 @@
                     class="builder-card"
                     :data-name="pair[1]"
                 >
-                    <div class="builder-card-name">{{ pair[1].name }}</div>
+                    <div class="builder-card-name">{{ pair[1][0] }}</div>
                     <div class="builder-card-action">
                         <span
                             class="fa fa-plus builder-add"
@@ -83,42 +83,36 @@ export default {
                 modes: [
                     {
                         name: "Alphabetical (A-Z)",
-                        fn: (a, b) => a.name.localeCompare(b.name)
+                        fn: (a, b) => a[0].localeCompare(b[0])
                     },
                     {
                         name: "Alphabetical (Z-A)",
-                        fn: (a, b) => b.name.localeCompare(a.name)
+                        fn: (a, b) => b[0].localeCompare(a[0])
                     },
 
                     {
                         name: "ATK",
-                        fn: (a, b) => Number(b.atk) - Number(a.atk)
+                        fn: (a, b) => Number(b[4]) - Number(a[4])
                     },
                     {
                         name: "DEF",
-                        fn: (a, b) => Number(b.def) - Number(a.def)
+                        fn: (a, b) => Number(b[5]) - Number(a[5])
                     },
                     {
                         name: "Level",
-                        fn: (a, b) => Number(b.level) - Number(a.level)
+                        fn: (a, b) => Number(b[6]) - Number(a[6])
                     },
                     {
                         name: "Upvotes",
-                        fn: (a, b) => Number(b.rating[0]) - Number(a.rating[0])
+                        fn: (a, b) => Number(b[11]) - Number(a[11])
                     },
                     {
                         name: "Downvotes",
-                        fn: (a, b) => Number(b.rating[1]) - Number(a.rating[1])
+                        fn: (a, b) => Number(b[12]) - Number(a[12])
                     },
                     {
                         name: "Views",
-                        fn: (a, b) => Number(b.views[0]) - Number(a.views[1])
-                    },
-                    {
-                        name: "Newest",
-                        fn: (a, b) =>
-                            new Date(b.date).getTime() -
-                            new Date(a.date).getTime()
+                        fn: (a, b) => Number(b[10]) - Number(a[10])
                     }
                 ]
             }
@@ -130,7 +124,7 @@ export default {
         },
         pairsFiltered() {
             const filterFn = pair =>
-                pair[1].name.toLowerCase().includes(this.filter.toLowerCase());
+                pair[1][0].toLowerCase().includes(this.filter.toLowerCase());
             const sortFn = this.sort.modes[this.sort.active].fn;
 
             return this.pairs

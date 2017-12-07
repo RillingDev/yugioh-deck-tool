@@ -7,24 +7,25 @@ const inputCards = input[2].data;
 const output = {};
 
 inputCards.forEach(entry => {
-    output[entry.id] = {
-        name: entry.name,
-        nameBeta: entry.betaname,
-        set: entry.cardset,
+    output[entry.id] = [
+        entry.name,
+        entry.betaname,
 
-        type: entry.type,
+        entry.cardset,
 
-        atk: entry.atk,
-        def: entry.def,
-        level: entry.level,
-        type: entry.type,
-        race: entry.race,
-        attribute: entry.attribute,
+        entry.type,
 
-        views: [entry.times, entry.timesperweek],
-        rating: [entry.rating_up, entry.rating_down],
-        date: entry.date
-    };
+        entry.atk,
+        entry.def,
+        entry.level,
+        entry.type,
+        entry.race,
+        entry.attribute,
+
+        entry.times,
+        entry.rating_up,
+        entry.rating_down
+    ];
 });
 
 fs.writeFileSync(
