@@ -86,10 +86,9 @@ const PriceDatabase = class {
         ]);
     }
     formatPrice(val) {
-        return (
-            (val * this.activeCurrency.val).toFixed(2) +
-            this.activeCurrency.label
-        );
+        const currency = this.activeCurrency;
+
+        return (val * currency.val).toFixed(2) + currency.label;
     }
 };
 

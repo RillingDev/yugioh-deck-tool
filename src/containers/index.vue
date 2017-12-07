@@ -152,7 +152,6 @@ import convertFileToDeck from "../lib/convertFileToDeck";
 import convertDeckToFile from "../lib/convertDeckToFile";
 import convertDeckToText from "../lib/convertDeckToText";
 import deckParts from "../lib/data/deckParts";
-import priceCurrencies from "../lib/data/priceCurrencies";
 import getUrls from "../lib/data/urls";
 
 import ygoPriceView from "../components/ygoPriceView.vue";
