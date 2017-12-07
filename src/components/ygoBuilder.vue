@@ -35,7 +35,7 @@
                     class="builder-card"
                     :data-name="pair[1]"
                 >
-                    <div class="builder-card-name">{{ pair[1][0] }}</div>
+                    <div class="builder-card-name">{{ pair[1] }}</div>
                     <div class="builder-card-action">
                         <span
                             class="fa fa-plus builder-add"
@@ -120,17 +120,32 @@ export default {
     },
     computed: {
         pairs() {
-            return arrFrom(this.cardDb.getAllUnique().entries());
+            return arrFrom(this.cardDb.getAll().entries());
         },
         pairsFiltered() {
-            const filterFn = pair =>
-                pair[1][0].toLowerCase().includes(this.filter.toLowerCase());
             const sortFn = this.sort.modes[this.sort.active].fn;
+            const filterFnPrimary = entry =>
+                entry[1][0].toLowerCase().includes(this.filter.toLowerCase());
+            const filterFnSecondary = entry => {
+                const name = entry[1];
+
+                if (nameCache.has(name)) {
+                    return false;
+                } else {
+                    nameCache.add(name);
+
+                    return true;
+                }
+            };
+
+            const nameCache = new Set();
 
             return this.pairs
-                .filter(filterFn)
-                .sort((a, b) => sortFn(a[1], b[1]))
-                .slice(0, 100);
+                .filter(filterFnPrimary) // Filter Text search
+                .sort((a, b) => sortFn(a[1], b[1])) // Apply sorting
+                .map(entry => [entry[0], entry[1][0]]) // Drop everything but name and id
+                .filter(filterFnSecondary) // Drop duplicates
+                .slice(0, 100); // Take 100 first results
         }
     }
 };

@@ -2,15 +2,9 @@ import { objEntries, arrFrom } from "lightdash";
 
 const CardDatabase = class {
     constructor(obj = {}) {
-        const entries = objEntries(
-            obj
-        ) /* .sort(
-            (a, b) => Number(b[0]) - Number(a[0])
-        ) */;
-        const nameCache = new Set();
+        const entries = objEntries(obj);
 
         this.cards = new Map();
-        this.unique = new Map();
 
         entries.forEach(entry => {
             const id = entry[0];
@@ -18,13 +12,6 @@ const CardDatabase = class {
 
             if (val[0].length > 0) {
                 this.cards.set(id, val);
-
-                // Only add each card once to parts, skip alternate arts
-                if (!nameCache.has(val[0])) {
-                    this.unique.set(id, val);
-                }
-
-                nameCache.add(val[0]);
             }
         });
 
@@ -44,9 +31,6 @@ const CardDatabase = class {
     }
     getAll() {
         return this.cards;
-    }
-    getAllUnique() {
-        return this.unique;
     }
 };
 
