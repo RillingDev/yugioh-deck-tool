@@ -17,7 +17,6 @@ inputCards.forEach(entry => {
         entry.atk,
         entry.def,
         entry.level,
-        entry.type,
         entry.race,
         entry.attribute,
 
