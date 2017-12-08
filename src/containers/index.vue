@@ -155,8 +155,9 @@ import ygoCard from "../components/ygoCard.vue";
 import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
 
-const urls = getUrls();
+// eslint-disable-next-line no-console
 const stderr = console.error;
+const urls = getUrls();
 
 export default {
     name: "Index",

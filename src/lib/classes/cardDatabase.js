@@ -23,6 +23,7 @@ const CardDatabase = class {
          */
         Object.freeze(this);
 
+        // eslint-disable-next-line no-console
         console.log("LOADED Cards", this);
     }
     has(cardId) {

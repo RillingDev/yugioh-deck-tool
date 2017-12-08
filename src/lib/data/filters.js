@@ -78,7 +78,6 @@ const CARD_LEVEL = [
 
 const CARD_LINKARROWS = [
     "Any",
-    "Link Arrows",
     "Top",
     "Bottom",
     "Left",

@@ -8,6 +8,7 @@ const PriceDatabase = class {
         this.activeCurrency = this.currencies[0];
         this.prices = new Map();
 
+        // eslint-disable-next-line no-console
         console.log("LOADED Prices", this);
     }
     getCardsWithoutData(cardIdArr) {

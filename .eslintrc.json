@@ -1,10 +1,6 @@
 {
-    "extends": [
-        "plugin:vue/recommended"
-    ],
-    "plugins": [
-        "vue"
-    ],
+    "extends": ["plugin:vue/recommended"],
+    "plugins": ["vue"],
     "env": {
         "es6": true,
         "node": true,
@@ -21,6 +17,7 @@
         "comma-dangle": "error",
         "no-console": "warn",
         "indent": ["warn", 4],
-        "vue/html-indent": ["warn", 4]
+        "vue/html-indent": ["warn", 4],
+        "vue/valid-v-bind": "off"
     }
 }

@@ -45,6 +45,7 @@ const Deck = class {
         this.side = list[2];
         this.all = this.getAll();
 
+        // eslint-disable-next-line no-console
         console.log("CREATED Deck", this);
     }
     static fromUri(uriDeck) {
