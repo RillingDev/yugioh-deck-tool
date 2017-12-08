@@ -6,32 +6,7 @@ import {
     arrRemoveItem
 } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
-
-const EXTRA_DECK_TYPE_REGEX = /Fusion|Synchro|XYZ|Link/;
-
-const DECKPARTS = [
-    {
-        id: "main",
-        name: "Main",
-        indicator: "#main",
-        limit: 60,
-        check: card => !EXTRA_DECK_TYPE_REGEX.test(card[3])
-    },
-    {
-        id: "extra",
-        name: "Extra",
-        indicator: "#extra",
-        limit: 15,
-        check: card => EXTRA_DECK_TYPE_REGEX.test(card[3])
-    },
-    {
-        id: "side",
-        name: "Side",
-        indicator: "!side",
-        limit: 15,
-        check: () => true
-    }
-];
+import { DECKPARTS } from "../data/deck";
 
 const fileToList = function(fileContent) {
     const fileParts = fileContent

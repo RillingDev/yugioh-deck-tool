@@ -22,6 +22,8 @@ const CardDatabase = class {
          * The arrays dont need to be modified again, freezing improves performance
          */
         Object.freeze(this);
+
+        console.log("LOADED Cards", this);
     }
     has(cardId) {
         return this.cards.has(cardId);

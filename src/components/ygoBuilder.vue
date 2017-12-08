@@ -1,47 +1,105 @@
 <template>
     <div class="builder">
         <span>Showing {{ pairsFiltered.length }} of {{ pairsArr.length }} Cards</span>
-        <div class="builder-filter">
-            <div class="form-group">
-                <input
-                    class="form-control builder-search"
-                    type="search"
-                    v-model="filter.name"
-                    title="Search"
-                    placeholder="Search"
-                >
-            </div>
+
+        <!-- builder-name -->
+        <div class="form-group">
+            <input
+                class="form-control builder-search"
+                type="search"
+                v-model="filter.name"
+                title="Search"
+                placeholder="Search"
+            >
+        </div>
+
+        <!-- builder-sort -->
+        <div class="form-group form-group-select">
+            <label>Sort:</label>
+            <select
+                class="form-control"
+                v-model="sort.active"
+                title="Active Sorting"
+            >
+                <option
+                    v-for="(option, index) in sort.options"
+                    :key="option.name"
+                    :value="index"
+                >{{ option.name }}</option>
+            </select>
+        </div>
+
+        <!-- builder-type -->
+        <div class="form-group form-group-select">
+            <label>Type:</label>
+            <select
+                class="form-control"
+                v-model="filter.type.active"
+                title="Types"
+            >
+                <option
+                    v-for="option in filter.type.options"
+                    :key="option"
+                    :value="option"
+                >{{ option }}</option>
+            </select>
+        </div>
+
+        <!-- builder-expanded -->
+        <div
+            class="builder-filter-expanded"
+            v-if="isTypeFilterExpanded"
+        >
+            <!-- builder-attribute -->
             <div class="form-group form-group-select">
-                <label>Type:</label>
+                <label>Attribute:</label>
                 <select
                     class="form-control"
-                    v-model="filter.type.active"
-                    title="Types"
+                    v-model="filter.attribute.active"
+                    title="Attributes"
                 >
                     <option
-                        v-for="option in filter.type.options"
+                        v-for="option in filter.attribute.options"
+                        :key="option"
+                        :value="option"
+                    >{{ option }}</option>
+                </select>
+            </div>
+
+            <!-- builder-type -->
+            <div class="form-group form-group-select">
+                <label>Race:</label>
+                <select
+                    class="form-control"
+                    v-model="filter.race.active"
+                    title="Races"
+                >
+                    <option
+                        v-for="option in filter.race.options"
+                        :key="option"
+                        :value="option"
+                    >{{ option }}</option>
+                </select>
+            </div>
+
+            <!-- builder-level -->
+            <div class="form-group form-group-select">
+                <label>Level:</label>
+                <select
+                    class="form-control"
+                    v-model="filter.level.active"
+                    title="Levels"
+                >
+                    <option
+                        v-for="option in filter.level.options"
                         :key="option"
                         :value="option"
                     >{{ option }}</option>
                 </select>
             </div>
         </div>
-        <div class="builder-sort">
-            <div class="form-group form-group-select">
-                <label>Sort:</label>
-                <select
-                    class="form-control"
-                    v-model="sort.active"
-                    title="Active Sorting"
-                >
-                    <option
-                        v-for="(option, index) in sort.options"
-                        :key="option.name"
-                        :value="index"
-                    >{{ option.name }}</option>
-                </select>
-            </div>
-        </div>
+
+        <!-- builder-list -->
         <ul
             class="builder-list"
             v-if="pairsFiltered.length"
@@ -77,6 +135,13 @@
 
 <script>
 import searchCard from "../lib/searchCard";
+import {
+    CARD_TYPE,
+    CARD_RACE,
+    CARD_ATTRIBUTE,
+    CARD_LEVEL,
+    CARD_SORTERS
+} from "../lib/data/filters";
 
 export default {
     props: {
@@ -107,70 +172,24 @@ export default {
                 name: "",
                 type: {
                     active: "Any",
-                    options: [
-                        "Any",
-                        "Normal Monster",
-                        "Effect Monster",
-                        "Toon Monster",
-                        "Fusion Monster",
-                        "Ritual Monster",
-                        "Ritual Effect Monster",
-                        "Synchro Monster",
-                        "Synchro Tuner Monster",
-                        "Synchro Pendulum Effect Monster",
-                        "XYZ Monster",
-                        "XYZ Pendulum Effect Monster",
-                        "Pendulum Normal Monster",
-                        "Pendulum Effect Monster",
-                        "Pendulum Tuner Effect Monster",
-                        "Pendulum Effect Fusion Monster",
-                        "Link Monster",
-                        "Spell Card",
-                        "Trap Card"
-                    ]
+                    options: CARD_TYPE
+                },
+                race: {
+                    active: "Any",
+                    options: CARD_RACE
+                },
+                attribute: {
+                    active: "Any",
+                    options: CARD_ATTRIBUTE
+                },
+                level: {
+                    active: "Any",
+                    options: CARD_LEVEL
                 }
             },
             sort: {
                 active: 0,
-                options: [
-                    {
-                        name: "Alphabetical (A-Z)",
-                        fn: (a, b) => a[0].localeCompare(b[0])
-                    },
-                    {
-                        name: "Alphabetical (Z-A)",
-                        fn: (a, b) => b[0].localeCompare(a[0])
-                    },
-
-                    {
-                        name: "ATK",
-                        fn: (a, b) => Number(b[4]) - Number(a[4])
-                    },
-                    {
-                        name: "DEF",
-                        fn: (a, b) => Number(b[5]) - Number(a[5])
-                    },
-                    {
-                        name: "Level",
-                        fn: (a, b) => Number(b[6]) - Number(a[6])
-                    },
-                    {
-                        name: "Upvotes",
-                        fn: (a, b) => Number(b[11]) - Number(a[11])
-                    },
-                    {
-                        name: "Downvotes",
-                        fn: (a, b) => Number(b[12]) - Number(a[12])
-                    },
-                    {
-                        name: "Views",
-                        fn: (a, b) => Number(b[10]) - Number(a[10])
-                    },
-                    {
-                        name: "Latest",
-                        fn: (a, b) => Number(b[13]) - Number(a[13])
-                    }
-                ]
+                options: CARD_SORTERS
             }
         };
     },
@@ -186,7 +205,12 @@ export default {
         pairsFiltered() {
             const sortFn = this.sort.options[this.sort.active].fn;
 
-            return searchCard(this.pairsArr, this.filter, sortFn);
+            return searchCard(
+                this.pairsArr,
+                this.filter,
+                this.isTypeFilterExpanded,
+                sortFn
+            );
         }
     }
 };
@@ -206,7 +230,7 @@ export default {
         margin-bottom: 0;
     }
     select {
-        max-width: 85%;
+        max-width: 80%;
     }
 }
 .builder-list {

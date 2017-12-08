@@ -207,8 +207,6 @@ export default {
 
                     this.ajax.cardsLoaded = true;
                     this.ajax.currentlyLoading = false;
-
-                    console.log("LOADED Cards", this.cardDb);
                 })
                 .catch(stderr);
         },
@@ -218,8 +216,6 @@ export default {
 
             apiLoadPrices(urls, this.deck.all, this.cardDb, this.priceDb)
                 .then(() => {
-                    console.log("LOADED PRICES", this.priceDb);
-
                     this.ajax.pricesLoaded = true;
                     this.ajax.currentlyLoading = false;
                 })
