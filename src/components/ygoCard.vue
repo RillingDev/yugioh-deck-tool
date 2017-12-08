@@ -34,12 +34,12 @@ export default {
         cardId: {
             type: String,
             required: true,
-            default: () => ""
+            default: ""
         },
         cardName: {
             type: String,
             required: false,
-            default: () => ""
+            default: ""
         },
         onRightClick: {
             type: Function,

@@ -24,6 +24,4 @@ const DECKPARTS = [
     }
 ];
 
-Object.freeze(DECKPARTS);
-
 export { DECKPARTS, DECKPARTS_REGEX_EXTRA };

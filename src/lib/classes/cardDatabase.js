@@ -34,9 +34,6 @@ const CardDatabase = class {
     getName(cardId) {
         return this.has(cardId) ? this.get(cardId)[0] : `[${cardId}]`;
     }
-    getAll() {
-        return this.cards;
-    }
 };
 
 export default CardDatabase;

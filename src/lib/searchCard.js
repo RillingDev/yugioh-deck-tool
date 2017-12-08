@@ -1,14 +1,18 @@
 const optionFilter = (val, filterItem) =>
     filterItem.active === "Any" ? true : val === filterItem.active;
 
-const searchCard = (cardArr, filter, isFilterExpanded, sortFn) => {
+const optionFilterArr = (val, filterItem) =>
+    filterItem.active === "Any" ? true : val.includes(filterItem.active);
+
+const searchCard = (cardArr, filter, isMonster, isMonsterLink, sortFn) => {
     const filterFilters = pair => {
         return (
             pair[1][0].toLowerCase().includes(filter.name.toLowerCase()) &&
-            optionFilter(pair[1][3], filter.type) &&
-            (!isFilterExpanded || optionFilter(pair[1][8], filter.attribute)) &&
-            (!isFilterExpanded || optionFilter(pair[1][7], filter.race)) &&
-            (!isFilterExpanded || optionFilter(pair[1][6], filter.level))
+            optionFilter(pair[1][1], filter.type) &&
+            (!isMonster || optionFilter(pair[1][6], filter.attribute)) &&
+            (!isMonster || optionFilter(pair[1][5], filter.race)) &&
+            (!isMonster || optionFilter(pair[1][4], filter.level)) &&
+            (!isMonsterLink || optionFilterArr(pair[1][7], filter.linkarrows))
         );
     };
     const filterDuplicates = pair => {

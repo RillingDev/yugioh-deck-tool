@@ -48,7 +48,7 @@
         <!-- builder-expanded -->
         <div
             class="builder-filter-expanded"
-            v-if="isTypeFilterExpanded"
+            v-if="isMonster"
         >
             <!-- builder-attribute -->
             <div class="form-group form-group-select">
@@ -97,6 +97,25 @@
                     >{{ option }}</option>
                 </select>
             </div>
+
+            <!-- builder-linkarrow -->
+            <div
+                class="form-group form-group-select"
+                v-if="isMonsterLink"
+            >
+                <label>Link Arrows:</label>
+                <select
+                    class="form-control"
+                    v-model="filter.linkarrows.active"
+                    title="Link Arrows"
+                >
+                    <option
+                        v-for="option in filter.linkarrows.options"
+                        :key="option"
+                        :value="option"
+                    >{{ option }}</option>
+                </select>
+            </div>
         </div>
 
         <!-- builder-list -->
@@ -140,6 +159,7 @@ import {
     CARD_RACE,
     CARD_ATTRIBUTE,
     CARD_LEVEL,
+    CARD_LINKARROWS,
     CARD_SORTERS
 } from "../lib/data/filters";
 
@@ -185,6 +205,10 @@ export default {
                 level: {
                     active: "Any",
                     options: CARD_LEVEL
+                },
+                linkarrows: {
+                    active: "Any",
+                    options: CARD_LINKARROWS
                 }
             },
             sort: {
@@ -194,13 +218,13 @@ export default {
         };
     },
     computed: {
-        isTypeFilterEnabled() {
-            return this.filter.type.active !== "Any";
-        },
-        isTypeFilterExpanded() {
+        isMonster() {
             return !["Any", "Spell Card", "Trap Card"].includes(
                 this.filter.type.active
             );
+        },
+        isMonsterLink() {
+            return this.filter.type.active === "Link Monster";
         },
         pairsFiltered() {
             const sortFn = this.sort.options[this.sort.active].fn;
@@ -208,7 +232,8 @@ export default {
             return searchCard(
                 this.pairsArr,
                 this.filter,
-                this.isTypeFilterExpanded,
+                this.isMonster,
+                this.isMonsterLink,
                 sortFn
             );
         }

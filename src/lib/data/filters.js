@@ -76,6 +76,19 @@ const CARD_LEVEL = [
     "12"
 ];
 
+const CARD_LINKARROWS = [
+    "Any",
+    "Link Arrows",
+    "Top",
+    "Bottom",
+    "Left",
+    "Right",
+    "Top-Left",
+    "Top-Right",
+    "Bottom-Left",
+    "Bottom-Right"
+];
+
 const CARD_SORTERS = [
     {
         name: "Alphabetical (A-Z)",
@@ -87,38 +100,39 @@ const CARD_SORTERS = [
     },
     {
         name: "ATK",
-        fn: (a, b) => Number(b[4]) - Number(a[4])
+        fn: (a, b) => Number(b[2]) - Number(a[2])
     },
     {
         name: "DEF",
-        fn: (a, b) => Number(b[5]) - Number(a[5])
+        fn: (a, b) => Number(b[3]) - Number(a[3])
     },
     {
         name: "Level",
-        fn: (a, b) => Number(b[6]) - Number(a[6])
+        fn: (a, b) => Number(b[4]) - Number(a[4])
     },
     {
         name: "Upvotes",
-        fn: (a, b) => Number(b[10]) - Number(a[10])
-    },
-    {
-        name: "Downvotes",
-        fn: (a, b) => Number(b[11]) - Number(a[11])
-    },
-    {
-        name: "Views",
         fn: (a, b) => Number(b[9]) - Number(a[9])
     },
     {
+        name: "Downvotes",
+        fn: (a, b) => Number(b[10]) - Number(a[10])
+    },
+    {
+        name: "Views",
+        fn: (a, b) => Number(b[8]) - Number(a[8])
+    },
+    {
         name: "Latest",
-        fn: (a, b) => Number(b[12]) - Number(a[12])
+        fn: (a, b) => Number(b[11]) - Number(a[11])
     }
 ];
 
-Object.freeze(CARD_TYPE);
-Object.freeze(CARD_RACE);
-Object.freeze(CARD_ATTRIBUTE);
-Object.freeze(CARD_LEVEL);
-Object.freeze(CARD_SORTERS);
-
-export { CARD_TYPE, CARD_RACE, CARD_ATTRIBUTE, CARD_LEVEL, CARD_SORTERS };
+export {
+    CARD_TYPE,
+    CARD_RACE,
+    CARD_ATTRIBUTE,
+    CARD_LEVEL,
+    CARD_LINKARROWS,
+    CARD_SORTERS
+};

@@ -1,10 +1,4 @@
-import {
-    forEachEntry,
-    arrFrom,
-    objValues,
-    arrCount,
-    arrRemoveItem
-} from "lightdash";
+import { arrFrom, arrCount, arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 import { DECKPARTS } from "../data/deck";
 
