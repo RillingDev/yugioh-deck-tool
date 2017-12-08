@@ -192,7 +192,7 @@ export default {
             this.deck = Deck.fromUri(uriQuery.replace("?d=", ""));
         } else if (uriQuery.includes("?u=")) {
             //Load remote deck file
-            Deck.fromRemoteFile(uriQuery.replace("?d=", ""))
+            Deck.fromRemoteFile(uriQuery.replace("?u=", ""))
                 .then(deck => (this.deck = deck))
                 .catch(stderr);
         }
