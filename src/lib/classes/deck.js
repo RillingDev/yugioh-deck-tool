@@ -76,7 +76,7 @@ const Deck = class {
             }).then(res => {
                 if (res.ok) {
                     res.text().then(text => {
-                        const list = convertFileToDeck(text);
+                        const list = fileToList(text);
 
                         resolve(new Deck(list));
                     });
