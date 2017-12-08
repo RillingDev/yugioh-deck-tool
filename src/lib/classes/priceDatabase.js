@@ -1,4 +1,3 @@
-import { isDefined } from "lightdash";
 import { PRICE_MODES, PRICE_CURRENCIES } from "../data/price";
 
 const PriceDatabase = class {
@@ -15,11 +14,11 @@ const PriceDatabase = class {
         return cardIdArr.filter(cardId => !this.has(cardId));
     }
     set(cardId, val) {
-        if (isDefined(val.low)) {
+        if (val !== null) {
             return this.prices.set(cardId, {
-                low: val.low,
-                average: val.average,
-                high: val.high
+                low: val[0],
+                average: val[1],
+                high: val[2]
             });
         } else {
             return false;
