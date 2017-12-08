@@ -5,13 +5,14 @@ const deflate = require("zlib").deflateSync;
 const input = require("./input.json");
 const inputCards = input[2].data;
 const output = {};
-let outputJSON;
 
 inputCards.forEach(entry => {
+    entry.linkmarkers = entry.linkmarkers
+        ? entry.linkmarkers.split(",").map(str => str.trim())
+        : [];
+
     output[entry.id] = [
         entry.name,
-        entry.betaname,
-        entry.cardset,
 
         entry.type,
         entry.atk,
@@ -19,6 +20,7 @@ inputCards.forEach(entry => {
         entry.level,
         entry.race,
         entry.attribute,
+        entry.linkmarkers,
 
         entry.times,
         entry.rating_up,
@@ -27,7 +29,13 @@ inputCards.forEach(entry => {
     ];
 });
 
-outputJSON = JSON.stringify(output, null, "");
-
-//fs.writeFileSync("./names.json", outputJSON, "utf8");
-fs.writeFileSync("./names.json.gz", deflate(outputJSON), "binary");
+fs.writeFileSync(
+    "./out/names.json",
+    JSON.stringify(output, null, "  "),
+    "utf8"
+);
+fs.writeFileSync(
+    "./out/names.json.gz",
+    deflate(JSON.stringify(output)),
+    "binary"
+);
