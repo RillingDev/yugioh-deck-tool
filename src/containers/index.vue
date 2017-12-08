@@ -131,6 +131,7 @@
                 v-if="ajax.cardsLoaded"
                 :pairs-arr="cardDb.pairsArr"
                 :deck-parts="deck.parts"
+                :deck-card-can-add="(deckPart,cardId) => deckCardCanAdd(deckPart,cardId)"
                 :deck-card-add="(deckPart,cardId) => deckCardAdd(deckPart,cardId)"
             />
         </div>
@@ -226,6 +227,9 @@ export default {
         },
         deckToFile() {
             FileSaver.saveAs(this.deck.toFile());
+        },
+        deckCardCanAdd(deckPart, cardId) {
+            return this.deck.cardCanAdd(deckPart, cardId, this.cardDb);
         },
         deckCardAdd(deckPart, cardId) {
             this.deck.cardAdd(deckPart, cardId, this.cardDb);

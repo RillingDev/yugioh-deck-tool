@@ -133,25 +133,26 @@ const Deck = class {
     toText(cardDb) {
         return listToText(this.getList(), cardDb);
     }
-    cardAdd(deckPart, cardId, cardDb) {
+    cardCanAdd(deckPart, cardId, cardDb) {
         const activeSection = this[deckPart.id];
 
-        if (
+        return (
             deckPart.check(cardDb.get(cardId)) &&
-            activeSection.length < deckPart.limit &&
-            activeSection.filter(
+            this[deckPart.id].length < deckPart.limit &&
+            this[deckPart.id].filter(
                 activeSectionCardId => activeSectionCardId === cardId
             ).length < 3
-        ) {
-            activeSection.push(cardId);
+        );
+    }
+    cardAdd(deckPart, cardId, cardDb) {
+        if (this.cardCanAdd(deckPart, cardId, cardDb)) {
+            this[deckPart.id].push(cardId);
             this.all = this.getAll();
         }
     }
     cardRemove(deckPart, cardId) {
-        const activeSection = this[deckPart.id];
-
-        if (activeSection.includes(cardId)) {
-            this[deckPart.id] = arrRemoveItem(activeSection, cardId);
+        if (this[deckPart.id].includes(cardId)) {
+            this[deckPart.id] = arrRemoveItem(this[deckPart.id], cardId);
             this.all = this.getAll();
         }
     }

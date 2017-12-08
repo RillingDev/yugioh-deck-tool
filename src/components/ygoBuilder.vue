@@ -1,42 +1,46 @@
 <template>
     <div class="builder">
         <span>Showing {{ pairsFiltered.length }} of {{ pairsArr.length }} Cards</span>
-        <div class="form-group">
-            <input
-                class="form-control builder-search"
-                type="search"
-                v-model="filter.name"
-                title="Search"
-                placeholder="Search"
-            >
+        <div class="builder-filter">
+            <div class="form-group">
+                <input
+                    class="form-control builder-search"
+                    type="search"
+                    v-model="filter.name"
+                    title="Search"
+                    placeholder="Search"
+                >
+            </div>
+            <div class="form-group form-group-select">
+                <label>Type:</label>
+                <select
+                    class="form-control"
+                    v-model="filter.type.active"
+                    title="Types"
+                >
+                    <option
+                        v-for="option in filter.type.options"
+                        :key="option"
+                        :value="option"
+                    >{{ option }}</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group builder-select">
-            <label>Type:</label>
-            <select
-                class="form-control"
-                v-model="filter.type.active"
-                title="Types"
-            >
-                <option
-                    v-for="option in filter.type.options"
-                    :key="option"
-                    :value="option"
-                >{{ option }}</option>
-            </select>
-        </div>
-        <div class="form-group builder-select">
-            <label>Sort:</label>
-            <select
-                class="form-control"
-                v-model="sort.active"
-                title="Active Sorting"
-            >
-                <option
-                    v-for="(option, index) in sort.options"
-                    :key="option.name"
-                    :value="index"
-                >{{ option.name }}</option>
-            </select>
+        <div class="builder-sort">
+            <div class="form-group form-group-select">
+                <label>Sort:</label>
+                <select
+                    class="form-control"
+                    v-model="sort.active"
+                    title="Active Sorting"
+                >
+                    <option
+                        v-for="(option, index) in sort.options"
+                        :key="option.name"
+                        :value="index"
+                    >{{ option.name }}</option>
+                </select>
+            </div>
         </div>
         <ul
             class="builder-list"
@@ -53,14 +57,17 @@
                 >
                     <div class="builder-card-name">{{ pair[1] }}</div>
                     <div class="builder-card-action">
-                        <span
-                            class="fa fa-plus builder-add"
+                        <button
+                            class="builder-add btn"
                             v-for="deckPart in deckParts"
                             :key="deckPart.id"
                             @click="deckCardAdd(deckPart, pair[0])"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
-                        ><!----></span>
+                            :disabled.boolean="!deckCardCanAdd(deckPart, pair[0])"
+                        >
+                            <span class="fa fa-plus"><!----></span>
+                        </button>
                     </div>
                 </a>
             </li>
@@ -84,6 +91,11 @@ export default {
             default: () => []
         },
         deckCardAdd: {
+            type: Function,
+            required: true,
+            default: () => {}
+        },
+        deckCardCanAdd: {
             type: Function,
             required: true,
             default: () => {}
@@ -163,6 +175,14 @@ export default {
         };
     },
     computed: {
+        isTypeFilterEnabled() {
+            return this.filter.type.active !== "Any";
+        },
+        isTypeFilterExpanded() {
+            return !["Any", "Spell Card", "Trap Card"].includes(
+                this.filter.type.active
+            );
+        },
         pairsFiltered() {
             const sortFn = this.sort.options[this.sort.active].fn;
 
@@ -177,6 +197,18 @@ export default {
 @import "../styles/variables";
 @import "../styles/variables.app";
 
+.form-group-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    label {
+        padding-right: 0.5rem;
+        margin-bottom: 0;
+    }
+    select {
+        max-width: 85%;
+    }
+}
 .builder-list {
     max-height: 60vh;
     width: 100%;
@@ -212,14 +244,18 @@ export default {
     justify-content: space-evenly;
     align-items: center;
 }
-.builder-add {
+.btn.builder-add {
     width: 34px;
-    text-align: center;
     opacity: 0.8;
     font-size: 1.2em;
     cursor: pointer;
+    padding: 0;
+    background-color: transparent;
     &:active {
         opacity: 1;
+    }
+    &[disabled] {
+        opacity: 0.4;
     }
     &-main {
         color: $color-deckpart-main;
@@ -234,18 +270,5 @@ export default {
 
 .builder-card-name {
     width: calc(100% - 108px);
-}
-
-.builder-select {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    label {
-        padding-right: 0.5rem;
-        margin-bottom: 0;
-    }
-    select {
-        max-width: 85%;
-    }
 }
 </style>
