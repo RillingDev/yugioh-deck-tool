@@ -5,7 +5,7 @@
         <!-- builder-name -->
         <div class="form-group">
             <input
-                class="form-control builder-search"
+                class="form-control"
                 type="search"
                 v-model="filter.name"
                 title="Search"
@@ -124,7 +124,6 @@
             v-if="pairsFiltered.length"
         >
             <li
-                class="builder-card-wrapper"
                 v-for="pair in pairsFiltered"
                 :key="pair[0]"
             >
@@ -269,7 +268,7 @@ export default {
     border: 1px solid $gray-400;
 }
 
-.builder-card-wrapper {
+.builder-list li {
     border-top: 1px solid $gray-400;
     &:first-child {
         border-top: 0;
@@ -284,6 +283,7 @@ export default {
 }
 
 .builder-card-name {
+    width: calc(100% - 108px);
     padding: 10px 0;
 }
 .builder-card-action {
@@ -315,9 +315,5 @@ export default {
     &-side {
         color: $color-deckpart-side;
     }
-}
-
-.builder-card-name {
-    width: calc(100% - 108px);
 }
 </style>

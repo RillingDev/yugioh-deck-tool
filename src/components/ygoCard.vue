@@ -6,13 +6,11 @@
         :data-name="cardName"
         @contextmenu="contextEvent"
     >
-        <div class="deck-card-image">
-            <img
-                width="100"
-                height="140"
-                :src="image"
-            >
-        </div>
+        <img
+            width="100"
+            height="140"
+            :src="image"
+        >
         <div class="deck-card-text">
             <div class="deck-card-name">{{ cardName || `[${cardId}]` }}</div>
             <slot
@@ -86,7 +84,7 @@ export default {
     margin: 5px;
 }
 
-.deck-card-image img {
+.deck-card img {
     height: 140px;
     width: 100px;
     margin-bottom: 0;
