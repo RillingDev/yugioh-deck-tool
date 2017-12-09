@@ -5,7 +5,6 @@ const CardDatabase = class {
         const entries = objEntries(obj);
 
         this.cards = new Map();
-        this.pairsArr = [];
 
         entries.forEach(entry => {
             const id = entry[0];

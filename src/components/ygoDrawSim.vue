@@ -15,19 +15,19 @@
         >
             <div class="drawsim">
                 <div
-                    class="drawsim-drawmode btn-group"
+                    class="btn-group"
                     role="group"
                 >
                     <button
                         type="button button-primary"
                         class="btn btn-secondary"
-                        :class="{active: drawMode===5}"
+                        :class="{active: drawMode === 5}"
                         @click="setDrawMode(5)"
                     >Going First</button>
                     <button
                         type="button button-primary"
                         class="btn btn-secondary"
-                        :class="{active: drawMode===6}"
+                        :class="{active: drawMode === 6}"
                         @click="setDrawMode(6)"
                     >Going Second</button>
                 </div>
@@ -42,6 +42,7 @@
                 <button
                     class="btn btn-primary"
                     @click="draw()"
+                    title="Simulate a new Starting Hand"
                 >Draw</button>
             </div>
         </b-modal>
@@ -126,6 +127,7 @@ export default {
     flex-direction: column;
     align-items: center;
 }
+
 .drawsim-output {
     margin: 1em 0;
     display: flex;

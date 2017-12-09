@@ -4,7 +4,6 @@ const PriceDatabase = class {
     constructor() {
         this.modes = PRICE_MODES;
         this.currencies = PRICE_CURRENCIES;
-
         this.activeCurrency = this.currencies[0];
         this.prices = new Map();
 

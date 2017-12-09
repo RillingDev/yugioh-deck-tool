@@ -75,11 +75,9 @@ const Deck = class {
                 mode: "same-origin"
             }).then(res => {
                 if (res.ok) {
-                    res.text().then(text => {
-                        const list = fileToList(text);
-
-                        resolve(new Deck(list));
-                    });
+                    res
+                        .text()
+                        .then(text => resolve(new Deck(fileToList(text))));
                 } else {
                     reject(err.statusText);
                 }

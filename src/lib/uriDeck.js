@@ -31,7 +31,6 @@ const loadOptimizedList = str =>
                 if (entry.startsWith(DELIMITERS.cardAmount)) {
                     const arrSized = Array(Number(entry[1]));
 
-                    // Creates a new array of the size of cards, and fills with the card id
                     result.push(...arrSized.fill(entry.slice(2)));
                 } else {
                     result.push(entry);
