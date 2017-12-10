@@ -306,13 +306,13 @@ export default {
     &[disabled] {
         opacity: 0.4;
     }
-    &-main {
+    &-main .fa {
         color: $color-deckpart-main;
     }
-    &-extra {
+    &-extra .fa {
         color: $color-deckpart-extra;
     }
-    &-side {
+    &-side .fa {
         color: $color-deckpart-side;
     }
 }
