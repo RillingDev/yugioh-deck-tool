@@ -1,5 +1,5 @@
 {
-    "extends": ["plugin:vue/recommended"],
+    "extends": ["eslint:recommended", "plugin:vue/recommended"],
     "plugins": ["vue"],
     "env": {
         "es6": true,
@@ -16,8 +16,8 @@
         "semi": ["error", "always"],
         "comma-dangle": "error",
         "no-console": "warn",
-        "indent": ["warn", 4],
-        "vue/html-indent": ["warn", 4],
-        "vue/valid-v-bind": "off"
+        "indent": "off",
+
+        "vue/html-indent": ["warn", 4]
     }
 }
