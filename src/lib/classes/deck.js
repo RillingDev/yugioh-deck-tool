@@ -70,7 +70,7 @@ const Deck = class {
         });
     }
     static fromRemoteFile(uri) {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             fetch(uri, {
                 mode: "same-origin"
             }).then(res => {
@@ -79,7 +79,7 @@ const Deck = class {
                         .text()
                         .then(text => resolve(new Deck(fileToList(text))));
                 } else {
-                    reject(err.statusText);
+                    reject(res);
                 }
             });
         });
@@ -90,7 +90,7 @@ const Deck = class {
     toFile() {
         const fileParts = [];
 
-        DECKPARTS.forEach((deckPart, index) => {
+        DECKPARTS.forEach(deckPart => {
             fileParts.push(deckPart.indicator, ...this[deckPart.id], "");
         });
 
@@ -102,8 +102,6 @@ const Deck = class {
         return listToText(this.getList(), cardDb);
     }
     cardCanAdd(deckPart, cardId, cardDb) {
-        const activeSection = this[deckPart.id];
-
         return (
             deckPart.check(cardDb.get(cardId)) &&
             this[deckPart.id].length < deckPart.limit &&
