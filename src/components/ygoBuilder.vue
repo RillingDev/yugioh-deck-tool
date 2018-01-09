@@ -166,23 +166,19 @@ export default {
     props: {
         pairsArr: {
             type: Array,
-            required: true,
-            default: () => []
+            required: true
         },
         deckParts: {
             type: Array,
-            required: true,
-            default: () => []
+            required: true
         },
         deckCardAdd: {
             type: Function,
-            required: true,
-            default: () => {}
+            required: true
         },
         deckCardCanAdd: {
             type: Function,
-            required: true,
-            default: () => {}
+            required: true
         }
     },
     data: () => {

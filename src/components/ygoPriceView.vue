@@ -17,20 +17,17 @@
 
 <script>
 import { isString } from "lightdash";
+import PriceDatabase from "../lib/classes/priceDatabase"
 
 export default {
     props: {
         item: {
             type: [String, Array],
-            required: true,
-            default: () => ""
+            required: true
         },
         priceDb: {
-            type: Object,
-            required: true,
-            default: () => {
-                return {};
-            }
+            type: PriceDatabase,
+            required: true
         }
     },
     computed: {

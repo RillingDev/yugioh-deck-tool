@@ -32,7 +32,6 @@ export default {
         cardId: {
             type: String,
             required: true,
-            default: ""
         },
         cardName: {
             type: String,
