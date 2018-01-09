@@ -253,10 +253,23 @@ export default {
 
 <style lang="scss">
 @import "node_modules/bootstrap/scss/functions";
-@import "../styles/variables";
-@import "../styles/variables.app";
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/variables";
 
-@import "../styles/bootstrap";
+@import "../styles/variables.custom";
+@import "../styles/reboot.custom";
+
+@import "node_modules/bootstrap/scss/type";
+@import "node_modules/bootstrap/scss/grid";
+@import "node_modules/bootstrap/scss/tables";
+@import "node_modules/bootstrap/scss/forms";
+@import "node_modules/bootstrap/scss/buttons";
+@import "node_modules/bootstrap/scss/transitions";
+@import "node_modules/bootstrap/scss/button-group";
+@import "node_modules/bootstrap/scss/close";
+@import "node_modules/bootstrap/scss/modal";
+@import "node_modules/bootstrap/scss/utilities";
+
 @import "node_modules/bootstrap-vue/dist/bootstrap-vue";
 
 @import "../styles/blocks/general";

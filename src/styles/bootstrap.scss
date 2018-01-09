@@ -5,17 +5,16 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+@import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/mixins";
-@import "node_modules/bootstrap/scss/root";
+@import "node_modules/bootstrap/scss/variables";
 
-/* @import "node_modules/bootstrap/scss/print"; */
+@import "../styles/variables.custom";
+@import "../styles/reboot.custom";
 
-@import "reboot.custom";
 @import "node_modules/bootstrap/scss/type";
-
 /* @import "node_modules/bootstrap/scss/images";
 @import "node_modules/bootstrap/scss/code"; */
-
 @import "node_modules/bootstrap/scss/grid";
 @import "node_modules/bootstrap/scss/tables";
 @import "node_modules/bootstrap/scss/forms";

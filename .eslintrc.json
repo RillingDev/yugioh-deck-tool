@@ -1,6 +1,11 @@
 {
-    "extends": ["eslint:recommended", "plugin:vue/recommended"],
-    "plugins": ["vue"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended"
+    ],
+    "plugins": [
+        "vue"
+    ],
     "env": {
         "es6": true,
         "node": true,
@@ -11,13 +16,17 @@
         "ecmaVersion": 8
     },
     "rules": {
-        "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "double"],
-        "semi": ["error", "always"],
-        "comma-dangle": "error",
+        "quotes": [
+            "warn",
+            "double"
+        ],
+        "semi": [
+            "warn",
+            "always"
+        ],
         "no-console": "warn",
+        "linebreak-style": "off",
         "indent": "off",
-
-        "vue/html-indent": ["warn", 4]
+        "vue/html-indent": "off"
     }
 }

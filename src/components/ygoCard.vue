@@ -76,8 +76,10 @@ export default {
 
 <style lang="scss">
 @import "node_modules/bootstrap/scss/functions";
-@import "../styles/variables";
-@import "../styles/variables.app";
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/variables";
+
+@import "../styles/variables.custom";
 
 .deck-card {
     position: relative;
