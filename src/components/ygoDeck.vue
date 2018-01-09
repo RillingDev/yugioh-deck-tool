@@ -14,6 +14,7 @@
             v-for="deckPart in deck.parts"
             :key="deckPart.id"
             :class="`deck-part-${deckPart.id}`"
+
             :ajax="ajax"
             :deck="deck"
             :deck-part="deckPart"

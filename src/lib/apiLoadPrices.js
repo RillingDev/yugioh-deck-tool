@@ -7,9 +7,9 @@ const apiLoadPrices = (urls, deckListAll, cardDb, priceDb) =>
         );
 
         if (cardsWithoutData.length > 0) {
-            const cardsWithoutDataNames = cardsWithoutData.map(cardId =>
-                cardDb.getName(cardId)
-            );
+            const cardsWithoutDataNames = cardsWithoutData
+                .sort() // Sort to make caching easier
+                .map(cardId => cardDb.getName(cardId));
             const query = btoa(JSON.stringify(cardsWithoutDataNames));
 
             fetch(urls.priceAPI + query)

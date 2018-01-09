@@ -23,7 +23,7 @@
 
 <script>
 import getUrls from "../lib/data/urls";
-import { isDefined, isFunction } from "lightdash";
+import { isDefined } from "lightdash";
 
 const urls = getUrls();
 

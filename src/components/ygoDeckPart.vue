@@ -1,7 +1,6 @@
 <template>
     <div
         class="deck-part"
-        :key="deckPart.id"
         :class="`deck-part-${deckPart.id}`"
     >
         <span>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</span>
