@@ -137,7 +137,7 @@
                             class="builder-add btn"
                             v-for="deckPart in deckParts"
                             :key="deckPart.id"
-                            @click="deckCardAdd(deckPart, pair[0])"
+                            @click="(e) => clickEvent(e, deckPart, pair[0])"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
                             :disabled.boolean="!deckCardCanAdd(deckPart, pair[0])"
@@ -170,10 +170,6 @@ export default {
         },
         deckParts: {
             type: Array,
-            required: true
-        },
-        deckCardAdd: {
-            type: Function,
             required: true
         },
         deckCardCanAdd: {
@@ -231,6 +227,11 @@ export default {
                 this.isMonsterLink,
                 sortFn
             );
+        },
+    },
+    methods:{
+        clickEvent(e, deckPart, cardId){
+            this.$emit("deckcardadd", deckPart, cardId, e);
         }
     }
 };

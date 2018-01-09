@@ -37,11 +37,6 @@ export default {
             type: String,
             required: false,
             default: ""
-        },
-        onRightClick: {
-            type: Function,
-            required: false,
-            default: null
         }
     },
     computed: {
@@ -61,13 +56,7 @@ export default {
     },
     methods: {
         contextEvent(e) {
-            /**
-       * as the event prop is optional, we cannot use .preventdefault in the directive and need to do it manually
-       */
-            if (isFunction(this.onRightClick)) {
-                e.preventDefault();
-                this.onRightClick();
-            }
+            this.$emit("deckcardrightclick", e);
         }
     }
 };

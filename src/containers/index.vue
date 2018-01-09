@@ -102,7 +102,7 @@
                                 :key="`${cardId}_${cardIndex}`"
                                 :card-id="cardId"
                                 :card-name="cardDb.getName(cardId)"
-                                :on-right-click="() => deckCardRemove(deckPart, cardId)"
+                                @deckcardrightclick.prevent="deckCardRemove(deckPart, cardId)"
                             >
                                 <ygo-price-view
                                     slot="price"
@@ -131,8 +131,8 @@
                 v-if="ajax.cardsLoaded"
                 :pairs-arr="cardDb.pairsArr"
                 :deck-parts="deck.parts"
-                :deck-card-can-add="(deckPart,cardId) => deckCardCanAdd(deckPart,cardId)"
-                :deck-card-add="(deckPart,cardId) => deckCardAdd(deckPart,cardId)"
+                :deck-card-can-add="deckCardCanAdd"
+                @deckcardadd="deckCardAdd"
             />
         </div>
     </div>

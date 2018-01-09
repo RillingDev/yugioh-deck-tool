@@ -3,7 +3,7 @@
         <button
             class="btn btn-primary btn-sm"
             title="Open Start Hand Simulation"
-            @click="showModal()"
+            @click="showModal"
         >Start Hand</button>
 
         <b-modal
@@ -41,7 +41,7 @@
                 </div>
                 <button
                     class="btn btn-primary"
-                    @click="draw()"
+                    @click="draw"
                     title="Simulate a new Starting Hand"
                 >Draw</button>
             </div>
