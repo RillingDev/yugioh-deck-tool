@@ -43,6 +43,7 @@ const Deck = class {
         this.main = list[0];
         this.extra = list[1];
         this.side = list[2];
+        
         this.all = this.getAll();
 
         // eslint-disable-next-line no-console

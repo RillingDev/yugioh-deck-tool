@@ -54,7 +54,7 @@ import bModal from "bootstrap-vue/es/components/modal/modal";
 import ygoCard from "./ygoCard.vue";
 
 import simulateStartingHand from "../lib/simulateStartingHand";
-import CardDatabase from "../lib/classes/cardDatabase"
+import CardDatabase from "../lib/classes/cardDatabase";
 
 export default {
     components: {

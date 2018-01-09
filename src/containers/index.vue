@@ -72,49 +72,12 @@
         <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
-            <div class="deck">
-                <div
-                    class="deck-part deck-part-total"
-                    v-if="ajax.pricesLoaded"
-                >
-                    <span>Total:</span>
-                    <ygo-price-view
-                        :item="deck.all"
-                        :price-db="priceDb"
-                    />
-                </div>
-                <div
-                    class="deck-part"
-                    v-for="deckPart in deck.parts"
-                    :key="deckPart.id"
-                    :class="`deck-part-${deckPart.id}`"
-                >
-                    <span>{{ deckPart.name }} Deck ({{ deck[deckPart.id].length }} Cards):</span>
-                    <div v-if="deck[deckPart.id].length">
-                        <ygo-price-view
-                            v-if="ajax.pricesLoaded"
-                            :item="deck[deckPart.id]"
-                            :price-db="priceDb"
-                        />
-                        <div class="deck-content">
-                            <ygo-card
-                                v-for="(cardId, cardIndex) in deck[deckPart.id]"
-                                :key="`${cardId}_${cardIndex}`"
-                                :card-id="cardId"
-                                :card-name="cardDb.getName(cardId)"
-                                @deckcardrightclick.prevent="deckCardRemove(deckPart, cardId)"
-                            >
-                                <ygo-price-view
-                                    slot="price"
-                                    v-if="ajax.pricesLoaded"
-                                    :item="cardId"
-                                    :price-db="priceDb"
-                                />
-                            </ygo-card>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           <ygo-deck
+               :ajax="ajax"
+               :deck="deck"
+               :card-db="cardDb"
+               :price-db="priceDb"
+           />
         </div>
 
         <!-- app-builder -->
@@ -150,9 +113,8 @@ import apiLoadCards from "../lib/apiLoadCards";
 import apiLoadPrices from "../lib/apiLoadPrices";
 import getUrls from "../lib/data/urls";
 
-import ygoPriceView from "../components/ygoPriceView.vue";
-import ygoCard from "../components/ygoCard.vue";
 import ygoBuilder from "../components/ygoBuilder.vue";
+import ygoDeck from "../components/ygoDeck.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
 
 // eslint-disable-next-line no-console
@@ -161,7 +123,7 @@ const urls = getUrls();
 
 export default {
     name: "Index",
-    components: { ygoPriceView, ygoCard, ygoBuilder, ygoDrawSim },
+    components: { ygoBuilder, ygoDrawSim, ygoDeck },
     data: () => {
         return {
             cardDb: new CardDatabase(),
@@ -232,9 +194,6 @@ export default {
             this.deck.cardAdd(deckPart, cardId, this.cardDb);
             this.ajax.pricesLoaded = false;
         },
-        deckCardRemove(deckPart, cardId) {
-            this.deck.cardRemove(deckPart, cardId);
-        },
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;
 
@@ -275,5 +234,4 @@ export default {
 @import "../styles/blocks/general";
 @import "../styles/blocks/app";
 @import "../styles/blocks/forms";
-@import "../styles/blocks/deck";
 </style>

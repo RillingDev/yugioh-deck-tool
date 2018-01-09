@@ -17,7 +17,7 @@
 
 <script>
 import { isString } from "lightdash";
-import PriceDatabase from "../lib/classes/priceDatabase"
+import PriceDatabase from "../lib/classes/priceDatabase";
 
 export default {
     props: {
