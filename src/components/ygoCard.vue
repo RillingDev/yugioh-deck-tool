@@ -31,7 +31,7 @@ export default {
     props: {
         cardId: {
             type: String,
-            required: true,
+            required: true
         },
         cardName: {
             type: String,

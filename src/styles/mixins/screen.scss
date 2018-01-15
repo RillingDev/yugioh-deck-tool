@@ -3,8 +3,8 @@
         @media (#{$mode}-width: #{map-get($grid-breakpoints, $breakpoint)}) {
             @content;
         }
-    }
-    @else {
-        @warn"Unfortunately, no value could be retrieved from `#{$breakpoint}`. "+"Please make sure it is defined in `$grid-breakpoints` map.";
+    } @else {
+        @warn "Unfortunately,
+            no value could be retrieved from `#{$breakpoint}`. "+"Please make sure it is defined in `$grid-breakpoints` map.";
     }
 }

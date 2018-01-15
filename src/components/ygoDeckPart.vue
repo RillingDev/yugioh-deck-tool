@@ -27,7 +27,7 @@
                 </ygo-card>
             </div>
         </div>
-    </div>  
+    </div>
 </template>
 
 <script>
@@ -64,7 +64,7 @@ export default {
             type: CardDatabase,
             required: true
         },
-        priceDb:{
+        priceDb: {
             type: PriceDatabase,
             required: true
         }
@@ -107,5 +107,4 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
 }
-
 </style>

@@ -51,7 +51,7 @@ export default {
             type: CardDatabase,
             required: true
         },
-        priceDb:{
+        priceDb: {
             type: PriceDatabase,
             required: true
         }

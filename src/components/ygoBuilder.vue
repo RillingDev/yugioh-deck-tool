@@ -227,10 +227,10 @@ export default {
                 this.isMonsterLink,
                 sortFn
             );
-        },
+        }
     },
-    methods:{
-        clickEvent(e, deckPart, cardId){
+    methods: {
+        clickEvent(e, deckPart, cardId) {
             this.$emit("deckcardadd", deckPart, cardId, e);
         }
     }
