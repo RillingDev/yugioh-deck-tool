@@ -48,74 +48,109 @@
         <!-- builder-expanded -->
         <div
             class="builder-filter-expanded"
-            v-if="isMonster"
         >
-            <!-- builder-attribute -->
-            <div class="form-group form-group-select">
-                <label>Attribute:</label>
-                <select
-                    class="form-control"
-                    v-model="filter.attribute.active"
-                    title="Attributes"
+            <div v-if="isMonster">
+                <!-- builder-attribute -->
+                <div class="form-group form-group-select">
+                    <label>Attribute:</label>
+                    <select
+                        class="form-control"
+                        v-model="filter.attribute.active"
+                        title="Attributes"
+                    >
+                        <option
+                            v-for="option in filter.attribute.options"
+                            :key="option"
+                            :value="option"
+                        >{{ option }}</option>
+                    </select>
+                </div>
+
+                <!-- builder-type -->
+                <div class="form-group form-group-select">
+                    <label>Race:</label>
+                    <select
+                        class="form-control"
+                        v-model="filter.race.active"
+                        title="Races"
+                    >
+                        <option
+                            v-for="option in filter.race.options"
+                            :key="option"
+                            :value="option"
+                        >{{ option }}</option>
+                    </select>
+                </div>
+
+                <!-- builder-level -->
+                <div class="form-group form-group-select">
+                    <label>Level:</label>
+                    <select
+                        class="form-control"
+                        v-model="filter.level.active"
+                        title="Levels"
+                    >
+                        <option
+                            v-for="option in filter.level.options"
+                            :key="option"
+                            :value="option"
+                        >{{ option }}</option>
+                    </select>
+                </div>
+
+                <!-- builder-linkarrow -->
+                <div
+                    class="form-group form-group-select"
+                    v-if="isMonsterLink"
                 >
-                    <option
-                        v-for="option in filter.attribute.options"
-                        :key="option"
-                        :value="option"
-                    >{{ option }}</option>
-                </select>
+                    <label>Link Arrows:</label>
+                    <select
+                        class="form-control"
+                        v-model="filter.linkarrows.active"
+                        title="Link Arrows"
+                    >
+                        <option
+                            v-for="option in filter.linkarrows.options"
+                            :key="option"
+                            :value="option"
+                        >{{ option }}</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- builder-type -->
+          <div v-if="isSpell">
             <div class="form-group form-group-select">
-                <label>Race:</label>
+                <label>Subtype:</label>
                 <select
                     class="form-control"
-                    v-model="filter.race.active"
-                    title="Races"
+                    v-model="filter.spelltype.active"
+                    title="Subtypes"
                 >
                     <option
-                        v-for="option in filter.race.options"
+                        v-for="option in filter.spelltype.options"
                         :key="option"
                         :value="option"
                     >{{ option }}</option>
                 </select>
             </div>
+          </div>
 
-            <!-- builder-level -->
-            <div class="form-group form-group-select">
-                <label>Level:</label>
-                <select
-                    class="form-control"
-                    v-model="filter.level.active"
-                    title="Levels"
-                >
-                    <option
-                        v-for="option in filter.level.options"
-                        :key="option"
-                        :value="option"
-                    >{{ option }}</option>
-                </select>
-            </div>
-
-            <!-- builder-linkarrow -->
-            <div
-                class="form-group form-group-select"
-                v-if="isMonsterLink"
-            >
-                <label>Link Arrows:</label>
-                <select
-                    class="form-control"
-                    v-model="filter.linkarrows.active"
-                    title="Link Arrows"
-                >
-                    <option
-                        v-for="option in filter.linkarrows.options"
-                        :key="option"
-                        :value="option"
-                    >{{ option }}</option>
-                </select>
-            </div>
+          <div v-if="isTrap">
+              <div class="form-group form-group-select">
+                  <label>Subtype:</label>
+                    <select
+                        class="form-control"
+                        v-model="filter.traptype.active"
+                        title="Subtypes"
+                    >
+                        <option
+                            v-for="option in filter.traptype.options"
+                            :key="option"
+                            :value="option"
+                        >{{ option }}</option>
+                    </select>
+                </div>
+          </div>
         </div>
 
         <!-- builder-list -->
@@ -159,6 +194,8 @@ import {
     CARD_ATTRIBUTE,
     CARD_LEVEL,
     CARD_LINKARROWS,
+    CARD_SPELL_TYPE,
+    CARD_TRAP_TYPE,
     CARD_SORTERS
 } from "../lib/data/filters";
 
@@ -200,6 +237,14 @@ export default {
                 linkarrows: {
                     active: "Any",
                     options: CARD_LINKARROWS
+                },
+                spelltype: {
+                    active: "Any",
+                    options: CARD_SPELL_TYPE
+                },
+                traptype: {
+                    active: "Any",
+                    options: CARD_TRAP_TYPE
                 }
             },
             sort: {
@@ -217,14 +262,24 @@ export default {
         isMonsterLink() {
             return this.filter.type.active === "Link Monster";
         },
+        isSpell() {
+            return this.filter.type.active === "Spell Card";
+        },
+        isTrap() {
+            return this.filter.type.active === "Trap Card";
+        },
         pairsFiltered() {
             const sortFn = this.sort.options[this.sort.active].fn;
 
             return searchCard(
                 this.pairsArr,
                 this.filter,
-                this.isMonster,
-                this.isMonsterLink,
+                {
+                    monster: this.isMonster,
+                    monsterLink: this.isMonsterLink,
+                    spell: this.isSpell,
+                    trap: this.isTrap
+                },
                 sortFn
             );
         }

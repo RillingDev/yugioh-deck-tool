@@ -88,6 +88,18 @@ const CARD_LINKARROWS = [
     "Bottom-Right"
 ];
 
+const CARD_SPELL_TYPE = [
+    "Any",
+    "Normal",
+    "Field",
+    "Equip",
+    "Continuous",
+    "Quick-Play",
+    "Ritual"
+];
+
+const CARD_TRAP_TYPE = ["Any", "Normal", "Continuous", "Counter"];
+
 const CARD_SORTERS = [
     {
         name: "Alphabetical (A-Z)",
@@ -133,5 +145,7 @@ export {
     CARD_ATTRIBUTE,
     CARD_LEVEL,
     CARD_LINKARROWS,
+    CARD_SPELL_TYPE,
+    CARD_TRAP_TYPE,
     CARD_SORTERS
 };
