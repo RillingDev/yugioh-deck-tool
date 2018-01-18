@@ -12,7 +12,7 @@ const getUrls = () => {
     return {
         buyAPI: "http://yugiohprices.com/card_price?name=",
         imageAPI: joinUrl(URL_YGOPRODECK, "pics"),
-        imageUnkown: getRelativeUrl("assets/unknown.png"),
+        imageUnknown: getRelativeUrl("assets/unknown.png"),
         nameAPI: getRelativeUrl("api/names/names.json.gz"),
         priceAPI: getRelativeUrl("api/prices/prices.php?n=")
     };
