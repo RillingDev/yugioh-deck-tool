@@ -30,128 +30,60 @@
         </div>
 
         <!-- builder-type -->
-        <div class="form-group form-group-select">
-            <label>Type:</label>
-            <select
-                class="form-control"
-                v-model="filter.type.active"
-                title="Types"
-            >
-                <option
-                    v-for="option in filter.type.options"
-                    :key="option"
-                    :value="option"
-                >{{ option }}</option>
-            </select>
-        </div>
+        <ygo-select
+            title="Type"
+            v-model="filter.type.active"
+            :options="filter.type.options"
+        />
 
         <!-- builder-expanded -->
-        <div
-            class="builder-filter-expanded"
-        >
-            <div v-if="isMonster">
-                <!-- builder-attribute -->
-                <div class="form-group form-group-select">
-                    <label>Attribute:</label>
-                    <select
-                        class="form-control"
-                        v-model="filter.attribute.active"
-                        title="Attributes"
-                    >
-                        <option
-                            v-for="option in filter.attribute.options"
-                            :key="option"
-                            :value="option"
-                        >{{ option }}</option>
-                    </select>
-                </div>
+        <template v-if="isMonster">
+            <!-- builder-attribute -->
+            <ygo-select
+                title="Attribute"
+                v-model="filter.attribute.active"
+                :options="filter.attribute.options"
+            />
 
-                <!-- builder-type -->
-                <div class="form-group form-group-select">
-                    <label>Race:</label>
-                    <select
-                        class="form-control"
-                        v-model="filter.race.active"
-                        title="Races"
-                    >
-                        <option
-                            v-for="option in filter.race.options"
-                            :key="option"
-                            :value="option"
-                        >{{ option }}</option>
-                    </select>
-                </div>
+            <!-- builder-type -->
+            <ygo-select
+                title="Race"
+                v-model="filter.race.active"
+                :options="filter.race.options"
+            />
 
-                <!-- builder-level -->
-                <div class="form-group form-group-select">
-                    <label>Level:</label>
-                    <select
-                        class="form-control"
-                        v-model="filter.level.active"
-                        title="Levels"
-                    >
-                        <option
-                            v-for="option in filter.level.options"
-                            :key="option"
-                            :value="option"
-                        >{{ option }}</option>
-                    </select>
-                </div>
+            <!-- builder-level -->
+            <ygo-select
+                title="Level"
+                v-model="filter.level.active"
+                :options="filter.level.options"
+            />
 
+            <template v-if="isMonsterLink">
                 <!-- builder-linkarrow -->
-                <div
-                    class="form-group form-group-select"
-                    v-if="isMonsterLink"
-                >
-                    <label>Link Arrows:</label>
-                    <select
-                        class="form-control"
-                        v-model="filter.linkarrows.active"
-                        title="Link Arrows"
-                    >
-                        <option
-                            v-for="option in filter.linkarrows.options"
-                            :key="option"
-                            :value="option"
-                        >{{ option }}</option>
-                    </select>
-                </div>
-            </div>
+                <ygo-select
+                    title="Link Arrows"
+                    v-model="filter.linkarrows.active"
+                    :options="filter.linkarrows.options"
+                />
+            </template>
+        </template>
 
-          <div v-if="isSpell">
-            <div class="form-group form-group-select">
-                <label>Subtype:</label>
-                <select
-                    class="form-control"
-                    v-model="filter.spelltype.active"
-                    title="Subtypes"
-                >
-                    <option
-                        v-for="option in filter.spelltype.options"
-                        :key="option"
-                        :value="option"
-                    >{{ option }}</option>
-                </select>
-            </div>
-          </div>
+        <template v-if="isSpell">
+            <ygo-select
+                title="Subtype"
+                v-model="filter.spelltype.active"
+                :options="filter.spelltype.options"
+            />
+        </template>
 
-          <div v-if="isTrap">
-              <div class="form-group form-group-select">
-                  <label>Subtype:</label>
-                    <select
-                        class="form-control"
-                        v-model="filter.traptype.active"
-                        title="Subtypes"
-                    >
-                        <option
-                            v-for="option in filter.traptype.options"
-                            :key="option"
-                            :value="option"
-                        >{{ option }}</option>
-                    </select>
-                </div>
-          </div>
-        </div>
+        <template v-if="isTrap">
+            <ygo-select
+                title="Subtype"
+                v-model="filter.traptype.active"
+                :options="filter.traptype.options"
+            />
+        </template>
 
         <!-- builder-list -->
         <ul
@@ -171,8 +103,8 @@
                         <button
                             class="builder-add btn"
                             v-for="deckPart in deckParts"
-                            :key="deckPart.id"
                             @click="(e) => clickEvent(e, deckPart, pair[0])"
+                            :key="deckPart.id"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
                             :disabled.boolean="!deckCardCanAdd(deckPart, pair[0])"
@@ -198,8 +130,10 @@ import {
     CARD_TRAP_TYPE,
     CARD_SORTERS
 } from "../lib/data/filters";
+import ygoSelect from "./ygoSelect.vue";
 
 export default {
+    components: { ygoSelect },
     props: {
         pairsArr: {
             type: Array,
@@ -269,6 +203,7 @@ export default {
             return this.filter.type.active === "Trap Card";
         },
         pairsFiltered() {
+            console.log(this.sort);
             const sortFn = this.sort.options[this.sort.active].fn;
 
             return searchCard(
