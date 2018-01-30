@@ -19,13 +19,11 @@
                     role="group"
                 >
                     <button
-                        type="button button-primary"
                         class="btn btn-secondary"
                         :class="{active: drawMode === 5}"
                         @click="setDrawMode(5)"
                     >Going First</button>
                     <button
-                        type="button button-primary"
                         class="btn btn-secondary"
                         :class="{active: drawMode === 6}"
                         @click="setDrawMode(6)"
