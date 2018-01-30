@@ -6,6 +6,11 @@
     > .form-group {
         display: flex;
         flex-direction: column;
+        input,
+        button,
+        select{
+            margin-bottom: 0.5rem;
+        }
     }
     label {
         margin-bottom: 0;
@@ -18,6 +23,11 @@
     @include screen(min, md) {
         > .form-group {
             flex-direction: row;
+            input,
+            button,
+            select{
+                margin-bottom: 0;
+            }
         }
         input[title="Deck Title"] {
             max-width: 175px;
