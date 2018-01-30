@@ -107,7 +107,7 @@
                             :key="deckPart.id"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
-                            :disabled.boolean="!deckCardCanAdd(deckPart, pair[0])"
+                            :disabled="!deckCardCanAdd(deckPart, pair[0])"
                         >
                             <span class="fa fa-plus"><!----></span>
                         </button>
