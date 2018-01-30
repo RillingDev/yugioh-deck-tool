@@ -22,7 +22,7 @@
                 >
                 <button
                     class="btn btn-primary form-control"
-                    download
+                    download="Unnamed.ydk"
                     @click="deckToFile"
                     title="Download Deck"
                 >Download</button>

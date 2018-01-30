@@ -10,6 +10,7 @@
             width="100"
             height="140"
             :src="image"
+            :alt="cardName"
         >
         <div class="deck-card-text">
             <div class="deck-card-name">{{ cardName || `[${cardId}]` }}</div>
