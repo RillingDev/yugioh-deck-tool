@@ -150,10 +150,10 @@ export default {
         this.fetchCards();
 
         if (uriQuery.includes("?d=")) {
-            //Load encoded uriDeck
+            // Load encoded uriDeck
             this.deck = Deck.fromUri(uriQuery.replace("?d=", ""));
         } else if (uriQuery.includes("?u=")) {
-            //Load remote deck file
+            // Load remote deck file
             Deck.fromRemoteFile(uriQuery.replace("?u=", ""))
                 .then(deck => (this.deck = deck))
                 .catch(stderr);

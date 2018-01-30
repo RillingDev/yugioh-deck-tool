@@ -2,7 +2,7 @@ import { arrFrom, arrCount, arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 import { DECKPARTS } from "../data/deck";
 
-const fileToList = function(fileContent) {
+const fileToList = function (fileContent) {
     const fileParts = fileContent
         .replace(/#created.+/, "")
         .trim()
@@ -17,7 +17,7 @@ const fileToList = function(fileContent) {
     );
 };
 
-const listToText = function(list, cardDb) {
+const listToText = function (list, cardDb) {
     const result = [];
 
     DECKPARTS.forEach((deckPart, index) => {

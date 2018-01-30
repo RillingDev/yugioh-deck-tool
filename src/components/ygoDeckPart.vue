@@ -79,8 +79,6 @@ export default {
 
 @import "../styles/variables.custom";
 
-/* .app-deck {} */
-
 .deck-part {
     margin-bottom: 1em;
     &-main {
