@@ -7,9 +7,9 @@ const inputCards = input[2].data;
 const output = {};
 
 inputCards.forEach(entry => {
-    entry.linkmarkers = entry.linkmarkers
-        ? entry.linkmarkers.split(",").map(str => str.trim())
-        : [];
+    entry.linkmarkers = entry.linkmarkers ?
+        entry.linkmarkers.split(",").map(str => str.trim()) :
+        [];
 
     output[entry.id] = [
         entry.name,

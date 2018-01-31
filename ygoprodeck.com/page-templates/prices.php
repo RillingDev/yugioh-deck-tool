@@ -38,7 +38,7 @@
             <div class="priceapp">
                 <div class="container">
                     <header class="priceapp-header">
-                        <h1>YuGiOh Deck Price v4.2</h1>
+                        <h1>YuGiOh Deck Price v4</h1>
                         <p>Check the average price for your YgoPro/DevPro .ydk files</p>
                     </header>
                     <main>
@@ -51,7 +51,7 @@
                             </span>
                             |
                             <span>
-                                <a href="https://github.com/FelixRilling/ygodeckprice3" target="_blank">Project Sourcecode</a>
+                                <a href="https://github.com/FelixRilling/ygodeckprice3" target="_blank">Project source code</a>
                             </span>
                             |
                             <span>Price data from the
