@@ -94,13 +94,14 @@
                 v-for="pair in pairsFiltered"
                 :key="pair[0]"
             >
+                <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
                 <a
                     class="builder-card"
                     :data-name="pair[1]"
                 >
                     <div class="builder-card-name">{{ pair[1] }}</div>
                     <div class="builder-card-action">
-                        <button
+                        <span
                             class="builder-add btn"
                             v-for="deckPart in deckParts"
                             @click="(e) => clickEvent(e, deckPart, pair[0])"
@@ -109,8 +110,8 @@
                             :title="`Add Card to ${deckPart.name} Deck`"
                             :disabled="!deckCardCanAdd(deckPart, pair[0])"
                         >
-                            <span class="fa fa-plus"><!----></span>
-                        </button>
+                            <i class="fa fa-plus"><!----></i>
+                        </span>
                     </div>
                 </a>
             </li>
