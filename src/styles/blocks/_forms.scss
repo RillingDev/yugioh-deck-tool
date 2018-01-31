@@ -1,14 +1,13 @@
 @import "../mixins/screen";
-
 .app-forms {
     display: flex;
     flex-direction: column;
-    > .form-group {
+    >.form-group {
         display: flex;
         flex-direction: column;
         input,
         button,
-        select{
+        select {
             margin-bottom: 0.5rem;
         }
     }
@@ -21,11 +20,11 @@
         padding-bottom: 3px;
     }
     @include screen(min, md) {
-        > .form-group {
+        >.form-group {
             flex-direction: row;
             input,
             button,
-            select{
+            select {
                 margin-bottom: 0;
             }
         }

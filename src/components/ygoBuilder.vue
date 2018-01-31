@@ -99,7 +99,7 @@
                     class="builder-card"
                     :data-name="pair[1]"
                 >
-                    <div class="builder-card-name">{{ pair[1] }}</div>
+                    <span class="builder-card-name">{{ pair[1] }}</span>
                     <div class="builder-card-action">
                         <span
                             class="builder-add btn"
