@@ -4,7 +4,7 @@
         :class="`deck-part-${deckPart.id}`"
     >
         <h3>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</h3>
-        <div v-if="deckPartList.length">
+        <template v-if="deckPartList.length">
             <ygo-price-view
                 v-if="ajax.pricesLoaded"
                 :item="deckPartList"
@@ -26,7 +26,7 @@
                     />
                 </ygo-card>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -81,6 +81,12 @@ export default {
 
 .deck-part {
     margin-bottom: 1.25em;
+
+    h3 {
+        font-size: 1rem;
+        display: initial;
+    }
+
     &-main {
         .deck-content {
             background-color: $color-deckpart-main;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="drawsim">
         <button
             class="btn btn-primary btn-sm"
             title="Open Start Hand Simulation"
@@ -13,36 +13,36 @@
             hide-footer
             title="Start Hand Simulation"
         >
-            <div class="drawsim">
-                <div
-                    class="btn-group"
-                    role="group"
-                >
-                    <button
-                        class="btn btn-secondary"
-                        :class="{active: drawMode === 5}"
-                        @click="setDrawMode(5)"
-                    >Going First</button>
-                    <button
-                        class="btn btn-secondary"
-                        :class="{active: drawMode === 6}"
-                        @click="setDrawMode(6)"
-                    >Going Second</button>
-                </div>
-                <div class="drawsim-output">
-                    <ygo-card
-                        v-for="(drawItemId, index) of drawItems"
-                        :key="`${drawItemId}_${index}`"
-                        :card-id="drawItemId"
-                        :card-name="cardDb.getName(drawItemId)"
-                    />
-                </div>
+            <div
+                class="btn-group"
+                role="group"
+            >
                 <button
-                    class="btn btn-primary"
-                    @click="draw"
-                    title="Simulate a new Starting Hand"
-                >Draw</button>
+                    class="btn btn-secondary"
+                    :class="{active: drawMode === 5}"
+                    @click="setDrawMode(5)"
+                >Going First</button>
+                <button
+                    class="btn btn-secondary"
+                    :class="{active: drawMode === 6}"
+                    @click="setDrawMode(6)"
+                >Going Second</button>
             </div>
+            <div class="drawsim-output">
+                <ygo-card
+                    v-for="(drawItemId, index) of drawItems"
+                    :key="`${drawItemId}_${index}`"
+                    :card-id="drawItemId"
+                    :card-name="cardDb.getName(drawItemId)"
+                />
+            </div>
+            <button
+                class="btn btn-primary"
+                @click="draw"
+                title="Simulate a new Starting Hand"
+            >
+                Draw
+            </button>
         </b-modal>
     </div>
 </template>
@@ -108,21 +108,23 @@ export default {
         font-size: 1.4em;
         cursor: pointer;
     }
+
     .modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
+
     .modal-title {
         margin-bottom: 0;
     }
-}
 
-.drawsim {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center;
+    .modal-body {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .drawsim-output {
