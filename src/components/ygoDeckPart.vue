@@ -3,7 +3,7 @@
         class="deck-part"
         :class="`deck-part-${deckPart.id}`"
     >
-        <span>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</span>
+        <h3>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</h3>
         <div v-if="deckPartList.length">
             <ygo-price-view
                 v-if="ajax.pricesLoaded"
@@ -80,7 +80,7 @@ export default {
 @import "../styles/variables.custom";
 
 .deck-part {
-    margin-bottom: 1em;
+    margin-bottom: 1.25em;
     &-main {
         .deck-content {
             background-color: $color-deckpart-main;

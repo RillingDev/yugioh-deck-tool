@@ -72,12 +72,12 @@
         <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
-           <ygo-deck
+            <ygo-deck
                :ajax="ajax"
                :deck="deck"
                :card-db="cardDb"
                :price-db="priceDb"
-           />
+            />
         </div>
 
         <!-- app-builder -->

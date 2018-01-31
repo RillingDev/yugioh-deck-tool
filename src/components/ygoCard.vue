@@ -13,7 +13,7 @@
             :alt="cardName"
         >
         <div class="deck-card-text">
-            <div class="deck-card-name">{{ cardName || `[${cardId}]` }}</div>
+            <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
             <slot
                 class="deck-card-price"
                 name="price"
@@ -24,7 +24,7 @@
 
 <script>
 import getUrls from "../lib/data/urls";
-import { isDefined } from "lightdash";
+import { isNil } from "lightdash";
 
 const urls = getUrls();
 
@@ -37,12 +37,12 @@ export default {
         cardName: {
             type: String,
             required: false,
-            default: ""
+            default: null
         }
     },
     computed: {
         hasData() {
-            return isDefined(this.cardName);
+            return !isNil(this.cardName);
         },
         image() {
             return this.hasData

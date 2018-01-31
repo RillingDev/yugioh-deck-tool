@@ -1,5 +1,4 @@
 @import "../mixins/screen";
-
 .priceapp-header {
     text-align: center;
 }
@@ -12,4 +11,8 @@
     @include screen(max, xl) {
         max-width: 100%;
     }
+}
+
+h3 {
+    font-size: 1.2rem;
 }
