@@ -94,7 +94,7 @@
                 v-for="pair in pairsFiltered"
                 :key="pair[0]"
             >
-                <div
+                <a
                     class="builder-card"
                     :data-name="pair[1]"
                 >
@@ -112,7 +112,7 @@
                             <span class="fa fa-plus"><!----></span>
                         </button>
                     </div>
-                </div>
+                </a>
             </li>
         </ul>
     </div>
