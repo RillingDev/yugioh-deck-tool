@@ -26,7 +26,7 @@
                     :key="option.name"
                     :value="index"
                 >{{ option.name }}</option>
-            </select>
+                    </select>
         </div>
 
         <!-- builder-type -->
@@ -110,12 +110,14 @@
                             :title="`Add Card to ${deckPart.name} Deck`"
                             :disabled="!deckCardCanAdd(deckPart, pair[0])"
                         >
-                            <i class="fa fa-plus"><!----></i>
-                        </span>
+                            <i class="fa fa-plus">
+                                <!---->
+                            </i>
+                            </span>
                     </div>
-                </a>
-            </li>
-        </ul>
+                    </a>
+                    </li>
+                    </ul>
     </div>
 </template>
 

@@ -24,10 +24,10 @@
                         :item="cardId"
                         :price-db="priceDb"
                     />
-                </ygo-card>
+                    </ygo-card>
             </div>
         </template>
-    </div>
+        </div>
 </template>
 
 <script>

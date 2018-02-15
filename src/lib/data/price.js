@@ -24,25 +24,25 @@ const PRICE_CURRENCIES = [
         id: "euro",
         name: "Euro",
         label: "€",
-        val: 0.807
+        val: 0.799
     },
     {
         id: "pound",
         name: "Pound",
         label: "£",
-        val: 0.713
+        val: 0.709
     },
     {
         id: "dollar_ca",
         name: "Canadian Dollar",
         label: "$",
-        val: 1.234
+        val: 1.248
     },
     {
         id: "dollar_au",
         name: "Australian Dollar",
         label: "$",
-        val: 1.238
+        val: 1.259
     }
 ];
 

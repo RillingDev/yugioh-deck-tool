@@ -12,7 +12,7 @@
                 :key="option"
                 :value="option"
             >{{ option }}</option>
-        </select>
+                </select>
     </div>
 </template>
 

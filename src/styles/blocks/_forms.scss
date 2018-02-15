@@ -2,7 +2,7 @@
 .app-forms {
     display: flex;
     flex-direction: column;
-    >.form-group {
+    > .form-group {
         display: flex;
         flex-direction: column;
         input,
@@ -20,7 +20,7 @@
         padding-bottom: 3px;
     }
     @include screen(min, md) {
-        >.form-group {
+        > .form-group {
             flex-direction: row;
             input,
             button,

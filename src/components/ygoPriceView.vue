@@ -11,8 +11,8 @@
             :class="'price-mode-'+priceMode.id"
         >
             {{ priceDb.format(priceValues[index]) }}
-        </span>
-    </div>
+            </span>
+            </div>
 </template>
 
 <script>
