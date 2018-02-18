@@ -1,15 +1,10 @@
-import { objEntries, arrFrom } from "lightdash";
+import { forEachEntry, arrFrom } from "lightdash";
 
 const CardDatabase = class {
     constructor(obj = {}) {
-        const entries = objEntries(obj);
-
         this.cards = new Map();
 
-        entries.forEach(entry => {
-            const id = entry[0];
-            const val = entry[1];
-
+        forEachEntry(obj, (id, val) => {
             if (val[0].length > 0) {
                 this.cards.set(id, val);
             }
@@ -18,7 +13,7 @@ const CardDatabase = class {
         this.pairsArr = arrFrom(this.cards.entries());
 
         /**
-         * The arrays dont need to be modified again, freezing improves performance
+         * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
          */
         Object.freeze(this);
 

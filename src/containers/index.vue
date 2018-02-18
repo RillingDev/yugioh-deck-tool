@@ -13,19 +13,19 @@
                     @change="fileOnUpload"
                     title="Upload Deck"
                 >
-                <input
-                    class="form-control form-deck-name"
-                    type="text"
-                    v-model="deck.name"
-                    title="Deck Title"
-                    placeholder="Deck Title"
-                >
-                <button
-                    class="btn btn-primary form-control"
-                    download="Unnamed.ydk"
-                    @click="deckToFile"
-                    title="Download Deck"
-                >Download</button>
+                    <input
+                        class="form-control form-deck-name"
+                        type="text"
+                        v-model="deck.name"
+                        title="Deck Title"
+                        placeholder="Deck Title"
+                    >
+                        <button
+                            class="btn btn-primary form-control"
+                            download="Unnamed.ydk"
+                            @click="deckToFile"
+                            title="Download Deck"
+                        >Download</button>
             </div>
             <!-- app-forms-share -->
             <div class="form-group">
@@ -36,11 +36,11 @@
                     :value="shareLink"
                     title="Shareable Link"
                 >
-                <button
-                    class="btn btn-primary form-control"
-                    @click="copyShareText"
-                    title="Copy Decklist to Clipboard"
-                >Copy Decklist to Clipboard</button>
+                    <button
+                        class="btn btn-primary form-control"
+                        @click="copyShareText"
+                        title="Copy Decklist to Clipboard"
+                    >Copy Decklist to Clipboard</button>
             </div>
             <!-- app-forms-price -->
             <div class="form-group">
@@ -55,17 +55,19 @@
                         :key="currency.id"
                         :value="currency"
                     >{{ currency.name }}</option>
-                </select>
-                <button
-                    class="btn btn-primary form-control"
-                    @click="fetchPrices"
-                    title="Load Prices"
-                >
-                    <span :hidden="ajax.currentlyLoading">Load Prices</span>
-                    <span :hidden="!ajax.currentlyLoading">
-                        <i class="fa fa-circle-o-notch fa-spin fa-fw"><!----></i>
-                    </span>
-                </button>
+                        </select>
+                        <button
+                            class="btn btn-primary form-control"
+                            @click="fetchPrices"
+                            title="Load Prices"
+                        >
+                            <span :hidden="ajax.currentlyLoading">Load Prices</span>
+                            <span :hidden="!ajax.currentlyLoading">
+                                <i class="fa fa-circle-o-notch fa-spin fa-fw">
+                                    <!---->
+                                </i>
+                            </span>
+                            </button>
             </div>
         </div>
 
@@ -73,10 +75,10 @@
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
             <ygo-deck
-               :ajax="ajax"
-               :deck="deck"
-               :card-db="cardDb"
-               :price-db="priceDb"
+                :ajax="ajax"
+                :deck="deck"
+                :card-db="cardDb"
+                :price-db="priceDb"
             />
         </div>
 

@@ -11,13 +11,12 @@ const createOptimizeList = deckList =>
     deckList
         .map(deckListPart =>
             arrFrom(arrCount(deckListPart))
-                .map(entry => {
-                    if (entry[1] > 1) {
-                        return `${DELIMITERS.cardAmount}${entry[1]}${entry[0]}`;
-                    } else {
-                        return entry[0];
-                    }
-                })
+                .map(
+                    entry =>
+                        entry[1] > 1
+                            ? `${DELIMITERS.cardAmount}${entry[1]}${entry[0]}`
+                            : entry[0]
+                )
                 .join(DELIMITERS.cardId)
         )
         .join(DELIMITERS.deckPart);
