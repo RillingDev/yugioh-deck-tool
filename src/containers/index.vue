@@ -63,9 +63,9 @@
                         >
                             <span :hidden="ajax.currentlyLoading">Load Prices</span>
                             <span :hidden="!ajax.currentlyLoading">
-                                <i class="fa fa-circle-o-notch fa-spin fa-fw">
+                                <span class="fa fa-circle-o-notch fa-spin fa-fw">
                                     <!---->
-                                </i>
+                                </span>
                             </span>
                             </button>
             </div>

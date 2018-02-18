@@ -110,9 +110,9 @@
                             :title="`Add Card to ${deckPart.name} Deck`"
                             :disabled="!deckCardCanAdd(deckPart, pair[0])"
                         >
-                            <i class="fa fa-plus">
+                            <span class="fa fa-plus">
                                 <!---->
-                            </i>
+                            </span>
                             </span>
                     </div>
                     </a>
