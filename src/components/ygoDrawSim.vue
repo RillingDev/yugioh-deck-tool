@@ -18,12 +18,12 @@
                     role="group"
                 >
                     <button
-                        class="btn btn-secondary"
+                        class="btn btn-primary"
                         :class="{active: drawMode === 5}"
                         @click="setDrawMode(5)"
                     >Going First</button>
                         <button
-                            class="btn btn-secondary"
+                            class="btn btn-primary"
                             :class="{active: drawMode === 6}"
                             @click="setDrawMode(6)"
                         >Going Second</button>
@@ -100,6 +100,10 @@ export default {
 @import "node_modules/bootstrap/scss/variables";
 
 @import "../styles/variables.custom";
+
+@import "node_modules/bootstrap/scss/button-group";
+@import "node_modules/bootstrap/scss/close";
+@import "node_modules/bootstrap/scss/modal";
 
 .priceapp {
     .close {

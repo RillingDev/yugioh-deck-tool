@@ -222,16 +222,10 @@ export default {
 
 @import "node_modules/bootstrap/scss/type";
 @import "node_modules/bootstrap/scss/grid";
-@import "node_modules/bootstrap/scss/tables";
 @import "node_modules/bootstrap/scss/forms";
 @import "node_modules/bootstrap/scss/buttons";
 @import "node_modules/bootstrap/scss/transitions";
-@import "node_modules/bootstrap/scss/button-group";
-@import "node_modules/bootstrap/scss/close";
-@import "node_modules/bootstrap/scss/modal";
 @import "node_modules/bootstrap/scss/utilities";
-
-@import "node_modules/bootstrap-vue/dist/bootstrap-vue";
 
 @import "../styles/blocks/general";
 @import "../styles/blocks/app";
