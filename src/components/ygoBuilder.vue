@@ -133,16 +133,13 @@ import {
     CARD_TRAP_TYPE,
     CARD_SORTERS
 } from "../lib/data/filters";
+import { DECKPARTS } from "../lib/data/deck";
 import ygoSelect from "./ygoSelect.vue";
 
 export default {
     components: { ygoSelect },
     props: {
         pairsArr: {
-            type: Array,
-            required: true
-        },
-        deckParts: {
             type: Array,
             required: true
         },
@@ -153,6 +150,7 @@ export default {
     },
     data: () => {
         return {
+            deckParts: DECKPARTS,
             filter: {
                 name: "",
                 type: {
@@ -206,7 +204,6 @@ export default {
             return this.filter.type.active === "Trap Card";
         },
         pairsFiltered() {
-            console.log(this.sort);
             const sortFn = this.sort.options[this.sort.active].fn;
 
             return searchCard(

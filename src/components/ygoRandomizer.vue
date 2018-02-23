@@ -3,14 +3,37 @@
         <button
             class="btn btn-primary btn-sm"
             title="Open Randomizer"
+            @click="randomize"
         >Randomize</button>
     </div>
 </template>
 
 <script>
+import randomizeDeck from "../lib/randomizeDeck";
+import { DECKPARTS } from "../lib/data/deck";
+
 export default {
-    props: {},
-    computed: {}
+    props: {
+        pairsArr: {
+            type: Array,
+            required: true
+        },
+        deckCardCanAdd: {
+            type: Function,
+            required: true
+        }
+    },
+    methods: {
+        randomize() {
+            const result = randomizeDeck(
+                this.pairsArr,
+                DECKPARTS,
+                this.deckCardCanAdd
+            );
+
+            this.$emit("randomize", result);
+        }
+    }
 };
 </script>
 

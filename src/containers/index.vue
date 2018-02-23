@@ -75,6 +75,7 @@
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
             <ygo-deck
+                v-if="ajax.cardsLoaded"
                 :ajax="ajax"
                 :deck="deck"
                 :card-db="cardDb"
@@ -86,7 +87,12 @@
         <div class="app-section app-builder">
             <div class="app-builder-intro">
                 <h2>Deckbuilder:</h2>
-                <ygo-randomizer />
+                <ygo-randomizer
+                    v-if="ajax.cardsLoaded"
+                    :pairs-arr="cardDb.pairsArr"
+                    :deck-card-can-add="deckCardCanAdd"
+                    @randomize="deckRandomize"
+                />
                 <ygo-draw-sim
                     :deck-list-main="deck.main"
                     :card-db="cardDb"
@@ -95,7 +101,6 @@
             <ygo-builder
                 v-if="ajax.cardsLoaded"
                 :pairs-arr="cardDb.pairsArr"
-                :deck-parts="deck.parts"
                 :deck-card-can-add="deckCardCanAdd"
                 @deckcardadd="deckCardAdd"
             />
@@ -196,6 +201,9 @@ export default {
         deckCardAdd(deckPart, cardId) {
             this.deck.cardAdd(deckPart, cardId, this.cardDb);
             this.ajax.pricesLoaded = false;
+        },
+        deckRandomize(newDeck) {
+            this.deck = newDeck;
         },
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;
