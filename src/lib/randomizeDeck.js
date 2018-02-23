@@ -3,12 +3,18 @@ import shuffle from "./shuffle";
 
 const REGEX_NAME_DELIMITER = /[,;:]? (?:- )?/;
 
-const getRandomAmount = () => {
+const getRandomAmount = (extra = false) => {
     const seed = Math.random();
 
-    if (seed > 0.85) return 1;
-    else if (seed > 0.6) return 2;
-    else return 3;
+    if (extra) {
+        if (seed > 0.5) return 1;
+        else if (seed > 0.2) return 2;
+        return 3;
+    } else {
+        if (seed > 0.8) return 1;
+        else if (seed > 0.7) return 2;
+        return 3;
+    }
 };
 
 const getRandomName = cardNameList => {
@@ -31,16 +37,20 @@ const randomizeDeck = (pairsArr, deckParts) => {
     deckParts.forEach(deckPart => {
         const subResult = [];
         const deckPartLimit = deckPart.min === 0 ? deckPart.max : deckPart.min;
+        const isExtra = deckPart.id === "extra";
+        const isSide = deckPart.id === "side";
+        const cardCanAdd = isSide ? deckParts[0].check : deckPart.check;
 
         while (subResult.length < deckPartLimit && i < pairsShuffled.length) {
             const card = pairsShuffled[i];
 
-            if (deckPart.check(card[1])) {
-                const cardByAmount = new Array(getRandomAmount()).fill(card[0]);
+            if (cardCanAdd(card[1])) {
+                const cardAmount = getRandomAmount(isExtra);
+                const cardByAmount = new Array(cardAmount).fill(card[0]);
 
                 subResult.push(...cardByAmount);
 
-                if (deckPart.id !== "side") {
+                if (!isSide && cardAmount === 3) {
                     resultCardNames.push(card[1][0]);
                 }
             }
