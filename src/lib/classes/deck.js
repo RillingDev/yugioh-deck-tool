@@ -105,7 +105,7 @@ const Deck = class {
     cardCanAdd(deckPart, cardId, cardDb) {
         return (
             deckPart.check(cardDb.get(cardId)) &&
-            this[deckPart.id].length < deckPart.limit &&
+            this[deckPart.id].length < deckPart.max &&
             this[deckPart.id].filter(
                 activeSectionCardId => activeSectionCardId === cardId
             ).length < 3

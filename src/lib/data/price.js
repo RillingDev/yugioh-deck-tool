@@ -46,4 +46,7 @@ const PRICE_CURRENCIES = [
     }
 ];
 
+Object.freeze(PRICE_MODES);
+Object.freeze(PRICE_CURRENCIES);
+
 export { PRICE_MODES, PRICE_CURRENCIES };

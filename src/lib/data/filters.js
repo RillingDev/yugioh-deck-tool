@@ -139,6 +139,15 @@ const CARD_SORTERS = [
     }
 ];
 
+Object.freeze(CARD_TYPE);
+Object.freeze(CARD_RACE);
+Object.freeze(CARD_ATTRIBUTE);
+Object.freeze(CARD_LEVEL);
+Object.freeze(CARD_LINKARROWS);
+Object.freeze(CARD_SPELL_TYPE);
+Object.freeze(CARD_TRAP_TYPE);
+Object.freeze(CARD_SORTERS);
+
 export {
     CARD_TYPE,
     CARD_RACE,

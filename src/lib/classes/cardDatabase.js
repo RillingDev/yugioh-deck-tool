@@ -1,11 +1,13 @@
 import { forEachEntry, arrFrom } from "lightdash";
 
+const REGEX_IS_TOKEN = /Tokens?$/;
+
 const CardDatabase = class {
     constructor(obj = {}) {
         this.cards = new Map();
 
         forEachEntry(obj, (id, val) => {
-            if (val[0].length > 0) {
+            if (val[0].length > 0 && !REGEX_IS_TOKEN.test(val[0])) {
                 this.cards.set(id, val);
             }
         });

@@ -5,23 +5,28 @@ const DECKPARTS = [
         id: "main",
         name: "Main",
         indicator: "#main",
-        limit: 60,
+        min: 40,
+        max: 60,
         check: card => !DECKPARTS_REGEX_EXTRA.test(card[1])
     },
     {
         id: "extra",
         name: "Extra",
         indicator: "#extra",
-        limit: 15,
+        min: 0,
+        max: 15,
         check: card => DECKPARTS_REGEX_EXTRA.test(card[1])
     },
     {
         id: "side",
         name: "Side",
         indicator: "!side",
-        limit: 15,
+        min: 0,
+        max: 15,
         check: () => true
     }
 ];
+
+Object.freeze(DECKPARTS);
 
 export { DECKPARTS };
