@@ -1,6 +1,7 @@
 <template>
     <div class="drawsim">
         <button
+            :disabled="deckListMain.length === 0"
             class="btn btn-primary btn-sm"
             title="Open Start Hand Simulation"
             @click="showModal"

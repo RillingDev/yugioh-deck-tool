@@ -86,8 +86,8 @@
         <div class="app-section app-builder">
             <div class="app-builder-intro">
                 <h2>Deckbuilder:</h2>
+                <ygo-randomizer />
                 <ygo-draw-sim
-                    v-if="deck.main.length"
                     :deck-list-main="deck.main"
                     :card-db="cardDb"
                 />
@@ -118,6 +118,7 @@ import getUrls from "../lib/data/urls";
 import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDeck from "../components/ygoDeck.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
+import ygoRandomizer from "../components/ygoRandomizer.vue";
 
 // eslint-disable-next-line no-console
 const stderr = console.error;
@@ -125,7 +126,7 @@ const urls = getUrls();
 
 export default {
     name: "Index",
-    components: { ygoBuilder, ygoDrawSim, ygoDeck },
+    components: { ygoBuilder, ygoDrawSim, ygoDeck, ygoRandomizer },
     data: () => {
         return {
             cardDb: new CardDatabase(),
