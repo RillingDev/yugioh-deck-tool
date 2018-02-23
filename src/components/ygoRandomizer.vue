@@ -17,19 +17,11 @@ export default {
         pairsArr: {
             type: Array,
             required: true
-        },
-        deckCardCanAdd: {
-            type: Function,
-            required: true
         }
     },
     methods: {
         randomize() {
-            const result = randomizeDeck(
-                this.pairsArr,
-                DECKPARTS,
-                this.deckCardCanAdd
-            );
+            const result = randomizeDeck(this.pairsArr, DECKPARTS);
 
             this.$emit("randomize", result);
         }

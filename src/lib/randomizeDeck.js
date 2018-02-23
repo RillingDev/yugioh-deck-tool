@@ -1,6 +1,8 @@
 import Deck from "./classes/deck";
 import shuffle from "./shuffle";
 
+const REGEX_NAME_DELIMITER = /[,;:]? (?:- )?/;
+
 const getRandomAmount = () => {
     const seed = Math.random();
 
@@ -10,14 +12,17 @@ const getRandomAmount = () => {
 };
 
 const getRandomName = cardNameList => {
-    const words = cardNameList.join(" ").split(" ");
+    const words = cardNameList
+        .join(" ")
+        .split(REGEX_NAME_DELIMITER)
+        .filter(word => word[0].toUpperCase() === word[0]); // Only use Capitalized words to avoid 'the' and 'of'
 
     return shuffle(words)
         .slice(0, 3)
         .join(" ");
 };
 
-const randomizeDeck = (pairsArr, deckParts, deckCardCanAdd) => {
+const randomizeDeck = (pairsArr, deckParts) => {
     const pairsShuffled = shuffle(pairsArr);
     const result = [];
     const resultCardNames = [];
@@ -30,12 +35,16 @@ const randomizeDeck = (pairsArr, deckParts, deckCardCanAdd) => {
         while (subResult.length < deckPartLimit && i < pairsShuffled.length) {
             const card = pairsShuffled[i];
 
-            if (deckCardCanAdd(deckPart, card[0])) {
+            if (deckPart.check(card[1])) {
                 const cardByAmount = new Array(getRandomAmount()).fill(card[0]);
 
                 subResult.push(...cardByAmount);
-                resultCardNames.push(card[1][0]);
+
+                if (deckPart.id !== "side") {
+                    resultCardNames.push(card[1][0]);
+                }
             }
+
             i++;
         }
 

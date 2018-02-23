@@ -20,4 +20,6 @@ const shuffle = arr => {
     return result;
 };
 
+/* const shuffle = arr => arr.sort(() => Math.random()); */
+
 export default shuffle;

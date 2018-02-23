@@ -90,7 +90,6 @@
                 <ygo-randomizer
                     v-if="ajax.cardsLoaded"
                     :pairs-arr="cardDb.pairsArr"
-                    :deck-card-can-add="deckCardCanAdd"
                     @randomize="deckRandomize"
                 />
                 <ygo-draw-sim
