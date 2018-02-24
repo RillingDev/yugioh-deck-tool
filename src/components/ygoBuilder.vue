@@ -232,6 +232,7 @@ export default {
 @import "node_modules/bootstrap/scss/mixins";
 @import "node_modules/bootstrap/scss/variables";
 
+@import "../styles/mixins/screen";
 @import "../styles/variables.custom";
 
 .form-group-select {
@@ -247,7 +248,7 @@ export default {
     }
 }
 .builder-list {
-    max-height: 60vh;
+    max-height: 250px;
     width: 100%;
     overflow-x: auto;
     overflow-y: scroll;
@@ -255,6 +256,10 @@ export default {
     padding: 0;
     resize: vertical;
     border: 1px solid $gray-400;
+
+    @include screen(min, md) {
+        max-height: 60vh;
+    }
 }
 
 .builder-list li {
@@ -272,7 +277,6 @@ export default {
 }
 
 .builder-card-name {
-    width: calc(100% - 108px);
     padding: 10px 0;
 }
 .builder-card-action {
