@@ -8,7 +8,7 @@
     >
         <img
             width="100"
-            height="140"
+            height="135"
             :src="image"
             :alt="cardName"
         >
@@ -76,8 +76,6 @@ export default {
 }
 
 .deck-card img {
-    height: 140px;
-    width: 100px;
     margin-bottom: 0;
 }
 
