@@ -9,19 +9,20 @@
 </template>
 
 <script>
+import CardDatabase from "../lib/classes/cardDatabase";
 import randomizeDeck from "../lib/randomizeDeck";
 import { DECKPARTS } from "../lib/data/deck";
 
 export default {
     props: {
-        pairsArr: {
-            type: Array,
+        cardDb: {
+            type: CardDatabase,
             required: true
         }
     },
     methods: {
         randomize() {
-            const result = randomizeDeck(this.pairsArr, DECKPARTS);
+            const result = randomizeDeck(this.cardDb, DECKPARTS);
 
             this.$emit("randomize", result);
         }

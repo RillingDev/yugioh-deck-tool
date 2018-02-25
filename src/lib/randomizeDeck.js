@@ -28,11 +28,12 @@ const getRandomName = cardNameList => {
         .join(" ");
 };
 
-const randomizeDeck = (pairsArr, deckParts) => {
-    const pairsShuffled = shuffle(pairsArr);
+const randomizeDeck = (cardDb, deckParts) => {
+    const pairsShuffled = shuffle(cardDb.pairsArr);
     const result = [];
     const resultCardNames = [];
     let i = 0;
+    let resultDeck;
 
     deckParts.forEach(deckPart => {
         const subResult = [];
@@ -61,7 +62,11 @@ const randomizeDeck = (pairsArr, deckParts) => {
         result.push(subResult.slice(0, deckPart.max));
     });
 
-    return new Deck(result, getRandomName(resultCardNames));
+    resultDeck = new Deck(result, getRandomName(resultCardNames));
+
+    resultDeck.sort(cardDb);
+
+    return resultDeck;
 };
 
 export default randomizeDeck;

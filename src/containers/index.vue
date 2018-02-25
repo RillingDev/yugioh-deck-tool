@@ -89,7 +89,7 @@
                 <h2>Deckbuilder:</h2>
                 <ygo-randomizer
                     v-if="ajax.cardsLoaded"
-                    :pairs-arr="cardDb.pairsArr"
+                    :card-db="cardDb"
                     @randomize="deckRandomize"
                 />
                 <ygo-draw-sim

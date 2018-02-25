@@ -1,6 +1,7 @@
 import { arrFrom, arrCount, arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 import { DECKPARTS } from "../data/deck";
+import { CARD_TYPE } from "../data/filters";
 
 const fileToList = function(fileContent) {
     const fileParts = fileContent
@@ -34,6 +35,27 @@ const listToText = function(list, cardDb) {
 
     return result.join("\n").trim();
 };
+
+const sort = (list, cardDb) =>
+    list.sort((a, b) => {
+        const dataA = cardDb.get(a);
+        const dataB = cardDb.get(b);
+        const typeComp =
+            CARD_TYPE.indexOf(dataA[1]) - CARD_TYPE.indexOf(dataB[1]);
+        const lvComp = Number(dataB[4]) - Number(dataA[4]);
+        const rcComp = dataA[5].localeCompare(dataB[5]);
+        const nameComp = dataA[0].localeCompare(dataB[0]);
+
+        if (typeComp !== 0) {
+            return typeComp;
+        } else if (lvComp !== 0) {
+            return lvComp;
+        } else if (rcComp !== 0) {
+            return rcComp;
+        }
+
+        return nameComp;
+    });
 
 const Deck = class {
     constructor(list = [[], [], []], name = "Unnamed") {
@@ -128,6 +150,11 @@ const Deck = class {
     }
     getAll() {
         return [...this.main, ...this.extra, ...this.side];
+    }
+    sort(cardDb) {
+        DECKPARTS.forEach(deckPart => {
+            this[deckPart.id] = sort(this[deckPart.id], cardDb);
+        });
     }
 };
 
