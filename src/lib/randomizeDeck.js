@@ -3,6 +3,14 @@ import shuffle from "./shuffle";
 
 const REGEX_NAME_DELIMITER = /[,;:]? (?:- )?/;
 
+/**
+ * Soft limits
+ * If the deck currently has less, than MAX_${type}, add more
+ * A max of 5 could lead to 7 cards that way
+ */
+const MAX_SPELLS = 15;
+const MAX_TRAPS = 5;
+
 const getRandomAmount = (extra = false) => {
     const seed = Math.random();
 
@@ -41,15 +49,29 @@ const randomizeDeck = (cardDb, deckParts) => {
         const isExtra = deckPart.id === "extra";
         const isSide = deckPart.id === "side";
         const cardCanAdd = isSide ? deckParts[0].check : deckPart.check;
+        let countSpells = 0;
+        let countTraps = 0;
 
         while (subResult.length < deckPartLimit && i < pairsShuffled.length) {
             const card = pairsShuffled[i];
+            const isSpell = card[1][1] === "Spell Card";
+            const isTrap = card[1][1] === "Trap Card";
 
-            if (cardCanAdd(card[1])) {
+            if (
+                cardCanAdd(card[1]) &&
+                (!isSpell || countSpells < MAX_SPELLS) &&
+                (!isTrap || countTraps < MAX_TRAPS)
+            ) {
                 const cardAmount = getRandomAmount(isExtra);
                 const cardByAmount = new Array(cardAmount).fill(card[0]);
 
                 subResult.push(...cardByAmount);
+
+                if (isSpell) {
+                    countSpells += cardAmount;
+                } else if (isTrap) {
+                    countTraps += cardAmount;
+                }
 
                 if (!isSide && cardAmount === 3) {
                     resultCardNames.push(card[1][0]);
@@ -59,7 +81,7 @@ const randomizeDeck = (cardDb, deckParts) => {
             i++;
         }
 
-        result.push(subResult.slice(0, deckPart.max));
+        result.push(subResult.slice(0, deckPartLimit));
     });
 
     resultDeck = new Deck(result, getRandomName(resultCardNames));
