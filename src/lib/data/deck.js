@@ -49,6 +49,18 @@ const CARD_TYPE = [
     "Trap Card"
 ];
 
+const CARD_TYPE_SIMPLE = [
+    "Normal",
+    "Effect",
+    "Ritual",
+    "Fusion",
+    "Synchro",
+    "XYZ",
+    "Link",
+    "Spell",
+    "Trap"
+];
+
 const CARD_RACE = [
     "Any",
     "Aqua",
@@ -131,6 +143,7 @@ const CARD_TRAP_TYPE = ["Any", "Normal", "Continuous", "Counter"];
 
 Object.freeze(DECKPARTS);
 Object.freeze(CARD_TYPE);
+Object.freeze(CARD_TYPE_SIMPLE);
 Object.freeze(CARD_RACE);
 Object.freeze(CARD_ATTRIBUTE);
 Object.freeze(CARD_LEVEL);
@@ -141,6 +154,7 @@ Object.freeze(CARD_TRAP_TYPE);
 export {
     DECKPARTS,
     CARD_TYPE,
+    CARD_TYPE_SIMPLE,
     CARD_RACE,
     CARD_ATTRIBUTE,
     CARD_LEVEL,
