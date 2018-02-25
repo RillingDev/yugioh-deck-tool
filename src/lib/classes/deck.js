@@ -1,7 +1,6 @@
 import { arrFrom, arrCount, arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
-import { DECKPARTS } from "../data/deck";
-import { CARD_TYPE } from "../data/filters";
+import { DECKPARTS, CARD_TYPE } from "../data/deck";
 
 const fileToList = function(fileContent) {
     const fileParts = fileContent
