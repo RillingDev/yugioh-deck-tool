@@ -77,6 +77,11 @@ export default {
 
 .deck-card img {
     margin-bottom: 0;
+    /**
+    * Has to be repeated to override ygoprodeck style
+    */
+    width: 100px;
+    height: 135px;
 }
 
 .deck-card-text {

@@ -1,7 +1,7 @@
 import Deck from "./classes/deck";
 import shuffle from "./shuffle";
 
-const REGEX_NAME_DELIMITER = /[,;:]? (?:- )?/;
+const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 
 /**
  * Soft limits
