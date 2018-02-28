@@ -1,17 +1,8 @@
-import { forEachEntry, arrFrom } from "lightdash";
-
-const REGEX_IS_TOKEN = /Tokens?$/;
+import { arrFrom, mapFromObject } from "lightdash";
 
 const CardDatabase = class {
     constructor(obj = {}) {
-        this.cards = new Map();
-
-        forEachEntry(obj, (id, val) => {
-            if (val[0].length > 0 && !REGEX_IS_TOKEN.test(val[0])) {
-                this.cards.set(id, val);
-            }
-        });
-
+        this.cards = mapFromObject(obj);
         this.pairsArr = arrFrom(this.cards.entries());
 
         /**
