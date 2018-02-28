@@ -1,5 +1,7 @@
 "use strict";
 
+const REGEX_IS_TOKEN = /Tokens?$/;
+
 const fs = require("fs");
 const deflate = require("zlib").deflateSync;
 const input = require("./input.json");
@@ -7,26 +9,28 @@ const inputCards = input[2].data;
 const output = {};
 
 inputCards.forEach(entry => {
-    entry.linkmarkers = entry.linkmarkers ?
-        entry.linkmarkers.split(",").map(str => str.trim()) :
-        [];
+    if (entry.name.length > 0 && !REGEX_IS_TOKEN.test(entry.name)) {
+        entry.linkmarkers = entry.linkmarkers
+            ? entry.linkmarkers.split(",").map(str => str.trim())
+            : [];
 
-    output[entry.id] = [
-        entry.name,
+        output[entry.id] = [
+            entry.name,
 
-        entry.type,
-        entry.atk,
-        entry.def,
-        entry.level,
-        entry.race,
-        entry.attribute,
-        entry.linkmarkers,
+            entry.type,
+            entry.atk,
+            entry.def,
+            entry.level,
+            entry.race,
+            entry.attribute,
+            entry.linkmarkers,
 
-        entry.times,
-        entry.rating_up,
-        entry.rating_down,
-        entry.pkey
-    ];
+            entry.times,
+            entry.rating_up,
+            entry.rating_down,
+            entry.pkey
+        ];
+    }
 });
 
 fs.writeFileSync(
