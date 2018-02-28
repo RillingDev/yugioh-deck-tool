@@ -10,44 +10,44 @@
                     class="form-control"
                     type="file"
                     accept=".ydk"
-                    @change="fileOnUpload"
                     title="Upload Deck"
+                    @change="fileOnUpload"
                 >
                     <input
+                        v-model="deck.name"
                         class="form-control form-deck-name"
                         type="text"
-                        v-model="deck.name"
                         title="Deck Title"
                         placeholder="Deck Title"
                     >
                         <button
                             class="btn btn-primary form-control"
                             download="Unnamed.ydk"
-                            @click="deckToFile"
                             title="Download Deck"
+                            @click="deckToFile"
                         >Download</button>
             </div>
             <!-- app-forms-share -->
             <div class="form-group">
                 <label>Share:</label>
                 <input
+                    :value="shareLink"
                     class="form-control"
                     type="url"
-                    :value="shareLink"
                     title="Shareable Link"
                 >
                     <button
                         class="btn btn-primary form-control"
-                        @click="copyShareText"
                         title="Copy Decklist to Clipboard"
+                        @click="copyShareText"
                     >Copy Decklist to Clipboard</button>
             </div>
             <!-- app-forms-price -->
             <div class="form-group">
                 <label>Price:</label>
                 <select
-                    class="form-control form-deck-currency"
                     v-model="priceDb.activeCurrency"
+                    class="form-control form-deck-currency"
                     title="Price Currency"
                 >
                     <option
@@ -58,8 +58,8 @@
                         </select>
                         <button
                             class="btn btn-primary form-control"
-                            @click="fetchPrices"
                             title="Load Prices"
+                            @click="fetchPrices"
                         >
                             <span :hidden="ajax.currentlyLoading">Load Prices</span>
                             <span :hidden="!ajax.currentlyLoading">

@@ -1,7 +1,7 @@
 <template>
     <div
-        class="deck-part"
         :class="`deck-part-${deckPart.id}`"
+        class="deck-part"
     >
         <h3>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</h3>
         <template v-if="deckPartList.length">
@@ -19,8 +19,8 @@
                     @deckcardrightclick.prevent="deck.cardRemove(deckPart, cardId)"
                 >
                     <ygo-price-view
-                        slot="price"
                         v-if="ajax.pricesLoaded"
+                        slot="price"
                         :item="cardId"
                         :price-db="priceDb"
                     />

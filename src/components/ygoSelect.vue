@@ -2,9 +2,9 @@
     <div class="form-group form-group-select">
         <label>{{ title }}:</label>
         <select
-            class="form-control"
             v-model="selected"
             :title="title"
+            class="form-control"
             @change="emitInput"
         >
             <option

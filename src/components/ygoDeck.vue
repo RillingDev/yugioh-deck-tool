@@ -1,8 +1,8 @@
 <template>
     <div class="deck">
         <div
-            class="deck-part deck-part-total"
             v-if="ajax.pricesLoaded"
+            class="deck-part deck-part-total"
         >
             <span>Total:</span>
             <ygo-price-view

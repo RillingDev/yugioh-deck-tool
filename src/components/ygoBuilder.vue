@@ -5,9 +5,9 @@
         <!-- builder-name -->
         <div class="form-group">
             <input
+                v-model="filter.name"
                 class="form-control"
                 type="search"
-                v-model="filter.name"
                 title="Search"
                 placeholder="Search"
             >
@@ -17,8 +17,8 @@
         <div class="form-group form-group-select">
             <label>Sort:</label>
             <select
-                class="form-control"
                 v-model="sort.active"
+                class="form-control"
                 title="Active Sorting"
             >
                 <option
@@ -31,64 +31,64 @@
 
         <!-- builder-type -->
         <ygo-select
-            title="Type"
             v-model="filter.type.active"
             :options="filter.type.options"
+            title="Type"
         />
 
         <!-- builder-expanded -->
         <template v-if="isMonster">
             <!-- builder-attribute -->
             <ygo-select
-                title="Attribute"
                 v-model="filter.attribute.active"
                 :options="filter.attribute.options"
+                title="Attribute"
             />
 
             <!-- builder-type -->
             <ygo-select
-                title="Race"
                 v-model="filter.race.active"
                 :options="filter.race.options"
+                title="Race"
             />
 
             <!-- builder-level -->
             <ygo-select
-                title="Level"
                 v-model="filter.level.active"
                 :options="filter.level.options"
+                title="Level"
             />
 
             <template v-if="isMonsterLink">
                 <!-- builder-linkarrow -->
                 <ygo-select
-                    title="Link Arrows"
                     v-model="filter.linkarrows.active"
                     :options="filter.linkarrows.options"
+                    title="Link Arrows"
                 />
             </template>
         </template>
 
         <template v-if="isSpell">
             <ygo-select
-                title="Subtype"
                 v-model="filter.spelltype.active"
                 :options="filter.spelltype.options"
+                title="Subtype"
             />
         </template>
 
         <template v-if="isTrap">
             <ygo-select
-                title="Subtype"
                 v-model="filter.traptype.active"
                 :options="filter.traptype.options"
+                title="Subtype"
             />
         </template>
 
         <!-- builder-list -->
         <ul
-            class="builder-list"
             v-if="pairsFiltered.length"
+            class="builder-list"
         >
             <li
                 v-for="pair in pairsFiltered"
@@ -96,19 +96,19 @@
             >
                 <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
                 <a
-                    class="builder-card"
                     :data-name="pair[1]"
+                    class="builder-card"
                 >
                     <span class="builder-card-name">{{ pair[1] }}</span>
                     <div class="builder-card-action">
                         <span
-                            class="builder-add btn"
                             v-for="deckPart in deckParts"
-                            @click="(e) => clickEvent(e, deckPart, pair[0])"
                             :key="deckPart.id"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
                             :disabled="!deckCardCanAdd(deckPart, pair[0])"
+                            class="builder-add btn"
+                            @click="(e) => clickEvent(e, deckPart, pair[0])"
                         >
                             <span class="fa fa-plus">
                                 <!---->

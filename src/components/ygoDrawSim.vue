@@ -19,13 +19,13 @@
                     role="group"
                 >
                     <button
-                        class="btn btn-primary"
                         :class="{active: drawMode === 5}"
+                        class="btn btn-primary"
                         @click="setDrawMode(5)"
                     >Going First</button>
                         <button
-                            class="btn btn-primary"
                             :class="{active: drawMode === 6}"
+                            class="btn btn-primary"
                             @click="setDrawMode(6)"
                         >Going Second</button>
     </div>
@@ -39,8 +39,8 @@
     </div>
     <button
         class="btn btn-primary"
-        @click="draw"
         title="Simulate a new Starting Hand"
+        @click="draw"
     >
         Draw
         </button>

@@ -1,16 +1,16 @@
 <template>
     <a
-        class="deck-card"
-        target="_blank"
         :href="link"
         :data-name="cardName"
+        class="deck-card"
+        target="_blank"
         @contextmenu="contextEvent"
     >
         <img
-            width="100"
-            height="135"
             :src="image"
             :alt="cardName"
+            width="100"
+            height="135"
         >
             <div class="deck-card-text">
                 <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
