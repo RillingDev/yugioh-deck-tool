@@ -28,7 +28,10 @@ inputCards.forEach(entry => {
             entry.times,
             entry.rating_up,
             entry.rating_down,
-            entry.pkey
+
+            entry.format,
+            entry.ban_tcg,
+            entry.bab_ocg
         ];
     }
 });
