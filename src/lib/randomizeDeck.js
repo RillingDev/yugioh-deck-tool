@@ -11,16 +11,16 @@ const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 const MAX_SPELLS = 15;
 const MAX_TRAPS = 5;
 
-const getRandomAmount = (extra = false) => {
+const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();
 
-    if (extra) {
-        if (seed > 0.5) return 1;
-        else if (seed > 0.2) return 2;
-        return 3;
-    } else {
+    if (preferPlayset) {
         if (seed > 0.8) return 1;
         else if (seed > 0.7) return 2;
+        return 3;
+    } else {
+        if (seed > 0.3) return 1;
+        else if (seed > 0.15) return 2;
         return 3;
     }
 };
@@ -62,7 +62,7 @@ const randomizeDeck = (cardDb, deckParts) => {
                 (!isSpell || countSpells < MAX_SPELLS) &&
                 (!isTrap || countTraps < MAX_TRAPS)
             ) {
-                const cardAmount = getRandomAmount(isExtra);
+                const cardAmount = getRandomAmount(!(isExtra || isSide));
                 const cardAmountMax = card[1][12];
                 const cardByAmount = new Array(
                     cardAmountMax >= cardAmount ? cardAmount : cardAmountMax
