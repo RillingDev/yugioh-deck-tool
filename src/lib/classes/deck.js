@@ -104,12 +104,15 @@ const Deck = class {
         return listToText(this.getList(), cardDb);
     }
     cardCanAdd(deckPart, cardId, cardDb) {
+        const card = cardDb.get(cardId);
+        const cardCount = this[deckPart.id].filter(
+            activeSectionCardId => activeSectionCardId === cardId
+        ).length;
+
         return (
-            deckPart.check(cardDb.get(cardId)) &&
+            deckPart.check(card) &&
             this[deckPart.id].length < deckPart.max &&
-            this[deckPart.id].filter(
-                activeSectionCardId => activeSectionCardId === cardId
-            ).length < 3
+            cardCount < card[12]
         );
     }
     cardAdd(deckPart, cardId, cardDb) {

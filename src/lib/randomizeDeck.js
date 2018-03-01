@@ -63,7 +63,10 @@ const randomizeDeck = (cardDb, deckParts) => {
                 (!isTrap || countTraps < MAX_TRAPS)
             ) {
                 const cardAmount = getRandomAmount(isExtra);
-                const cardByAmount = new Array(cardAmount).fill(card[0]);
+                const cardAmountMax = card[1][12];
+                const cardByAmount = new Array(
+                    cardAmountMax >= cardAmount ? cardAmount : cardAmountMax
+                ).fill(card[0]);
 
                 subResult.push(...cardByAmount);
 
