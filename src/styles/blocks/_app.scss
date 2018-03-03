@@ -33,15 +33,8 @@
 
 .app-builder-intro {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 0.5rem;
-    > h2 {
-        width: 100%;
-        @include screen(min, sm) {
-            width: auto;
-            margin-bottom: 0;
-        }
+    margin-bottom: 1rem;
+    > div {
+        margin-right: 1rem;
     }
 }

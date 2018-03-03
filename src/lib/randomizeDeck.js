@@ -8,7 +8,7 @@ const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
  * If the deck currently has less, than MAX_${type}, add more
  * A max of 5 could lead to 7 cards that way
  */
-const MAX_SPELLS = 15;
+const MAX_SPELLS = 17;
 const MAX_TRAPS = 5;
 
 const getRandomAmount = (preferPlayset = true) => {

@@ -1,11 +1,30 @@
 <template>
-    <div class="randomizer">
+    <div
+        class="randomizer btn-group"
+        role="group"
+    >
         <button
             class="btn btn-primary btn-sm"
-            title="Open Randomizer"
+            title="Randomize Deck"
             @click="randomize"
         >Randomize</button>
-    </div>
+            <button
+                class="btn btn-primary btn-sm"
+                title="Configure Randomizer"
+                @click="showModal"
+            >
+                <span class="fa fa-gear">
+                    <!---->
+                </span>
+                </button>
+                <b-modal
+                    id="modalRandomizerSettings"
+                    ref="modalRandomizerSettings"
+                    size="lg"
+                    hide-footer
+                    title="Randomizer Settings"
+                >a</b-modal>
+                    </div>
 </template>
 
 <script>
@@ -13,7 +32,10 @@ import CardDatabase from "../lib/classes/cardDatabase";
 import randomizeDeck from "../lib/randomizeDeck";
 import { DECKPARTS } from "../lib/data/deck";
 
+import bModal from "bootstrap-vue/es/components/modal/modal";
+
 export default {
+    components: { bModal },
     props: {
         cardDb: {
             type: CardDatabase,
@@ -21,6 +43,9 @@ export default {
         }
     },
     methods: {
+        showModal() {
+            this.$refs.modalRandomizerSettings.show();
+        },
         randomize() {
             const result = randomizeDeck(this.cardDb, DECKPARTS);
 

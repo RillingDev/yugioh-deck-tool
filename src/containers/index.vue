@@ -85,16 +85,16 @@
 
         <!-- app-builder -->
         <div class="app-section app-builder">
+            <h2>Deckbuilder:</h2>
             <div class="app-builder-intro">
-                <h2>Deckbuilder:</h2>
+                <ygo-draw-sim
+                    :deck-list-main="deck.main"
+                    :card-db="cardDb"
+                />
                 <ygo-randomizer
                     v-if="ajax.cardsLoaded"
                     :card-db="cardDb"
                     @randomize="deckRandomize"
-                />
-                <ygo-draw-sim
-                    :deck-list-main="deck.main"
-                    :card-db="cardDb"
                 />
             </div>
             <ygo-builder
