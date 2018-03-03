@@ -31,7 +31,12 @@ const CARD_TYPE = [
     "Any",
     "Normal Monster",
     "Effect Monster",
+    "Tuner Monster",
+    "Union Effect Monster",
+    "Flip Effect Monster",
+    "Spirit Monster",
     "Toon Monster",
+    "Gemini Monster",
     "Fusion Monster",
     "Ritual Monster",
     "Ritual Effect Monster",
@@ -49,16 +54,30 @@ const CARD_TYPE = [
     "Trap Card"
 ];
 
-const CARD_TYPE_SIMPLE = [
-    "Normal",
-    "Effect",
-    "Ritual",
-    "Fusion",
-    "Synchro",
-    "XYZ",
-    "Link",
-    "Spell",
-    "Trap"
+const CARD_TYPE_SORTED = [
+    ["Normal Monster", "Pendulum Normal Monster"],
+    [
+        "Effect Monster",
+        "Tuner Monster",
+        "Union Effect Monster",
+        "Flip Effect Monster",
+        "Spirit Monster",
+        "Toon Monster",
+        "Gemini Monster",
+        "Pendulum Effect Monster",
+        "Pendulum Tuner Effect Monster"
+    ],
+    ["Ritual Monster", "Ritual Effect Monster"],
+    ["Fusion Monster", "Pendulum Effect Fusion Monster"],
+    [
+        "Synchro Monster",
+        "Synchro Tuner Monster",
+        "Synchro Pendulum Effect Monster"
+    ],
+    ["XYZ Monster", "XYZ Pendulum Effect Monster"],
+    ["Link Monster"],
+    ["Spell Card"],
+    ["Trap Card"]
 ];
 
 const CARD_RACE = [
@@ -143,7 +162,7 @@ const CARD_TRAP_TYPE = ["Any", "Normal", "Continuous", "Counter"];
 
 Object.freeze(DECKPARTS);
 Object.freeze(CARD_TYPE);
-Object.freeze(CARD_TYPE_SIMPLE);
+Object.freeze(CARD_TYPE_SORTED);
 Object.freeze(CARD_RACE);
 Object.freeze(CARD_ATTRIBUTE);
 Object.freeze(CARD_LEVEL);
@@ -154,7 +173,7 @@ Object.freeze(CARD_TRAP_TYPE);
 export {
     DECKPARTS,
     CARD_TYPE,
-    CARD_TYPE_SIMPLE,
+    CARD_TYPE_SORTED,
     CARD_RACE,
     CARD_ATTRIBUTE,
     CARD_LEVEL,
