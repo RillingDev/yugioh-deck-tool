@@ -16,7 +16,7 @@ const getRandomAmount = (preferPlayset = true) => {
 
     if (preferPlayset) {
         if (seed > 0.8) return 1;
-        else if (seed > 0.7) return 2;
+        else if (seed > 0.65) return 2;
         return 3;
     } else {
         if (seed > 0.3) return 1;
