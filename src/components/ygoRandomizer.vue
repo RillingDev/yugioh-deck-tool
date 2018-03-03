@@ -23,7 +23,21 @@
                     size="lg"
                     hide-footer
                     title="Randomizer Settings"
-                >a</b-modal>
+                >
+                    <div class="form-group">
+                        <label>Mode:</label>
+                        <select
+                            v-model="mode.selected"
+                            class="form-control"
+                        >
+                            <option
+                                v-for="(modeCurrent, index) in mode.available"
+                                :key="modeCurrent.name"
+                                :value="index"
+                            >{{ modeCurrent.name }}</option>
+                                </select>
+                    </div>
+                    </b-modal>
                     </div>
 </template>
 
@@ -31,6 +45,7 @@
 import CardDatabase from "../lib/classes/cardDatabase";
 import randomizeDeck from "../lib/randomizeDeck";
 import { DECKPARTS } from "../lib/data/deck";
+import { RANDOMIZER_MODES } from "../lib/data/randomizer";
 
 import bModal from "bootstrap-vue/es/components/modal/modal";
 
@@ -42,12 +57,24 @@ export default {
             required: true
         }
     },
+    data: () => {
+        return {
+            mode: {
+                selected: 0,
+                available: RANDOMIZER_MODES
+            }
+        };
+    },
     methods: {
         showModal() {
             this.$refs.modalRandomizerSettings.show();
         },
         randomize() {
-            const result = randomizeDeck(this.cardDb, DECKPARTS);
+            const result = randomizeDeck(
+                this.cardDb,
+                RANDOMIZER_MODES[this.mode.selected],
+                DECKPARTS
+            );
 
             this.$emit("randomize", result);
         }
