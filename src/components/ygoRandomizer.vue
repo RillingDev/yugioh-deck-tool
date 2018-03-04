@@ -70,11 +70,8 @@ export default {
             this.$refs.modalRandomizerSettings.show();
         },
         randomize() {
-            const result = randomizeDeck(
-                this.cardDb,
-                RANDOMIZER_MODES[this.mode.selected],
-                DECKPARTS
-            );
+            const filter = RANDOMIZER_MODES[this.mode.selected].filterFactory();
+            const result = randomizeDeck(this.cardDb, filter, DECKPARTS);
 
             this.$emit("randomize", result);
         }

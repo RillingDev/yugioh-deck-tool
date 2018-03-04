@@ -37,7 +37,7 @@ const getRandomName = cardNameList => {
 };
 
 const randomizeDeck = (cardDb, filter, deckParts) => {
-    const pairsShuffled = shuffle(cardDb.pairsArr);
+    const pairsShuffled = shuffle(cardDb.pairsArr).filter(filter);
     const result = [];
     const resultCardNames = [];
     let i = 0;
