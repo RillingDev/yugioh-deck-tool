@@ -124,8 +124,8 @@
 <script>
 import searchCard from "../lib/searchCard";
 import { CARD_SORTERS } from "../lib/data/filters";
+import { DECKPARTS } from "../lib/data/deck";
 import {
-    DECKPARTS,
     CARD_TYPE,
     CARD_RACE,
     CARD_ATTRIBUTE,
@@ -133,7 +133,7 @@ import {
     CARD_LINKARROWS,
     CARD_SPELL_TYPE,
     CARD_TRAP_TYPE
-} from "../lib/data/deck";
+} from "../lib/data/cards";
 import ygoSelect from "./ygoSelect.vue";
 
 export default {

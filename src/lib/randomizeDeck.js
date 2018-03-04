@@ -19,8 +19,8 @@ const getRandomAmount = (preferPlayset = true) => {
         else if (seed > 0.65) return 2;
         return 3;
     } else {
-        if (seed > 0.3) return 1;
-        else if (seed > 0.15) return 2;
+        if (seed > 0.25) return 1;
+        else if (seed > 0.1) return 2;
         return 3;
     }
 };
@@ -41,14 +41,12 @@ const randomizeDeck = (cardDb, filter, deckParts) => {
     const result = [];
     const resultCardNames = [];
     let i = 0;
-    let resultDeck;
 
     deckParts.forEach(deckPart => {
         const subResult = [];
         const deckPartLimit = deckPart.min === 0 ? deckPart.max : deckPart.min;
         const isExtra = deckPart.id === "extra";
         const isSide = deckPart.id === "side";
-        const cardCanAdd = isSide ? deckParts[0].check : deckPart.check;
         let countSpells = 0;
         let countTraps = 0;
 
@@ -58,7 +56,7 @@ const randomizeDeck = (cardDb, filter, deckParts) => {
             const isTrap = card[1][1] === "Trap Card";
 
             if (
-                cardCanAdd(card[1]) &&
+                deckPart.check(card[1]) &&
                 (!isSpell || countSpells < MAX_SPELLS) &&
                 (!isTrap || countTraps < MAX_TRAPS)
             ) {
@@ -87,11 +85,7 @@ const randomizeDeck = (cardDb, filter, deckParts) => {
         result.push(subResult.slice(0, deckPartLimit));
     });
 
-    resultDeck = new Deck(result, getRandomName(resultCardNames));
-
-    resultDeck.sort(cardDb);
-
-    return resultDeck;
+    return new Deck(result, getRandomName(resultCardNames)).sort(cardDb);
 };
 
 export default randomizeDeck;

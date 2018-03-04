@@ -137,6 +137,8 @@ const Deck = class {
         DECKPARTS.forEach(deckPart => {
             this[deckPart.id] = sortCards(this[deckPart.id], cardDb);
         });
+
+        return this;
     }
 };
 

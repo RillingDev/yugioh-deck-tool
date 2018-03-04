@@ -1,0 +1,152 @@
+const CARD_TYPE = [
+    "Any",
+    "Normal Monster",
+    "Effect Monster",
+    "Tuner Monster",
+    "Union Effect Monster",
+    "Flip Effect Monster",
+    "Spirit Monster",
+    "Toon Monster",
+    "Gemini Monster",
+    "Fusion Monster",
+    "Ritual Monster",
+    "Ritual Effect Monster",
+    "Synchro Monster",
+    "Synchro Tuner Monster",
+    "Synchro Pendulum Effect Monster",
+    "XYZ Monster",
+    "XYZ Pendulum Effect Monster",
+    "Pendulum Normal Monster",
+    "Pendulum Effect Monster",
+    "Pendulum Tuner Effect Monster",
+    "Pendulum Effect Fusion Monster",
+    "Link Monster",
+    "Spell Card",
+    "Trap Card"
+];
+
+const CARD_TYPE_SORTED = [
+    ["Normal Monster", "Pendulum Normal Monster"],
+    [
+        "Effect Monster",
+        "Tuner Monster",
+        "Union Effect Monster",
+        "Flip Effect Monster",
+        "Spirit Monster",
+        "Toon Monster",
+        "Gemini Monster",
+        "Pendulum Effect Monster",
+        "Pendulum Tuner Effect Monster"
+    ],
+    ["Ritual Monster", "Ritual Effect Monster"],
+    ["Fusion Monster", "Pendulum Effect Fusion Monster"],
+    [
+        "Synchro Monster",
+        "Synchro Tuner Monster",
+        "Synchro Pendulum Effect Monster"
+    ],
+    ["XYZ Monster", "XYZ Pendulum Effect Monster"],
+    ["Link Monster"],
+    ["Spell Card"],
+    ["Trap Card"]
+];
+
+const CARD_RACE = [
+    "Any",
+    "Aqua",
+    "Beast",
+    "Beast-Warrior",
+    "Creator-God",
+    "Cyberse",
+    "Dinosaur",
+    "Divine-Beast",
+    "Dragon",
+    "Fairy",
+    "Fiend",
+    "Fish",
+    "Insect",
+    "Machine",
+    "Plant",
+    "Psychic",
+    "Pyro",
+    "Reptile",
+    "Rock",
+    "Sea Serpent",
+    "Spellcaster",
+    "Thunder",
+    "Warrior",
+    "Winged Beast",
+    "Wyrm",
+    "Zombie"
+];
+
+const CARD_ATTRIBUTE = [
+    "Any",
+    "DARK",
+    "EARTH",
+    "FIRE",
+    "LIGHT",
+    "WATER",
+    "WIND",
+    "DIVINE"
+];
+
+const CARD_LEVEL = [
+    "Any",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12"
+];
+
+const CARD_LINKARROWS = [
+    "Any",
+    "Top",
+    "Bottom",
+    "Left",
+    "Right",
+    "Top-Left",
+    "Top-Right",
+    "Bottom-Left",
+    "Bottom-Right"
+];
+
+const CARD_SPELL_TYPE = [
+    "Any",
+    "Normal",
+    "Field",
+    "Equip",
+    "Continuous",
+    "Quick-Play",
+    "Ritual"
+];
+
+const CARD_TRAP_TYPE = ["Any", "Normal", "Continuous", "Counter"];
+
+Object.freeze(CARD_TYPE);
+Object.freeze(CARD_TYPE_SORTED);
+Object.freeze(CARD_RACE);
+Object.freeze(CARD_ATTRIBUTE);
+Object.freeze(CARD_LEVEL);
+Object.freeze(CARD_LINKARROWS);
+Object.freeze(CARD_SPELL_TYPE);
+Object.freeze(CARD_TRAP_TYPE);
+
+export {
+    CARD_TYPE,
+    CARD_TYPE_SORTED,
+    CARD_RACE,
+    CARD_ATTRIBUTE,
+    CARD_LEVEL,
+    CARD_LINKARROWS,
+    CARD_SPELL_TYPE,
+    CARD_TRAP_TYPE
+};
