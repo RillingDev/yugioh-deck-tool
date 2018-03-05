@@ -1,9 +1,25 @@
 import { arrFrom, mapFromObject } from "lightdash";
 
+const excludeAlternateArtworks = arr => {
+    const names = new Set();
+
+    return arr.filter(entry => {
+        const name = entry[1][0];
+
+        if (!names.has(name)) {
+            names.add(name);
+
+            return true;
+        }
+
+        return false;
+    });
+};
+
 const CardDatabase = class {
     constructor(obj = {}) {
         this.cards = mapFromObject(obj);
-        this.pairsArr = arrFrom(this.cards.entries());
+        this.pairsArr = excludeAlternateArtworks(arrFrom(this.cards.entries()));
 
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
