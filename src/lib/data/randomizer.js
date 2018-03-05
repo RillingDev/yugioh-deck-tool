@@ -48,13 +48,11 @@ const RANDOMIZER_MODES = [
                 archetypes.some(
                     archetype =>
                         card[1][0].toLowerCase().includes(archetype) ||
-                        Math.random() > 0.9999
+                        Math.random() > 0.99975
                 );
         }
     }
 ];
-
-console.log(pickRandomArchetypes(3));
 
 Object.freeze(RANDOMIZER_MODES);
 
