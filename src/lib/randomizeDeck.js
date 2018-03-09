@@ -18,11 +18,10 @@ const getRandomAmount = (preferPlayset = true) => {
         if (seed > 0.8) return 1;
         else if (seed > 0.65) return 2;
         return 3;
-    } else {
-        if (seed > 0.25) return 1;
-        else if (seed > 0.1) return 2;
-        return 3;
     }
+    if (seed > 0.25) return 1;
+    else if (seed > 0.1) return 2;
+    return 3;
 };
 
 const getRandomName = cardNameList => {

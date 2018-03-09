@@ -20,9 +20,9 @@ const PriceDatabase = class {
                 average: val[1],
                 high: val[2]
             });
-        } else {
-            return false;
         }
+
+        return false;
     }
     has(cardId) {
         return this.prices.has(cardId);
@@ -32,9 +32,9 @@ const PriceDatabase = class {
             const item = this.prices.get(cardId);
 
             return [item.low, item.average, item.high];
-        } else {
-            return [0, 0, 0];
         }
+
+        return [0, 0, 0];
     }
     getSelection(cardIdArr) {
         const items = cardIdArr.map(cardId => this.get(cardId));

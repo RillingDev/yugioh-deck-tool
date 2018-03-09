@@ -38,11 +38,10 @@ const searchCard = (cardArr, filter, is, sortFn) => {
             .filter(pair => {
                 if (nameCache.has(pair[1])) {
                     return false;
-                } else {
-                    nameCache.add(pair[1]);
-
-                    return true;
                 }
+                nameCache.add(pair[1]);
+
+                return true;
             })
             // Take 100 first results
             .slice(0, 100)

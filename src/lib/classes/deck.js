@@ -3,11 +3,14 @@ import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sortCards from "../sortCards";
 
-const fileToList = function(fileContent) {
+const REGEX_CREATED = /#created.+/;
+const REGEX_DECKPARTS = /[#!].+\n?/g;
+
+const fileToList = fileContent => {
     const fileParts = fileContent
-        .replace(/#created.+/, "")
+        .replace(REGEX_CREATED)
         .trim()
-        .split(/[#!].+\n?/g)
+        .split(REGEX_DECKPARTS)
         .slice(1);
 
     return DECKPARTS.map((deckPart, index) =>
@@ -18,7 +21,7 @@ const fileToList = function(fileContent) {
     );
 };
 
-const listToText = function(list, cardDb) {
+const listToText = (list, cardDb) => {
     const result = [];
 
     DECKPARTS.forEach((deckPart, index) => {
@@ -67,7 +70,7 @@ const Deck = class {
             if (file) {
                 reader.readAsText(file);
             } else {
-                reject(null);
+                reject(new Error("could not read file"));
             }
         });
     }
