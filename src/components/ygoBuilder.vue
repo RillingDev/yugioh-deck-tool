@@ -22,9 +22,9 @@
                 title="Active Sorting"
             >
                 <option
-                    v-for="(option, index) in sort.options"
+                    v-for="option in sort.options"
                     :key="option.name"
-                    :value="index"
+                    :value="option"
                 >{{ option.name }}</option>
                     </select>
         </div>
@@ -57,9 +57,9 @@
                             title="Active Format"
                         >
                             <option
-                                v-for="(option, index) in filter.format.options"
+                                v-for="option in filter.format.options"
                                 :key="option.name"
-                                :value="index"
+                                :value="option"
                             >{{ option.name }}</option>
                                 </select>
                     </div>
@@ -75,9 +75,9 @@
                             title="Active Banlist"
                         >
                             <option
-                                v-for="(option, index) in filter.banlist.options"
+                                v-for="option in filter.banlist.options"
                                 :key="option.name"
-                                :value="index"
+                                :value="option"
                             >{{ option.name }}</option>
                                 </select>
                     </div>
@@ -298,16 +298,16 @@ export default {
                     options: CARD_TRAP_TYPE
                 },
                 format: {
-                    active: 0,
+                    active: FORMATS[0],
                     options: FORMATS
                 },
                 banlist: {
-                    active: 0,
+                    active: BANLISTS[0],
                     options: BANLISTS
                 }
             },
             sort: {
-                active: 0,
+                active: SORTERS[0],
                 options: SORTERS
             }
         };
@@ -328,8 +328,6 @@ export default {
             return this.filter.type.active === "Trap Card";
         },
         pairsFiltered() {
-            const sortFn = this.sort.options[this.sort.active].fn;
-
             return searchCard(
                 this.pairsArr,
                 this.filter,
@@ -339,7 +337,7 @@ export default {
                     spell: this.isSpell,
                     trap: this.isTrap
                 },
-                sortFn
+                this.sort.active.fn
             ).slice(0, 100); // Take 100 first results;
         }
     },

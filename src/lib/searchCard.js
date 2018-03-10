@@ -14,13 +14,16 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                 const optionFilterPattern = (
                     cond,
                     index,
-                    filterVal,
+                    filterItem,
                     optionFn = optionFilter
-                ) => !cond || optionFn(pair[1][index], filterVal);
+                ) => !cond || optionFn(pair[1][index], filterItem);
 
                 return (
                     // Search Name
                     pair[1][0].toLowerCase().includes(filterNameLower) &&
+                    // Search Format
+                    filter.format.active.check(pair[1]) &&
+                    filter.banlist.active.check(pair[1]) &&
                     // Search Type
                     optionFilter(pair[1][1], filter.type) &&
                     // Search Monster Sub

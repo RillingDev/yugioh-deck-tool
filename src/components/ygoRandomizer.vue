@@ -31,9 +31,9 @@
                             class="form-control"
                         >
                             <option
-                                v-for="(modeCurrent, index) in mode.available"
+                                v-for="modeCurrent in mode.available"
                                 :key="modeCurrent.name"
-                                :value="index"
+                                :value="modeCurrent"
                             >{{ modeCurrent.name }}</option>
                                 </select>
                     </div>
@@ -60,7 +60,7 @@ export default {
     data: () => {
         return {
             mode: {
-                selected: 0,
+                selected: RANDOMIZER_MODES[0],
                 available: RANDOMIZER_MODES
             }
         };
@@ -70,7 +70,7 @@ export default {
             this.$refs.modalRandomizerSettings.show();
         },
         randomize() {
-            const filter = RANDOMIZER_MODES[this.mode.selected].filterFactory();
+            const filter = this.mode.selected.filterFactory();
             const result = randomizeDeck(this.cardDb, filter, DECKPARTS);
 
             this.$emit("randomize", result);
