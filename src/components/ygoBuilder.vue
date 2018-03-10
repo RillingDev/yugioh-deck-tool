@@ -101,7 +101,7 @@
                 >
                     <span class="builder-card-name">{{ pair[1] }}</span>
                     <div class="builder-card-action">
-                        <span
+                        <button
                             v-for="deckPart in deckParts"
                             :key="deckPart.id"
                             :class="`builder-add-${deckPart.id}`"
@@ -113,7 +113,7 @@
                             <span class="fa fa-plus">
                                 <!---->
                             </span>
-                            </span>
+                            </button>
                     </div>
                     </a>
                     </li>
@@ -216,7 +216,7 @@ export default {
                     trap: this.isTrap
                 },
                 sortFn
-            );
+            ).slice(0, 100); // Take 100 first results;
         }
     },
     methods: {
