@@ -1,6 +1,7 @@
 import Deck from "./classes/deck";
 import shuffle from "./shuffle";
 import { DECKPARTS } from "./data/deck";
+import { arrUniq } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 
@@ -49,7 +50,7 @@ const getRandomName = cardNameList => {
         .split(REGEX_NAME_DELIMITER)
         .filter(word => word[0].toUpperCase() === word[0]); // Only use Capitalized words to avoid 'the' and 'of'
 
-    return shuffle(words)
+    return shuffle(arrUniq(words))
         .slice(0, 3)
         .join(" ");
 };
