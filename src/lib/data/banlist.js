@@ -1,5 +1,5 @@
 const BANLISTS = [
-    { name: "Any", check: () => true },
+    { name: "None", check: () => true },
     { name: "TCG", check: card => card[12] > 0 },
     { name: "OCG", check: card => card[13] > 0 }
 ];

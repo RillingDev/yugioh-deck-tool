@@ -1,5 +1,5 @@
 const FORMATS = [
-    { name: "Any", check: () => true },
+    { name: "None", check: () => true },
     { name: "GOAT", check: card => card[11] === "GOAT" }
 ];
 

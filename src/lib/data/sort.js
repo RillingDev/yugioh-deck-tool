@@ -1,10 +1,10 @@
-const CARD_SORTERS = [
+const SORTERS = [
     {
-        name: "Alphabetical (A-Z)",
+        name: "A-Z",
         fn: (a, b) => a[0].localeCompare(b[0])
     },
     {
-        name: "Alphabetical (Z-A)",
+        name: "Z-A",
         fn: (a, b) => b[0].localeCompare(a[0])
     },
     {
@@ -37,6 +37,6 @@ const CARD_SORTERS = [
     }
 ];
 
-Object.freeze(CARD_SORTERS);
+Object.freeze(SORTERS);
 
-export { CARD_SORTERS };
+export { SORTERS };
