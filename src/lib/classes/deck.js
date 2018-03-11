@@ -106,7 +106,7 @@ const Deck = class {
     toText(cardDb) {
         return listToText(this.getList(), cardDb);
     }
-    cardCanAdd(deckPart, cardId, cardDb) {
+    cardCanAdd(deckPart, cardId, cardDb, banlist) {
         const card = cardDb.get(cardId);
         const cardCount = this[deckPart.id].filter(
             activeSectionCardId => activeSectionCardId === cardId
@@ -115,11 +115,11 @@ const Deck = class {
         return (
             deckPart.check(card) &&
             this[deckPart.id].length < deckPart.max &&
-            cardCount < card[12]
+            cardCount < banlist.getVal(card)
         );
     }
-    cardAdd(deckPart, cardId, cardDb) {
-        if (this.cardCanAdd(deckPart, cardId, cardDb)) {
+    cardAdd(deckPart, cardId, cardDb, banlist) {
+        if (this.cardCanAdd(deckPart, cardId, cardDb, banlist)) {
             this[deckPart.id].push(cardId);
             this.all = this.getAll();
         }

@@ -123,6 +123,7 @@ import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDeck from "../components/ygoDeck.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
 import ygoRandomizer from "../components/ygoRandomizer.vue";
+import { forTimes } from "lightdash";
 
 // eslint-disable-next-line no-console
 const stderr = console.error;
@@ -194,11 +195,11 @@ export default {
         deckToFile() {
             FileSaver.saveAs(this.deck.toFile());
         },
-        deckCardCanAdd(deckPart, cardId) {
-            return this.deck.cardCanAdd(deckPart, cardId, this.cardDb);
+        deckCardCanAdd(deckPart, cardId, banlist) {
+            return this.deck.cardCanAdd(deckPart, cardId, this.cardDb, banlist);
         },
-        deckCardAdd(deckPart, cardId) {
-            this.deck.cardAdd(deckPart, cardId, this.cardDb);
+        deckCardAdd(deckPart, cardId, banlist) {
+            this.deck.cardAdd(deckPart, cardId, this.cardDb, banlist);
             this.ajax.pricesLoaded = false;
         },
         deckRandomize(newDeck) {

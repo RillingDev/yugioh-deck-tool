@@ -221,9 +221,9 @@
                             :key="deckPart.id"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
-                            :disabled="!deckCardCanAdd(deckPart, pair[0])"
+                            :disabled="!deckCardCanAdd(deckPart, pair[0],filter.banlist.active)"
                             class="builder-add btn"
-                            @click="(e) => clickEvent(e, deckPart, pair[0])"
+                            @click="(e) => clickEvent(e, deckPart, pair[0],filter.banlist.active)"
                         >
                             <span class="fa fa-plus">
                                 <!---->
@@ -342,8 +342,8 @@ export default {
         }
     },
     methods: {
-        clickEvent(e, deckPart, cardId) {
-            this.$emit("deckcardadd", deckPart, cardId, e);
+        clickEvent(e, deckPart, cardId, banlist) {
+            this.$emit("deckcardadd", deckPart, cardId, banlist, e);
         }
     }
 };

@@ -23,7 +23,7 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                     pair[1][0].toLowerCase().includes(filterNameLower) &&
                     // Search Format
                     filter.format.active.check(pair[1]) &&
-                    filter.banlist.active.check(pair[1]) &&
+                    //filter.banlist.active.check(pair[1]) &&
                     // Search Type
                     optionFilter(pair[1][1], filter.type) &&
                     // Search Monster Sub
