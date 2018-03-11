@@ -12,46 +12,45 @@ const checkArchetypeValidity = (card, archetypes, randChance) => {
             archetype[1].some(archetypeSub =>
                 cardName.includes(archetypeSub)
             ) ||
-            (archetype[2].some(archetypeSub =>
-                cardName.includes(archetypeSub)
-            ) &&
-                Math.random() > 0.5) ||
+            (archetype[2].some(archetypeSub => cardName === archetypeSub) &&
+                Math.random() > 0.75) ||
             Math.random() < randChance
     );
 };
 
 const RANDOMIZER_MODES = [
     { name: "Fully Random", filterFactory: () => () => true },
-    /*{ name: "Single Attribute", filter: card => card },
-    { name: "Single Race", filter: card => card }*/
     {
         name: "One Archetype",
         filterFactory: () => {
             const archetypes = pickRandomArchetypes(1);
-            // eslint-disable-next-line no-console
-            console.log(archetypes);
 
-            return card => checkArchetypeValidity(card, archetypes, 0.001);
+            // eslint-disable-next-line no-console
+            console.log(archetypes.map(archetype => archetype[0]));
+
+            return card => checkArchetypeValidity(card, archetypes, 0.002);
         }
     },
     {
         name: "Two Archetypes",
         filterFactory: () => {
             const archetypes = pickRandomArchetypes(2);
-            // eslint-disable-next-line no-console
-            console.log(archetypes);
 
-            return card => checkArchetypeValidity(card, archetypes, 0.0005);
+            // eslint-disable-next-line no-console
+            console.log(archetypes.map(archetype => archetype[0]));
+
+            return card => checkArchetypeValidity(card, archetypes, 0.001);
         }
     },
     {
         name: "Three Archetypes",
         filterFactory: () => {
             const archetypes = pickRandomArchetypes(3);
-            // eslint-disable-next-line no-console
-            console.log(archetypes);
 
-            return card => checkArchetypeValidity(card, archetypes, 0.00025);
+            // eslint-disable-next-line no-console
+            console.log(archetypes.map(archetype => archetype[0]));
+
+            return card => checkArchetypeValidity(card, archetypes, 0.0005);
         }
     }
 ];

@@ -56,6 +56,12 @@ const getRandomName = cardNameList => {
 };
 
 const randomizeDeck = (cardDb, filter) => {
+    const deckpartHasSpace = deckpartIndex =>
+        result[deckpartIndex].length <
+        (deckpartIndex === 0 ? DECKPARTS[0].min : DECKPARTS[deckpartIndex].max);
+    const deckpartCanAdd = (card, deckpartIndex) =>
+        DECKPARTS[deckpartIndex].check(card[1]) &&
+        deckpartHasSpace(deckpartIndex);
     const pairsShuffled = shuffle(cardDb.pairsArr.filter(filter));
     const result = [[], [], []];
     const resultCardNames = [];
@@ -64,20 +70,12 @@ const randomizeDeck = (cardDb, filter) => {
     let i = 0;
 
     while (
-        (result[0].length < DECKPARTS[0].min ||
-            result[1].length < DECKPARTS[1].max ||
-            result[2].length < DECKPARTS[2].max) &&
+        (deckpartHasSpace(0) || deckpartHasSpace(1) || deckpartHasSpace(1)) &&
         i < pairsShuffled.length
     ) {
         const card = pairsShuffled[i];
 
-        if (
-            DECKPARTS[0].check(card[1]) &&
-            result[0].length < DECKPARTS[0].min
-        ) {
-            /**
-             * Main
-             */
+        if (deckpartCanAdd(card, 0)) {
             const isSpell = card[1][1] === "Spell Card";
             const isTrap = card[1][1] === "Trap Card";
 
@@ -104,26 +102,14 @@ const randomizeDeck = (cardDb, filter) => {
                     mainDeckCountTraps += cardsAdded;
                 }
             }
-        } else if (
-            DECKPARTS[1].check(card[1]) &&
-            result[1].length < DECKPARTS[1].max
-        ) {
-            /**
-             * Extra
-             */
+        } else if (deckpartCanAdd(card, 1)) {
             result[1] = addCardRandomAmount(
                 result[1],
                 card,
                 DECKPARTS[1].max,
                 false
             );
-        } else if (
-            DECKPARTS[2].check(card[1]) &&
-            result[2].length < DECKPARTS[2].max
-        ) {
-            /**
-             * Side
-             */
+        } else if (deckpartCanAdd(card, 2)) {
             result[2] = addCardRandomAmount(
                 result[2],
                 card,
