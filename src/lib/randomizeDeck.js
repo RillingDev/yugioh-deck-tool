@@ -60,7 +60,8 @@ const randomizeDeck = (cardDb, filter) => {
         result[deckpartIndex].length <
         (deckpartIndex === 0 ? DECKPARTS[0].min : DECKPARTS[deckpartIndex].max);
     const deckpartCanAdd = (card, deckpartIndex) =>
-        deckpartHasSpace(deckpartIndex);
+        deckpartHasSpace(deckpartIndex) &&
+        DECKPARTS[deckpartIndex].check(card[1]);
     const pairsShuffled = shuffle(cardDb.pairsArr.filter(filter));
     const result = [[], [], []];
     const resultCardNames = [];

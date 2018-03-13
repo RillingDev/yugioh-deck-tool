@@ -13,7 +13,7 @@ const checkArchetypeValidity = (card, archetypes, randChance) => {
                 cardName.includes(archetypeSub)
             ) ||
             (archetype[2].some(archetypeSub => cardName === archetypeSub) &&
-                Math.random() > 0.75) ||
+                Math.random() > 0.333) ||
             Math.random() < randChance
     );
 };
@@ -28,7 +28,7 @@ const RANDOMIZER_MODES = [
             // eslint-disable-next-line no-console
             console.log(archetypes.map(archetype => archetype[0]));
 
-            return card => checkArchetypeValidity(card, archetypes, 0.002);
+            return card => checkArchetypeValidity(card, archetypes, 0.001);
         }
     },
     {
@@ -39,7 +39,7 @@ const RANDOMIZER_MODES = [
             // eslint-disable-next-line no-console
             console.log(archetypes.map(archetype => archetype[0]));
 
-            return card => checkArchetypeValidity(card, archetypes, 0.001);
+            return card => checkArchetypeValidity(card, archetypes, 0.0005);
         }
     },
     {
@@ -50,7 +50,7 @@ const RANDOMIZER_MODES = [
             // eslint-disable-next-line no-console
             console.log(archetypes.map(archetype => archetype[0]));
 
-            return card => checkArchetypeValidity(card, archetypes, 0.0005);
+            return card => checkArchetypeValidity(card, archetypes, 0.00025);
         }
     }
 ];
