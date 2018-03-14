@@ -12,14 +12,14 @@
             width="100"
             height="135"
         >
-            <div class="deck-card-text">
-                <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
-                <slot
-                    class="deck-card-price"
-                    name="price"
-                />
-            </div>
-            </a>
+        <div class="deck-card-text">
+            <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
+            <slot
+                class="deck-card-price"
+                name="price"
+            />
+        </div>
+    </a>
 </template>
 
 <script>

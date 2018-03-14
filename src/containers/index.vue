@@ -13,19 +13,19 @@
                     title="Upload Deck"
                     @change="fileOnUpload"
                 >
-                    <input
-                        v-model="deck.name"
-                        class="form-control form-deck-name"
-                        type="text"
-                        title="Deck Title"
-                        placeholder="Deck Title"
-                    >
-                        <button
-                            class="btn btn-primary form-control"
-                            download="Unnamed.ydk"
-                            title="Download Deck"
-                            @click="deckToFile"
-                        >Download</button>
+                <input
+                    v-model="deck.name"
+                    class="form-control form-deck-name"
+                    type="text"
+                    title="Deck Title"
+                    placeholder="Deck Title"
+                >
+                <button
+                    class="btn btn-primary form-control"
+                    download="Unnamed.ydk"
+                    title="Download Deck"
+                    @click="deckToFile"
+                >Download</button>
             </div>
             <!-- app-forms-share -->
             <div class="form-group">
@@ -36,11 +36,11 @@
                     type="url"
                     title="Shareable Link"
                 >
-                    <button
-                        class="btn btn-primary form-control"
-                        title="Copy Decklist to Clipboard"
-                        @click="copyShareText"
-                    >Copy Decklist to Clipboard</button>
+                <button
+                    class="btn btn-primary form-control"
+                    title="Copy Decklist to Clipboard"
+                    @click="copyShareText"
+                >Copy Decklist to Clipboard</button>
             </div>
             <!-- app-forms-price -->
             <div class="form-group">
@@ -55,19 +55,19 @@
                         :key="currency.id"
                         :value="currency"
                     >{{ currency.name }}</option>
-                        </select>
-                        <button
-                            class="btn btn-primary form-control"
-                            title="Load Prices"
-                            @click="fetchPrices"
-                        >
-                            <span :hidden="ajax.currentlyLoading">Load Prices</span>
-                            <span :hidden="!ajax.currentlyLoading">
-                                <span class="fa fa-circle-o-notch fa-spin fa-fw">
-                                    <!---->
-                                </span>
-                            </span>
-                            </button>
+                </select>
+                <button
+                    class="btn btn-primary form-control"
+                    title="Load Prices"
+                    @click="fetchPrices"
+                >
+                    <span :hidden="ajax.currentlyLoading">Load Prices</span>
+                    <span :hidden="!ajax.currentlyLoading">
+                        <span class="fa fa-circle-o-notch fa-spin fa-fw">
+                            <!---->
+                        </span>
+                    </span>
+                </button>
             </div>
         </div>
 
@@ -123,7 +123,6 @@ import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDeck from "../components/ygoDeck.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
 import ygoRandomizer from "../components/ygoRandomizer.vue";
-import { forTimes } from "lightdash";
 
 // eslint-disable-next-line no-console
 const stderr = console.error;

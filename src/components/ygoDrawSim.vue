@@ -7,45 +7,45 @@
             @click="showModal"
         >Start Hand</button>
 
-            <b-modal
-                id="modalDrawSim"
-                ref="modalDrawSim"
-                size="lg"
-                hide-footer
-                title="Start Hand Simulation"
+        <b-modal
+            id="modalDrawSim"
+            ref="modalDrawSim"
+            size="lg"
+            hide-footer
+            title="Start Hand Simulation"
+        >
+            <div
+                class="btn-group"
+                role="group"
             >
-                <div
-                    class="btn-group"
-                    role="group"
-                >
-                    <button
-                        :class="{active: drawMode === 5}"
-                        class="btn btn-primary"
-                        @click="setDrawMode(5)"
-                    >Going First</button>
-                        <button
-                            :class="{active: drawMode === 6}"
-                            class="btn btn-primary"
-                            @click="setDrawMode(6)"
-                        >Going Second</button>
-    </div>
-    <div class="drawsim-output">
-        <ygo-card
-            v-for="(drawItemId, index) of drawItems"
-            :key="`${drawItemId}_${index}`"
-            :card-id="drawItemId"
-            :card-name="cardDb.getName(drawItemId)"
-        />
-    </div>
-    <button
-        class="btn btn-primary"
-        title="Simulate a new Starting Hand"
-        @click="draw"
-    >
-        Draw
-        </button>
+                <button
+                    :class="{active: drawMode === 5}"
+                    class="btn btn-primary"
+                    @click="setDrawMode(5)"
+                >Going First</button>
+                <button
+                    :class="{active: drawMode === 6}"
+                    class="btn btn-primary"
+                    @click="setDrawMode(6)"
+                >Going Second</button>
+            </div>
+            <div class="drawsim-output">
+                <ygo-card
+                    v-for="(drawItemId, index) of drawItems"
+                    :key="`${drawItemId}_${index}`"
+                    :card-id="drawItemId"
+                    :card-name="cardDb.getName(drawItemId)"
+                />
+            </div>
+            <button
+                class="btn btn-primary"
+                title="Simulate a new Starting Hand"
+                @click="draw"
+            >
+                Draw
+            </button>
         </b-modal>
-        </div>
+    </div>
 </template>
 
 <script>

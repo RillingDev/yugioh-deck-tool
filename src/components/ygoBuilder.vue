@@ -26,7 +26,7 @@
                     :key="option.name"
                     :value="option"
                 >{{ option.name }}</option>
-                    </select>
+            </select>
         </div>
 
         <!-- builder-type -->
@@ -42,7 +42,7 @@
                     :key="option"
                     :value="option"
                 >{{ option }}</option>
-                    </select>
+            </select>
         </div>
 
         <div class="form-group">
@@ -61,7 +61,7 @@
                                 :key="option.name"
                                 :value="option"
                             >{{ option.name }}</option>
-                                </select>
+                        </select>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
                                 :key="option.name"
                                 :value="option"
                             >{{ option.name }}</option>
-                                </select>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                                     :key="option"
                                     :value="option"
                                 >{{ option }}</option>
-                                    </select>
+                            </select>
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                                     :key="option"
                                     :value="option"
                                 >{{ option }}</option>
-                                    </select>
+                            </select>
                         </div>
                     </div>
 
@@ -142,7 +142,7 @@
                         :key="option"
                         :value="option"
                     >{{ option }}</option>
-                        </select>
+                </select>
             </div>
 
             <template v-if="isMonsterLink">
@@ -159,7 +159,7 @@
                             :key="option"
                             :value="option"
                         >{{ option }}</option>
-                            </select>
+                    </select>
                 </div>
             </template>
         </template>
@@ -178,7 +178,7 @@
                         :key="option"
                         :value="option"
                     >{{ option }}</option>
-                        </select>
+                </select>
             </div>
         </template>
 
@@ -196,7 +196,7 @@
                         :key="option"
                         :value="option"
                     >{{ option }}</option>
-                        </select>
+                </select>
             </div>
         </template>
 
@@ -228,11 +228,11 @@
                             <span class="fa fa-plus">
                                 <!---->
                             </span>
-                            </button>
+                        </button>
                     </div>
-                    </a>
-                    </li>
-                    </ul>
+                </a>
+            </li>
+        </ul>
     </div>
 </template>
 

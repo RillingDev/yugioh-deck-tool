@@ -24,10 +24,10 @@
                         :item="cardId"
                         :price-db="priceDb"
                     />
-                    </ygo-card>
+                </ygo-card>
             </div>
         </template>
-        </div>
+    </div>
 </template>
 
 <script>
@@ -79,6 +79,14 @@ export default {
 
 @import "../styles/variables.custom";
 
+.deck-content {
+    border: 1px solid $gray-300;
+    padding: 3px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .deck-part {
     margin-bottom: 1.25em;
 
@@ -102,13 +110,5 @@ export default {
             background-color: $color-deckpart-side;
         }
     }
-}
-
-.deck-content {
-    border: 1px solid $gray-300;
-    padding: 3px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 </style>

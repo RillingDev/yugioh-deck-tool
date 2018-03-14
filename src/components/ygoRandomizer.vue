@@ -8,37 +8,37 @@
             title="Randomize Deck"
             @click="randomize"
         >Randomize</button>
-            <button
-                class="btn btn-primary btn-sm"
-                title="Configure Randomizer"
-                @click="showModal"
-            >
-                <span class="fa fa-gear">
-                    <!---->
-                </span>
-                </button>
-                <b-modal
-                    id="modalRandomizerSettings"
-                    ref="modalRandomizerSettings"
-                    size="lg"
-                    hide-footer
-                    title="Randomizer Settings"
+        <button
+            class="btn btn-primary btn-sm"
+            title="Configure Randomizer"
+            @click="showModal"
+        >
+            <span class="fa fa-gear">
+                <!---->
+            </span>
+        </button>
+        <b-modal
+            id="modalRandomizerSettings"
+            ref="modalRandomizerSettings"
+            size="lg"
+            hide-footer
+            title="Randomizer Settings"
+        >
+            <div class="form-group">
+                <label>Mode:</label>
+                <select
+                    v-model="mode.selected"
+                    class="form-control"
                 >
-                    <div class="form-group">
-                        <label>Mode:</label>
-                        <select
-                            v-model="mode.selected"
-                            class="form-control"
-                        >
-                            <option
-                                v-for="modeCurrent in mode.available"
-                                :key="modeCurrent.name"
-                                :value="modeCurrent"
-                            >{{ modeCurrent.name }}</option>
-                                </select>
-                    </div>
-                    </b-modal>
-                    </div>
+                    <option
+                        v-for="modeCurrent in mode.available"
+                        :key="modeCurrent.name"
+                        :value="modeCurrent"
+                    >{{ modeCurrent.name }}</option>
+                </select>
+            </div>
+        </b-modal>
+    </div>
 </template>
 
 <script>
