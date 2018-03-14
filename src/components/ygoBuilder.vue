@@ -383,7 +383,6 @@ export default {
     padding: 0;
     resize: vertical;
     border: 1px solid $gray-400;
-
     @include screen(min, md) {
         max-height: 60vh;
     }
@@ -406,6 +405,7 @@ export default {
 .builder-card-name {
     padding: 10px 0;
 }
+
 .builder-card-action {
     width: 80px;
     display: flex;
@@ -413,6 +413,7 @@ export default {
     justify-content: space-evenly;
     align-items: center;
 }
+
 .btn.builder-add {
     width: 34px;
     opacity: 0.8;

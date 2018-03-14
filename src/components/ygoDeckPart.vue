@@ -89,12 +89,10 @@ export default {
 
 .deck-part {
     margin-bottom: 1.25em;
-
     h3 {
         font-size: 1rem;
         display: initial;
     }
-
     &-main {
         .deck-content {
             background-color: $color-deckpart-main;

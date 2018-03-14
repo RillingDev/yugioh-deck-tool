@@ -113,17 +113,14 @@ export default {
         font-size: 1.4em;
         cursor: pointer;
     }
-
     .modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
     .modal-title {
         margin-bottom: 0;
     }
-
     .modal-body {
         display: flex;
         justify-content: space-around;
