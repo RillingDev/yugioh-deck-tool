@@ -10,15 +10,15 @@ const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
  * If the deck currently has less, than MAX_${type}, add more
  * A max of 5 could lead to 7 cards that way
  */
-const MAX_SPELLS = 15;
-const MAX_TRAPS = 5;
+const MAX_SPELLS = 18;
+const MAX_TRAPS = 6;
 
 const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();
 
     if (preferPlayset) {
-        if (seed > 0.8) return 1;
-        else if (seed > 0.65) return 2;
+        if (seed > 0.7) return 1;
+        else if (seed > 0.6) return 2;
         return 3;
     }
     if (seed > 0.25) return 1;
