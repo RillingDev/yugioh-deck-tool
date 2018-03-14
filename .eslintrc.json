@@ -28,6 +28,6 @@
         "no-with": 2,
         "prefer-promise-reject-errors": 2,
 
-        "vue/html-indent": 0
+        "vue/html-indent": [1, 4]
     }
 }

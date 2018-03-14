@@ -11,7 +11,7 @@
             class="price-mode"
         >
             {{ priceDb.format(priceValues[index]) }}
-            </span>
+        </span>
     </div>
 </template>
 

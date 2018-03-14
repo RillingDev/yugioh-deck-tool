@@ -9,18 +9,18 @@
                 :item="deck.all"
                 :price-db="priceDb"
             />
-    </div>
-    <ygo-deck-part
-        v-for="deckPart in deck.parts"
-        :key="deckPart.id"
-        :class="`deck-part-${deckPart.id}`"
-        :ajax="ajax"
-        :deck="deck"
-        :deck-part="deckPart"
-        :deck-part-list="deck[deckPart.id]"
-        :card-db="cardDb"
-        :price-db="priceDb"
-    />
+        </div>
+        <ygo-deck-part
+            v-for="deckPart in deck.parts"
+            :key="deckPart.id"
+            :class="`deck-part-${deckPart.id}`"
+            :ajax="ajax"
+            :deck="deck"
+            :deck-part="deckPart"
+            :deck-part-list="deck[deckPart.id]"
+            :card-db="cardDb"
+            :price-db="priceDb"
+        />
     </div>
 </template>
 

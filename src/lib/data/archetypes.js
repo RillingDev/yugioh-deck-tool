@@ -1,4 +1,3 @@
-
 /**
  * Structure:
  * [archetype,[rquired],[bonus]]
@@ -120,11 +119,7 @@ const ARCHETYPES = [
     ["Dark Magician", [], ["Dark Magician Girl"]],
     ["Dark Magician Girl", [], ["Dark Magician"]],
     ["Dark Scorpion", [], []],
-    [
-        "Dark World",
-        [],
-        ["Tour Guide From the Underworld", "Armageddon Knight"]
-    ],
+    ["Dark World", [], ["Tour Guide From the Underworld", "Armageddon Knight"]],
     ["Darklord", [], []],
     ["Deskbot", [], []],
     [
@@ -869,11 +864,7 @@ const ARCHETYPES = [
         ["Revival Jam", "Jam Defender", "Jam Breeding Machine", "Wetlands"],
         []
     ],
-    [
-        "Speedroid",
-        [],
-        ["Limiter Removal", "Machina Armored Unit", "Iron Call"]
-    ],
+    ["Speedroid", [], ["Limiter Removal", "Machina Armored Unit", "Iron Call"]],
     [
         "Sphinx",
         [],
@@ -1062,11 +1053,7 @@ const ARCHETYPES = [
     ],
     ["Troymare", [], []],
     ["True Draco", ["Draco"], []],
-    [
-        "U.A.",
-        [],
-        ["Reinforcement of the Army", "The Warrior Returning Alive"]
-    ],
+    ["U.A.", [], ["Reinforcement of the Army", "The Warrior Returning Alive"]],
     [
         "Umbral Horror",
         [],

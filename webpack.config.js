@@ -29,12 +29,6 @@ const ruleVue = {
         extractCSS: true
     }
 };
-const ruleEslint = {
-    enforce: "pre",
-    test: /\.js$/,
-    exclude: /node_modules/,
-    loader: "eslint-loader"
-};
 const ruleBabel = {
     test: /\.js$/,
     exclude: /node_modules/,
@@ -66,7 +60,7 @@ module.exports = {
         : [pluginEnv, pluginExtractText],
     module: {
         rules: PRODUCTION_ENABLED
-            ? [ruleVue, ruleExtractText, ruleEslint, ruleBabel]
+            ? [ruleVue, ruleExtractText, ruleBabel]
             : [ruleVue, ruleExtractText]
     }
 };
