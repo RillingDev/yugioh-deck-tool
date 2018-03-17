@@ -1,6 +1,6 @@
 {
     "name": "ygoprodeckprice",
-    "version": "v4.5.0",
+    "version": "v4.6.0",
     "description": "ygodeckprice app for ygoprodeck.com",
     "main": "app/index.js",
     "scripts": {
@@ -16,11 +16,7 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/ygodeckprice3.git"
     },
-    "keywords": [
-        "yugioh",
-        "deck",
-        "app"
-    ],
+    "keywords": ["yugioh", "deck", "app"],
     "author": "FelixRilling",
     "license": "MIT",
     "bugs": {
