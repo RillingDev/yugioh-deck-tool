@@ -31,7 +31,6 @@ const CARD_TYPE_SORTED = [
         "Effect Monster",
         "Tuner Monster",
         "Union Effect Monster",
-        "Flip Monster",
         "Flip Effect Monster",
         "Spirit Monster",
         "Toon Monster",

@@ -20,8 +20,13 @@ const banlistToNumber = val => {
     return 3;
 };
 
+const types = new Set();
+
 inputCards.forEach(entry => {
     if (entry.name.length > 0 && !entry.type.startsWith("Token")) {
+        if (!types.has(entry.type)) {
+            types.add(entry.type);
+        }
         output[entry.id] = [
             normalize(entry.name),
 
@@ -39,13 +44,18 @@ inputCards.forEach(entry => {
 
             normalize(entry.format),
             banlistToNumber(entry.ban_tcg),
-            banlistToNumber(entry.bab_ocg)
+            banlistToNumber(entry.ban_ocg)
         ];
     }
 });
 
 fs.writeFileSync(
-    "./out/names.json",
+    "./out/debug_types.json",
+    JSON.stringify(Array.from(types).sort(), null, "  "),
+    "utf8"
+);
+fs.writeFileSync(
+    "./out/debug_names.json",
     JSON.stringify(output, null, "  "),
     "utf8"
 );
