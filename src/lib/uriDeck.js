@@ -1,5 +1,5 @@
 import { compress, decompress } from "./compress";
-import { arrFrom, arrCount } from "lightdash";
+import { arrCount } from "lightdash";
 
 const DELIMITERS = {
     deckPart: "|",
@@ -10,7 +10,7 @@ const DELIMITERS = {
 const createOptimizeList = deckList =>
     deckList
         .map(deckListPart =>
-            arrFrom(arrCount(deckListPart))
+            Array.from(arrCount(deckListPart))
                 .map(
                     entry =>
                         entry[1] > 1

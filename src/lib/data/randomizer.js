@@ -1,7 +1,7 @@
-import shuffle from "../shuffle";
+import { randShuffle } from "lightdash";
 import { ARCHETYPES } from "./archetypes";
 
-const pickRandomArchetypes = (max = 1) => shuffle(ARCHETYPES).slice(0, max);
+const pickRandomArchetypes = (max = 1) => randShuffle(ARCHETYPES).slice(0, max);
 
 const checkArchetypeValidity = (card, archetypes, randChance) => {
     const cardName = card[1][0].toLowerCase();

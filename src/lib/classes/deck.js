@@ -1,4 +1,4 @@
-import { arrFrom, arrCount, arrRemoveItem } from "lightdash";
+import { arrCount, arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sortCards from "../sortCards";
@@ -28,7 +28,7 @@ const listToText = (list, cardDb) => {
         const deckPartCards = list[index];
 
         if (deckPartCards.length > 0) {
-            const deckPartCardsCounted = arrFrom(
+            const deckPartCardsCounted = Array.from(
                 arrCount(deckPartCards).entries()
             ).map(entry => `${cardDb.getName(entry[0])} x${entry[1]}`);
 

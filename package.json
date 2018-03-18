@@ -16,7 +16,11 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/ygodeckprice3.git"
     },
-    "keywords": ["yugioh", "deck", "app"],
+    "keywords": [
+        "yugioh",
+        "deck",
+        "app"
+    ],
     "author": "FelixRilling",
     "license": "MIT",
     "bugs": {
@@ -28,7 +32,7 @@
         "bootstrap-vue": "^2.0.0-rc.2",
         "clipboard-polyfill": "^2.4.6",
         "file-saver": "^1.3.3",
-        "lightdash": "^4.1.6",
+        "lightdash": "^5.0.1",
         "pako": "^1.0.6",
         "vue": "^2.5.16"
     },

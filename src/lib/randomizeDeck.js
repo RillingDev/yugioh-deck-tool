@@ -1,7 +1,6 @@
 import Deck from "./classes/deck";
-import shuffle from "./shuffle";
 import { DECKPARTS } from "./data/deck";
-import { arrUniq } from "lightdash";
+import { arrUniq, randShuffle } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 
@@ -50,7 +49,7 @@ const getRandomName = cardNameList => {
         .split(REGEX_NAME_DELIMITER)
         .filter(word => word[0].toUpperCase() === word[0]); // Only use Capitalized words to avoid 'the' and 'of'
 
-    return shuffle(arrUniq(words))
+    return randShuffle(arrUniq(words))
         .slice(0, 3)
         .join(" ");
 };
@@ -62,7 +61,7 @@ const randomizeDeck = (cardDb, filter) => {
     const deckpartCanAdd = (card, deckpartIndex) =>
         deckpartHasSpace(deckpartIndex) &&
         DECKPARTS[deckpartIndex].check(card[1]);
-    const pairsShuffled = shuffle(cardDb.pairsArr.filter(filter));
+    const pairsShuffled = randShuffle(cardDb.pairsArr.filter(filter));
     const result = [[], [], []];
     const resultCardNames = [];
     let mainDeckCountSpells = 0;
