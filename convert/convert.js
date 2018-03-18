@@ -3,15 +3,20 @@
 const fs = require("fs");
 const deflate = require("zlib").deflateSync;
 const input = require("./input.json");
-const { isString } = require("lightdash");
+const { isNil } = require("lightdash");
 
 const inputCards = input[2].data;
 const output = {};
 
-const normalize = val => (isString(val) ? val.trim() : "");
+const normalize = val => (isNil(val) ? "" : val);
 
 const splitLinkMarkers = val =>
-    val ? val.split(",").map(str => str.trim()) : [];
+    val
+        ? val
+              .split(",")
+              .map(str => str.trim())
+              .filter(str => str.length > 0)
+        : [];
 
 const banlistToNumber = val => {
     if (val === "Banned") return 0;
@@ -28,23 +33,23 @@ inputCards.forEach(entry => {
             types.add(entry.type);
         }
         output[entry.id] = [
-            normalize(entry.name),
+            /* 0 */ normalize(entry.name),
 
-            normalize(entry.type),
-            normalize(entry.atk),
-            normalize(entry.def),
-            normalize(entry.level),
-            normalize(entry.race),
-            normalize(entry.attribute),
-            splitLinkMarkers(entry.linkmarkers),
+            /* 1 */ normalize(entry.type),
+            /* 2 */ normalize(entry.atk),
+            /* 3 */ normalize(entry.def),
+            /* 4 */ normalize(entry.level),
+            /* 5 */ normalize(entry.race),
+            /* 6 */ normalize(entry.attribute),
+            /* 7 */ splitLinkMarkers(entry.linkmarkers),
 
-            normalize(entry.times),
-            normalize(entry.rating_up),
-            normalize(entry.rating_down),
+            /* 8 */ normalize(entry.times),
+            /* 9 */ normalize(entry.rating_up),
+            /* 10 */ normalize(entry.rating_down),
 
-            normalize(entry.format),
-            banlistToNumber(entry.ban_tcg),
-            banlistToNumber(entry.ban_ocg)
+            /* 11 */ normalize(entry.format),
+            /* 12 */ banlistToNumber(entry.ban_tcg),
+            /* 13 */ banlistToNumber(entry.ban_ocg)
         ];
     }
 });
