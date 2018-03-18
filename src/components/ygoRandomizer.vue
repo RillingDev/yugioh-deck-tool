@@ -69,8 +69,10 @@ export default {
             this.$refs.modalRandomizerSettings.show();
         },
         randomize() {
-            const filter = this.mode.selected.filterFactory();
-            const result = randomizeDeck(this.cardDb, filter);
+            const result = randomizeDeck(
+                this.cardDb,
+                this.mode.selected.splitter
+            );
 
             this.$emit("randomize", result);
         }

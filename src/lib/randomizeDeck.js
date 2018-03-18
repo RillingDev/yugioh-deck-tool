@@ -44,24 +44,28 @@ const addCardRandomAmount = (arr, card, limit, preferPlayset = true) => {
 };
 
 const getRandomName = cardNameList => {
+    const length = Math.floor(Math.random() * 3) + 2;
     const words = cardNameList
         .join(" ")
         .split(REGEX_NAME_DELIMITER)
         .filter(word => word[0].toUpperCase() === word[0]); // Only use Capitalized words to avoid 'the' and 'of'
 
     return randShuffle(arrUniq(words))
-        .slice(0, 3)
-        .join(" ");
+        .slice(0, length)
+        .join(" ")
+        .trim();
 };
 
-const randomizeDeck = (cardDb, filter) => {
+const randomizeDeck = (cardDb, randomizerSplitter) => {
     const deckpartHasSpace = deckpartIndex =>
         result[deckpartIndex].length <
         (deckpartIndex === 0 ? DECKPARTS[0].min : DECKPARTS[deckpartIndex].max);
+
     const deckpartCanAdd = (card, deckpartIndex) =>
         deckpartHasSpace(deckpartIndex) &&
         DECKPARTS[deckpartIndex].check(card[1]);
-    const pairsShuffled = randShuffle(cardDb.pairsArr.filter(filter));
+
+    const pool = randomizerSplitter(randShuffle(cardDb.pairsArr));
     const result = [[], [], []];
     const resultCardNames = [];
     let mainDeckCountSpells = 0;
@@ -70,9 +74,9 @@ const randomizeDeck = (cardDb, filter) => {
 
     while (
         (deckpartHasSpace(0) || deckpartHasSpace(1) || deckpartHasSpace(1)) &&
-        i < pairsShuffled.length
+        i < pool.primary.length
     ) {
-        const card = pairsShuffled[i];
+        const card = pool.primary[i];
 
         if (deckpartCanAdd(card, 0)) {
             const isSpell = card[1][1] === "Spell Card";
