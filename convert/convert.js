@@ -32,25 +32,25 @@ inputCards.forEach(entry => {
         if (!types.has(entry.type)) {
             types.add(entry.type);
         }
-        output[entry.id] = [
-            /* 0 */ normalize(entry.name),
+        output[entry.id] = {
+            name: normalize(entry.name),
 
-            /* 1 */ normalize(entry.type),
-            /* 2 */ normalize(entry.atk),
-            /* 3 */ normalize(entry.def),
-            /* 4 */ normalize(entry.level),
-            /* 5 */ normalize(entry.race),
-            /* 6 */ normalize(entry.attribute),
-            /* 7 */ splitLinkMarkers(entry.linkmarkers),
+            type: normalize(entry.type),
+            race: normalize(entry.race),
+            attribute: normalize(entry.attribute),
+            stats: [entry.atk, entry.def, entry.level],
+            linkmarkers: splitLinkMarkers(entry.linkmarkers),
 
-            /* 8 */ normalize(entry.times),
-            /* 9 */ normalize(entry.rating_up),
-            /* 10 */ normalize(entry.rating_down),
+            format: normalize(entry.format),
+            limit: [
+                banlistToNumber(entry.ban_tcg),
+                banlistToNumber(entry.ban_ocg)
+            ],
 
-            /* 11 */ normalize(entry.format),
-            /* 12 */ banlistToNumber(entry.ban_tcg),
-            /* 13 */ banlistToNumber(entry.ban_ocg)
-        ];
+            date: new Date(entry.date).getTime(),
+            times: entry.times,
+            rating: [entry.rating_up, entry.rating_down]
+        };
     }
 });
 
