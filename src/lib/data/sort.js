@@ -29,7 +29,7 @@ const SORTERS = [
     },
     {
         name: "Views",
-        fn: (a, b) => b.views - a.views
+        fn: (a, b) => b.times - a.times
     },
     {
         name: "Latest",
