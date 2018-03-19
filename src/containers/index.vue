@@ -43,13 +43,13 @@
                 >
                     <span class="fa fa-clipboard"><!-- icon--></span>
                 </button>
-                <button
+                <!--<button
                     class="btn btn-primary btn-tiny form-control"
                     title="Copy Short Sharelink to Clipboard"
                     @click="copyShortLink"
                 >
-                    <span class="fa fa-bolt"><!-- icon--></span>
-                </button>
+                    <span class="fa fa-bolt"></span>
+                </button>-->
                 <button
                     class="btn btn-primary form-control"
                     title="Copy Decklist to Clipboard"
