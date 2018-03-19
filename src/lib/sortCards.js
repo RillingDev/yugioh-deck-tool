@@ -5,19 +5,17 @@ import {
 } from "./data/cards";
 
 const compareType = (dataA, dataB) => {
-    const typeA = dataA[1];
-    const typeB = dataB[1];
     const typeComp =
-        CARD_TYPE_SORTED.findIndex(typeArr => typeArr.includes(typeA)) -
-        CARD_TYPE_SORTED.findIndex(typeArr => typeArr.includes(typeB));
+        CARD_TYPE_SORTED.findIndex(typeArr => typeArr.includes(dataA.type)) -
+        CARD_TYPE_SORTED.findIndex(typeArr => typeArr.includes(dataB.type));
 
     if (typeComp === 0) {
-        if (typeA === "Spell Card") {
+        if (dataA.type === "Spell Card") {
             return (
                 CARD_SPELL_TYPE.indexOf(dataA.race) -
                 CARD_SPELL_TYPE.indexOf(dataB.race)
             );
-        } else if (typeA === "Trap Card") {
+        } else if (dataB.type === "Trap Card") {
             return (
                 CARD_TRAP_TYPE.indexOf(dataA.race) -
                 CARD_TRAP_TYPE.indexOf(dataB.race)
