@@ -14,7 +14,8 @@ const getUrls = () => {
         imageAPI: joinUrl(URL_YGOPRODECK, "pics"),
         imageUnknown: getRelativeUrl("assets/unknown.png"),
         nameAPI: getRelativeUrl("api/names/names.json.gz"),
-        priceAPI: getRelativeUrl("api/prices/prices.php?n=")
+        priceAPI: getRelativeUrl("api/prices/prices.php?n="),
+        shortenerAPI: "https://v.gd/create.php?format=simple&url="
     };
 };
 

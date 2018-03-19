@@ -19,6 +19,7 @@
         padding-top: 3px;
         padding-bottom: 3px;
     }
+
     @include screen(min, md) {
         > .form-group {
             flex-direction: row;
@@ -35,6 +36,10 @@
             min-width: 225px;
             max-width: 275px;
             margin-left: 10px;
+            &.btn-tiny {
+                max-width: 40px;
+                min-width: 0;
+            }
         }
         label {
             min-width: 100px;

@@ -37,6 +37,20 @@
                     title="Shareable Link"
                 >
                 <button
+                    class="btn btn-primary btn-tiny form-control"
+                    title="Copy Sharelink to Clipboard"
+                    @click="copyShareLink"
+                >
+                    <span class="fa fa-clipboard"><!-- icon--></span>
+                </button>
+                <button
+                    class="btn btn-primary btn-tiny form-control"
+                    title="Copy Short Sharelink to Clipboard"
+                    @click="copyShortLink"
+                >
+                    <span class="fa fa-bolt"><!-- icon--></span>
+                </button>
+                <button
                     class="btn btn-primary form-control"
                     title="Copy Decklist to Clipboard"
                     @click="copyShareText"
@@ -212,6 +226,15 @@ export default {
                     .then(deck => (this.deck = deck))
                     .catch(stderr);
             }
+        },
+        copyShortLink() {
+            fetch(urls.shortenerAPI + this.shareLink)
+                .then(res => res.text())
+                .then(text => clipboard.writeText(text))
+                .catch(stderr);
+        },
+        copyShareLink() {
+            clipboard.writeText(this.shareLink);
         },
         copyShareText() {
             clipboard.writeText(this.deck.toText(this.cardDb));
