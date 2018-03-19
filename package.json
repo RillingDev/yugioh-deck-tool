@@ -5,10 +5,8 @@
     "main": "app/index.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-        "build":
-            "cross-env NODE_ENV=development webpack --progress --hide-modules",
-        "dist":
-            "cross-env NODE_ENV=production webpack --progress --hide-modules",
+        "build": "cross-env NODE_ENV=development webpack --progress --hide-modules",
+        "dist": "cross-env NODE_ENV=production webpack --progress --hide-modules",
         "lint": "eslint src/**/*.js src/**/*.vue",
         "fix": "npm-run-all fix:prettier fix:es",
         "fix:es": "eslint src/**/*.js src/**/*.vue --fix",
@@ -18,7 +16,11 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/ygodeckprice3.git"
     },
-    "keywords": ["yugioh", "deck", "app"],
+    "keywords": [
+        "yugioh",
+        "deck",
+        "app"
+    ],
     "author": "FelixRilling",
     "license": "MIT",
     "bugs": {
@@ -43,7 +45,7 @@
         "eslint": "^4.19.0",
         "eslint-plugin-vue": "^4.3.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
-        "node-sass": "^4.8.2",
+        "node-sass": "^4.8.3",
         "npm-run-all": "^4.1.2",
         "sass-loader": "^6.0.7",
         "stylelint": "^9.1.3",

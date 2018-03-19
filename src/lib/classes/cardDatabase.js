@@ -4,7 +4,7 @@ const excludeAlternateArtworks = arr => {
     const names = new Set();
 
     return arr.filter(entry => {
-        const name = entry[1][0];
+        const name = entry[1].name;
 
         if (!names.has(name)) {
             names.add(name);
@@ -19,9 +19,8 @@ const excludeAlternateArtworks = arr => {
 const CardDatabase = class {
     constructor(obj = {}) {
         this.cards = mapFromObject(obj);
-        this.pairsArr = excludeAlternateArtworks(
-            Array.from(this.cards.entries())
-        );
+        this.pairsArr = Array.from(this.cards.entries());
+        this.pairsArrUniq = excludeAlternateArtworks(this.pairsArr);
 
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
@@ -38,7 +37,7 @@ const CardDatabase = class {
         return this.cards.get(cardId);
     }
     getName(cardId) {
-        return this.has(cardId) ? this.get(cardId)[0] : `[${cardId}]`;
+        return this.has(cardId) ? this.get(cardId).name : `[${cardId}]`;
     }
 };
 

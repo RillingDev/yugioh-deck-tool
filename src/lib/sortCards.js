@@ -14,13 +14,13 @@ const compareType = (dataA, dataB) => {
     if (typeComp === 0) {
         if (typeA === "Spell Card") {
             return (
-                CARD_SPELL_TYPE.indexOf(dataA[5]) -
-                CARD_SPELL_TYPE.indexOf(dataB[5])
+                CARD_SPELL_TYPE.indexOf(dataA.race) -
+                CARD_SPELL_TYPE.indexOf(dataB.race)
             );
         } else if (typeA === "Trap Card") {
             return (
-                CARD_TRAP_TYPE.indexOf(dataA[5]) -
-                CARD_TRAP_TYPE.indexOf(dataB[5])
+                CARD_TRAP_TYPE.indexOf(dataA.race) -
+                CARD_TRAP_TYPE.indexOf(dataB.race)
             );
         }
     }
@@ -33,8 +33,8 @@ const sortCards = (list, cardDb) =>
         const dataA = cardDb.get(a);
         const dataB = cardDb.get(b);
         const typeComp = compareType(dataA, dataB);
-        const lvComp = Number(dataB[4]) - Number(dataA[4]);
-        const nameComp = dataA[0].localeCompare(dataB[0]);
+        const lvComp = Number(dataB.stats[2]) - Number(dataA.stats[2]);
+        const nameComp = dataA.name.localeCompare(dataB.name);
 
         if (typeComp !== 0) {
             return typeComp;

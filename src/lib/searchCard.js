@@ -11,42 +11,42 @@ const searchCard = (cardArr, filter, is, sortFn) => {
         cardArr
             // Filter Text and other filters
             .filter(pair => {
-                const optionFilterPattern = (
-                    cond,
-                    index,
-                    filterItem,
-                    optionFn = optionFilter
-                ) => !cond || optionFn(pair[1][index], filterItem);
-                const cardNameLower = pair[1][0].toLowerCase();
+                const pairData = pair[1];
+                const cardNameLower = pairData.name.toLowerCase();
 
                 return (
                     // Search Name
                     cardNameLower.includes(filterNameLower) &&
                     // Search Format
-                    filter.format.active.check(pair[1]) &&
-                    filter.banlist.active.check(pair[1]) &&
+                    filter.format.active.check(pairData) &&
+                    filter.banlist.active.check(pairData) &&
                     // Search Type
-                    optionFilter(pair[1][1], filter.type) &&
+                    optionFilter(pairData.type, filter.type) &&
                     // Search Monster Sub
-                    optionFilterPattern(is.monster, 6, filter.attribute) &&
-                    optionFilterPattern(is.monster, 5, filter.race) &&
-                    optionFilterPattern(is.monster, 4, filter.level) &&
-                    optionFilterPattern(
-                        is.monsterLink,
-                        7,
-                        filter.linkarrows,
-                        optionFilterArr
-                    ) &&
+                    (!is.monster ||
+                        optionFilter(pairData.attribute, filter.attribute)) &&
+                    (!is.monster || optionFilter(pairData.race, filter.race)) &&
+                    (!is.monster ||
+                        optionFilter(
+                            String(pairData.stats[2]),
+                            filter.level
+                        )) &&
+                    (!is.monsterLink ||
+                        optionFilterArr(
+                            pairData.linkarrows,
+                            filter.linkarrows
+                        )) &&
                     // Search Spell Sub
-                    optionFilterPattern(is.spell, 5, filter.spelltype) &&
+                    (!is.spell ||
+                        optionFilter(pairData.race, filter.spelltype)) &&
                     // Search Trap Sub
-                    optionFilterPattern(is.trap, 5, filter.traptype)
+                    (!is.trap || optionFilter(pairData.race, filter.traptype))
                 );
             })
             // Apply sorting
             .sort((a, b) => sortFn(a[1], b[1]))
             // Drop everything but id and name
-            .map(pair => [pair[0], pair[1][0]])
+            .map(pair => [pair[0], pair[1].name])
     );
 };
 

@@ -4,7 +4,7 @@ import { ARCHETYPES } from "./archetypes";
 const pickRandomArchetypes = (max = 1) => randShuffle(ARCHETYPES).slice(0, max);
 
 const checkArchetypeValidity = (card, archetypes, randChance) => {
-    const cardName = card[1][0].toLowerCase();
+    const cardName = card[1].name.toLowerCase();
 
     return archetypes.some(
         archetype =>
