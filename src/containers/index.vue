@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import FileSaver from "file-saver/FileSaver";
+import FileSaver from "file-saver";
 import clipboard from "clipboard-polyfill";
 
 import CardDatabase from "../lib/classes/cardDatabase";

@@ -30,11 +30,11 @@ const SORTERS = [
     {
         name: "Views",
         fn: (a, b) => b.times - a.times
-    },
-    {
+    }
+    /* {
         name: "Latest",
         fn: (a, b) => b.date - a.date
-    }
+    } */
 ];
 
 Object.freeze(SORTERS);
