@@ -122,8 +122,6 @@
 </template>
 
 <script>
-import FileSaver from "file-saver";
-
 import CardDatabase from "../lib/classes/cardDatabase";
 import PriceDatabase from "../lib/classes/priceDatabase";
 import Deck from "../lib/classes/deck";
@@ -131,6 +129,7 @@ import Deck from "../lib/classes/deck";
 import apiLoadCards from "../lib/apiLoadCards";
 import apiLoadPrices from "../lib/apiLoadPrices";
 import getUrls from "../lib/data/urls";
+import saveFile from "../lib/saveFile";
 
 import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDeck from "../components/ygoDeck.vue";
@@ -205,7 +204,7 @@ export default {
                 .catch(stderr);
         },
         deckToFile() {
-            FileSaver.saveAs(this.deck.toFile());
+            saveFile(this.deck.toFile());
         },
         deckCardCanAdd(deckPart, cardId, banlist) {
             return this.deck.cardCanAdd(deckPart, cardId, this.cardDb, banlist);
