@@ -226,12 +226,12 @@ export default {
                     .catch(stderr);
             }
         },
-        copyShortLink() {
-            /*             fetch(urls.shortenerAPI + this.shareLink)
+        /*  copyShortLink() {
+                      fetch(urls.shortenerAPI + this.shareLink)
                 .then(res => res.text())
                 .then(text => clipboard.writeText(text))
-                .catch(stderr); */
-        },
+                .catch(stderr);
+        },*/
         copyShareLink() {
             navigator.clipboard.writeText(this.shareLink).catch(stderr);
         },
