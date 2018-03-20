@@ -123,7 +123,6 @@
 
 <script>
 import FileSaver from "file-saver";
-import clipboard from "clipboard-polyfill";
 
 import CardDatabase from "../lib/classes/cardDatabase";
 import PriceDatabase from "../lib/classes/priceDatabase";
@@ -228,16 +227,18 @@ export default {
             }
         },
         copyShortLink() {
-            fetch(urls.shortenerAPI + this.shareLink)
+            /*             fetch(urls.shortenerAPI + this.shareLink)
                 .then(res => res.text())
                 .then(text => clipboard.writeText(text))
-                .catch(stderr);
+                .catch(stderr); */
         },
         copyShareLink() {
-            clipboard.writeText(this.shareLink);
+            navigator.clipboard.writeText(this.shareLink).catch(stderr);
         },
         copyShareText() {
-            clipboard.writeText(this.deck.toText(this.cardDb));
+            navigator.clipboard
+                .writeText(this.deck.toText(this.cardDb))
+                .catch(stderr);
         }
     }
 };
