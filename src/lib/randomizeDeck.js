@@ -64,7 +64,10 @@ const randomizeDeck = (cardDb, randomizerSplitter) => {
         deckpartHasSpace(deckpartIndex) &&
         DECKPARTS[deckpartIndex].check(card[1]);
 
-    const pool = randomizerSplitter(randShuffle(cardDb.pairsArr));
+    const pool = randomizerSplitter(randShuffle(cardDb.pairsArrUniq));
+    console.log(pool);
+
+    //console.log({ pool });
     const result = [[], [], []];
     const resultCardNames = [];
     let mainDeckCountSpells = 0;
@@ -73,9 +76,9 @@ const randomizeDeck = (cardDb, randomizerSplitter) => {
 
     while (
         (deckpartHasSpace(0) || deckpartHasSpace(1) || deckpartHasSpace(1)) &&
-        i < pool.primary.length
+        i < pool.main.length
     ) {
-        const card = pool.primary[i];
+        const card = pool.main[i];
 
         if (deckpartCanAdd(card, 0)) {
             const isSpell = card[1].type === "Spell Card";

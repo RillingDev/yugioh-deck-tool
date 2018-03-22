@@ -1,9 +1,9 @@
-import { randShuffle, arrFlattenDeep } from "lightdash";
+import { randShuffle, arrFlattenDeep, arrUniq } from "lightdash";
 import { ARCHETYPES } from "./archetypes";
 
 const pickRandomArchetypes = (max = 1) => randShuffle(ARCHETYPES).slice(0, max);
 
-const checkArchetypeValidity = (card, archetypes, randChance) => {
+/* const checkArchetypeValidity = (card, archetypes, randChance) => {
     const cardName = card[1].name.toLowerCase();
 
     return archetypes.some(
@@ -13,32 +13,65 @@ const checkArchetypeValidity = (card, archetypes, randChance) => {
                 Math.random() > 0.5) ||
             Math.random() < randChance
     );
-};
+}; */
 
 const archetypeSplitterFactory = (shuffledPairs, archetypes, randChance) => {
-    const requiredCardNames = arrFlattenDeep(
-        archetypes.map(archetype => archetype[1])
+    const namesMain = archetypes.map(archetype => archetype[0]);
+    const namesRequired = arrUniq(
+        arrFlattenDeep(archetypes.map(archetype => archetype[1]))
     );
-    const requiredCards = shuffledPairs.filter(card => card[1][0]);
+    const namesOptional = arrUniq(
+        arrFlattenDeep(archetypes.map(archetype => archetype[2]))
+    );
+    const requiredPool = shuffledPairs.filter(card => {
+        const name = card[1].name;
 
-    console.log({
-        requiredCardNames,
-        archetypes: archetypes.map(archetype => archetype[0]).join("+")
+        /**
+         * Full matches always get added, archetype matches only sometimes
+         */
+        if (namesRequired.includes(name)) {
+            return true;
+        } else if (
+            namesRequired.some(archetype =>
+                name.toLowerCase().includes(archetype.toLowerCase())
+            )
+        ) {
+            return Math.random() < 0.5;
+        }
+
+        return false;
+    });
+    const mainPool = shuffledPairs.filter(card => {
+        const name = card[1].name;
+
+        if (requiredPool.includes(card)) {
+            return false;
+        }
+
+        /**
+         * Full matches always get added, archetype matches only sometimes
+         */
+        if (
+            namesMain.some(archetype =>
+                name.toLowerCase().includes(archetype.toLowerCase())
+            )
+        ) {
+            return true;
+        } else if (namesOptional.some(archetype => name.includes(archetype))) {
+            return Math.random() < 0.5;
+        }
+
+        return Math.random() < randChance;
     });
 
-    // eslint-disable-next-line no-console
-    //console.log(archetypes.map(archetype => archetype[0]), requiredCards);
-
-    //return card => checkArchetypeValidity(card, archetypes, randChance);
-
-    return { primary: shuffledPairs, required: [] };
+    return { main: mainPool, required: requiredPool };
 };
 
 const RANDOMIZER_MODES = [
     {
         name: "Fully Random",
         splitter: shuffledPairs => {
-            return { primary: shuffledPairs, required: [] };
+            return { main: shuffledPairs, required: [] };
         }
     },
     {
@@ -47,31 +80,27 @@ const RANDOMIZER_MODES = [
             archetypeSplitterFactory(
                 shuffledPairs,
                 pickRandomArchetypes(1),
-                0.001
+                0.005
+            )
+    },
+    {
+        name: "Two Archetypes",
+        splitter: shuffledPairs =>
+            archetypeSplitterFactory(
+                shuffledPairs,
+                pickRandomArchetypes(2),
+                0.0025
+            )
+    },
+    {
+        name: "Three Archetypes",
+        splitter: shuffledPairs =>
+            archetypeSplitterFactory(
+                shuffledPairs,
+                pickRandomArchetypes(3),
+                0.00125
             )
     }
-    /*     {
-            name: "Two Archetypes",
-            filterFactory: () => {
-                const archetypes = pickRandomArchetypes(2);
-
-                // eslint-disable-next-line no-console
-                console.log(archetypes.map(archetype => archetype[0]));
-
-                return card => checkArchetypeValidity(card, archetypes, 0.0005);
-            }
-        },
-        {
-            name: "Three Archetypes",
-            filterFactory: () => {
-                const archetypes = pickRandomArchetypes(3);
-
-                // eslint-disable-next-line no-console
-                console.log(archetypes.map(archetype => archetype[0]));
-
-                return card => checkArchetypeValidity(card, archetypes, 0.00025);
-            }
-        } */
 ];
 
 Object.freeze(RANDOMIZER_MODES);
