@@ -1,40 +1,40 @@
 const SORTERS = [
     {
         name: "A-Z",
-        fn: (a, b) => a[0].localeCompare(b[0])
+        fn: (a, b) => a.name.localeCompare(b.name)
     },
     {
         name: "Z-A",
-        fn: (a, b) => b[0].localeCompare(a[0])
+        fn: (a, b) => b.name.localeCompare(a.name)
     },
     {
         name: "ATK",
-        fn: (a, b) => Number(b[2]) - Number(a[2])
+        fn: (a, b) => b.stats[0] - a.stats[0]
     },
     {
         name: "DEF",
-        fn: (a, b) => Number(b[3]) - Number(a[3])
+        fn: (a, b) => b.stats[1] - a.stats[1]
     },
     {
         name: "Level",
-        fn: (a, b) => Number(b[4]) - Number(a[4])
+        fn: (a, b) => b.stats[2] - a.stats[2]
     },
     {
         name: "Upvotes",
-        fn: (a, b) => Number(b[9]) - Number(a[9])
+        fn: (a, b) => b.rating[0] - a.rating[0]
     },
     {
         name: "Downvotes",
-        fn: (a, b) => Number(b[10]) - Number(a[10])
+        fn: (a, b) => b.rating[1] - a.rating[1]
     },
     {
         name: "Views",
-        fn: (a, b) => Number(b[8]) - Number(a[8])
-    },
-    {
-        name: "Latest",
-        fn: (a, b) => Number(b[11]) - Number(a[11])
+        fn: (a, b) => b.times - a.times
     }
+    /* {
+        name: "Latest",
+        fn: (a, b) => b.date - a.date
+    } */
 ];
 
 Object.freeze(SORTERS);

@@ -7,7 +7,7 @@ const DECKPARTS = [
         indicator: "#main",
         min: 40,
         max: 60,
-        check: card => !DECKPARTS_REGEX_EXTRA.test(card[1])
+        check: card => !DECKPARTS_REGEX_EXTRA.test(card.type)
     },
     {
         id: "extra",
@@ -15,7 +15,7 @@ const DECKPARTS = [
         indicator: "#extra",
         min: 0,
         max: 15,
-        check: card => DECKPARTS_REGEX_EXTRA.test(card[1])
+        check: card => DECKPARTS_REGEX_EXTRA.test(card.type)
     },
     {
         id: "side",

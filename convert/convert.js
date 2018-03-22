@@ -3,15 +3,20 @@
 const fs = require("fs");
 const deflate = require("zlib").deflateSync;
 const input = require("./input.json");
-const { isString } = require("lightdash");
+const { isNil } = require("lightdash");
 
 const inputCards = input[2].data;
 const output = {};
 
-const normalize = val => (isString(val) ? val.trim() : "");
+const normalize = val => (isNil(val) ? "" : val);
 
 const splitLinkMarkers = val =>
-    val ? val.split(",").map(str => str.trim()) : [];
+    val
+        ? val
+              .split(",")
+              .map(str => str.trim())
+              .filter(str => str.length > 0)
+        : [];
 
 const banlistToNumber = val => {
     if (val === "Banned") return 0;
@@ -20,32 +25,42 @@ const banlistToNumber = val => {
     return 3;
 };
 
+const types = new Set();
+
 inputCards.forEach(entry => {
     if (entry.name.length > 0 && !entry.type.startsWith("Token")) {
-        output[entry.id] = [
-            normalize(entry.name),
+        if (!types.has(entry.type)) {
+            types.add(entry.type);
+        }
+        output[entry.id] = {
+            name: normalize(entry.name),
 
-            normalize(entry.type),
-            normalize(entry.atk),
-            normalize(entry.def),
-            normalize(entry.level),
-            normalize(entry.race),
-            normalize(entry.attribute),
-            splitLinkMarkers(entry.linkmarkers),
+            type: normalize(entry.type),
+            race: normalize(entry.race),
+            attribute: normalize(entry.attribute),
+            stats: [entry.atk, entry.def, entry.level],
+            linkmarkers: splitLinkMarkers(entry.linkmarkers),
 
-            normalize(entry.times),
-            normalize(entry.rating_up),
-            normalize(entry.rating_down),
+            format: normalize(entry.format),
+            limit: [
+                banlistToNumber(entry.ban_tcg),
+                banlistToNumber(entry.ban_ocg)
+            ],
 
-            normalize(entry.format),
-            banlistToNumber(entry.ban_tcg),
-            banlistToNumber(entry.bab_ocg)
-        ];
+            date: new Date(entry.date).getTime(),
+            times: entry.times,
+            rating: [entry.rating_up, entry.rating_down]
+        };
     }
 });
 
 fs.writeFileSync(
-    "./out/names.json",
+    "./out/debug_types.json",
+    JSON.stringify(Array.from(types).sort(), null, "  "),
+    "utf8"
+);
+fs.writeFileSync(
+    "./out/debug_names.json",
     JSON.stringify(output, null, "  "),
     "utf8"
 );

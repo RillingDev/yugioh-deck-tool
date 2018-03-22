@@ -26,7 +26,7 @@ const getRandomAmount = (preferPlayset = true) => {
 };
 
 const addCardRandomAmount = (arr, card, limit, preferPlayset = true) => {
-    const cardAmountMaxFromBanlist = card[1][12];
+    const cardAmountMaxFromBanlist = card[1].limit[0];
     let cardAmountRandom = getRandomAmount(preferPlayset);
 
     if (cardAmountRandom > cardAmountMaxFromBanlist) {
@@ -78,8 +78,8 @@ const randomizeDeck = (cardDb, randomizerSplitter) => {
         const card = pool.primary[i];
 
         if (deckpartCanAdd(card, 0)) {
-            const isSpell = card[1][1] === "Spell Card";
-            const isTrap = card[1][1] === "Trap Card";
+            const isSpell = card[1].type === "Spell Card";
+            const isTrap = card[1].type === "Trap Card";
 
             if (
                 (!isSpell || mainDeckCountSpells < MAX_SPELLS) &&
@@ -96,7 +96,7 @@ const randomizeDeck = (cardDb, randomizerSplitter) => {
                 const cardsAdded = result[0].length - prevLength;
 
                 if (cardsAdded === 3) {
-                    resultCardNames.push(card[1][0]);
+                    resultCardNames.push(card[1].name);
                 }
                 if (isSpell) {
                     mainDeckCountSpells += cardsAdded;
