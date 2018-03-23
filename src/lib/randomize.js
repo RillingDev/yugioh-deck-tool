@@ -1,6 +1,6 @@
 import Deck from "./classes/deck";
 import { DECKPARTS } from "./data/deck";
-import { arrUniq, randShuffle, randNumber } from "lightdash";
+import { arrUniq, randShuffle, randNumber, arrFlattenDeep } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 
@@ -11,6 +11,61 @@ const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
  */
 const MAX_SPELLS = 18;
 const MAX_TRAPS = 6;
+
+const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
+    const namesMain = archetypes.map(archetype => archetype[0]);
+    const namesRequired = arrUniq(
+        arrFlattenDeep(archetypes.map(archetype => archetype[1]))
+    );
+    const namesOptional = arrUniq(
+        arrFlattenDeep(archetypes.map(archetype => archetype[2]))
+    );
+    const requiredPool = shuffledPairs.filter(card => {
+        const name = card[1].name;
+
+        /**
+         * Full matches always get added, archetype matches only sometimes
+         */
+        if (namesRequired.includes(name)) {
+            return true;
+        } else if (
+            namesRequired.some(archetype =>
+                name.toLowerCase().includes(archetype.toLowerCase())
+            )
+        ) {
+            return Math.random() < 0.5;
+        }
+
+        return false;
+    });
+    const mainPool = shuffledPairs.filter(card => {
+        const name = card[1].name;
+
+        if (requiredPool.includes(card)) {
+            return false;
+        }
+
+        /**
+         * Full matches always get added, archetype matches only sometimes
+         */
+        if (
+            namesMain.some(archetype =>
+                name.toLowerCase().includes(archetype.toLowerCase())
+            )
+        ) {
+            return true;
+        } else if (namesOptional.some(archetype => name.includes(archetype))) {
+            return Math.random() < 0.5;
+        }
+
+        return Math.random() < randChance;
+    });
+
+    return {
+        main: mainPool,
+        required: requiredPool
+    };
+};
 
 const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();
@@ -55,7 +110,7 @@ const getRandomName = cardNameList => {
         .trim();
 };
 
-const randomizeDeck = (cardDb, randomizerSplitter) => {
+const randomizeDeck = (cardDb, getPools) => {
     const deckpartHasSpace = deckpartIndex =>
         result[deckpartIndex].length <
         (deckpartIndex === 0 ? DECKPARTS[0].min : DECKPARTS[deckpartIndex].max);
@@ -64,8 +119,12 @@ const randomizeDeck = (cardDb, randomizerSplitter) => {
         deckpartHasSpace(deckpartIndex) &&
         DECKPARTS[deckpartIndex].check(card[1]);
 
-    const pool = randomizerSplitter(randShuffle(cardDb.pairsArrUniq));
-    console.log(pool);
+    const pools = getPools(cardDb.pairsArrUniq);
+
+    pools.main = randShuffle(pools.main);
+    pools.required = randShuffle(pools.required);
+
+    console.log(pools);
 
     //console.log({ pool });
     const result = [[], [], []];
@@ -76,9 +135,9 @@ const randomizeDeck = (cardDb, randomizerSplitter) => {
 
     while (
         (deckpartHasSpace(0) || deckpartHasSpace(1) || deckpartHasSpace(1)) &&
-        i < pool.main.length
+        i < pools.main.length
     ) {
-        const card = pool.main[i];
+        const card = pools.main[i];
 
         if (deckpartCanAdd(card, 0)) {
             const isSpell = card[1].type === "Spell Card";
@@ -129,4 +188,4 @@ const randomizeDeck = (cardDb, randomizerSplitter) => {
     return new Deck(result, getRandomName(resultCardNames)).sort(cardDb);
 };
 
-export default randomizeDeck;
+export { archetypePoolFactory, randomizeDeck, getRandomName, getRandomAmount };

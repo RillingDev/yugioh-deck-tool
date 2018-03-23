@@ -43,7 +43,7 @@
 
 <script>
 import CardDatabase from "../lib/classes/cardDatabase";
-import randomizeDeck from "../lib/randomizeDeck";
+import { randomizeDeck } from "../lib/randomize";
 import { RANDOMIZER_MODES } from "../lib/data/randomizer";
 
 import bModal from "bootstrap-vue/es/components/modal/modal";
@@ -71,7 +71,7 @@ export default {
         randomize() {
             const result = randomizeDeck(
                 this.cardDb,
-                this.mode.selected.splitter
+                this.mode.selected.getPools
             );
 
             this.$emit("randomize", result);
