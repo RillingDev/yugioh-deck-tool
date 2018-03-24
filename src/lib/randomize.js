@@ -11,10 +11,10 @@ const IGNORED_WORDS = ["of", "the", "a", "an"];
  * If the deck currently has less, than MAX_${type}, add more
  * A max of 5 could lead to max of 8 cards that way, as 3 cards can be added at once
  */
-const MAX_SPELLS = 17;
+const MAX_SPELLS = 18;
 const MAX_TRAPS = 6;
 
-const CHANCE_ADD_REQUIRED_ARCHETYPE_CARD = 0.35;
+const CHANCE_ADD_REQUIRED_ARCHETYPE_CARD = 0.75;
 const CHANCE_ADD_OPTIONAL_CARD = 0.5;
 
 const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
