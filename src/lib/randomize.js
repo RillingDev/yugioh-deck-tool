@@ -4,13 +4,18 @@ import { arrUniq, randShuffle, randNumber, arrFlattenDeep } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 
+const IGNORED_WORDS = ["of", "the", "a", "an"];
+
 /**
  * Soft limits
  * If the deck currently has less, than MAX_${type}, add more
- * A max of 5 could lead to 7 cards that way
+ * A max of 5 could lead to max of 8 cards that way, as 3 cards can be added at once
  */
-const MAX_SPELLS = 18;
+const MAX_SPELLS = 17;
 const MAX_TRAPS = 6;
+
+const CHANCE_ADD_REQUIRED_ARCHETYPE_CARD = 0.35;
+const CHANCE_ADD_OPTIONAL_CARD = 0.5;
 
 const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
     const namesMain = archetypes.map(archetype => archetype[0]);
@@ -21,6 +26,7 @@ const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
         arrFlattenDeep(archetypes.map(archetype => archetype[2]))
     );
     const requiredPool = shuffledPairs.filter(card => {
+        const seed = Math.random();
         const name = card[1].name;
 
         /**
@@ -33,12 +39,13 @@ const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
                 name.toLowerCase().includes(archetype.toLowerCase())
             )
         ) {
-            return Math.random() < 0.5;
+            return seed < CHANCE_ADD_REQUIRED_ARCHETYPE_CARD;
         }
 
         return false;
     });
     const mainPool = shuffledPairs.filter(card => {
+        const seed = Math.random();
         const name = card[1].name;
 
         if (requiredPool.includes(card)) {
@@ -55,10 +62,16 @@ const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
         ) {
             return true;
         } else if (namesOptional.some(archetype => name.includes(archetype))) {
-            return Math.random() < 0.5;
+            return seed < CHANCE_ADD_OPTIONAL_CARD;
         }
 
-        return Math.random() < randChance;
+        return seed < randChance;
+    });
+
+    console.log({
+        namesMain: namesMain.join(" + "),
+        namesOptional,
+        namesRequired
     });
 
     return {
@@ -102,10 +115,10 @@ const getRandomName = cardNameList => {
     const words = cardNameList
         .join(" ")
         .split(REGEX_NAME_DELIMITER)
-        .filter(word => word[0].toUpperCase() === word[0]); // Only use Capitalized words to avoid 'the' and 'of'
+        .filter(word => !IGNORED_WORDS.includes(word.toLowerCase()));
 
-    return randShuffle(arrUniq(words))
-        .slice(0, randNumber(2, 4))
+    return randShuffle(words)
+        .slice(0, randNumber(1, 2))
         .join(" ")
         .trim();
 };
@@ -118,72 +131,81 @@ const randomizeDeck = (cardDb, getPools) => {
     const deckpartCanAdd = (card, deckpartIndex) =>
         deckpartHasSpace(deckpartIndex) &&
         DECKPARTS[deckpartIndex].check(card[1]);
+    const fillDeck = (subResult, pool, enableTypeLimits = false) => {
+        let mainDeckCountSpells = 0;
+        let mainDeckCountTraps = 0;
+        let i = 0;
 
+        while (
+            (deckpartHasSpace(0) ||
+                deckpartHasSpace(1) ||
+                deckpartHasSpace(1)) &&
+            i < pool.length
+        ) {
+            const card = pool[i];
+
+            if (deckpartCanAdd(card, 0)) {
+                const isSpell = card[1].type === "Spell Card";
+                const isTrap = card[1].type === "Trap Card";
+
+                if (
+                    !enableTypeLimits ||
+                    ((!isSpell || mainDeckCountSpells < MAX_SPELLS) &&
+                        (!isTrap || mainDeckCountTraps < MAX_TRAPS))
+                ) {
+                    const prevLength = subResult[0].length;
+
+                    subResult[0] = addCardRandomAmount(
+                        subResult[0],
+                        card,
+                        DECKPARTS[0].min
+                    );
+
+                    const cardsAdded = subResult[0].length - prevLength;
+
+                    if (cardsAdded === 3) {
+                        resultCardNames.push(card[1].name);
+                    }
+                    if (enableTypeLimits) {
+                        if (isSpell) {
+                            mainDeckCountSpells += cardsAdded;
+                        } else if (isTrap) {
+                            mainDeckCountTraps += cardsAdded;
+                        }
+                    }
+                }
+            } else if (deckpartCanAdd(card, 1)) {
+                subResult[1] = addCardRandomAmount(
+                    subResult[1],
+                    card,
+                    DECKPARTS[1].max,
+                    false
+                );
+            } else if (deckpartCanAdd(card, 2)) {
+                subResult[2] = addCardRandomAmount(
+                    subResult[2],
+                    card,
+                    DECKPARTS[2].max,
+                    false
+                );
+            }
+
+            i++;
+        }
+
+        return subResult;
+    };
     const pools = getPools(cardDb.pairsArrUniq);
+    const resultCardNames = [];
+    let result = [[], [], []];
+
+    console.log(pools);
 
     pools.main = randShuffle(pools.main);
     pools.required = randShuffle(pools.required);
 
-    console.log(pools);
-
-    //console.log({ pool });
-    const result = [[], [], []];
-    const resultCardNames = [];
-    let mainDeckCountSpells = 0;
-    let mainDeckCountTraps = 0;
-    let i = 0;
-
-    while (
-        (deckpartHasSpace(0) || deckpartHasSpace(1) || deckpartHasSpace(1)) &&
-        i < pools.main.length
-    ) {
-        const card = pools.main[i];
-
-        if (deckpartCanAdd(card, 0)) {
-            const isSpell = card[1].type === "Spell Card";
-            const isTrap = card[1].type === "Trap Card";
-
-            if (
-                (!isSpell || mainDeckCountSpells < MAX_SPELLS) &&
-                (!isTrap || mainDeckCountTraps < MAX_TRAPS)
-            ) {
-                const prevLength = result[0].length;
-
-                result[0] = addCardRandomAmount(
-                    result[0],
-                    card,
-                    DECKPARTS[0].min
-                );
-
-                const cardsAdded = result[0].length - prevLength;
-
-                if (cardsAdded === 3) {
-                    resultCardNames.push(card[1].name);
-                }
-                if (isSpell) {
-                    mainDeckCountSpells += cardsAdded;
-                } else if (isTrap) {
-                    mainDeckCountTraps += cardsAdded;
-                }
-            }
-        } else if (deckpartCanAdd(card, 1)) {
-            result[1] = addCardRandomAmount(
-                result[1],
-                card,
-                DECKPARTS[1].max,
-                false
-            );
-        } else if (deckpartCanAdd(card, 2)) {
-            result[2] = addCardRandomAmount(
-                result[2],
-                card,
-                DECKPARTS[2].max,
-                false
-            );
-        }
-
-        i++;
-    }
+    result = fillDeck(result, pools.required, false);
+    result = fillDeck(result, pools.main, true);
 
     return new Deck(result, getRandomName(resultCardNames)).sort(cardDb);
 };
