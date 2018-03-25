@@ -1,10 +1,10 @@
 import Deck from "./classes/deck";
 import { DECKPARTS } from "./data/deck";
-import { arrUniq, randShuffle, randNumber, arrFlattenDeep } from "lightdash";
+import { randShuffle, randNumber } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 
-const IGNORED_WORDS = ["of", "the", "a", "an"];
+const IGNORED_WORDS = ["of", "the", "a", "an", "for", "with", "in"];
 
 /**
  * Soft limits
@@ -13,72 +13,6 @@ const IGNORED_WORDS = ["of", "the", "a", "an"];
  */
 const MAX_SPELLS = 18;
 const MAX_TRAPS = 6;
-
-const CHANCE_ADD_REQUIRED_ARCHETYPE_CARD = 0.75;
-const CHANCE_ADD_OPTIONAL_CARD = 0.5;
-
-const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
-    const namesMain = archetypes.map(archetype => archetype[0]);
-    const namesRequired = arrUniq(
-        arrFlattenDeep(archetypes.map(archetype => archetype[1]))
-    );
-    const namesOptional = arrUniq(
-        arrFlattenDeep(archetypes.map(archetype => archetype[2]))
-    );
-    const requiredPool = shuffledPairs.filter(card => {
-        const seed = Math.random();
-        const name = card[1].name;
-
-        /**
-         * Full matches always get added, archetype matches only sometimes
-         */
-        if (namesRequired.includes(name)) {
-            return true;
-        } else if (
-            namesRequired.some(archetype =>
-                name.toLowerCase().includes(archetype.toLowerCase())
-            )
-        ) {
-            return seed < CHANCE_ADD_REQUIRED_ARCHETYPE_CARD;
-        }
-
-        return false;
-    });
-    const mainPool = shuffledPairs.filter(card => {
-        const seed = Math.random();
-        const name = card[1].name;
-
-        if (requiredPool.includes(card)) {
-            return false;
-        }
-
-        /**
-         * Full matches always get added, archetype matches only sometimes
-         */
-        if (
-            namesMain.some(archetype =>
-                name.toLowerCase().includes(archetype.toLowerCase())
-            )
-        ) {
-            return true;
-        } else if (namesOptional.some(archetype => name.includes(archetype))) {
-            return seed < CHANCE_ADD_OPTIONAL_CARD;
-        }
-
-        return seed < randChance;
-    });
-
-    console.log({
-        namesMain: namesMain.join(" + "),
-        namesOptional,
-        namesRequired
-    });
-
-    return {
-        main: mainPool,
-        required: requiredPool
-    };
-};
 
 const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();
@@ -210,4 +144,4 @@ const randomizeDeck = (cardDb, getPools) => {
     return new Deck(result, getRandomName(resultCardNames)).sort(cardDb);
 };
 
-export { archetypePoolFactory, randomizeDeck, getRandomName, getRandomAmount };
+export { randomizeDeck, getRandomName, getRandomAmount };

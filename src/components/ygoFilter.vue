@@ -299,7 +299,7 @@ export default {
     },
     methods: {
         filterCards() {
-            const filtered = searchCard(
+            const pairsArrFiltered = searchCard(
                 this.pairsArr,
                 this.filter,
                 {
@@ -310,7 +310,7 @@ export default {
                 },
                 this.sort.active.fn
             );
-            this.$emit("change", filtered, this.filter);
+            this.$emit("change", pairsArrFiltered, this.filter);
         }
     }
 };

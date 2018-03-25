@@ -44,7 +44,7 @@
 <script>
 import CardDatabase from "../lib/classes/cardDatabase";
 import { randomizeDeck } from "../lib/randomize";
-import { RANDOMIZER_MODES } from "../lib/data/randomizer";
+import { archetypePoolFactory, getRandomArchetypes } from "../lib/archetype";
 
 import bModal from "bootstrap-vue/es/components/modal/modal";
 
@@ -59,10 +59,59 @@ export default {
     data: () => {
         return {
             mode: {
-                selected: RANDOMIZER_MODES[0],
-                available: RANDOMIZER_MODES
+                selected: null,
+                available: [
+                    {
+                        name: "Fully Random",
+                        getPools: pairsArrUniq => {
+                            return {
+                                main: pairsArrUniq,
+                                required: []
+                            };
+                        }
+                    },
+                    {
+                        name: "Custom",
+                        getPools: pairsArrUniq => {
+                            return {
+                                main: pairsArrUniq,
+                                required: []
+                            };
+                        }
+                    },
+                    {
+                        name: "One Archetype",
+                        getPools: pairsArrUniq =>
+                            archetypePoolFactory(
+                                pairsArrUniq,
+                                getRandomArchetypes(1),
+                                0.005
+                            )
+                    },
+                    {
+                        name: "Two Archetypes",
+                        getPools: pairsArrUniq =>
+                            archetypePoolFactory(
+                                pairsArrUniq,
+                                getRandomArchetypes(2),
+                                0.0025
+                            )
+                    },
+                    {
+                        name: "Three Archetypes",
+                        getPools: pairsArrUniq =>
+                            archetypePoolFactory(
+                                pairsArrUniq,
+                                getRandomArchetypes(3),
+                                0.00125
+                            )
+                    }
+                ]
             }
         };
+    },
+    mounted() {
+        this.mode.selected = this.mode.available[0];
     },
     methods: {
         showModal() {

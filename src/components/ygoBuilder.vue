@@ -1,6 +1,6 @@
 <template>
     <div class="builder">
-        <span>Showing {{ pairsArrFiltered.length }} of {{ pairsArr.length }} Cards</span>
+        <span>Showing {{ pairsArrFilteredPrepared.length }} of {{ pairsArr.length }} Cards</span>
 
         <ygo-filter
             :pairs-arr="pairsArr"
@@ -9,11 +9,10 @@
 
         <!-- builder-list -->
         <ul
-            v-if="pairsArrFiltered.length"
             class="builder-list"
         >
             <li
-                v-for="pair in pairsArrFiltered"
+                v-for="pair in pairsArrFilteredPrepared"
                 :key="pair[0]"
             >
                 <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
@@ -66,21 +65,22 @@ export default {
             banlist: BANLISTS[0]
         };
     },
+    computed: {
+        pairsArrFilteredPrepared() {
+            return this.pairsArrFiltered
+                .slice(0, 100)
+                .map(pair => [pair[0], pair[1].name]);
+        }
+    },
     mounted() {
-        this.handleFilterUpdate(this.pairsArr);
+        this.pairsArrFiltered = this.pairsArr;
     },
     methods: {
         clickEvent(e, deckPart, cardId, banlist) {
             this.$emit("deckcardadd", deckPart, cardId, banlist, e);
         },
-        handleFilterUpdate(filtered, filter = null) {
-            this.pairsArrFiltered = filtered
-                .slice(0, 100)
-                .map(pair => [pair[0], pair[1].name]);
-
-            if (filter) {
-                this.banlist = filter.banlist.active;
-            }
+        handleFilterUpdate(pairsArrFiltered) {
+            this.pairsArrFiltered = pairsArrFiltered;
         }
     }
 };
