@@ -4,7 +4,7 @@
 
         <ygo-filter
             :pairs-arr="pairsArr"
-            v-model="pairsArrFiltered"
+            @change="handleFilterUpdate"
         />
 
         <!-- builder-list -->
@@ -28,13 +28,11 @@
                             :key="deckPart.id"
                             :class="`builder-add-${deckPart.id}`"
                             :title="`Add Card to ${deckPart.name} Deck`"
-                            :disabled="!deckCardCanAdd(deckPart, pair[0],filter.banlist.active)"
+                            :disabled="!deckCardCanAdd(deckPart, pair[0],banlist)"
                             class="builder-add btn"
-                            @click="(e) => clickEvent(e, deckPart, pair[0],filter.banlist.active)"
+                            @click="(e) => clickEvent(e, deckPart, pair[0],banlist)"
                         >
-                            <span class="fa fa-plus">
-                                <!---->
-                            </span>
+                            <span class="fa fa-plus"><!----></span>
                         </button>
                     </div>
                 </a>
@@ -44,7 +42,9 @@
 </template>
 
 <script>
+import { DECKPARTS } from "../lib/data/deck";
 import YgoFilter from "./ygoFilter.vue";
+import { BANLISTS } from "../lib/data/banlist";
 
 export default {
     components: { YgoFilter },
@@ -55,32 +55,32 @@ export default {
         },
         deckCardCanAdd: {
             type: Function,
-            required: true
+            required: false,
+            default: () => true
         }
     },
     data: () => {
         return {
-            pairsArrFiltered: []
+            deckParts: DECKPARTS,
+            pairsArrFiltered: [],
+            banlist: BANLISTS[0]
         };
     },
-    /*computed: {
-        pairsFiltered() {
-            return [];  searchCard(
-                this.pairsArr,
-                this.filter,
-                {
-                    monster: this.isMonster,
-                    monsterLink: this.isMonsterLink,
-                    spell: this.isSpell,
-                    trap: this.isTrap
-                },
-                this.sort.active.fn
-            ).slice(0, 100);  // Take 100 first results;
-        }
-    },*/
+    mounted() {
+        this.handleFilterUpdate(this.pairsArr);
+    },
     methods: {
         clickEvent(e, deckPart, cardId, banlist) {
             this.$emit("deckcardadd", deckPart, cardId, banlist, e);
+        },
+        handleFilterUpdate(filtered, filter = null) {
+            this.pairsArrFiltered = filtered
+                .slice(0, 100)
+                .map(pair => [pair[0], pair[1].name]);
+
+            if (filter) {
+                this.banlist = filter.banlist.active;
+            }
         }
     }
 };

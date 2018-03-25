@@ -45,8 +45,6 @@ const searchCard = (cardArr, filter, is, sortFn) => {
             })
             // Apply sorting
             .sort((a, b) => sortFn(a[1], b[1]))
-            // Drop everything but id and name
-            .map(pair => [pair[0], pair[1].name])
     );
 };
 

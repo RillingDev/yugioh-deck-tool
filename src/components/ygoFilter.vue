@@ -19,6 +19,7 @@
                 v-model="sort.active"
                 class="form-control"
                 title="Active Sorting"
+                @change="filterCards"
             >
                 <option
                     v-for="option in sort.options"
@@ -35,6 +36,7 @@
                 v-model="filter.type.active"
                 class="form-control"
                 title="Active Type"
+                @change="filterCards"
             >
                 <option
                     v-for="option in filter.type.options"
@@ -54,6 +56,7 @@
                             v-model="filter.format.active"
                             class="form-control"
                             title="Active Format"
+                            @change="filterCards"
                         >
                             <option
                                 v-for="option in filter.format.options"
@@ -72,6 +75,7 @@
                             v-model="filter.banlist.active"
                             class="form-control"
                             title="Active Banlist"
+                            @change="filterCards"
                         >
                             <option
                                 v-for="option in filter.banlist.options"
@@ -97,6 +101,7 @@
                                 v-model="filter.attribute.active"
                                 class="form-control"
                                 title="Active Attribute"
+                                @change="filterCards"
                             >
                                 <option
                                     v-for="option in filter.attribute.options"
@@ -116,6 +121,7 @@
                                 v-model="filter.race.active"
                                 class="form-control"
                                 title="Active Race"
+                                @change="filterCards"
                             >
                                 <option
                                     v-for="option in filter.race.options"
@@ -135,6 +141,7 @@
                     v-model="filter.level.active"
                     class="form-control"
                     title="Active Level"
+                    @change="filterCards"
                 >
                     <option
                         v-for="option in filter.level.options"
@@ -152,6 +159,7 @@
                         v-model="filter.linkarrows.active"
                         class="form-control"
                         title="Active Link Arrows"
+                        @change="filterCards"
                     >
                         <option
                             v-for="option in filter.linkarrows.options"
@@ -171,6 +179,7 @@
                     v-model="filter.spelltype.active"
                     class="form-control"
                     title="Active Spell Type"
+                    @change="filterCards"
                 >
                     <option
                         v-for="option in filter.spelltype.options"
@@ -189,6 +198,7 @@
                     v-model="filter.traptype.active"
                     class="form-control"
                     title="Active Trap Type"
+                    @change="filterCards"
                 >
                     <option
                         v-for="option in filter.traptype.options"
@@ -203,7 +213,6 @@
 
 <script>
 import { SORTERS } from "../lib/data/sort";
-import { DECKPARTS } from "../lib/data/deck";
 import { FORMATS } from "../lib/data/format";
 import { BANLISTS } from "../lib/data/banlist";
 import {
@@ -215,14 +224,10 @@ import {
     CARD_SPELL_TYPE,
     CARD_TRAP_TYPE
 } from "../lib/data/cards";
-/*
-import searchCard from "../lib/searchCard"; */
+
+import searchCard from "../lib/searchCard";
 
 export default {
-    model: {
-        prop: "pairsArrFiltered",
-        event: "change"
-    },
     props: {
         pairsArr: {
             type: Array,
@@ -231,7 +236,6 @@ export default {
     },
     data: () => {
         return {
-            deckParts: DECKPARTS,
             filter: {
                 name: "",
                 type: {
@@ -278,9 +282,6 @@ export default {
         };
     },
     computed: {
-        pairsArrFiltered() {
-            return this.pairsArr;
-        },
         isMonster() {
             return !["Any", "Spell Card", "Trap Card"].includes(
                 this.filter.type.active
@@ -298,8 +299,18 @@ export default {
     },
     methods: {
         filterCards() {
-            console.log(this.pairsArrFiltered);
-            this.$emit("change", this.pairsArrFiltered);
+            const filtered = searchCard(
+                this.pairsArr,
+                this.filter,
+                {
+                    monster: this.isMonster,
+                    monsterLink: this.isMonsterLink,
+                    spell: this.isSpell,
+                    trap: this.isTrap
+                },
+                this.sort.active.fn
+            );
+            this.$emit("change", filtered, this.filter);
         }
     }
 };
