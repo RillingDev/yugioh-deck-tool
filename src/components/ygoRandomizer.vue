@@ -37,6 +37,13 @@
                     >{{ modeCurrent.name }}</option>
                 </select>
             </div>
+            <template v-if="mode.selected===mode.available[1]">
+                <ygo-filter
+                    :pairs-arr="cardDb.pairsArrUniq"
+                    :hide-sort="true"
+                    @change="handleFilterUpdate"
+                />
+            </template>
         </b-modal>
     </div>
 </template>
@@ -47,17 +54,19 @@ import { randomizeDeck } from "../lib/randomize";
 import { archetypePoolFactory, getRandomArchetypes } from "../lib/archetype";
 
 import bModal from "bootstrap-vue/es/components/modal/modal";
+import YgoFilter from "./ygoFilter.vue";
 
 export default {
-    components: { bModal },
+    components: { bModal, YgoFilter },
     props: {
         cardDb: {
             type: CardDatabase,
             required: true
         }
     },
-    data: () => {
+    data: function() {
         return {
+            pairsArrFiltered: [],
             mode: {
                 selected: null,
                 available: [
@@ -72,9 +81,10 @@ export default {
                     },
                     {
                         name: "Custom",
-                        getPools: pairsArrUniq => {
+                        getPools: () => {
+                            console.log(this);
                             return {
-                                main: pairsArrUniq,
+                                main: this.pairsArrFiltered,
                                 required: []
                             };
                         }
@@ -116,6 +126,9 @@ export default {
     methods: {
         showModal() {
             this.$refs.modalRandomizerSettings.show();
+        },
+        handleFilterUpdate(pairsArrFiltered) {
+            this.pairsArrFiltered = pairsArrFiltered;
         },
         randomize() {
             const result = randomizeDeck(

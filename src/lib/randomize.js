@@ -138,7 +138,7 @@ const randomizeDeck = (cardDb, getPools) => {
     pools.main = randShuffle(pools.main);
     pools.required = randShuffle(pools.required);
 
-    result = fillDeck(result, pools.required, false);
+    result = fillDeck(result, pools.required);
     result = fillDeck(result, pools.main, true);
 
     return new Deck(result, getRandomName(resultCardNames)).sort(cardDb);

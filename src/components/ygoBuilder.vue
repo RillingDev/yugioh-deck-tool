@@ -42,8 +42,8 @@
 
 <script>
 import { DECKPARTS } from "../lib/data/deck";
-import YgoFilter from "./ygoFilter.vue";
 import { BANLISTS } from "../lib/data/banlist";
+import YgoFilter from "./ygoFilter.vue";
 
 export default {
     components: { YgoFilter },

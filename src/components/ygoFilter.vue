@@ -13,21 +13,23 @@
         </div>
 
         <!-- builder-sort -->
-        <div class="form-group form-group-builder">
-            <label>Sort:</label>
-            <select
-                v-model="sort.active"
-                class="form-control"
-                title="Active Sorting"
-                @change="filterCards"
-            >
-                <option
-                    v-for="option in sort.options"
-                    :key="option.name"
-                    :value="option"
-                >{{ option.name }}</option>
-            </select>
-        </div>
+        <template v-if="!hideSort">
+            <div class="form-group form-group-builder">
+                <label>Sort:</label>
+                <select
+                    v-model="sort.active"
+                    class="form-control"
+                    title="Active Sorting"
+                    @change="filterCards"
+                >
+                    <option
+                        v-for="option in sort.options"
+                        :key="option.name"
+                        :value="option"
+                    >{{ option.name }}</option>
+                </select>
+            </div>
+        </template>
 
         <!-- builder-type -->
         <div class="form-group form-group-builder">
@@ -232,6 +234,11 @@ export default {
         pairsArr: {
             type: Array,
             required: true
+        },
+        hideSort: {
+            type: Boolean,
+            required: false,
+            default: () => false
         }
     },
     data: () => {
