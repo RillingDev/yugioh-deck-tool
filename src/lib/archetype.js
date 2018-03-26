@@ -1,7 +1,7 @@
 import { ARCHETYPES } from "./data/archetypes";
 import { arrUniq, randShuffle, arrFlattenDeep } from "lightdash";
 import {
-    RATIOS_DEFAULT,
+    getDefaultRatios,
     CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
     CHANCE_ADD_OPTIONAL_CARD
 } from "./data/randomizer";
@@ -68,7 +68,7 @@ const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
     return {
         main: mainPool,
         required: requiredPool,
-        ratios: RATIOS_DEFAULT
+        ratios: getDefaultRatios()
     };
 };
 

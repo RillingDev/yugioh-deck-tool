@@ -6,14 +6,6 @@ const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 
 const IGNORED_WORDS = ["of", "the", "a", "an", "for", "with", "in"];
 
-/**
- * Soft limits
- * If the deck currently has less, than MAX_${type}, add more
- * A max of 5 could lead to max of 8 cards that way, as 3 cards can be added at once
- */
-const MAX_SPELLS = 18;
-const MAX_TRAPS = 6;
-
 const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();
 
@@ -65,9 +57,7 @@ const randomizeDeck = (cardDb, getPools) => {
     const deckpartCanAdd = (card, deckpartIndex) =>
         deckpartHasSpace(deckpartIndex) &&
         DECKPARTS[deckpartIndex].check(card[1]);
-    const fillDeck = (subResult, pool, enableTypeLimits = false) => {
-        let mainDeckCountSpells = 0;
-        let mainDeckCountTraps = 0;
+    const fillDeck = (subResult, pool, ratios = null) => {
         let i = 0;
 
         while (
@@ -79,13 +69,16 @@ const randomizeDeck = (cardDb, getPools) => {
             const card = pool[i];
 
             if (deckpartCanAdd(card, 0)) {
+                const seed = Math.random();
                 const isSpell = card[1].type === "Spell Card";
                 const isTrap = card[1].type === "Trap Card";
+                const isMonster = !isTrap && !isSpell;
 
                 if (
-                    !enableTypeLimits ||
-                    ((!isSpell || mainDeckCountSpells < MAX_SPELLS) &&
-                        (!isTrap || mainDeckCountTraps < MAX_TRAPS))
+                    ratios === null ||
+                    (isSpell && seed < ratios.spell) ||
+                    (isTrap && seed < ratios.trap) ||
+                    (isMonster && seed < ratios.monster)
                 ) {
                     const prevLength = subResult[0].length;
 
@@ -99,13 +92,6 @@ const randomizeDeck = (cardDb, getPools) => {
 
                     if (cardsAdded === 3) {
                         resultCardNames.push(card[1].name);
-                    }
-                    if (enableTypeLimits) {
-                        if (isSpell) {
-                            mainDeckCountSpells += cardsAdded;
-                        } else if (isTrap) {
-                            mainDeckCountTraps += cardsAdded;
-                        }
                     }
                 }
             } else if (deckpartCanAdd(card, 1)) {
@@ -139,7 +125,7 @@ const randomizeDeck = (cardDb, getPools) => {
     pools.required = randShuffle(pools.required);
 
     result = fillDeck(result, pools.required);
-    result = fillDeck(result, pools.main, true);
+    result = fillDeck(result, pools.main, pools.ratios);
 
     return new Deck(result, getRandomName(resultCardNames)).sort(cardDb);
 };

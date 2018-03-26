@@ -29,6 +29,7 @@
                 <select
                     v-model="mode.selected"
                     class="form-control"
+                    @change="updateMode"
                 >
                     <option
                         v-for="modeCurrent in mode.available"
@@ -37,7 +38,7 @@
                     >{{ modeCurrent.name }}</option>
                 </select>
             </div>
-            <template v-if="mode.selected===mode.available[1]">
+            <template v-if="showCustom">
                 <h3>Ratios:</h3>
                 <div class="form-group d-flex">
                     <div>
@@ -91,7 +92,7 @@
 import CardDatabase from "../lib/classes/cardDatabase";
 import { randomizeDeck } from "../lib/randomize";
 import { archetypePoolFactory, getRandomArchetypes } from "../lib/archetype";
-import { RATIOS_DEFAULT } from "../lib/data/randomizer";
+import { getDefaultRatios } from "../lib/data/randomizer";
 import bModal from "bootstrap-vue/es/components/modal/modal";
 import YgoFilter from "./ygoFilter.vue";
 
@@ -105,8 +106,9 @@ export default {
     },
     data: function() {
         return {
-            pairsArrFiltered: [],
-            ratios: RATIOS_DEFAULT,
+            pairsArrFiltered: null,
+            ratios: getDefaultRatios(),
+            showCustom: false,
             mode: {
                 selected: null,
                 available: [
@@ -116,7 +118,7 @@ export default {
                             return {
                                 main: pairsArrUniq,
                                 required: [],
-                                ratios: RATIOS_DEFAULT
+                                ratios: getDefaultRatios()
                             };
                         }
                     },
@@ -136,7 +138,7 @@ export default {
                             archetypePoolFactory(
                                 pairsArrUniq,
                                 getRandomArchetypes(1),
-                                0.005
+                                0.002
                             )
                     },
                     {
@@ -145,7 +147,7 @@ export default {
                             archetypePoolFactory(
                                 pairsArrUniq,
                                 getRandomArchetypes(2),
-                                0.0025
+                                0.001
                             )
                     },
                     {
@@ -154,7 +156,7 @@ export default {
                             archetypePoolFactory(
                                 pairsArrUniq,
                                 getRandomArchetypes(3),
-                                0.00125
+                                0.0005
                             )
                     }
                 ]
@@ -163,7 +165,6 @@ export default {
     },
     mounted() {
         this.mode.selected = this.mode.available[0];
-        this.pairsArrFiltered = this.pairsArrUniq;
     },
     methods: {
         showModal() {
@@ -171,6 +172,18 @@ export default {
         },
         handleFilterUpdate(pairsArrFiltered) {
             this.pairsArrFiltered = pairsArrFiltered;
+        },
+        updateMode() {
+            if (this.mode.selected === this.mode.available[1]) {
+                this.showCustom = true;
+
+                //Manually set pairsArrFiltered if no change event was fired yet
+                if (this.pairsArrFiltered === null) {
+                    this.pairsArrFiltered = this.cardDb.pairsArrUniq;
+                }
+            } else {
+                this.showCustom = false;
+            }
         },
         randomize() {
             const result = randomizeDeck(
