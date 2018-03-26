@@ -25,6 +25,9 @@ const CardDatabase = class {
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
          */
+        Object.freeze(this.cards);
+        Object.freeze(this.pairsArr);
+        Object.freeze(this.pairsArrUniq);
         Object.freeze(this);
 
         // eslint-disable-next-line no-console

@@ -123,7 +123,6 @@ export default {
                     {
                         name: "Custom",
                         getPools: () => {
-                            console.log(this);
                             return {
                                 main: this.pairsArrFiltered,
                                 required: [],
@@ -164,6 +163,7 @@ export default {
     },
     mounted() {
         this.mode.selected = this.mode.available[0];
+        this.pairsArrFiltered = this.pairsArrUniq;
     },
     methods: {
         showModal() {
