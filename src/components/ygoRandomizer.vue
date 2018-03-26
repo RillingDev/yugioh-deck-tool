@@ -43,7 +43,7 @@
                     <div>
                         <label>Monster:</label>
                         <input
-                            v-model="ratio.monster"
+                            v-model="ratios.monster"
                             type="number"
                             class="form-control"
                             min="0"
@@ -54,7 +54,7 @@
                     <div>
                         <label>Spell:</label>
                         <input
-                            v-model="ratio.spell"
+                            v-model="ratios.spell"
                             type="number"
                             class="form-control"
                             min="0"
@@ -65,7 +65,7 @@
                     <div>
                         <label>Trap:</label>
                         <input
-                            v-model="ratio.trap"
+                            v-model="ratios.trap"
                             type="number"
                             class="form-control"
                             min="0"
@@ -91,7 +91,7 @@
 import CardDatabase from "../lib/classes/cardDatabase";
 import { randomizeDeck } from "../lib/randomize";
 import { archetypePoolFactory, getRandomArchetypes } from "../lib/archetype";
-
+import { RATIOS_DEFAULT } from "../lib/data/randomizer";
 import bModal from "bootstrap-vue/es/components/modal/modal";
 import YgoFilter from "./ygoFilter.vue";
 
@@ -106,11 +106,7 @@ export default {
     data: function() {
         return {
             pairsArrFiltered: [],
-            ratio: {
-                monster: 0.6,
-                spell: 0.3,
-                trap: 0.1
-            },
+            ratios: RATIOS_DEFAULT,
             mode: {
                 selected: null,
                 available: [
@@ -119,7 +115,8 @@ export default {
                         getPools: pairsArrUniq => {
                             return {
                                 main: pairsArrUniq,
-                                required: []
+                                required: [],
+                                ratios: RATIOS_DEFAULT
                             };
                         }
                     },
@@ -129,7 +126,8 @@ export default {
                             console.log(this);
                             return {
                                 main: this.pairsArrFiltered,
-                                required: []
+                                required: [],
+                                ratios: this.ratios
                             };
                         }
                     },

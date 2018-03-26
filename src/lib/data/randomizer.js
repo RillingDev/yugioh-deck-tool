@@ -1,0 +1,14 @@
+const RATIOS_DEFAULT = {
+    monster: 0.6,
+    spell: 0.3,
+    trap: 0.1
+};
+
+const CHANCE_ADD_REQUIRED_ARCHETYPE_CARD = 0.75;
+const CHANCE_ADD_OPTIONAL_CARD = 0.5;
+
+export {
+    RATIOS_DEFAULT,
+    CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
+    CHANCE_ADD_OPTIONAL_CARD
+};
