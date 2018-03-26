@@ -38,11 +38,50 @@
                 </select>
             </div>
             <template v-if="mode.selected===mode.available[1]">
-                <ygo-filter
-                    :pairs-arr="cardDb.pairsArrUniq"
-                    :hide-sort="true"
-                    @change="handleFilterUpdate"
-                />
+                <h3>Ratios:</h3>
+                <div class="form-group d-flex">
+                    <div>
+                        <label>Monster:</label>
+                        <input
+                            v-model="ratio.monster"
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            max="1"
+                            step="0.1"
+                        >
+                    </div>
+                    <div>
+                        <label>Spell:</label>
+                        <input
+                            v-model="ratio.spell"
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            max="1"
+                            step="0.1"
+                        >
+                    </div>
+                    <div>
+                        <label>Trap:</label>
+                        <input
+                            v-model="ratio.trap"
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            max="1"
+                            step="0.1"
+                        >
+                    </div>
+                </div>
+                <h3>Filter:</h3>
+                <div class="form-group">
+                    <ygo-filter
+                        :pairs-arr="cardDb.pairsArrUniq"
+                        :hide-sort="true"
+                        @change="handleFilterUpdate"
+                    />
+                </div>
             </template>
         </b-modal>
     </div>
@@ -67,6 +106,11 @@ export default {
     data: function() {
         return {
             pairsArrFiltered: [],
+            ratio: {
+                monster: 0.6,
+                spell: 0.3,
+                trap: 0.1
+            },
             mode: {
                 selected: null,
                 available: [
