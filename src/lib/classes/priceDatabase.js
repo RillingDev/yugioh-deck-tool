@@ -4,7 +4,7 @@ const PriceDatabase = class {
     constructor() {
         this.modes = PRICE_MODES;
         this.currencies = PRICE_CURRENCIES;
-        this.activeCurrency = this.currencies[0];
+        this.activeCurrency = PRICE_CURRENCIES[0];
         this.prices = new Map();
 
         // eslint-disable-next-line no-console

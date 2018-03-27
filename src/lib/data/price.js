@@ -15,34 +15,50 @@ const PRICE_MODES = [
 
 const PRICE_CURRENCIES = [
     {
-        id: "dollar_us",
         name: "US Dollar",
         label: "$",
         val: 1
     },
     {
-        id: "euro",
         name: "Euro",
         label: "€",
-        val: 0.811
+        val: 0.805
     },
     {
-        id: "pound",
-        name: "Pound",
+        name: "British Pound",
         label: "£",
-        val: 0.721
+        val: 0.705
     },
     {
-        id: "dollar_ca",
         name: "Canadian Dollar",
         label: "$",
-        val: 1.282
+        val: 1.286
     },
     {
-        id: "dollar_au",
         name: "Australian Dollar",
         label: "$",
-        val: 1.273
+        val: 1.297
+    },
+
+    {
+        name: "Mexican Peso",
+        label: "$",
+        val: 18.33
+    },
+    {
+        name: "Brazilian Real",
+        label: "R$",
+        val: 3.331
+    },
+    {
+        name: "Thai Baht",
+        label: "฿",
+        val: 31.1864
+    },
+    {
+        name: "Indonesian Rupiah",
+        label: "Rp",
+        val: 13742.86
     }
 ];
 

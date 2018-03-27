@@ -43,13 +43,6 @@
                 >
                     <span class="fa fa-clipboard"><!-- icon--></span>
                 </button>
-                <!--<button
-                    class="btn btn-primary btn-tiny form-control"
-                    title="Copy Short Sharelink to Clipboard"
-                    @click="copyShortLink"
-                >
-                    <span class="fa fa-bolt"></span>
-                </button>-->
                 <button
                     class="btn btn-primary form-control"
                     title="Copy Decklist to Clipboard"
@@ -66,7 +59,7 @@
                 >
                     <option
                         v-for="currency in priceDb.currencies"
-                        :key="currency.id"
+                        :key="currency.name"
                         :value="currency"
                     >{{ currency.name }}</option>
                 </select>
