@@ -50,9 +50,8 @@ const ruleExtractText = {
 module.exports = {
     entry: "./src/index.js",
     output: {
-        path: path.resolve(__dirname, "./dist"),
-        publicPath: "/dist/",
-        filename: "app.js"
+        filename: "app.js",
+        path: path.resolve(__dirname, "./dist")
     },
     mode: NODE_ENV,
     plugins: PRODUCTION_ENABLED
