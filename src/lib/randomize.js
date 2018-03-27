@@ -3,15 +3,14 @@ import { DECKPARTS } from "./data/deck";
 import { randShuffle, randNumber } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
-
 const IGNORED_WORDS = ["of", "the", "a", "an", "for", "with", "in"];
 
 const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();
 
     if (preferPlayset) {
-        if (seed > 0.7) return 1;
-        else if (seed > 0.6) return 2;
+        if (seed > 0.65) return 1;
+        else if (seed > 0.5) return 2;
         return 3;
     }
     if (seed > 0.25) return 1;
@@ -121,8 +120,8 @@ const randomizeDeck = (cardDb, getPools) => {
 
     console.log(pools);
 
-    pools.main = randShuffle(pools.main);
     pools.required = randShuffle(pools.required);
+    pools.main = randShuffle(pools.main);
 
     result = fillDeck(result, pools.required);
     result = fillDeck(result, pools.main, pools.ratios);

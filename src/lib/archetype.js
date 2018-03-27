@@ -8,7 +8,7 @@ import {
 
 const getRandomArchetypes = (max = 1) => randShuffle(ARCHETYPES).slice(0, max);
 
-const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
+const archetypePoolFactory = (pairsArr, archetypes, randChance) => {
     const namesMain = archetypes.map(archetype => archetype[0]);
     const namesRequired = arrUniq(
         arrFlattenDeep(archetypes.map(archetype => archetype[1]))
@@ -16,7 +16,7 @@ const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
     const namesOptional = arrUniq(
         arrFlattenDeep(archetypes.map(archetype => archetype[2]))
     );
-    const requiredPool = shuffledPairs.filter(card => {
+    const requiredPool = pairsArr.filter(card => {
         const seed = Math.random();
         const name = card[1].name;
 
@@ -35,7 +35,7 @@ const archetypePoolFactory = (shuffledPairs, archetypes, randChance) => {
 
         return false;
     });
-    const mainPool = shuffledPairs.filter(card => {
+    const mainPool = pairsArr.filter(card => {
         const seed = Math.random();
         const name = card[1].name;
 

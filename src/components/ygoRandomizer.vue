@@ -92,7 +92,12 @@
 import CardDatabase from "../lib/classes/cardDatabase";
 import { randomizeDeck } from "../lib/randomize";
 import { archetypePoolFactory, getRandomArchetypes } from "../lib/archetype";
-import { getDefaultRatios } from "../lib/data/randomizer";
+import {
+    CHANCE_ARCHETYPE_1_EXTRA,
+    CHANCE_ARCHETYPE_2_EXTRA,
+    CHANCE_ARCHETYPE_3_EXTRA,
+    getDefaultRatios
+} from "../lib/data/randomizer";
 import bModal from "bootstrap-vue/es/components/modal/modal";
 import YgoFilter from "./ygoFilter.vue";
 
@@ -138,7 +143,7 @@ export default {
                             archetypePoolFactory(
                                 pairsArrUniq,
                                 getRandomArchetypes(1),
-                                0.002
+                                CHANCE_ARCHETYPE_1_EXTRA
                             )
                     },
                     {
@@ -147,7 +152,7 @@ export default {
                             archetypePoolFactory(
                                 pairsArrUniq,
                                 getRandomArchetypes(2),
-                                0.001
+                                CHANCE_ARCHETYPE_2_EXTRA
                             )
                     },
                     {
@@ -156,7 +161,7 @@ export default {
                             archetypePoolFactory(
                                 pairsArrUniq,
                                 getRandomArchetypes(3),
-                                0.0005
+                                CHANCE_ARCHETYPE_3_EXTRA
                             )
                     }
                 ]
