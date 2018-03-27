@@ -59,12 +59,6 @@ const archetypePoolFactory = (pairsArr, archetypes, randChance) => {
         return seed < randChance;
     });
 
-    console.log({
-        namesMain: namesMain.join(" + "),
-        namesOptional,
-        namesRequired
-    });
-
     return {
         main: mainPool,
         required: requiredPool,

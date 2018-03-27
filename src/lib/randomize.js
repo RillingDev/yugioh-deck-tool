@@ -118,8 +118,6 @@ const randomizeDeck = (cardDb, getPools) => {
     const resultCardNames = [];
     let result = [[], [], []];
 
-    console.log(pools);
-
     pools.required = randShuffle(pools.required);
     pools.main = randShuffle(pools.main);
 
