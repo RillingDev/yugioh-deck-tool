@@ -48,7 +48,10 @@ const PriceDatabase = class {
     format(val) {
         const currency = this.activeCurrency;
 
-        return (val * currency.val).toFixed(2) + currency.label;
+        return (
+            (val * currency.val).toFixed(currency.decimalPlaces) +
+            currency.label
+        );
     }
 };
 

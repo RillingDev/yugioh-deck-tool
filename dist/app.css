@@ -1,4 +1,22 @@
 
+.form-group-builder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-group-builder label {
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+    width: 40%;
+}
+.form-group-builder label:not(:first-child) {
+      margin-left: 1rem;
+}
+.form-group-builder input,
+  .form-group-builder select {
+    width: 60%;
+}
+
 .builder-list {
   max-height: 250px;
   width: 100%;
@@ -60,48 +78,6 @@
     color: #799a60;
 }
 
-.form-group-builder {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.form-group-builder label {
-    padding-right: 0.75rem;
-    margin-bottom: 0;
-    width: 40%;
-}
-.form-group-builder label:not(:first-child) {
-      margin-left: 1rem;
-}
-.form-group-builder input,
-  .form-group-builder select {
-    width: 60%;
-}
-
-.deck-content {
-  border: 1px solid #dee2e6;
-  padding: 3px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.deck-part {
-  margin-bottom: 1.25em;
-}
-.deck-part h3 {
-    font-size: 1rem;
-    display: initial;
-}
-.deck-part-main .deck-content {
-    background-color: #9f7151;
-}
-.deck-part-extra .deck-content {
-    background-color: #9683b8;
-}
-.deck-part-side .deck-content {
-    background-color: #799a60;
-}
-
 .deck-card {
   position: relative;
   margin: 5px;
@@ -129,6 +105,30 @@
 }
 .deck-card-text:focus, .deck-card-text:hover {
     opacity: 1;
+}
+
+.deck-content {
+  border: 1px solid #dee2e6;
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.deck-part {
+  margin-bottom: 1.25em;
+}
+.deck-part h3 {
+    font-size: 1rem;
+    display: initial;
+}
+.deck-part-main .deck-content {
+    background-color: #9f7151;
+}
+.deck-part-extra .deck-content {
+    background-color: #9683b8;
+}
+.deck-part-side .deck-content {
+    background-color: #799a60;
 }
 
 .decktool {
