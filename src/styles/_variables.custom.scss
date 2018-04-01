@@ -7,36 +7,18 @@ $enable-hover-media-query: false;
 $enable-grid-classes: true;
 $enable-print-styles: false;
 
+$brown: #b97b51;
 $blue: #9683b8;
-$green: #9ec085;
+$green: #799a60;
 $yellow: #ffd275;
-$orange: #e8ae68;
-$brown: #bf713b;
+$orange: #e29341;
 
-$colors: (
-    "blue": $blue,
-    "green": $green,
-    "yellow": $yellow,
-    "orange": $orange,
-    "brown": $brown
-);
+$colors: ();
 
 $primary: $brown;
-$dark: desaturate(darken($primary, 8%), 15%);
-$secondary: $orange;
-$success: $green;
-$info: $blue;
-$warning: $yellow;
-$danger: $orange;
+$dark: desaturate(darken($primary, 5%), 10%);
 
-$theme-colors: (
-    "primary": $primary,
-    "secondary": $secondary,
-    "success": $success,
-    "info": $info,
-    "warning": $warning,
-    "danger": $danger
-);
+$theme-colors: ("primary": $primary);
 
 $color-deckpart-main: $dark;
 $color-deckpart-extra: $blue;
