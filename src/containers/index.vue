@@ -41,7 +41,7 @@
                     title="Copy Sharelink to Clipboard"
                     @click="copyShareLink"
                 >
-                    <span class="fa fa-clipboard"><!-- icon--></span>
+                    <span class="fas fa-share-square"><!-- icon--></span>
                 </button>
                 <button
                     class="btn btn-primary form-control"
@@ -70,8 +70,8 @@
                 >
                     <span :hidden="ajax.currentlyLoading">Load Prices</span>
                     <span :hidden="!ajax.currentlyLoading">
-                        <span class="fa fa-circle-o-notch fa-spin fa-fw">
-                            <!---->
+                        <span class="fas fa-spinner fa-spin fa-fw">
+                            <!-- icon -->
                         </span>
                     </span>
                 </button>

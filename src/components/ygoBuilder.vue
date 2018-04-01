@@ -31,7 +31,7 @@
                             class="builder-add btn"
                             @click="(e) => clickEvent(e, deckPart, pair[0],banlist)"
                         >
-                            <span class="fa fa-plus"><!----></span>
+                            <span class="fas fa-plus"><!----></span>
                         </button>
                     </div>
                 </a>
@@ -147,13 +147,13 @@ export default {
     &[disabled] {
         opacity: 0.4;
     }
-    &-main .fa {
+    &-main .fas {
         color: $color-deckpart-main;
     }
-    &-extra .fa {
+    &-extra .fas {
         color: $color-deckpart-extra;
     }
-    &-side .fa {
+    &-side .fas {
         color: $color-deckpart-side;
     }
 }

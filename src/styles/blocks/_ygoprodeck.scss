@@ -2,8 +2,13 @@
 * Overrides for ygoprodeck.com overrides
 */
 .decktool {
-    .fa {
+    .fas {
         color: $white;
+        /**
+        * Weird offset I have no idea why it is there
+        */
+        position: relative;
+        top: 1px;
     }
     input[type="text"],
     input[type="email"],

@@ -13,7 +13,7 @@
             title="Configure Randomizer"
             @click="showModal"
         >
-            <span class="fa fa-gear">
+            <span class="fas fa-cog">
                 <!---->
             </span>
         </button>
