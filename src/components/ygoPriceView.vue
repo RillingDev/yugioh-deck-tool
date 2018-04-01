@@ -7,6 +7,7 @@
         <span
             v-for="(priceMode, index) in priceDb.modes"
             :key="priceMode.id"
+            :title="`${priceMode.name} Price`"
             :class="'price-mode-'+priceMode.id"
             class="price-mode"
         >

@@ -1,22 +1,4 @@
 
-.form-group-builder {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.form-group-builder label {
-    padding-right: 0.75rem;
-    margin-bottom: 0;
-    width: 40%;
-}
-.form-group-builder label:not(:first-child) {
-      margin-left: 1rem;
-}
-.form-group-builder input,
-  .form-group-builder select {
-    width: 60%;
-}
-
 .builder-list {
   max-height: 250px;
   width: 100%;
@@ -78,6 +60,48 @@
     color: #9ec085;
 }
 
+.form-group-builder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-group-builder label {
+    padding-right: 0.75rem;
+    margin-bottom: 0;
+    width: 40%;
+}
+.form-group-builder label:not(:first-child) {
+      margin-left: 1rem;
+}
+.form-group-builder input,
+  .form-group-builder select {
+    width: 60%;
+}
+
+.deck-content {
+  border: 1px solid #dee2e6;
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.deck-part {
+  margin-bottom: 1.25em;
+}
+.deck-part h3 {
+    font-size: 1rem;
+    display: initial;
+}
+.deck-part-main .deck-content {
+    background-color: #906141;
+}
+.deck-part-extra .deck-content {
+    background-color: #9683b8;
+}
+.deck-part-side .deck-content {
+    background-color: #9ec085;
+}
+
 .deck-card {
   position: relative;
   margin: 5px;
@@ -105,52 +129,6 @@
 }
 .deck-card-text:focus, .deck-card-text:hover {
     opacity: 1;
-}
-
-.deck-content {
-  border: 1px solid #dee2e6;
-  padding: 3px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.deck-part {
-  margin-bottom: 1.25em;
-}
-.deck-part h3 {
-    font-size: 1rem;
-    display: initial;
-}
-.deck-part-main .deck-content {
-    background-color: #906141;
-}
-.deck-part-extra .deck-content {
-    background-color: #9683b8;
-}
-.deck-part-side .deck-content {
-    background-color: #9ec085;
-}
-
-.price.price--group {
-  margin-bottom: 0.5rem;
-}
-.price:not(.price--group) {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-.price-mode {
-  padding: 2px 4px;
-  display: inline-block;
-}
-.price-mode-low {
-    background-color: #9ec085;
-}
-.price-mode-average {
-    background-color: #ffd275;
-}
-.price-mode-high {
-    background-color: #e8ae68;
 }
 
 .decktool {
@@ -4556,6 +4534,28 @@ a.text-danger:hover, a.text-danger:focus {
 .deck-card img {
   width: 100px;
   height: 135px;
+}
+
+.price.price--group {
+  margin-bottom: 0.5rem;
+}
+.price:not(.price--group) {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.price-mode {
+  padding: 2px 4px;
+  display: inline-block;
+}
+.price-mode-low {
+    background-color: #9ec085;
+}
+.price-mode-average {
+    background-color: #ffd275;
+}
+.price-mode-high {
+    background-color: #e8ae68;
 }
 
 .btn-group,
