@@ -1,0 +1,28 @@
+/**
+* Overrides for ygoprodeck.com overrides
+*/
+.decktool {
+    .fa {
+        color: $white;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+        background: transparent;
+        border-radius: 0;
+        padding: 0.375rem 0.75rem;
+    }
+    input[type="text"]:focus,
+    textarea:focus {
+        box-shadow: none;
+        padding: inherit;
+        margin: 0;
+        border-color: $gray-400;
+    }
+}
+
+.deck-card img {
+    width: 100px;
+    height: 135px;
+}

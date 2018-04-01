@@ -252,6 +252,7 @@ export default {
 @import "node_modules/bootstrap/scss/utilities";
 
 @import "../styles/blocks/general";
-@import "../styles/blocks/app";
 @import "../styles/blocks/forms";
+
+@import "../styles/blocks/ygoprodeck";
 </style>

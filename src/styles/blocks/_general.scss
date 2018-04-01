@@ -1,4 +1,5 @@
 @import "../mixins/screen";
+
 .decktool-header {
     text-align: center;
 }
@@ -10,5 +11,45 @@
 .container {
     @include screen(max, xl) {
         max-width: 100%;
+    }
+}
+
+.app {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.app-section {
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.app-forms {
+    order: 1;
+}
+
+.app-deck {
+    order: 3;
+    @include screen(min, md) {
+        width: calc(100% - 432px);
+        order: 2;
+    }
+}
+
+.app-builder {
+    order: 2;
+    @include screen(min, md) {
+        width: 412px;
+        margin-left: 20px;
+        order: 3;
+    }
+}
+
+.app-builder-intro {
+    display: flex;
+    margin-bottom: 1rem;
+    > div {
+        margin-right: 1rem;
     }
 }
