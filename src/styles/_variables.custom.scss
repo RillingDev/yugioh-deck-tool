@@ -1,14 +1,3 @@
-$color-deckpart-main: #9e7a50;
-$color-deckpart-extra: #9b78ac;
-$color-deckpart-side: #6aa06a;
-$color-pricemode-low: #e8fa8e;
-$color-pricemode-average: #fff18c;
-$color-pricemode-high: #ffdb7f;
-
-// Options
-//
-// Quickly modify global styling by enabling or disabling optional features.
-
 $enable-caret: false;
 $enable-rounded: false;
 $enable-shadows: false;
@@ -17,3 +6,41 @@ $enable-transitions: true;
 $enable-hover-media-query: false;
 $enable-grid-classes: true;
 $enable-print-styles: false;
+
+$blue: #9683b8;
+$green: #9ec085;
+$yellow: #ffd275;
+$orange: #e8ae68;
+$brown: #bf713b;
+
+$colors: (
+    "blue": $blue,
+    "green": $green,
+    "yellow": $yellow,
+    "orange": $orange,
+    "brown": $brown
+);
+
+$primary: $brown;
+$dark: desaturate(darken($primary, 8%), 15%);
+$secondary: $orange;
+$success: $green;
+$info: $blue;
+$warning: $yellow;
+$danger: $orange;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger
+);
+
+$color-deckpart-main: $dark;
+$color-deckpart-extra: $blue;
+$color-deckpart-side: $green;
+$color-pricemode-low: $green;
+$color-pricemode-average: $yellow;
+$color-pricemode-high: $orange;
