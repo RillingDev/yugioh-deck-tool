@@ -106,29 +106,6 @@ export default {
 @import "node_modules/bootstrap/scss/close";
 @import "node_modules/bootstrap/scss/modal";
 
-.priceapp {
-    .close {
-        margin: 0;
-        padding: 0;
-        font-size: 1.4em;
-        cursor: pointer;
-    }
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .modal-title {
-        margin-bottom: 0;
-    }
-    .modal-body {
-        display: flex;
-        justify-content: space-around;
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
 .drawsim-output {
     margin: 1em 0;
     display: flex;

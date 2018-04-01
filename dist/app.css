@@ -78,30 +78,6 @@
     color: #9ec085;
 }
 
-.deck-content {
-  border: 1px solid #dee2e6;
-  padding: 3px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.deck-part {
-  margin-bottom: 1.25em;
-}
-.deck-part h3 {
-    font-size: 1rem;
-    display: initial;
-}
-.deck-part-main .deck-content {
-    background-color: #906141;
-}
-.deck-part-extra .deck-content {
-    background-color: #9683b8;
-}
-.deck-part-side .deck-content {
-    background-color: #9ec085;
-}
-
 .deck-card {
   position: relative;
   margin: 5px;
@@ -129,6 +105,52 @@
 }
 .deck-card-text:focus, .deck-card-text:hover {
     opacity: 1;
+}
+
+.deck-content {
+  border: 1px solid #dee2e6;
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.deck-part {
+  margin-bottom: 1.25em;
+}
+.deck-part h3 {
+    font-size: 1rem;
+    display: initial;
+}
+.deck-part-main .deck-content {
+    background-color: #906141;
+}
+.deck-part-extra .deck-content {
+    background-color: #9683b8;
+}
+.deck-part-side .deck-content {
+    background-color: #9ec085;
+}
+
+.price.price--group {
+  margin-bottom: 0.5rem;
+}
+.price:not(.price--group) {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.price-mode {
+  padding: 2px 4px;
+  display: inline-block;
+}
+.price-mode-low {
+    background-color: #9ec085;
+}
+.price-mode-average {
+    background-color: #ffd275;
+}
+.price-mode-high {
+    background-color: #e8ae68;
 }
 
 .decktool {
@@ -4391,14 +4413,38 @@ a.text-danger:hover, a.text-danger:focus {
 .decktool-header {
   text-align: center;
 }
-.btn {
+.decktool .close {
+  margin: 0;
+  padding: 0;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+.decktool .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.decktool .modal-title {
+  margin-bottom: 0;
+}
+.decktool .modal-body {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 1200px) {
+.decktool .container {
+    max-width: 100%;
+}
+}
+.decktool .btn {
   cursor: pointer;
   border: 0;
 }
-@media (max-width: 1200px) {
-.container {
-    max-width: 100%;
-}
+.decktool .btn-primary:focus {
+  background-color: #bf713b;
+  color: #fff;
 }
 .app {
   display: flex;
@@ -4510,28 +4556,6 @@ a.text-danger:hover, a.text-danger:focus {
 .deck-card img {
   width: 100px;
   height: 135px;
-}
-
-.price.price--group {
-  margin-bottom: 0.5rem;
-}
-.price:not(.price--group) {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-.price-mode {
-  padding: 2px 4px;
-  display: inline-block;
-}
-.price-mode-low {
-    background-color: #9ec085;
-}
-.price-mode-average {
-    background-color: #ffd275;
-}
-.price-mode-high {
-    background-color: #e8ae68;
 }
 
 .btn-group,
@@ -4760,26 +4784,6 @@ button.close {
 .modal-lg {
     max-width: 800px;
 }
-}
-.priceapp .close {
-  margin: 0;
-  padding: 0;
-  font-size: 1.4em;
-  cursor: pointer;
-}
-.priceapp .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.priceapp .modal-title {
-  margin-bottom: 0;
-}
-.priceapp .modal-body {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  align-items: center;
 }
 .drawsim-output {
   margin: 1em 0;
