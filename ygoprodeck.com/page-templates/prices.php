@@ -12,19 +12,19 @@
 ?>
 
     <?php
-    function register_priceapp_assets()
+    function register_decktool_assets()
     {
         //CSS
-        wp_register_style('priceapp-css-main', 'https://ygoprodeck.com/priceapp/build/app.css');
-        wp_enqueue_style('priceapp-css-main');
+        wp_register_style('decktool-css-main', 'https://ygoprodeck.com/decktool/build/app.css');
+        wp_enqueue_style('decktool-css-main');
 
         //Scripts
 
-        wp_register_script('priceapp-js-app', 'https://ygoprodeck.com/priceapp/build/app.js',[],"v4.1.0",true);
-        wp_enqueue_script('priceapp-js-app');
+        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/build/app.js',[],"v4.1.0",true);
+        wp_enqueue_script('decktool-js-app');
     }
 
-    add_action('wp_enqueue_scripts', 'register_priceapp_assets');
+    add_action('wp_enqueue_scripts', 'register_decktool_assets');
 ?>
 
     <?php get_header(); ?>
@@ -35,23 +35,23 @@
           <div id="content" class="clearfix">
 
             <!--YGODeckPrice App-->
-            <div class="priceapp">
+            <div class="decktool">
                 <div class="container">
-                    <header class="priceapp-header">
-                        <h1>YuGiOh Deck Price v4</h1>
-                        <p>Check the average price for your YgoPro/DevPro .ydk files</p>
+                    <header class="decktool-header">
+                        <h1>YuGiOh Deck Tool</h1>
+                        <p>A tool to view deck prices, share and edit decks, create random decks and much more</p>
                     </header>
                     <main>
-                        <div id="appYgodeckprice"></div>
+                        <div id="decktoolApp"></div>
                     </main>
-                    <footer class="priceapp-footer">
+                    <footer class="decktool-footer">
                         <p>
                             <span>Created by
                                 <a href="https://f-rilling.com/" target="_blank">Felix Rilling</a>
                             </span>
                             |
                             <span>
-                                <a href="https://github.com/FelixRilling/ygodeckprice3" target="_blank">Project source code</a>
+                                <a href="https://github.com/FelixRilling/yugioh-deck-tool" target="_blank">Project source code</a>
                             </span>
                             |
                             <span>Price data from the

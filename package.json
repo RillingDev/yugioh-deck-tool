@@ -1,7 +1,8 @@
 {
     "name": "yugioh-deck-tool",
     "version": "v4.7.0",
-    "description": "yugioh-deck-tool app for ygoprodeck.com",
+    "description":
+        "A tool to view deck prices, share and edit decks, create random decks and much more",
     "main": "app/index.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
