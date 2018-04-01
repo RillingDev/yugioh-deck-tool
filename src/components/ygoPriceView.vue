@@ -63,7 +63,7 @@ export default {
 }
 
 .price-mode {
-    padding: 2px 4px;
+    padding: 2px 8px;
     display: inline-block;
     &-low {
         background-color: $color-pricemode-low;
