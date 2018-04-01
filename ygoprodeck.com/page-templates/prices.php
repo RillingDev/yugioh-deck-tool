@@ -20,7 +20,7 @@
 
         //Scripts
 
-        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/build/app.js',[],"v4.7.0",true);
+        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/build/app.js',[],"v4.8.0",true);
         wp_enqueue_script('decktool-js-app');
     }
 
