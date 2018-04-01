@@ -80,8 +80,7 @@ export default {
 @import "../styles/variables.custom";
 
 .deck-content {
-    border: 1px solid $gray-300;
-    padding: 3px;
+    padding: 4px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

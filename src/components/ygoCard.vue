@@ -72,7 +72,7 @@ export default {
 
 .deck-card {
     position: relative;
-    margin: 5px;
+    margin: 4px;
 }
 
 .deck-card img {
@@ -84,7 +84,7 @@ export default {
     width: 100%;
     height: 100%;
     top: 0;
-    padding: 5px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

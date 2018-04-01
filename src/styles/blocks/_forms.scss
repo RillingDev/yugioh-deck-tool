@@ -17,8 +17,7 @@
         line-height: 38px;
     }
     input[type="file"] {
-        padding-top: 3px;
-        padding-bottom: 3px;
+        padding: 3px;
     }
 
     @include screen(min, md) {
