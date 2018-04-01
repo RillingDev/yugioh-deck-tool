@@ -38,13 +38,27 @@ curl_multi_close($mh);
 // Transforms output
 foreach ($requests as $request) {
     $response = json_decode(curl_multi_getcontent($request));
-    $data = null;
+    $data = [0, 0, 0];
 
-    if ($response && $response->status==="success") {
+    if (
+        $response &&
+        $response->status === "success" &&
+        $response->data[0] &&
+        $response->data[0]->price_data->status==="success"
+    ) {
         // We only need the price data of the first entry
         $prices = $response->data[0]->price_data->data->prices;
+
         // And only three props from that
-        $data = [$prices->low, $prices->average, $prices->high];
+        $priceLow = $prices->low;
+        $priceAverage = $prices->average;
+        $priceHigh = $prices->high;
+
+        $data = [
+            is_null($priceLow) ? 0 : $priceLow,
+            is_null($priceAverage) ? 0 : $priceAverage,
+            is_null($priceHigh) ? 0 : $priceHigh,
+        ];
     }
 
     array_push($result, $data);
