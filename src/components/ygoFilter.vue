@@ -337,7 +337,6 @@ export default {
     align-items: center;
     label {
         padding-right: 0.75rem;
-        margin-bottom: 0;
         width: 40%;
         &:not(:first-child) {
             margin-left: 1rem;

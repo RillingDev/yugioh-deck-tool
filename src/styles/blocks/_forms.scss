@@ -12,17 +12,13 @@
             margin-bottom: 0.5rem;
         }
     }
-    label {
-        margin-bottom: 0;
-        line-height: 38px;
-    }
     input[type="file"] {
         padding: 3px;
     }
-
     @include screen(min, md) {
         > .form-group {
             flex-direction: row;
+            align-items: center;
             input,
             button,
             select {
