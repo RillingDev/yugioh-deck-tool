@@ -4,5 +4,6 @@
 
 ## Introduction
 
-The live version can be found here: <https://ygoprodeck.com/card-database/deck-prices/>.
-The latest development version can be found here: <https://f-rilling.com/projects/YuGiOhDeckPrice/>.
+Live version: <https://ygoprodeck.com/card-database/deck-prices/>.
+
+Latest development version: <https://f-rilling.com/projects/YuGiOhDeckPrice/>.
