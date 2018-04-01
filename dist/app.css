@@ -1,21 +1,4 @@
 
-.form-group-builder {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.form-group-builder label {
-    padding-right: 0.75rem;
-    width: 40%;
-}
-.form-group-builder label:not(:first-child) {
-      margin-left: 1rem;
-}
-.form-group-builder input,
-  .form-group-builder select {
-    width: 60%;
-}
-
 .builder-list {
   max-height: 250px;
   width: 100%;
@@ -75,6 +58,23 @@
 }
 .btn.builder-add-side .fa {
     color: #799a60;
+}
+
+.form-group-builder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-group-builder label {
+    padding-right: 0.75rem;
+    width: 40%;
+}
+.form-group-builder label:not(:first-child) {
+      margin-left: 1rem;
+}
+.form-group-builder input,
+  .form-group-builder select {
+    width: 60%;
 }
 
 .deck-card {

@@ -208,13 +208,17 @@ export default {
         },
         deckRandomize(newDeck) {
             this.deck = newDeck;
+            this.ajax.pricesLoaded = false;
         },
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;
 
             if (files.length > 0) {
                 Deck.fromFile(files[0])
-                    .then(deck => (this.deck = deck))
+                    .then(deck => {
+                        this.deck = deck;
+                        this.ajax.pricesLoaded = false;
+                    })
                     .catch(stderr);
             }
         },
