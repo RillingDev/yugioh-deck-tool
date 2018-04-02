@@ -123,6 +123,7 @@ import apiLoadCards from "../lib/apiLoadCards";
 import apiLoadPrices from "../lib/apiLoadPrices";
 import getUrls from "../lib/data/urls";
 import saveFile from "../lib/saveFile";
+import copyText from "../lib/copyText";
 
 import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDeck from "../components/ygoDeck.vue";
@@ -223,12 +224,10 @@ export default {
             }
         },
         copyShareLink() {
-            navigator.clipboard.writeText(this.shareLink).catch(stderr);
+            copyText(this.shareLink);
         },
         copyShareText() {
-            navigator.clipboard
-                .writeText(this.deck.toText(this.cardDb))
-                .catch(stderr);
+            copyText(this.deck.toText(this.cardDb));
         }
     }
 };
