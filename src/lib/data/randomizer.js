@@ -8,7 +8,7 @@ const CHANCE_ARCHETYPE_3_EXTRA = 0.001;
 const RATIOS_DEFAULT = {
     monster: 1,
     spell: 0.9,
-    trap: 0.75
+    trap: 0.8
 };
 
 Object.freeze(RATIOS_DEFAULT);
