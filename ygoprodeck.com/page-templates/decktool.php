@@ -1,13 +1,8 @@
 <?php
 /**
-* Template Name: Price App Page Template
+* Template Name: Deck Tool Page Template
 *
-* Displays the Contact Page Template of the theme.
-*
-* @package ThemeGrill
-* @subpackage ColorMag
-* @since ColorMag 1.0
-* @version 6
+* Displays the YuGiOh Deck Tool.
 */
 ?>
 
@@ -15,12 +10,12 @@
     function register_decktool_assets()
     {
         //CSS
-        wp_register_style('decktool-css-main', 'https://ygoprodeck.com/decktool/build/app.css');
+        wp_register_style('decktool-css-main', 'https://ygoprodeck.com/decktool/dist/app.css');
         wp_enqueue_style('decktool-css-main');
 
         //Scripts
 
-        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/build/app.js',[],"v4.8.0",true);
+        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/dist/app.js',[],"v4.8.0",true);
         wp_enqueue_script('decktool-js-app');
     }
 
