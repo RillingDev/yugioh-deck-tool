@@ -1,7 +1,7 @@
 const joinUrl = (...arr) => arr.join("/");
 
 const URL_YGOPRODECK = "https://ygoprodeck.com";
-const URL_YGOPRODECK_APP = joinUrl(URL_YGOPRODECK, "priceapp");
+const URL_YGOPRODECK_APP = joinUrl(URL_YGOPRODECK, "decktool");
 
 const getUrls = () => {
     const getRelativeUrl = val =>

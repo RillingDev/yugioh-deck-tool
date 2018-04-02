@@ -1,0 +1,215 @@
+@font-face{font-family:'Open Sans', sans-serif;font-style:normal;font-weight:400;}[data-card]{cursor:pointer;}#yugioh-tooltip{background:none repeat scroll 0 0 #1E2531;position:absolute;z-index:9999;display:none;border:1px solid #8E846B;padding:5px;max-width:28%;min-width:20%;}#yugioh-tooltip-content .timg{float:right!important;padding-left:4px;}
+}
+
+#yugioh-tooltip-content {
+    min-width: 500px;
+    min-height: 254px;
+    background: url("https://ygoprodeck.com/pics/back.jpg") no-repeat;
+    background-size: 177px 254px;
+    overflow: hidden;
+
+}
+
+#yugioh-tooltip-content .db-img-tooltip {
+    width: 177px;
+    height: 254px;
+    float: left;
+	padding-right: 2px;
+}
+
+.timg {
+   max-height:254px;
+   max-width: 177px; 
+}
+
+
+
+#yugioh-tooltip-content .name{color: white; font-weight: bold; border-style: solid;
+    border-width: 2px; border-color: grey; padding: 3px; overflow:hidden; background-color: #b2591a; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px; margin-bottom: 5px; }
+    
+#yugioh-tooltip-content .text{color: white; padding-top: 5px; text-align: left; border-style: solid;
+    border-width: 2px; border-color: grey; overflow:hidden; border-top:none; background-color: #b2591a; padding-bottom: 10px; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;  margin-bottom: 5px; padding-left: 2px; font-size: 14px;}
+    
+     #yugioh-tooltip-content .atk{color: white; text-align: left; border-style: solid;
+    border-width: 2px; border-color: grey; padding: 3px; overflow:hidden; border-top:none; background-color: #b2591a; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;  margin-bottom: 5px; font-size: 14px;}
+    
+         #yugioh-tooltip-content .att{color: white; text-align: left; border-style: solid;
+    border-width: 2px; border-color: grey; padding: 3px; overflow:hidden; border-top:none; background-color: #b2591a; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;  margin-bottom: 5px; font-size: 14px;}
+    
+         #yugioh-tooltip-content .type{color: white; text-align: left; border-style: solid;
+    border-width: 2px; border-color: grey; padding: 3px; overflow:hidden; border-top:none; background-color: #b2591a; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;  margin-bottom: 5px; font-size: 14px;}
+	
+	         #yugioh-tooltip-content .bantcg{color: white; text-align: left; border-style: solid;
+    border-width: 2px; border-color: grey; padding: 3px; overflow:hidden; border-top:none; background-color: #b2591a; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;  margin-bottom: 5px; font-size: 14px;}
+	
+	         #yugioh-tooltip-content .price{color: white; padding-top: 5px; text-align: left; border-style: solid;
+    border-width: 2px; border-color: grey; overflow:hidden; border-top:none; background-color: #b2591a; padding-bottom: 10px; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px; border-radius: 5px;  margin-bottom: 5px; padding-left: 2px; font-size: 14px; margin: 0 auto; -webkit-transform: translateX(-3px); 
+-moz-transform: translateX(-3px); 
+-ms-transform: translateX(-3px); 
+ transform: translateX(-3px); max-width:65%;}
+
+
+#yugioh-tooltip-content .price li:nth-child(2) span {
+    color: #fff6a1;
+}
+
+#yugioh-tooltip-content .price li:nth-child(3) span {
+    color: #fdc1b0;
+}
+    
+         #yugioh-tooltip-content .lvl{color: white; text-align: left; border-style: solid;
+    border-width: 2px; border-color: grey; padding: 3px; overflow:hidden; border-top:none; background-color: #b2591a; -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;  margin-bottom: 5px; font-size: 14px; }
+
+
+
+
+#yugioh-tooltip-desc .price {
+    color: #ddd;
+    margin-left: 4px;
+}
+
+#yugioh-tooltip-desc .price li span {
+    padding: 1px;
+    margin-left: 4px;
+    display: inline-block;
+    color: #caf9ae;
+}
+
+#yugioh-tooltip-desc .price li:nth-child(2) span {
+    color: #fff6a1;
+}
+
+#yugioh-tooltip-desc .price li:nth-child(3) span {
+    color: #fdc1b0;
+}
+
+
+@media only screen and (max-width: 1440px) {
+#yugioh-tooltip {
+    background: none repeat scroll 0 0 #1E2531;
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    border: 1px solid #8E846B;
+    padding: 5px;
+	max-width: 600px;
+	min-width: 500px; 
+	margin-left:50px;
+}	
+}
+
+@media only screen and (max-width: 1024px) {
+#yugioh-tooltip {
+    background: none repeat scroll 0 0 #1E2531;
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    border: 1px solid #8E846B;
+    padding: 5px;
+	max-width: 400px;
+	min-width: 400px; 
+	font-size: 12px;
+}	
+
+#yugioh-tooltip-content .timg {
+	max-height: 30%;
+	max-width: 30%;
+}
+
+#yugioh-tooltip-content .text{
+    font-size: 9px;
+}
+#yugioh-tooltip-content .lvl{
+    font-size: 9px;
+}
+
+#yugioh-tooltip-content .type {
+    font-size: 9px;
+}
+
+#yugioh-tooltip-content .att {
+    font-size: 9px;
+}
+
+#yugioh-tooltip-content .atk {
+    font-size: 9px;
+}
+
+#yugioh-tooltip-content .bantcg {
+    font-size: 9px;
+}
+
+#yugioh-tooltip-content .price {
+    font-size: 9px;
+}
+
+}
+
+@media only screen and (max-width: 970px) {
+	#yugioh-tooltip {
+		background: none repeat scroll 0 0 #1E2531;
+		position: absolute;
+		z-index: 9999;
+		display: none;
+		border: 1px solid #8E846B;
+		padding: 5px;
+		max-width: 300px;
+		min-width: 300px; 
+		font-size: 12px;
+		margin-left:250px;
+
+	}	
+
+	#yugioh-tooltip-content .timg {
+		max-height: 20%;
+		max-width: 20%;
+	}
+	
+	#tooltiprating {
+	    
+	   display:none;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	#yugioh-tooltip {
+	   left:-47px !important;
+	}
+}
+@media only screen and (max-width: 670px) {
+	#yugioh-tooltip {
+	   left:-70px !important;
+	}
+}
+@media only screen and (max-width: 600px) {
+	#yugioh-tooltip {
+	   left:-100px !important;
+	}
+}
+@media only screen and (max-width: 500px) {
+	#yugioh-tooltip {
+	   left:-200px !important;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	#yugioh-tooltip {
+	   left:-230px !important;
+	   max-width:300px !important;
+		min-width:300px !important;
+	}
+
+  	#tooltiprating {
+	    
+	   display:none;
+	}
+
+}
