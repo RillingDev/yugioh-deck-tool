@@ -4,7 +4,9 @@ const saveFile = file => {
     el.href = window.URL.createObjectURL(file);
     el.download = file.name;
 
+    document.body.appendChild(el);
     el.click();
+    el.remove();
 };
 
 export default saveFile;
