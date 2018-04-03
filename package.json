@@ -1,15 +1,12 @@
 {
     "name": "yugioh-deck-tool",
     "version": "v4.8.0",
-    "description":
-        "A tool to view deck prices, share and edit decks, create random decks and much more",
+    "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
     "main": "app/index.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-        "build":
-            "cross-env NODE_ENV=development webpack --progress --hide-modules",
-        "dist":
-            "cross-env NODE_ENV=production webpack --progress --hide-modules",
+        "build": "cross-env NODE_ENV=development webpack --progress --hide-modules",
+        "dist": "cross-env NODE_ENV=production webpack --progress --hide-modules",
         "lint": "eslint src/**/*.js src/**/*.vue",
         "fix": "npm-run-all fix:prettier fix:es",
         "fix:es": "eslint src/**/*.js src/**/*.vue --fix",
@@ -19,7 +16,11 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
     },
-    "keywords": ["yugioh", "deck", "app"],
+    "keywords": [
+        "yugioh",
+        "deck",
+        "app"
+    ],
     "author": "FelixRilling",
     "license": "MIT",
     "bugs": {
@@ -28,14 +29,14 @@
     "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
     "dependencies": {
         "bootstrap": "^4.0.0",
-        "bootstrap-vue": "^2.0.0-rc.4",
+        "bootstrap-vue": "^2.0.0-rc.6",
         "lightdash": "^5.0.2",
         "pako": "^1.0.6",
         "vue": "^2.5.17-beta.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.0.0-beta.42",
-        "@babel/preset-env": "^7.0.0-beta.42",
+        "@babel/core": "^7.0.0-beta.44",
+        "@babel/preset-env": "^7.0.0-beta.44",
         "babel-loader": "^8.0.0-beta.2",
         "cross-env": "^5.1.4",
         "css-loader": "^0.28.11",
