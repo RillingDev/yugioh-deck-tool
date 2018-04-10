@@ -28,7 +28,7 @@
     },
     "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
     "dependencies": {
-        "bootstrap": "^4.0.0",
+        "bootstrap": "^4.1.0",
         "bootstrap-vue": "^2.0.0-rc.6",
         "lightdash": "^5.0.2",
         "pako": "^1.0.6",

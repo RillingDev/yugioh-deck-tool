@@ -245,7 +245,6 @@ export default {
 @import "node_modules/bootstrap/scss/grid";
 @import "node_modules/bootstrap/scss/forms";
 @import "node_modules/bootstrap/scss/buttons";
-@import "node_modules/bootstrap/scss/transitions";
 @import "node_modules/bootstrap/scss/utilities";
 
 @import "../styles/blocks/general";
