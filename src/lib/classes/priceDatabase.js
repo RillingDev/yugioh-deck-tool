@@ -3,11 +3,25 @@ import {
     PRICE_CURRENCIES
 } from "../data/price";
 
+const mapCurrencyFomatters = () => PRICE_CURRENCIES.map(currency => {
+    currency.formatter = new Intl.NumberFormat(currency.locale, {
+        style: "currency",
+        currency: currency.id
+    });
+
+    return currency;
+});
+const guessDefaultCurrency = () => {
+    const localeIndex = PRICE_CURRENCIES.findIndex(currency => currency.locale === navigator.language);
+
+    return localeIndex === -1 ? PRICE_CURRENCIES[0] : PRICE_CURRENCIES[localeIndex];
+}
+
 const PriceDatabase = class {
     constructor() {
         this.modes = PRICE_MODES;
-        this.currencies = PRICE_CURRENCIES;
-        this.activeCurrency = PRICE_CURRENCIES[0];
+        this.currencies = mapCurrencyFomatters();
+        this.activeCurrency = guessDefaultCurrency();
         this.prices = new Map();
 
         // eslint-disable-next-line no-console

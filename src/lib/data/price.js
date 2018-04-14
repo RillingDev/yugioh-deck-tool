@@ -14,74 +14,56 @@ const PRICE_MODES = [{
 
 const PRICE_CURRENCIES = [{
         name: "US Dollar",
-        formatter: new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD"
-        }),
+        locale: "en-US",
+        id: "USD",
         val: 1,
     },
     {
         name: "Euro",
-        formatter: new Intl.NumberFormat("de-DE", {
-            style: "currency",
-            currency: "EUR"
-        }),
+        locale: "de",
+        id: "EUR",
         val: 0.810,
     },
     {
         name: "British Pound",
-        formatter: new Intl.NumberFormat("en-GB", {
-            style: "currency",
-            currency: "GBP"
-        }),
+        locale: "en-GB",
+        id: "GBP",
         val: 0.702,
     },
     {
         name: "Canadian Dollar",
-        formatter: new Intl.NumberFormat("en-CA", {
-            style: "currency",
-            currency: "CAD"
-        }),
+        locale: "en-CA",
+        id: "CAD",
         val: 1.260,
     },
     {
         name: "Australian Dollar",
-        formatter: new Intl.NumberFormat("en-AU", {
-            style: "currency",
-            currency: "AUD"
-        }),
+        locale: "en-AU",
+        id: "AUD",
         val: 1.287,
     },
     {
         name: "Mexican Peso",
-        formatter: new Intl.NumberFormat("es-MX", {
-            style: "currency",
-            currency: "MXN"
-        }),
+        locale: "es-MX",
+        id: "MXN",
         val: 18.109,
     },
     {
         name: "Brazilian Real",
-        formatter: new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        }),
+        locale: "pt-BR",
+        id: "BRL",
         val: 3.421,
     },
     {
         name: "Thai Baht",
-        formatter: new Intl.NumberFormat("th-TH", {
-            style: "currency",
-            currency: "THB"
-        }),
+        locale: "th",
+        id: "THB",
         val: 31.214,
     },
     {
         name: "Indonesian Rupiah",
-        formatter: new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR"
-        }),
+        locale: "id",
+        id: "IDR",
         val: 13756.23,
     }
 ];
