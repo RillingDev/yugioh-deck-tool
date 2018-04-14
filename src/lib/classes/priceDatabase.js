@@ -1,4 +1,7 @@
-import { PRICE_MODES, PRICE_CURRENCIES } from "../data/price";
+import {
+    PRICE_MODES,
+    PRICE_CURRENCIES
+} from "../data/price";
 
 const PriceDatabase = class {
     constructor() {
@@ -48,10 +51,7 @@ const PriceDatabase = class {
     format(val) {
         const currency = this.activeCurrency;
 
-        return (
-            (val * currency.val).toFixed(currency.decimalPlaces) +
-            currency.label
-        );
+        return currency.formatter.format(val * currency.val);
     }
 };
 

@@ -1,5 +1,4 @@
-const PRICE_MODES = [
-    {
+const PRICE_MODES = [{
         id: "low",
         name: "Low"
     },
@@ -13,65 +12,84 @@ const PRICE_MODES = [
     }
 ];
 
-const PRICE_CURRENCIES = [
-    {
+const PRICE_CURRENCIES = [{
         name: "US Dollar",
-        label: "$",
+        formatter: new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD"
+        }),
         val: 1,
-        decimalPlaces: 2
     },
     {
         name: "Euro",
-        label: "€",
-        val: 0.805,
-        decimalPlaces: 2
+        formatter: new Intl.NumberFormat("de-DE", {
+            style: "currency",
+            currency: "EUR"
+        }),
+        val: 0.810,
     },
     {
         name: "British Pound",
-        label: "£",
-        val: 0.705,
-        decimalPlaces: 2
+        formatter: new Intl.NumberFormat("en-GB", {
+            style: "currency",
+            currency: "GBP"
+        }),
+        val: 0.702,
     },
     {
         name: "Canadian Dollar",
-        label: "$",
-        val: 1.286,
-        decimalPlaces: 2
+        formatter: new Intl.NumberFormat("en-CA", {
+            style: "currency",
+            currency: "CAD"
+        }),
+        val: 1.260,
     },
     {
         name: "Australian Dollar",
-        label: "$",
-        val: 1.297,
-        decimalPlaces: 2
+        formatter: new Intl.NumberFormat("en-AU", {
+            style: "currency",
+            currency: "AUD"
+        }),
+        val: 1.287,
     },
-
     {
         name: "Mexican Peso",
-        label: "$",
-        val: 18.33,
-        decimalPlaces: 1
+        formatter: new Intl.NumberFormat("es-MX", {
+            style: "currency",
+            currency: "MXN"
+        }),
+        val: 18.109,
     },
     {
         name: "Brazilian Real",
-        label: "R$",
-        val: 3.331,
-        decimalPlaces: 2
+        formatter: new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        }),
+        val: 3.421,
     },
     {
         name: "Thai Baht",
-        label: "฿",
-        val: 31.1864,
-        decimalPlaces: 1
+        formatter: new Intl.NumberFormat("th-TH", {
+            style: "currency",
+            currency: "THB"
+        }),
+        val: 31.214,
     },
     {
         name: "Indonesian Rupiah",
-        label: "Rp",
-        val: 13742.86,
-        decimalPlaces: 0
+        formatter: new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR"
+        }),
+        val: 13756.23,
     }
 ];
 
 Object.freeze(PRICE_MODES);
 Object.freeze(PRICE_CURRENCIES);
 
-export { PRICE_MODES, PRICE_CURRENCIES };
+export {
+    PRICE_MODES,
+    PRICE_CURRENCIES
+};
