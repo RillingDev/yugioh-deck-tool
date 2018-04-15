@@ -1,11 +1,6 @@
 import Deck from "./classes/deck";
-import {
-    DECKPARTS
-} from "./data/deck";
-import {
-    randShuffle,
-    randNumber
-} from "lightdash";
+import { DECKPARTS } from "./data/deck";
+import { randShuffle, randNumber } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 const IGNORED_WORDS = ["of", "the", "a", "an", "for", "with", "in"];
@@ -121,11 +116,7 @@ const randomizeDeck = (cardDb, getPools) => {
     };
     const pools = getPools(cardDb.pairsArrUniq);
     const resultCardNames = [];
-    let result = [
-        [],
-        [],
-        []
-    ];
+    let result = [[], [], []];
 
     pools.required = randShuffle(pools.required);
     pools.main = randShuffle(pools.main);
@@ -136,8 +127,4 @@ const randomizeDeck = (cardDb, getPools) => {
     return new Deck(result, getRandomName(resultCardNames)).sort(cardDb);
 };
 
-export {
-    randomizeDeck,
-    getRandomName,
-    getRandomAmount
-};
+export { randomizeDeck, getRandomName, getRandomAmount };
