@@ -24,6 +24,9 @@ const PriceDatabase = class {
         this.activeCurrency = guessDefaultCurrency();
         this.prices = new Map();
 
+        Object.freeze(this.modes);
+        Object.freeze(this.currencies);
+
         // eslint-disable-next-line no-console
         console.log("LOADED Prices", this);
     }

@@ -1,6 +1,14 @@
-import { arrCount, arrRemoveItem } from "lightdash";
-import { uriDeckDecode, uriDeckEncode } from "../uriDeck";
-import { DECKPARTS } from "../data/deck";
+import {
+    arrCount,
+    arrRemoveItem
+} from "lightdash";
+import {
+    uriDeckDecode,
+    uriDeckEncode
+} from "../uriDeck";
+import {
+    DECKPARTS
+} from "../data/deck";
 import sortCards from "../sortCards";
 
 const REGEX_CREATED = /#created.+/;
@@ -15,9 +23,9 @@ const fileToList = fileContent => {
 
     return DECKPARTS.map((deckPart, index) =>
         fileParts[index]
-            .split(/\n\r?/g)
-            .map(line => line.trim())
-            .filter(line => line.length > 0)
+        .split(/\n\r?/g)
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
     );
 };
 
@@ -40,7 +48,11 @@ const listToText = (list, cardDb) => {
 };
 
 const Deck = class {
-    constructor(list = [[], [], []], name = "Unnamed") {
+    constructor(list = [
+        [],
+        [],
+        []
+    ], name = "Unnamed") {
         this.name = name;
         this.parts = DECKPARTS;
 
@@ -49,6 +61,8 @@ const Deck = class {
         this.side = list[2];
 
         this.all = this.getAll();
+
+        Object.freeze(this.parts);
 
         // eslint-disable-next-line no-console
         console.log("CREATED Deck", this);

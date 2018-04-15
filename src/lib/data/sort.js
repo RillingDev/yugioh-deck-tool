@@ -1,5 +1,4 @@
-const SORTERS = [
-    {
+const SORTERS = [{
         name: "A-Z",
         fn: (a, b) => a.name.localeCompare(b.name)
     },
@@ -39,4 +38,6 @@ const SORTERS = [
 
 Object.freeze(SORTERS);
 
-export { SORTERS };
+export {
+    SORTERS
+};

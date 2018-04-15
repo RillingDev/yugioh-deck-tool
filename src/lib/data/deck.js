@@ -1,7 +1,6 @@
 const DECKPARTS_REGEX_EXTRA = /Fusion|Synchro|XYZ|Link/;
 
-const DECKPARTS = [
-    {
+const DECKPARTS = [{
         id: "main",
         name: "Main",
         indicator: "#main",
@@ -29,4 +28,6 @@ const DECKPARTS = [
 
 Object.freeze(DECKPARTS);
 
-export { DECKPARTS };
+export {
+    DECKPARTS
+};

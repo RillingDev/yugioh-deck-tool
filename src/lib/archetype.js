@@ -1,5 +1,11 @@
-import { ARCHETYPES } from "./data/archetypes";
-import { arrUniq, randShuffle, arrFlattenDeep } from "lightdash";
+import {
+    ARCHETYPES
+} from "./data/archetypes";
+import {
+    arrUniq,
+    randShuffle,
+    arrFlattenDeep
+} from "lightdash";
 import {
     getDefaultRatios,
     CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
@@ -66,4 +72,7 @@ const archetypePoolFactory = (pairsArr, archetypes, randChance) => {
     };
 };
 
-export { getRandomArchetypes, archetypePoolFactory };
+export {
+    getRandomArchetypes,
+    archetypePoolFactory
+};

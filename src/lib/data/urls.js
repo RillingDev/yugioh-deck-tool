@@ -5,9 +5,9 @@ const URL_YGOPRODECK_APP = joinUrl(URL_YGOPRODECK, "decktool");
 
 const getUrls = () => {
     const getRelativeUrl = val =>
-        location.host === "ygoprodeck.com"
-            ? joinUrl(URL_YGOPRODECK_APP, val)
-            : joinUrl(".", val);
+        location.host === "ygoprodeck.com" ?
+        joinUrl(URL_YGOPRODECK_APP, val) :
+        joinUrl(".", val);
 
     return {
         buyAPI: "http://yugiohprices.com/card_price?name=",

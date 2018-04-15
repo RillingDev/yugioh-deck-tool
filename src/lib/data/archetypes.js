@@ -4,8 +4,7 @@
  */
 const ARCHETYPES = [
     [
-        "ABC",
-        [
+        "ABC", [
             "ABC-Dragon Buster",
             "A-Assault Core",
             "B-Buster Drake",
@@ -13,33 +12,69 @@ const ARCHETYPES = [
         ],
         ["Gadget", "Limiter Removal", "Machina Armored Unit", "Iron Call"]
     ],
-    ["Assault Mode", [], []],
-    ["Abyss Actor", [], []],
-    ["Aesir", [], []],
-    ["Aether", [], []],
-    ["Alien", [], []],
-    ["Alligator", [], []],
-    ["Allure Queen", [], []],
-    ["Ally of Justice", [], []],
-    ["Altergeist", [], []],
-    ["Amazoness", [], []],
-    ["Amorphage", [], []],
+    ["Assault Mode", [],
+        []
+    ],
+    ["Abyss Actor", [],
+        []
+    ],
+    ["Aesir", [],
+        []
+    ],
+    ["Aether", [],
+        []
+    ],
+    ["Alien", [],
+        []
+    ],
+    ["Alligator", [],
+        []
+    ],
+    ["Allure Queen", [],
+        []
+    ],
+    ["Ally of Justice", [],
+        []
+    ],
+    ["Altergeist", [],
+        []
+    ],
+    ["Amazoness", [],
+        []
+    ],
+    ["Amorphage", [],
+        []
+    ],
     [
-        "Ancient Gear",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Ancient Gear", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp"]
     ],
-    ["Angel", [], []],
-    ["Anti", [], []],
-    ["Apoqliphort", [], []],
-    ["Aquaactress", [], []],
-    ["Arcana Force", [], []],
-    ["Archfiend", [], []],
-    ["Armed Dragon", ["Ojama"], []],
-    ["Aroma", [], []],
+    ["Angel", [],
+        []
+    ],
+    ["Anti", [],
+        []
+    ],
+    ["Apoqliphort", [],
+        []
+    ],
+    ["Aquaactress", [],
+        []
+    ],
+    ["Arcana Force", [],
+        []
+    ],
+    ["Archfiend", [],
+        []
+    ],
+    ["Armed Dragon", ["Ojama"],
+        []
+    ],
+    ["Aroma", [],
+        []
+    ],
     [
-        "Artifact",
-        [],
+        "Artifact", [],
         [
             "Honest",
             "Shining Angel",
@@ -50,25 +85,45 @@ const ARCHETYPES = [
             "The Fountain in the Sky"
         ]
     ],
-    ["Assassin", [], []],
-    ["Assault Blackwing", [], []],
-    ["Atlantean", [], []],
-    ["B.E.S.", [], []],
-    ["Baby", [], []],
-    ["Bamboo Sword", [], []],
-    ["Batteryman", [], []],
-    ["Battleguard", [], []],
-    ["Battlin' Boxer", [], []],
-    ["Black Luster Soldier", [], []],
+    ["Assassin", [],
+        []
+    ],
+    ["Assault Blackwing", [],
+        []
+    ],
+    ["Atlantean", [],
+        []
+    ],
+    ["B.E.S.", [],
+        []
+    ],
+    ["Baby", [],
+        []
+    ],
+    ["Bamboo Sword", [],
+        []
+    ],
+    ["Batteryman", [],
+        []
+    ],
+    ["Battleguard", [],
+        []
+    ],
+    ["Battlin' Boxer", [],
+        []
+    ],
+    ["Black Luster Soldier", [],
+        []
+    ],
     [
-        "Blackwing",
-        [],
+        "Blackwing", [],
         ["Quill Pen of Gulldos", "Divine Wind of Mist Valley", "Quiet Life"]
     ],
-    ["Blaze Accelerator", [], []],
+    ["Blaze Accelerator", [],
+        []
+    ],
     [
-        "Blue-Eyes",
-        [],
+        "Blue-Eyes", [],
         [
             "Return of the Dragon Lords",
             "Silver's Cry",
@@ -76,62 +131,126 @@ const ARCHETYPES = [
             "The King of D."
         ]
     ],
-    ["Bonding", [], []],
-    ["Bounzer", [], []],
-    ["Bujin", [], []],
-    ["Burning Abyss", [], ["Allure of Darkness", "Reckless Greed"]],
-    ["Buster Blader", [], []],
-    ["Butterfly", [], []],
+    ["Bonding", [],
+        []
+    ],
+    ["Bounzer", [],
+        []
+    ],
+    ["Bujin", [],
+        []
+    ],
+    ["Burning Abyss", [],
+        ["Allure of Darkness", "Reckless Greed"]
+    ],
+    ["Buster Blader", [],
+        []
+    ],
+    ["Butterfly", [],
+        []
+    ],
     [
-        "Celtic Guard",
-        [],
+        "Celtic Guard", [],
         ["Reinforcement of the Army", "The Warrior Returning Alive"]
     ],
-    ["Chaos", [], []],
-    ["Charmer", [], []],
-    ["Chemicritter", [], []],
-    ["Chronomaly", [], []],
-    ["Chrysalis", [], []],
-    ["Cipher", [], []],
-    ["Clear Wing", [], []],
-    ["Cloudian", [], []],
-    ["Code Talker", ["Cyberse"], []],
-    ["Constellar", [], []],
-    ["Crystal Beast", [], []],
-    ["Crystron", [], []],
-    ["Cubic", [], []],
-    ["CXyz", [], []],
+    ["Chaos", [],
+        []
+    ],
+    ["Charmer", [],
+        []
+    ],
+    ["Chemicritter", [],
+        []
+    ],
+    ["Chronomaly", [],
+        []
+    ],
+    ["Chrysalis", [],
+        []
+    ],
+    ["Cipher", [],
+        []
+    ],
+    ["Clear Wing", [],
+        []
+    ],
+    ["Cloudian", [],
+        []
+    ],
+    ["Code Talker", ["Cyberse"],
+        []
+    ],
+    ["Constellar", [],
+        []
+    ],
+    ["Crystal Beast", [],
+        []
+    ],
+    ["Crystron", [],
+        []
+    ],
+    ["Cubic", [],
+        []
+    ],
+    ["CXyz", [],
+        []
+    ],
     [
-        "Cyber Angel",
-        ["Machine Angel Ritual"],
+        "Cyber Angel", ["Machine Angel Ritual"],
         [
             "Djinn Prognosticator of Rituals",
             "Manju of the Ten Thousand Hands",
             "Senju of the Thousand Hands"
         ]
     ],
-    ["Cyber Dragon", ["Polymerization"], []],
-    ["Cyberdark", [], []],
-    ["D/D", ["D/D/D", "Polymerization"], []],
-    ["D/D/D", ["D/D", "Polymerization", "Dark Contract"], ["Fusion Sage"]],
-    ["Dante", ["Burning Abyss"], []],
-    ["Dark Contract", ["D/D", "D/D/D", "Polymerization"], ["Fusion Sage"]],
-    ["Dark Magician", [], ["Dark Magician Girl"]],
-    ["Dark Magician Girl", [], ["Dark Magician"]],
-    ["Dark Scorpion", [], []],
-    ["Dark World", [], ["Tour Guide From the Underworld", "Armageddon Knight"]],
-    ["Darklord", [], []],
-    ["Deskbot", [], []],
+    ["Cyber Dragon", ["Polymerization"],
+        []
+    ],
+    ["Cyberdark", [],
+        []
+    ],
+    ["D/D", ["D/D/D", "Polymerization"],
+        []
+    ],
+    ["D/D/D", ["D/D", "Polymerization", "Dark Contract"],
+        ["Fusion Sage"]
+    ],
+    ["Dante", ["Burning Abyss"],
+        []
+    ],
+    ["Dark Contract", ["D/D", "D/D/D", "Polymerization"],
+        ["Fusion Sage"]
+    ],
+    ["Dark Magician", [],
+        ["Dark Magician Girl"]
+    ],
+    ["Dark Magician Girl", [],
+        ["Dark Magician"]
+    ],
+    ["Dark Scorpion", [],
+        []
+    ],
+    ["Dark World", [],
+        ["Tour Guide From the Underworld", "Armageddon Knight"]
+    ],
+    ["Darklord", [],
+        []
+    ],
+    ["Deskbot", [],
+        []
+    ],
     [
-        "Destiny HERO",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Destiny HERO", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
-    ["Destruction Sword", [], ["Buster Blader"]],
-    ["Dice", [], []],
+    ["Destruction Sword", [],
+        ["Buster Blader"]
+    ],
+    ["Dice", [],
+        []
+    ],
     [
-        "Dinomist",
-        [],
+        "Dinomist", [],
         [
             "Fossil Excavation",
             "Big Evolution Pill",
@@ -141,15 +260,26 @@ const ARCHETYPES = [
             "Jurassic World"
         ]
     ],
-    ["Dododo", [], ["Gagaga", "Zubaba", "Gogogo"]],
-    ["Dracoslayer", ["True Draco", "Dracoverlord"], ["True King"]],
-    ["Dracoverlord", ["True Draco", "Dracoslayer"], ["True King"]],
-    ["Dragunity", [], []],
-    ["Duston", [], []],
-    ["Earthbound", [], []],
+    ["Dododo", [],
+        ["Gagaga", "Zubaba", "Gogogo"]
+    ],
+    ["Dracoslayer", ["True Draco", "Dracoverlord"],
+        ["True King"]
+    ],
+    ["Dracoverlord", ["True Draco", "Dracoslayer"],
+        ["True King"]
+    ],
+    ["Dragunity", [],
+        []
+    ],
+    ["Duston", [],
+        []
+    ],
+    ["Earthbound", [],
+        []
+    ],
     [
-        "Edge Imp",
-        [
+        "Edge Imp", [
             "Polymerization",
             "Fusion Substitute",
             "Ultra Polymerization",
@@ -158,16 +288,20 @@ const ARCHETYPES = [
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Elemental HERO",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Elemental HERO", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
-    ["Elemental Lord", ["Elementsaber"], []],
-    ["Elementsaber", ["Elemental Lord"], []],
-    ["Empowered Warrior", [], []],
+    ["Elemental Lord", ["Elementsaber"],
+        []
+    ],
+    ["Elementsaber", ["Elemental Lord"],
+        []
+    ],
+    ["Empowered Warrior", [],
+        []
+    ],
     [
-        "Evolsaur",
-        ["Evoltile", "Evolzar"],
+        "Evolsaur", ["Evoltile", "Evolzar"],
         [
             "Fossil Excavation",
             "Big Evolution Pill",
@@ -178,8 +312,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Evoltile",
-        ["Evolzar", "Evolsaur"],
+        "Evoltile", ["Evolzar", "Evolsaur"],
         [
             "Fossil Excavation",
             "Big Evolution Pill",
@@ -190,8 +323,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Evolzar",
-        ["Evoltile", "Evolsaur"],
+        "Evolzar", ["Evoltile", "Evolsaur"],
         [
             "Fossil Excavation",
             "Big Evolution Pill",
@@ -202,8 +334,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Exodia",
-        ["Forbidden One"],
+        "Exodia", ["Forbidden One"],
         [
             "Cup of Ace",
             "Royal Magical Library",
@@ -214,26 +345,42 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Eyes Restrict",
-        ["Relinquished"],
+        "Eyes Restrict", ["Relinquished"],
         [
             "Djinn Prognosticator of Rituals",
             "Manju of the Ten Thousand Hands",
             "Senju of the Thousand Hands"
         ]
     ],
-    ["F.A.", [], []],
-    ["Familiar-Possessed", [], []],
-    ["Fire Fist", ["Fire Formation"], []],
-    ["Fire Formation", ["Fire Fist"], []],
-    ["Fire King", ["Fire King Avatar"], []],
-    ["Fire King Avatar", ["Fire King"], []],
-    ["Fishborg", [], []],
-    ["Flamvell", [], []],
-    ["Flower Cardian", [], []],
+    ["F.A.", [],
+        []
+    ],
+    ["Familiar-Possessed", [],
+        []
+    ],
+    ["Fire Fist", ["Fire Formation"],
+        []
+    ],
+    ["Fire Formation", ["Fire Fist"],
+        []
+    ],
+    ["Fire King", ["Fire King Avatar"],
+        []
+    ],
+    ["Fire King Avatar", ["Fire King"],
+        []
+    ],
+    ["Fishborg", [],
+        []
+    ],
+    ["Flamvell", [],
+        []
+    ],
+    ["Flower Cardian", [],
+        []
+    ],
     [
-        "Fluffal",
-        [
+        "Fluffal", [
             "Polymerization",
             "Fusion Substitute",
             "Ultra Polymerization",
@@ -243,8 +390,7 @@ const ARCHETYPES = [
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Forbidden One",
-        ["Exodia"],
+        "Forbidden One", ["Exodia"],
         [
             "Cup of Ace",
             "Royal Magical Library",
@@ -254,10 +400,11 @@ const ARCHETYPES = [
             "Reckless Greed"
         ]
     ],
-    ["Fortune Lady", [], []],
+    ["Fortune Lady", [],
+        []
+    ],
     [
-        "Frightfur",
-        [
+        "Frightfur", [
             "Polymerization",
             "Fusion Substitute",
             "Ultra Polymerization",
@@ -267,8 +414,7 @@ const ARCHETYPES = [
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Frog",
-        [
+        "Frog", [
             "Polymerization",
             "Fusion Substitute",
             "Ultra Polymerization",
@@ -277,8 +423,7 @@ const ARCHETYPES = [
         ["Scapegoat", "Wetlands", "Star Boy", "Mistar Boy"]
     ],
     [
-        "Gadget",
-        [],
+        "Gadget", [],
         [
             "ABC-Dragon Buster",
             "A-Assault Core",
@@ -289,10 +434,11 @@ const ARCHETYPES = [
             "Iron Call"
         ]
     ],
-    ["Gagaga", [], ["Dododo", "Zubaba"]],
+    ["Gagaga", [],
+        ["Dododo", "Zubaba"]
+    ],
     [
-        "Gaia The Fierce Knight",
-        [
+        "Gaia The Fierce Knight", [
             "Curse of Dragon",
             "Polymerization",
             "Fusion Substitute",
@@ -300,51 +446,93 @@ const ARCHETYPES = [
         ],
         []
     ],
-    ["Galaxy-Eyes", [], []],
-    ["Gandora", [], []],
+    ["Galaxy-Eyes", [],
+        []
+    ],
+    ["Gandora", [],
+        []
+    ],
     [
-        "Geargia",
-        [],
+        "Geargia", [],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call", "7 Completed"]
     ],
     [
-        "Gem-",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Gem-", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
-    ["Genex", [], []],
-    ["Ghostrick", [], []],
-    ["Gimmick Puppet", [], []],
+    ["Genex", [],
+        []
+    ],
+    ["Ghostrick", [],
+        []
+    ],
+    ["Gimmick Puppet", [],
+        []
+    ],
     [
-        "Gishki",
-        [],
+        "Gishki", [],
         [
             "Djinn Prognosticator of Rituals",
             "Manju of the Ten Thousand Hands",
             "Senju of the Thousand Hands"
         ]
     ],
-    ["Gladiator Beast", [], []],
-    ["Gogogo", [], ["Gagaga", "Zubaba", "Dododo"]],
-    ["Gorgonic", [], []],
-    ["Gouki", [], []],
-    ["Gravekeeper's", ["Necrovalley"], []],
-    ["Graydle", [], []],
-    ["of Gusto", [], []],
-    ["Harpie", [], []],
-    ["Hazy", ["Hazy Flame"], []],
-    ["Hazy Flame", ["Hazy"], []],
-    ["Heraldic", ["Heraldic Beast", "Heraldry"], []],
-    ["Heraldic Beast", ["Heraldic", "Heraldry"], []],
-    ["Heraldry", ["Heraldic Beast", "Heraldic"], []],
-    ["Heroic", [], []],
-    ["Hi-Speedroid", ["Speedroid"], []],
-    ["Hieratic", [], []],
-    ["Hole", ["Traptrix"], []],
-    ["Horus the Black Flame Dragon", [], []],
+    ["Gladiator Beast", [],
+        []
+    ],
+    ["Gogogo", [],
+        ["Gagaga", "Zubaba", "Dododo"]
+    ],
+    ["Gorgonic", [],
+        []
+    ],
+    ["Gouki", [],
+        []
+    ],
+    ["Gravekeeper's", ["Necrovalley"],
+        []
+    ],
+    ["Graydle", [],
+        []
+    ],
+    ["of Gusto", [],
+        []
+    ],
+    ["Harpie", [],
+        []
+    ],
+    ["Hazy", ["Hazy Flame"],
+        []
+    ],
+    ["Hazy Flame", ["Hazy"],
+        []
+    ],
+    ["Heraldic", ["Heraldic Beast", "Heraldry"],
+        []
+    ],
+    ["Heraldic Beast", ["Heraldic", "Heraldry"],
+        []
+    ],
+    ["Heraldry", ["Heraldic Beast", "Heraldic"],
+        []
+    ],
+    ["Heroic", [],
+        []
+    ],
+    ["Hi-Speedroid", ["Speedroid"],
+        []
+    ],
+    ["Hieratic", [],
+        []
+    ],
+    ["Hole", ["Traptrix"],
+        []
+    ],
+    ["Horus the Black Flame Dragon", [],
+        []
+    ],
     [
-        "Ice Barrier",
-        [],
+        "Ice Barrier", [],
         [
             "Salvage",
             "Surface",
@@ -354,13 +542,20 @@ const ARCHETYPES = [
             "Torrential Rebirth"
         ]
     ],
-    ["Igknight", [], []],
-    ["Infernity", [], []],
-    ["Infernoid", [], []],
-    ["Infestation", ["Evilswarm", "Steelswarm"], []],
+    ["Igknight", [],
+        []
+    ],
+    ["Infernity", [],
+        []
+    ],
+    ["Infernoid", [],
+        []
+    ],
+    ["Infestation", ["Evilswarm", "Steelswarm"],
+        []
+    ],
     [
-        "Invoked",
-        [
+        "Invoked", [
             "Aleister the Invoker",
             "Aleister the Meltdown Invoker",
             "Magical Meltdown",
@@ -369,8 +564,7 @@ const ARCHETYPES = [
         []
     ],
     [
-        "Inzektor",
-        [],
+        "Inzektor", [],
         [
             "Cocoon of Ultra Evolution",
             "Parasite Paranoid",
@@ -378,17 +572,21 @@ const ARCHETYPES = [
             "Worm Bait"
         ]
     ],
-    ["Iron Chain", [], []],
-    ["Jester", [], []],
+    ["Iron Chain", [],
+        []
+    ],
+    ["Jester", [],
+        []
+    ],
     [
-        "Jinzo",
-        [],
+        "Jinzo", [],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call", "7 Completed"]
     ],
-    ["Junk", [], []],
+    ["Junk", [],
+        []
+    ],
     [
-        "Jurrac",
-        [],
+        "Jurrac", [],
         [
             "Fossil Excavation",
             "Big Evolution Pill",
@@ -398,12 +596,17 @@ const ARCHETYPES = [
             "Jurassic World"
         ]
     ],
-    ["Kaiju", [], ["Owner's Seal"]],
-    ["Karakuri", [], []],
-    ["Koa'ki Meiru", [], []],
+    ["Kaiju", [],
+        ["Owner's Seal"]
+    ],
+    ["Karakuri", [],
+        []
+    ],
+    ["Koa'ki Meiru", [],
+        []
+    ],
     [
-        "Koala",
-        [
+        "Koala", [
             "Des Kangaroo",
             "Tree Otter",
             "Polymerization",
@@ -419,15 +622,15 @@ const ARCHETYPES = [
             "Wild Nature's Release"
         ]
     ],
-    ["Kozmo", [], ["Allure of Darkness ", "Card of Demise"]],
+    ["Kozmo", [],
+        ["Allure of Darkness ", "Card of Demise"]
+    ],
     [
-        "Krawler",
-        [],
+        "Krawler", [],
         ["Scapegoat", "Book of Moon", "Verdant Sanctuary", "Worm Bait"]
     ],
     [
-        "Kuriboh",
-        [],
+        "Kuriboh", [],
         [
             "One for One",
             "Mimiclay",
@@ -435,10 +638,11 @@ const ARCHETYPES = [
             "Wolf in Sheep's Clothing"
         ]
     ],
-    ["Laval", [], []],
+    ["Laval", [],
+        []
+    ],
     [
-        "Legendary Knight",
-        ["The Fang of Critias", "The Claw of Hermos", "The Eye of Timaeus"],
+        "Legendary Knight", ["The Fang of Critias", "The Claw of Hermos", "The Eye of Timaeus"],
         [
             "Crush Card Virus",
             "Doom Virus Dragon",
@@ -447,8 +651,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Lightsworn",
-        [],
+        "Lightsworn", [],
         [
             "Foolish Burial ",
             " Pot of Desires ",
@@ -458,29 +661,26 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Lunalight",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Lunalight", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Lyrilusc",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Lyrilusc", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Machina",
-        [],
+        "Machina", [],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call", "7 Completed"]
     ],
-    ["Madolche", [], []],
+    ["Madolche", [],
+        []
+    ],
     [
-        "Magical Musket",
-        [],
+        "Magical Musket", [],
         ["Ties of the Brethren", "Soul Charge", "Double Summon"]
     ],
     [
-        "Magician",
-        [
+        "Magician", [
             "Pendulum Effect Monster",
             "Pendulum Normal Monster",
             "Pendulum Tuner Effect Monster",
@@ -497,8 +697,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Magician Girl",
-        [],
+        "Magician Girl", [],
         [
             "Dark Magician",
             "Secret Village of the Spellcasters",
@@ -506,24 +705,22 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Magna Warrior",
-        ["Magnet Warrior"],
+        "Magna Warrior", ["Magnet Warrior"],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call"]
     ],
     [
-        "Magnet Warrior",
-        ["Magna Warrior"],
+        "Magnet Warrior", ["Magna Warrior"],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call"]
     ],
     [
-        "Majespecter",
-        [],
+        "Majespecter", [],
         ["Secret Village of the Spellcasters", "Ties of the Brethren"]
     ],
-    ["Majestic", ["Majestic Dragon"], []],
+    ["Majestic", ["Majestic Dragon"],
+        []
+    ],
     [
-        "Malefic",
-        [
+        "Malefic", [
             "Blue-Eyes White Dragon",
             "Cyber End Dragon",
             "Stardust Dragon",
@@ -533,25 +730,25 @@ const ARCHETYPES = [
         []
     ],
     [
-        "Masked HERO",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Masked HERO", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Mecha Phantom Beast",
-        [],
+        "Mecha Phantom Beast", [],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call"]
     ],
-    ["Mekk-Knight", [], ["Grinder Golem", "Trade-In", "Lava Golem"]],
-    ["Meklord", [], ["Limiter Removal", "Machina Armored Unit", "Iron Call"]],
+    ["Mekk-Knight", [],
+        ["Grinder Golem", "Trade-In", "Lava Golem"]
+    ],
+    ["Meklord", [],
+        ["Limiter Removal", "Machina Armored Unit", "Iron Call"]
+    ],
     [
-        "Melodious",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Melodious", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Mermail",
-        [],
+        "Mermail", [],
         [
             "Deep Sea Diva",
             "Moray of Greed",
@@ -562,8 +759,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Metalfoes",
-        [],
+        "Metalfoes", [],
         [
             "Archfiend Eccentrick",
             "Majespecter Unicorn - Kirin",
@@ -571,18 +767,24 @@ const ARCHETYPES = [
             "Painful Decision"
         ]
     ],
-    ["Metaphys", [], []],
-    ["Mist Valley", [], ["Quill Pen of Gulldos", "Swallow's Nest,"]],
-    ["Monarch", [], []],
+    ["Metaphys", [],
+        []
+    ],
+    ["Mist Valley", [],
+        ["Quill Pen of Gulldos", "Swallow's Nest,"]
+    ],
+    ["Monarch", [],
+        []
+    ],
     [
-        "Morphtronic",
-        [],
+        "Morphtronic", [],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call", "Jinzo"]
     ],
-    ["Mythical BeastN", [], []],
+    ["Mythical BeastN", [],
+        []
+    ],
     [
-        "Naturia",
-        [],
+        "Naturia", [],
         [
             "Dandylion",
             "Neo-Spacian Grand Mole",
@@ -591,10 +793,11 @@ const ARCHETYPES = [
             "Miracle Synchro Fusion"
         ]
     ],
-    ["Necrovalley", ["Gravekeeper's"], []],
+    ["Necrovalley", ["Gravekeeper's"],
+        []
+    ],
     [
-        "Nekroz",
-        [],
+        "Nekroz", [],
         [
             "Djinn Prognosticator of Rituals",
             "Manju of the Ten Thousand Hands",
@@ -602,13 +805,11 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Neo-Spacian",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Neo-Spacian", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Nimble",
-        [],
+        "Nimble", [],
         [
             "Salvage",
             "Surface",
@@ -618,12 +819,17 @@ const ARCHETYPES = [
             "Treeborn Frog"
         ]
     ],
-    ["Ninja", ["Ninjitsu Art"], []],
-    ["Ninjitsu Art", ["Ninja"], []],
-    ["Noble Arms", ["Noble Knight"], []],
+    ["Ninja", ["Ninjitsu Art"],
+        []
+    ],
+    ["Ninjitsu Art", ["Ninja"],
+        []
+    ],
+    ["Noble Arms", ["Noble Knight"],
+        []
+    ],
     [
-        "Noble Knight",
-        ["Noble Arms"],
+        "Noble Knight", ["Noble Arms"],
         [
             "Honest",
             "Summoner Monk",
@@ -631,10 +837,11 @@ const ARCHETYPES = [
             "The Warrior Returning Alive"
         ]
     ],
-    ["Nordic", [], []],
+    ["Nordic", [],
+        []
+    ],
     [
-        "Odd-Eyes",
-        [],
+        "Odd-Eyes", [],
         [
             "Tuning Magician",
             "Pendulum Call",
@@ -642,10 +849,11 @@ const ARCHETYPES = [
             "Draconnection"
         ]
     ],
-    ["of Rituals", ["Ritual Monster", "Ritual Effect Monster"], []],
+    ["of Rituals", ["Ritual Monster", "Ritual Effect Monster"],
+        []
+    ],
     [
-        "Ojama",
-        [
+        "Ojama", [
             "Armed Dragon",
             "Polymerization",
             "Fusion Substitute",
@@ -659,8 +867,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Paleozoic",
-        [],
+        "Paleozoic", [],
         [
             "Dimensional Barrier",
             "Imperial Iron Wall",
@@ -669,8 +876,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Parasite",
-        [],
+        "Parasite", [],
         [
             "Cocoon of Ultra Evolution",
             "Parasite Paranoid",
@@ -679,8 +885,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Parshath",
-        [],
+        "Parshath", [],
         [
             "Honest",
             "Shining Angel",
@@ -692,8 +897,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Pendulum Dragon",
-        ["Odd-Eyes"],
+        "Pendulum Dragon", ["Odd-Eyes"],
         [
             "Supreme King Z-ARC",
             "Wavering Eyes",
@@ -703,12 +907,17 @@ const ARCHETYPES = [
             "Sky Iris"
         ]
     ],
-    ["Penguin", [], ["Umi", "Moray of Greed", "Water Hazard", "Salvage"]],
-    ["Performage", ["Performapal"], []],
-    ["Performapal", ["Performage"], []],
+    ["Penguin", [],
+        ["Umi", "Moray of Greed", "Water Hazard", "Salvage"]
+    ],
+    ["Performage", ["Performapal"],
+        []
+    ],
+    ["Performapal", ["Performage"],
+        []
+    ],
     [
-        "Phantasm Spiral",
-        [],
+        "Phantasm Spiral", [],
         [
             "Megalosmasher X",
             "Rescue Rabbit",
@@ -718,8 +927,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Phantom Knights",
-        [],
+        "Phantom Knights", [],
         [
             "Dark Requiem Xyz Dragon",
             "Dark Rebellion Xyz Dragon",
@@ -727,15 +935,15 @@ const ARCHETYPES = [
             "Reinforcement of the Army"
         ]
     ],
-    ["Photon", [], ["Reinforcement of the Army"]],
+    ["Photon", [],
+        ["Reinforcement of the Army"]
+    ],
     [
-        "Predap",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Predap", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Prediction Princess",
-        [],
+        "Prediction Princess", [],
         [
             "Djinn Prognosticator of Rituals",
             "Manju of the Ten Thousand Hands",
@@ -743,21 +951,24 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Priestess",
-        [],
+        "Priestess", [],
         ["Secret Village of the Spellcasters", "Ties of the Brethren"]
     ],
-    ["Prophecy", [], ["Secret Village of the Spellcasters"]],
+    ["Prophecy", [],
+        ["Secret Village of the Spellcasters"]
+    ],
     [
-        "PSY-Frame",
-        [],
+        "PSY-Frame", [],
         ["Telekinetic Power Well", "Psychic Feel Zone", "Lose 1 Turn"]
     ],
-    ["Qli", [], []],
-    ["Raidraptor", [], []],
+    ["Qli", [],
+        []
+    ],
+    ["Raidraptor", [],
+        []
+    ],
     [
-        "Red-Eyes",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Red-Eyes", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         [
             "Beastking of the Swamps",
             "King of the Swamp",
@@ -767,19 +978,18 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Reptilianne",
-        [],
+        "Reptilianne", [],
         ["Molting Escape", "Viper's Rebirth", "Attack Pheromones"]
     ],
-    ["Resonator", [], []],
+    ["Resonator", [],
+        []
+    ],
     [
-        "Ritual Beast",
-        ["Spiritual Beast"],
+        "Ritual Beast", ["Spiritual Beast"],
         ["Emergency Teleport", "Book of Moon"]
     ],
     [
-        "Roid",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Roid", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         [
             "Beastking of the Swamps",
             "King of the Swamp",
@@ -788,25 +998,23 @@ const ARCHETYPES = [
             "Limiter Removal"
         ]
     ],
-    ["Rokket", [], ["Firewall Dragon", "Evenly Matched", "Scapegoat"]],
+    ["Rokket", [],
+        ["Firewall Dragon", "Evenly Matched", "Scapegoat"]
+    ],
     [
-        "Rose",
-        [],
+        "Rose", [],
         ["Dandylion", "Neo-Spacian Grand Mole", "Glow-Up Bulb", "Spore"]
     ],
     [
-        "Secret Six Samurai",
-        ["Six Samurai", "Shien"],
+        "Secret Six Samurai", ["Six Samurai", "Shien"],
         ["Reinforcement of the Army", "The Warrior Returning Alive"]
     ],
     [
-        "Shaddoll",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Shaddoll", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         ["Beastking of the Swamps", "King of the Swamp", "Fusion Sage"]
     ],
     [
-        "Shark",
-        [],
+        "Shark", [],
         [
             "A Legendary Ocean",
             "Moray of Greed",
@@ -816,8 +1024,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Shiranui",
-        [],
+        "Shiranui", [],
         [
             "Zombie World",
             "Gold Sarcophagus",
@@ -828,8 +1035,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Silent Magician",
-        [],
+        "Silent Magician", [],
         [
             "Interdimensional Matter Transporter",
             "Sphere Kuriboh ",
@@ -839,8 +1045,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Silent Swordsman",
-        [],
+        "Silent Swordsman", [],
         [
             "Command Knight",
             "Marauding Captain",
@@ -850,24 +1055,22 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Six Samurai",
-        ["Secret Six Samurai", "Shien"],
+        "Six Samurai", ["Secret Six Samurai", "Shien"],
         ["Reinforcement of the Army", "The Warrior Returning Alive"]
     ],
     [
-        "Skyfang Brigade",
-        [],
+        "Skyfang Brigade", [],
         ["Reinforcement of the Army", "Back to the Front", "Soul Charge"]
     ],
     [
-        "Slime",
-        ["Revival Jam", "Jam Defender", "Jam Breeding Machine", "Wetlands"],
+        "Slime", ["Revival Jam", "Jam Defender", "Jam Breeding Machine", "Wetlands"],
         []
     ],
-    ["Speedroid", [], ["Limiter Removal", "Machina Armored Unit", "Iron Call"]],
+    ["Speedroid", [],
+        ["Limiter Removal", "Machina Armored Unit", "Iron Call"]
+    ],
     [
-        "Sphinx",
-        [],
+        "Sphinx", [],
         [
             "Triamid Pulse",
             "Triamid Fortress",
@@ -876,15 +1079,15 @@ const ARCHETYPES = [
             "Triamid Hunter"
         ]
     ],
-    ["Spirit Message", ["Destiny Board", "Dark Sanctuary"], ["Reckless Greed"]],
+    ["Spirit Message", ["Destiny Board", "Dark Sanctuary"],
+        ["Reckless Greed"]
+    ],
     [
-        "Spiritual Beast",
-        ["Ritual Beast"],
+        "Spiritual Beast", ["Ritual Beast"],
         ["Emergency Teleport", "Book of Moon"]
     ],
     [
-        "SPYRAL",
-        [],
+        "SPYRAL", [],
         [
             "Evenly Matched",
             "Ash Blossom & Joyous Spring",
@@ -893,8 +1096,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Star Seraph",
-        [],
+        "Star Seraph", [],
         [
             "Honest",
             "Shining Angel",
@@ -905,33 +1107,36 @@ const ARCHETYPES = [
             "The Fountain in the Sky"
         ]
     ],
-    ["Steelswarm", [], ["Allure of Darkness,"]],
+    ["Steelswarm", [],
+        ["Allure of Darkness,"]
+    ],
     [
-        "Stellarknight",
-        ["Tellarknight"],
+        "Stellarknight", ["Tellarknight"],
         ["Reinforcement of the Army", "The Warrior Returning Alive"]
     ],
     [
-        "Strikeblade",
-        [],
+        "Strikeblade", [],
         ["Reinforcement of the Army", "The Warrior Returning Alive"]
     ],
-    ["Subterror", [], ["Book of Eclipse", "Burst Rebirth"]],
+    ["Subterror", [],
+        ["Book of Eclipse", "Burst Rebirth"]
+    ],
     [
-        "Super Defense Robot",
-        ["Orbital 7", "Lillybot"],
+        "Super Defense Robot", ["Orbital 7", "Lillybot"],
         ["Limiter Removal", "Machina Armored Unit", "Iron Call"]
     ],
-    ["Super Quant", ["Super Quantal Mech Beast"], []],
-    ["Super Quantal Mech Beast", ["Super Quant"], []],
+    ["Super Quant", ["Super Quantal Mech Beast"],
+        []
+    ],
+    ["Super Quantal Mech Beast", ["Super Quant"],
+        []
+    ],
     [
-        "Superheavy",
-        [],
+        "Superheavy", [],
         ["Vylon Tetra", "Limiter Removal", "Machina Armored Unit", "Iron Call"]
     ],
     [
-        "Supreme King",
-        [],
+        "Supreme King", [],
         [
             "Supreme King Z-ARC",
             "Wavering Eyes",
@@ -942,8 +1147,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Sylvan",
-        [],
+        "Sylvan", [],
         [
             "Wall of Thorns",
             "Seed of Deception",
@@ -953,19 +1157,18 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Symphonic Warrior",
-        [],
+        "Symphonic Warrior", [],
         ["Vylon Tetra", "Limiter Removal", "Machina Armored Unit", "Iron Call"]
     ],
-    ["T.G.", [], []],
+    ["T.G.", [],
+        []
+    ],
     [
-        "Tellarknight",
-        ["Stellarknight"],
+        "Tellarknight", ["Stellarknight"],
         ["Reinforcement of the Army", "The Warrior Returning Alive"]
     ],
     [
-        "The Agent",
-        [],
+        "The Agent", [],
         [
             "Honest",
             "Shining Angel",
@@ -977,8 +1180,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "The Phantom Knights",
-        ["Phantom Knights"],
+        "The Phantom Knights", ["Phantom Knights"],
         [
             "Dark Requiem Xyz Dragon",
             "Dark Rebellion Xyz Dragon",
@@ -987,8 +1189,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "The Weather",
-        [],
+        "The Weather", [],
         [
             "Honest",
             "Shining Angel",
@@ -1000,8 +1201,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Timelord",
-        [],
+        "Timelord", [],
         [
             "Honest",
             "Shining Angel",
@@ -1012,11 +1212,14 @@ const ARCHETYPES = [
             "The Fountain in the Sky"
         ]
     ],
-    ["Tindangle", [], ["Book of Eclipse", "Burst Rebirth", "Book of Moon"]],
-    ["Toon", ["Toon World"], ["Terraforming"]],
+    ["Tindangle", [],
+        ["Book of Eclipse", "Burst Rebirth", "Book of Moon"]
+    ],
+    ["Toon", ["Toon World"],
+        ["Terraforming"]
+    ],
     [
-        "Traptrix",
-        [
+        "Traptrix", [
             "Trap Hole",
             "Time-Space Trap Hole",
             "Void Trap Hole",
@@ -1026,8 +1229,7 @@ const ARCHETYPES = [
         ["Floodgate Trap Hole"]
     ],
     [
-        "Triamid",
-        [],
+        "Triamid", [],
         [
             "Guardian Sphinx",
             "Hieracosphinx",
@@ -1038,8 +1240,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Trickstar",
-        [],
+        "Trickstar", [],
         [
             "Honest",
             "Shining Angel",
@@ -1051,18 +1252,24 @@ const ARCHETYPES = [
             "Terraforming"
         ]
     ],
-    ["Troymare", [], []],
-    ["True Draco", ["Draco"], []],
-    ["U.A.", [], ["Reinforcement of the Army", "The Warrior Returning Alive"]],
+    ["Troymare", [],
+        []
+    ],
+    ["True Draco", ["Draco"],
+        []
+    ],
+    ["U.A.", [],
+        ["Reinforcement of the Army", "The Warrior Returning Alive"]
+    ],
     [
-        "Umbral Horror",
-        [],
+        "Umbral Horror", [],
         ["Armageddon Knight", "Summoner Monk", "Allure of Darkness"]
     ],
-    ["Utopia", [], []],
+    ["Utopia", [],
+        []
+    ],
     [
-        "Vampire",
-        [],
+        "Vampire", [],
         [
             "Book of Life",
             "Zombie Master",
@@ -1072,8 +1279,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Vendread",
-        ["Revendread Origin"],
+        "Vendread", ["Revendread Origin"],
         [
             "Djinn Prognosticator of Rituals",
             "Manju of the Ten Thousand Hands",
@@ -1086,8 +1292,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Venom",
-        [],
+        "Venom", [],
         [
             "Snake Rain",
             "Damage = Reptile",
@@ -1096,8 +1301,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Volcanic",
-        [],
+        "Volcanic", [],
         [
             "Watch Dog",
             "Royal Firestorm Guards",
@@ -1107,8 +1311,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Vylon",
-        [],
+        "Vylon", [],
         [
             "Honest",
             "Shining Angel",
@@ -1121,13 +1324,11 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Watt",
-        [],
+        "Watt", [],
         ["Mahunder", "Brohunder", "Recycling Batteries", "Judgment of Thunder"]
     ],
     [
-        "Wind-Up",
-        [],
+        "Wind-Up", [],
         [
             "Cyber Dragon",
             "T.G. Warwolf",
@@ -1137,8 +1338,7 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Windwitch",
-        ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
+        "Windwitch", ["Polymerization", "Fusion Substitute", "Ultra Polymerization"],
         [
             "Beastking of the Swamps",
             "King of the Swamp",
@@ -1146,12 +1346,17 @@ const ARCHETYPES = [
             "Secret Village of the Spellcasters"
         ]
     ],
-    ["World Chalice", ["World Legacy"], []],
-    ["World Legacy", ["World Chalice"], []],
-    ["X-Saber", [], []],
+    ["World Chalice", ["World Legacy"],
+        []
+    ],
+    ["World Legacy", ["World Chalice"],
+        []
+    ],
+    ["X-Saber", [],
+        []
+    ],
     [
-        "Yang Zing",
-        [],
+        "Yang Zing", [],
         [
             "Celestia",
             "Dracocension",
@@ -1160,17 +1365,21 @@ const ARCHETYPES = [
         ]
     ],
     [
-        "Yosenju",
-        [],
+        "Yosenju", [],
         ["Quill Pen of Gulldos", "Divine Wind of Mist Valley", "Quiet Life"]
     ],
-    ["Yubel", ["Yubel", "Yubel - Terror Incarnate"], []],
-    ["Zefra", [], []],
+    ["Yubel", ["Yubel", "Yubel - Terror Incarnate"],
+        []
+    ],
+    ["Zefra", [],
+        []
+    ],
     [
-        "Zoodiac",
-        [],
+        "Zoodiac", [],
         ["Fire Formation - Tenki", "Scapegoat", "Mistake", "Pot of Desires"]
     ]
 ];
 
-export { ARCHETYPES };
+export {
+    ARCHETYPES
+};

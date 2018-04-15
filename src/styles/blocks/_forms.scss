@@ -1,9 +1,8 @@
 @import "../mixins/screen";
-
 .app-forms {
     display: flex;
     flex-direction: column;
-    > .form-group {
+    >.form-group {
         display: flex;
         flex-direction: column;
         input,
@@ -16,7 +15,7 @@
         padding: 3px;
     }
     @include screen(min, md) {
-        > .form-group {
+        >.form-group {
             flex-direction: row;
             align-items: center;
             input,

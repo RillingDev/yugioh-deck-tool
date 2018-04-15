@@ -1,5 +1,4 @@
 @import "../mixins/screen";
-
 .decktool-header {
     text-align: center;
 }
@@ -81,7 +80,7 @@
 .app-builder-intro {
     display: flex;
     margin-bottom: 1rem;
-    > div {
+    >div {
         margin-right: 1rem;
     }
 }

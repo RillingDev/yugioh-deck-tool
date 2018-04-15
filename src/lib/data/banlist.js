@@ -1,5 +1,8 @@
-const BANLISTS = [
-    { name: "None", check: () => true, getVal: () => 3 },
+const BANLISTS = [{
+        name: "None",
+        check: () => true,
+        getVal: () => 3
+    },
     {
         name: "TCG",
         check: card => card.limit[0] > 0,
@@ -14,4 +17,6 @@ const BANLISTS = [
 
 Object.freeze(BANLISTS);
 
-export { BANLISTS };
+export {
+    BANLISTS
+};
