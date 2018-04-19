@@ -1,6 +1,4 @@
-import {
-    arrUniq
-} from "lightdash";
+import { arrUniq } from "lightdash";
 
 const apiLoadPrices = (urls, deckListAll, cardDb, priceDb) =>
     new Promise((resolve, reject) => {

@@ -1,6 +1,4 @@
-import {
-    inflate
-} from "./compress";
+import { inflate } from "./compress";
 
 const apiLoadCards = urls =>
     new Promise((resolve, reject) => {
