@@ -10,9 +10,4 @@ const inflate = val => pako.inflate(val, PAKO_OPTIONS);
 const compress = val => btoa(deflate(val));
 const decompress = val => inflate(atob(val));
 
-export {
-    deflate,
-    inflate,
-    compress,
-    decompress
-};
+export { deflate, inflate, compress, decompress };

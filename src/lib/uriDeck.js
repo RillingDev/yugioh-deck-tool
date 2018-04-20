@@ -1,10 +1,5 @@
-import {
-    compress,
-    decompress
-} from "./compress";
-import {
-    arrCount
-} from "lightdash";
+import { compress, decompress } from "./compress";
+import { arrCount } from "lightdash";
 
 const DELIMITERS = {
     deckPart: "|",
@@ -14,17 +9,17 @@ const DELIMITERS = {
 
 const createOptimizeList = deckList =>
     deckList
-    .map(deckListPart =>
-        Array.from(arrCount(deckListPart))
-        .map(
-            entry =>
-            entry[1] > 1 ?
-            `${DELIMITERS.cardAmount}${entry[1]}${entry[0]}` :
-            entry[0]
+        .map(deckListPart =>
+            Array.from(arrCount(deckListPart))
+                .map(
+                    entry =>
+                        entry[1] > 1
+                            ? `${DELIMITERS.cardAmount}${entry[1]}${entry[0]}`
+                            : entry[0]
+                )
+                .join(DELIMITERS.cardId)
         )
-        .join(DELIMITERS.cardId)
-    )
-    .join(DELIMITERS.deckPart);
+        .join(DELIMITERS.deckPart);
 
 const loadOptimizedList = str =>
     str.split(DELIMITERS.deckPart).map(deckListPart => {
@@ -48,14 +43,11 @@ const loadOptimizedList = str =>
 const uriDeckEncode = deckList => {
     const optimized = createOptimizeList(deckList);
 
-    return optimized !== DELIMITERS.deckPart.repeat(2) ?
-        compress(optimized) :
-        "";
+    return optimized !== DELIMITERS.deckPart.repeat(2)
+        ? compress(optimized)
+        : "";
 };
 
 const uriDeckDecode = deckUri => loadOptimizedList(decompress(deckUri));
 
-export {
-    uriDeckEncode,
-    uriDeckDecode
-};
+export { uriDeckEncode, uriDeckDecode };
