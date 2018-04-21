@@ -30,7 +30,7 @@
     "dependencies": {
         "bootstrap": "^4.1.0",
         "bootstrap-vue": "^2.0.0-rc.8",
-        "lightdash": "^5.0.4",
+        "lightdash": "^5.0.5",
         "pako": "^1.0.6",
         "vue": "^2.5.17-beta.0"
     },
@@ -54,7 +54,7 @@
         "vue-loader": "^14.2.2",
         "vue-template-compiler": "^2.5.17-beta.0",
         "webpack": "^4.6.0",
-        "webpack-cli": "^2.0.14",
+        "webpack-cli": "^2.0.15",
         "webpack-dev-server": "^3.1.3"
     }
 }
