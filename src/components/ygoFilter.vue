@@ -1,19 +1,21 @@
 <template>
     <div>
         <!-- builder-name -->
-        <div class="form-group">
-            <input
-                v-model="filter.name"
-                class="form-control"
-                type="search"
-                title="Search"
-                placeholder="Search"
-                @input="filterCards"
-            >
-        </div>
+        <template v-if="showAdvancedFilters">
+            <div class="form-group">
+                <input
+                    v-model="filter.name"
+                    class="form-control"
+                    type="search"
+                    title="Search"
+                    placeholder="Search"
+                    @input="filterCards"
+                >
+            </div>
+        </template>
 
         <!-- builder-sort -->
-        <template v-if="!hideSort">
+        <template v-if="showAdvancedFilters">
             <div class="form-group form-group-builder">
                 <label>Sort:</label>
                 <select
@@ -32,21 +34,23 @@
         </template>
 
         <!-- builder-type -->
-        <div class="form-group form-group-builder">
-            <label>Type:</label>
-            <select
-                v-model="filter.type.active"
-                class="form-control"
-                title="Active Type"
-                @change="filterCards"
-            >
-                <option
-                    v-for="option in filter.type.options"
-                    :key="option"
-                    :value="option"
-                >{{ option }}</option>
-            </select>
-        </div>
+        <template v-if="showAdvancedFilters">
+            <div class="form-group form-group-builder">
+                <label>Type:</label>
+                <select
+                    v-model="filter.type.active"
+                    class="form-control"
+                    title="Active Type"
+                    @change="filterCards"
+                >
+                    <option
+                        v-for="option in filter.type.options"
+                        :key="option"
+                        :value="option"
+                    >{{ option }}</option>
+                </select>
+            </div>
+        </template>
 
         <div class="form-group">
             <div class="row">
@@ -91,7 +95,7 @@
         </div>
 
         <!-- builder-expanded -->
-        <template v-if="isMonster">
+        <template v-if="isMonster && showAdvancedFilters">
             <div class="form-group">
                 <div class="row">
                     <!-- builder-type -->
@@ -173,7 +177,7 @@
             </template>
         </template>
 
-        <template v-if="isSpell">
+        <template v-if="isSpell && showAdvancedFilters">
             <!-- builder-spelltype -->
             <div class="form-group form-group-builder">
                 <label>Spell Type:</label>
@@ -192,7 +196,7 @@
             </div>
         </template>
 
-        <template v-if="isTrap">
+        <template v-if="isTrap && showAdvancedFilters">
             <!-- builder-traptype -->
             <div class="form-group form-group-builder">
                 <label>Trap Type:</label>
@@ -235,10 +239,10 @@ export default {
             type: Array,
             required: true
         },
-        hideSort: {
+        showAdvancedFilters: {
             type: Boolean,
             required: false,
-            default: () => false
+            default: true
         }
     },
     data: () => {

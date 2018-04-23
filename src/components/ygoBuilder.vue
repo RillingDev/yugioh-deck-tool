@@ -4,6 +4,7 @@
 
         <ygo-filter
             :pairs-arr="pairsArr"
+            :show-advanced-filters="true"
             @change="handleFilterUpdate"
         />
 
