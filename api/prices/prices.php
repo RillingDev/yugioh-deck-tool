@@ -1,13 +1,15 @@
 <?php
-
 $cardUri = $_GET["n"];
 $cardNames = json_decode(base64_decode($cardUri));
 $requests = [];
 $result = [];
 
+// Tell Browser to expect JSON
+header("Content-Type: application/json");
+// And Cache response for a day
+header("Cache-Control: max-age=".(60 * 60 * 24));
 
-
-// Creates a curl object for every name to query
+// Creates a CURL object for every name to query
 foreach ($cardNames as $currentIndex => $cardName) {
     $requests[$currentIndex] = curl_init();
 
