@@ -9,35 +9,36 @@ $result = [];
 
 // Creates a curl object for every name to query
 foreach ($cardNames as $currentIndex => $cardName) {
-    $url = "http://yugiohprices.com/api/get_card_prices/".urlencode($cardName);
     $requests[$currentIndex] = curl_init();
 
-    curl_setopt($requests[$currentIndex], CURLOPT_URL, $url);
+    curl_setopt($requests[$currentIndex], CURLOPT_URL, "http://yugiohprices.com/api/get_card_prices/".urlencode($cardName));
     curl_setopt($requests[$currentIndex], CURLOPT_RETURNTRANSFER, 1);
 }
 
-$mh = curl_multi_init();
+$multiHandle = curl_multi_init();
+
+curl_multi_setopt($multiHandle, CURLMOPT_PIPELINING, 2);
 
 foreach ($requests as $request) {
-    curl_multi_add_handle($mh, $request);
+    curl_multi_add_handle($multiHandle, $request);
 }
 
 $running = null;
 
 do {
-    curl_multi_exec($mh, $running);
+    curl_multi_exec($multiHandle, $running);
 } while ($running);
 
 // Close the handles
 foreach ($requests as $request) {
-    curl_multi_remove_handle($mh, $request);
+    curl_multi_remove_handle($multiHandle, $request);
 }
 
-curl_multi_close($mh);
+curl_multi_close($multiHandle);
 
 
 
-// Transforms output
+// Transform output
 foreach ($requests as $request) {
     $response = json_decode(curl_multi_getcontent($request));
     $data = [0, 0, 0];

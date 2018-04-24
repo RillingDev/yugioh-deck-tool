@@ -2,15 +2,15 @@
     "name": "yugioh-deck-tool",
     "version": "v4.8.0",
     "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
-    "main": "app/index.js",
+    "main": "./dist/app.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
         "build": "cross-env NODE_ENV=development webpack --progress --hide-modules",
         "dist": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-        "lint": "eslint src/**/*.js src/**/*.vue",
-        "fix": "npm-run-all fix:prettier fix:es",
-        "fix:es": "eslint src/**/*.js src/**/*.vue --fix",
-        "fix:prettier": "prettier src/**/*.js src/**/*.vue --write"
+        "lint": "eslint ./src/**/*.{js,vue}",
+        "fix": "npm-run-all fix:es fix:prettier",
+        "fix:es": "eslint ./src/**/*.{js,vue} --fix",
+        "fix:prettier": "prettier ./src/**/*  --write"
     },
     "repository": {
         "type": "git",
