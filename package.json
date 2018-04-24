@@ -1,6 +1,6 @@
 {
     "name": "yugioh-deck-tool",
-    "version": "v4.9.0",
+    "version": "v4.10.0",
     "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
     "main": "./dist/app.js",
     "scripts": {

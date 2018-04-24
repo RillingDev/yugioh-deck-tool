@@ -15,7 +15,7 @@
 
         //Scripts
 
-        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/dist/app.js',[],"v4.9.0",true);
+        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/dist/app.js',[],"v4.10.0",true);
         wp_enqueue_script('decktool-js-app');
     }
 
