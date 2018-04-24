@@ -2,15 +2,15 @@
     "name": "yugioh-deck-tool",
     "version": "v4.9.0",
     "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
-    "main": "app/index.js",
+    "main": "./dist/app.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
         "build": "cross-env NODE_ENV=development webpack --progress --hide-modules",
         "dist": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-        "lint": "eslint src/**/*.js src/**/*.vue",
-        "fix": "npm-run-all fix:prettier fix:es",
-        "fix:es": "eslint src/**/*.js src/**/*.vue --fix",
-        "fix:prettier": "prettier src/**/*.js src/**/*.vue --write"
+        "lint": "eslint ./src/**/*.{js,vue}",
+        "fix": "npm-run-all fix:es fix:prettier",
+        "fix:es": "eslint ./src/**/*.{js,vue} --fix",
+        "fix:prettier": "prettier ./src/**/*  --write"
     },
     "repository": {
         "type": "git",
@@ -30,13 +30,13 @@
     "dependencies": {
         "bootstrap": "^4.1.0",
         "bootstrap-vue": "^2.0.0-rc.8",
-        "lightdash": "^5.0.4",
+        "lightdash": "^5.0.5",
         "pako": "^1.0.6",
         "vue": "^2.5.17-beta.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.0.0-beta.44",
-        "@babel/preset-env": "^7.0.0-beta.44",
+        "@babel/core": "^7.0.0-beta.46",
+        "@babel/preset-env": "^7.0.0-beta.46",
         "babel-loader": "^8.0.0-beta.2",
         "cross-env": "^5.1.4",
         "css-loader": "^0.28.11",
@@ -54,7 +54,7 @@
         "vue-loader": "^14.2.2",
         "vue-template-compiler": "^2.5.17-beta.0",
         "webpack": "^4.6.0",
-        "webpack-cli": "^2.0.14",
+        "webpack-cli": "^2.0.15",
         "webpack-dev-server": "^3.1.3"
     }
 }

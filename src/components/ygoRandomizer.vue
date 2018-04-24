@@ -39,7 +39,15 @@
                 </select>
             </div>
             <template v-if="showCustom">
-                <h3>Ratios:</h3>
+                <h5>Filter:</h5>
+                <div class="form-group">
+                    <ygo-filter
+                        :pairs-arr="cardDb.pairsArrUniq"
+                        :show-advanced-filters="false"
+                        @change="handleFilterUpdate"
+                    />
+                </div>
+                <h5>Ratios:</h5>
                 <div class="form-group d-flex">
                     <div>
                         <label>Monster:</label>
@@ -74,14 +82,6 @@
                             step="0.1"
                         >
                     </div>
-                </div>
-                <h3>Filter:</h3>
-                <div class="form-group">
-                    <ygo-filter
-                        :pairs-arr="cardDb.pairsArrUniq"
-                        :hide-sort="true"
-                        @change="handleFilterUpdate"
-                    />
                 </div>
             </template>
         </b-modal>
@@ -201,3 +201,14 @@ export default {
     }
 };
 </script>
+
+<style lang="scss">
+.form-group-builder {
+    label {
+        padding-right: 0.25rem;
+    }
+    select {
+        min-width: 130px;
+    }
+}
+</style>

@@ -6,7 +6,9 @@ import {
 const mapCurrencyFomatters = () => PRICE_CURRENCIES.map(currency => {
     currency.formatter = new Intl.NumberFormat(currency.locale, {
         style: "currency",
-        currency: currency.id
+        currency: currency.id,
+        minimumFractionDigits: currency.fractionDigits,
+        maximumFractionDigits: currency.fractionDigits
     });
 
     return currency;

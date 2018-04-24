@@ -1,5 +1,6 @@
-const FORMATS = [{
-        name: "None",
+const FORMATS = [
+    {
+        name: "Advanced",
         check: () => true
     },
     {
@@ -10,6 +11,4 @@ const FORMATS = [{
 
 Object.freeze(FORMATS);
 
-export {
-    FORMATS
-};
+export { FORMATS };

@@ -51,8 +51,8 @@ export default {
         },
         link() {
             return this.hasData
-                ? `${urls.buyAPI}${encodeURI(this.cardName.replace(/ /g, "+"))}`
-                : `http://yugioh.wikia.com/wiki/${this.cardId}`;
+                ? urls.dbAPI + encodeURI(this.cardName)
+                : urls.wikiAPI + this.cardId;
         }
     },
     methods: {

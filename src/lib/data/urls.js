@@ -3,19 +3,19 @@ const joinUrl = (...arr) => arr.join("/");
 const URL_YGOPRODECK = "https://ygoprodeck.com";
 const URL_YGOPRODECK_APP = joinUrl(URL_YGOPRODECK, "decktool");
 
-const getUrls = () => {
-    const getRelativeUrl = val =>
-        location.host === "ygoprodeck.com" ?
-        joinUrl(URL_YGOPRODECK_APP, val) :
-        joinUrl(".", val);
+const getRelativeUrl = val =>
+    location.host === "ygoprodeck.com"
+        ? joinUrl(URL_YGOPRODECK_APP, val)
+        : joinUrl(".", val);
 
+const getUrls = () => {
     return {
-        buyAPI: "http://yugiohprices.com/card_price?name=",
+        dbAPI: "https://db.ygoprodeck.com/card/?search=",
+        wikiAPI: "http://yugioh.wikia.com/wiki/",
         imageAPI: joinUrl(URL_YGOPRODECK, "pics"),
-        imageUnknown: getRelativeUrl("assets/unknown.png"),
         nameAPI: getRelativeUrl("api/names/names.json.gz"),
         priceAPI: getRelativeUrl("api/prices/prices.php?n="),
-        shortenerAPI: "https://v.gd/create.php?format=simple&url="
+        imageUnknown: getRelativeUrl("assets/unknown.png")
     };
 };
 
