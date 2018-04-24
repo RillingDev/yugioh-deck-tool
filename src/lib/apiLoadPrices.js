@@ -1,6 +1,4 @@
-import {
-    arrUniq
-} from "lightdash";
+import { arrUniq } from "lightdash";
 
 const apiLoadPrices = (urls, deckListAll, cardDb, priceDb) =>
     new Promise((resolve, reject) => {
@@ -15,8 +13,8 @@ const apiLoadPrices = (urls, deckListAll, cardDb, priceDb) =>
             const query = btoa(JSON.stringify(cardsWithoutDataNames));
 
             fetch(urls.priceAPI + query, {
-                    mode: "same-origin"
-                })
+                mode: "same-origin"
+            })
                 .then(response => response.json())
                 .then(json => {
                     cardsWithoutData.forEach((cardId, index) => {
