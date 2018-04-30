@@ -2,6 +2,7 @@
   "Effect Monster",
   "Effect Tuner Monster",
   "Flip Effect Monster",
+  "Flip Monster",
   "Flip Tuner Effect Monster",
   "Fusion Monster",
   "Gemini Monster",
@@ -11,6 +12,7 @@
   "Pendulum Effect Fusion Monster",
   "Pendulum Effect Monster",
   "Pendulum Flip Effect Monster",
+  "Pendulum Monster",
   "Pendulum Normal Monster",
   "Pendulum Tuner Effect Monster",
   "Ritual Effect Monster",
@@ -22,8 +24,10 @@
   "Synchro Tuner Monster",
   "Toon Monster",
   "Trap Card",
+  "Tuner Monster",
   "Union Effect Monster",
   "Union Tuner Effect Monster",
   "XYZ Monster",
-  "XYZ Pendulum Effect Monster"
+  "XYZ Pendulum Effect Monster",
+  "Xyz Monster"
 ]

@@ -3,20 +3,18 @@
 const fs = require("fs");
 const deflate = require("zlib").deflateSync;
 const input = require("./input.json");
-const { isNil } = require("lightdash");
 
 const inputCards = input[2].data;
 const output = {};
 
-const normalize = val => (isNil(val) ? "" : val);
+const normalize = val => (typeof val === "undefined" || val === null) ? "" : val;
 
 const splitLinkMarkers = val =>
+    val ?
     val
-        ? val
-              .split(",")
-              .map(str => str.trim())
-              .filter(str => str.length > 0)
-        : [];
+    .split(",")
+    .map(str => str.trim())
+    .filter(str => str.length > 0) : [];
 
 const banlistToNumber = val => {
     if (val === "Banned") return 0;
