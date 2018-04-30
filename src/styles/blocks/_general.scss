@@ -36,6 +36,7 @@
     .btn {
         cursor: pointer;
         border: 0;
+        line-height: 24px;
     }
     .btn-primary {
         &:focus {
@@ -80,7 +81,7 @@
 .app-builder-intro {
     display: flex;
     margin-bottom: 1rem;
-    > div {
+    >div {
         margin-right: 1rem;
     }
 }
