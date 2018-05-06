@@ -63,8 +63,10 @@ export default {
 }
 
 .price-mode {
-    padding: 2px 8px;
+    padding: 5px 8px 2px;
+    font-size: 0.9em;
     display: inline-block;
+    text-align: center;
     &-low {
         background-color: $color-pricemode-low;
     }

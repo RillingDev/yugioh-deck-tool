@@ -94,6 +94,10 @@
         <div class="app-section app-builder">
             <h2>Deckbuilder:</h2>
             <div class="app-builder-intro">
+                <ygo-sorter
+                    :deck="deck"
+                    :card-db="cardDb"
+                />
                 <ygo-draw-sim
                     :deck-list-main="deck.main"
                     :card-db="cardDb"
@@ -127,6 +131,7 @@ import copyText from "../lib/copyText";
 
 import ygoBuilder from "../components/ygoBuilder.vue";
 import ygoDeck from "../components/ygoDeck.vue";
+import ygoSorter from "../components/ygoSorter.vue";
 import ygoDrawSim from "../components/ygoDrawSim.vue";
 import ygoRandomizer from "../components/ygoRandomizer.vue";
 
@@ -136,7 +141,7 @@ const urls = getUrls();
 
 export default {
     name: "Index",
-    components: { ygoBuilder, ygoDrawSim, ygoDeck, ygoRandomizer },
+    components: { ygoBuilder, ygoDeck, ygoSorter, ygoDrawSim, ygoRandomizer },
     data: () => {
         return {
             cardDb: new CardDatabase(),

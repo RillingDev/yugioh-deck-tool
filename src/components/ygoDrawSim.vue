@@ -3,16 +3,16 @@
         <button
             :disabled="deckListMain.length === 0"
             class="btn btn-primary btn-sm"
-            title="Open Start Hand Simulation"
+            title="Open Start-Hand Simulation"
             @click="showModal"
-        >Start Hand</button>
+        >Start-Hand</button>
 
         <b-modal
             id="modalDrawSim"
             ref="modalDrawSim"
             size="lg"
             hide-footer
-            title="Start Hand Simulation"
+            title="Start-Hand Simulation"
         >
             <div
                 class="btn-group"
@@ -39,7 +39,7 @@
             </div>
             <button
                 class="btn btn-primary"
-                title="Simulate a new Starting Hand"
+                title="Simulate a new Starting-Hand"
                 @click="draw"
             >
                 Draw

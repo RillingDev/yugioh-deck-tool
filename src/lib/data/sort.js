@@ -1,4 +1,5 @@
-const SORTERS = [{
+const SORTERS = [
+    {
         name: "A-Z",
         fn: (a, b) => a.name.localeCompare(b.name)
     },
@@ -30,14 +31,8 @@ const SORTERS = [{
         name: "Views",
         fn: (a, b) => b.times - a.times
     }
-    /* {
-        name: "Latest",
-        fn: (a, b) => b.date - a.date
-    } */
 ];
 
 Object.freeze(SORTERS);
 
-export {
-    SORTERS
-};
+export { SORTERS };
