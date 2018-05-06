@@ -3,10 +3,7 @@
         [
             "@babel/env",
             {
-                "modules": false,
-                "targets": {
-                    "browsers": ["> 2%", "last 2 versions", "not ie <=12"]
-                }
+                "modules": false
             }
         ]
     ]
