@@ -18,7 +18,7 @@
 
 <script>
 import { isString } from "lightdash";
-import PriceDatabase from "../lib/classes/priceDatabase";
+import PriceDb from "../lib/priceDb/priceDb";
 
 export default {
     props: {
@@ -27,7 +27,7 @@ export default {
             required: true
         },
         priceDb: {
-            type: PriceDatabase,
+            type: PriceDb,
             required: true
         }
     },

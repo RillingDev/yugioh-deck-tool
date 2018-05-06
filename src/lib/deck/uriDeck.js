@@ -1,4 +1,4 @@
-import { compress, decompress } from "./compress";
+import { compress, decompress } from "../compress";
 import { arrCount } from "lightdash";
 
 const DELIMITERS = {

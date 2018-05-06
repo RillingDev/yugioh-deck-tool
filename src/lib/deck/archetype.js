@@ -1,10 +1,10 @@
-import { ARCHETYPES } from "./data/archetypes";
+import { ARCHETYPES } from "../data/archetypes";
 import { arrUniq, randShuffle, arrFlattenDeep } from "lightdash";
 import {
     getDefaultRatios,
     CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
     CHANCE_ADD_OPTIONAL_CARD
-} from "./data/randomizer";
+} from "../data/randomizer";
 
 const getRandomArchetypes = (max = 1) => randShuffle(ARCHETYPES).slice(0, max);
 

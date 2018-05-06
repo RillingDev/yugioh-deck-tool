@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import CardDatabase from "../lib/classes/cardDatabase";
-import Deck from "../lib/classes/deck";
+import CardDb from "../lib/cardDb/cardDb";
+import Deck from "../lib/deck/deck";
 
 export default {
     props: {
@@ -22,10 +22,12 @@ export default {
             required: true
         },
         cardDb: {
-            type: CardDatabase,
+            type: CardDb,
             required: true
         }
     },
-    data: () => {}
+    data: function() {
+        return {};
+    }
 };
 </script>

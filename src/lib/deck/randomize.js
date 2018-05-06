@@ -1,5 +1,5 @@
-import Deck from "./classes/deck";
-import { DECKPARTS } from "./data/deck";
+import Deck from "./deck";
+import { DECKPARTS } from "../data/deck";
 import { randShuffle, randNumber } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;

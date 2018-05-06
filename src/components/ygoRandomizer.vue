@@ -89,9 +89,12 @@
 </template>
 
 <script>
-import CardDatabase from "../lib/classes/cardDatabase";
-import { randomizeDeck } from "../lib/randomize";
-import { archetypePoolFactory, getRandomArchetypes } from "../lib/archetype";
+import CardDb from "../lib/cardDb/cardDb";
+import { randomizeDeck } from "../lib/deck/randomize";
+import {
+    archetypePoolFactory,
+    getRandomArchetypes
+} from "../lib/deck/archetype";
 import {
     CHANCE_ARCHETYPE_1_EXTRA,
     CHANCE_ARCHETYPE_2_EXTRA,
@@ -105,7 +108,7 @@ export default {
     components: { bModal, YgoFilter },
     props: {
         cardDb: {
-            type: CardDatabase,
+            type: CardDb,
             required: true
         }
     },

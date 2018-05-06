@@ -52,8 +52,8 @@
 import bModal from "bootstrap-vue/es/components/modal/modal";
 import ygoCard from "./ygoCard.vue";
 
-import simulateStartingHand from "../lib/simulateStartingHand";
-import CardDatabase from "../lib/classes/cardDatabase";
+import startHand from "../lib/deck/startHand";
+import CardDb from "../lib/cardDb/cardDb";
 
 export default {
     components: {
@@ -66,7 +66,7 @@ export default {
             required: true
         },
         cardDb: {
-            type: CardDatabase,
+            type: CardDb,
             required: true
         }
     },
@@ -86,10 +86,7 @@ export default {
             this.draw();
         },
         draw() {
-            this.drawItems = simulateStartingHand(
-                this.deckListMain,
-                this.drawMode
-            );
+            this.drawItems = startHand(this.deckListMain, this.drawMode);
         }
     }
 };

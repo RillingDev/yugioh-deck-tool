@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import CardDatabase from "../lib/classes/cardDatabase";
-import PriceDatabase from "../lib/classes/priceDatabase";
-import Deck from "../lib/classes/deck";
+import CardDb from "../lib/cardDb/cardDb";
+import PriceDb from "../lib/priceDb/priceDb";
+import Deck from "../lib/deck/deck";
 
 import ygoDeckPart from "./ygoDeckPart.vue";
 import ygoPriceView from "./ygoPriceView.vue";
@@ -47,11 +47,11 @@ export default {
             required: true
         },
         cardDb: {
-            type: CardDatabase,
+            type: CardDb,
             required: true
         },
         priceDb: {
-            type: PriceDatabase,
+            type: PriceDb,
             required: true
         }
     }

@@ -1,23 +1,25 @@
-import {
-    PRICE_MODES,
-    PRICE_CURRENCIES
-} from "../data/price";
+import { PRICE_MODES, PRICE_CURRENCIES } from "../data/price";
 
-const mapCurrencyFomatters = () => PRICE_CURRENCIES.map(currency => {
-    currency.formatter = new Intl.NumberFormat(currency.locale, {
-        style: "currency",
-        currency: currency.id,
-        minimumFractionDigits: currency.fractionDigits,
-        maximumFractionDigits: currency.fractionDigits
+const mapCurrencyFomatters = () =>
+    PRICE_CURRENCIES.map(currency => {
+        currency.formatter = new Intl.NumberFormat(currency.locale, {
+            style: "currency",
+            currency: currency.id,
+            minimumFractionDigits: currency.fractionDigits,
+            maximumFractionDigits: currency.fractionDigits
+        });
+
+        return currency;
     });
-
-    return currency;
-});
 const guessDefaultCurrency = () => {
-    const localeIndex = PRICE_CURRENCIES.findIndex(currency => currency.locale === navigator.language);
+    const localeIndex = PRICE_CURRENCIES.findIndex(
+        currency => currency.locale === navigator.language
+    );
 
-    return localeIndex === -1 ? PRICE_CURRENCIES[0] : PRICE_CURRENCIES[localeIndex];
-}
+    return localeIndex === -1
+        ? PRICE_CURRENCIES[0]
+        : PRICE_CURRENCIES[localeIndex];
+};
 
 const PriceDatabase = class {
     constructor() {

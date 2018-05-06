@@ -1,15 +1,7 @@
-import {
-    arrCount,
-    arrRemoveItem
-} from "lightdash";
-import {
-    uriDeckDecode,
-    uriDeckEncode
-} from "../uriDeck";
-import {
-    DECKPARTS
-} from "../data/deck";
-import sortCards from "../sortCards";
+import { arrCount, arrRemoveItem } from "lightdash";
+import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
+import { DECKPARTS } from "../data/deck";
+import sort from "./sort";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -23,9 +15,9 @@ const fileToList = fileContent => {
 
     return DECKPARTS.map((deckPart, index) =>
         fileParts[index]
-        .split(/\n\r?/g)
-        .map(line => line.trim())
-        .filter(line => line.length > 0)
+            .split(/\n\r?/g)
+            .map(line => line.trim())
+            .filter(line => line.length > 0)
     );
 };
 
@@ -48,11 +40,7 @@ const listToText = (list, cardDb) => {
 };
 
 const Deck = class {
-    constructor(list = [
-        [],
-        [],
-        []
-    ], name = "Unnamed") {
+    constructor(list = [[], [], []], name = "Unnamed") {
         this.name = name;
         this.parts = DECKPARTS;
 
@@ -152,7 +140,7 @@ const Deck = class {
     }
     sort(cardDb) {
         DECKPARTS.forEach(deckPart => {
-            this[deckPart.id] = sortCards(this[deckPart.id], cardDb);
+            this[deckPart.id] = sort(this[deckPart.id], cardDb);
         });
 
         return this;

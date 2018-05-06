@@ -119,12 +119,12 @@
 </template>
 
 <script>
-import CardDatabase from "../lib/classes/cardDatabase";
-import PriceDatabase from "../lib/classes/priceDatabase";
-import Deck from "../lib/classes/deck";
+import CardDb from "../lib/cardDb/cardDb";
+import PriceDb from "../lib/priceDb/priceDb";
+import Deck from "../lib/deck/deck";
 
-import apiLoadCards from "../lib/apiLoadCards";
-import apiLoadPrices from "../lib/apiLoadPrices";
+import apiLoadCards from "../lib/cardDb/apiLoadCards";
+import apiLoadPrices from "../lib/priceDb/apiLoadPrices";
 import getUrls from "../lib/data/urls";
 import saveFile from "../lib/saveFile";
 import copyText from "../lib/copyText";
@@ -144,8 +144,8 @@ export default {
     components: { ygoBuilder, ygoDeck, ygoSorter, ygoDrawSim, ygoRandomizer },
     data: () => {
         return {
-            cardDb: new CardDatabase(),
-            priceDb: new PriceDatabase(),
+            cardDb: new CardDb(),
+            priceDb: new PriceDb(),
             deck: new Deck(),
             ajax: {
                 cardsLoaded: false,
@@ -184,7 +184,7 @@ export default {
 
             apiLoadCards(urls)
                 .then(result => {
-                    this.cardDb = new CardDatabase(result);
+                    this.cardDb = new CardDb(result);
 
                     this.ajax.cardsLoaded = true;
                     this.ajax.currentlyLoading = false;

@@ -230,8 +230,7 @@ import {
     CARD_SPELL_TYPE,
     CARD_TRAP_TYPE
 } from "../lib/data/cards";
-
-import searchCard from "../lib/searchCard";
+import search from "../lib/cardDb/search";
 
 export default {
     props: {
@@ -310,7 +309,7 @@ export default {
     },
     methods: {
         filterCards() {
-            const pairsArrFiltered = searchCard(
+            const pairsArrFiltered = search(
                 this.pairsArr,
                 this.filter,
                 {
