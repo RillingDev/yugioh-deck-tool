@@ -307,6 +307,9 @@ export default {
             return this.filter.type.active === "Trap Card";
         }
     },
+    mounted() {
+        this.filterCards();
+    },
     methods: {
         filterCards() {
             const pairsArrFiltered = search(
@@ -320,6 +323,7 @@ export default {
                 },
                 this.sort.active.fn
             );
+
             this.$emit("change", pairsArrFiltered, this.filter);
         }
     }

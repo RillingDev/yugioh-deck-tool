@@ -73,9 +73,6 @@ export default {
                 .map(pair => [pair[0], pair[1].name]);
         }
     },
-    mounted() {
-        this.pairsArrFiltered = this.pairsArr;
-    },
     methods: {
         clickEvent(e, deckPart, cardId, banlist) {
             this.$emit("deckcardadd", deckPart, cardId, banlist, e);

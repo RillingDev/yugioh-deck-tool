@@ -179,7 +179,6 @@ export default {
             this.$refs.modalRandomizerSettings.show();
         },
         handleFilterUpdate(pairsArrFiltered) {
-            console.log("!", pairsArrFiltered);
             this.pairsArrFiltered = pairsArrFiltered;
         },
         updateMode() {
