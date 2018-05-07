@@ -1,4 +1,7 @@
-const BANLISTS = [{
+import deepFreeze from "../deepFreeze";
+
+const BANLISTS = [
+    {
         name: "None",
         check: () => true,
         getVal: () => 3
@@ -15,8 +18,6 @@ const BANLISTS = [{
     }
 ];
 
-Object.freeze(BANLISTS);
+deepFreeze(BANLISTS);
 
-export {
-    BANLISTS
-};
+export { BANLISTS };

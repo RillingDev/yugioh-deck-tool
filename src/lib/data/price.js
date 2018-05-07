@@ -1,4 +1,5 @@
-const PRICE_MODES = [{
+const PRICE_MODES = [
+    {
         id: "low",
         name: "Low"
     },
@@ -12,11 +13,12 @@ const PRICE_MODES = [{
     }
 ];
 
-const PRICE_CURRENCIES = [{
+const PRICE_CURRENCIES = [
+    {
         name: "US Dollar",
         locale: "en-US",
         id: "USD",
-        val: 1.000,
+        val: 1.0,
         fractionDigits: 2
     },
     {
@@ -77,10 +79,4 @@ const PRICE_CURRENCIES = [{
     }
 ];
 
-Object.freeze(PRICE_MODES);
-Object.freeze(PRICE_CURRENCIES);
-
-export {
-    PRICE_MODES,
-    PRICE_CURRENCIES
-};
+export { PRICE_MODES, PRICE_CURRENCIES };

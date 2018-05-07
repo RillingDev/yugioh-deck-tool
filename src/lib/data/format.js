@@ -1,3 +1,5 @@
+import deepFreeze from "../deepFreeze";
+
 const FORMATS = [
     {
         name: "Advanced",
@@ -9,6 +11,6 @@ const FORMATS = [
     }
 ];
 
-Object.freeze(FORMATS);
+deepFreeze(FORMATS);
 
 export { FORMATS };

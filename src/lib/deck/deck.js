@@ -2,6 +2,7 @@ import { arrCount, arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
+import deepFreeze from "../deepFreeze";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -50,7 +51,7 @@ const Deck = class {
 
         this.all = this.getAll();
 
-        Object.freeze(this.parts);
+        deepFreeze(this.parts);
 
         // eslint-disable-next-line no-console
         console.log("CREATED Deck", this);

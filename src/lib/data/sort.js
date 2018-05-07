@@ -1,3 +1,5 @@
+import deepFreeze from "../deepFreeze";
+
 const SORTERS = [
     {
         name: "A-Z",
@@ -33,6 +35,6 @@ const SORTERS = [
     }
 ];
 
-Object.freeze(SORTERS);
+deepFreeze(SORTERS);
 
 export { SORTERS };

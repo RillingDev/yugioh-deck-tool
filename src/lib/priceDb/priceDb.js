@@ -1,4 +1,5 @@
 import { PRICE_MODES, PRICE_CURRENCIES } from "../data/price";
+import deepFreeze from "../deepFreeze";
 
 const mapCurrencyFomatters = () =>
     PRICE_CURRENCIES.map(currency => {
@@ -28,8 +29,8 @@ const PriceDatabase = class {
         this.activeCurrency = guessDefaultCurrency();
         this.prices = new Map();
 
-        Object.freeze(this.modes);
-        Object.freeze(this.currencies);
+        deepFreeze(this.modes);
+        deepFreeze(this.currencies);
 
         // eslint-disable-next-line no-console
         console.log("LOADED Prices", this);

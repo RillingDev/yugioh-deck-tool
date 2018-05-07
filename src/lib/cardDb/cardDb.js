@@ -1,4 +1,5 @@
 import { mapFromObject } from "lightdash";
+import deepFreeze from "../deepFreeze";
 
 const excludeAlternateArtworks = arr => {
     const names = new Set();
@@ -25,10 +26,10 @@ const CardDatabase = class {
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
          */
-        Object.freeze(this.cards);
-        Object.freeze(this.pairsArr);
-        Object.freeze(this.pairsArrUniq);
-        Object.freeze(this);
+        deepFreeze(this.cards);
+        deepFreeze(this.pairsArr);
+        deepFreeze(this.pairsArrUniq);
+        deepFreeze(this);
 
         // eslint-disable-next-line no-console
         console.log("LOADED Cards", this);

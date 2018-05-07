@@ -1,3 +1,5 @@
+import deepFreeze from "../deepFreeze";
+
 const CARD_TYPE = [
     "Any",
     "Normal Monster",
@@ -139,14 +141,14 @@ const CARD_SPELL_TYPE = [
 
 const CARD_TRAP_TYPE = ["Any", "Normal", "Continuous", "Counter"];
 
-Object.freeze(CARD_TYPE);
-Object.freeze(CARD_TYPE_SORTED);
-Object.freeze(CARD_RACE);
-Object.freeze(CARD_ATTRIBUTE);
-Object.freeze(CARD_LEVEL);
-Object.freeze(CARD_LINKARROWS);
-Object.freeze(CARD_SPELL_TYPE);
-Object.freeze(CARD_TRAP_TYPE);
+deepFreeze(CARD_TYPE);
+deepFreeze(CARD_TYPE_SORTED);
+deepFreeze(CARD_RACE);
+deepFreeze(CARD_ATTRIBUTE);
+deepFreeze(CARD_LEVEL);
+deepFreeze(CARD_LINKARROWS);
+deepFreeze(CARD_SPELL_TYPE);
+deepFreeze(CARD_TRAP_TYPE);
 
 export {
     CARD_TYPE,
