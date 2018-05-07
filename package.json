@@ -1,40 +1,37 @@
 {
     "name": "yugioh-deck-tool",
-    "version": "v4.10.0",
-    "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
+    "version": "v4.11.0",
+    "description":
+        "A tool to view deck prices, share and edit decks, create random decks and much more",
     "main": "./dist/app.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-        "build": "cross-env NODE_ENV=development webpack --progress --hide-modules",
-        "dist": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+        "build":
+            "cross-env NODE_ENV=development webpack --progress --hide-modules",
+        "dist":
+            "cross-env NODE_ENV=production webpack --progress --hide-modules",
         "lint": "npm-run-all lint:es lint:style",
         "lint:es": "eslint ./src/**/*.{js,vue}",
-        "lint:style": "stylelint ./src/**/*.{scss,vue} --cache --cache-location=./.cache/stylelint/",
+        "lint:style":
+            "stylelint ./src/**/*.{scss,vue} --cache --cache-location=./.cache/stylelint/",
         "fix": "npm-run-all fix:es fix:style fix:prettier",
         "fix:es": "eslint ./src/**/*.{js,vue} --fix",
-        "fix:style": "stylelint ./src/**/*.{scss,vue} --cache --cache-location=./.cache/stylelint/ --fix",
+        "fix:style":
+            "stylelint ./src/**/*.{scss,vue} --cache --cache-location=./.cache/stylelint/ --fix",
         "fix:prettier": "prettier ./src/**/*  --write"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
     },
-    "keywords": [
-        "yugioh",
-        "deck",
-        "app"
-    ],
+    "keywords": ["yugioh", "deck", "app"],
     "author": "FelixRilling",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
     },
     "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
-    "browserslist": [
-        "> 1%",
-        "last 5 versions",
-        "not ie <=10"
-    ],
+    "browserslist": ["> 1%", "last 5 versions", "not ie <=10"],
     "dependencies": {
         "bootstrap": "^4.1.1",
         "bootstrap-vue": "^2.0.0-rc.9",
