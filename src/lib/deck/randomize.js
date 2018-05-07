@@ -43,7 +43,7 @@ const getRandomName = cardNameList => {
         .filter(word => !IGNORED_WORDS.includes(word.toLowerCase()));
 
     return randShuffle(words)
-        .slice(0, randNumber(1, 2))
+        .slice(0, randNumber(2, 3))
         .join(" ")
         .trim();
 };
