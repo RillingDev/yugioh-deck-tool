@@ -7,14 +7,16 @@ const input = require("./input.json");
 const inputCards = input[2].data;
 const output = {};
 
-const normalize = val => (typeof val === "undefined" || val === null) ? "" : val;
+const normalize = val =>
+    typeof val === "undefined" || val === null ? "" : val;
 
 const splitLinkMarkers = val =>
-    val ?
     val
-    .split(",")
-    .map(str => str.trim())
-    .filter(str => str.length > 0) : [];
+        ? val
+              .split(",")
+              .map(str => str.trim())
+              .filter(str => str.length > 0)
+        : [];
 
 const banlistToNumber = val => {
     if (val === "Banned") return 0;
@@ -52,18 +54,27 @@ inputCards.forEach(entry => {
     }
 });
 
-fs.writeFileSync(
+fs.writeFile(
     "./out/debug_types.json",
     JSON.stringify(Array.from(types).sort(), null, "  "),
-    "utf8"
+    "utf8",
+    () => "Wrote debug_types"
 );
-fs.writeFileSync(
+fs.writeFile(
     "./out/debug_names.json",
     JSON.stringify(output, null, "  "),
-    "utf8"
+    "utf8",
+    () => "Wrote debug_names"
 );
-fs.writeFileSync(
-    "./out/names.json.gz",
+fs.writeFile(
+    "./out/names.min.json",
+    JSON.stringify(output),
+    "utf8",
+    () => "Wrote names"
+);
+fs.writeFile(
+    "./out/names.min.json.gz",
     deflate(JSON.stringify(output)),
-    "binary"
+    "binary",
+    () => "Wrote names.gz"
 );
