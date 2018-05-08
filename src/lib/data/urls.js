@@ -13,7 +13,7 @@ const getUrls = () => {
         dbAPI: "https://db.ygoprodeck.com/card/?search=",
         wikiAPI: "http://yugioh.wikia.com/wiki/",
         imageAPI: joinUrl(URL_YGOPRODECK, "pics"),
-        nameAPI: getRelativeUrl("api/names/names.json.gz"),
+        nameAPI: getRelativeUrl("api/names/names.min.json"),
         priceAPI: getRelativeUrl("api/prices/prices.php?n="),
         imageUnknown: getRelativeUrl("assets/unknown.png")
     };
