@@ -1,11 +1,13 @@
-const NODE_ENV = process.env.NODE_ENV;
-const PRODUCTION_ENABLED = NODE_ENV === "production";
-const CACHE = "./.cache/";
-
 const webpack = require("webpack");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
+const NODE_ENV = process.env.NODE_ENV;
+const PRODUCTION_ENABLED = NODE_ENV === "production";
+const CACHE = "./.cache/";
+const PUBLIC_PATH = path.resolve(__dirname, "./dist/");
 
 /**
  * Plugins
@@ -14,10 +16,17 @@ const pluginExtractText = new ExtractTextPlugin("app.css");
 const pluginEnv = new webpack.DefinePlugin({
     "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
 });
-const pluginUglify = new UglifyJsPlugin({
+
+/**
+ * Optimizations
+ */
+const optimizationUglify = new UglifyJsPlugin({
     cache: path.join(CACHE, "uglifyjs/"),
+    parallel: true,
     sourceMap: true
 });
+
+const optimizationCssAssets = new OptimizeCSSAssetsPlugin({});
 
 /**
  * Rules
@@ -31,7 +40,6 @@ const ruleVue = {
 };
 const ruleBabel = {
     test: /\.js$/,
-    exclude: /node_modules/,
     use: {
         loader: "babel-loader",
         options: {
@@ -51,15 +59,20 @@ module.exports = {
     entry: "./src/index.js",
     output: {
         filename: "app.js",
-        path: path.resolve(__dirname, "./dist")
+        path: PUBLIC_PATH,
+        publicPath: PUBLIC_PATH
     },
     mode: NODE_ENV,
+    optimization: {
+        minimizer: [optimizationUglify, optimizationCssAssets]
+    },
     plugins: PRODUCTION_ENABLED
-        ? [pluginEnv, pluginUglify, pluginExtractText]
+        ? [pluginEnv, pluginExtractText]
         : [pluginEnv, pluginExtractText],
     module: {
         rules: PRODUCTION_ENABLED
             ? [ruleVue, ruleExtractText, ruleBabel]
             : [ruleVue, ruleExtractText]
-    }
+    },
+    devtool: PRODUCTION_ENABLED ? "" : "cheap-module-source-map"
 };
