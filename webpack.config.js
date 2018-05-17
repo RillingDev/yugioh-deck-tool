@@ -1,27 +1,33 @@
-const webpack = require("webpack");
 const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require("webpack");
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const NODE_ENV = process.env.NODE_ENV;
 const PRODUCTION_ENABLED = NODE_ENV === "production";
-const CACHE = "./.cache/";
+const CACHE_PATH = path.resolve(__dirname, "./.cache/");
 const PUBLIC_PATH = path.resolve(__dirname, "./dist/");
 
 /**
  * Plugins
  */
-const pluginExtractText = new ExtractTextPlugin("app.css");
+const pluginExtractCss = new MiniCssExtractPlugin({
+    filename: "app.css",
+    chunkFilename: "[id].css"
+});
 const pluginEnv = new webpack.DefinePlugin({
     "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
 });
+const pluginVue = new VueLoaderPlugin({});
 
 /**
  * Optimizations
  */
 const optimizationUglify = new UglifyJsPlugin({
-    cache: path.join(CACHE, "uglifyjs/"),
+    cache: path.join(CACHE_PATH, "uglifyjs/"),
     parallel: true,
     sourceMap: true
 });
@@ -34,27 +40,31 @@ const optimizationCssAssets = new OptimizeCSSAssetsPlugin({});
 const ruleVue = {
     test: /\.vue$/,
     loader: "vue-loader",
-    options: {
-        extractCSS: true
-    }
+    options: {}
 };
 const ruleBabel = {
     test: /\.js$/,
     use: {
         loader: "babel-loader",
         options: {
-            cacheDirectory: path.join(CACHE, "babel/")
+            cacheDirectory: path.join(CACHE_PATH, "babel/")
         }
-    }
+    },
+    exclude: file => !/\.vue\.js/.test(file)
 };
-const ruleExtractText = {
-    test: /\.css$/,
-    use: ExtractTextPlugin.extract({
-        fallback: "style-loader",
-        use: "css-loader"
-    })
+const ruleScss = {
+    test: /\.scss$/,
+    use: [
+        "vue-style-loader",
+        MiniCssExtractPlugin.loader,
+        "css-loader",
+        "sass-loader"
+    ]
 };
 
+/**
+ * Config
+ */
 module.exports = {
     entry: "./src/index.js",
     output: {
@@ -64,15 +74,15 @@ module.exports = {
     },
     mode: NODE_ENV,
     optimization: {
-        minimizer: [optimizationUglify, optimizationCssAssets]
+        minimizer: [optimizationCssAssets, optimizationUglify]
     },
     plugins: PRODUCTION_ENABLED
-        ? [pluginEnv, pluginExtractText]
-        : [pluginEnv, pluginExtractText],
+        ? [pluginEnv, pluginVue, pluginExtractCss]
+        : [pluginEnv, pluginVue, pluginExtractCss],
     module: {
         rules: PRODUCTION_ENABLED
-            ? [ruleVue, ruleExtractText, ruleBabel]
-            : [ruleVue, ruleExtractText]
+            ? [ruleVue, ruleScss, ruleBabel]
+            : [ruleVue, ruleScss]
     },
     devtool: PRODUCTION_ENABLED ? "" : "cheap-module-source-map"
 };
