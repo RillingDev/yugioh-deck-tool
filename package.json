@@ -36,15 +36,15 @@
     ],
     "dependencies": {
         "bootstrap": "^4.1.1",
-        "bootstrap-vue": "^2.0.0-rc.10",
-        "lightdash": "^5.0.5",
+        "bootstrap-vue": "^2.0.0-rc.11",
+        "lightdash": "^6.0.2",
         "pako": "^1.0.6",
         "vue": "^2.5.17-beta.0"
     },
     "devDependencies": {
         "@babel/core": "^7.0.0-beta.47",
         "@babel/preset-env": "^7.0.0-beta.47",
-        "babel-loader": "^8.0.0-beta.2",
+        "babel-loader": "^8.0.0-beta.3",
         "cross-env": "^5.1.5",
         "css-loader": "^0.28.11",
         "eslint": "^4.19.1",
@@ -60,7 +60,7 @@
         "stylelint-scss": "^3.1.0",
         "uglify-es": "^3.3.10",
         "uglifyjs-webpack-plugin": "^1.2.5",
-        "vue-loader": "^15.0.11",
+        "vue-loader": "^15.1.0",
         "vue-template-compiler": "^2.5.17-beta.0",
         "webpack": "^4.8.3",
         "webpack-cli": "^2.1.3",
