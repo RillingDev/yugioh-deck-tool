@@ -8,6 +8,7 @@ import {
 
 const arrFlattenDeep = arr => {
     const result = [];
+
     arr.forEach(val => {
         if (isArray(val)) {
             result.push(...arrFlattenDeep(val));
@@ -15,6 +16,7 @@ const arrFlattenDeep = arr => {
             result.push(val);
         }
     });
+
     return result;
 };
 

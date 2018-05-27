@@ -37,7 +37,7 @@
     "dependencies": {
         "bootstrap": "^4.1.1",
         "bootstrap-vue": "^2.0.0-rc.11",
-        "lightdash": "^6.0.2",
+        "lightdash": "^6.2.0",
         "pako": "^1.0.6",
         "vue": "^2.5.17-beta.0"
     },
@@ -62,7 +62,7 @@
         "uglifyjs-webpack-plugin": "^1.2.5",
         "vue-loader": "^15.2.1",
         "vue-template-compiler": "^2.5.17-beta.0",
-        "webpack": "^4.8.3",
+        "webpack": "^4.9.1",
         "webpack-cli": "^2.1.4",
         "webpack-dev-server": "^3.1.4"
     }
