@@ -1,4 +1,4 @@
-import { mapFromObject } from "lightdash";
+import { mapFromObject, arrUniq } from "lightdash";
 import deepFreeze from "../deepFreeze";
 
 const excludeAlternateArtworks = arr => {
@@ -17,11 +17,22 @@ const excludeAlternateArtworks = arr => {
     });
 };
 
+const getSets = pairsArr => {
+    const result = [];
+
+    pairsArr.forEach(pair => {
+        result.push(...pair[1].sets);
+    });
+
+    return arrUniq(result).sort();
+};
+
 const CardDatabase = class {
     constructor(obj = {}) {
         this.cards = mapFromObject(obj);
         this.pairsArr = Array.from(this.cards.entries());
         this.pairsArrUniq = excludeAlternateArtworks(this.pairsArr);
+        this.sets = getSets(this.pairsArr);
 
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
@@ -29,6 +40,7 @@ const CardDatabase = class {
         deepFreeze(this.cards);
         deepFreeze(this.pairsArr);
         deepFreeze(this.pairsArrUniq);
+        deepFreeze(this.sets);
         deepFreeze(this);
 
         // eslint-disable-next-line no-console
