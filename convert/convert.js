@@ -46,6 +46,7 @@ inputCards.forEach(entry => {
                 banlistToNumber(entry.ban_tcg),
                 banlistToNumber(entry.ban_ocg)
             ],
+            sets: ["foo", "bar", "fizz"],
 
             date: new Date(entry.date).getTime(),
             times: entry.times,
