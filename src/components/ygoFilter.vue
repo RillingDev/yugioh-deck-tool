@@ -41,6 +41,7 @@
                     v-model="filter.type.active"
                     :options="filter.type.options"
                     :show-labels="false"
+                    @input="filterCards"
                 />
             </div>
         </template>
@@ -95,6 +96,7 @@
                 :options="filter.sets.options"
                 :multiple="true"
                 :show-labels="false"
+                @input="filterCards"
             />
         </div>
 
@@ -214,6 +216,7 @@
                         v-for="option in filter.traptype.options"
                         :key="option"
                         :value="option"
+                        @change="filterCards"
                     >{{ option }}</option>
                 </select>
             </div>

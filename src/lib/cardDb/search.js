@@ -6,6 +6,7 @@ const optionFilterArr = (val, filterItem) =>
 
 const searchCard = (cardArr, filter, is, sortFn) => {
     const filterNameLower = filter.name.toLowerCase();
+    const sets = filter.sets.active === null ? [] : filter.sets.active;
 
     return (
         cardArr
@@ -15,8 +16,9 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                 const cardNameLower = pairData.name.toLowerCase();
 
                 return (
-                    // Search Name
-                    cardNameLower.includes(filterNameLower) &&
+                    // Search Set
+                    (sets.length === 0 ||
+                        sets.some(set => pairData.sets.includes(set))) &&
                     // Search Format
                     filter.format.active.check(pairData) &&
                     filter.banlist.active.check(pairData) &&
@@ -36,11 +38,14 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                             pairData.linkarrows,
                             filter.linkarrows
                         )) &&
-                    // Search Spell Sub
+                    // Search Spell sub
                     (!is.spell ||
                         optionFilter(pairData.race, filter.spelltype)) &&
-                    // Search Trap Sub
-                    (!is.trap || optionFilter(pairData.race, filter.traptype))
+                    // Search Trap sub
+                    (!is.trap ||
+                        optionFilter(pairData.race, filter.traptype)) &&
+                    // Search name
+                    cardNameLower.includes(filterNameLower)
                 );
             })
             // Apply sorting
