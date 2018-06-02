@@ -377,93 +377,58 @@ export default {
 /**
 * Multiselect
 */
-.multiselect {
-    min-height: 38px;
-    font-size: inherit;
-}
+.decktool {
+    .multiselect__tags {
+        border: 1px solid #ced4da;
+        border-radius: 0;
+    }
+    .multiselect__tag {
+        border-radius: 0;
+        background: $primary;
+    }
+    .multiselect__tag-icon:after {
+        color: $white;
+    }
+    .multiselect__tag-icon:focus,
+    .multiselect__tag-icon:hover {
+        background: lighten($primary, 10%);
+    }
 
-.multiselect__tags {
-    min-height: 38px;
-    display: block;
-    padding: 0.375rem 0.75rem;
-    border: 1px solid #ced4da;
-    border-radius: 0;
-}
-.multiselect__tag {
-    border-radius: 0;
-    color: #fff;
-    background: $primary;
-}
-.multiselect__tag-icon:after {
-    content: "×";
-    color: $white;
-}
-.multiselect__tag-icon:focus,
-.multiselect__tag-icon:hover {
-    background: lighten($primary, 10%);
-}
-.multiselect__current {
-    min-height: 38px;
-    border-radius: 0;
-}
-.multiselect__select {
-    height: 38px;
-    widows: 38px;
-}
-.multiselect__select:before {
-    margin-top: 4px;
-    border-style: solid;
-    border-width: 5px 5px 0 5px;
-    border-color: #999999 transparent transparent transparent;
-    content: "";
-}
-.multiselect__placeholder {
-    color: #adadad;
-    display: inline-block;
-    margin-bottom: 10px;
-    padding-top: 2px;
-}
-.multiselect__element {
-    display: block;
-}
-.multiselect__option {
-    min-height: 38px;
-    line-height: 16px;
-}
-.multiselect__option:after {
-    position: absolute;
-    line-height: 38px;
-}
-.multiselect__option--highlight {
-    background: $primary;
-    color: white;
-}
-.multiselect__option--highlight:after {
-    background: $primary;
-    color: white;
-}
-.multiselect__option--selected {
-    background: #f3f3f3;
-    color: #35495e;
-    font-weight: bold;
-}
-.multiselect__option--selected.multiselect__option--highlight {
-    background: $danger;
-}
-.multiselect__option--selected.multiselect__option--highlight:after {
-    background: $danger;
-}
-.multiselect__option--group-selected.multiselect__option--highlight {
-    background: $danger;
-}
-.multiselect__option--group-selected.multiselect__option--highlight:after {
-    background: $danger;
-}
-.multiselect__input,
-.multiselect__single {
-    line-height: inherit;
-}
-.multiselect__option {
-    min-height: 38px;
+    .multiselect__option--highlight,
+    .multiselect__option--highlight:after {
+        background: $primary;
+    }
+
+    .multiselect__option--selected.multiselect__option--highlight,
+    .multiselect__option--selected.multiselect__option--highlight:after,
+    .multiselect__option--group-selected.multiselect__option--highlight,
+    .multiselect__option--group-selected.multiselect__option--highlight:after {
+        background: $danger;
+    }
+
+    .multiselect,
+    .multiselect__tags,
+    .multiselect__current,
+    .multiselect__option {
+        min-height: 38px;
+    }
+    .multiselect__option:after {
+        line-height: 38px;
+    }
+    .multiselect,
+    .multiselect__input,
+    .multiselect__single {
+        font-size: 1rem;
+    }
+    .multiselect input[type="text"].multiselect__input,
+    .multiselect input[type="text"].multiselect__input:focus {
+        padding: 0 0 0 5px;
+        margin: inherit;
+    }
+    .multiselect__tags,
+    .multiselect__tag-icon:after,
+    .multiselect__option:after {
+        font-size: 0.85em;
+    }
 }
 </style>
