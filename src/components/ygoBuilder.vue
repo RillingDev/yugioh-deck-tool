@@ -4,6 +4,7 @@
 
         <ygo-filter
             :pairs-arr="pairsArr"
+            :sets="sets"
             :show-advanced-filters="true"
             @change="handleFilterUpdate"
         />
@@ -50,6 +51,10 @@ export default {
     components: { YgoFilter },
     props: {
         pairsArr: {
+            type: Array,
+            required: true
+        },
+        sets: {
             type: Array,
             required: true
         },

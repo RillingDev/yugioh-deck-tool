@@ -111,6 +111,7 @@
             <ygo-builder
                 v-if="ajax.cardsLoaded"
                 :pairs-arr="cardDb.pairsArr"
+                :sets="cardDb.sets"
                 :deck-card-can-add="deckCardCanAdd"
                 @deckcardadd="deckCardAdd"
             />

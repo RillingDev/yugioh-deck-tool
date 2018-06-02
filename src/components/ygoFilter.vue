@@ -37,18 +37,11 @@
         <template v-if="showAdvancedFilters">
             <div class="form-group form-group-builder">
                 <label>Type:</label>
-                <select
+                <multiselect
                     v-model="filter.type.active"
-                    class="form-control"
-                    title="Active Type"
-                    @change="filterCards"
-                >
-                    <option
-                        v-for="option in filter.type.options"
-                        :key="option"
-                        :value="option"
-                    >{{ option }}</option>
-                </select>
+                    :options="filter.type.options"
+                    :show-labels="false"
+                />
             </div>
         </template>
 
@@ -92,6 +85,17 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- builder-set -->
+        <div class="form-group form-group-builder">
+            <label>Set:</label>
+            <multiselect
+                v-model="filter.sets.active"
+                :options="filter.sets.options"
+                :multiple="true"
+                :show-labels="false"
+            />
         </div>
 
         <!-- builder-expanded -->
@@ -231,10 +235,16 @@ import {
     CARD_TRAP_TYPE
 } from "../lib/data/cards";
 import search from "../lib/cardDb/search";
+import Multiselect from "vue-multiselect";
 
 export default {
+    components: { Multiselect },
     props: {
         pairsArr: {
+            type: Array,
+            required: true
+        },
+        sets: {
             type: Array,
             required: true
         },
@@ -283,6 +293,10 @@ export default {
                 banlist: {
                     active: BANLISTS[0],
                     options: BANLISTS
+                },
+                sets: {
+                    active: null,
+                    options: ["foo", "bar", "buzz"]
                 }
             },
             sort: {
@@ -330,6 +344,8 @@ export default {
 };
 </script>
 
+<style lang="scss" src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <style lang="scss">
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/mixins";
@@ -348,10 +364,6 @@ export default {
         &:not(:first-child) {
             margin-left: 1rem;
         }
-    }
-    input,
-    select {
-        width: 60%;
     }
 }
 </style>

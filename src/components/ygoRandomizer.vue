@@ -43,6 +43,7 @@
                 <div class="form-group">
                     <ygo-filter
                         :pairs-arr="cardDb.pairsArrUniq"
+                        :sets="cardDb.sets"
                         :show-advanced-filters="false"
                         @change="handleFilterUpdate"
                     />
@@ -206,7 +207,7 @@ export default {
 </script>
 
 <style lang="scss">
-.form-group-builder {
+.randomizer .form-group-builder {
     label {
         padding-right: 0.25rem;
     }
