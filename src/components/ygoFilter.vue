@@ -430,5 +430,8 @@ export default {
     .multiselect__option:after {
         font-size: 0.85em;
     }
+    .multiselect__select {
+        display: none;
+    }
 }
 </style>
