@@ -299,7 +299,7 @@ export default {
                 },
                 sets: {
                     active: null,
-                    options: ["foo", "bar", "buzz"]
+                    options: []
                 }
             },
             sort: {
@@ -325,6 +325,7 @@ export default {
         }
     },
     mounted() {
+        this.filter.sets.options = this.sets;
         this.filterCards();
     },
     methods: {

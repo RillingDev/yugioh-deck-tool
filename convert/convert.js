@@ -10,13 +10,13 @@ const output = {};
 const normalize = val =>
     typeof val === "undefined" || val === null ? "" : val;
 
-const splitLinkMarkers = val =>
-    val
-        ? val
+const normalizeArray = val =>
+    typeof val === "undefined" || val === null
+        ? []
+        : val
               .split(",")
               .map(str => str.trim())
-              .filter(str => str.length > 0)
-        : [];
+              .filter(str => str.length > 0);
 
 const banlistToNumber = val => {
     if (val === "Banned") return 0;
@@ -39,14 +39,14 @@ inputCards.forEach(entry => {
             race: normalize(entry.race),
             attribute: normalize(entry.attribute),
             stats: [entry.atk, entry.def, entry.level],
-            linkmarkers: splitLinkMarkers(entry.linkmarkers),
+            linkmarkers: normalizeArray(entry.linkmarkers),
 
             format: normalize(entry.format),
             limit: [
                 banlistToNumber(entry.ban_tcg),
                 banlistToNumber(entry.ban_ocg)
             ],
-            sets: ["foo", "bar", "fizz"],
+            sets: normalizeArray(entry.setcode),
 
             date: new Date(entry.date).getTime(),
             times: entry.times,

@@ -2,7 +2,6 @@
   "Effect Monster",
   "Effect Tuner Monster",
   "Flip Effect Monster",
-  "Flip Monster",
   "Flip Tuner Effect Monster",
   "Fusion Monster",
   "Gemini Monster",
@@ -28,6 +27,5 @@
   "Union Effect Monster",
   "Union Tuner Effect Monster",
   "XYZ Monster",
-  "XYZ Pendulum Effect Monster",
-  "Xyz Monster"
+  "XYZ Pendulum Effect Monster"
 ]

@@ -22,6 +22,8 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                     // Search Format
                     filter.format.active.check(pairData) &&
                     filter.banlist.active.check(pairData) &&
+                    // Search name
+                    cardNameLower.includes(filterNameLower) &&
                     // Search Type
                     optionFilter(pairData.type, filter.type) &&
                     // Search Monster Sub
@@ -42,10 +44,7 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                     (!is.spell ||
                         optionFilter(pairData.race, filter.spelltype)) &&
                     // Search Trap sub
-                    (!is.trap ||
-                        optionFilter(pairData.race, filter.traptype)) &&
-                    // Search name
-                    cardNameLower.includes(filterNameLower)
+                    (!is.trap || optionFilter(pairData.race, filter.traptype))
                 );
             })
             // Apply sorting
