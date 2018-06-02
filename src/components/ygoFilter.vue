@@ -41,6 +41,7 @@
                     v-model="filter.type.active"
                     :options="filter.type.options"
                     :show-labels="false"
+                    :show-no-results="false"
                     @input="filterCards"
                 />
             </div>
@@ -96,6 +97,8 @@
                 :options="filter.sets.options"
                 :multiple="true"
                 :show-labels="false"
+                :show-no-results="false"
+                placeholder="All Sets"
                 @input="filterCards"
             />
         </div>
@@ -369,5 +372,98 @@ export default {
             margin-left: 1rem;
         }
     }
+}
+
+/**
+* Multiselect
+*/
+.multiselect {
+    min-height: 38px;
+    font-size: inherit;
+}
+
+.multiselect__tags {
+    min-height: 38px;
+    display: block;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0;
+}
+.multiselect__tag {
+    border-radius: 0;
+    color: #fff;
+    background: $primary;
+}
+.multiselect__tag-icon:after {
+    content: "×";
+    color: $white;
+}
+.multiselect__tag-icon:focus,
+.multiselect__tag-icon:hover {
+    background: lighten($primary, 10%);
+}
+.multiselect__current {
+    min-height: 38px;
+    border-radius: 0;
+}
+.multiselect__select {
+    height: 38px;
+    widows: 38px;
+}
+.multiselect__select:before {
+    margin-top: 4px;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #999999 transparent transparent transparent;
+    content: "";
+}
+.multiselect__placeholder {
+    color: #adadad;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding-top: 2px;
+}
+.multiselect__element {
+    display: block;
+}
+.multiselect__option {
+    min-height: 38px;
+    line-height: 16px;
+}
+.multiselect__option:after {
+    position: absolute;
+    line-height: 38px;
+}
+.multiselect__option--highlight {
+    background: $primary;
+    color: white;
+}
+.multiselect__option--highlight:after {
+    background: $primary;
+    color: white;
+}
+.multiselect__option--selected {
+    background: #f3f3f3;
+    color: #35495e;
+    font-weight: bold;
+}
+.multiselect__option--selected.multiselect__option--highlight {
+    background: $danger;
+}
+.multiselect__option--selected.multiselect__option--highlight:after {
+    background: $danger;
+}
+.multiselect__option--group-selected.multiselect__option--highlight {
+    background: $danger;
+}
+.multiselect__option--group-selected.multiselect__option--highlight:after {
+    background: $danger;
+}
+.multiselect__input,
+.multiselect__single {
+    line-height: inherit;
+}
+.multiselect__option {
+    min-height: 38px;
 }
 </style>

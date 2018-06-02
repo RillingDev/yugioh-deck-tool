@@ -10,15 +10,16 @@ $enable-print-styles: false;
 $brown: #b97b51;
 $blue: #9683b8;
 $green: #799a60;
-
 $greenyellow: #b8d46c;
 $yellow: #ffd275;
 $orange: #f1a64a;
+$red: #d26c6c;
 
 $colors: ();
 
 $primary: $brown;
 $dark: desaturate(darken($primary, 5%), 10%);
+$danger: $red;
 
 $theme-colors: ("primary": $primary);
 

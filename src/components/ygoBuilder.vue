@@ -10,35 +10,40 @@
         />
 
         <!-- builder-list -->
-        <ul
-            class="builder-list"
-        >
-            <li
-                v-for="pair in pairsArrFilteredPrepared"
-                :key="pair[0]"
+        <template v-if="pairsArrFilteredPrepared.length">
+            <ul
+                class="builder-list"
             >
-                <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
-                <a
-                    :data-name="pair[1]"
-                    class="builder-card"
+                <li
+                    v-for="pair in pairsArrFilteredPrepared"
+                    :key="pair[0]"
                 >
-                    <span class="builder-card-name">{{ pair[1] }}</span>
-                    <div class="builder-card-action">
-                        <button
-                            v-for="deckPart in deckParts"
-                            :key="deckPart.id"
-                            :class="`builder-add-${deckPart.id}`"
-                            :title="`Add Card to ${deckPart.name} Deck`"
-                            :disabled="!deckCardCanAdd(deckPart, pair[0],banlist)"
-                            class="builder-add btn"
-                            @click="(e) => clickEvent(e, deckPart, pair[0],banlist)"
-                        >
-                            <span class="fas fa-plus"><!----></span>
-                        </button>
-                    </div>
-                </a>
-            </li>
-        </ul>
+                    <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
+                    <a
+                        :data-name="pair[1]"
+                        class="builder-card"
+                    >
+                        <span class="builder-card-name">{{ pair[1] }}</span>
+                        <div class="builder-card-action">
+                            <button
+                                v-for="deckPart in deckParts"
+                                :key="deckPart.id"
+                                :class="`builder-add-${deckPart.id}`"
+                                :title="`Add Card to ${deckPart.name} Deck`"
+                                :disabled="!deckCardCanAdd(deckPart, pair[0],banlist)"
+                                class="builder-add btn"
+                                @click="(e) => clickEvent(e, deckPart, pair[0],banlist)"
+                            >
+                                <span class="fas fa-plus"><!----></span>
+                            </button>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else>
+            <p class="builder-noresults">No Results Found</p>
+        </template>
     </div>
 </template>
 
@@ -159,5 +164,11 @@ export default {
     &-side .fas {
         color: $color-deckpart-side;
     }
+}
+
+.builder-noresults {
+    text-align: center;
+    padding: 0.5rem 0;
+    color: $gray-600;
 }
 </style>
