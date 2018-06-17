@@ -23,10 +23,13 @@
 </template>
 
 <script>
-import getUrls from "../lib/data/urls";
 import { isNil } from "lightdash";
-
-const urls = getUrls();
+import {
+    URL_IMAGE_API,
+    URL_IMAGE_UNKNOWN,
+    URL_DB_API,
+    URL_WIKI_API
+} from "../lib/data/urls";
 
 export default {
     props: {
@@ -46,13 +49,13 @@ export default {
         },
         image() {
             return this.hasData
-                ? `${urls.imageAPI}/${this.cardId}.jpg`
-                : urls.imageUnkown;
+                ? `${URL_IMAGE_API}/${this.cardId}.jpg`
+                : URL_IMAGE_UNKNOWN;
         },
         link() {
             return this.hasData
-                ? urls.dbAPI + encodeURI(this.cardName)
-                : urls.wikiAPI + this.cardId;
+                ? URL_DB_API + encodeURI(this.cardName)
+                : URL_WIKI_API + this.cardId;
         }
     },
     methods: {

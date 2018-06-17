@@ -126,7 +126,6 @@ import Deck from "../lib/deck/deck";
 
 import apiLoadCards from "../lib/cardDb/apiLoadCards";
 import apiLoadPrices from "../lib/priceDb/apiLoadPrices";
-import getUrls from "../lib/data/urls";
 import saveFile from "../lib/saveFile";
 import copyText from "../lib/copyText";
 
@@ -138,7 +137,6 @@ import ygoRandomizer from "../components/ygoRandomizer.vue";
 
 // eslint-disable-next-line no-console
 const stderr = console.error;
-const urls = getUrls();
 
 export default {
     name: "Index",
@@ -183,7 +181,7 @@ export default {
             this.ajax.cardsLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadCards(urls)
+            apiLoadCards()
                 .then(result => {
                     this.cardDb = new CardDb(result);
 
@@ -196,7 +194,7 @@ export default {
             this.ajax.pricesLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadPrices(urls, this.deck.all, this.cardDb, this.priceDb)
+            apiLoadPrices(this.deck.all, this.cardDb, this.priceDb)
                 .then(() => {
                     this.ajax.pricesLoaded = true;
                     this.ajax.currentlyLoading = false;

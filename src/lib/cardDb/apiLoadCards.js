@@ -1,8 +1,10 @@
+import { URL_NAME_API } from "../data/urls";
+
 /* import { inflate } from "../compress"; */
 
-const apiLoadCards = urls =>
+const apiLoadCards = () =>
     new Promise((resolve, reject) => {
-        fetch(urls.nameAPI, {
+        fetch(URL_NAME_API, {
             mode: "same-origin"
         })
             /*  .then(response => response.arrayBuffer())
