@@ -354,9 +354,9 @@ export default {
 <style lang="scss" src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/mixins";
-@import "node_modules/bootstrap/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 
 @import "../styles/mixins/screen";
 @import "../styles/variables.custom";

@@ -238,18 +238,18 @@ export default {
 </script>
 
 <style lang="scss">
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/mixins";
-@import "node_modules/bootstrap/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 
 @import "../styles/variables.custom";
 @import "../styles/reboot.custom";
 
-@import "node_modules/bootstrap/scss/type";
-@import "node_modules/bootstrap/scss/grid";
-@import "node_modules/bootstrap/scss/forms";
-@import "node_modules/bootstrap/scss/buttons";
-@import "node_modules/bootstrap/scss/utilities";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/utilities";
 
 @import "../styles/blocks/general";
 @import "../styles/blocks/forms";

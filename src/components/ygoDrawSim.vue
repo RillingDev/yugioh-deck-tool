@@ -93,15 +93,15 @@ export default {
 </script>
 
 <style lang="scss">
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/mixins";
-@import "node_modules/bootstrap/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 
 @import "../styles/variables.custom";
 
-@import "node_modules/bootstrap/scss/button-group";
-@import "node_modules/bootstrap/scss/close";
-@import "node_modules/bootstrap/scss/modal";
+@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/modal";
 
 .drawsim-output {
     margin: 1em 0;
