@@ -127,18 +127,34 @@ $spacers: () !default;
 $spacers: map-merge(
     (
         0: 0,
-        1: ($spacer * 0.25),
-        2: ($spacer * 0.5),
+        1: (
+            $spacer * 0.25
+        ),
+        2: (
+            $spacer * 0.5
+        ),
         3: $spacer,
-        4: ($spacer * 1.5),
-        5: ($spacer * 3)
+        4: (
+            $spacer * 1.5
+        ),
+        5: (
+            $spacer * 3
+        )
     ),
     $spacers
 );
 
 // This variable affects the `.h-*` and `.w-*` classes.
 $sizes: () !default;
-$sizes: map-merge((25: 25%, 50: 50%, 75: 75%, 100: 100%), $sizes);
+$sizes: map-merge(
+    (
+        25: 25%,
+        50: 50%,
+        75: 75%,
+        100: 100%
+    ),
+    $sizes
+);
 // stylelint-enable
 
 // Body
@@ -545,7 +561,9 @@ $custom-file-border-radius: $input-border-radius !default;
 $custom-file-box-shadow: $input-box-shadow !default;
 $custom-file-button-color: $custom-file-color !default;
 $custom-file-button-bg: $input-group-addon-bg !default;
-$custom-file-text: (en: "Browse") !default;
+$custom-file-text: (
+    en: "Browse"
+) !default;
 
 // Form validation
 $form-feedback-margin-top: $form-text-margin-top !default;

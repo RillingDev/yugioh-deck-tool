@@ -21,7 +21,9 @@ $primary: $brown;
 $dark: desaturate(darken($primary, 5%), 10%);
 $danger: $red;
 
-$theme-colors: ("primary": $primary);
+$theme-colors: (
+    "primary": $primary
+);
 
 $color-deckpart-main: $dark;
 $color-deckpart-extra: $blue;

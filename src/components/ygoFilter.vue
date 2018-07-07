@@ -351,7 +351,8 @@ export default {
 };
 </script>
 
-<style lang="scss" src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style lang="scss" src="vue-multiselect/dist/vue-multiselect.min.css">
+</style>
 
 <style lang="scss">
 @import "~bootstrap/scss/functions";
