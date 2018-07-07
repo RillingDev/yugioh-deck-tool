@@ -1,4 +1,3 @@
-import { arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
@@ -114,8 +113,18 @@ const Deck = class {
         }
     }
     cardRemove(deckPart, cardId) {
+        let isRemoved = false;
+
         if (this[deckPart.id].includes(cardId)) {
-            this[deckPart.id] = arrRemoveItem(this[deckPart.id], cardId);
+            this[deckPart.id] = this[deckPart.id].filter(currentCardId => {
+                if (isRemoved) return true;
+                if (currentCardId === cardId) {
+                    isRemoved = true;
+                    return false;
+                }
+
+                return true;
+            });
             this.all = this.getAll();
         }
     }
