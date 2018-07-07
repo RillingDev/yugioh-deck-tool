@@ -25,56 +25,56 @@ const PRICE_CURRENCIES = [
         name: "Euro",
         locale: "de-DE",
         id: "EUR",
-        val: 0.817,
+        val: 0.85,
         fractionDigits: 2
     },
     {
         name: "British Pound",
         locale: "en-GB",
         id: "GBP",
-        val: 0.715,
+        val: 0.752,
         fractionDigits: 2
     },
     {
         name: "Canadian Dollar",
         locale: "en-CA",
         id: "CAD",
-        val: 1.283,
+        val: 1.308,
         fractionDigits: 2
     },
     {
         name: "Australian Dollar",
         locale: "en-AU",
         id: "AUD",
-        val: 1.315,
+        val: 1.345,
         fractionDigits: 2
     },
     {
         name: "Mexican Peso",
         locale: "es-MX",
         id: "MXN",
-        val: 18.84,
+        val: 19.11,
         fractionDigits: 1
     },
     {
         name: "Brazilian Real",
         locale: "pt-BR",
         id: "BRL",
-        val: 3.47,
+        val: 3.86,
         fractionDigits: 1
     },
     {
         name: "Thai Baht",
         locale: "th-TH",
         id: "THB",
-        val: 31.4,
+        val: 33.1,
         fractionDigits: 0
     },
     {
         name: "Indonesian Rupiah",
         locale: "id-ID",
         id: "IDR",
-        val: 13881.6,
+        val: 14363.2,
         fractionDigits: 0
     }
 ];
