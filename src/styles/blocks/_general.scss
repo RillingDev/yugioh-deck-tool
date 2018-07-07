@@ -33,6 +33,10 @@
             max-width: 100%;
         }
     }
+    a.btn {
+        /* fix for weird things */
+        background-color: $primary;
+    }
     .btn {
         cursor: pointer;
         border: 0;

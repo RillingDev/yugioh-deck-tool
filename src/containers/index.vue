@@ -37,6 +37,7 @@
                     title="Shareable Link"
                 >
                 <button
+                    :disabled="isDeckEmpty"
                     class="btn btn-primary btn-tiny form-control"
                     title="Copy Sharelink to Clipboard"
                     @click="copyShareLink"
@@ -44,6 +45,7 @@
                     <span class="fas fa-share-square"><!-- icon--></span>
                 </button>
                 <button
+                    :disabled="isDeckEmpty"
                     class="btn btn-primary form-control"
                     title="Copy Decklist to Clipboard"
                     @click="copyShareText"
@@ -63,7 +65,18 @@
                         :value="currency"
                     >{{ currency.name }}</option>
                 </select>
+                <a
+                    :href="buyLink"
+                    :disabled="isDeckEmpty"
+                    :class="{disabled: isDeckEmpty}"
+                    class="btn btn-primary btn-tiny form-control"
+                    title="Open Buy Page"
+                    target="_blank"
+                >
+                    <span class="fas fa-shopping-cart"><!-- icon--></span>
+                </a>
                 <button
+                    :disabled="isDeckEmpty"
                     class="btn btn-primary form-control"
                     title="Load Prices"
                     @click="fetchPrices"
@@ -159,6 +172,12 @@ export default {
             const deckUri = this.deck.toUri();
 
             return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
+        },
+        buyLink() {
+            return this.deck.toBuyLink(this.cardDb);
+        },
+        isDeckEmpty() {
+            return this.deck.all.length === 0;
         }
     },
     mounted() {

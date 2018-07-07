@@ -1,8 +1,9 @@
-import { arrCount, arrRemoveItem } from "lightdash";
+import { arrRemoveItem } from "lightdash";
 import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
 import deepFreeze from "../deepFreeze";
+import { getShareText, getBuyLink } from "./toText";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -20,24 +21,6 @@ const fileToList = fileContent => {
             .map(line => line.trim())
             .filter(line => line.length > 0)
     );
-};
-
-const listToText = (list, cardDb) => {
-    const result = [];
-
-    DECKPARTS.forEach((deckPart, index) => {
-        const deckPartCards = list[index];
-
-        if (deckPartCards.length > 0) {
-            const deckPartCardsCounted = Array.from(
-                arrCount(deckPartCards).entries()
-            ).map(entry => `${cardDb.getName(entry[0])} x${entry[1]}`);
-
-            result.push(`${deckPart.name}:`, ...deckPartCardsCounted, "");
-        }
-    });
-
-    return result.join("\n").trim();
 };
 
 const Deck = class {
@@ -83,9 +66,9 @@ const Deck = class {
                 mode: "same-origin"
             }).then(res => {
                 if (res.ok) {
-                    res
-                        .text()
-                        .then(text => resolve(new Deck(fileToList(text))));
+                    res.text().then(text =>
+                        resolve(new Deck(fileToList(text)))
+                    );
                 } else {
                     reject(res);
                 }
@@ -107,7 +90,10 @@ const Deck = class {
         });
     }
     toText(cardDb) {
-        return listToText(this.getList(), cardDb);
+        return getShareText(this.getList(), cardDb);
+    }
+    toBuyLink(cardDb) {
+        return getBuyLink(this.all, cardDb);
     }
     cardCanAdd(deckPart, cardId, cardDb, banlist) {
         const card = cardDb.get(cardId);

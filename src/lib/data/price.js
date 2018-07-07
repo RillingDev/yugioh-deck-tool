@@ -23,7 +23,7 @@ const PRICE_CURRENCIES = [
     },
     {
         name: "Euro",
-        locale: "de",
+        locale: "de-DE",
         id: "EUR",
         val: 0.817,
         fractionDigits: 2
@@ -65,14 +65,14 @@ const PRICE_CURRENCIES = [
     },
     {
         name: "Thai Baht",
-        locale: "th",
+        locale: "th-TH",
         id: "THB",
         val: 31.4,
         fractionDigits: 0
     },
     {
         name: "Indonesian Rupiah",
-        locale: "id",
+        locale: "id-ID",
         id: "IDR",
         val: 13881.6,
         fractionDigits: 0
