@@ -23,7 +23,8 @@ const getShareText = (list, cardDb) => {
 const getBuyLink = (listAll, cardDb) => {
     if (listAll.length > 0) {
         const cardsCounted = Array.from(arrCount(listAll).entries()).map(
-            entry => `${entry[1]} ${cardDb.getName(entry[0])}`
+            entry =>
+                `${entry[1]} ${cardDb.getName(entry[0]).replace("&", "%26")}`
         );
 
         return URL_BUY_API + ["", ...cardsCounted, ""].join("||").trim();
