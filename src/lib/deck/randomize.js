@@ -74,10 +74,12 @@ const randomizeDeck = (cardDb, getPools) => {
                 const isMonster = !isTrap && !isSpell;
 
                 if (
-                    ratios === null ||
-                    (isSpell && seed < ratios.spell) ||
-                    (isTrap && seed < ratios.trap) ||
-                    (isMonster && seed < ratios.monster)
+                    !names.has(card[1].name) &&
+                    !names.has(card[1].treatedAs) &&
+                    (ratios === null ||
+                        (isSpell && seed < ratios.spell) ||
+                        (isTrap && seed < ratios.trap) ||
+                        (isMonster && seed < ratios.monster))
                 ) {
                     const prevLength = subResult[0].length;
 
@@ -87,9 +89,10 @@ const randomizeDeck = (cardDb, getPools) => {
                         DECKPARTS[0].min
                     );
 
-                    const cardsAdded = subResult[0].length - prevLength;
+                    names.add(card[1].name);
+                    if (card[1].treatedAs) names.add(card[1].treatedAs);
 
-                    if (cardsAdded === 3) {
+                    if (subResult[0].length - prevLength === 3) {
                         resultCardNames.push(card[1].name);
                     }
                 }
@@ -114,8 +117,9 @@ const randomizeDeck = (cardDb, getPools) => {
 
         return subResult;
     };
-    const pools = getPools(cardDb.pairsArrUniq);
+    const pools = getPools(cardDb.pairsArr);
     const resultCardNames = [];
+    const names = new Set();
     let result = [[], [], []];
 
     pools.required = randShuffle(pools.required);

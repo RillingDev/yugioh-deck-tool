@@ -43,8 +43,8 @@
         "vue-multiselect": "^2.1.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.0.0-beta.52",
-        "@babel/preset-env": "^7.0.0-beta.52",
+        "@babel/core": "^7.0.0-beta.53",
+        "@babel/preset-env": "^7.0.0-beta.53",
         "babel-loader": "^8.0.0-beta.3",
         "cross-env": "^5.1.6",
         "css-loader": "^0.28.11",
@@ -63,7 +63,7 @@
         "uglifyjs-webpack-plugin": "^1.2.5",
         "vue-loader": "^15.2.4",
         "vue-template-compiler": "^2.5.17-beta.0",
-        "webpack": "^4.15.1",
+        "webpack": "^4.16.0",
         "webpack-cli": "^3.0.8",
         "webpack-dev-server": "^3.1.4"
     }

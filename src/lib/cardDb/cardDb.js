@@ -1,22 +1,6 @@
 import { mapFromObject, arrUniq } from "lightdash";
 import deepFreeze from "../deepFreeze";
 
-const excludeAlternateArtworks = arr => {
-    const names = new Set();
-
-    return arr.filter(entry => {
-        const name = entry[1].name;
-
-        if (!names.has(name)) {
-            names.add(name);
-
-            return true;
-        }
-
-        return false;
-    });
-};
-
 const getSets = pairsArr => {
     const result = [];
 
@@ -31,7 +15,6 @@ const CardDatabase = class {
     constructor(obj = {}) {
         this.cards = mapFromObject(obj);
         this.pairsArr = Array.from(this.cards.entries());
-        this.pairsArrUniq = excludeAlternateArtworks(this.pairsArr);
         this.sets = getSets(this.pairsArr);
 
         /**
@@ -39,7 +22,6 @@ const CardDatabase = class {
          */
         deepFreeze(this.cards);
         deepFreeze(this.pairsArr);
-        deepFreeze(this.pairsArrUniq);
         deepFreeze(this.sets);
         deepFreeze(this);
 
