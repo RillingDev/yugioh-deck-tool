@@ -1,17 +1,11 @@
-"use strict";
-
 const fs = require("fs");
-const deflate = require("zlib").deflateSync;
+const { deflateSync } = require("zlib");
 const input = require("./input.json");
 
-const inputCards = input[2].data;
-const output = {};
-
-const normalize = val =>
-    typeof val === "undefined" || val === null ? "" : val;
+const normalize = val => (val == null ? "" : val);
 
 const normalizeArray = val =>
-    typeof val === "undefined" || val === null
+    val == null
         ? []
         : val
               .split(",")
@@ -25,6 +19,8 @@ const banlistToNumber = val => {
     return 3;
 };
 
+const inputCards = input[2].data;
+const output = {};
 const types = new Set();
 
 inputCards.forEach(entry => {
@@ -50,7 +46,8 @@ inputCards.forEach(entry => {
 
             date: new Date(entry.date).getTime(),
             times: entry.times,
-            rating: [entry.rating_up, entry.rating_down]
+            rating: [entry.rating_up, entry.rating_down],
+            treatedAs: entry.treated_as
         };
     }
 });
@@ -59,23 +56,20 @@ fs.writeFile(
     "./out/debug_types.json",
     JSON.stringify(Array.from(types).sort(), null, "  "),
     "utf8",
-    () => "Wrote debug_types"
+    () => console.log("Wrote debug_types")
 );
 fs.writeFile(
     "./out/debug_names.json",
     JSON.stringify(output, null, "  "),
     "utf8",
-    () => "Wrote debug_names"
+    () => console.log("Wrote debug_names")
 );
-fs.writeFile(
-    "./out/names.min.json",
-    JSON.stringify(output),
-    "utf8",
-    () => "Wrote names"
+fs.writeFile("./out/names.min.json", JSON.stringify(output), "utf8", () =>
+    console.log("Wrote names")
 );
 fs.writeFile(
     "./out/names.min.json.gz",
-    deflate(JSON.stringify(output)),
+    deflateSync(JSON.stringify(output)),
     "binary",
-    () => "Wrote names.gz"
+    () => console.log("Wrote names.gz")
 );
