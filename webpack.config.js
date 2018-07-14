@@ -3,7 +3,6 @@ const webpack = require("webpack");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -31,8 +30,6 @@ const optimizationUglify = new UglifyJsPlugin({
     parallel: true,
     sourceMap: true
 });
-
-const optimizationCssAssets = new OptimizeCSSAssetsPlugin({});
 
 /**
  * Rules
@@ -74,7 +71,7 @@ module.exports = {
     },
     mode: NODE_ENV,
     optimization: {
-        minimizer: [optimizationCssAssets, optimizationUglify]
+        minimizer: [optimizationUglify]
     },
     plugins: PRODUCTION_ENABLED
         ? [pluginEnv, pluginVue, pluginExtractCss]
