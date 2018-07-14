@@ -3,6 +3,7 @@ import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
 import deepFreeze from "../deepFreeze";
 import { getShareText, getBuyLink } from "./toText";
+import CardDatabase from "../cardDb/cardDb";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -96,8 +97,8 @@ const Deck = class {
     }
     cardCanAdd(deckPart, cardId, cardDb, banlist) {
         const card = cardDb.get(cardId);
-        const cardCount = this[deckPart.id].filter(
-            activeSectionCardId => activeSectionCardId === cardId
+        const cardCount = this[deckPart.id].filter(activeSectionCardId =>
+            CardDatabase.isTreatedAsSame(card, cardDb.get(activeSectionCardId))
         ).length;
 
         return (

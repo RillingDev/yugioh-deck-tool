@@ -3,7 +3,7 @@ import { DECKPARTS } from "../data/deck";
 import { randShuffle, randNumber } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
-const IGNORED_WORDS = ["of", "the", "a", "an", "for", "with", "in"];
+const IGNORED_WORDS = ["of", "the", "a", "an", "in"];
 
 const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();

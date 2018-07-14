@@ -24285,6 +24285,14 @@ const CardDatabase = class {
         // eslint-disable-next-line no-console
         console.log("LOADED Cards", this);
     }
+    static isTreatedAsSame(card1, card2) {
+        return (
+            card1.treatedAs === card2.name ||
+            (card1.treatedAs !== null && card1.treatedAs === card2.treatedAs) ||
+            card1.name === card2.treatedAs ||
+            card1.name === card2.name
+        );
+    }
     has(cardId) {
         return this.cards.has(cardId);
     }
@@ -26254,6 +26262,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sort */ "./src/lib/deck/sort.js");
 /* harmony import */ var _deepFreeze__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../deepFreeze */ "./src/lib/deepFreeze.js");
 /* harmony import */ var _toText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./toText */ "./src/lib/deck/toText.js");
+/* harmony import */ var _cardDb_cardDb__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../cardDb/cardDb */ "./src/lib/cardDb/cardDb.js");
+
 
 
 
@@ -26352,8 +26362,8 @@ const Deck = class {
     }
     cardCanAdd(deckPart, cardId, cardDb, banlist) {
         const card = cardDb.get(cardId);
-        const cardCount = this[deckPart.id].filter(
-            activeSectionCardId => activeSectionCardId === cardId
+        const cardCount = this[deckPart.id].filter(activeSectionCardId =>
+            _cardDb_cardDb__WEBPACK_IMPORTED_MODULE_5__["default"].isTreatedAsSame(card, cardDb.get(activeSectionCardId))
         ).length;
 
         return (
@@ -26424,7 +26434,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
-const IGNORED_WORDS = ["of", "the", "a", "an", "for", "with", "in"];
+const IGNORED_WORDS = ["of", "the", "a", "an", "in"];
 
 const getRandomAmount = (preferPlayset = true) => {
     const seed = Math.random();

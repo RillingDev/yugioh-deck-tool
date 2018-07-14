@@ -28,6 +28,14 @@ const CardDatabase = class {
         // eslint-disable-next-line no-console
         console.log("LOADED Cards", this);
     }
+    static isTreatedAsSame(card1, card2) {
+        return (
+            card1.treatedAs === card2.name ||
+            (card1.treatedAs !== null && card1.treatedAs === card2.treatedAs) ||
+            card1.name === card2.treatedAs ||
+            card1.name === card2.name
+        );
+    }
     has(cardId) {
         return this.cards.has(cardId);
     }
