@@ -29,6 +29,12 @@
     .form-group {
         line-height: 1.5;
     }
+    .modal {
+        /*
+        * Welcome to z-index hell
+        */
+        z-index: 1001;
+    }
 }
 
 .deck-card img {
