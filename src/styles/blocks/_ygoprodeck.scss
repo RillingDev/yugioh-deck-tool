@@ -1,5 +1,6 @@
 /**
-* Overrides for ygoprodeck.com overrides
+* Overrides for ygoprodeck.com overrides.
+* Yeah.
 */
 
 .decktool {
@@ -34,6 +35,9 @@
         * Welcome to z-index hell
         */
         z-index: 1001;
+    }
+    .modal-backdrop{
+        z-index: 1000;
     }
 }
 
