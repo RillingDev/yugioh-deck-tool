@@ -716,6 +716,10 @@ button.close {
 .modal-open {
   overflow: hidden;
 }
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -726,10 +730,6 @@ button.close {
   display: none;
   overflow: hidden;
   outline: 0;
-}
-.modal-open .modal {
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 .modal-dialog {
   position: relative;
@@ -753,6 +753,11 @@ button.close {
   display: flex;
   align-items: center;
   min-height: calc(100% - (0.5rem * 2));
+}
+.modal-dialog-centered::before {
+    display: block;
+    height: calc(100vh - (0.5rem * 2));
+    content: "";
 }
 .modal-content {
   position: relative;
@@ -827,6 +832,9 @@ button.close {
 }
 .modal-dialog-centered {
     min-height: calc(100% - (1.75rem * 2));
+}
+.modal-dialog-centered::before {
+      height: calc(100vh - (1.75rem * 2));
 }
 .modal-sm {
     max-width: 300px;
@@ -1988,6 +1996,7 @@ mark,
 .form-control {
   display: block;
   width: 100%;
+  height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
@@ -2021,9 +2030,6 @@ mark,
 .form-control:disabled, .form-control[readonly] {
     background-color: #e9ecef;
     opacity: 1;
-}
-select.form-control:not([size]):not([multiple]) {
-  height: calc(2.25rem + 2px);
 }
 select.form-control:focus::-ms-value {
   color: #495057;
@@ -2070,20 +2076,22 @@ select.form-control:focus::-ms-value {
     padding-left: 0;
 }
 .form-control-sm {
+  height: calc(1.8125rem + 2px);
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
 }
-select.form-control-sm:not([size]):not([multiple]) {
-  height: calc(1.8125rem + 2px);
-}
 .form-control-lg {
+  height: calc(2.875rem + 2px);
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
 }
-select.form-control-lg:not([size]):not([multiple]) {
-  height: calc(2.875rem + 2px);
+select.form-control[size], select.form-control[multiple] {
+  height: auto;
+}
+textarea.form-control {
+  height: auto;
 }
 .form-group {
   margin-bottom: 1rem;
@@ -2144,13 +2152,12 @@ select.form-control-lg:not([size]):not([multiple]) {
   z-index: 5;
   display: none;
   max-width: 100%;
-  padding: .5rem;
+  padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: .875rem;
-  line-height: 1;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: #fff;
-  background-color: rgba(40, 167, 69, 0.8);
-  border-radius: .2rem;
+  background-color: rgba(40, 167, 69, 0.9);
 }
 .was-validated .form-control:valid, .form-control.is-valid, .was-validated
 .custom-select:valid,
@@ -2206,7 +2213,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .was-validated .custom-file-input:valid ~ .custom-file-label, .custom-file-input.is-valid ~ .custom-file-label {
   border-color: #28a745;
 }
-.was-validated .custom-file-input:valid ~ .custom-file-label::before, .custom-file-input.is-valid ~ .custom-file-label::before {
+.was-validated .custom-file-input:valid ~ .custom-file-label::after, .custom-file-input.is-valid ~ .custom-file-label::after {
     border-color: inherit;
 }
 .was-validated .custom-file-input:valid ~ .valid-feedback,
@@ -2230,13 +2237,12 @@ select.form-control-lg:not([size]):not([multiple]) {
   z-index: 5;
   display: none;
   max-width: 100%;
-  padding: .5rem;
+  padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: .875rem;
-  line-height: 1;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: #fff;
-  background-color: rgba(220, 53, 69, 0.8);
-  border-radius: .2rem;
+  background-color: rgba(220, 53, 69, 0.9);
 }
 .was-validated .form-control:invalid, .form-control.is-invalid, .was-validated
 .custom-select:invalid,
@@ -2292,7 +2298,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
   border-color: #dc3545;
 }
-.was-validated .custom-file-input:invalid ~ .custom-file-label::before, .custom-file-input.is-invalid ~ .custom-file-label::before {
+.was-validated .custom-file-input:invalid ~ .custom-file-label::after, .custom-file-input.is-invalid ~ .custom-file-label::after {
     border-color: inherit;
 }
 .was-validated .custom-file-input:invalid ~ .invalid-feedback,
@@ -2389,9 +2395,6 @@ select.form-control-lg:not([size]):not([multiple]) {
 }
 .btn:not(:disabled):not(.disabled) {
     cursor: pointer;
-}
-.btn:not(:disabled):not(.disabled):active, .btn:not(:disabled):not(.disabled).active {
-    background-image: none;
 }
 a.btn.disabled,
 fieldset:disabled a.btn {
