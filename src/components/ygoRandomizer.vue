@@ -42,7 +42,7 @@
                 <h5>Filter:</h5>
                 <div class="form-group">
                     <ygo-filter
-                        :pairs-arr="cardDb.pairsArrUniq"
+                        :pairs-arr="cardDb.pairsArr"
                         :sets="cardDb.sets"
                         :show-advanced-filters="false"
                         @change="handleFilterUpdate"
