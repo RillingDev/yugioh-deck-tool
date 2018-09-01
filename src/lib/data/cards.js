@@ -5,7 +5,7 @@ const CARD_TYPE = [
     "Normal Monster",
     "Normal Tuner Monster",
     "Effect Monster",
-    "Effect Tuner Monster",
+    "Tuner Monster",
     "Flip Effect Monster",
     "Flip Tuner Effect Monster",
     "Union Effect Monster",
@@ -35,7 +35,7 @@ const CARD_TYPE_SORTED = [
     ["Normal Monster", "Normal Tuner Monster", "Pendulum Normal Monster"],
     [
         "Effect Monster",
-        "Effect Tuner Monster",
+        "Tuner Monster",
         "Flip Effect Monster",
         "Flip Tuner Effect Monster",
         "Union Effect Monster",
