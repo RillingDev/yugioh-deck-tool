@@ -32,3 +32,6 @@ bower_components/
 .cache/
 .tmp/
 npm-debug.*
+
+# Safe files
+_key*
