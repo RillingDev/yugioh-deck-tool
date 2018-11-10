@@ -37,7 +37,7 @@ inputCards.forEach(entry => {
             stats: [entry.atk, entry.def, entry.level],
             linkmarkers: normalizeArray(entry.linkmarkers),
 
-            format: normalize(entry.format),
+            format: normalizeArray(entry.format),
             limit: [
                 banlistToNumber(entry.ban_tcg),
                 banlistToNumber(entry.ban_ocg)
@@ -53,7 +53,7 @@ inputCards.forEach(entry => {
 });
 
 fs.writeFile(
-    "./out/debug_types.json",
+    "out/debug_types.json",
     JSON.stringify(Array.from(types).sort(), null, "  "),
     "utf8",
     () => console.log("Wrote debug_types")

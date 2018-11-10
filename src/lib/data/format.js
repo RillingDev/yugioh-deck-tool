@@ -7,7 +7,11 @@ const FORMATS = [
     },
     {
         name: "GOAT",
-        check: card => card.format === "GOAT"
+        check: card => card.format.includes("GOAT")
+    },
+    {
+        name: "Speed Duel",
+        check: card => card.format.includes("Speed Duel")
     }
 ];
 
