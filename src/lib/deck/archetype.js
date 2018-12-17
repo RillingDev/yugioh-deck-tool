@@ -1,5 +1,5 @@
 import { ARCHETYPES } from "../data/archetypes";
-import { arrUniq, randShuffle, isArray } from "lightdash";
+import { arrUniq, randShuffle } from "lightdash";
 import {
     getDefaultRatios,
     CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
@@ -10,7 +10,7 @@ const arrFlattenDeep = arr => {
     const result = [];
 
     arr.forEach(val => {
-        if (isArray(val)) {
+        if (Array.isArray(val)) {
             result.push(...arrFlattenDeep(val));
         } else {
             result.push(val);
