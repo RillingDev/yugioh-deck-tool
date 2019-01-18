@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -25,11 +25,7 @@ const pluginVue = new VueLoaderPlugin({});
 /**
  * Optimizations
  */
-const optimizationUglify = new UglifyJsPlugin({
-    cache: path.join(CACHE_PATH, "uglifyjs/"),
-    parallel: true,
-    sourceMap: true
-});
+const optimizationTerser = new TerserPlugin();
 
 /**
  * Rules
@@ -71,7 +67,7 @@ module.exports = {
     },
     mode: NODE_ENV,
     optimization: {
-        minimizer: [optimizationUglify]
+        minimizer: [optimizationTerser]
     },
     plugins: PRODUCTION_ENABLED
         ? [pluginEnv, pluginVue, pluginExtractCss]
