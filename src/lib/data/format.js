@@ -10,6 +10,10 @@ const FORMATS = [
         check: card => card.format.includes("GOAT")
     },
     {
+        name: "OCG GOAT",
+        check: card => card.format.includes("OCG GOAT")
+    },
+    {
         name: "Speed Duel",
         check: card => card.format.includes("Speed Duel")
     }
