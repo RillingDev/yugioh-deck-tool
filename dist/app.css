@@ -19,17 +19,16 @@ fieldset[disabled] .multiselect {
   width: 16px;
   height: 16px;
   border-radius: 100%;
-  border-color: #41b883 transparent transparent;
-  border-style: solid;
-  border-width: 2px;
+  border: 2px solid transparent;
+  border-top-color: #41b883;
   box-shadow: 0 0 0 1px transparent;
 }
 .multiselect__spinner:before {
-  animation: a 2.4s cubic-bezier(0.41, 0.26, 0.2, 0.62);
+  animation: spinning 2.4s cubic-bezier(0.41, 0.26, 0.2, 0.62);
   animation-iteration-count: infinite;
 }
 .multiselect__spinner:after {
-  animation: a 2.4s cubic-bezier(0.51, 0.09, 0.21, 0.8);
+  animation: spinning 2.4s cubic-bezier(0.51, 0.09, 0.21, 0.8);
   animation-iteration-count: infinite;
 }
 .multiselect__loading-enter-active, .multiselect__loading-leave-active {
@@ -61,10 +60,12 @@ fieldset[disabled] .multiselect {
   outline: none;
 }
 .multiselect--disabled {
+  background: #ededed;
+  pointer-events: none;
   opacity: .6;
 }
 .multiselect--active {
-  z-index: 1;
+  z-index: 50;
 }
 .multiselect--active:not(.multiselect--above) .multiselect__current, .multiselect--active:not(.multiselect--above) .multiselect__input, .multiselect--active:not(.multiselect--above) .multiselect__tags {
   border-bottom-left-radius: 0;
@@ -168,8 +169,7 @@ fieldset[disabled] .multiselect {
 .multiselect__current {
   min-height: 40px;
   overflow: hidden;
-  padding: 8px 12px 0;
-  padding-right: 30px;
+  padding: 8px 30px 0 12px;
   white-space: nowrap;
   border-radius: 5px;
   border: 1px solid #e8e8e8;
@@ -198,9 +198,9 @@ fieldset[disabled] .multiselect {
   top: 65%;
   color: #999;
   margin-top: 4px;
+  border-color: #999 transparent transparent;
   border-style: solid;
   border-width: 5px 5px 0;
-  border-color: #999 transparent transparent;
   content: "";
 }
 .multiselect__placeholder {
@@ -223,7 +223,7 @@ fieldset[disabled] .multiselect {
   border-top: none;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  z-index: 1;
+  z-index: 50;
   -webkit-overflow-scrolling: touch;
 }
 .multiselect__content {
@@ -298,10 +298,6 @@ fieldset[disabled] .multiselect {
   content: attr(data-deselect);
   color: #fff;
 }
-.multiselect--disabled {
-  background: #ededed;
-  pointer-events: none;
-}
 .multiselect--disabled .multiselect__current, .multiselect--disabled .multiselect__select {
   background: #ededed;
   color: #a6a6a6;
@@ -372,7 +368,7 @@ fieldset[disabled] .multiselect {
   right: auto;
   left: 1px;
 }
-@keyframes a {
+@keyframes spinning {
 0% {
     transform: rotate(0);
 }
