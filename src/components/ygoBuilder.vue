@@ -11,19 +11,11 @@
 
         <!-- builder-list -->
         <template v-if="pairsArrFilteredPrepared.length">
-            <ul
-                class="builder-list"
-            >
-                <li
-                    v-for="pair in pairsArrFilteredPrepared"
-                    :key="pair[0]"
-                >
-                    <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
-                    <a
-                        :data-name="pair[1]"
-                        class="builder-card"
-                    >
-                        <span class="builder-card-name">{{ pair[1] }}</span>
+            <ul class="builder-list">
+                <li v-for="pair in pairsArrFilteredPrepared" :key="pair[0]">
+                    <span class="builder-card">
+                        <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
+                        <a class="builder-card-name" :data-name="pair[1]">{{ pair[1] }}</a>
                         <div class="builder-card-action">
                             <button
                                 v-for="deckPart in deckParts"
@@ -34,10 +26,12 @@
                                 class="builder-add btn"
                                 @click="(e) => clickEvent(e, deckPart, pair[0],banlist)"
                             >
-                                <span class="fas fa-plus"><!----></span>
+                                <span class="fas fa-plus">
+                                    <!---->
+                                </span>
                             </button>
                         </div>
-                    </a>
+                    </span>
                 </li>
             </ul>
         </template>
@@ -132,6 +126,7 @@ export default {
 
 .builder-card-name {
     padding: 10px 0;
+    width: 100%;
 }
 
 .builder-card-action {

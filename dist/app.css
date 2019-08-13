@@ -475,6 +475,7 @@ to {
 }
 .builder-card-name {
   padding: 10px 0;
+  width: 100%;
 }
 .builder-card-action {
   width: 80px;
