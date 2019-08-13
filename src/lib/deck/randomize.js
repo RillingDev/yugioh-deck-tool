@@ -55,7 +55,8 @@ const randomizeDeck = (cardDb, getPools) => {
 
     const deckpartCanAdd = (card, deckpartIndex) =>
         deckpartHasSpace(deckpartIndex) &&
-        DECKPARTS[deckpartIndex].check(card[1]);
+        DECKPARTS[deckpartIndex].check(card[1]) &&
+        card[1].type != "Skill Card";
     const fillDeck = (subResult, pool, ratios = null) => {
         let i = 0;
 
