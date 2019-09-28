@@ -1,13 +1,12 @@
 <template>
-    <div
-        class="randomizer btn-group"
-        role="group"
-    >
+    <div class="randomizer btn-group" role="group">
         <button
             class="btn btn-primary btn-sm"
             title="Randomize Deck"
             @click="randomize"
-        >Randomize</button>
+        >
+            Randomize
+        </button>
         <button
             class="btn btn-primary btn-sm"
             title="Configure Randomizer"
@@ -35,7 +34,9 @@
                         v-for="modeCurrent in mode.available"
                         :key="modeCurrent.name"
                         :value="modeCurrent"
-                    >{{ modeCurrent.name }}</option>
+                    >
+                        {{ modeCurrent.name }}
+                    </option>
                 </select>
             </div>
             <template v-if="showCustom">
@@ -59,7 +60,7 @@
                             min="0"
                             max="1"
                             step="0.1"
-                        >
+                        />
                     </div>
                     <div>
                         <label>Spell:</label>
@@ -70,7 +71,7 @@
                             min="0"
                             max="1"
                             step="0.1"
-                        >
+                        />
                     </div>
                     <div>
                         <label>Trap:</label>
@@ -81,7 +82,7 @@
                             min="0"
                             max="1"
                             step="0.1"
-                        >
+                        />
                     </div>
                 </div>
             </template>

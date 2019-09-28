@@ -10,7 +10,7 @@
                     title="Search"
                     placeholder="Search"
                     @input="filterCards"
-                >
+                />
             </div>
         </template>
 
@@ -28,7 +28,9 @@
                         v-for="option in sort.options"
                         :key="option.name"
                         :value="option"
-                    >{{ option.name }}</option>
+                    >
+                        {{ option.name }}
+                    </option>
                 </select>
             </div>
         </template>
@@ -63,7 +65,9 @@
                                 v-for="option in filter.format.options"
                                 :key="option.name"
                                 :value="option"
-                            >{{ option.name }}</option>
+                            >
+                                {{ option.name }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -82,7 +86,9 @@
                                 v-for="option in filter.banlist.options"
                                 :key="option.name"
                                 :value="option"
-                            >{{ option.name }}</option>
+                            >
+                                {{ option.name }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -122,7 +128,9 @@
                                     v-for="option in filter.attribute.options"
                                     :key="option"
                                     :value="option"
-                                >{{ option }}</option>
+                                >
+                                    {{ option }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -142,11 +150,12 @@
                                     v-for="option in filter.race.options"
                                     :key="option"
                                     :value="option"
-                                >{{ option }}</option>
+                                >
+                                    {{ option }}
+                                </option>
                             </select>
                         </div>
                     </div>
-
                 </div>
             </div>
             <!-- builder-level -->
@@ -162,7 +171,9 @@
                         v-for="option in filter.level.options"
                         :key="option"
                         :value="option"
-                    >{{ option }}</option>
+                    >
+                        {{ option }}
+                    </option>
                 </select>
             </div>
 
@@ -180,7 +191,9 @@
                             v-for="option in filter.linkarrows.options"
                             :key="option"
                             :value="option"
-                        >{{ option }}</option>
+                        >
+                            {{ option }}
+                        </option>
                     </select>
                 </div>
             </template>
@@ -200,7 +213,9 @@
                         v-for="option in filter.spelltype.options"
                         :key="option"
                         :value="option"
-                    >{{ option }}</option>
+                    >
+                        {{ option }}
+                    </option>
                 </select>
             </div>
         </template>
@@ -220,7 +235,9 @@
                         :key="option"
                         :value="option"
                         @change="filterCards"
-                    >{{ option }}</option>
+                    >
+                        {{ option }}
+                    </option>
                 </select>
             </div>
         </template>
@@ -351,8 +368,7 @@ export default {
 };
 </script>
 
-<style lang="scss" src="vue-multiselect/dist/vue-multiselect.min.css">
-</style>
+<style lang="scss" src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
 @import "~bootstrap/scss/functions";

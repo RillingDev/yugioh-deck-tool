@@ -1,13 +1,13 @@
 <template>
-    <div
-        class="sorter"
-    >
+    <div class="sorter">
         <button
             :disabled="deck.all.length < 2"
             class="btn btn-primary btn-sm"
             title="Sort Deck"
             @click="deck.sort(cardDb)"
-        >Sort Deck</button>
+        >
+            Sort Deck
+        </button>
     </div>
 </template>
 

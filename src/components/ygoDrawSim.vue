@@ -5,7 +5,9 @@
             class="btn btn-primary btn-sm"
             title="Open Start-Hand Simulation"
             @click="showModal"
-        >Start-Hand</button>
+        >
+            Start-Hand
+        </button>
 
         <b-modal
             id="modalDrawSim"
@@ -14,20 +16,21 @@
             hide-footer
             title="Start-Hand Simulation"
         >
-            <div
-                class="btn-group"
-                role="group"
-            >
+            <div class="btn-group" role="group">
                 <button
-                    :class="{active: drawMode === 5}"
+                    :class="{ active: drawMode === 5 }"
                     class="btn btn-primary"
                     @click="setDrawMode(5)"
-                >Going First</button>
+                >
+                    Going First
+                </button>
                 <button
-                    :class="{active: drawMode === 6}"
+                    :class="{ active: drawMode === 6 }"
                     class="btn btn-primary"
                     @click="setDrawMode(6)"
-                >Going Second</button>
+                >
+                    Going Second
+                </button>
             </div>
             <div class="drawsim-output">
                 <ygo-card

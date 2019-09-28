@@ -1,6 +1,5 @@
 <template>
     <div class="app">
-
         <!-- app-forms -->
         <div class="app-section app-forms">
             <!-- app-forms-upload -->
@@ -12,20 +11,22 @@
                     accept=".ydk"
                     title="Upload Deck"
                     @change="fileOnUpload"
-                >
+                />
                 <input
                     v-model="deck.name"
                     class="form-control form-deck-name"
                     type="text"
                     title="Deck Title"
                     placeholder="Deck Title"
-                >
+                />
                 <button
                     class="btn btn-primary form-control"
                     download="Unnamed.ydk"
                     title="Download Deck"
                     @click="deckToFile"
-                >Download</button>
+                >
+                    Download
+                </button>
             </div>
             <!-- app-forms-share -->
             <div class="form-group">
@@ -35,7 +36,7 @@
                     class="form-control"
                     type="url"
                     title="Shareable Link"
-                >
+                />
                 <button
                     :disabled="isDeckEmpty"
                     class="btn btn-primary btn-tiny form-control"
@@ -49,7 +50,9 @@
                     class="btn btn-primary form-control"
                     title="Copy Decklist to Clipboard"
                     @click="copyShareText"
-                >Copy Decklist to Clipboard</button>
+                >
+                    Copy Decklist to Clipboard
+                </button>
             </div>
             <!-- app-forms-price -->
             <div class="form-group">
@@ -63,12 +66,14 @@
                         v-for="currency in priceDb.currencies"
                         :key="currency.name"
                         :value="currency"
-                    >{{ currency.name }}</option>
+                    >
+                        {{ currency.name }}
+                    </option>
                 </select>
                 <a
                     :href="buyLink"
                     :disabled="isDeckEmpty"
-                    :class="{disabled: isDeckEmpty}"
+                    :class="{ disabled: isDeckEmpty }"
                     class="btn btn-primary btn-tiny form-control"
                     title="Open Buy Page"
                     target="_blank"
@@ -107,14 +112,8 @@
         <div class="app-section app-builder">
             <h2>Deckbuilder:</h2>
             <div class="app-builder-intro">
-                <ygo-sorter
-                    :deck="deck"
-                    :card-db="cardDb"
-                />
-                <ygo-draw-sim
-                    :deck-list-main="deck.main"
-                    :card-db="cardDb"
-                />
+                <ygo-sorter :deck="deck" :card-db="cardDb" />
+                <ygo-draw-sim :deck-list-main="deck.main" :card-db="cardDb" />
                 <ygo-randomizer
                     v-if="ajax.cardsLoaded"
                     :card-db="cardDb"

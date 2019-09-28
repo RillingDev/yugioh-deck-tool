@@ -1,14 +1,14 @@
 <template>
     <div
-        v-if="priceDb.prices.size>0"
-        :class="{'price--group' : isGroup}"
+        v-if="priceDb.prices.size > 0"
+        :class="{ 'price--group': isGroup }"
         class="price"
     >
         <span
             v-for="(priceMode, index) in priceDb.modes"
             :key="priceMode.id"
             :title="`${priceMode.name} Price`"
-            :class="'price-mode-'+priceMode.id"
+            :class="'price-mode-' + priceMode.id"
             class="price-mode"
         >
             {{ priceDb.format(priceValues[index]) }}

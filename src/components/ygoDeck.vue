@@ -1,14 +1,8 @@
 <template>
     <div class="deck">
-        <div
-            v-if="ajax.pricesLoaded"
-            class="deck-part deck-part-total"
-        >
+        <div v-if="ajax.pricesLoaded" class="deck-part deck-part-total">
             <span>Total:</span>
-            <ygo-price-view
-                :item="deck.all"
-                :price-db="priceDb"
-            />
+            <ygo-price-view :item="deck.all" :price-db="priceDb" />
         </div>
         <ygo-deck-part
             v-for="deckPart in deck.parts"

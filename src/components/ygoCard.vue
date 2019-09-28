@@ -6,18 +6,10 @@
         target="_blank"
         @contextmenu="contextEvent"
     >
-        <img
-            :src="image"
-            :alt="cardName"
-            width="100"
-            height="135"
-        >
+        <img :src="image" :alt="cardName" width="100" height="135" />
         <div class="deck-card-text">
             <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
-            <slot
-                class="deck-card-price"
-                name="price"
-            />
+            <slot class="deck-card-price" name="price" />
         </div>
     </a>
 </template>

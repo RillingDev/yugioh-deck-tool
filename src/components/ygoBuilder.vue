@@ -1,6 +1,9 @@
 <template>
     <div class="builder">
-        <span>Showing {{ pairsArrFilteredPrepared.length }} of {{ pairsArr.length }} Cards</span>
+        <span
+            >Showing {{ pairsArrFilteredPrepared.length }} of
+            {{ pairsArr.length }} Cards</span
+        >
 
         <ygo-filter
             :pairs-arr="pairsArr"
@@ -15,16 +18,28 @@
                 <li v-for="pair in pairsArrFilteredPrepared" :key="pair[0]">
                     <span class="builder-card">
                         <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
-                        <a class="builder-card-name" :data-name="pair[1]">{{ pair[1] }}</a>
+                        <a class="builder-card-name" :data-name="pair[1]">{{
+                            pair[1]
+                        }}</a>
                         <div class="builder-card-action">
                             <button
                                 v-for="deckPart in deckParts"
                                 :key="deckPart.id"
                                 :class="`builder-add-${deckPart.id}`"
                                 :title="`Add Card to ${deckPart.name} Deck`"
-                                :disabled="!deckCardCanAdd(deckPart, pair[0],banlist)"
+                                :disabled="
+                                    !deckCardCanAdd(deckPart, pair[0], banlist)
+                                "
                                 class="builder-add btn"
-                                @click="(e) => clickEvent(e, deckPart, pair[0],banlist)"
+                                @click="
+                                    e =>
+                                        clickEvent(
+                                            e,
+                                            deckPart,
+                                            pair[0],
+                                            banlist
+                                        )
+                                "
                             >
                                 <span class="fas fa-plus">
                                     <!---->
@@ -36,7 +51,9 @@
             </ul>
         </template>
         <template v-else>
-            <p class="builder-noresults">No Results Found</p>
+            <p class="builder-noresults">
+                No Results Found
+            </p>
         </template>
     </div>
 </template>
