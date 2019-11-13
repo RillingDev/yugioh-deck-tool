@@ -16,7 +16,11 @@ const FORMATS = [
     {
         name: "Speed Duel",
         check: card => card.format.includes("Speed Duel")
-    }
+    },
+    {
+        name: "Duel Links",
+        check: card => card.format.includes("Duel Links")
+    }	
 ];
 
 deepFreeze(FORMATS);

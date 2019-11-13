@@ -28,10 +28,12 @@ const CARD_TYPE = [
     "XYZ Pendulum Effect Monster",
     "Link Monster",
     "Spell Card",
-    "Trap Card"
+    "Trap Card",
+	"Skill Card"
 ];
 
 const CARD_TYPE_SORTED = [
+    ["Skill Card"],
     ["Normal Monster", "Normal Tuner Monster", "Pendulum Normal Monster"],
     [
         "Effect Monster",
