@@ -18,7 +18,7 @@
                 <li v-for="pair in pairsArrFilteredPrepared" :key="pair[0]">
                     <span class="builder-card">
                         <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
-                        <a class="builder-card-name" :data-name="pair[1]">{{
+                        <a class="builder-card-name" :data-name="pair[0]">{{
                             pair[1]
                         }}</a>
                         <div class="builder-card-action">

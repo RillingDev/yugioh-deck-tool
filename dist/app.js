@@ -14434,7 +14434,7 @@ var render = function() {
                       "a",
                       {
                         staticClass: "builder-card-name",
-                        attrs: { "data-name": pair[1] }
+                        attrs: { "data-name": pair[0] }
                       },
                       [_vm._v(_vm._s(pair[1]))]
                     ),
@@ -14514,7 +14514,7 @@ var render = function() {
     "a",
     {
       staticClass: "deck-card",
-      attrs: { href: _vm.link, "data-name": _vm.cardName, target: "_blank" },
+      attrs: { href: _vm.link, "data-name": _vm.cardId, target: "_blank" },
       on: { contextmenu: _vm.contextEvent }
     },
     [

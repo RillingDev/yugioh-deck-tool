@@ -1,7 +1,7 @@
 <template>
     <a
         :href="link"
-        :data-name="cardName"
+        :data-name="cardId"
         class="deck-card"
         target="_blank"
         @contextmenu="contextEvent"
