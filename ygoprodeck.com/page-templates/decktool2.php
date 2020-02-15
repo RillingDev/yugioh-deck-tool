@@ -9,16 +9,15 @@
 <?php
     function register_decktool_assets(){
         //CSS
-        wp_register_style('decktool-css-vendor', 'https://ygoprodeck.com/decktool2/dist/css/app.css');
+        wp_register_style('decktool-css-vendor', 'https://ygoprodeck.com/decktool/dist/css/chunk-vendors.css');
         wp_enqueue_style('decktool-css-vendor');
-        wp_register_style('decktool-css-main', 'https://ygoprodeck.com/decktool2/dist/css/chunk-vendors.css');
-        wp_enqueue_style('decktool-css-main');
+        wp_register_style('decktool-css-app', 'https://ygoprodeck.com/decktool/dist/css/app.css');
+        wp_enqueue_style('decktool-css-app');
 
         //Scripts
-
-        wp_register_script('decktool-js-vendor', 'https://ygoprodeck.com/decktool2/dist/js/chunk-vendors.js', [], "v4.13.0", true);
+        wp_register_script('decktool-js-vendor', 'https://ygoprodeck.com/decktool/dist/js/chunk-vendors.js', [], "v4.13.0", true);
         wp_enqueue_script('decktool-js-vendor');
-        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool2/dist/js/app.js', [], "v4.13.0", true);
+        wp_register_script('decktool-js-app', 'https://ygoprodeck.com/decktool/dist/js/app.js', [], "v4.13.0", true);
         wp_enqueue_script('decktool-js-app');
 
         wp_register_script('decktool-js-app2', 'https://ygoprodeck.com/html2canvas.js?v=1.0.0', [], "v1.0.0", true);
