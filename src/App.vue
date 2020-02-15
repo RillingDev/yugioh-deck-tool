@@ -253,23 +253,24 @@ export default {
 </script>
 
 <style lang="scss">
+@import "styles/variables.custom";
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
-
-@import "styles/variables.custom";
 @import "styles/reboot.custom";
 
+@import "~bootstrap/scss/transitions";
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/utilities";
 
 @import "~bootstrap-vue/dist/bootstrap-vue.css";
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
 
 @import "styles/blocks/general";
 @import "styles/blocks/forms";
-
 @import "styles/blocks/ygoprodeck";
 </style>

@@ -17,23 +17,6 @@
     cursor: pointer;
   }
 
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .modal-title {
-    margin-bottom: 0;
-  }
-
-  .modal-body {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center;
-  }
-
   .container {
     @include screen(max, xl) {
       max-width: 100%;
@@ -98,4 +81,22 @@
   > div {
     margin-right: 1rem;
   }
+}
+
+/* modal is not inside app in DOM */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin-bottom: 0;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
 }

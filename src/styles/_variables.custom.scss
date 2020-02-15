@@ -3,9 +3,13 @@ $enable-rounded: false;
 $enable-shadows: false;
 $enable-gradients: false;
 $enable-transitions: true;
-$enable-hover-media-query: false;
+$enable-prefers-reduced-motion-media-query: false;
 $enable-grid-classes: true;
+$enable-pointer-cursor-for-buttons: true;
 $enable-print-styles: false;
+$enable-responsive-font-sizes: false;
+$enable-validation-icons: true;
+$enable-deprecation-messages: true;
 
 $brown: #b97b51;
 $blue: #9683b8;
@@ -22,7 +26,7 @@ $dark: desaturate(darken($primary, 5%), 10%);
 $danger: $red;
 
 $theme-colors: (
-  "primary": $primary
+        "primary": $primary
 );
 
 $color-deckpart-main: $dark;
