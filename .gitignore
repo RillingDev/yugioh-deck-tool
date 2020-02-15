@@ -9,6 +9,7 @@
 *.vi
 *.zip
 *~
+_key.*
 
 # OS or Editor folders
 ._*
@@ -26,12 +27,13 @@ desktop.ini
 
 # Vendor Files
 node_modules/
-bower_components/
 
 # Debug Files
-.cache/
-.tmp/
 npm-debug.*
+
+# Temp Files
+spec/dist/
+tsconfig.tsbuildinfo
 
 # Safe files
 _key*

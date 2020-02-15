@@ -9,9 +9,9 @@ const CHANCE_ARCHETYPE_2_EXTRA = 0.002;
 const CHANCE_ARCHETYPE_3_EXTRA = 0.001;
 
 const RATIOS_DEFAULT = {
-    monster: 1,
-    spell: 0.9,
-    trap: 0.8
+  monster: 1,
+  spell: 0.9,
+  trap: 0.8
 };
 
 deepFreeze(RATIOS_DEFAULT);
@@ -19,11 +19,11 @@ deepFreeze(RATIOS_DEFAULT);
 const getDefaultRatios = () => objFrom(RATIOS_DEFAULT);
 
 export {
-    CHANCE_ARCHETYPE_1_EXTRA,
-    CHANCE_ARCHETYPE_2_EXTRA,
-    CHANCE_ARCHETYPE_3_EXTRA,
-    RATIOS_DEFAULT,
-    CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
-    CHANCE_ADD_OPTIONAL_CARD,
-    getDefaultRatios
+  CHANCE_ARCHETYPE_1_EXTRA,
+  CHANCE_ARCHETYPE_2_EXTRA,
+  CHANCE_ARCHETYPE_3_EXTRA,
+  RATIOS_DEFAULT,
+  CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
+  CHANCE_ADD_OPTIONAL_CARD,
+  getDefaultRatios
 };

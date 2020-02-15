@@ -1,64 +1,52 @@
 {
-    "name": "yugioh-deck-tool",
-    "version": "v4.14.1",
-    "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
-    "main": "./dist/app.js",
-    "scripts": {
-        "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-        "build": "cross-env NODE_ENV=development webpack --progress --hide-modules",
-        "dist": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-        "lint": "npm run lint:es",
-        "lint:es": "eslint ./src/**/*.{js,vue}",
-        "fix": "npm-run-all fix:es fix:prettier",
-        "fix:es": "eslint ./src/**/*.{js,vue} --fix",
-        "fix:prettier": "prettier ./src/**/*  --write"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
-    },
-    "keywords": [
-        "yugioh",
-        "deck",
-        "app"
-    ],
-    "author": "FelixRilling",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
-    },
-    "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
-    "browserslist": [
-        "last 2 Chrome versions",
-        "last 2 Firefox versions"
-    ],
-    "dependencies": {
-        "bootstrap": "4.2.1",
-        "bootstrap-vue": "2.0.0-rc.11",
-        "lightdash": "^10.3.0",
-        "pako": "^1.0.8",
-        "vue": "^2.6.10",
-        "vue-multiselect": "^2.1.6"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.7.2",
-        "@babel/preset-env": "^7.7.1",
-        "babel-loader": "^8.0.6",
-        "cross-env": "^6.0.3",
-        "css-loader": "^3.2.0",
-        "eslint": "^6.6.0",
-        "eslint-plugin-vue": "^6.0.0",
-        "mini-css-extract-plugin": "^0.8.0",
-        "node-sass": "^4.13.0",
-        "npm-run-all": "^4.1.5",
-        "sass-loader": "^8.0.0",
-        "style-loader": "^1.0.0",
-        "terser": "^4.4.0",
-        "terser-webpack-plugin": "^2.2.1",
-        "vue-loader": "^15.7.2",
-        "vue-template-compiler": "^2.6.10",
-        "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.10",
-        "webpack-dev-server": "^3.9.0"
-    }
+  "name": "yugioh-deck-tool",
+  "version": "v4.14.1",
+  "private": true,
+  "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
+  "author": "FelixRilling",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.4.2",
+    "core-js": "^3.6.4",
+    "lightdash": "^10.3.0",
+    "pako": "^1.0.8",
+    "vue": "^2.6.11",
+    "vue-multiselect": "^2.1.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-plugin-eslint": "~4.2.0",
+    "@vue/cli-service": "~4.2.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^6.1.2",
+    "node-sass": "^4.12.0",
+    "portal-vue": "^2.1.6",
+    "prettier": "^1.19.1",
+    "sass": "^1.19.0",
+    "sass-loader": "^8.0.2",
+    "vue-cli-plugin-bootstrap-vue": "~0.6.0",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "bugs": {
+    "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
+  },
+  "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
+  "keywords": [
+    "yugioh",
+    "deck",
+    "app"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
+  }
 }
