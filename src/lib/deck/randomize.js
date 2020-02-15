@@ -1,6 +1,6 @@
-import Deck from "./deck";
+import Deck from "./Deck";
 import { DECKPARTS } from "../data/deck";
-import { randShuffle, randNumber } from "lightdash";
+import { randNumber, randShuffle } from "lightdash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 const IGNORED_WORDS = ["of", "the", "a", "an", "in"];

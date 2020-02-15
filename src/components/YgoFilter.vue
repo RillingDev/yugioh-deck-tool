@@ -4,12 +4,12 @@
     <template v-if="showAdvancedFilters">
       <div class="form-group">
         <input
-          v-model="filter.name"
-          class="form-control"
-          type="search"
-          title="Search"
-          placeholder="Search"
           @input="filterCards"
+          class="form-control"
+          placeholder="Search"
+          title="Search"
+          type="search"
+          v-model="filter.name"
         />
       </div>
     </template>
@@ -19,15 +19,15 @@
       <div class="form-group form-group-builder">
         <label>Sort:</label>
         <select
-          v-model="sort.active"
+          @change="filterCards"
           class="form-control"
           title="Active Sorting"
-          @change="filterCards"
+          v-model="sort.active"
         >
           <option
-            v-for="option in sort.options"
             :key="option.name"
             :value="option"
+            v-for="option in sort.options"
           >
             {{ option.name }}
           </option>
@@ -40,11 +40,11 @@
       <div class="form-group form-group-builder">
         <label>Type:</label>
         <multiselect
-          v-model="filter.type.active"
           :options="filter.type.options"
           :show-labels="false"
           :show-no-results="false"
           @input="filterCards"
+          v-model="filter.type.active"
         />
       </div>
     </template>
@@ -56,15 +56,15 @@
           <div class=" form-group-builder">
             <label>Format:</label>
             <select
-              v-model="filter.format.active"
+              @change="filterCards"
               class="form-control"
               title="Active Format"
-              @change="filterCards"
+              v-model="filter.format.active"
             >
               <option
-                v-for="option in filter.format.options"
                 :key="option.name"
                 :value="option"
+                v-for="option in filter.format.options"
               >
                 {{ option.name }}
               </option>
@@ -77,15 +77,15 @@
           <div class=" form-group-builder">
             <label>Banlist:</label>
             <select
-              v-model="filter.banlist.active"
+              @change="filterCards"
               class="form-control"
               title="Active Banlist"
-              @change="filterCards"
+              v-model="filter.banlist.active"
             >
               <option
-                v-for="option in filter.banlist.options"
                 :key="option.name"
                 :value="option"
+                v-for="option in filter.banlist.options"
               >
                 {{ option.name }}
               </option>
@@ -99,13 +99,13 @@
     <div class="form-group form-group-builder">
       <label>Set:</label>
       <multiselect
-        v-model="filter.sets.active"
-        :options="filter.sets.options"
         :multiple="true"
+        :options="filter.sets.options"
         :show-labels="false"
         :show-no-results="false"
-        placeholder="All Sets"
         @input="filterCards"
+        placeholder="All Sets"
+        v-model="filter.sets.active"
       />
     </div>
 
@@ -119,15 +119,15 @@
             <div class="form-group-builder">
               <label>Attribute:</label>
               <select
-                v-model="filter.attribute.active"
+                @change="filterCards"
                 class="form-control"
                 title="Active Attribute"
-                @change="filterCards"
+                v-model="filter.attribute.active"
               >
                 <option
-                  v-for="option in filter.attribute.options"
                   :key="option"
                   :value="option"
+                  v-for="option in filter.attribute.options"
                 >
                   {{ option }}
                 </option>
@@ -141,15 +141,15 @@
               <!-- builder-race -->
               <label>Race:</label>
               <select
-                v-model="filter.race.active"
+                @change="filterCards"
                 class="form-control"
                 title="Active Race"
-                @change="filterCards"
+                v-model="filter.race.active"
               >
                 <option
-                  v-for="option in filter.race.options"
                   :key="option"
                   :value="option"
+                  v-for="option in filter.race.options"
                 >
                   {{ option }}
                 </option>
@@ -162,15 +162,15 @@
       <div class="form-group form-group-builder">
         <label>Level:</label>
         <select
-          v-model="filter.level.active"
+          @change="filterCards"
           class="form-control"
           title="Active Level"
-          @change="filterCards"
+          v-model="filter.level.active"
         >
           <option
-            v-for="option in filter.level.options"
             :key="option"
             :value="option"
+            v-for="option in filter.level.options"
           >
             {{ option }}
           </option>
@@ -182,15 +182,15 @@
         <div class="form-group form-group-builder">
           <label>Link Arrows:</label>
           <select
-            v-model="filter.linkarrows.active"
+            @change="filterCards"
             class="form-control"
             title="Active Link Arrows"
-            @change="filterCards"
+            v-model="filter.linkarrows.active"
           >
             <option
-              v-for="option in filter.linkarrows.options"
               :key="option"
               :value="option"
+              v-for="option in filter.linkarrows.options"
             >
               {{ option }}
             </option>
@@ -204,15 +204,15 @@
       <div class="form-group form-group-builder">
         <label>Spell Type:</label>
         <select
-          v-model="filter.spelltype.active"
+          @change="filterCards"
           class="form-control"
           title="Active Spell Type"
-          @change="filterCards"
+          v-model="filter.spelltype.active"
         >
           <option
-            v-for="option in filter.spelltype.options"
             :key="option"
             :value="option"
+            v-for="option in filter.spelltype.options"
           >
             {{ option }}
           </option>
@@ -225,16 +225,16 @@
       <div class="form-group form-group-builder">
         <label>Trap Type:</label>
         <select
-          v-model="filter.traptype.active"
+          @change="filterCards"
           class="form-control"
           title="Active Trap Type"
-          @change="filterCards"
+          v-model="filter.traptype.active"
         >
           <option
-            v-for="option in filter.traptype.options"
             :key="option"
             :value="option"
             @change="filterCards"
+            v-for="option in filter.traptype.options"
           >
             {{ option }}
           </option>
@@ -249,13 +249,13 @@ import { SORTERS } from "../lib/data/sort";
 import { FORMATS } from "../lib/data/format";
 import { BANLISTS } from "../lib/data/banlist";
 import {
-  CARD_TYPE,
-  CARD_RACE,
   CARD_ATTRIBUTE,
   CARD_LEVEL,
   CARD_LINKARROWS,
+  CARD_RACE,
   CARD_SPELL_TYPE,
-  CARD_TRAP_TYPE
+  CARD_TRAP_TYPE,
+  CARD_TYPE
 } from "../lib/data/cards";
 import search from "../lib/cardDb/search";
 import Multiselect from "vue-multiselect";
@@ -382,9 +382,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   label {
     padding-right: 0.75rem;
     width: 40%;
+
     &:not(:first-child) {
       margin-left: 1rem;
     }
@@ -392,20 +394,23 @@ export default {
 }
 
 /**
-* Multiselect
-*/
+        * Multiselect
+        */
 .decktool {
   .multiselect__tags {
     border: 1px solid #ced4da;
     border-radius: 0;
   }
+
   .multiselect__tag {
     border-radius: 0;
     background: $primary;
   }
+
   .multiselect__tag-icon:after {
     color: $white;
   }
+
   .multiselect__tag-icon:focus,
   .multiselect__tag-icon:hover {
     background: lighten($primary, 10%);
@@ -429,24 +434,29 @@ export default {
   .multiselect__option {
     min-height: 38px;
   }
+
   .multiselect__option:after {
     line-height: 38px;
   }
+
   .multiselect,
   .multiselect__input,
   .multiselect__single {
     font-size: 1rem;
   }
+
   .multiselect input[type="text"].multiselect__input,
   .multiselect input[type="text"].multiselect__input:focus {
     padding: 0 0 0 5px;
     margin: inherit;
   }
+
   .multiselect__tags,
   .multiselect__tag-icon:after,
   .multiselect__option:after {
     font-size: 0.85em;
   }
+
   .multiselect__select {
     display: none;
   }

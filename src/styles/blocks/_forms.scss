@@ -1,44 +1,51 @@
 @import "../mixins/screen";
+
 .app-forms {
+  display: flex;
+  flex-direction: column;
+
+  > .form-group {
     display: flex;
     flex-direction: column;
-    >.form-group {
-        display: flex;
-        flex-direction: column;
-        input,
-        button,
-        select {
-            margin-bottom: 0.5rem;
-        }
+
+    input,
+    button,
+    select {
+      margin-bottom: 0.5rem;
     }
-    input[type="file"] {
-        padding: 3px;
+  }
+
+  input[type="file"] {
+    padding: 3px;
+  }
+
+  @include screen(min, md) {
+    > .form-group {
+      flex-direction: row;
+      align-items: center;
+
+      input,
+      button,
+      select {
+        margin-bottom: 0;
+      }
     }
-    @include screen(min, md) {
-        >.form-group {
-            flex-direction: row;
-            align-items: center;
-            input,
-            button,
-            select {
-                margin-bottom: 0;
-            }
-        }
-        input[title="Deck Title"] {
-            max-width: 300px;
-        }
-        .btn {
-            min-width: 225px;
-            max-width: 275px;
-            margin-left: 10px;
-            &.btn-tiny {
-                max-width: 40px;
-                min-width: 0;
-            }
-        }
-        label {
-            min-width: 100px;
-            max-width: 150px;
-        }
+    input[title="Deck Title"] {
+      max-width: 300px;
     }
+    .btn {
+      min-width: 225px;
+      max-width: 275px;
+      margin-left: 10px;
+
+      &.btn-tiny {
+        max-width: 40px;
+        min-width: 0;
+      }
+    }
+    label {
+      min-width: 100px;
+      max-width: 150px;
+    }
+  }
 }

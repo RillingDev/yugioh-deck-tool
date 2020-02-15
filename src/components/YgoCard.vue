@@ -1,12 +1,12 @@
 <template>
   <a
-    :href="link"
     :data-name="cardId"
+    :href="link"
+    @contextmenu="contextEvent"
     class="deck-card"
     target="_blank"
-    @contextmenu="contextEvent"
   >
-    <img :src="image" :alt="cardName" width="100" height="135" />
+    <img :alt="cardName" :src="image" height="135" width="100" />
     <div class="deck-card-text">
       <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
       <slot class="deck-card-price" name="price" />
@@ -17,9 +17,9 @@
 <script>
 import { isNil } from "lightdash";
 import {
+  URL_DB_API,
   URL_IMAGE_API,
   URL_IMAGE_UNKNOWN,
-  URL_DB_API,
   URL_WIKI_API
 } from "../lib/data/urls";
 
@@ -91,6 +91,7 @@ export default {
   word-wrap: break-word;
   line-height: 1.125em;
   font-size: 0.85em;
+
   &:focus,
   &:hover {
     opacity: 1;

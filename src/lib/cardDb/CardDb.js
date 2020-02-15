@@ -1,4 +1,4 @@
-import { mapFromObject, arrUniq } from "lightdash";
+import { arrUniq, mapFromObject } from "lightdash";
 import deepFreeze from "../deepFreeze";
 
 const getSets = pairsArr => {
@@ -25,9 +25,9 @@ const CardDatabase = class {
     deepFreeze(this.sets);
     deepFreeze(this);
 
-    // eslint-disable-next-line no-console
     console.log("LOADED Cards", this);
   }
+
   static isTreatedAsSame(card1, card2) {
     return (
       card1.treatedAs === card2.name ||
@@ -36,12 +36,15 @@ const CardDatabase = class {
       card1.name === card2.name
     );
   }
+
   has(cardId) {
     return this.cards.has(cardId);
   }
+
   get(cardId) {
     return this.cards.get(cardId);
   }
+
   getName(cardId) {
     return this.has(cardId) ? this.get(cardId).name : `[${cardId}]`;
   }

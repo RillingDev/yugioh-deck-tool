@@ -1,4 +1,4 @@
-import { PRICE_MODES, PRICE_CURRENCIES } from "../data/price";
+import { PRICE_CURRENCIES, PRICE_MODES } from "../data/price";
 import deepFreeze from "../deepFreeze";
 
 const mapCurrencyFomatters = () =>
@@ -32,12 +32,13 @@ const PriceDatabase = class {
     deepFreeze(this.modes);
     deepFreeze(this.currencies);
 
-    // eslint-disable-next-line no-console
     console.log("LOADED Prices", this);
   }
+
   getCardsWithoutData(cardIdArr) {
     return cardIdArr.filter(cardId => !this.has(cardId));
   }
+
   set(cardId, val) {
     if (val !== null) {
       return this.prices.set(cardId, {
@@ -49,9 +50,11 @@ const PriceDatabase = class {
 
     return false;
   }
+
   has(cardId) {
     return this.prices.has(cardId);
   }
+
   get(cardId) {
     if (this.has(cardId)) {
       const item = this.prices.get(cardId);
@@ -61,6 +64,7 @@ const PriceDatabase = class {
 
     return [0, 0, 0];
   }
+
   getSelection(cardIdArr) {
     const items = cardIdArr.map(cardId => this.get(cardId));
 
@@ -70,6 +74,7 @@ const PriceDatabase = class {
       accumulator[2] + val[2]
     ]);
   }
+
   format(val) {
     const currency = this.activeCurrency;
 

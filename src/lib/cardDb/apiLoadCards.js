@@ -8,7 +8,7 @@ const apiLoadCards = () =>
       mode: "same-origin"
     })
       /*  .then(response => response.arrayBuffer())
-            .then(buffer => resolve(JSON.parse(inflate( buffer )))) */
+                        .then(buffer => resolve(JSON.parse(inflate( buffer )))) */
       .then(response => response.json())
       .then(resolve)
       .catch(reject);

@@ -2,8 +2,8 @@ import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
 import deepFreeze from "../deepFreeze";
-import { getShareText, getBuyLink } from "./toText";
-import CardDatabase from "../cardDb/cardDb";
+import { getBuyLink, getShareText } from "./toText";
+import CardDatabase from "../cardDb/CardDb";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -36,12 +36,13 @@ const Deck = class {
 
     deepFreeze(this.parts);
 
-    // eslint-disable-next-line no-console
     console.log("CREATED Deck", this);
   }
+
   static fromUri(uriDeck) {
     return new Deck(uriDeckDecode(uriDeck));
   }
+
   static fromFile(file) {
     const reader = new FileReader();
 
@@ -60,6 +61,7 @@ const Deck = class {
       }
     });
   }
+
   static fromRemoteFile(uri) {
     return new Promise((resolve, reject) => {
       fetch(uri, {
@@ -73,9 +75,11 @@ const Deck = class {
       });
     });
   }
+
   toUri() {
     return uriDeckEncode(this.getList());
   }
+
   toFile() {
     const fileParts = [];
 
@@ -87,12 +91,15 @@ const Deck = class {
       type: "text/ydk"
     });
   }
+
   toText(cardDb) {
     return getShareText(this.getList(), cardDb);
   }
+
   toBuyLink(cardDb) {
     return getBuyLink(this.all, cardDb);
   }
+
   cardCanAdd(deckPart, cardId, cardDb, banlist) {
     const card = cardDb.get(cardId);
     const cardCount = this.all.filter(activeSectionCardId =>
@@ -105,12 +112,14 @@ const Deck = class {
       cardCount < banlist.getVal(card)
     );
   }
+
   cardAdd(deckPart, cardId, cardDb, banlist) {
     if (this.cardCanAdd(deckPart, cardId, cardDb, banlist)) {
       this[deckPart.id].push(cardId);
       this.all = this.getAll();
     }
   }
+
   cardRemove(deckPart, cardId) {
     let isRemoved = false;
 
@@ -127,12 +136,15 @@ const Deck = class {
       this.all = this.getAll();
     }
   }
+
   getList() {
     return [this.main, this.extra, this.side];
   }
+
   getAll() {
     return [...this.main, ...this.extra, ...this.side];
   }
+
   sort(cardDb) {
     DECKPARTS.forEach(deckPart => {
       this[deckPart.id] = sort(this[deckPart.id], cardDb);

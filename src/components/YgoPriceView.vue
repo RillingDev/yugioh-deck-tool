@@ -1,15 +1,15 @@
 <template>
   <div
-    v-if="priceDb.prices.size > 0"
     :class="{ 'price--group': isGroup }"
     class="price"
+    v-if="priceDb.prices.size > 0"
   >
     <span
-      v-for="(priceMode, index) in priceDb.modes"
+      :class="'price-mode-' + priceMode.id"
       :key="priceMode.id"
       :title="`${priceMode.name} Price`"
-      :class="'price-mode-' + priceMode.id"
       class="price-mode"
+      v-for="(priceMode, index) in priceDb.modes"
     >
       {{ priceDb.format(priceValues[index]) }}
     </span>
@@ -18,7 +18,7 @@
 
 <script>
 import { isString } from "lightdash";
-import PriceDb from "../lib/priceDb/priceDb";
+import PriceDb from "../lib/priceDb/PriceDb";
 
 export default {
   props: {
@@ -55,6 +55,7 @@ export default {
   &.price--group {
     margin-bottom: 0.5rem;
   }
+
   &:not(.price--group) {
     display: flex;
     justify-content: space-between;
@@ -67,12 +68,15 @@ export default {
   font-size: 0.9em;
   display: inline-block;
   text-align: center;
+
   &-low {
     background-color: $color-pricemode-low;
   }
+
   &-average {
     background-color: $color-pricemode-average;
   }
+
   &-high {
     background-color: $color-pricemode-high;
   }

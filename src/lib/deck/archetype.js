@@ -1,9 +1,9 @@
 import { ARCHETYPES } from "../data/archetypes";
 import { arrUniq, randShuffle } from "lightdash";
 import {
-  getDefaultRatios,
+  CHANCE_ADD_OPTIONAL_CARD,
   CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
-  CHANCE_ADD_OPTIONAL_CARD
+  getDefaultRatios
 } from "../data/randomizer";
 
 const arrFlattenDeep = arr => {

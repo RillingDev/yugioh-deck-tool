@@ -2,9 +2,9 @@
   <div class="sorter">
     <button
       :disabled="deck.all.length < 2"
+      @click="deck.sort(cardDb)"
       class="btn btn-primary btn-sm"
       title="Sort Deck"
-      @click="deck.sort(cardDb)"
     >
       Sort Deck
     </button>
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import CardDb from "../lib/cardDb/cardDb";
-import Deck from "../lib/deck/deck";
+import CardDb from "../lib/cardDb/CardDb";
+import Deck from "../lib/deck/Deck";
 
 export default {
   props: {

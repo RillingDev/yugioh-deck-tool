@@ -2,48 +2,48 @@
   <div class="drawsim">
     <button
       :disabled="deckListMain.length === 0"
+      @click="showModal"
       class="btn btn-primary btn-sm"
       title="Open Start-Hand Simulation"
-      @click="showModal"
     >
       Start-Hand
     </button>
 
     <b-modal
+      hide-footer
       id="modalDrawSim"
       ref="modalDrawSim"
       size="lg"
-      hide-footer
       title="Start-Hand Simulation"
     >
       <div class="btn-group" role="group">
         <button
           :class="{ active: drawMode === 5 }"
-          class="btn btn-primary"
           @click="setDrawMode(5)"
+          class="btn btn-primary"
         >
           Going First
         </button>
         <button
           :class="{ active: drawMode === 6 }"
-          class="btn btn-primary"
           @click="setDrawMode(6)"
+          class="btn btn-primary"
         >
           Going Second
         </button>
       </div>
       <div class="drawsim-output">
         <ygo-card
-          v-for="(drawItemId, index) of drawItems"
-          :key="`${drawItemId}_${index}`"
           :card-id="drawItemId"
           :card-name="cardDb.getName(drawItemId)"
+          :key="`${drawItemId}_${index}`"
+          v-for="(drawItemId, index) of drawItems"
         />
       </div>
       <button
+        @click="draw"
         class="btn btn-primary"
         title="Simulate a new Starting-Hand"
-        @click="draw"
       >
         Draw
       </button>
@@ -52,10 +52,10 @@
 </template>
 
 <script>
-import ygoCard from "./ygoCard.vue";
+import ygoCard from "./YgoCard.vue";
 
 import startHand from "../lib/deck/startHand";
-import CardDb from "../lib/cardDb/cardDb";
+import CardDb from "../lib/cardDb/CardDb";
 
 export default {
   components: {

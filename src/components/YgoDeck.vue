@@ -1,30 +1,30 @@
 <template>
   <div class="deck">
-    <div v-if="ajax.pricesLoaded" class="deck-part deck-part-total">
+    <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
       <span>Total:</span>
       <ygo-price-view :item="deck.all" :price-db="priceDb" />
     </div>
     <ygo-deck-part
-      v-for="deckPart in deck.parts"
-      :key="deckPart.id"
-      :class="`deck-part-${deckPart.id}`"
       :ajax="ajax"
+      :card-db="cardDb"
+      :class="`deck-part-${deckPart.id}`"
       :deck="deck"
       :deck-part="deckPart"
       :deck-part-list="deck[deckPart.id]"
-      :card-db="cardDb"
+      :key="deckPart.id"
       :price-db="priceDb"
+      v-for="deckPart in deck.parts"
     />
   </div>
 </template>
 
 <script>
-import CardDb from "../lib/cardDb/cardDb";
-import PriceDb from "../lib/priceDb/priceDb";
-import Deck from "../lib/deck/deck";
+import CardDb from "../lib/cardDb/CardDb";
+import PriceDb from "../lib/priceDb/PriceDb";
+import Deck from "../lib/deck/Deck";
 
-import ygoDeckPart from "./ygoDeckPart.vue";
-import ygoPriceView from "./ygoPriceView.vue";
+import ygoDeckPart from "./YgoDeckPart.vue";
+import ygoPriceView from "./YgoPriceView.vue";
 
 export default {
   components: {

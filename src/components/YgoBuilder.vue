@@ -15,19 +15,19 @@
     <!-- builder-list -->
     <template v-if="pairsArrFilteredPrepared.length">
       <ul class="builder-list">
-        <li v-for="pair in pairsArrFilteredPrepared" :key="pair[0]">
+        <li :key="pair[0]" v-for="pair in pairsArrFilteredPrepared">
           <span class="builder-card">
             <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
-            <a class="builder-card-name" :data-name="pair[0]">{{ pair[1] }}</a>
+            <a :data-name="pair[0]" class="builder-card-name">{{ pair[1] }}</a>
             <div class="builder-card-action">
               <button
-                v-for="deckPart in deckParts"
-                :key="deckPart.id"
                 :class="`builder-add-${deckPart.id}`"
-                :title="`Add Card to ${deckPart.name} Deck`"
                 :disabled="!deckCardCanAdd(deckPart, pair[0], banlist)"
-                class="builder-add btn"
+                :key="deckPart.id"
+                :title="`Add Card to ${deckPart.name} Deck`"
                 @click="e => clickEvent(e, deckPart, pair[0], banlist)"
+                class="builder-add btn"
+                v-for="deckPart in deckParts"
               >
                 <span class="fas fa-plus">
                   <!---->
@@ -49,7 +49,7 @@
 <script>
 import { DECKPARTS } from "../lib/data/deck";
 import { BANLISTS } from "../lib/data/banlist";
-import YgoFilter from "./ygoFilter.vue";
+import YgoFilter from "./YgoFilter.vue";
 
 export default {
   components: { YgoFilter },
@@ -117,6 +117,7 @@ export default {
 
 .builder-list li {
   border-top: 1px solid $gray-400;
+
   &:first-child {
     border-top: 0;
   }
@@ -149,18 +150,23 @@ export default {
   cursor: pointer;
   padding: 0;
   background-color: transparent;
+
   &:active {
     opacity: 1;
   }
+
   &[disabled] {
     opacity: 0.4;
   }
+
   &-main .fas {
     color: $color-deckpart-main;
   }
+
   &-extra .fas {
     color: $color-deckpart-extra;
   }
+
   &-side .fas {
     color: $color-deckpart-side;
   }

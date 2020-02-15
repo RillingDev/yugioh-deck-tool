@@ -3,23 +3,23 @@
     <h3>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</h3>
     <template v-if="deckPartList.length">
       <ygo-price-view
-        v-if="ajax.pricesLoaded"
         :item="deckPartList"
         :price-db="priceDb"
+        v-if="ajax.pricesLoaded"
       />
       <div class="deck-content">
         <ygo-card
-          v-for="(cardId, cardIndex) in deckPartList"
-          :key="`${cardId}_${cardIndex}`"
           :card-id="cardId"
           :card-name="cardDb.getName(cardId)"
+          :key="`${cardId}_${cardIndex}`"
           @deckcardrightclick.prevent="deck.cardRemove(deckPart, cardId)"
+          v-for="(cardId, cardIndex) in deckPartList"
         >
           <ygo-price-view
-            v-if="ajax.pricesLoaded"
-            slot="price"
             :item="cardId"
             :price-db="priceDb"
+            slot="price"
+            v-if="ajax.pricesLoaded"
           />
         </ygo-card>
       </div>
@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import CardDb from "../lib/cardDb/cardDb";
-import PriceDb from "../lib/priceDb/priceDb";
-import Deck from "../lib/deck/deck";
+import CardDb from "../lib/cardDb/CardDb";
+import PriceDb from "../lib/priceDb/PriceDb";
+import Deck from "../lib/deck/Deck";
 
-import ygoCard from "./ygoCard.vue";
-import ygoPriceView from "./ygoPriceView.vue";
+import ygoCard from "./YgoCard.vue";
+import ygoPriceView from "./YgoPriceView.vue";
 
 export default {
   components: {
@@ -85,20 +85,24 @@ export default {
 
 .deck-part {
   margin-bottom: 1.25em;
+
   h3 {
     font-size: 1rem;
     display: initial;
   }
+
   &-main {
     .deck-content {
       background-color: $color-deckpart-main;
     }
   }
+
   &-extra {
     .deck-content {
       background-color: $color-deckpart-extra;
     }
   }
+
   &-side {
     .deck-content {
       background-color: $color-deckpart-side;

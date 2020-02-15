@@ -6,24 +6,24 @@
       <div class="form-group">
         <label>Deck:</label>
         <input
-          class="form-control"
-          type="file"
-          accept=".ydk"
-          title="Upload Deck"
           @change="fileOnUpload"
+          accept=".ydk"
+          class="form-control"
+          title="Upload Deck"
+          type="file"
         />
         <input
-          v-model="deck.name"
           class="form-control form-deck-name"
-          type="text"
-          title="Deck Title"
           placeholder="Deck Title"
+          title="Deck Title"
+          type="text"
+          v-model="deck.name"
         />
         <button
+          @click="deckToFile"
           class="btn btn-primary form-control"
           download="Unnamed.ydk"
           title="Download Deck"
-          @click="deckToFile"
         >
           Download
         </button>
@@ -34,22 +34,22 @@
         <input
           :value="shareLink"
           class="form-control"
-          type="url"
           title="Shareable Link"
+          type="url"
         />
         <button
           :disabled="isDeckEmpty"
+          @click="copyShareLink"
           class="btn btn-primary btn-tiny form-control"
           title="Copy Sharelink to Clipboard"
-          @click="copyShareLink"
         >
           <span class="fas fa-share-square"><!-- icon--></span>
         </button>
         <button
           :disabled="isDeckEmpty"
+          @click="copyShareText"
           class="btn btn-primary form-control"
           title="Copy Decklist to Clipboard"
-          @click="copyShareText"
         >
           Copy Decklist to Clipboard
         </button>
@@ -58,33 +58,33 @@
       <div class="form-group">
         <label>Price:</label>
         <select
-          v-model="priceDb.activeCurrency"
           class="form-control form-deck-currency"
           title="Price Currency"
+          v-model="priceDb.activeCurrency"
         >
           <option
-            v-for="currency in priceDb.currencies"
             :key="currency.name"
             :value="currency"
+            v-for="currency in priceDb.currencies"
           >
             {{ currency.name }}
           </option>
         </select>
         <a
-          :href="buyLink"
-          :disabled="isDeckEmpty"
           :class="{ disabled: isDeckEmpty }"
+          :disabled="isDeckEmpty"
+          :href="buyLink"
           class="btn btn-primary btn-tiny form-control"
-          title="Open Buy Page"
           target="_blank"
+          title="Open Buy Page"
         >
           <span class="fas fa-shopping-cart"><!-- icon--></span>
         </a>
         <button
           :disabled="isDeckEmpty"
+          @click="fetchPrices"
           class="btn btn-primary form-control"
           title="Load Prices"
-          @click="fetchPrices"
         >
           <span :hidden="ajax.currentlyLoading">Load Prices</span>
           <span :hidden="!ajax.currentlyLoading">
@@ -100,11 +100,11 @@
     <div class="app-section app-deck">
       <h2>Decklist:</h2>
       <ygo-deck
-        v-if="ajax.cardsLoaded"
         :ajax="ajax"
-        :deck="deck"
         :card-db="cardDb"
+        :deck="deck"
         :price-db="priceDb"
+        v-if="ajax.cardsLoaded"
       />
     </div>
 
@@ -112,42 +112,41 @@
     <div class="app-section app-builder">
       <h2>Deckbuilder:</h2>
       <div class="app-builder-intro">
-        <ygo-sorter :deck="deck" :card-db="cardDb" />
-        <ygo-draw-sim :deck-list-main="deck.main" :card-db="cardDb" />
+        <ygo-sorter :card-db="cardDb" :deck="deck" />
+        <ygo-draw-sim :card-db="cardDb" :deck-list-main="deck.main" />
         <ygo-randomizer
-          v-if="ajax.cardsLoaded"
           :card-db="cardDb"
           @randomize="deckRandomize"
+          v-if="ajax.cardsLoaded"
         />
       </div>
       <ygo-builder
-        v-if="ajax.cardsLoaded"
+        :deck-card-can-add="deckCardCanAdd"
         :pairs-arr="cardDb.pairsArr"
         :sets="cardDb.sets"
-        :deck-card-can-add="deckCardCanAdd"
         @deckcardadd="deckCardAdd"
+        v-if="ajax.cardsLoaded"
       />
     </div>
   </div>
 </template>
 
 <script>
-import CardDb from "./lib/cardDb/cardDb";
-import PriceDb from "./lib/priceDb/priceDb";
-import Deck from "./lib/deck/deck";
+import CardDb from "./lib/cardDb/CardDb";
+import PriceDb from "./lib/priceDb/PriceDb";
+import Deck from "./lib/deck/Deck";
 
 import apiLoadCards from "./lib/cardDb/apiLoadCards";
 import apiLoadPrices from "./lib/priceDb/apiLoadPrices";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
 
-import ygoBuilder from "./components/ygoBuilder.vue";
-import ygoDeck from "./components/ygoDeck.vue";
-import ygoSorter from "./components/ygoSorter.vue";
-import ygoDrawSim from "./components/ygoDrawSim.vue";
-import ygoRandomizer from "./components/ygoRandomizer.vue";
+import ygoBuilder from "./components/YgoBuilder.vue";
+import ygoDeck from "./components/YgoDeck.vue";
+import ygoSorter from "./components/YgoSorter.vue";
+import ygoDrawSim from "./components/YgoDrawSim.vue";
+import ygoRandomizer from "./components/YgoRandomizer.vue";
 
-// eslint-disable-next-line no-console
 export default {
   name: "Index",
   components: { ygoBuilder, ygoDeck, ygoSorter, ygoDrawSim, ygoRandomizer },

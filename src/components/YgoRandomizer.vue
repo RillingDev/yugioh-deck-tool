@@ -1,39 +1,39 @@
 <template>
   <div class="randomizer btn-group" role="group">
     <button
+      @click="randomize"
       class="btn btn-primary btn-sm"
       title="Randomize Deck"
-      @click="randomize"
     >
       Randomize
     </button>
     <button
+      @click="showModal"
       class="btn btn-primary btn-sm"
       title="Configure Randomizer"
-      @click="showModal"
     >
       <span class="fas fa-cog">
         <!---->
       </span>
     </button>
     <b-modal
+      hide-footer
       id="modalRandomizerSettings"
       ref="modalRandomizerSettings"
       size="lg"
-      hide-footer
       title="Randomizer Settings"
     >
       <div class="form-group">
         <label>Mode:</label>
         <select
-          v-model="mode.selected"
-          class="form-control"
           @change="updateMode"
+          class="form-control"
+          v-model="mode.selected"
         >
           <option
-            v-for="modeCurrent in mode.available"
             :key="modeCurrent.name"
             :value="modeCurrent"
+            v-for="modeCurrent in mode.available"
           >
             {{ modeCurrent.name }}
           </option>
@@ -54,34 +54,34 @@
           <div>
             <label>Monster:</label>
             <input
-              v-model="ratios.monster"
-              type="number"
               class="form-control"
-              min="0"
               max="1"
+              min="0"
               step="0.1"
+              type="number"
+              v-model="ratios.monster"
             />
           </div>
           <div>
             <label>Spell:</label>
             <input
-              v-model="ratios.spell"
-              type="number"
               class="form-control"
-              min="0"
               max="1"
+              min="0"
               step="0.1"
+              type="number"
+              v-model="ratios.spell"
             />
           </div>
           <div>
             <label>Trap:</label>
             <input
-              v-model="ratios.trap"
-              type="number"
               class="form-control"
-              min="0"
               max="1"
+              min="0"
               step="0.1"
+              type="number"
+              v-model="ratios.trap"
             />
           </div>
         </div>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import CardDb from "../lib/cardDb/cardDb";
+import CardDb from "../lib/cardDb/CardDb";
 import { randomizeDeck } from "../lib/deck/randomize";
 import {
   archetypePoolFactory,
@@ -103,7 +103,7 @@ import {
   CHANCE_ARCHETYPE_3_EXTRA,
   getDefaultRatios
 } from "../lib/data/randomizer";
-import YgoFilter from "./ygoFilter.vue";
+import YgoFilter from "./YgoFilter.vue";
 
 export default {
   components: { YgoFilter },
@@ -208,6 +208,7 @@ export default {
   label {
     padding-right: 0.25rem;
   }
+
   select {
     min-width: 130px;
   }

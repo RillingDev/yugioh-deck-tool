@@ -1,7 +1,7 @@
 import {
-  CARD_TYPE_SORTED,
   CARD_SPELL_TYPE,
-  CARD_TRAP_TYPE
+  CARD_TRAP_TYPE,
+  CARD_TYPE_SORTED
 } from "../data/cards";
 
 const compareType = (dataA, dataB) => {
