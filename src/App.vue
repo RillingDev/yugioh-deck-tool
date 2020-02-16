@@ -132,6 +132,8 @@
 </template>
 
 <script>
+import logger from "loglevel";
+
 import CardDb from "./lib/cardDb/CardDb";
 import PriceDb from "./lib/priceDb/PriceDb";
 import Deck from "./lib/deck/Deck";
@@ -188,7 +190,7 @@ export default {
             // Load remote deck file
             Deck.fromRemoteFile(uriQuery.replace("?u=", ""))
                 .then(deck => (this.deck = deck))
-                .catch(console.error);
+                .catch(logger.error);
         }
     },
     methods: {
@@ -203,7 +205,7 @@ export default {
                     this.ajax.cardsLoaded = true;
                     this.ajax.currentlyLoading = false;
                 })
-                .catch(console.error);
+                .catch(logger.error);
         },
         fetchPrices() {
             this.ajax.pricesLoaded = false;
@@ -214,7 +216,7 @@ export default {
                     this.ajax.pricesLoaded = true;
                     this.ajax.currentlyLoading = false;
                 })
-                .catch(console.error);
+                .catch(logger.error);
         },
         deckToFile() {
             saveFile(this.deck.toFile());
@@ -239,7 +241,7 @@ export default {
                         this.deck = deck;
                         this.ajax.pricesLoaded = false;
                     })
-                    .catch(console.error);
+                    .catch(logger.error);
             }
         },
         copyShareLink() {

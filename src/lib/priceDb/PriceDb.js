@@ -1,5 +1,6 @@
 import { PRICE_CURRENCIES, PRICE_MODES } from "../data/price";
 import deepFreeze from "../deepFreeze";
+import logger from "loglevel";
 
 const mapCurrencyFomatters = () =>
     PRICE_CURRENCIES.map(currency => {
@@ -32,7 +33,7 @@ const PriceDatabase = class {
         deepFreeze(this.modes);
         deepFreeze(this.currencies);
 
-        console.log("LOADED Prices", this);
+        logger.log("LOADED Prices", this);
     }
 
     getCardsWithoutData(cardIdArr) {

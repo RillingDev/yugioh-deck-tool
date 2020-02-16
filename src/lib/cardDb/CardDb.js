@@ -1,6 +1,7 @@
 import { toMap } from "lightdash";
 import { uniq } from "lodash";
 import deepFreeze from "../deepFreeze";
+import logger from "loglevel";
 
 const getSets = pairsArr => {
     const result = [];
@@ -26,7 +27,7 @@ const CardDatabase = class {
         deepFreeze(this.sets);
         deepFreeze(this);
 
-        console.log("LOADED Cards", this);
+        logger.log("LOADED Cards", this);
     }
 
     static isTreatedAsSame(card1, card2) {

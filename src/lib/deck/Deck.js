@@ -4,6 +4,7 @@ import sort from "./sort";
 import deepFreeze from "../deepFreeze";
 import { getBuyLink, getShareText } from "./toText";
 import CardDatabase from "../cardDb/CardDb";
+import logger from "loglevel";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -36,7 +37,7 @@ const Deck = class {
 
         deepFreeze(this.parts);
 
-        console.log("CREATED Deck", this);
+        logger.log("CREATED Deck", this);
     }
 
     static fromUri(uriDeck) {

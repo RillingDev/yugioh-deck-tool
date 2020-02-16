@@ -2,6 +2,8 @@ const fs = require("fs");
 const { deflateSync } = require("zlib");
 const input = require("./input.json");
 
+const logger = console;
+
 const normalize = val => (val == null ? "" : val);
 
 const normalizeArray = val =>
@@ -62,20 +64,20 @@ fs.writeFile(
     "out/debug_types.json",
     JSON.stringify(Array.from(types).sort(), null, "  "),
     "utf8",
-    () => console.log("Wrote debug_types")
+    () => logger.log("Wrote debug_types")
 );
 fs.writeFile(
     "./out/debug_names.json",
     JSON.stringify(output, null, "  "),
     "utf8",
-    () => console.log("Wrote debug_names")
+    () => logger.log("Wrote debug_names")
 );
 fs.writeFile("./out/names.min.json", JSON.stringify(output), "utf8", () =>
-    console.log("Wrote names")
+    logger.log("Wrote names")
 );
 fs.writeFile(
     "./out/names.min.json.gz",
     deflateSync(JSON.stringify(output)),
     "binary",
-    () => console.log("Wrote names.gz")
+    () => logger.log("Wrote names.gz")
 );
