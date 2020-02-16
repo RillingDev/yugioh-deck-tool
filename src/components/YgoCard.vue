@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { isNil } from "lightdash";
+import { isNil } from "lodash";
 import {
     URL_DB_API,
     URL_IMAGE_API,

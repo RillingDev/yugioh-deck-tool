@@ -1,5 +1,5 @@
 import deepFreeze from "../deepFreeze";
-import { objFrom } from "lightdash";
+import { clone } from "lodash";
 
 const CHANCE_ADD_REQUIRED_ARCHETYPE_CARD = 0.8;
 const CHANCE_ADD_OPTIONAL_CARD = 0.7;
@@ -16,7 +16,7 @@ const RATIOS_DEFAULT = {
 
 deepFreeze(RATIOS_DEFAULT);
 
-const getDefaultRatios = () => objFrom(RATIOS_DEFAULT);
+const getDefaultRatios = () => clone(RATIOS_DEFAULT);
 
 export {
     CHANCE_ARCHETYPE_1_EXTRA,

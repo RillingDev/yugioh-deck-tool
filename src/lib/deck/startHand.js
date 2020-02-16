@@ -1,6 +1,6 @@
-import { randShuffle } from "lightdash";
+import { shuffle } from "lodash";
 
 const simulateStartingHand = (cardListMain, cardsToDraw) =>
-    randShuffle(cardListMain).slice(0, cardsToDraw);
+    shuffle(cardListMain).slice(0, cardsToDraw);
 
 export default simulateStartingHand;

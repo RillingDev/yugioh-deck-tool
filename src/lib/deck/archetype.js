@@ -1,5 +1,5 @@
 import { ARCHETYPES } from "../data/archetypes";
-import { arrUniq, randShuffle } from "lightdash";
+import { uniq, shuffle } from "lodash";
 import {
     CHANCE_ADD_OPTIONAL_CARD,
     CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,
@@ -20,14 +20,14 @@ const arrFlattenDeep = arr => {
     return result;
 };
 
-const getRandomArchetypes = (max = 1) => randShuffle(ARCHETYPES).slice(0, max);
+const getRandomArchetypes = (max = 1) => shuffle(ARCHETYPES).slice(0, max);
 
 const archetypePoolFactory = (pairsArr, archetypes, randChance) => {
     const namesMain = archetypes.map(archetype => archetype[0]);
-    const namesRequired = arrUniq(
+    const namesRequired = uniq(
         arrFlattenDeep(archetypes.map(archetype => archetype[1]))
     );
-    const namesOptional = arrUniq(
+    const namesOptional = uniq(
         arrFlattenDeep(archetypes.map(archetype => archetype[2]))
     );
     const requiredPool = pairsArr.filter(card => {

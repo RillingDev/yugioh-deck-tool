@@ -1,4 +1,5 @@
-import { arrUniq, mapFromObject } from "lightdash";
+import { toMap } from "lightdash";
+import { uniq } from "lodash";
 import deepFreeze from "../deepFreeze";
 
 const getSets = pairsArr => {
@@ -8,12 +9,12 @@ const getSets = pairsArr => {
         result.push(...pair[1].sets);
     });
 
-    return arrUniq(result).sort();
+    return uniq(result).sort();
 };
 
 const CardDatabase = class {
     constructor(obj = {}) {
-        this.cards = mapFromObject(obj);
+        this.cards = toMap(obj);
         this.pairsArr = Array.from(this.cards.entries());
         this.sets = getSets(this.pairsArr);
 

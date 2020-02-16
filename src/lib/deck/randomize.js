@@ -1,6 +1,6 @@
 import Deck from "./Deck";
 import { DECKPARTS } from "../data/deck";
-import { randNumber, randShuffle } from "lightdash";
+import { random, shuffle } from "lodash";
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 const IGNORED_WORDS = ["of", "the", "a", "an", "in"];
@@ -42,8 +42,8 @@ const getRandomName = cardNameList => {
         .split(REGEX_NAME_DELIMITER)
         .filter(word => !IGNORED_WORDS.includes(word.toLowerCase()));
 
-    return randShuffle(words)
-        .slice(0, randNumber(2, 3))
+    return shuffle(words)
+        .slice(0, random(2, 3, false))
         .join(" ")
         .trim();
 };
@@ -123,8 +123,8 @@ const randomizeDeck = (cardDb, getPools) => {
     const names = new Set();
     let result = [[], [], []];
 
-    pools.required = randShuffle(pools.required);
-    pools.main = randShuffle(pools.main);
+    pools.required = shuffle(pools.required);
+    pools.main = shuffle(pools.main);
 
     result = fillDeck(result, pools.required);
     result = fillDeck(result, pools.main, pools.ratios);

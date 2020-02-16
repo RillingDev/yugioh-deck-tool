@@ -1,11 +1,9 @@
-import { arrUniq } from "lightdash";
+import { uniq } from "lodash";
 import { URL_PRICE_API } from "../data/urls";
 
 const apiLoadPrices = (deckListAll, cardDb, priceDb) =>
     new Promise((resolve, reject) => {
-        const cardsWithoutData = priceDb.getCardsWithoutData(
-            arrUniq(deckListAll)
-        );
+        const cardsWithoutData = priceDb.getCardsWithoutData(uniq(deckListAll));
 
         if (cardsWithoutData.length > 0) {
             const cardsWithoutDataNames = cardsWithoutData

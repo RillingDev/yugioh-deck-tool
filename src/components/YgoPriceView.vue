@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { isString } from "lightdash";
+import { isString } from "lodash";
 import PriceDb from "../lib/priceDb/PriceDb";
 
 export default {

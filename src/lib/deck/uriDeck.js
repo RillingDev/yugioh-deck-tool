@@ -1,5 +1,6 @@
 import { compress, decompress } from "../compress";
-import { arrCount } from "lightdash";
+import { countBy } from "lodash";
+import { toMap } from "lightdash";
 
 const DELIMITERS = {
     deckPart: "|",
@@ -10,7 +11,7 @@ const DELIMITERS = {
 const createOptimizeList = deckList =>
     deckList
         .map(deckListPart =>
-            Array.from(arrCount(deckListPart))
+            Array.from(toMap(countBy(deckListPart)))
                 .map(entry =>
                     entry[1] > 1
                         ? `${DELIMITERS.cardAmount}${entry[1]}${entry[0]}`
