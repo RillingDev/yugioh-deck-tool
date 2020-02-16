@@ -25,7 +25,7 @@ const loadOptimizedList = str =>
         const result = [];
 
         if (deckListPart.length > 0) {
-            deckListPart.split(DELIMITERS.cardId).map(entry => {
+            deckListPart.split(DELIMITERS.cardId).forEach(entry => {
                 if (entry.startsWith(DELIMITERS.cardAmount)) {
                     const arrSized = Array(Number(entry[1]));
 
