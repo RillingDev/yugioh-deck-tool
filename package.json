@@ -20,7 +20,9 @@
     "vue-multiselect": "^2.1.6"
   },
   "devDependencies": {
+    "@types/core-js": "^2.5.3",
     "@types/lodash": "^4.14.149",
+    "@types/pako": "^1.0.1",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-service": "~4.2.0",
