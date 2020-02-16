@@ -1,0 +1,1 @@
+// https://jvilk.com/MakeTypes/

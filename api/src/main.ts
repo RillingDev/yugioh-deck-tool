@@ -1,5 +1,3 @@
-import { Human } from "./human/Human";
-import { betty } from "./people/betty";
-import { steve } from "./people/steve";
+import { Client } from "./client";
 
-export { Human, betty, steve };
+export { Client };
