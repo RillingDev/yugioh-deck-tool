@@ -1,19 +1,19 @@
 <template>
-  <div
-    :class="{ 'price--group': isGroup }"
-    class="price"
-    v-if="priceDb.prices.size > 0"
-  >
-    <span
-      :class="'price-mode-' + priceMode.id"
-      :key="priceMode.id"
-      :title="`${priceMode.name} Price`"
-      class="price-mode"
-      v-for="(priceMode, index) in priceDb.modes"
+    <div
+        :class="{ 'price--group': isGroup }"
+        class="price"
+        v-if="priceDb.prices.size > 0"
     >
-      {{ priceDb.format(priceValues[index]) }}
-    </span>
-  </div>
+        <span
+            :class="'price-mode-' + priceMode.id"
+            :key="priceMode.id"
+            :title="`${priceMode.name} Price`"
+            class="price-mode"
+            v-for="(priceMode, index) in priceDb.modes"
+        >
+            {{ priceDb.format(priceValues[index]) }}
+        </span>
+    </div>
 </template>
 
 <script>
@@ -21,26 +21,26 @@ import { isString } from "lightdash";
 import PriceDb from "../lib/priceDb/PriceDb";
 
 export default {
-  props: {
-    item: {
-      type: [String, Array],
-      required: true
+    props: {
+        item: {
+            type: [String, Array],
+            required: true
+        },
+        priceDb: {
+            type: PriceDb,
+            required: true
+        }
     },
-    priceDb: {
-      type: PriceDb,
-      required: true
+    computed: {
+        isGroup() {
+            return !isString(this.item);
+        },
+        priceValues() {
+            return this.isGroup
+                ? this.priceDb.getSelection(this.item)
+                : this.priceDb.get(this.item);
+        }
     }
-  },
-  computed: {
-    isGroup() {
-      return !isString(this.item);
-    },
-    priceValues() {
-      return this.isGroup
-        ? this.priceDb.getSelection(this.item)
-        : this.priceDb.get(this.item);
-    }
-  }
 };
 </script>
 
@@ -52,33 +52,33 @@ export default {
 @import "../styles/variables.custom";
 
 .price {
-  &.price--group {
-    margin-bottom: 0.5rem;
-  }
+    &.price--group {
+        margin-bottom: 0.5rem;
+    }
 
-  &:not(.price--group) {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-  }
+    &:not(.price--group) {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
 }
 
 .price-mode {
-  padding: 5px 8px 2px;
-  font-size: 0.9em;
-  display: inline-block;
-  text-align: center;
+    padding: 5px 8px 2px;
+    font-size: 0.9em;
+    display: inline-block;
+    text-align: center;
 
-  &-low {
-    background-color: $color-pricemode-low;
-  }
+    &-low {
+        background-color: $color-pricemode-low;
+    }
 
-  &-average {
-    background-color: $color-pricemode-average;
-  }
+    &-average {
+        background-color: $color-pricemode-average;
+    }
 
-  &-high {
-    background-color: $color-pricemode-high;
-  }
+    &-high {
+        background-color: $color-pricemode-high;
+    }
 }
 </style>

@@ -1,7 +1,7 @@
 import pako from "pako";
 
 const PAKO_OPTIONS = {
-  to: "string"
+    to: "string"
 };
 
 const deflate = val => pako.deflate(val, PAKO_OPTIONS);

@@ -1,60 +1,60 @@
 <template>
-  <a
-    :data-name="cardId"
-    :href="link"
-    @contextmenu="contextEvent"
-    class="deck-card"
-    target="_blank"
-  >
-    <img :alt="cardName" :src="image" height="135" width="100" />
-    <div class="deck-card-text">
-      <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
-      <slot class="deck-card-price" name="price" />
-    </div>
-  </a>
+    <a
+        :data-name="cardId"
+        :href="link"
+        @contextmenu="contextEvent"
+        class="deck-card"
+        target="_blank"
+    >
+        <img :alt="cardName" :src="image" height="135" width="100" />
+        <div class="deck-card-text">
+            <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
+            <slot class="deck-card-price" name="price" />
+        </div>
+    </a>
 </template>
 
 <script>
 import { isNil } from "lightdash";
 import {
-  URL_DB_API,
-  URL_IMAGE_API,
-  URL_IMAGE_UNKNOWN,
-  URL_WIKI_API
+    URL_DB_API,
+    URL_IMAGE_API,
+    URL_IMAGE_UNKNOWN,
+    URL_WIKI_API
 } from "../lib/data/urls";
 
 export default {
-  props: {
-    cardId: {
-      type: String,
-      required: true
+    props: {
+        cardId: {
+            type: String,
+            required: true
+        },
+        cardName: {
+            type: String,
+            required: false,
+            default: null
+        }
     },
-    cardName: {
-      type: String,
-      required: false,
-      default: null
-    }
-  },
-  computed: {
-    hasData() {
-      return !isNil(this.cardName);
+    computed: {
+        hasData() {
+            return !isNil(this.cardName);
+        },
+        image() {
+            return this.hasData
+                ? `${URL_IMAGE_API}/${this.cardId}.jpg`
+                : URL_IMAGE_UNKNOWN;
+        },
+        link() {
+            return this.hasData
+                ? URL_DB_API + encodeURI(this.cardName)
+                : URL_WIKI_API + this.cardId;
+        }
     },
-    image() {
-      return this.hasData
-        ? `${URL_IMAGE_API}/${this.cardId}.jpg`
-        : URL_IMAGE_UNKNOWN;
-    },
-    link() {
-      return this.hasData
-        ? URL_DB_API + encodeURI(this.cardName)
-        : URL_WIKI_API + this.cardId;
+    methods: {
+        contextEvent(e) {
+            this.$emit("deckcardrightclick", e);
+        }
     }
-  },
-  methods: {
-    contextEvent(e) {
-      this.$emit("deckcardrightclick", e);
-    }
-  }
 };
 </script>
 
@@ -66,35 +66,35 @@ export default {
 @import "../styles/variables.custom";
 
 .deck-card {
-  position: relative;
-  margin: 4px;
+    position: relative;
+    margin: 4px;
 }
 
 .deck-card img {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .deck-card-text {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  padding: 6px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: $gray-200;
-  opacity: 0;
-  transition: opacity 0.15s;
-  text-align: center;
-  color: $gray-800;
-  word-wrap: break-word;
-  line-height: 1.125em;
-  font-size: 0.85em;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $gray-200;
+    opacity: 0;
+    transition: opacity 0.15s;
+    text-align: center;
+    color: $gray-800;
+    word-wrap: break-word;
+    line-height: 1.125em;
+    font-size: 0.85em;
 
-  &:focus,
-  &:hover {
-    opacity: 1;
-  }
+    &:focus,
+    &:hover {
+        opacity: 1;
+    }
 }
 </style>
