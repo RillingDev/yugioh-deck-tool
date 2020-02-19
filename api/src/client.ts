@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import { mapCardInfo } from "./mapping/mapCardInfo";
 import { Card } from "./model/Card";
 
 class Client {
@@ -19,7 +20,8 @@ class Client {
             data: {
                 misc: true,
                 sort: "id"
-            }
+            },
+            transformResponse: data => mapCardInfo(data)
         });
         return response.data;
     }

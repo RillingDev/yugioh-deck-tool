@@ -1,54 +1,61 @@
-// https://jvilk.com/MakeTypes/
-
 interface Card {
     id: number;
     name: string;
-    type: string;
     desc: string;
+
+    type: string;
     race: string;
-    archetype?: string;
-    card_sets?: CardSetsEntity[];
-    card_images?: CardImagesEntity[];
-    card_prices?: CardPricesEntity[];
-    misc_info?: MiscInfoEntity[];
+    attribute?: string;
     atk?: number;
     def?: number;
     level?: number;
-    attribute?: string;
-    banlist_info?: BanlistInfo;
     scale?: number;
     linkval?: number;
     linkmarkers?: string[];
-}
-interface CardSetsEntity {
-    set_name: string;
-    set_code: string;
-    set_rarity: string;
-    set_price: string;
-}
-interface CardImagesEntity {
-    id: number;
-    image_url: string;
-    image_url_small: string;
-}
-interface CardPricesEntity {
-    cardmarket_price: string;
-    tcgplayer_price: string;
-    ebay_price: string;
-    amazon_price: string;
-}
-interface MiscInfoEntity {
-    beta_name?: string;
+
+    sets: CardSet[];
+    images: CardImage[];
+    prices: CardPrices[];
+
+    betaName: string | null;
+    treatedAs: string | null;
+    archetype: string | null;
+    formats: string[];
+    release: ReleaseInfo | null;
+    banlist: BanlistInfo | null;
+
     views: number;
-    formats?: string[];
-    tcg_date?: string;
-    ocg_date?: string;
-    treated_as?: string;
 }
+
+interface CardSet {
+    name: string;
+    code: string;
+    rarity: string;
+    price: string;
+}
+
+interface CardImage {
+    id: number;
+    url: string;
+    urlSmall: string;
+}
+
+interface CardPrices {
+    cardmarket: string;
+    tcgplayer: string;
+    ebay: string;
+    amazon: string;
+}
+
+interface ReleaseInfo {
+    tcg: string | null;
+    ocg: string | null;
+}
+
 interface BanlistInfo {
-    ban_tcg?: string;
-    ban_ocg?: string;
-    ban_goat?: string;
+    tcg: string | null;
+    ocg: string | null;
+    goat: string | null;
 }
 
 export { Card };

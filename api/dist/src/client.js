@@ -1,4 +1,5 @@
 import axios from "axios";
+import { mapCardInfo } from "./mapping/mapCardInfo";
 class Client {
     constructor() {
         this.httpClient = axios.create({
@@ -14,7 +15,8 @@ class Client {
             data: {
                 misc: true,
                 sort: "id"
-            }
+            },
+            transformResponse: data => mapCardInfo(data)
         });
         return response.data;
     }
