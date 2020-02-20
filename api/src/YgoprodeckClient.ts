@@ -1,7 +1,12 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 import { mapCardInfo } from "./mapping/mapCardInfo";
+import { Card } from "./model/Card";
 import { mapCardSets } from "./mapping/mapCardSets";
-class Client {
+import { CardSet } from "./model/CardSet";
+
+class YgoprodeckClient {
+    private readonly httpClient: AxiosInstance;
+
     constructor() {
         this.httpClient = axios.create({
             baseURL: "https://db.ygoprodeck.com/api/v6/",
@@ -10,7 +15,8 @@ class Client {
             validateStatus: status => status === 200
         });
     }
-    async getCardInfo() {
+
+    public async getCardInfo(): Promise<Card[]> {
         const response = await this.httpClient.get("cardinfo.php", {
             timeout: 10000,
             data: {
@@ -20,11 +26,13 @@ class Client {
         });
         return response.data;
     }
-    async getCardSets() {
+
+    public async getCardSets(): Promise<CardSet[]> {
         const response = await this.httpClient.get("cardsets.php", {
             transformResponse: data => mapCardSets(data)
         });
         return response.data;
     }
 }
-export { Client };
+
+export { YgoprodeckClient };

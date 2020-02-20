@@ -1,3 +1,3 @@
-import { Client } from "./client";
+import { YgoprodeckClient } from "./YgoprodeckClient";
 
-export { Client };
+export { YgoprodeckClient };
