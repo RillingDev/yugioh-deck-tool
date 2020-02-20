@@ -1,3 +1,5 @@
+import { ReleaseInfo } from "./ReleaseInfo";
+
 interface Card {
     id: number;
     name: string;
@@ -45,11 +47,6 @@ interface CardPrices {
     tcgplayer: string;
     ebay: string;
     amazon: string;
-}
-
-interface ReleaseInfo {
-    tcg: string | null;
-    ocg: string | null;
 }
 
 interface BanlistInfo {

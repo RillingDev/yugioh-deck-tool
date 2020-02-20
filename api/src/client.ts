@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import { mapCardInfo } from "./mapping/mapCardInfo";
 import { Card } from "./model/Card";
+import { mapCardSets } from "./mapping/mapCardSets";
+import { CardSet } from "./model/CardSet";
 
 class Client {
     private readonly httpClient: AxiosInstance;
@@ -18,10 +20,16 @@ class Client {
         const response = await this.httpClient.get("cardinfo.php", {
             timeout: 10000,
             data: {
-                misc: true,
-                sort: "id"
+                misc: true
             },
             transformResponse: data => mapCardInfo(data)
+        });
+        return response.data;
+    }
+
+    public async getCardSets(): Promise<CardSet[]> {
+        const response = await this.httpClient.get("cardsets.php", {
+            transformResponse: data => mapCardSets(data)
         });
         return response.data;
     }

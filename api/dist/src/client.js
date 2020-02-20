@@ -1,5 +1,6 @@
 import axios from "axios";
 import { mapCardInfo } from "./mapping/mapCardInfo";
+import { mapCardSets } from "./mapping/mapCardSets";
 class Client {
     constructor() {
         this.httpClient = axios.create({
@@ -13,10 +14,15 @@ class Client {
         const response = await this.httpClient.get("cardinfo.php", {
             timeout: 10000,
             data: {
-                misc: true,
-                sort: "id"
+                misc: true
             },
             transformResponse: data => mapCardInfo(data)
+        });
+        return response.data;
+    }
+    async getCardSets() {
+        const response = await this.httpClient.get("cardsets.php", {
+            transformResponse: data => mapCardSets(data)
         });
         return response.data;
     }
