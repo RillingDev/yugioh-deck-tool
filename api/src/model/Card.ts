@@ -15,7 +15,7 @@ interface Card {
     linkval?: number;
     linkmarkers?: string[];
 
-    sets: CardSet[];
+    sets: CardSetAppearance[];
     images: CardImage[];
     prices: CardPrices[];
 
@@ -29,7 +29,7 @@ interface Card {
     views: number;
 }
 
-interface CardSet {
+interface CardSetAppearance {
     name: string;
     code: string;
     rarity: string;

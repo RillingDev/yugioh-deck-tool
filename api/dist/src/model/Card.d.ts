@@ -12,7 +12,7 @@ interface Card {
     scale?: number;
     linkval?: number;
     linkmarkers?: string[];
-    sets: CardSet[];
+    sets: CardSetAppearance[];
     images: CardImage[];
     prices: CardPrices[];
     betaName: string | null;
@@ -23,7 +23,7 @@ interface Card {
     banlist: BanlistInfo;
     views: number;
 }
-interface CardSet {
+interface CardSetAppearance {
     name: string;
     code: string;
     rarity: string;
