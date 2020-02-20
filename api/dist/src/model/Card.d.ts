@@ -19,8 +19,8 @@ interface Card {
     treatedAs: string | null;
     archetype: string | null;
     formats: string[];
-    release: ReleaseInfo | null;
-    banlist: BanlistInfo | null;
+    release: ReleaseInfo;
+    banlist: BanlistInfo;
     views: number;
 }
 interface CardSet {

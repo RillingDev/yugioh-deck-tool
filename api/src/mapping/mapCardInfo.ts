@@ -103,15 +103,15 @@ const mapCardInfo = (data: RawCard[]): Card[] => data.map(rawCard => {
         treatedAs: miscInfo?.treated_as ?? null,
         archetype: rawCard.archetype ?? null,
         formats: miscInfo?.formats ?? [],
-        release: miscInfo != null ? {
-            ocg: miscInfo.ocg_date ?? null,
-            tcg: miscInfo.tcg_date ?? null
-        } : null,
-        banlist: rawCard.banlist_info != null ? {
-            tcg: rawCard.banlist_info.ban_tcg ?? null,
-            ocg: rawCard.banlist_info.ban_ocg ?? null,
-            goat: rawCard.banlist_info.ban_goat ?? null
-        } : null,
+        release:  {
+            ocg: miscInfo?.ocg_date ?? null,
+            tcg: miscInfo?.tcg_date ?? null
+        },
+        banlist: {
+            tcg: rawCard.banlist_info?.ban_tcg ?? null,
+            ocg: rawCard.banlist_info?.ban_ocg ?? null,
+            goat: rawCard.banlist_info?.ban_goat ?? null
+        } ,
 
         views: miscInfo?.views ?? 0
     };
