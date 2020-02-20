@@ -1,5 +1,6 @@
 import deepFreeze from "../deepFreeze";
 import logger from "loglevel";
+import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../data/urls.js";
 
 const banlistToNumber = val => {
     if (val === "Banned") {
@@ -17,6 +18,8 @@ const banlistToNumber = val => {
 const createIdMap = cardArr => {
     const result = new Map();
     for (const card of cardArr) {
+        const imageUrl =
+            card.images.length > 0 ? card.images[0].url : URL_IMAGE_UNKNOWN;
         result.set(String(card.id), {
             name: card.name,
 
@@ -36,7 +39,10 @@ const createIdMap = cardArr => {
             date: new Date(card.release.tcg).getTime(),
             times: card.views,
             rating: [0, 0],
-            treatedAs: card.treatedAs
+            treatedAs: card.treatedAs,
+
+            imageUrl: imageUrl,
+            referenceUrl: URL_DB_API + encodeURI(card.name)
         });
     }
     return result;

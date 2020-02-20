@@ -1,53 +1,33 @@
 <template>
     <a
-        :data-name="cardId"
-        :href="link"
+        :data-name="card.name"
+        :href="card.referenceUrl"
         @contextmenu="contextEvent"
         class="deck-card"
         target="_blank"
     >
-        <img :alt="cardName" :src="image" height="135" width="100" />
+        <img :alt="card.name" :src="card.imageUrl" height="135" width="100" />
         <div class="deck-card-text">
-            <span class="deck-card-name">{{ cardName || `[${cardId}]` }}</span>
+            <span class="deck-card-name">{{ card.name }}</span>
             <slot class="deck-card-price" name="price" />
         </div>
     </a>
 </template>
 
 <script>
-import { isNil } from "lodash";
-import {
-    URL_DB_API,
-    URL_IMAGE_API,
-    URL_IMAGE_UNKNOWN,
-    URL_WIKI_API
-} from "../lib/data/urls";
+import { URL_IMAGE_UNKNOWN } from "../lib/data/urls.js";
 
 export default {
     props: {
-        cardId: {
-            type: String,
-            required: true
-        },
-        cardName: {
-            type: String,
-            required: false,
-            default: null
-        }
-    },
-    computed: {
-        hasData() {
-            return !isNil(this.cardName);
-        },
-        image() {
-            return this.hasData
-                ? `${URL_IMAGE_API}/${this.cardId}.jpg`
-                : URL_IMAGE_UNKNOWN;
-        },
-        link() {
-            return this.hasData
-                ? URL_DB_API + encodeURI(this.cardName)
-                : URL_WIKI_API + this.cardId;
+        card: {
+            type: Object,
+            default: () => {
+                return {
+                    name: "Unknown",
+                    imageUrl: URL_IMAGE_UNKNOWN,
+                    referenceUrl: "#"
+                };
+            }
         }
     },
     methods: {

@@ -34,8 +34,7 @@
             </div>
             <div class="drawsim-output">
                 <ygo-card
-                    :card-id="drawItemId"
-                    :card-name="cardDb.getName(drawItemId)"
+                    :card="cardDb.get(drawItemId)"
                     :key="`${drawItemId}_${index}`"
                     v-for="(drawItemId, index) of drawItems"
                 />

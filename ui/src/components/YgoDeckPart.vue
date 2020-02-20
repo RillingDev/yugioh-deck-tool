@@ -9,8 +9,7 @@
             />
             <div class="deck-content">
                 <ygo-card
-                    :card-id="cardId"
-                    :card-name="cardDb.getName(cardId)"
+                    :card="cardDb.get(cardId)"
                     :key="`${cardId}_${cardIndex}`"
                     @deckcardrightclick.prevent="
                         deck.cardRemove(deckPart, cardId)
