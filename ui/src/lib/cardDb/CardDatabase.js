@@ -1,24 +1,54 @@
-import { toMap } from "lightdash";
-import { uniq } from "lodash";
 import deepFreeze from "../deepFreeze";
 import logger from "loglevel";
 
-const getSets = pairsArr => {
-    const result = [];
-
-    pairsArr.forEach(pair => {
-        result.push(...pair[1].sets);
-    });
-
-    return uniq(result).sort();
+const banlistToNumber = val => {
+    if (val === "Banned") {
+        return 0;
+    }
+    if (val === "Limited") {
+        return 1;
+    }
+    if (val === "Semi-Limited") {
+        return 2;
+    }
+    return 3;
 };
 
-const CardDatabase = class {
-    constructor(obj = {}) {
-        this.cards = toMap(obj);
-        this.pairsArr = Array.from(this.cards.entries());
-        this.sets = getSets(this.pairsArr);
+const createIdMap = cardArr => {
+    const result = new Map();
+    for (const card of cardArr) {
+        result.set(String(card.id), {
+            name: card.name,
 
+            type: card.type,
+            race: card.race,
+            attribute: card.attribute ?? null,
+            stats: [card.atk ?? null, card.def ?? null, card.level ?? null],
+            linkmarkers: card.linkmarkers ?? [],
+
+            format: card.formats,
+            limit: [
+                banlistToNumber(card.banlist.tcg),
+                banlistToNumber(card.banlist.ocg)
+            ],
+            sets: createSetArr(card.sets),
+
+            date: new Date(card.release.tcg).getTime(),
+            times: card.views,
+            rating: [0, 0],
+            treatedAs: card.treatedAs
+        });
+    }
+    return result;
+};
+
+const createSetArr = cardSets => cardSets.map(set => set.name);
+
+const CardDatabase = class {
+    constructor(cardInfo = [], cardSets = []) {
+        this.cards = createIdMap(cardInfo);
+        this.pairsArr = Array.from(this.cards.entries());
+        this.sets = createSetArr(cardSets);
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
          */

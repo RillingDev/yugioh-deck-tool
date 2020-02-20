@@ -138,8 +138,7 @@ import CardDb from "./lib/cardDb/CardDatabase.js";
 import PriceDb from "./lib/priceDb/PriceDatabase.js";
 import Deck from "./lib/deck/Deck";
 
-import apiLoadCards from "./lib/cardDb/apiLoadCards";
-import apiLoadPrices from "./lib/priceDb/apiLoadPrices";
+import { YgoprodeckClient } from "../../api";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
 
@@ -148,6 +147,8 @@ import ygoDeck from "./components/YgoDeck.vue";
 import ygoSorter from "./components/YgoSorter.vue";
 import ygoDrawSim from "./components/YgoDrawSim.vue";
 import ygoRandomizer from "./components/YgoRandomizer.vue";
+
+const ygoprodeckClient = new YgoprodeckClient();
 
 export default {
     name: "Index",
@@ -198,10 +199,12 @@ export default {
             this.ajax.cardsLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadCards()
-                .then(result => {
-                    this.cardDb = new CardDb(result);
-
+            Promise.all([
+                ygoprodeckClient.getCardInfo(),
+                ygoprodeckClient.getCardSets()
+            ])
+                .then(([cardInfo, cardSets]) => {
+                    this.cardDb = new CardDb(cardInfo, cardSets);
                     this.ajax.cardsLoaded = true;
                     this.ajax.currentlyLoading = false;
                 })
@@ -211,12 +214,12 @@ export default {
             this.ajax.pricesLoaded = false;
             this.ajax.currentlyLoading = true;
 
-            apiLoadPrices(this.deck.all, this.cardDb, this.priceDb)
-                .then(() => {
-                    this.ajax.pricesLoaded = true;
-                    this.ajax.currentlyLoading = false;
-                })
-                .catch(logger.error);
+            // apiLoadPrices(this.deck.all, this.cardDb, this.priceDb)
+            //     .then(() => {
+            //         this.ajax.pricesLoaded = true;
+            //         this.ajax.currentlyLoading = false;
+            //     })
+            //     .catch(logger.error);
         },
         deckToFile() {
             saveFile(this.deck.toFile());

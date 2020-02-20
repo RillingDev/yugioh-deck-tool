@@ -105,9 +105,15 @@ const Deck = class {
 
     cardCanAdd(deckPart, cardId, cardDb, banlist) {
         const card = cardDb.get(cardId);
-        const cardCount = this.all.filter(activeSectionCardId =>
-            CardDatabase.isTreatedAsSame(card, cardDb.get(activeSectionCardId))
-        ).length;
+        const cardCount = this.all.filter(activeSectionCardId => {
+            if (!cardDb.has(activeSectionCardId)) {
+                return true;
+            }
+            return CardDatabase.isTreatedAsSame(
+                card,
+                cardDb.get(activeSectionCardId)
+            );
+        }).length;
 
         return (
             deckPart.check(card) &&
