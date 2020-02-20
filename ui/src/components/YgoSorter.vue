@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import CardDb from "../lib/cardDb/CardDb";
+import CardDb from "../lib/cardDb/CardDatabase.js";
 import Deck from "../lib/deck/Deck";
 
 export default {

@@ -55,7 +55,7 @@
 import ygoCard from "./YgoCard.vue";
 
 import startHand from "../lib/deck/startHand";
-import CardDb from "../lib/cardDb/CardDb";
+import CardDb from "../lib/cardDb/CardDatabase.js";
 
 export default {
     components: {

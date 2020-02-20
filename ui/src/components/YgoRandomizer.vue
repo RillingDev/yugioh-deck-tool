@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import CardDb from "../lib/cardDb/CardDb";
+import CardDb from "../lib/cardDb/CardDatabase.js";
 import { randomizeDeck } from "../lib/deck/randomize";
 import {
     archetypePoolFactory,

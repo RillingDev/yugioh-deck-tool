@@ -18,7 +18,7 @@
 
 <script>
 import { isString } from "lodash";
-import PriceDb from "../lib/priceDb/PriceDb";
+import PriceDb from "../lib/priceDb/PriceDatabase.js";
 
 export default {
     props: {

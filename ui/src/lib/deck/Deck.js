@@ -3,7 +3,7 @@ import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
 import deepFreeze from "../deepFreeze";
 import { getBuyLink, getShareText } from "./toText";
-import CardDatabase from "../cardDb/CardDb";
+import CardDatabase from "../cardDb/CardDatabase.js";
 import logger from "loglevel";
 
 const REGEX_CREATED = /#created.+/;

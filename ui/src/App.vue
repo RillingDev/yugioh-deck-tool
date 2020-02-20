@@ -134,8 +134,8 @@
 <script>
 import logger from "loglevel";
 
-import CardDb from "./lib/cardDb/CardDb";
-import PriceDb from "./lib/priceDb/PriceDb";
+import CardDb from "./lib/cardDb/CardDatabase.js";
+import PriceDb from "./lib/priceDb/PriceDatabase.js";
 import Deck from "./lib/deck/Deck";
 
 import apiLoadCards from "./lib/cardDb/apiLoadCards";
