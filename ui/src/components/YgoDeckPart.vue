@@ -2,11 +2,7 @@
     <div :class="`deck-part-${deckPart.id}`" class="deck-part">
         <h3>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</h3>
         <template v-if="deckPartList.length">
-            <ygo-price-view
-                :item="deckPartList"
-                :price-db="priceDb"
-                v-if="ajax.pricesLoaded"
-            />
+            <ygo-price-view :item="deckPartList" :price-db="priceDb" />
             <div class="deck-content">
                 <ygo-card
                     :card="cardDb.get(cardId)"
@@ -20,7 +16,6 @@
                         :item="cardId"
                         :price-db="priceDb"
                         slot="price"
-                        v-if="ajax.pricesLoaded"
                     />
                 </ygo-card>
             </div>
@@ -42,10 +37,6 @@ export default {
         ygoPriceView
     },
     props: {
-        ajax: {
-            type: Object,
-            required: true
-        },
         deck: {
             type: Deck,
             required: true

@@ -1,11 +1,10 @@
 <template>
     <div class="deck">
-        <div class="deck-part deck-part-total" v-if="ajax.pricesLoaded">
+        <div class="deck-part deck-part-total">
             <span>Total:</span>
             <ygo-price-view :item="deck.all" :price-db="priceDb" />
         </div>
         <ygo-deck-part
-            :ajax="ajax"
             :card-db="cardDb"
             :class="`deck-part-${deckPart.id}`"
             :deck="deck"
@@ -32,10 +31,6 @@ export default {
         ygoPriceView
     },
     props: {
-        ajax: {
-            type: Object,
-            required: true
-        },
         deck: {
             type: Deck,
             required: true

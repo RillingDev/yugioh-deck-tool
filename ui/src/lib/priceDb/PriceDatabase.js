@@ -13,6 +13,7 @@ const mapCurrencyFomatters = () =>
 
         return currency;
     });
+
 const guessDefaultCurrency = () => {
     const localeIndex = PRICE_CURRENCIES.findIndex(
         currency => currency.locale === navigator.language
@@ -23,33 +24,30 @@ const guessDefaultCurrency = () => {
         : PRICE_CURRENCIES[localeIndex];
 };
 
+const createIdMap = cardArr => {
+    const result = new Map();
+    for (const card of cardArr) {
+        if (card.prices.length > 0) {
+            result.set(String(card.id), [
+                Number(card.prices[0].tcgplayer),
+                Number(card.prices[0].cardmarket),
+                Number(card.prices[0].ebay)
+            ]);
+        }
+    }
+    return result;
+};
+
 const PriceDatabase = class {
-    constructor() {
+    constructor(cardInfo = []) {
         this.modes = PRICE_MODES;
         this.currencies = mapCurrencyFomatters();
         this.activeCurrency = guessDefaultCurrency();
-        this.prices = new Map();
+        this.prices = createIdMap(cardInfo);
 
         deepFreeze(this.modes);
-        deepFreeze(this.currencies);
 
         logger.log("LOADED Prices", this);
-    }
-
-    getCardsWithoutData(cardIdArr) {
-        return cardIdArr.filter(cardId => !this.has(cardId));
-    }
-
-    set(cardId, val) {
-        if (val !== null) {
-            return this.prices.set(cardId, {
-                low: val[0],
-                average: val[1],
-                high: val[2]
-            });
-        }
-
-        return false;
     }
 
     has(cardId) {
@@ -57,16 +55,16 @@ const PriceDatabase = class {
     }
 
     get(cardId) {
-        if (this.has(cardId)) {
-            const item = this.prices.get(cardId);
-
-            return [item.low, item.average, item.high];
+        if (!this.has(cardId)) {
+            return [0, 0, 0];
         }
-
-        return [0, 0, 0];
+        return this.prices.get(cardId);
     }
 
     getSelection(cardIdArr) {
+        if (cardIdArr.length === 0) {
+            return [0, 0, 0];
+        }
         const items = cardIdArr.map(cardId => this.get(cardId));
 
         return items.reduce((accumulator, val) => [

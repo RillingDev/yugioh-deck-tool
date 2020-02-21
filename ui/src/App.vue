@@ -81,12 +81,11 @@
                     <span class="fas fa-shopping-cart"><!-- icon--></span>
                 </a>
                 <button
-                    :disabled="isDeckEmpty"
-                    @click="fetchPrices"
+                    disabled="disabled"
                     class="btn btn-primary form-control"
                     title="Load Prices"
                 >
-                    <span :hidden="ajax.currentlyLoading">Load Prices</span>
+                    <span :hidden="ajax.currentlyLoading">Ready</span>
                     <span :hidden="!ajax.currentlyLoading">
                         <span class="fas fa-spinner fa-spin fa-fw">
                             <!-- icon -->
@@ -100,11 +99,10 @@
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
             <ygo-deck
-                :ajax="ajax"
                 :card-db="cardDb"
                 :deck="deck"
                 :price-db="priceDb"
-                v-if="ajax.cardsLoaded"
+                v-if="!ajax.currentlyLoading"
             />
         </div>
 
@@ -117,7 +115,7 @@
                 <ygo-randomizer
                     :card-db="cardDb"
                     @randomize="deckRandomize"
-                    v-if="ajax.cardsLoaded"
+                    v-if="!ajax.currentlyLoading"
                 />
             </div>
             <ygo-builder
@@ -125,7 +123,7 @@
                 :pairs-arr="cardDb.pairsArr"
                 :sets="cardDb.sets"
                 @deckcardadd="deckCardAdd"
-                v-if="ajax.cardsLoaded"
+                v-if="!ajax.currentlyLoading"
             />
         </div>
     </div>
@@ -159,9 +157,7 @@ export default {
             priceDb: new PriceDb(),
             deck: new Deck(),
             ajax: {
-                cardsLoaded: false,
-                pricesLoaded: false,
-                currentlyLoading: false
+                currentlyLoading: true
             }
         };
     },
@@ -196,7 +192,6 @@ export default {
     },
     methods: {
         fetchCards() {
-            this.ajax.cardsLoaded = false;
             this.ajax.currentlyLoading = true;
 
             Promise.all([
@@ -205,21 +200,10 @@ export default {
             ])
                 .then(([cardInfo, cardSets]) => {
                     this.cardDb = new CardDb(cardInfo, cardSets);
-                    this.ajax.cardsLoaded = true;
+                    this.priceDb = new PriceDb(cardInfo);
                     this.ajax.currentlyLoading = false;
                 })
                 .catch(logger.error);
-        },
-        fetchPrices() {
-            this.ajax.pricesLoaded = false;
-            this.ajax.currentlyLoading = true;
-
-            // apiLoadPrices(this.deck.all, this.cardDb, this.priceDb)
-            //     .then(() => {
-            //         this.ajax.pricesLoaded = true;
-            //         this.ajax.currentlyLoading = false;
-            //     })
-            //     .catch(logger.error);
         },
         deckToFile() {
             saveFile(this.deck.toFile());
@@ -229,11 +213,9 @@ export default {
         },
         deckCardAdd(deckPart, cardId, banlist) {
             this.deck.cardAdd(deckPart, cardId, this.cardDb, banlist);
-            this.ajax.pricesLoaded = false;
         },
         deckRandomize(newDeck) {
             this.deck = newDeck;
-            this.ajax.pricesLoaded = false;
         },
         fileOnUpload(e) {
             const files = e.target.files || e.dataTransfer.files;
@@ -242,7 +224,6 @@ export default {
                 Deck.fromFile(files[0])
                     .then(deck => {
                         this.deck = deck;
-                        this.ajax.pricesLoaded = false;
                     })
                     .catch(logger.error);
             }

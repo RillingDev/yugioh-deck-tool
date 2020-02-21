@@ -20,6 +20,7 @@ const createIdMap = cardArr => {
     for (const card of cardArr) {
         const imageUrl =
             card.images.length > 0 ? card.images[0].url : URL_IMAGE_UNKNOWN;
+
         result.set(String(card.id), {
             name: card.name,
 
@@ -36,10 +37,10 @@ const createIdMap = cardArr => {
             ],
             sets: createSetArr(card.sets),
 
+            treatedAs: card.treatedAs,
             date: new Date(card.release.tcg).getTime(),
             times: card.views,
             rating: [0, 0],
-            treatedAs: card.treatedAs,
 
             imageUrl: imageUrl,
             referenceUrl: URL_DB_API + encodeURI(card.name)
