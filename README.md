@@ -12,8 +12,6 @@ Live version: <https://ygoprodeck.com/card-database/deck-prices/>.
 
 ### Directory Structure
 
-- `src` Vue app source code.
-- `public` Static Vue files.
-- `api` PHP based backend for serving JSON data files as well as handling price requests.
-- `convert` A Node.js script for ygoprodeck.com to convert the SQL dumps of the card database to JSON data files.
+- `ui` Vue app source code.
+- `api` Backend handling communication with the [YGOProDeck API](https://db.ygoprodeck.com/api-guide/)
 - `ygoprodeck.com` Files used on ygoprodeck.com, e.g. the WordPress template the app is accessed by.
