@@ -1,15 +1,15 @@
 const PRICE_MODES = [
     {
-        id: "low",
-        name: "tcgplayer"
+        id: "tcgplayer",
+        name: "TCGPlayer"
     },
     {
-        id: "average",
-        name: "cardmarket"
+        id: "cardmarket",
+        name: "Cardmarket"
     },
     {
-        id: "high",
-        name: "ebay"
+        id: "ebay",
+        name: "eBay"
     }
 ];
 

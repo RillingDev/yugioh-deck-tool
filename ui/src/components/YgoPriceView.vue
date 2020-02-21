@@ -69,16 +69,17 @@ export default {
     display: inline-block;
     text-align: center;
 
-    &-low {
-        background-color: $color-pricemode-low;
+    &-tcgplayer {
+        background-color: $color-pricemode-tcgplayer;
+        color:#fff
     }
 
-    &-average {
-        background-color: $color-pricemode-average;
+    &-cardmarket {
+        background-color: $color-pricemode-cardmarket;
     }
 
-    &-high {
-        background-color: $color-pricemode-high;
+    &-ebay {
+        background-color: $color-pricemode-ebay;
     }
 }
 </style>
