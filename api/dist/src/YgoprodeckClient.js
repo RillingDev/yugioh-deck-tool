@@ -11,7 +11,7 @@ class YgoprodeckClient {
         });
     }
     async getCardInfo() {
-        const response = await this.httpClient.get("cardinfo.php", {
+        const response = await this.httpClient.get("cardinfo.php?misc=yes", {
             timeout: 10000,
             data: {
                 misc: true

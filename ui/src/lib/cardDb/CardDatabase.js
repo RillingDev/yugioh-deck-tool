@@ -52,7 +52,6 @@ const CardDatabase = class {
         this.cards = createIdMap(cardInfo);
         this.pairsArr = Array.from(this.cards.entries());
         this.sets = createSetArr(cardSets);
-        console.log(this.cards)
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
          */
