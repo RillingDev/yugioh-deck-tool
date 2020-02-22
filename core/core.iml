@@ -5,8 +5,11 @@
     <content url="file://$MODULE_DIR$/../core">
       <sourceFolder url="file://$MODULE_DIR$/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../core/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../core/spec/src" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/_old" />
       <excludeFolder url="file://$MODULE_DIR$/../core/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/../core/spec/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/../core/spec/support" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

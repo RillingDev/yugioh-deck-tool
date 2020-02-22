@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "private": true,
     "description": "API for ygoprodeck.com",
-    "module": "./dist/src/main.js",
-    "types": "./dist/src/main.d.ts",
+    "module": "./dist/esm/src/main.js",
+    "types": "./dist/esm/src/main.d.ts",
     "scripts": {
         "start": "npm run dist",
         "dist": "npm-run-all clean lint build",
@@ -12,7 +12,9 @@
         "build": "tsc --build ./tsconfig.json",
         "watch": "tsc --build ./tsconfig.json -w",
         "lint": "eslint ./src/ ./spec/src/ --ext .ts",
-        "fix": "eslint ./src/ ./spec/src/ --ext .ts --fix"
+        "fix": "eslint ./src/ ./spec/src/ --ext .ts --fix",
+        "test": "npm-run-all build test:jasmine",
+        "test:jasmine": "jasmine --require=source-map-support/register"
     },
     "bugs": {
         "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
@@ -36,6 +38,7 @@
         "pako": "^1.0.8"
     },
     "devDependencies": {
+        "@types/jasmine": "^3.5.6",
         "@types/lodash": "^4.14.149",
         "@types/pako": "^1.0.1",
         "@typescript-eslint/eslint-plugin": "^2.19.2",
@@ -46,6 +49,8 @@
         "npm-run-all": "^4.1.5",
         "prettier": "^1.19.1",
         "rimraf": "^3.0.2",
-        "typescript": "^3.7.5"
+        "typescript": "^3.7.5",
+        "jasmine": "^3.5.0",
+        "source-map-support": "^0.5.16"
     }
 }

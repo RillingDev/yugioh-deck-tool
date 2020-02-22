@@ -46,3 +46,4 @@ interface BanlistInfo {
     goat: string | null;
 }
 export { Card };
+//# sourceMappingURL=Card.d.ts.map

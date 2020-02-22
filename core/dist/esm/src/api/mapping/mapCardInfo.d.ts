@@ -51,3 +51,4 @@ interface RawBanlistInfo {
 }
 declare const mapCardInfo: (data: RawCard[]) => Card[];
 export { mapCardInfo };
+//# sourceMappingURL=mapCardInfo.d.ts.map

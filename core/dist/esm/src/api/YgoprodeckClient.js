@@ -28,3 +28,4 @@ class YgoprodeckClient {
     }
 }
 export { YgoprodeckClient };
+//# sourceMappingURL=YgoprodeckClient.js.map

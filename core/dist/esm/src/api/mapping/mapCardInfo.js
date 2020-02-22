@@ -55,3 +55,4 @@ const mapCardInfo = (data) => data.map(rawCard => {
     };
 });
 export { mapCardInfo };
+//# sourceMappingURL=mapCardInfo.js.map

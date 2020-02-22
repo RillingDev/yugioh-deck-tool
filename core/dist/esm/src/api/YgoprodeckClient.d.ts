@@ -7,3 +7,4 @@ declare class YgoprodeckClient {
     getCardSets(): Promise<CardSet[]>;
 }
 export { YgoprodeckClient };
+//# sourceMappingURL=YgoprodeckClient.d.ts.map

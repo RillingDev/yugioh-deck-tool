@@ -1,18 +1,26 @@
 {
     "compilerOptions": {
         "moduleResolution": "node",
-        "target": "es2018",
-        "module": "esnext",
         "rootDir": "./",
         "baseUrl": "./",
-        "outDir": "./dist//",
+        "target": "es2018",
+        "composite": true,
         "newLine": "LF",
-        "declaration": true,
         "removeComments": false,
-        "strict": true
+        "strict": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
-    "include": ["./src"],
+    "include": [],
     "exclude": [
         "node_modules"
+    ],
+    "references": [
+        {
+            "path": "./src/tsconfig.json"
+        },
+        {
+            "path": "./spec/src/tsconfig.json"
+        }
     ]
 }
