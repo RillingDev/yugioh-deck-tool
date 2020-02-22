@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { URL_IMAGE_UNKNOWN } from "../lib/data/urls.js";
+import { URL_IMAGE_UNKNOWN } from "../lib/data/urls";
 
 export default {
     props: {

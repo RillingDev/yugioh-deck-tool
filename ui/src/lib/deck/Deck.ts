@@ -3,7 +3,7 @@ import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
 import deepFreeze from "../deepFreeze";
 import { getBuyLink, getShareText } from "./toText";
-import CardDatabase from "../cardDb/CardDatabase.js";
+import CardDatabase from "../cardDb/CardDatabase";
 import logger from "loglevel";
 
 const REGEX_CREATED = /#created.+/;
@@ -25,6 +25,12 @@ const fileToList = fileContent => {
 };
 
 const Deck = class {
+    private name: string;
+    private main: any[];
+    private extra: any[];
+    private side: any[];
+    private all: any[];
+    private parts: any[];
     constructor(list = [[], [], []], name = "Unnamed") {
         this.name = name;
         this.parts = DECKPARTS;
@@ -37,7 +43,7 @@ const Deck = class {
 
         deepFreeze(this.parts);
 
-        logger.log("CREATED Deck", this);
+        logger.info("CREATED Deck", this);
     }
 
     static fromUri(uriDeck) {

@@ -18,7 +18,7 @@
 
 <script>
 import { isString } from "lodash";
-import PriceDb from "../lib/priceDb/PriceDatabase.js";
+import PriceDb from "../lib/priceDb/PriceDatabase";
 
 export default {
     props: {
@@ -71,7 +71,7 @@ export default {
 
     &-tcgplayer {
         background-color: $color-pricemode-tcgplayer;
-        color:#fff
+        color: #fff;
     }
 
     &-cardmarket {

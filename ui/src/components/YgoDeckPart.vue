@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import CardDb from "../lib/cardDb/CardDatabase.js";
-import PriceDb from "../lib/priceDb/PriceDatabase.js";
+import CardDb from "../lib/cardDb/CardDatabase";
+import PriceDb from "../lib/priceDb/PriceDatabase";
 import Deck from "../lib/deck/Deck";
 
 import ygoCard from "./YgoCard.vue";

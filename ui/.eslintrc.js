@@ -1,12 +1,16 @@
 module.exports = {
     root: true,
+
     env: {
         node: true
     },
+
     extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
+
     parserOptions: {
-        parser: "babel-eslint"
+        parser: '@typescript-eslint/parser'
     },
+
     rules: {
         "no-console": "warn",
         "no-debugger": "warn",
@@ -20,5 +24,12 @@ module.exports = {
         "no-else-return": "warn",
         "no-implicit-coercion": "warn",
         "no-dupe-else-if": "warn"
-    }
+    },
+
+    'extends': [
+      'plugin:vue/essential',
+      'eslint:recommended',
+      '@vue/prettier',
+      '@vue/typescript'
+    ]
 };

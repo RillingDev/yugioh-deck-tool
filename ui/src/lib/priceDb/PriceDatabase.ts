@@ -39,6 +39,10 @@ const createIdMap = cardArr => {
 };
 
 const PriceDatabase = class {
+    private modes: any[];
+    private currencies: any[];
+    private activeCurrency: any;
+    private prices: Map<any, any>;
     constructor(cardInfo = []) {
         this.modes = PRICE_MODES;
         this.currencies = mapCurrencyFomatters();
@@ -47,7 +51,7 @@ const PriceDatabase = class {
 
         deepFreeze(this.modes);
 
-        logger.log("LOADED Prices", this);
+        logger.info("LOADED Prices", this);
     }
 
     has(cardId) {
