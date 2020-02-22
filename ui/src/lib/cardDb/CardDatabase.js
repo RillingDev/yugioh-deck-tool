@@ -18,9 +18,6 @@ const banlistToNumber = val => {
 const createIdMap = cardArr => {
     const result = new Map();
     for (const card of cardArr) {
-        const imageUrl =
-            card.images.length > 0 ? card.images[0].url : URL_IMAGE_UNKNOWN;
-
         result.set(String(card.id), {
             name: card.name,
 
@@ -42,7 +39,7 @@ const createIdMap = cardArr => {
             times: card.views,
             rating: [0, 0],
 
-            imageUrl: imageUrl,
+            imageUrl: card.image?.url ?? URL_IMAGE_UNKNOWN,
             referenceUrl: URL_DB_API + encodeURI(card.name)
         });
     }

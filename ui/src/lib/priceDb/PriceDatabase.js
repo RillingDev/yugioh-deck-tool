@@ -27,11 +27,11 @@ const guessDefaultCurrency = () => {
 const createIdMap = cardArr => {
     const result = new Map();
     for (const card of cardArr) {
-        if (card.prices.length > 0) {
+        if (card.prices != null) {
             result.set(String(card.id), [
-                Number(card.prices[0].tcgplayer),
-                Number(card.prices[0].cardmarket),
-                Number(card.prices[0].ebay)
+                Number(card.prices.tcgplayer),
+                Number(card.prices.cardmarket),
+                Number(card.prices.ebay)
             ]);
         }
     }

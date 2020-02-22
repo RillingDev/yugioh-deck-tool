@@ -1,6 +1,8 @@
 const mapCardInfo = (data) => data.map(rawCard => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
     const miscInfo = rawCard.misc_info != null ? rawCard.misc_info[0] : null;
+    const image = rawCard.card_images != null ? rawCard.card_images[0] : null;
+    const prices = rawCard.card_prices != null ? rawCard.card_prices[0] : null;
     return {
         id: rawCard.id,
         name: rawCard.name,
@@ -22,35 +24,34 @@ const mapCardInfo = (data) => data.map(rawCard => {
                 price: rawSet.set_price
             };
         }), (_b !== null && _b !== void 0 ? _b : [])),
-        images: (_d = (_c = rawCard.card_images) === null || _c === void 0 ? void 0 : _c.map(rawImage => {
-            return {
-                id: rawImage.id,
-                url: rawImage.image_url,
-                urlSmall: rawImage.image_url_small
-            };
-        }), (_d !== null && _d !== void 0 ? _d : [])),
-        prices: (_f = (_e = rawCard.card_prices) === null || _e === void 0 ? void 0 : _e.map(rawPrice => {
-            return {
-                cardmarket: rawPrice.cardmarket_price,
-                tcgplayer: rawPrice.tcgplayer_price,
-                ebay: rawPrice.ebay_price,
-                amazon: rawPrice.amazon_price
-            };
-        }), (_f !== null && _f !== void 0 ? _f : [])),
-        betaName: (_h = (_g = miscInfo) === null || _g === void 0 ? void 0 : _g.beta_name, (_h !== null && _h !== void 0 ? _h : null)),
-        treatedAs: (_k = (_j = miscInfo) === null || _j === void 0 ? void 0 : _j.treated_as, (_k !== null && _k !== void 0 ? _k : null)),
-        archetype: (_l = rawCard.archetype, (_l !== null && _l !== void 0 ? _l : null)),
-        formats: (_o = (_m = miscInfo) === null || _m === void 0 ? void 0 : _m.formats, (_o !== null && _o !== void 0 ? _o : [])),
+        image: image != null ?
+            {
+                id: image.id,
+                url: image.image_url,
+                urlSmall: image.image_url_small
+            }
+            : null,
+        prices: prices != null ?
+            {
+                cardmarket: prices.cardmarket_price,
+                tcgplayer: prices.tcgplayer_price,
+                ebay: prices.ebay_price,
+                amazon: prices.amazon_price
+            } : null,
+        betaName: (_d = (_c = miscInfo) === null || _c === void 0 ? void 0 : _c.beta_name, (_d !== null && _d !== void 0 ? _d : null)),
+        treatedAs: (_f = (_e = miscInfo) === null || _e === void 0 ? void 0 : _e.treated_as, (_f !== null && _f !== void 0 ? _f : null)),
+        archetype: (_g = rawCard.archetype, (_g !== null && _g !== void 0 ? _g : null)),
+        formats: (_j = (_h = miscInfo) === null || _h === void 0 ? void 0 : _h.formats, (_j !== null && _j !== void 0 ? _j : [])),
         release: {
-            ocg: (_q = (_p = miscInfo) === null || _p === void 0 ? void 0 : _p.ocg_date, (_q !== null && _q !== void 0 ? _q : null)),
-            tcg: (_s = (_r = miscInfo) === null || _r === void 0 ? void 0 : _r.tcg_date, (_s !== null && _s !== void 0 ? _s : null))
+            ocg: (_l = (_k = miscInfo) === null || _k === void 0 ? void 0 : _k.ocg_date, (_l !== null && _l !== void 0 ? _l : null)),
+            tcg: (_o = (_m = miscInfo) === null || _m === void 0 ? void 0 : _m.tcg_date, (_o !== null && _o !== void 0 ? _o : null))
         },
         banlist: {
-            tcg: (_u = (_t = rawCard.banlist_info) === null || _t === void 0 ? void 0 : _t.ban_tcg, (_u !== null && _u !== void 0 ? _u : null)),
-            ocg: (_w = (_v = rawCard.banlist_info) === null || _v === void 0 ? void 0 : _v.ban_ocg, (_w !== null && _w !== void 0 ? _w : null)),
-            goat: (_y = (_x = rawCard.banlist_info) === null || _x === void 0 ? void 0 : _x.ban_goat, (_y !== null && _y !== void 0 ? _y : null))
+            tcg: (_q = (_p = rawCard.banlist_info) === null || _p === void 0 ? void 0 : _p.ban_tcg, (_q !== null && _q !== void 0 ? _q : null)),
+            ocg: (_s = (_r = rawCard.banlist_info) === null || _r === void 0 ? void 0 : _r.ban_ocg, (_s !== null && _s !== void 0 ? _s : null)),
+            goat: (_u = (_t = rawCard.banlist_info) === null || _t === void 0 ? void 0 : _t.ban_goat, (_u !== null && _u !== void 0 ? _u : null))
         },
-        views: (_0 = (_z = miscInfo) === null || _z === void 0 ? void 0 : _z.views, (_0 !== null && _0 !== void 0 ? _0 : 0))
+        views: (_w = (_v = miscInfo) === null || _v === void 0 ? void 0 : _v.views, (_w !== null && _w !== void 0 ? _w : 0))
     };
 });
 export { mapCardInfo };

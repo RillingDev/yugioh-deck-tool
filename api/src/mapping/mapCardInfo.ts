@@ -60,6 +60,8 @@ interface RawBanlistInfo {
 
 const mapCardInfo = (data: RawCard[]): Card[] => data.map(rawCard => {
     const miscInfo: RawMiscInfo | null = rawCard.misc_info != null ? rawCard.misc_info[0] : null;
+    const image: RawCardImage | null = rawCard.card_images != null ? rawCard.card_images[0] : null;
+    const prices: RawCardPrices | null = rawCard.card_prices != null ? rawCard.card_prices[0] : null;
     return {
         id: rawCard.id,
         name: rawCard.name,
@@ -83,27 +85,26 @@ const mapCardInfo = (data: RawCard[]): Card[] => data.map(rawCard => {
                 price: rawSet.set_price
             };
         }) ?? [],
-        images: rawCard.card_images?.map(rawImage => {
-            return {
-                id: rawImage.id,
-                url: rawImage.image_url,
-                urlSmall: rawImage.image_url_small
-            };
-        }) ?? [],
-        prices: rawCard.card_prices?.map(rawPrice => {
-            return {
-                cardmarket: rawPrice.cardmarket_price,
-                tcgplayer: rawPrice.tcgplayer_price,
-                ebay: rawPrice.ebay_price,
-                amazon: rawPrice.amazon_price
-            };
-        }) ?? [],
+        image: image != null ?
+            {
+                id: image.id,
+                url: image.image_url,
+                urlSmall: image.image_url_small
+            }
+            : null,
+        prices: prices != null ?
+            {
+                cardmarket: prices.cardmarket_price,
+                tcgplayer: prices.tcgplayer_price,
+                ebay: prices.ebay_price,
+                amazon: prices.amazon_price
+            } : null,
 
         betaName: miscInfo?.beta_name ?? null,
         treatedAs: miscInfo?.treated_as ?? null,
         archetype: rawCard.archetype ?? null,
         formats: miscInfo?.formats ?? [],
-        release:  {
+        release: {
             ocg: miscInfo?.ocg_date ?? null,
             tcg: miscInfo?.tcg_date ?? null
         },
@@ -111,7 +112,7 @@ const mapCardInfo = (data: RawCard[]): Card[] => data.map(rawCard => {
             tcg: rawCard.banlist_info?.ban_tcg ?? null,
             ocg: rawCard.banlist_info?.ban_ocg ?? null,
             goat: rawCard.banlist_info?.ban_goat ?? null
-        } ,
+        },
 
         views: miscInfo?.views ?? 0
     };

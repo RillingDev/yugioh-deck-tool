@@ -16,8 +16,8 @@ interface Card {
     linkmarkers?: string[];
 
     sets: CardSetAppearance[];
-    images: CardImage[];
-    prices: CardPrices[];
+    image: CardImage | null;
+    prices: CardPrices | null;
 
     betaName: string | null;
     treatedAs: string | null;
