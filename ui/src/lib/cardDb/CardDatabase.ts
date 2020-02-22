@@ -38,7 +38,7 @@ const createIdMap = cardArr => {
             date: new Date(card.release.tcg).getTime(),
             times: card.views,
 
-            imageUrl: card.image?.url ?? URL_IMAGE_UNKNOWN,
+            imageUrl: card.image?.urlSmall ?? URL_IMAGE_UNKNOWN,
             referenceUrl: URL_DB_API + encodeURI(card.name)
         });
     }
