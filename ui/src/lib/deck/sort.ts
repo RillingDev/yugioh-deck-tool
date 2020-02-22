@@ -29,7 +29,14 @@ const compareType = (dataA, dataB) => {
 const sortCards = (list, cardDb) =>
     list.sort((a, b) => {
         const dataA = cardDb.get(a);
+        if (dataA == null) {
+            return 1;
+        }
         const dataB = cardDb.get(b);
+        if (dataB == null) {
+            return -1;
+        }
+
         const typeComp = compareType(dataA, dataB);
         const lvComp = Number(dataB.stats[2]) - Number(dataA.stats[2]);
         const nameComp = dataA.name.localeCompare(dataB.name);
