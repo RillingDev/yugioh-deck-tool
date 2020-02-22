@@ -1,2 +1,3 @@
 import { YgoprodeckClient } from "./api/YgoprodeckClient";
-export { YgoprodeckClient };
+import { inflateString, deflateString } from "./core/zip";
+export { YgoprodeckClient, deflateString, inflateString };

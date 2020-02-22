@@ -28,7 +28,16 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
     },
+    "dependencies": {
+        "axios": "^0.19.2",
+        "lightdash": "^11.1.2",
+        "lodash": "^4.17.15",
+        "loglevel": "^1.6.7",
+        "pako": "^1.0.8"
+    },
     "devDependencies": {
+        "@types/lodash": "^4.14.149",
+        "@types/pako": "^1.0.1",
         "@typescript-eslint/eslint-plugin": "^2.19.2",
         "@typescript-eslint/parser": "^2.19.2",
         "eslint": "^6.8.0",
@@ -38,8 +47,5 @@
         "prettier": "^1.19.1",
         "rimraf": "^3.0.2",
         "typescript": "^3.7.5"
-    },
-    "dependencies": {
-        "axios": "^0.19.2"
     }
 }

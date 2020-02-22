@@ -1,15 +1,6 @@
-import pako from "pako";
+import { deflateString, inflateString } from "../../../core";
 
-const deflate = val =>
-    pako.deflate(val, {
-        to: "string"
-    });
-const inflate = val =>
-    pako.inflate(val, {
-        to: "string"
-    });
+const compress = val => btoa(deflateString(val));
+const decompress = val => inflateString(atob(val));
 
-const compress = val => btoa(deflate(val));
-const decompress = val => inflate(atob(val));
-
-export { deflate, inflate, compress, decompress };
+export { compress, decompress };
