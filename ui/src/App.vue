@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import logger from "loglevel";
+import logger, { levels } from "loglevel";
 
 import CardDb from "./lib/cardDb/CardDatabase";
 import PriceDb from "./lib/priceDb/PriceDatabase";
@@ -147,6 +147,7 @@ import ygoDrawSim from "./components/YgoDrawSim.vue";
 import ygoRandomizer from "./components/YgoRandomizer.vue";
 
 const ygoprodeckClient = new YgoprodeckClient();
+logger.setLevel(levels.INFO);
 
 export default {
     name: "Index",
