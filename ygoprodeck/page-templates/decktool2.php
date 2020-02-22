@@ -46,15 +46,12 @@
                 <footer class="decktool-footer">
                     <p>
                         <span>Created by
-                            <a href="https://f-rilling.com/" target="_blank">Felix Rilling</a>
+                            <a href="https://rilling.dev/" target="_blank" rel="noopener noreferrer">Felix Rilling</a>
                         </span>
                         |
                         <span>
-                            <a href="https://github.com/FelixRilling/yugioh-deck-tool" target="_blank">Project source code</a>
-                        </span>
-                        |
-                        <span>Price data from the
-                            <a href="http://yugiohprices.com/" target="_blank">yugiohprices.com</a> API.
+                            <a href="https://github.com/FelixRilling/yugioh-deck-tool" target="_blank"
+                               rel="noopener noreferrer">Project source code</a>
                         </span>
 
                         <button title="Screenshot Deck" class="btn btn-primary form-control" style="width:55%;display: block;margin-top: 10px;" onclick="screenshot()" id="screenshotdeck">Screenshot Deck  <i class="fas fa-camera"></i></button>
