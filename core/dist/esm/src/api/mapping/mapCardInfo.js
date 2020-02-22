@@ -24,20 +24,21 @@ const mapCardInfo = (data) => data.map(rawCard => {
                 price: rawSet.set_price
             };
         }), (_b !== null && _b !== void 0 ? _b : [])),
-        image: image != null ?
-            {
+        image: image != null
+            ? {
                 id: image.id,
                 url: image.image_url,
                 urlSmall: image.image_url_small
             }
             : null,
-        prices: prices != null ?
-            {
+        prices: prices != null
+            ? {
                 cardmarket: prices.cardmarket_price,
                 tcgplayer: prices.tcgplayer_price,
                 ebay: prices.ebay_price,
                 amazon: prices.amazon_price
-            } : null,
+            }
+            : null,
         betaName: (_d = (_c = miscInfo) === null || _c === void 0 ? void 0 : _c.beta_name, (_d !== null && _d !== void 0 ? _d : null)),
         treatedAs: (_f = (_e = miscInfo) === null || _e === void 0 ? void 0 : _e.treated_as, (_f !== null && _f !== void 0 ? _f : null)),
         archetype: (_g = rawCard.archetype, (_g !== null && _g !== void 0 ? _g : null)),

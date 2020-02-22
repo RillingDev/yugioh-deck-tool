@@ -8,16 +8,17 @@ interface RawCardSet {
     tcg_date?: string | null;
 }
 
-const mapCardSets = (data: RawCardSet[]): CardSet[] => data.map(rawCardSet => {
-    return {
-        name: rawCardSet.set_name,
-        code: rawCardSet.set_code,
-        cardCount: rawCardSet.num_of_cards,
-        release: {
-            tcg: rawCardSet.tcg_date ?? null,
-            ocg: null
-        }
-    };
-});
+const mapCardSets = (data: RawCardSet[]): CardSet[] =>
+    data.map(rawCardSet => {
+        return {
+            name: rawCardSet.set_name,
+            code: rawCardSet.set_code,
+            cardCount: rawCardSet.num_of_cards,
+            release: {
+                tcg: rawCardSet.tcg_date ?? null,
+                ocg: null
+            }
+        };
+    });
 
 export { mapCardSets };

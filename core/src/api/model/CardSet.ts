@@ -7,4 +7,4 @@ interface CardSet {
     release: ReleaseInfo | null;
 }
 
- export{CardSet}
+export { CardSet };
