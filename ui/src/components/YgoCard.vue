@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { URL_IMAGE_UNKNOWN } from "../lib/data/urls";
+import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../lib/data/urls";
 
 export default {
     props: {
@@ -25,7 +25,7 @@ export default {
                 return {
                     name: "Unknown",
                     imageUrl: URL_IMAGE_UNKNOWN,
-                    referenceUrl: "#"
+                    referenceUrl: URL_DB_API
                 };
             }
         }
