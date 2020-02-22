@@ -1,6 +1,6 @@
 <?php
 /**
-* Template Name: Deck Tool Debug Page Template
+* Template Name: Deck Tool Page Template
 *
 * Displays the YuGiOh Deck Tool.
 */
@@ -54,21 +54,17 @@
                                rel="noopener noreferrer">Project source code</a>
                         </span>
 
+
+
                         <button title="Screenshot Deck" class="btn btn-primary form-control" style="width:55%;display: block;margin-top: 10px;" onclick="screenshot()" id="screenshotdeck">Screenshot Deck  <i class="fas fa-camera"></i></button>
-
                         <span class="scrmessage"></span>
-
-    <input type="hidden" name="img_val" id="img_val" value="" />
-
-
+                        <input type="hidden" name="img_val" id="img_val" value="" />
                     </p>
 
 		    <!-- Ad Code -->
 		    <div id='Ygoprodeck_Horizontal_BTF'></div>
 		    <div id='Ygoprodeck_Mobile_300x250'></div>
 		    <!-- End Ad Code -->
-
-
                 </footer>
             </div>
         </div>
