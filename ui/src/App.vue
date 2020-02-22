@@ -136,7 +136,7 @@ import CardDb from "./lib/cardDb/CardDatabase";
 import PriceDb from "./lib/priceDb/PriceDatabase";
 import Deck from "./lib/deck/Deck";
 
-import { YgoprodeckClient } from "../../api";
+import { YgoprodeckClient } from "../../core";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
 
