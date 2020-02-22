@@ -22,14 +22,6 @@ const SORTERS = [
         fn: (a, b) => b.stats[2] - a.stats[2]
     },
     {
-        name: "Upvotes",
-        fn: (a, b) => b.rating[0] - a.rating[0]
-    },
-    {
-        name: "Downvotes",
-        fn: (a, b) => b.rating[1] - a.rating[1]
-    },
-    {
         name: "Views",
         fn: (a, b) => b.times - a.times
     }

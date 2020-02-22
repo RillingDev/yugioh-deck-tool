@@ -37,7 +37,6 @@ const createIdMap = cardArr => {
             treatedAs: card.treatedAs,
             date: new Date(card.release.tcg).getTime(),
             times: card.views,
-            rating: [0, 0],
 
             imageUrl: card.image?.url ?? URL_IMAGE_UNKNOWN,
             referenceUrl: URL_DB_API + encodeURI(card.name)
@@ -53,6 +52,7 @@ const CardDatabase = class {
         this.cards = createIdMap(cardInfo);
         this.pairsArr = Array.from(this.cards.entries());
         this.sets = createSetArr(cardSets);
+        console.log(this.cards)
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
          */
