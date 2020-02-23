@@ -18,7 +18,7 @@ const createIdMap = cardArr => {
 
             format: card.formats,
             banlist: card.banlist,
-            sets: createSetArr(card.sets),
+            sets: card.sets,
 
             treatedAs: card.treatedAs,
             views: card.views,
@@ -28,7 +28,6 @@ const createIdMap = cardArr => {
     return result;
 };
 
-const createSetArr = cardSets => cardSets.map(set => set.name);
 
 const CardDatabase = class {
     private cards: Map<any, any>;
@@ -38,7 +37,7 @@ const CardDatabase = class {
     constructor(cardInfo = [], cardSets = []) {
         this.cards = createIdMap(cardInfo);
         this.pairsArr = Array.from(this.cards.entries());
-        this.sets = createSetArr(cardSets);
+        this.sets = cardSets;
         /**
          * The arrays dont need to be modified again, freezing improves performance by preventing Vue from adding watchers
          */

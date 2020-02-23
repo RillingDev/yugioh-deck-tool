@@ -99,6 +99,8 @@
         <div class="form-group form-group-builder">
             <label>Set:</label>
             <multiselect
+                track-by="name"
+                label="name"
                 :multiple="true"
                 :options="filter.sets.options"
                 :show-labels="false"

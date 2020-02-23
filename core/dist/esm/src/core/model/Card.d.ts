@@ -1,5 +1,6 @@
 import { ReleaseInfo } from "./ReleaseInfo";
 import { BanlistInfo } from "./BanlistInfo";
+import { CardSetAppearance } from "./CardSetAppearance";
 interface Card {
     id: number;
     name: string;
@@ -23,12 +24,6 @@ interface Card {
     release: ReleaseInfo;
     banlist: BanlistInfo;
     views: number;
-}
-interface CardSetAppearance {
-    name: string;
-    code: string;
-    rarity: string;
-    price: string;
 }
 interface CardImage {
     id: number;

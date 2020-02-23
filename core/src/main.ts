@@ -9,6 +9,7 @@ import { CardSet } from "./core/model/CardSet";
 import { Deck } from "./core/model/Deck";
 import { DeckPart } from "./core/model/DeckPart";
 import { DeckParts } from "./core/model/DeckParts";
+import { CardSetAppearance } from "./core/model/CardSetAppearance";
 
 export {
     YgoprodeckClient,
@@ -18,6 +19,7 @@ export {
     BanlistInfo,
     BanState,
     CardSet,
+    CardSetAppearance,
     Deck,
     DeckPart,
     DeckParts,

@@ -9,5 +9,6 @@ import { CardSet } from "./core/model/CardSet";
 import { Deck } from "./core/model/Deck";
 import { DeckPart } from "./core/model/DeckPart";
 import { DeckParts } from "./core/model/DeckParts";
-export { YgoprodeckClient, ApiClient, CompressionService, Card, BanlistInfo, BanState, CardSet, Deck, DeckPart, DeckParts, ReleaseInfo };
+import { CardSetAppearance } from "./core/model/CardSetAppearance";
+export { YgoprodeckClient, ApiClient, CompressionService, Card, BanlistInfo, BanState, CardSet, CardSetAppearance, Deck, DeckPart, DeckParts, ReleaseInfo };
 //# sourceMappingURL=main.d.ts.map

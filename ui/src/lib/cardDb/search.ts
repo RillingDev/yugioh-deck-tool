@@ -10,7 +10,7 @@ const optionFilterArr = (val, filterItem) => {
 
 const searchCard = (cardArr, filter, is, sortFn) => {
     const filterNameLower = filter.name.toLowerCase();
-    const sets = filter.sets.active === null ? [] : filter.sets.active;
+    const sets = filter.sets.active == null ? [] : filter.sets.active;
 
     return (
         cardArr
@@ -22,7 +22,7 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                 return (
                     // Search Set
                     (sets.length === 0 ||
-                        sets.some(set => pairData.sets.includes(set))) &&
+                        sets.some(set => pairData.sets.some(setAppearance => setAppearance.name === set.name))) &&
                     // Search Format
                     filter.format.active.check(pairData) &&
                     filter.banlist.active.check(pairData) &&
