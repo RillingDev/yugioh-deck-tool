@@ -24,7 +24,9 @@ const createIdMap = cardArr => {
             type: card.type,
             race: card.race,
             attribute: card.attribute,
-            stats: [card.atk ?? null, card.def ?? null, card.level ?? null],
+            atk: card.atk,
+            def: card.def,
+            level: card.level,
             linkmarkers: card.linkmarkers,
 
             format: card.formats,

@@ -36,7 +36,7 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                     (!is.monster || optionFilter(pairData.race, filter.race)) &&
                     (!is.monster ||
                         optionFilter(
-                            String(pairData.stats[2]),
+                            String(pairData.level),
                             filter.level
                         )) &&
                     (!is.monsterLink ||

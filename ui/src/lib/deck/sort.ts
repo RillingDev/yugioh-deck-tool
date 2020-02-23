@@ -38,7 +38,7 @@ const sortCards = (list, cardDb) =>
         }
 
         const typeComp = compareType(dataA, dataB);
-        const lvComp = Number(dataB.stats[2]) - Number(dataA.stats[2]);
+        const lvComp = Number(dataB.level) - Number(dataA.level);
         const nameComp = dataA.name.localeCompare(dataB.name);
 
         if (typeComp !== 0) {

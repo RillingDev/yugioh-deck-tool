@@ -11,15 +11,15 @@ const SORTERS = [
     },
     {
         name: "ATK",
-        fn: (a, b) => b.stats[0] - a.stats[0]
+        fn: (a, b) => b.atk - a.atk
     },
     {
         name: "DEF",
-        fn: (a, b) => b.stats[1] - a.stats[1]
+        fn: (a, b) => b.def - a.def
     },
     {
         name: "Level",
-        fn: (a, b) => b.stats[2] - a.stats[2]
+        fn: (a, b) => b.level - a.level
     },
     {
         name: "Views",
