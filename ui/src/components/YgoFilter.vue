@@ -178,19 +178,19 @@
             </div>
 
             <template v-if="isMonsterLink">
-                <!-- builder-linkarrow -->
+                <!-- builder-linkmarkers -->
                 <div class="form-group form-group-builder">
-                    <label>Link Arrows:</label>
+                    <label>Link Markers:</label>
                     <select
                         @change="filterCards"
                         class="form-control"
                         title="Active Link Arrows"
-                        v-model="filter.linkarrows.active"
+                        v-model="filter.linkmarkers.active"
                     >
                         <option
                             :key="option"
                             :value="option"
-                            v-for="option in filter.linkarrows.options"
+                            v-for="option in filter.linkmarkers.options"
                         >
                             {{ option }}
                         </option>
@@ -297,7 +297,7 @@ export default {
                     active: "Any",
                     options: CARD_LEVEL
                 },
-                linkarrows: {
+                linkmarkers: {
                     active: "Any",
                     options: CARD_LINKARROWS
                 },

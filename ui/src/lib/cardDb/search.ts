@@ -1,8 +1,12 @@
 const optionFilter = (val, filterItem) =>
     filterItem.active === "Any" ? true : val === filterItem.active;
 
-const optionFilterArr = (val, filterItem) =>
-    filterItem.active === "Any" ? true : val.includes(filterItem.active);
+const optionFilterArr = (val, filterItem) => {
+    if (filterItem.active === "Any") {
+        return true;
+    }
+    return val != null && val.includes(filterItem.active);
+};
 
 const searchCard = (cardArr, filter, is, sortFn) => {
     const filterNameLower = filter.name.toLowerCase();
@@ -37,8 +41,8 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                         )) &&
                     (!is.monsterLink ||
                         optionFilterArr(
-                            pairData.linkarrows,
-                            filter.linkarrows
+                            pairData.linkmarkers,
+                            filter.linkmarkers
                         )) &&
                     // Search Spell sub
                     (!is.spell ||
