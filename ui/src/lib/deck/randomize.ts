@@ -19,7 +19,7 @@ const getRandomAmount = (preferPlayset = true) => {
 };
 
 const addCardRandomAmount = (arr, card, limit, preferPlayset = true) => {
-    const cardAmountMaxFromBanlist = card[1].limit[0];
+    const cardAmountMaxFromBanlist = card[1].banlist.tcg;
     let cardAmountRandom = getRandomAmount(preferPlayset);
 
     if (cardAmountRandom > cardAmountMaxFromBanlist) {

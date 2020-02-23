@@ -2,19 +2,6 @@ import deepFreeze from "../deepFreeze";
 import logger from "loglevel";
 import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../data/urls";
 
-const banlistToNumber = val => {
-    if (val === "Banned") {
-        return 0;
-    }
-    if (val === "Limited") {
-        return 1;
-    }
-    if (val === "Semi-Limited") {
-        return 2;
-    }
-    return 3;
-};
-
 const createIdMap = cardArr => {
     const result = new Map();
     for (const card of cardArr) {
@@ -30,10 +17,7 @@ const createIdMap = cardArr => {
             linkmarkers: card.linkmarkers,
 
             format: card.formats,
-            limit: [
-                banlistToNumber(card.banlist.tcg),
-                banlistToNumber(card.banlist.ocg)
-            ],
+            banlist: card.banlist,
             sets: createSetArr(card.sets),
 
             treatedAs: card.treatedAs,
@@ -53,6 +37,7 @@ const CardDatabase = class {
     private cards: Map<any, any>;
     private pairsArr: [any, any][];
     private sets: any;
+
     constructor(cardInfo = [], cardSets = []) {
         this.cards = createIdMap(cardInfo);
         this.pairsArr = Array.from(this.cards.entries());

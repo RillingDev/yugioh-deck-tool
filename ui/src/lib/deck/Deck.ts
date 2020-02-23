@@ -120,7 +120,6 @@ const Deck = class {
                 cardDb.get(activeSectionCardId)
             );
         }).length;
-
         return (
             deckPart.check(card) &&
             this[deckPart.id].length < deckPart.max &&

@@ -1,4 +1,5 @@
 import { ReleaseInfo } from "./ReleaseInfo";
+import { BanlistInfo } from "./BanlistInfo";
 
 interface Card {
     id: number;
@@ -48,11 +49,4 @@ interface CardPrices {
     ebay: string;
     amazon: string;
 }
-
-interface BanlistInfo {
-    tcg: string | null;
-    ocg: string | null;
-    goat: string | null;
-}
-
 export { Card };

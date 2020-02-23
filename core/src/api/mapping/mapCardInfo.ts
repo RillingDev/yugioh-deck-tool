@@ -1,6 +1,7 @@
-// https://jvilk.com/MakeTypes/
 import { Card } from "../../core/model/Card";
+import { BanState } from "../../core/model/BanState";
 
+// https://jvilk.com/MakeTypes/
 interface RawCard {
     id: number;
     name: string;
@@ -56,6 +57,19 @@ interface RawBanlistInfo {
     ban_ocg?: string;
     ban_goat?: string;
 }
+
+const mapBanListState = (name: string | null): BanState => {
+    if (name === "Banned") {
+        return BanState.BANNED;
+    }
+    if (name === "Limited") {
+        return BanState.LIMITED;
+    }
+    if (name === "Semi-Limited") {
+        return BanState.SEMI_LIMITED;
+    }
+    return BanState.UNLIMITED;
+};
 
 const mapCardInfo = (data: RawCard[]): Card[] =>
     data.map(rawCard => {
@@ -116,9 +130,9 @@ const mapCardInfo = (data: RawCard[]): Card[] =>
                 tcg: miscInfo?.tcg_date ?? null
             },
             banlist: {
-                tcg: rawCard.banlist_info?.ban_tcg ?? null,
-                ocg: rawCard.banlist_info?.ban_ocg ?? null,
-                goat: rawCard.banlist_info?.ban_goat ?? null
+                tcg: mapBanListState(rawCard.banlist_info?.ban_tcg ?? null),
+                ocg: mapBanListState(rawCard.banlist_info?.ban_ocg ?? null),
+                goat: mapBanListState(rawCard.banlist_info?.ban_goat ?? null)
             },
 
             views: miscInfo?.views ?? 0

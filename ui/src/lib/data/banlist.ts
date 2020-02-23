@@ -1,23 +1,26 @@
-import deepFreeze from "../deepFreeze";
+import { BanState } from "../../../../core";
 
 const BANLISTS = [
     {
         name: "None",
-        check: () => true,
-        getVal: () => 3
+        check: ignored => true,
+        getVal: ignored => 3
     },
     {
         name: "TCG",
-        check: card => card.limit[0] > 0,
-        getVal: card => card.limit[0]
+        check: card => card.banlist.tcg != BanState.BANNED,
+        getVal: card => card.banlist.tcg
     },
     {
         name: "OCG",
-        check: card => card.limit[1] > 0,
-        getVal: card => card.limit[1]
+        check: card => card.banlist.ocg != BanState.BANNED,
+        getVal: card => card.banlist.ocg
+    },
+    {
+        name: "GOAT",
+        check: card => card.banlist.goat != BanState.BANNED,
+        getVal: card => card.banlist.goat
     }
 ];
-
-deepFreeze(BANLISTS);
 
 export { BANLISTS };

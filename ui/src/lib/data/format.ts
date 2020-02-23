@@ -3,7 +3,7 @@ import deepFreeze from "../deepFreeze";
 const FORMATS = [
     {
         name: "Advanced",
-        check: () => true
+        check: ignored => true
     },
     {
         name: "GOAT",

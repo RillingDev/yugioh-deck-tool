@@ -1,3 +1,16 @@
+import { BanState } from "../../core/model/BanState";
+const mapBanListState = (name) => {
+    if (name === "Banned") {
+        return BanState.BANNED;
+    }
+    if (name === "Limited") {
+        return BanState.LIMITED;
+    }
+    if (name === "Semi-Limited") {
+        return BanState.SEMI_LIMITED;
+    }
+    return BanState.UNLIMITED;
+};
 const mapCardInfo = (data) => data.map(rawCard => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3;
     const miscInfo = rawCard.misc_info != null ? rawCard.misc_info[0] : null;
@@ -48,9 +61,9 @@ const mapCardInfo = (data) => data.map(rawCard => {
             tcg: (_v = (_u = miscInfo) === null || _u === void 0 ? void 0 : _u.tcg_date, (_v !== null && _v !== void 0 ? _v : null))
         },
         banlist: {
-            tcg: (_x = (_w = rawCard.banlist_info) === null || _w === void 0 ? void 0 : _w.ban_tcg, (_x !== null && _x !== void 0 ? _x : null)),
-            ocg: (_z = (_y = rawCard.banlist_info) === null || _y === void 0 ? void 0 : _y.ban_ocg, (_z !== null && _z !== void 0 ? _z : null)),
-            goat: (_1 = (_0 = rawCard.banlist_info) === null || _0 === void 0 ? void 0 : _0.ban_goat, (_1 !== null && _1 !== void 0 ? _1 : null))
+            tcg: mapBanListState((_x = (_w = rawCard.banlist_info) === null || _w === void 0 ? void 0 : _w.ban_tcg, (_x !== null && _x !== void 0 ? _x : null))),
+            ocg: mapBanListState((_z = (_y = rawCard.banlist_info) === null || _y === void 0 ? void 0 : _y.ban_ocg, (_z !== null && _z !== void 0 ? _z : null))),
+            goat: mapBanListState((_1 = (_0 = rawCard.banlist_info) === null || _0 === void 0 ? void 0 : _0.ban_goat, (_1 !== null && _1 !== void 0 ? _1 : null)))
         },
         views: (_3 = (_2 = miscInfo) === null || _2 === void 0 ? void 0 : _2.views, (_3 !== null && _3 !== void 0 ? _3 : 0))
     };

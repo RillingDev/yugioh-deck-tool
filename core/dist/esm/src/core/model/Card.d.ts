@@ -1,4 +1,5 @@
 import { ReleaseInfo } from "./ReleaseInfo";
+import { BanlistInfo } from "./BanlistInfo";
 interface Card {
     id: number;
     name: string;
@@ -39,11 +40,6 @@ interface CardPrices {
     tcgplayer: string;
     ebay: string;
     amazon: string;
-}
-interface BanlistInfo {
-    tcg: string | null;
-    ocg: string | null;
-    goat: string | null;
 }
 export { Card };
 //# sourceMappingURL=Card.d.ts.map
