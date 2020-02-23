@@ -1,4 +1,4 @@
-import { CardSet } from "../model/CardSet";
+import { CardSet } from "../../core/model/CardSet";
 interface RawCardSet {
     set_name: string;
     set_code: string;

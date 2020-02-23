@@ -32,11 +32,13 @@
     },
     "dependencies": {
         "axios": "^0.19.2",
+        "inversify": "^5.0.1",
         "js-base64": "^2.5.2",
         "lightdash": "^11.1.2",
         "lodash": "^4.17.15",
         "loglevel": "^1.6.7",
-        "pako": "^1.0.8"
+        "pako": "^1.0.8",
+        "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
         "@types/jasmine": "^3.5.6",

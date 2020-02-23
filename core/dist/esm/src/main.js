@@ -1,4 +1,4 @@
 import { YgoprodeckClient } from "./api/YgoprodeckClient";
-import { inflateString, deflateString } from "./core/zip";
-export { YgoprodeckClient, deflateString, inflateString };
+import { CompressionService } from "./core/business/CompressionService";
+export { YgoprodeckClient, CompressionService };
 //# sourceMappingURL=main.js.map

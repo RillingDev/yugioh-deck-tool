@@ -1,10 +1,11 @@
 import axios, { AxiosInstance } from "axios";
 import { mapCardInfo } from "./mapping/mapCardInfo";
-import { Card } from "./model/Card";
+import { Card } from "../core/model/Card";
 import { mapCardSets } from "./mapping/mapCardSets";
-import { CardSet } from "./model/CardSet";
+import { CardSet } from "../core/model/CardSet";
+import { ApiClient } from "../core/business/ApiClient";
 
-class YgoprodeckClient {
+class YgoprodeckClient implements ApiClient {
     private readonly httpClient: AxiosInstance;
 
     constructor() {

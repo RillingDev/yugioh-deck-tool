@@ -1,5 +1,5 @@
 // https://jvilk.com/MakeTypes/
-import { Card } from "../model/Card";
+import { Card } from "../../core/model/Card";
 
 interface RawCard {
     id: number;
