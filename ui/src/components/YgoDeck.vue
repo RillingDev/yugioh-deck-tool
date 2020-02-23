@@ -2,7 +2,7 @@
     <div class="deck">
         <div class="deck-part deck-part-total">
             <span>Total:</span>
-            <ygo-price-view :item="deck.all" :price-db="priceDb" />
+            <ygo-price-view :item="deck.getAll()" :price-db="priceDb" />
         </div>
         <ygo-deck-part
             :card-db="cardDb"
@@ -12,7 +12,7 @@
             :deck-part-list="deck[deckPart.id]"
             :key="deckPart.id"
             :price-db="priceDb"
-            v-for="deckPart in deck.parts"
+            v-for="deckPart in deckParts"
         />
     </div>
 </template>
@@ -20,6 +20,7 @@
 import CardDb from "../lib/cardDb/CardDatabase";
 import PriceDb from "../lib/priceDb/PriceDatabase";
 import Deck from "../lib/deck/Deck";
+import {DECKPARTS} from "../lib/data/deck";
 
 import ygoDeckPart from "./YgoDeckPart.vue";
 import ygoPriceView from "./YgoPriceView.vue";
@@ -42,6 +43,11 @@ export default {
             type: PriceDb,
             required: true
         }
+    },
+    data: () => {
+        return {
+            deckParts: DECKPARTS
+        };
     }
 };
 </script>

@@ -1,7 +1,6 @@
 import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
-import deepFreeze from "../deepFreeze";
 import { getBuyLink, getShareText } from "./toText";
 import CardDatabase from "../cardDb/CardDatabase";
 import logger from "loglevel";
@@ -29,20 +28,13 @@ const Deck = class {
     private main: any[];
     private extra: any[];
     private side: any[];
-    private all: any[];
-    private parts: any[];
 
     constructor(list = [[], [], []], name = "Unnamed") {
         this.name = name;
-        this.parts = DECKPARTS;
 
         this.main = list[0];
         this.extra = list[1];
         this.side = list[2];
-
-        this.all = this.getAll();
-
-        deepFreeze(this.parts);
 
         logger.info("CREATED Deck", this);
     }
@@ -107,12 +99,12 @@ const Deck = class {
     }
 
     toBuyLink(cardDb) {
-        return getBuyLink(this.all, cardDb);
+        return getBuyLink(this.getAll(), cardDb);
     }
 
     cardCanAdd(deckPart, cardId, cardDb, banlist) {
         const card = cardDb.get(cardId);
-        const cardCount = this.all.filter(activeSectionCardId => {
+        const cardCount = this.getAll().filter(activeSectionCardId => {
             if (!cardDb.has(activeSectionCardId)) {
                 return true;
             }
@@ -131,7 +123,6 @@ const Deck = class {
     cardAdd(deckPart, cardId, cardDb, banlist) {
         if (this.cardCanAdd(deckPart, cardId, cardDb, banlist)) {
             this[deckPart.id].push(cardId);
-            this.all = this.getAll();
         }
     }
 
@@ -148,7 +139,6 @@ const Deck = class {
 
                 return true;
             });
-            this.all = this.getAll();
         }
     }
 

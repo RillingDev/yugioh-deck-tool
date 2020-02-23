@@ -1,7 +1,7 @@
 <template>
     <div class="sorter">
         <button
-            :disabled="deck.all.length < 2"
+            :disabled="deck.getAll().length < 2"
             @click="deck.sort(cardDb)"
             class="btn btn-primary btn-sm"
             title="Sort Deck"

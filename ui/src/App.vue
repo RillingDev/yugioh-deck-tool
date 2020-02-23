@@ -173,7 +173,7 @@ export default {
             return this.deck.toBuyLink(this.cardDb);
         },
         isDeckEmpty() {
-            return this.deck.all.length === 0;
+            return this.deck.getAll().length === 0;
         }
     },
     mounted() {
