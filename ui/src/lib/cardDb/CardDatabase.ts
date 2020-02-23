@@ -1,40 +1,21 @@
 import deepFreeze from "../deepFreeze";
 import logger from "loglevel";
-import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../data/urls";
+import { Card, CardSet } from "../../../../core";
 
 const createIdMap = cardArr => {
     const result = new Map();
     for (const card of cardArr) {
-        result.set(String(card.id), {
-            name: card.name,
-
-            type: card.type,
-            race: card.race,
-            attribute: card.attribute,
-            atk: card.atk,
-            def: card.def,
-            level: card.level,
-            linkmarkers: card.linkmarkers,
-
-            format: card.formats,
-            banlist: card.banlist,
-            sets: card.sets,
-
-            treatedAs: card.treatedAs,
-            views: card.views,
-            image: card.image
-        });
+        result.set(String(card.id), card);
     }
     return result;
 };
 
-
 const CardDatabase = class {
-    private cards: Map<any, any>;
-    private pairsArr: [any, any][];
-    private sets: any;
+    private readonly cards: Map<string, Card>;
+    private readonly pairsArr: [string, Card][];
+    private readonly sets: CardSet[];
 
-    constructor(cardInfo = [], cardSets = []) {
+    constructor(cardInfo: Card[] = [], cardSets: CardSet[] = []) {
         this.cards = createIdMap(cardInfo);
         this.pairsArr = Array.from(this.cards.entries());
         this.sets = cardSets;
@@ -49,7 +30,7 @@ const CardDatabase = class {
         logger.info("LOADED Cards", this);
     }
 
-    static isTreatedAsSame(card1, card2) {
+    static isTreatedAsSame(card1: Card, card2: Card): boolean {
         return (
             card1.treatedAs === card2.name ||
             (card1.treatedAs !== null && card1.treatedAs === card2.treatedAs) ||
@@ -58,15 +39,15 @@ const CardDatabase = class {
         );
     }
 
-    has(cardId) {
+    has(cardId: string): boolean {
         return this.cards.has(cardId);
     }
 
-    get(cardId) {
+    get(cardId: string): Card {
         return this.cards.get(cardId);
     }
 
-    getName(cardId) {
+    getName(cardId: string): string {
         return this.has(cardId) ? this.get(cardId).name : `[${cardId}]`;
     }
 };
