@@ -23,7 +23,7 @@ const SORTERS = [
     },
     {
         name: "Views",
-        fn: (a, b) => b.times - a.times
+        fn: (a, b) => b.views - a.views
     }
 ];
 

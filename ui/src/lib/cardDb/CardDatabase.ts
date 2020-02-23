@@ -21,8 +21,7 @@ const createIdMap = cardArr => {
             sets: createSetArr(card.sets),
 
             treatedAs: card.treatedAs,
-            date: new Date(card.release.tcg).getTime(),
-            times: card.views,
+            views: card.views,
             image: card.image
         });
     }
