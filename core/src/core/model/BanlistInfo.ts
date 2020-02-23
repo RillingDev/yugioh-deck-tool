@@ -1,9 +1,9 @@
 import { BanState } from "./BanState";
 
- interface BanlistInfo {
+interface BanlistInfo {
     tcg: BanState;
     ocg: BanState;
     goat: BanState;
 }
 
-export{BanlistInfo}
+export { BanlistInfo };
