@@ -1,12 +1,12 @@
 <template>
     <a
         :data-name="card.name"
-        :href="card.referenceUrl"
+        :href="referenceUrl"
         @contextmenu="contextEvent"
         class="deck-card"
         target="_blank"
     >
-        <img :alt="card.name" :src="card.imageUrl" height="135" width="100" />
+        <img :alt="card.name" :src="imageUrl" height="135" width="100" />
         <div class="deck-card-text">
             <span class="deck-card-name">{{ card.name }}</span>
             <slot class="deck-card-price" name="price" />
@@ -28,6 +28,14 @@ export default {
                     referenceUrl: URL_DB_API
                 };
             }
+        }
+    },
+    computed: {
+        imageUrl() {
+            return this.card.image?.urlSmall ?? URL_IMAGE_UNKNOWN;
+        },
+        referenceUrl() {
+            return URL_DB_API + encodeURI(this.card.name);
         }
     },
     methods: {
