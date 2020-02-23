@@ -7,13 +7,13 @@ interface Card {
 
     type: string;
     race: string;
-    attribute?: string;
-    atk?: number;
-    def?: number;
-    level?: number;
-    scale?: number;
-    linkval?: number;
-    linkmarkers?: string[];
+    attribute: string | null;
+    atk: number | null;
+    def: number | null;
+    level: number | null;
+    scale: number | null;
+    linkval: number | null;
+    linkmarkers: string[] | null;
 
     sets: CardSetAppearance[];
     image: CardImage | null;

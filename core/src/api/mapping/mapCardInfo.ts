@@ -72,13 +72,13 @@ const mapCardInfo = (data: RawCard[]): Card[] =>
 
             type: rawCard.type,
             race: rawCard.race,
-            attribute: rawCard.attribute,
-            atk: rawCard.atk,
-            def: rawCard.def,
-            level: rawCard.level,
-            scale: rawCard.scale,
-            linkval: rawCard.linkval,
-            linkmarkers: rawCard.linkmarkers,
+            attribute: rawCard.attribute ?? null,
+            atk: rawCard.atk ?? null,
+            def: rawCard.def ?? null,
+            level: rawCard.level ?? null,
+            scale: rawCard.scale ?? null,
+            linkval: rawCard.linkval ?? null,
+            linkmarkers: rawCard.linkmarkers ?? null,
 
             sets:
                 rawCard.card_sets?.map(rawSet => {
