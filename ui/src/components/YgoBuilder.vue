@@ -58,7 +58,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { DECKPARTS } from "../lib/data/deck";
 import { BANLISTS } from "../lib/data/banlist";
 import YgoFilter from "./YgoFilter.vue";
@@ -114,12 +114,12 @@ export default {
 @import "../styles/variables.custom";
 
 .builder-list {
-    max-height: 250px;
-    width: 100%;
     overflow-x: auto;
     overflow-y: scroll;
-    list-style: none;
+    width: 100%;
+    max-height: 250px;
     padding: 0;
+    list-style: none;
     resize: vertical;
     border: 1px solid $gray-400;
     @include screen(min, md) {
@@ -143,24 +143,24 @@ export default {
 }
 
 .builder-card-name {
-    padding: 10px 0;
     width: 100%;
+    padding: 10px 0;
 }
 
 .builder-card-action {
-    width: 80px;
     display: flex;
+    align-items: center;
     flex-direction: row;
     justify-content: space-evenly;
-    align-items: center;
+    width: 80px;
 }
 
 .btn.builder-add {
-    width: 34px;
-    opacity: 0.8;
     font-size: 1.2em;
-    cursor: pointer;
+    width: 34px;
     padding: 0;
+    cursor: pointer;
+    opacity: 0.8;
     background-color: transparent;
 
     &:active {
@@ -185,8 +185,8 @@ export default {
 }
 
 .builder-noresults {
-    text-align: center;
     padding: 0.5rem 0;
+    text-align: center;
     color: $gray-600;
 }
 </style>

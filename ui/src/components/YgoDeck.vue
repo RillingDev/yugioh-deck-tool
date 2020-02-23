@@ -16,8 +16,7 @@
         />
     </div>
 </template>
-
-<script>
+<script lang="ts">
 import CardDb from "../lib/cardDb/CardDatabase";
 import PriceDb from "../lib/priceDb/PriceDatabase";
 import Deck from "../lib/deck/Deck";

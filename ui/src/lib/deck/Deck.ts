@@ -31,6 +31,7 @@ const Deck = class {
     private side: any[];
     private all: any[];
     private parts: any[];
+
     constructor(list = [[], [], []], name = "Unnamed") {
         this.name = name;
         this.parts = DECKPARTS;

@@ -1,5 +1,5 @@
 import { ARCHETYPES } from "../data/archetypes";
-import { uniq, shuffle } from "lodash";
+import { shuffle, uniq } from "lodash";
 import {
     CHANCE_ADD_OPTIONAL_CARD,
     CHANCE_ADD_REQUIRED_ARCHETYPE_CARD,

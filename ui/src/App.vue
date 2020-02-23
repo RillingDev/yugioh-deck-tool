@@ -81,8 +81,8 @@
                     <span class="fas fa-shopping-cart"><!-- icon--></span>
                 </a>
                 <button
-                    disabled="disabled"
                     class="btn btn-primary form-control"
+                    disabled="disabled"
                     title="Load Prices"
                 >
                     <span :hidden="ajax.currentlyLoading">Ready</span>
@@ -129,7 +129,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import logger, { levels } from "loglevel";
 
 import CardDb from "./lib/cardDb/CardDatabase";

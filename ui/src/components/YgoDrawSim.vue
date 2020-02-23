@@ -50,7 +50,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import ygoCard from "./YgoCard.vue";
 
 import startHand from "../lib/deck/startHand";
@@ -104,9 +104,9 @@ export default {
 @import "~bootstrap/scss/modal";
 
 .drawsim-output {
-    margin: 1em 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 1em 0;
 }
 </style>

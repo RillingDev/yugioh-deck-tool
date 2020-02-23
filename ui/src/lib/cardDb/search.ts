@@ -22,7 +22,11 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                 return (
                     // Search Set
                     (sets.length === 0 ||
-                        sets.some(set => pairData.sets.some(setAppearance => setAppearance.name === set.name))) &&
+                        sets.some(set =>
+                            pairData.sets.some(
+                                setAppearance => setAppearance.name === set.name
+                            )
+                        )) &&
                     // Search Format
                     filter.format.active.check(pairData) &&
                     filter.banlist.active.check(pairData) &&
@@ -35,10 +39,7 @@ const searchCard = (cardArr, filter, is, sortFn) => {
                         optionFilter(pairData.attribute, filter.attribute)) &&
                     (!is.monster || optionFilter(pairData.race, filter.race)) &&
                     (!is.monster ||
-                        optionFilter(
-                            String(pairData.level),
-                            filter.level
-                        )) &&
+                        optionFilter(String(pairData.level), filter.level)) &&
                     (!is.monsterLink ||
                         optionFilterArr(
                             pairData.linkmarkers,

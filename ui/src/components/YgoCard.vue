@@ -14,7 +14,7 @@
     </a>
 </template>
 
-<script>
+<script lang="ts">
 import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../lib/data/urls";
 
 export default {
@@ -63,22 +63,22 @@ export default {
 }
 
 .deck-card-text {
+    font-size: 0.85em;
+    line-height: 1.125em;
     position: absolute;
-    width: 100%;
-    height: 100%;
     top: 0;
-    padding: 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: $gray-200;
-    opacity: 0;
+    width: 100%;
+    height: 100%;
+    padding: 6px;
     transition: opacity 0.15s;
     text-align: center;
-    color: $gray-800;
     word-wrap: break-word;
-    line-height: 1.125em;
-    font-size: 0.85em;
+    opacity: 0;
+    color: $gray-800;
+    background-color: $gray-200;
 
     &:focus,
     &:hover {

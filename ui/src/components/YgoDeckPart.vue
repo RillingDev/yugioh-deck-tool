@@ -23,7 +23,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import CardDb from "../lib/cardDb/CardDatabase";
 import PriceDb from "../lib/priceDb/PriceDatabase";
 import Deck from "../lib/deck/Deck";
@@ -69,10 +69,10 @@ export default {
 @import "../styles/variables.custom";
 
 .deck-content {
-    padding: 4px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding: 4px;
 }
 
 .deck-part {

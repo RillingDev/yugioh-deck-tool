@@ -1,4 +1,7 @@
-import { compressToBase64Legacy, decompressFromBase64Legacy } from "../compression";
+import {
+    compressToBase64Legacy,
+    decompressFromBase64Legacy
+} from "../compression";
 import { countBy } from "lodash";
 import { toMap } from "lightdash";
 
@@ -50,6 +53,7 @@ const uriDeckEncode = deckList => {
         : "";
 };
 
-const uriDeckDecode = deckUri => loadOptimizedList(decompressFromBase64Legacy(deckUri));
+const uriDeckDecode = deckUri =>
+    loadOptimizedList(decompressFromBase64Legacy(deckUri));
 
 export { uriDeckEncode, uriDeckDecode };

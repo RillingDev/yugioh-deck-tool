@@ -99,14 +99,14 @@
         <div class="form-group form-group-builder">
             <label>Set:</label>
             <multiselect
-                track-by="name"
-                label="name"
                 :multiple="true"
                 :options="filter.sets.options"
                 :show-labels="false"
                 :show-no-results="false"
                 @input="filterCards"
+                label="name"
                 placeholder="All Sets"
+                track-by="name"
                 v-model="filter.sets.active"
             />
         </div>
@@ -246,7 +246,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { SORTERS } from "../lib/data/sort";
 import { FORMATS } from "../lib/data/format";
 import { BANLISTS } from "../lib/data/banlist";
@@ -382,12 +382,12 @@ export default {
 
 .form-group-builder {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
     label {
-        padding-right: 0.75rem;
         width: 40%;
+        padding-right: 0.75rem;
 
         &:not(:first-child) {
             margin-left: 1rem;
@@ -396,8 +396,8 @@ export default {
 }
 
 /**
-          * Multiselect
-          */
+              * Multiselect
+              */
 .decktool {
     .multiselect__tags {
         border: 1px solid #ced4da;
@@ -449,8 +449,8 @@ export default {
 
     .multiselect input[type="text"].multiselect__input,
     .multiselect input[type="text"].multiselect__input:focus {
-        padding: 0 0 0 5px;
         margin: inherit;
+        padding: 0 0 0 5px;
     }
 
     .multiselect__tags,

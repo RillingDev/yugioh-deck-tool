@@ -1,8 +1,5 @@
 <template>
-    <div
-        :class="{ 'price--group': isGroup }"
-        class="price"
-    >
+    <div :class="{ 'price--group': isGroup }" class="price">
         <span
             :class="'price-mode-' + priceMode.id"
             :key="priceMode.id"
@@ -15,7 +12,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { isString } from "lodash";
 import PriceDb from "../lib/priceDb/PriceDatabase";
 
@@ -57,20 +54,20 @@ export default {
 
     &:not(.price--group) {
         display: flex;
-        justify-content: space-between;
         flex-direction: column;
+        justify-content: space-between;
     }
 }
 
 .price-mode {
-    padding: 5px 8px 2px;
     font-size: 0.9em;
     display: inline-block;
+    padding: 5px 8px 2px;
     text-align: center;
 
     &-tcgplayer {
-        background-color: $color-pricemode-tcgplayer;
         color: #fff;
+        background-color: $color-pricemode-tcgplayer;
     }
 
     &-cardmarket {

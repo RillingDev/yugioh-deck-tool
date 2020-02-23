@@ -90,7 +90,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import CardDb from "../lib/cardDb/CardDatabase";
 import { randomizeDeck } from "../lib/deck/randomize";
 import {
