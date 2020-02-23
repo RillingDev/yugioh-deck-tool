@@ -2,7 +2,6 @@
     <div
         :class="{ 'price--group': isGroup }"
         class="price"
-        v-if="priceDb.prices.size > 0"
     >
         <span
             :class="'price-mode-' + priceMode.id"

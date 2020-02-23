@@ -114,10 +114,10 @@ const mapCardInfo = (data: RawCard[]): Card[] =>
             prices:
                 prices != null
                     ? {
-                          cardmarket: prices.cardmarket_price,
-                          tcgplayer: prices.tcgplayer_price,
-                          ebay: prices.ebay_price,
-                          amazon: prices.amazon_price
+                          cardmarket: Number(prices.cardmarket_price),
+                          tcgplayer: Number(prices.tcgplayer_price),
+                          ebay: Number(prices.ebay_price),
+                          amazon: Number(prices.amazon_price)
                       }
                     : null,
 

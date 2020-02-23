@@ -155,7 +155,7 @@ export default {
     data: () => {
         return {
             cardDb: new CardDb(),
-            priceDb: new PriceDb(),
+            priceDb: new PriceDb(new CardDb()),
             deck: new Deck(),
             ajax: {
                 currentlyLoading: true
@@ -201,7 +201,7 @@ export default {
             ])
                 .then(([cardInfo, cardSets]) => {
                     this.cardDb = new CardDb(cardInfo, cardSets);
-                    this.priceDb = new PriceDb(cardInfo);
+                    this.priceDb = new PriceDb(this.cardDb);
                     this.ajax.currentlyLoading = false;
                 })
                 .catch(logger.error);

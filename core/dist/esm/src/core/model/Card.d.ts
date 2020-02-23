@@ -31,10 +31,10 @@ interface CardImage {
     urlSmall: string;
 }
 interface CardPrices {
-    cardmarket: string;
-    tcgplayer: string;
-    ebay: string;
-    amazon: string;
+    cardmarket: number;
+    tcgplayer: number;
+    ebay: number;
+    amazon: number;
 }
 export { Card };
 //# sourceMappingURL=Card.d.ts.map

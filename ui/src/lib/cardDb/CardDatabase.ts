@@ -10,7 +10,7 @@ const createIdMap = cardArr => {
     return result;
 };
 
-const CardDatabase = class {
+class CardDatabase {
     private readonly cards: Map<string, Card>;
     private readonly pairsArr: [string, Card][];
     private readonly sets: CardSet[];
@@ -50,6 +50,6 @@ const CardDatabase = class {
     getName(cardId: string): string {
         return this.has(cardId) ? this.get(cardId).name : `[${cardId}]`;
     }
-};
+}
 
 export default CardDatabase;

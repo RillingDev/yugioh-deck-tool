@@ -46,10 +46,10 @@ const mapCardInfo = (data) => data.map(rawCard => {
             : null,
         prices: prices != null
             ? {
-                cardmarket: prices.cardmarket_price,
-                tcgplayer: prices.tcgplayer_price,
-                ebay: prices.ebay_price,
-                amazon: prices.amazon_price
+                cardmarket: Number(prices.cardmarket_price),
+                tcgplayer: Number(prices.tcgplayer_price),
+                ebay: Number(prices.ebay_price),
+                amazon: Number(prices.amazon_price)
             }
             : null,
         betaName: (_l = (_k = miscInfo) === null || _k === void 0 ? void 0 : _k.beta_name, (_l !== null && _l !== void 0 ? _l : null)),

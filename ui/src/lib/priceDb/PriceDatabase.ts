@@ -1,6 +1,7 @@
 import { PRICE_CURRENCIES, PRICE_MODES } from "../data/price";
 import deepFreeze from "../deepFreeze";
 import logger from "loglevel";
+import CardDatabase from "../cardDb/CardDatabase";
 
 const mapCurrencyFomatters = () =>
     PRICE_CURRENCIES.map(currency => {
@@ -24,45 +25,35 @@ const guessDefaultCurrency = () => {
         : PRICE_CURRENCIES[localeIndex];
 };
 
-const createIdMap = cardArr => {
-    const result = new Map();
-    for (const card of cardArr) {
-        if (card.prices != null) {
-            result.set(String(card.id), [
-                Number(card.prices.tcgplayer),
-                Number(card.prices.cardmarket),
-                Number(card.prices.ebay)
-            ]);
-        }
-    }
-    return result;
-};
-
 const PriceDatabase = class {
     private modes: any[];
     private currencies: any[];
     private activeCurrency: any;
-    private prices: Map<any, any>;
-    constructor(cardInfo = []) {
+    private readonly cardDb: CardDatabase;
+
+    constructor(cardDb: CardDatabase) {
         this.modes = PRICE_MODES;
         this.currencies = mapCurrencyFomatters();
         this.activeCurrency = guessDefaultCurrency();
-        this.prices = createIdMap(cardInfo);
+        this.cardDb = cardDb;
 
         deepFreeze(this.modes);
 
         logger.info("LOADED Prices", this);
     }
 
-    has(cardId) {
-        return this.prices.has(cardId);
+    has(cardId: string): boolean {
+        return (
+            this.cardDb.has(cardId) && this.cardDb.get(cardId).prices != null
+        );
     }
 
     get(cardId) {
         if (!this.has(cardId)) {
             return [0, 0, 0];
         }
-        return this.prices.get(cardId);
+        const prices = this.cardDb.get(cardId).prices;
+        return [prices.tcgplayer, prices.cardmarket, prices.ebay];
     }
 
     getSelection(cardIdArr) {
