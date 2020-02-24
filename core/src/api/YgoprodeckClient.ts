@@ -18,13 +18,16 @@ class YgoprodeckClient implements ApiClient {
     }
 
     public async getCardInfo(): Promise<Card[]> {
-        const response = await this.httpClient.get("cardinfo.php?misc=yes", {
-            timeout: 10000,
-            data: {
-                misc: true
-            },
-            transformResponse: data => mapCardInfo(data)
-        });
+        const response = await this.httpClient.get(
+            "cardinfo.php?misc=yes&includeAliased",
+            {
+                timeout: 10000,
+                data: {
+                    misc: true
+                },
+                transformResponse: data => mapCardInfo(data)
+            }
+        );
         return response.data;
     }
 
