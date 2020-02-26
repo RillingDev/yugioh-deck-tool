@@ -17,13 +17,14 @@
 <script lang="ts">
 import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../lib/data/urls";
 
+const NAME_UNKNOWN = "Unknown";
 export default {
     props: {
         card: {
             type: Object,
             default: () => {
                 return {
-                    name: "Unknown",
+                    name: NAME_UNKNOWN,
                     imageUrl: URL_IMAGE_UNKNOWN,
                     referenceUrl: URL_DB_API
                 };
@@ -35,6 +36,9 @@ export default {
             return this.card.image?.urlSmall ?? URL_IMAGE_UNKNOWN;
         },
         referenceUrl() {
+            if (this.card.name === NAME_UNKNOWN) {
+                return URL_DB_API;
+            }
             return URL_DB_API + encodeURI(this.card.name);
         }
     },
