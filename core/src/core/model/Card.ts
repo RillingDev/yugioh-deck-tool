@@ -1,6 +1,8 @@
 import { ReleaseInfo } from "./ReleaseInfo";
 import { BanlistInfo } from "./BanlistInfo";
 import { CardSetAppearance } from "./CardSetAppearance";
+import { CardImage } from "./CardImage";
+import { CardPrices } from "./CardPrices";
 
 interface Card {
     id: number;
@@ -31,16 +33,4 @@ interface Card {
     views: number;
 }
 
-interface CardImage {
-    id: number;
-    url: string;
-    urlSmall: string;
-}
-
-interface CardPrices {
-    cardmarket: number;
-    tcgplayer: number;
-    ebay: number;
-    amazon: number;
-}
 export { Card };

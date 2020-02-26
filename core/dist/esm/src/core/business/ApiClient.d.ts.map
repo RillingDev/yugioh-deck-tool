@@ -1,1 +1,0 @@
-{"version":3,"file":"ApiClient.d.ts","sourceRoot":"","sources":["../../../../../src/core/business/ApiClient.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,eAAe,CAAC;AACrC,OAAO,EAAE,OAAO,EAAE,MAAM,kBAAkB,CAAC;AAE3C,UAAU,SAAS;IACf,WAAW,IAAI,OAAO,CAAC,IAAI,EAAE,CAAC,CAAC;IAE/B,WAAW,IAAI,OAAO,CAAC,OAAO,EAAE,CAAC,CAAC;CACrC;AAED,OAAO,EAAE,SAAS,EAAE,CAAC"}

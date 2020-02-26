@@ -1,5 +1,8 @@
 import { Card } from "../../core/model/Card";
 import { BanState } from "../../core/model/BanState";
+import { CardImage } from "../../core/model/CardImage";
+import { CardPrices } from "../../core/model/CardPrices";
+import { CardSetAppearance } from "../../core/model/CardSetAppearance";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -71,14 +74,49 @@ const mapBanListState = (name: string | null): BanState => {
     return BanState.UNLIMITED;
 };
 
+const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
+    if (rawCard.card_sets == null) {
+        return [];
+    }
+    return rawCard.card_sets.map(rawSet => {
+        return {
+            name: rawSet.set_name,
+            code: rawSet.set_code,
+            rarity: rawSet.set_rarity,
+            price: rawSet.set_price
+        };
+    });
+};
+
+const mapImage = (rawCard: RawCard): CardImage | null => {
+    if (rawCard.card_images == null) {
+        return null;
+    }
+    const image = rawCard.card_images[0];
+    return {
+        id: image.id,
+        url: image.image_url,
+        urlSmall: image.image_url_small
+    };
+};
+
+const mapPrices = (rawCard: RawCard): CardPrices | null => {
+    if (rawCard.card_prices == null) {
+        return null;
+    }
+    const prices = rawCard.card_prices[0];
+    return {
+        cardmarket: Number(prices.cardmarket_price),
+        tcgplayer: Number(prices.tcgplayer_price),
+        ebay: Number(prices.ebay_price),
+        amazon: Number(prices.amazon_price)
+    };
+};
+
 const mapCardInfo = (data: RawCard[]): Card[] =>
     data.map(rawCard => {
         const miscInfo: RawMiscInfo | null =
             rawCard.misc_info != null ? rawCard.misc_info[0] : null;
-        const image: RawCardImage | null =
-            rawCard.card_images != null ? rawCard.card_images[0] : null;
-        const prices: RawCardPrices | null =
-            rawCard.card_prices != null ? rawCard.card_prices[0] : null;
         return {
             id: rawCard.id,
             name: rawCard.name,
@@ -94,32 +132,9 @@ const mapCardInfo = (data: RawCard[]): Card[] =>
             linkval: rawCard.linkval ?? null,
             linkmarkers: rawCard.linkmarkers ?? null,
 
-            sets:
-                rawCard.card_sets?.map(rawSet => {
-                    return {
-                        name: rawSet.set_name,
-                        code: rawSet.set_code,
-                        rarity: rawSet.set_rarity,
-                        price: rawSet.set_price
-                    };
-                }) ?? [],
-            image:
-                image != null
-                    ? {
-                          id: image.id,
-                          url: image.image_url,
-                          urlSmall: image.image_url_small
-                      }
-                    : null,
-            prices:
-                prices != null
-                    ? {
-                          cardmarket: Number(prices.cardmarket_price),
-                          tcgplayer: Number(prices.tcgplayer_price),
-                          ebay: Number(prices.ebay_price),
-                          amazon: Number(prices.amazon_price)
-                      }
-                    : null,
+            sets: mapCardSets(rawCard),
+            image: mapImage(rawCard),
+            prices: mapPrices(rawCard),
 
             betaName: miscInfo?.beta_name ?? null,
             treatedAs: miscInfo?.treated_as ?? null,
