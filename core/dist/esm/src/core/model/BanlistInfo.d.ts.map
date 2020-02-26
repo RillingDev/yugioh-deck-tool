@@ -1,0 +1,1 @@
+{"version":3,"file":"BanlistInfo.d.ts","sourceRoot":"","sources":["../../../../../src/core/model/BanlistInfo.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAC;AAEtC,UAAU,WAAW;IACjB,QAAQ,CAAC,GAAG,EAAE,QAAQ,CAAC;IACvB,QAAQ,CAAC,GAAG,EAAE,QAAQ,CAAC;IACvB,QAAQ,CAAC,IAAI,EAAE,QAAQ,CAAC;CAC3B;AAED,OAAO,EAAE,WAAW,EAAE,CAAC"}

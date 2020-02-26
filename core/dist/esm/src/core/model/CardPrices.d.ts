@@ -4,5 +4,5 @@ interface CardPrices {
     readonly ebay: number;
     readonly amazon: number;
 }
-
 export { CardPrices };
+//# sourceMappingURL=CardPrices.d.ts.map

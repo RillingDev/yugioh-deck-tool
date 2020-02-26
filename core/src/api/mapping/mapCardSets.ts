@@ -16,7 +16,7 @@ const mapCardSets = (data: RawCardSet[]): CardSet[] =>
             cardCount: rawCardSet.num_of_cards,
             release: {
                 tcg: rawCardSet.tcg_date ?? null,
-                ocg: null
+                ocg: null // Not exposed yet
             }
         };
     });

@@ -4,5 +4,5 @@ interface CardSetAppearance {
     readonly rarity: string;
     readonly price: string;
 }
-
 export { CardSetAppearance };
+//# sourceMappingURL=CardSetAppearance.d.ts.map
