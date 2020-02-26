@@ -7,6 +7,7 @@
             class="price-mode"
             v-for="(priceMode, index) in priceDb.modes"
         >
+            <span v-if="isGroup">{{ priceMode.name }}: </span>
             {{ priceDb.format(priceValues[index]) }}
         </span>
     </div>
