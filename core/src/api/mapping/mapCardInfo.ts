@@ -113,8 +113,8 @@ const mapPrices = (rawCard: RawCard): CardPrices | null => {
     };
 };
 
-const mapCardInfo = (data: RawCard[]): Card[] =>
-    data.map(rawCard => {
+const mapCardInfo = (data: RawCard[]): Card[] => {
+    return data.map(rawCard => {
         const miscInfo: RawMiscInfo | null =
             rawCard.misc_info != null ? rawCard.misc_info[0] : null;
         return {
@@ -153,5 +153,6 @@ const mapCardInfo = (data: RawCard[]): Card[] =>
             views: miscInfo?.views ?? 0
         };
     });
+};
 
 export { mapCardInfo };

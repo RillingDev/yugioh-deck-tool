@@ -10,7 +10,7 @@ class YgoprodeckClient implements ApiClient {
 
     constructor() {
         this.httpClient = axios.create({
-            baseURL: "https://db.ygoprodeck.com/api/v6/",
+            baseURL: "https://ygoprodeck.com/api/v6",
             timeout: 3000,
             responseType: "json",
             validateStatus: status => status === 200
@@ -25,7 +25,8 @@ class YgoprodeckClient implements ApiClient {
                 data: {
                     misc: true
                 },
-                transformResponse: data => mapCardInfo(data)
+                transformResponse: responseBody =>
+                    mapCardInfo(responseBody.data)
             }
         );
         return response.data;
