@@ -155,4 +155,4 @@ const mapCardInfo = (data: RawCard[]): Card[] => {
     });
 };
 
-export { mapCardInfo };
+export { mapCardInfo, RawCard };

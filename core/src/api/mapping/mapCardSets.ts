@@ -21,4 +21,4 @@ const mapCardSets = (data: RawCardSet[]): CardSet[] =>
         };
     });
 
-export { mapCardSets };
+export { mapCardSets, RawCardSet };
