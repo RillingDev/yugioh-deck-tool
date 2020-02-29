@@ -12,6 +12,7 @@ import { TYPES } from "./types";
 import { container } from "./inversify.config";
 import { CardDatabase } from "./core/business/CardDatabase";
 import { CardService } from "./core/business/CardService";
+import { PriceService } from "./core/business/PriceService";
 
 export {
     /*
@@ -22,6 +23,7 @@ export {
     CardDataLoaderService,
     CardDatabase,
     CardService,
+    PriceService,
     CompressionService,
     /*
      * Data models

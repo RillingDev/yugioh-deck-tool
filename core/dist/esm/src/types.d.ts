@@ -1,8 +1,9 @@
 declare const TYPES: {
-    DataLoaderService: symbol;
+    CardDataLoaderService: symbol;
     CardDatabase: symbol;
     CardService: symbol;
     CompressionService: symbol;
+    PriceService: symbol;
 };
 export { TYPES };
 //# sourceMappingURL=types.d.ts.map

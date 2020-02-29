@@ -12,5 +12,6 @@ import { TYPES } from "./types";
 import { container } from "./inversify.config";
 import { CardDatabase } from "./core/business/CardDatabase";
 import { CardService } from "./core/business/CardService";
-export { container, TYPES, CardDataLoaderService, CardDatabase, CardService, CompressionService, Card, CardPrices, CardImage, BanlistInfo, BanState, CardSet, CardSetAppearance, ReleaseInfo };
+import { PriceService } from "./core/business/PriceService";
+export { container, TYPES, CardDataLoaderService, CardDatabase, CardService, PriceService, CompressionService, Card, CardPrices, CardImage, BanlistInfo, BanState, CardSet, CardSetAppearance, ReleaseInfo };
 //# sourceMappingURL=main.d.ts.map

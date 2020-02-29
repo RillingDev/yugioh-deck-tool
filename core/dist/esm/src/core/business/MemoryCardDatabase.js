@@ -47,7 +47,7 @@ let MemoryCardDatabase = class MemoryCardDatabase {
 };
 MemoryCardDatabase = __decorate([
     injectable(),
-    __param(0, inject(TYPES.DataLoaderService)),
+    __param(0, inject(TYPES.CardDataLoaderService)),
     __metadata("design:paramtypes", [Object])
 ], MemoryCardDatabase);
 export default MemoryCardDatabase;

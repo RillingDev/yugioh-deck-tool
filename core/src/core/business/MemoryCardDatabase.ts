@@ -13,7 +13,8 @@ class MemoryCardDatabase implements CardDatabase {
     private readonly ready: boolean;
 
     constructor(
-        @inject(TYPES.CardDataLoaderService) dataLoaderClient: CardDataLoaderService
+        @inject(TYPES.CardDataLoaderService)
+        dataLoaderClient: CardDataLoaderService
     ) {
         this.dataLoaderClient = dataLoaderClient;
         this.cards = new Map<string, Card>();

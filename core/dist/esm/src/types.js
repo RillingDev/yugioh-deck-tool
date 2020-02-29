@@ -1,8 +1,9 @@
 const TYPES = {
-    DataLoaderService: Symbol.for("DataLoaderService"),
+    CardDataLoaderService: Symbol.for("CardDataLoaderService"),
     CardDatabase: Symbol.for("CardDatabase"),
     CardService: Symbol.for("CardService"),
-    CompressionService: Symbol.for("CompressionService")
+    CompressionService: Symbol.for("CompressionService"),
+    PriceService: Symbol.for("PriceService")
 };
 export { TYPES };
 //# sourceMappingURL=types.js.map
