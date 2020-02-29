@@ -1,10 +1,8 @@
 import { Card } from "../model/Card";
 import { CardSet } from "../model/CardSet";
-
-interface DataLoaderClient {
+interface CardDataLoaderService {
     getCardInfo(): Promise<Card[]>;
-
     getCardSets(): Promise<CardSet[]>;
 }
-
-export { DataLoaderClient };
+export { CardDataLoaderService };
+//# sourceMappingURL=CardDataLoaderService.d.ts.map

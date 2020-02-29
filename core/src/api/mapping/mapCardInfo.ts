@@ -118,7 +118,7 @@ const mapCardInfo = (data: RawCard[]): Card[] => {
         const miscInfo: RawMiscInfo | null =
             rawCard.misc_info != null ? rawCard.misc_info[0] : null;
         return {
-            id: rawCard.id,
+            id: String(rawCard.id),
             name: rawCard.name,
             desc: rawCard.desc,
 

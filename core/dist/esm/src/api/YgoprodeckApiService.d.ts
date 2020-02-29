@@ -1,7 +1,7 @@
 import { Card } from "../core/model/Card";
 import { CardSet } from "../core/model/CardSet";
-import { ApiClient } from "../core/business/ApiClient";
-declare class YgoprodeckClient implements ApiClient {
+import { CardDataLoaderService } from "../core/business/CardDataLoaderService";
+declare class YgoprodeckApiService implements CardDataLoaderService {
     private readonly httpClient;
     private static readonly CARD_INFO_CHUNK_SIZE;
     constructor();
@@ -9,5 +9,5 @@ declare class YgoprodeckClient implements ApiClient {
     getCardSets(): Promise<CardSet[]>;
     private loadPaginated;
 }
-export { YgoprodeckClient };
-//# sourceMappingURL=YgoprodeckClient.d.ts.map
+export { YgoprodeckApiService };
+//# sourceMappingURL=YgoprodeckApiService.d.ts.map

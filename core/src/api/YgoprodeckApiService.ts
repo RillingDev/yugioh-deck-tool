@@ -3,12 +3,12 @@ import { mapCardInfo, RawCard } from "./mapping/mapCardInfo";
 import { Card } from "../core/model/Card";
 import { mapCardSets, RawCardSet } from "./mapping/mapCardSets";
 import { CardSet } from "../core/model/CardSet";
-import { DataLoaderClient } from "../core/business/DataLoaderClient";
+import { CardDataLoaderService } from "../core/business/CardDataLoaderService";
 import { PaginatedResponse } from "./PaginatedResponse";
 import { injectable } from "inversify";
 
 @injectable()
-class YgoprodeckApiClient implements DataLoaderClient {
+class YgoprodeckApiService implements CardDataLoaderService {
     private readonly httpClient: AxiosInstance;
     private static readonly CARD_INFO_CHUNK_SIZE = 2500;
 
@@ -23,7 +23,7 @@ class YgoprodeckApiClient implements DataLoaderClient {
 
     public async getCardInfo(): Promise<Card[]> {
         const responseData = await this.loadPaginated<RawCard>(
-            YgoprodeckApiClient.CARD_INFO_CHUNK_SIZE,
+            YgoprodeckApiService.CARD_INFO_CHUNK_SIZE,
             async offset => {
                 const response = await this.httpClient.get<
                     PaginatedResponse<RawCard[]>
@@ -31,7 +31,7 @@ class YgoprodeckApiClient implements DataLoaderClient {
                     params: {
                         misc: "yes",
                         includeAliased: "yes",
-                        num: YgoprodeckApiClient.CARD_INFO_CHUNK_SIZE,
+                        num: YgoprodeckApiService.CARD_INFO_CHUNK_SIZE,
                         offset
                     }
                 });
@@ -69,4 +69,4 @@ class YgoprodeckApiClient implements DataLoaderClient {
     }
 }
 
-export { YgoprodeckApiClient };
+export { YgoprodeckApiService };

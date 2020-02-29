@@ -5,7 +5,7 @@ import { CardImage } from "./CardImage";
 import { CardPrices } from "./CardPrices";
 
 interface Card {
-    readonly id: number;
+    readonly id: string;
     readonly name: string;
     readonly desc: string;
 
