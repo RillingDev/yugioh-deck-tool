@@ -58,7 +58,7 @@ class YgoprodeckClient implements ApiClient {
             const response = await fetcher(offset);
             result.push(...response.data);
             if (total == null) {
-                total = response.meta.totalrows;
+                total = response.meta.total_rows;
             }
             offset += pageSize;
         }
