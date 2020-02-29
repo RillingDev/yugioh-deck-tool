@@ -1,21 +1,19 @@
 module.exports = {
     root: true,
-
-    env: {
-        node: true
-    },
-
     extends: [
-        'plugin:vue/essential',
-        'eslint:recommended',
-        '@vue/prettier',
-        '@vue/typescript'
+        "plugin:vue/essential",
+        "eslint:recommended",
+        "@vue/typescript/recommended",
+        "@vue/prettier",
+        "@vue/prettier/@typescript-eslint"
     ],
-
     parserOptions: {
-        parser: '@typescript-eslint/parser'
+        ecmaVersion: 2020
     },
-
+    env: {
+        "browser": true,
+        "node": true
+    },
     rules: {
         "no-console": "warn",
         "no-debugger": "warn",
@@ -29,6 +27,12 @@ module.exports = {
         "consistent-return": "warn",
         "no-else-return": "warn",
         "no-implicit-coercion": "warn",
-        "no-dupe-else-if": "warn"
-    },
+        "no-dupe-else-if": "warn",
+        "prettier/prettier": "warn",
+
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-use-before-define": "warn",
+        "@typescript-eslint/unbound-method": "off",
+    }
 };
