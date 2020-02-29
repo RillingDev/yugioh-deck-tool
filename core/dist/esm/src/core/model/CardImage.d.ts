@@ -4,4 +4,3 @@ interface CardImage {
     readonly urlSmall: string;
 }
 export { CardImage };
-//# sourceMappingURL=CardImage.d.ts.map

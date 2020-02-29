@@ -16,7 +16,10 @@ let MemoryCardDatabase = class MemoryCardDatabase {
     constructor(dataLoaderClient) {
         this.dataLoaderClient = dataLoaderClient;
         this.cards = new Map();
-        this.cardSets = [];
+        this.races = new Set();
+        this.attributes = new Set();
+        this.types = new Set();
+        this.sets = [];
         this.ready = false;
     }
     async init() {
@@ -26,8 +29,18 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         ]);
         for (const card of cardInfo) {
             this.cards.set(card.id, card);
+            if (!this.types.has(card.type)) {
+                this.types.add(card.type);
+            }
+            if (!this.races.has(card.race)) {
+                this.races.add(card.race);
+            }
+            if (card.attribute != null &&
+                !this.attributes.has(card.attribute)) {
+                this.attributes.add(card.attribute);
+            }
         }
-        this.cardSets.push(...cardSets);
+        this.sets.push(...cardSets);
     }
     isReady() {
         return this.ready;
@@ -41,8 +54,17 @@ let MemoryCardDatabase = class MemoryCardDatabase {
     getCards() {
         return Array.from(this.cards.values());
     }
+    getTypes() {
+        return Array.from(this.types.values());
+    }
+    getRaces() {
+        return Array.from(this.races.values());
+    }
+    getAttributes() {
+        return Array.from(this.attributes.values());
+    }
     getSets() {
-        return Array.from(this.cardSets);
+        return Array.from(this.sets);
     }
 };
 MemoryCardDatabase = __decorate([
@@ -50,5 +72,4 @@ MemoryCardDatabase = __decorate([
     __param(0, inject(TYPES.CardDataLoaderService)),
     __metadata("design:paramtypes", [Object])
 ], MemoryCardDatabase);
-export default MemoryCardDatabase;
-//# sourceMappingURL=MemoryCardDatabase.js.map
+export { MemoryCardDatabase };

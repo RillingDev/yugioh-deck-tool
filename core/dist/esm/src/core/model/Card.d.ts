@@ -28,4 +28,3 @@ interface Card {
     readonly views: number;
 }
 export { Card };
-//# sourceMappingURL=Card.d.ts.map

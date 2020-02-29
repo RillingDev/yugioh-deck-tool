@@ -6,4 +6,3 @@ var BanState;
     BanState[BanState["UNLIMITED"] = 3] = "UNLIMITED";
 })(BanState || (BanState = {}));
 export { BanState };
-//# sourceMappingURL=BanState.js.map

@@ -3,4 +3,3 @@ interface ReleaseInfo {
     readonly ocg: string | null;
 }
 export { ReleaseInfo };
-//# sourceMappingURL=ReleaseInfo.d.ts.map

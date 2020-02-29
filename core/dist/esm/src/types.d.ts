@@ -6,4 +6,3 @@ declare const TYPES: {
     PriceService: symbol;
 };
 export { TYPES };
-//# sourceMappingURL=types.d.ts.map

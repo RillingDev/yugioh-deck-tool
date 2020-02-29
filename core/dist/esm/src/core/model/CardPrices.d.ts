@@ -5,4 +5,3 @@ interface CardPrices {
     readonly amazon: number;
 }
 export { CardPrices };
-//# sourceMappingURL=CardPrices.d.ts.map

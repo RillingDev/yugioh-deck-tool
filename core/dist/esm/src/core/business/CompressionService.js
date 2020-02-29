@@ -22,4 +22,3 @@ CompressionService = __decorate([
     injectable()
 ], CompressionService);
 export { CompressionService };
-//# sourceMappingURL=CompressionService.js.map

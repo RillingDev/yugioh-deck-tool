@@ -3,4 +3,3 @@ declare class CompressionService {
     inflateString(val: string): string;
 }
 export { CompressionService };
-//# sourceMappingURL=CompressionService.d.ts.map

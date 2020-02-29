@@ -5,4 +5,3 @@ interface BanlistInfo {
     readonly goat: BanState;
 }
 export { BanlistInfo };
-//# sourceMappingURL=BanlistInfo.d.ts.map

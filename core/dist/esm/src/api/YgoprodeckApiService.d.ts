@@ -10,4 +10,3 @@ declare class YgoprodeckApiService implements CardDataLoaderService {
     private loadPaginated;
 }
 export { YgoprodeckApiService };
-//# sourceMappingURL=YgoprodeckApiService.d.ts.map

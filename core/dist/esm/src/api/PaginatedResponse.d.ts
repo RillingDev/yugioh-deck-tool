@@ -11,4 +11,3 @@ interface PaginatedResponse<T> {
     };
 }
 export { PaginatedResponse };
-//# sourceMappingURL=PaginatedResponse.d.ts.map

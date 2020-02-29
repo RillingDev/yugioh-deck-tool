@@ -5,4 +5,3 @@ interface CardDataLoaderService {
     getCardSets(): Promise<CardSet[]>;
 }
 export { CardDataLoaderService };
-//# sourceMappingURL=CardDataLoaderService.d.ts.map

@@ -7,4 +7,3 @@ interface RawCardSet {
 }
 declare const mapCardSets: (data: RawCardSet[]) => CardSet[];
 export { mapCardSets, RawCardSet };
-//# sourceMappingURL=mapCardSets.d.ts.map

@@ -84,4 +84,3 @@ const mapCardInfo = (data) => {
     });
 };
 export { mapCardInfo };
-//# sourceMappingURL=mapCardInfo.js.map

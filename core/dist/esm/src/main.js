@@ -9,4 +9,3 @@ export {
  * Business logic and container access
  */
 container, TYPES, CardService, PriceService, CompressionService, BanState };
-//# sourceMappingURL=main.js.map

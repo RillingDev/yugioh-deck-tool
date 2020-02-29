@@ -12,5 +12,11 @@ export interface CardDatabase {
 
     getCards(): Card[];
 
+    getRaces(): string[];
+
+    getAttributes(): string[];
+
+    getTypes(): string[];
+
     getSets(): CardSet[];
 }

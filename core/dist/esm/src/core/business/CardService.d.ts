@@ -4,4 +4,3 @@ declare class CardService {
     private getAllNames;
 }
 export { CardService };
-//# sourceMappingURL=CardService.d.ts.map

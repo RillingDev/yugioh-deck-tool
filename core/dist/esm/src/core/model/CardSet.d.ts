@@ -6,4 +6,3 @@ interface CardSet {
     readonly release: ReleaseInfo | null;
 }
 export { CardSet };
-//# sourceMappingURL=CardSet.d.ts.map

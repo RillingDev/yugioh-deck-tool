@@ -5,4 +5,3 @@ declare enum BanState {
     UNLIMITED = 3
 }
 export { BanState };
-//# sourceMappingURL=BanState.d.ts.map

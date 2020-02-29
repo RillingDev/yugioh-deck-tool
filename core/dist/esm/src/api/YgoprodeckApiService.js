@@ -60,4 +60,3 @@ YgoprodeckApiService = YgoprodeckApiService_1 = __decorate([
     __metadata("design:paramtypes", [])
 ], YgoprodeckApiService);
 export { YgoprodeckApiService };
-//# sourceMappingURL=YgoprodeckApiService.js.map

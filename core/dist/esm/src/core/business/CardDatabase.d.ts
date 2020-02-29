@@ -6,6 +6,8 @@ export interface CardDatabase {
     hasCard(cardId: string): boolean;
     getCard(cardId: string): Card | null;
     getCards(): Card[];
+    getRaces(): string[];
+    getAttributes(): string[];
+    getTypes(): string[];
     getSets(): CardSet[];
 }
-//# sourceMappingURL=CardDatabase.d.ts.map

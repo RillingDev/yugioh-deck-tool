@@ -23,4 +23,3 @@ CardService = __decorate([
     injectable()
 ], CardService);
 export { CardService };
-//# sourceMappingURL=CardService.js.map

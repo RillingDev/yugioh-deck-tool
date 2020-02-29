@@ -4,8 +4,8 @@
         "module": "esnext",
         "outDir": "../dist/esm/",
         "declaration": true,
-        "sourceMap": true,
-        "declarationMap": true
+        "sourceMap": false,
+        "declarationMap": false
     },
     "include": [
         "./"
