@@ -1,10 +1,10 @@
 import { Card } from "../model/Card";
 import { CardSet } from "../model/CardSet";
 
-interface ApiClient {
+interface DataLoaderClient {
     getCardInfo(): Promise<Card[]>;
 
     getCardSets(): Promise<CardSet[]>;
 }
 
-export { ApiClient };
+export { DataLoaderClient };

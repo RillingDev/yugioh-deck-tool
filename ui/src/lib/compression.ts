@@ -1,6 +1,8 @@
-import { CompressionService } from "../../../core";
+import { CompressionService, TYPES, container } from "../../../core";
 
-const compressionService = new CompressionService();
+const compressionService = container.get<CompressionService>(
+    TYPES.CompressionService
+);
 
 const compressToBase64Legacy = val =>
     btoa(compressionService.deflateString(val));

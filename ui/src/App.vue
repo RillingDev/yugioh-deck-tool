@@ -136,7 +136,7 @@ import CardDb from "./lib/cardDb/CardDatabase";
 import PriceDb from "./lib/priceDb/PriceDatabase";
 import Deck from "./lib/deck/Deck";
 
-import { YgoprodeckClient } from "../../core";
+import { TYPES, container, DataLoaderClient } from "../../core";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
 
@@ -146,7 +146,9 @@ import ygoSorter from "./components/YgoSorter.vue";
 import ygoDrawSim from "./components/YgoDrawSim.vue";
 import ygoRandomizer from "./components/YgoRandomizer.vue";
 
-const ygoprodeckClient = new YgoprodeckClient();
+const dataLoaderClient = container.get<DataLoaderClient>(
+    TYPES.DataLoaderClient
+);
 logger.setLevel(levels.INFO);
 
 export default {
@@ -196,8 +198,8 @@ export default {
             this.ajax.currentlyLoading = true;
 
             Promise.all([
-                ygoprodeckClient.getCardInfo(),
-                ygoprodeckClient.getCardSets()
+                dataLoaderClient.getCardInfo(),
+                dataLoaderClient.getCardSets()
             ])
                 .then(([cardInfo, cardSets]) => {
                     this.cardDb = new CardDb(cardInfo, cardSets);

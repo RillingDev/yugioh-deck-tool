@@ -5,7 +5,12 @@ module.exports = {
         node: true
     },
 
-    extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
+    extends: [
+        'plugin:vue/essential',
+        'eslint:recommended',
+        '@vue/prettier',
+        '@vue/typescript'
+    ],
 
     parserOptions: {
         parser: '@typescript-eslint/parser'
@@ -14,6 +19,7 @@ module.exports = {
     rules: {
         "no-console": "warn",
         "no-debugger": "warn",
+        "no-unused-vars": "warn",
 
         "no-shadow": "error",
         "no-undef-init": "error",
@@ -25,11 +31,4 @@ module.exports = {
         "no-implicit-coercion": "warn",
         "no-dupe-else-if": "warn"
     },
-
-    'extends': [
-      'plugin:vue/essential',
-      'eslint:recommended',
-      '@vue/prettier',
-      '@vue/typescript'
-    ]
 };

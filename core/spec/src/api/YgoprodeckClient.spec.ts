@@ -1,7 +1,7 @@
-import { YgoprodeckClient } from "../../../src/api/YgoprodeckClient";
+import { YgoprodeckApiClient } from "../../../src/api/YgoprodeckApiClient";
 
 describe("YgoprodeckClient", () => {
     it("is defined", () => {
-        expect(new YgoprodeckClient()).toBeDefined();
+        expect(new YgoprodeckApiClient()).toBeDefined();
     });
 });
