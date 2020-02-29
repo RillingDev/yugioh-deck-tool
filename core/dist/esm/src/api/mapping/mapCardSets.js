@@ -5,7 +5,7 @@ const mapCardSets = (data) => data.map(rawCardSet => {
         code: rawCardSet.set_code,
         cardCount: rawCardSet.num_of_cards,
         release: {
-            tcg: (_a = rawCardSet.tcg_date, (_a !== null && _a !== void 0 ? _a : null)),
+            tcg: (_a = rawCardSet.tcg_date) !== null && _a !== void 0 ? _a : null,
             ocg: null // Not exposed yet
         }
     };
