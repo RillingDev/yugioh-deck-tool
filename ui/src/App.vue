@@ -60,12 +60,12 @@
                 <select
                     class="form-control form-deck-currency"
                     title="Price Currency"
-                    v-model="priceDb.activeCurrency"
+                    v-model="priceController.activeCurrency"
                 >
                     <option
                         :key="currency.name"
                         :value="currency"
-                        v-for="currency in priceDb.currencies"
+                        v-for="currency in priceController.currencies"
                     >
                         {{ currency.name }}
                     </option>
@@ -99,65 +99,59 @@
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
             <ygo-deck
-                :card-db="cardDb"
+                :card-db="cardDatabase"
                 :deck="deck"
-                :price-db="priceDb"
+                :price-db="priceController"
                 v-if="!ajax.currentlyLoading"
             />
         </div>
 
         <!-- app-builder -->
-        <div class="app-section app-builder">
-            <h2>Deckbuilder:</h2>
-            <div class="app-builder-intro">
-                <ygo-sorter :card-db="cardDb" :deck="deck" />
-                <ygo-draw-sim :card-db="cardDb" :deck-list-main="deck.main" />
-                <ygo-randomizer
-                    :card-db="cardDb"
-                    @randomize="deckRandomize"
-                    v-if="!ajax.currentlyLoading"
-                />
-            </div>
-            <ygo-builder
-                :deck-card-can-add="deckCardCanAdd"
-                :pairs-arr="cardDb.pairsArr"
-                :sets="cardDb.sets"
-                @deckcardadd="deckCardAdd"
-                v-if="!ajax.currentlyLoading"
-            />
-        </div>
+        <!--        <div class="app-section app-builder">-->
+        <!--            <h2>Deckbuilder:</h2>-->
+        <!--            <div class="app-builder-intro">-->
+        <!--                <ygo-sorter :card-db="cardDb" :deck="deck" />-->
+        <!--                <ygo-draw-sim :card-db="cardDb" :deck-list-main="deck.main" />-->
+        <!--                <ygo-randomizer-->
+        <!--                    :card-db="cardDb"-->
+        <!--                    @randomize="deckRandomize"-->
+        <!--                    v-if="!ajax.currentlyLoading"-->
+        <!--                />-->
+        <!--            </div>-->
+        <!--            <ygo-builder-->
+        <!--                :deck-card-can-add="deckCardCanAdd"-->
+        <!--                @deckcardadd="deckCardAdd"-->
+        <!--                v-if="!ajax.currentlyLoading"-->
+        <!--            />-->
+        <!--        </div>-->
     </div>
 </template>
 
 <script lang="ts">
 import logger, { levels } from "loglevel";
 
-import CardDb from "./lib/cardDb/CardDatabase";
-import PriceDb from "./lib/priceDb/PriceDatabase";
+import { PriceController } from "./lib/controller/PriceController";
 import Deck from "./lib/deck/Deck";
 
-import { TYPES, container, DataLoaderClient } from "../../core";
+import { CardDatabase, container, TYPES } from "../../core";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
-
-import ygoBuilder from "./components/YgoBuilder.vue";
 import ygoDeck from "./components/YgoDeck.vue";
-import ygoSorter from "./components/YgoSorter.vue";
-import ygoDrawSim from "./components/YgoDrawSim.vue";
-import ygoRandomizer from "./components/YgoRandomizer.vue";
+import { uiContainer } from "@/inversify.config";
+import { UI_TYPES } from "@/types";
 
-const dataLoaderClient = container.get<DataLoaderClient>(
-    TYPES.DataLoaderClient
-);
 logger.setLevel(levels.INFO);
 
 export default {
     name: "Index",
-    components: { ygoBuilder, ygoDeck, ygoSorter, ygoDrawSim, ygoRandomizer },
+    //components: { ygoBuilder, ygoDeck, ygoSorter, ygoDrawSim, ygoRandomizer },
+    components: { ygoDeck },
     data: () => {
         return {
-            cardDb: new CardDb(),
-            priceDb: new PriceDb(new CardDb()),
+            cardDatabase: container.get<CardDatabase>(TYPES.CardDatabase),
+            priceController: uiContainer.get<PriceController>(
+                UI_TYPES.PriceController
+            ),
             deck: new Deck(),
             ajax: {
                 currentlyLoading: true
@@ -172,7 +166,7 @@ export default {
             return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
         },
         buyLink() {
-            return this.deck.toBuyLink(this.cardDb);
+            return this.deck.toBuyLink(this.cardDatabase);
         },
         isDeckEmpty() {
             return this.deck.getAll().length === 0;
@@ -197,13 +191,9 @@ export default {
         fetchCards() {
             this.ajax.currentlyLoading = true;
 
-            Promise.all([
-                dataLoaderClient.getCardInfo(),
-                dataLoaderClient.getCardSets()
-            ])
-                .then(([cardInfo, cardSets]) => {
-                    this.cardDb = new CardDb(cardInfo, cardSets);
-                    this.priceDb = new PriceDb(this.cardDb);
+            this.cardDatabase
+                .init()
+                .then(() => {
                     this.ajax.currentlyLoading = false;
                 })
                 .catch(logger.error);
@@ -212,10 +202,15 @@ export default {
             saveFile(this.deck.toFile());
         },
         deckCardCanAdd(deckPart, cardId, banlist) {
-            return this.deck.cardCanAdd(deckPart, cardId, this.cardDb, banlist);
+            return this.deck.cardCanAdd(
+                deckPart,
+                cardId,
+                this.cardDatabase,
+                banlist
+            );
         },
         deckCardAdd(deckPart, cardId, banlist) {
-            this.deck.cardAdd(deckPart, cardId, this.cardDb, banlist);
+            this.deck.cardAdd(deckPart, cardId, this.cardDatabase, banlist);
         },
         deckRandomize(newDeck) {
             this.deck = newDeck;
@@ -235,7 +230,7 @@ export default {
             copyText(this.shareLink);
         },
         copyShareText() {
-            copyText(this.deck.toText(this.cardDb));
+            copyText(this.deck.toText(this.cardDatabase));
         }
     }
 };

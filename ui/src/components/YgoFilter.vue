@@ -265,12 +265,7 @@ import Multiselect from "vue-multiselect";
 export default {
     components: { Multiselect },
     props: {
-        pairsArr: {
-            type: Array,
-            required: true
-        },
-        sets: {
-            type: Array,
+        cardDatabase: {
             required: true
         },
         showAdvancedFilters: {
@@ -353,7 +348,7 @@ export default {
     methods: {
         filterCards() {
             const pairsArrFiltered = search(
-                this.pairsArr,
+                this.cardDb.getCards(),
                 this.filter,
                 {
                     monster: this.isMonster,

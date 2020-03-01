@@ -5,37 +5,46 @@
             :key="priceMode.id"
             :title="`${priceMode.name} Price`"
             class="price-mode"
-            v-for="(priceMode, index) in priceDb.modes"
+            v-for="priceMode in priceController.modes"
         >
             <span v-if="isGroup">{{ priceMode.name }}: </span>
-            {{ priceDb.format(priceValues[index]) }}
+            {{ priceController.format(priceValues[priceMode.id]) }}
         </span>
     </div>
 </template>
 
 <script lang="ts">
 import { isString } from "lodash";
-import PriceDb from "../lib/priceDb/PriceDatabase";
+import { uiContainer } from "@/inversify.config";
+import { PriceController } from "@/lib/controller/PriceController";
+import { UI_TYPES } from "@/types";
+import { CardDatabase, container, PriceService, TYPES } from "../../../core";
 
 export default {
     props: {
         item: {
             type: [String, Array],
             required: true
-        },
-        priceDb: {
-            type: PriceDb,
-            required: true
         }
+    },
+    data: () => {
+        return {
+            priceController: uiContainer.get<PriceController>(
+                UI_TYPES.PriceController
+            ),
+            priceService: container.get<PriceService>(TYPES.PriceService),
+            cardDatabase: container.get<CardDatabase>(TYPES.CardDatabase)
+        };
     },
     computed: {
         isGroup() {
             return !isString(this.item);
         },
         priceValues() {
-            return this.isGroup
-                ? this.priceDb.getSelection(this.item)
-                : this.priceDb.get(this.item);
+            const cards = this.isGroup
+                ? this.item.map(item => this.cardDatabase.getCard(item))
+                : [this.cardDatabase.hasCard(this.item)];
+            return this.priceService.getPrice(...cards).prices;
         }
     }
 };

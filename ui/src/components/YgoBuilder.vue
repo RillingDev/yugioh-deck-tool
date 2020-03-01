@@ -62,18 +62,11 @@
 import { DECKPARTS } from "../lib/data/deck";
 import { BANLISTS } from "../lib/data/banlist";
 import YgoFilter from "./YgoFilter.vue";
+import { CardDatabase, container, TYPES } from "../../../core";
 
 export default {
     components: { YgoFilter },
     props: {
-        pairsArr: {
-            type: Array,
-            required: true
-        },
-        sets: {
-            type: Array,
-            required: true
-        },
         deckCardCanAdd: {
             type: Function,
             required: false,
@@ -81,10 +74,13 @@ export default {
         }
     },
     data: () => {
+        const cardDatabase = container.get<CardDatabase>(TYPES.CardDatabase);
         return {
             deckParts: DECKPARTS,
             pairsArrFiltered: [],
-            banlist: BANLISTS[0]
+            banlist: BANLISTS[0],
+            pairsArr: cardDatabase.getCards(),
+            sets: cardDatabase.getSets()
         };
     },
     computed: {

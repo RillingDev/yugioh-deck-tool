@@ -34,7 +34,7 @@
             </div>
             <div class="drawsim-output">
                 <ygo-card
-                    :card="cardDb.get(drawItemId)"
+                    :card="cardDb.getCard(drawItemId)"
                     :key="`${drawItemId}_${index}`"
                     v-for="(drawItemId, index) of drawItems"
                 />
@@ -54,7 +54,6 @@
 import ygoCard from "./YgoCard.vue";
 
 import startHand from "../lib/deck/startHand";
-import CardDb from "../lib/cardDb/CardDatabase";
 
 export default {
     components: {
@@ -65,8 +64,7 @@ export default {
             type: Array,
             required: true
         },
-        cardDb: {
-            type: CardDb,
+        cardDatabase: {
             required: true
         }
     },

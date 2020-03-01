@@ -3,6 +3,9 @@ import { DECKPARTS } from "../data/deck";
 import { countBy } from "lodash";
 import { toMap } from "lightdash";
 
+const getName = (cardDb, cardId) =>
+    cardDb.hasCard(cardId) ? cardDb.getCard(cardId).name : `[${cardId}]`;
+
 const getShareText = (list, cardDb) => {
     const result = [];
 
@@ -12,7 +15,7 @@ const getShareText = (list, cardDb) => {
         if (deckPartCards.length > 0) {
             const deckPartCardsCounted = Array.from(
                 toMap(countBy(deckPartCards)).entries()
-            ).map(entry => `${cardDb.getName(entry[0])} x${entry[1]}`);
+            ).map(entry => `${getName(cardDb, entry[0])} x${entry[1]}`);
 
             result.push(`${deckPart.name}:`, ...deckPartCardsCounted, "");
         }
@@ -25,7 +28,7 @@ const getBuyLink = (listAll, cardDb) => {
     if (listAll.length > 0) {
         const cardsCounted = Array.from(toMap(countBy(listAll)).entries()).map(
             entry =>
-                `${entry[1]} ${cardDb.getName(entry[0]).replace("&", "%26")}`
+                `${entry[1]} ${getName(cardDb, entry[0]).replace("&", "%26")}`
         );
 
         return URL_BUY_API + ["", ...cardsCounted, ""].join("||").trim();

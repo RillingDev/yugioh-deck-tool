@@ -43,8 +43,8 @@
                 <h5>Filter:</h5>
                 <div class="form-group">
                     <ygo-filter
-                        :pairs-arr="cardDb.pairsArr"
-                        :sets="cardDb.sets"
+                        :pairs-arr="cardDb.getCard()"
+                        :sets="cardDb.getSets()"
                         :show-advanced-filters="false"
                         @change="handleFilterUpdate"
                     />
@@ -91,7 +91,6 @@
 </template>
 
 <script lang="ts">
-import CardDb from "../lib/cardDb/CardDatabase";
 import { randomizeDeck } from "../lib/deck/randomize";
 import {
     archetypePoolFactory,
@@ -104,12 +103,12 @@ import {
     getDefaultRatios
 } from "../lib/data/randomizer";
 import YgoFilter from "./YgoFilter.vue";
+import { CardDatabase } from "../../../core/src/main";
 
 export default {
     components: { YgoFilter },
     props: {
-        cardDb: {
-            type: CardDb,
+        cardDatabase: {
             required: true
         }
     },
@@ -188,7 +187,7 @@ export default {
 
                 //Manually set pairsArrFiltered if no change event was fired yet
                 if (this.pairsArrFiltered === null) {
-                    this.pairsArrFiltered = this.cardDb.pairsArrUniq;
+                    this.pairsArrFiltered = this.cardDb.getCards();
                 }
             } else {
                 this.showCustom = false;

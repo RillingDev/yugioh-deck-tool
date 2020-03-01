@@ -2,8 +2,13 @@ import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
 import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
 import { getBuyLink, getShareText } from "./toText";
-import CardDatabase from "../cardDb/CardDatabase";
 import logger from "loglevel";
+import {
+    CardDatabase,
+    CardService,
+    container,
+    TYPES
+} from "../../../../core/src/main";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -23,11 +28,13 @@ const fileToList = fileContent => {
     );
 };
 
+const cardService = container.get<CardService>(TYPES.CardService);
+const cardDatabase = container.get<CardDatabase>(TYPES.CardDatabase);
 const Deck = class {
-    private name: string;
-    private main: any[];
-    private extra: any[];
-    private side: any[];
+    private readonly name: string;
+    private readonly main: any[];
+    private readonly extra: any[];
+    private readonly side: any[];
 
     constructor(list = [[], [], []], name = "Unnamed") {
         this.name = name;
@@ -95,22 +102,22 @@ const Deck = class {
     }
 
     toText(cardDb) {
-        return getShareText(this.getList(), cardDb);
+        return getShareText(this.getList(), cardDatabase);
     }
 
     toBuyLink(cardDb) {
-        return getBuyLink(this.getAll(), cardDb);
+        return getBuyLink(this.getAll(), cardDatabase);
     }
 
     cardCanAdd(deckPart, cardId, cardDb, banlist) {
-        const card = cardDb.get(cardId);
+        const card = cardDatabase.getCard(cardId);
         const cardCount = this.getAll().filter(activeSectionCardId => {
-            if (!cardDb.has(activeSectionCardId)) {
+            if (!cardDatabase.hasCard(activeSectionCardId)) {
                 return true;
             }
-            return CardDatabase.isTreatedAsSame(
+            return cardService.isTreatedAsSame(
                 card,
-                cardDb.get(activeSectionCardId)
+                cardDatabase.getCard(activeSectionCardId)
             );
         }).length;
         return (
@@ -121,7 +128,7 @@ const Deck = class {
     }
 
     cardAdd(deckPart, cardId, cardDb, banlist) {
-        if (this.cardCanAdd(deckPart, cardId, cardDb, banlist)) {
+        if (this.cardCanAdd(deckPart, cardId, cardDatabase, banlist)) {
             this[deckPart.id].push(cardId);
         }
     }
@@ -152,7 +159,7 @@ const Deck = class {
 
     sort(cardDb) {
         DECKPARTS.forEach(deckPart => {
-            this[deckPart.id] = sort(this[deckPart.id], cardDb);
+            this[deckPart.id] = sort(this[deckPart.id], cardDatabase);
         });
 
         return this;

@@ -2,21 +2,17 @@
     <div :class="`deck-part-${deckPart.id}`" class="deck-part">
         <h3>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</h3>
         <template v-if="deckPartList.length">
-            <ygo-price-view :item="deckPartList" :price-db="priceDb" />
+            <ygo-price-view :item="deckPartList" />
             <div class="deck-content">
                 <ygo-card
-                    :card="cardDb.get(cardId)"
+                    :card="cardDatabase.getCard(cardId)"
                     :key="`${cardId}_${cardIndex}`"
                     @deckcardrightclick.prevent="
                         deck.cardRemove(deckPart, cardId)
                     "
                     v-for="(cardId, cardIndex) in deckPartList"
                 >
-                    <ygo-price-view
-                        :item="cardId"
-                        :price-db="priceDb"
-                        slot="price"
-                    />
+                    <ygo-price-view :item="cardId" slot="price" />
                 </ygo-card>
             </div>
         </template>
@@ -24,12 +20,11 @@
 </template>
 
 <script lang="ts">
-import CardDb from "../lib/cardDb/CardDatabase";
-import PriceDb from "../lib/priceDb/PriceDatabase";
 import Deck from "../lib/deck/Deck";
 
 import ygoCard from "./YgoCard.vue";
 import ygoPriceView from "./YgoPriceView.vue";
+import { CardDatabase, container, TYPES } from "../../../core";
 
 export default {
     components: {
@@ -48,15 +43,12 @@ export default {
         deckPartList: {
             type: Array,
             required: true
-        },
-        cardDb: {
-            type: CardDb,
-            required: true
-        },
-        priceDb: {
-            type: PriceDb,
-            required: true
         }
+    },
+    data: () => {
+        return {
+            cardDatabase: container.get<CardDatabase>(TYPES.CardDatabase)
+        };
     }
 };
 </script>

@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-import CardDb from "../lib/cardDb/CardDatabase";
 import Deck from "../lib/deck/Deck";
 
 export default {
@@ -21,8 +20,7 @@ export default {
             type: Deck,
             required: true
         },
-        cardDb: {
-            type: CardDb,
+        cardDatabase: {
             required: true
         }
     },

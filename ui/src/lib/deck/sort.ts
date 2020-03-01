@@ -28,11 +28,11 @@ const compareType = (dataA, dataB) => {
 
 const sortCards = (list, cardDb) =>
     list.sort((a, b) => {
-        const dataA = cardDb.get(a);
+        const dataA = cardDb.getCard(a);
         if (dataA == null) {
             return 1;
         }
-        const dataB = cardDb.get(b);
+        const dataB = cardDb.getCard(b);
         if (dataB == null) {
             return -1;
         }

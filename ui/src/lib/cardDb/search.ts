@@ -5,7 +5,7 @@ const optionFilterArr = (val, filterItem) => {
     if (filterItem.active === "Any") {
         return true;
     }
-    return val != null && val.includes(filterItem.active);
+    return val?.includes(filterItem.active);
 };
 
 const searchCard = (cardArr, filter, is, sortFn) => {
