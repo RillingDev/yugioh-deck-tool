@@ -1,34 +1,28 @@
-import deepFreeze from "../deepFreeze";
-
 const DECKPARTS_REGEX_EXTRA = /Fusion|Synchro|XYZ|Link/;
-
-const DECKPARTS = [
-    {
+const DeckParts = {
+    MAIN: {
         id: "main",
         name: "Main",
         indicator: "#main",
         min: 40,
         max: 60,
-        check: card => !DECKPARTS_REGEX_EXTRA.test(card.type)
+        allowsCard: (card) => !DECKPARTS_REGEX_EXTRA.test(card.type)
     },
-    {
+    EXTRA: {
         id: "extra",
         name: "Extra",
         indicator: "#extra",
         min: 0,
         max: 15,
-        check: card => DECKPARTS_REGEX_EXTRA.test(card.type)
+        allowsCard: (card) => DECKPARTS_REGEX_EXTRA.test(card.type)
     },
-    {
+    SIDE: {
         id: "side",
         name: "Side",
         indicator: "!side",
         min: 0,
         max: 15,
-        check: () => true
+        allowsCard: () => true
     }
-];
-
-deepFreeze(DECKPARTS);
-
-export { DECKPARTS };
+};
+export { DeckParts };

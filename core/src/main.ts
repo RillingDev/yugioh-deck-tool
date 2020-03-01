@@ -8,6 +8,9 @@ import { CardSet } from "./core/model/CardSet";
 import { CardSetAppearance } from "./core/model/CardSetAppearance";
 import { CardImage } from "./core/model/CardImage";
 import { CardPrices } from "./core/model/CardPrices";
+import { Deck } from "./core/model/Deck";
+import { DeckPart } from "./core/model/DeckPart";
+import { DeckParts } from "./core/data/DeckParts";
 import { TYPES } from "./types";
 import { container } from "./inversify.config";
 import { CardDatabase } from "./core/business/CardDatabase";
@@ -31,9 +34,12 @@ export {
     Card,
     CardPrices,
     CardImage,
-    BanlistInfo,
-    BanState,
     CardSet,
     CardSetAppearance,
-    ReleaseInfo
+    BanlistInfo,
+    BanState,
+    ReleaseInfo,
+    Deck,
+    DeckPart,
+    DeckParts
 };
