@@ -19,29 +19,29 @@ let DeckImportExportService = class DeckImportExportService {
     }
     fromFile(fileContent, fileName) {
         const parts = new Map();
+        for (const deckpart of DECKPARTS) {
+            parts.set(deckpart, []);
+        }
         const missing = [];
         const lines = fileContent
             .trim()
             .split("\n")
             .map(str => str.trim());
         let currentDeckPart = null;
-        let currentCards = [];
         for (const line of lines) {
-            const startingDeckPart = DECKPARTS.find(part => part.indicator === line);
-            if (startingDeckPart != null) {
-                currentDeckPart = startingDeckPart;
-                currentCards = [];
-                if (!parts.has(currentDeckPart)) {
-                    parts.set(currentDeckPart, currentCards);
-                }
+            const foundDeckPart = DECKPARTS.find(part => part.indicator === line);
+            if (foundDeckPart != null) {
+                currentDeckPart = foundDeckPart;
                 continue;
             }
+            // Only start processing once a deckpart indicator was found. this allows for arbitrary file metadata as "head" of the file.
             if (currentDeckPart != null) {
-                if (this.cardDatabase.hasCard(line)) {
-                    currentCards.push(this.cardDatabase.getCard(line));
+                if (!this.cardDatabase.hasCard(line)) {
+                    missing.push(line);
                 }
                 else {
-                    missing.push(line);
+                    const card = this.cardDatabase.getCard(line);
+                    parts.get(currentDeckPart).push(card);
                 }
             }
         }
