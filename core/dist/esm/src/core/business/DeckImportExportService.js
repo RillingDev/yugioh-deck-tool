@@ -12,7 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
-import { DeckPartsArray } from "../data/DeckParts";
+import { DECKPARTS } from "../data/DeckParts";
 let DeckImportExportService = class DeckImportExportService {
     constructor(cardDatabase) {
         this.cardDatabase = cardDatabase;
@@ -27,7 +27,7 @@ let DeckImportExportService = class DeckImportExportService {
         let currentDeckPart = null;
         let currentCards = [];
         for (const line of lines) {
-            const startingDeckPart = DeckPartsArray.find(part => part.indicator === line);
+            const startingDeckPart = DECKPARTS.find(part => part.indicator === line);
             if (startingDeckPart != null) {
                 currentDeckPart = startingDeckPart;
                 currentCards = [];

@@ -10,7 +10,12 @@ import { CardImage } from "./core/model/CardImage";
 import { CardPrices } from "./core/model/CardPrices";
 import { Deck } from "./core/model/Deck";
 import { DeckPart } from "./core/model/DeckPart";
-import { DeckParts } from "./core/data/DeckParts";
+import {
+    DECKPART_EXTRA,
+    DECKPART_MAIN,
+    DECKPART_SIDE,
+    DECKPARTS
+} from "./core/data/DeckParts";
 import { TYPES } from "./types";
 import { container } from "./inversify.config";
 import { CardDatabase } from "./core/business/CardDatabase";
@@ -41,5 +46,11 @@ export {
     ReleaseInfo,
     Deck,
     DeckPart,
-    DeckParts
+    /*
+     * Static data
+     */
+    DECKPARTS,
+    DECKPART_EXTRA,
+    DECKPART_MAIN,
+    DECKPART_SIDE
 };

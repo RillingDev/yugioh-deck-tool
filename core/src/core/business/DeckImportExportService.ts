@@ -3,7 +3,7 @@ import { Deck } from "../model/Deck";
 import { TYPES } from "../../types";
 import { CardDatabase } from "./CardDatabase";
 import { Card } from "../model/Card";
-import { DeckPartsArray } from "../data/DeckParts";
+import { DECKPARTS } from "../data/DeckParts";
 import { DeckPart } from "../model/DeckPart";
 
 interface ImportResult {
@@ -34,7 +34,7 @@ class DeckImportExportService {
         let currentDeckPart = null;
         let currentCards: Card[] = [];
         for (const line of lines) {
-            const startingDeckPart = DeckPartsArray.find(
+            const startingDeckPart = DECKPARTS.find(
                 part => part.indicator === line
             );
             if (startingDeckPart != null) {

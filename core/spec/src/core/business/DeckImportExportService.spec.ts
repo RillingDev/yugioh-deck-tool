@@ -4,8 +4,12 @@ import { DeckImportExportService } from "../../../../src/core/business/DeckImpor
 import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { DeckParts } from "../../../../src/core/data/DeckParts";
 import { createCard } from "../../helper/dataFactories";
+import {
+    DECKPART_EXTRA,
+    DECKPART_MAIN,
+    DECKPART_SIDE
+} from "../../../../src/core/data/DeckParts";
 
 describe("DeckImportExportService", () => {
     let deckImportExportService: DeckImportExportService;
@@ -52,8 +56,8 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 "foo.ydk"
             );
-            expect(result.deck.parts.get(DeckParts.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DeckParts.MAIN)).toContain(card);
+            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DECKPART_MAIN)).toContain(card);
         });
 
         it("puts multiple", () => {
@@ -69,8 +73,8 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 "foo.ydk"
             );
-            expect(result.deck.parts.get(DeckParts.MAIN)!.length).toBe(3);
-            expect(result.deck.parts.get(DeckParts.MAIN)).toEqual([
+            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(3);
+            expect(result.deck.parts.get(DECKPART_MAIN)).toEqual([
                 card,
                 card,
                 card
@@ -98,12 +102,12 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 "foo.ydk"
             );
-            expect(result.deck.parts.get(DeckParts.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DeckParts.MAIN)).toContain(card1);
-            expect(result.deck.parts.get(DeckParts.EXTRA)!.length).toBe(1);
-            expect(result.deck.parts.get(DeckParts.EXTRA)).toContain(card2);
-            expect(result.deck.parts.get(DeckParts.SIDE)!.length).toBe(1);
-            expect(result.deck.parts.get(DeckParts.SIDE)).toContain(card3);
+            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DECKPART_MAIN)).toContain(card1);
+            expect(result.deck.parts.get(DECKPART_EXTRA)!.length).toBe(1);
+            expect(result.deck.parts.get(DECKPART_EXTRA)).toContain(card2);
+            expect(result.deck.parts.get(DECKPART_SIDE)!.length).toBe(1);
+            expect(result.deck.parts.get(DECKPART_SIDE)).toContain(card3);
         });
 
         it("ignores optional creator note", () => {
@@ -118,8 +122,8 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 "foo.ydk"
             );
-            expect(result.deck.parts.get(DeckParts.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DeckParts.MAIN)).toContain(card);
+            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DECKPART_MAIN)).toContain(card);
         });
     });
 });

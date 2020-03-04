@@ -1,7 +1,6 @@
 import { DeckPart } from "../model/DeckPart";
-declare type DeckPartEnum = {
-    [key: string]: DeckPart;
-};
-declare const DeckParts: DeckPartEnum;
-declare const DeckPartsArray: DeckPart[];
-export { DeckParts, DeckPartsArray };
+declare const DECKPART_MAIN: DeckPart;
+declare const DECKPART_EXTRA: DeckPart;
+declare const DECKPART_SIDE: DeckPart;
+declare const DECKPARTS: DeckPart[];
+export { DECKPARTS, DECKPART_EXTRA, DECKPART_SIDE, DECKPART_MAIN };

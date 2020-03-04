@@ -9,8 +9,8 @@ import { injectable } from "inversify";
 
 @injectable()
 class YgoprodeckApiService implements CardDataLoaderService {
-    private readonly httpClient: AxiosInstance;
     private static readonly CARD_INFO_CHUNK_SIZE = 2500;
+    private readonly httpClient: AxiosInstance;
 
     constructor() {
         this.httpClient = axios.create({
