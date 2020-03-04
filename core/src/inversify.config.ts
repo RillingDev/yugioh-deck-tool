@@ -7,12 +7,18 @@ import { CardDatabase } from "./core/business/CardDatabase";
 import { MemoryCardDatabase } from "./core/business/MemoryCardDatabase";
 import { CardService } from "./core/business/CardService";
 import { PriceService } from "./core/business/PriceService";
+import { DeckImportExportService } from "./core/business/DeckImportExportService";
+import { DeckService } from "./core/business/DeckService";
 
 const container = new Container();
 container
     .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
     .to(YgoprodeckApiService);
 container.bind<CardService>(TYPES.CardService).to(CardService);
+container
+    .bind<DeckImportExportService>(TYPES.DeckImportExportService)
+    .to(DeckImportExportService);
+container.bind<DeckService>(TYPES.DeckService).to(DeckService);
 container.bind<PriceService>(TYPES.PriceService).to(PriceService);
 container
     .bind<CompressionService>(TYPES.CompressionService)

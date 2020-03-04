@@ -25,4 +25,5 @@ const DeckParts = {
         allowsCard: () => true
     }
 };
-export { DeckParts };
+const DeckPartsArray = [DeckParts.MAIN, DeckParts.EXTRA, DeckParts.SIDE];
+export { DeckParts, DeckPartsArray };
