@@ -13,15 +13,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { DECKPARTS } from "../data/DeckParts";
+import { CompressionService } from "./CompressionService";
 let DeckImportExportService = class DeckImportExportService {
-    constructor(cardDatabase) {
+    constructor(cardDatabase, compressionService) {
+        this.compressionService = compressionService;
         this.cardDatabase = cardDatabase;
     }
     fromFile(deckFile) {
-        const parts = new Map();
-        for (const deckPart of DECKPARTS) {
-            parts.set(deckPart, []);
-        }
+        const parts = this.createPartMap();
         const missing = [];
         const lines = deckFile.fileContent
             .split("\n")
@@ -63,14 +62,51 @@ let DeckImportExportService = class DeckImportExportService {
             fileContent: fileLines.join("\n")
         };
     }
+    fromLegacyUrlQueryParamValue(val, base64Decoder) {
+        const parts = this.createPartMap();
+        const uncompressedValue = this.compressionService.inflateString(base64Decoder(val));
+        const DELIMITERS = {
+            deckPart: "|",
+            cardId: ";",
+            cardAmount: "*"
+        };
+        uncompressedValue
+            .split(DELIMITERS.deckPart)
+            .forEach((deckPartList, index) => {
+            const deckPart = DECKPARTS[index];
+            const deckPartCards = parts.get(deckPart);
+            if (deckPartList.length > 0) {
+                deckPartList.split(DELIMITERS.cardId).forEach(entry => {
+                    let count = 1;
+                    let cardId = entry;
+                    if (entry.startsWith(DELIMITERS.cardAmount)) {
+                        count = Number(entry[1]);
+                        cardId = entry.slice(2);
+                    }
+                    if (!this.cardDatabase.hasCard(cardId)) {
+                        throw new TypeError("Unknown card, this hopefully should never happen");
+                    }
+                    const card = this.cardDatabase.getCard(cardId);
+                    for (let i = 0; i < count; i++) {
+                        deckPartCards.push(card);
+                    }
+                });
+            }
+        });
+        return { name: null, parts };
+    }
+    createPartMap() {
+        const parts = new Map();
+        for (const deckPart of DECKPARTS) {
+            parts.set(deckPart, []);
+        }
+        return parts;
+    }
 };
-__decorate([
-    inject(TYPES.CardDatabase),
-    __metadata("design:type", Object)
-], DeckImportExportService.prototype, "cardDatabase", void 0);
 DeckImportExportService = __decorate([
     injectable(),
     __param(0, inject(TYPES.CardDatabase)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, inject(TYPES.CompressionService)),
+    __metadata("design:paramtypes", [Object, CompressionService])
 ], DeckImportExportService);
 export { DeckImportExportService };

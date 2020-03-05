@@ -5,13 +5,10 @@ import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { createCard } from "../../helper/dataFactories";
-import {
-    DECKPART_EXTRA,
-    DECKPART_MAIN,
-    DECKPART_SIDE
-} from "../../../../src/core/data/DeckParts";
+import { DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE } from "../../../../src/core/data/DeckParts";
 import { DeckPart } from "src/core/model/DeckPart";
 import { Card } from "src/core/model/Card";
+import { deflate } from "pako";
 
 describe("DeckImportExportService", () => {
     let deckImportExportService: DeckImportExportService;
@@ -26,6 +23,10 @@ describe("DeckImportExportService", () => {
         deckImportExportService = container.get<DeckImportExportService>(
             TYPES.DeckImportExportService
         );
+    });
+
+    afterEach(() => {
+        mockCardDatabase.reset();
     });
 
     describe("fromFile", () => {
@@ -164,6 +165,7 @@ describe("DeckImportExportService", () => {
 123`
             );
         });
+
         it("puts per deckpart", () => {
             expect(
                 deckImportExportService.toFile({
@@ -185,6 +187,35 @@ describe("DeckImportExportService", () => {
 789
 `
             );
+        });
+    });
+
+    describe("fromLegacyUrlQueryParamValue", () => {
+        it("puts per deckpart", () => {
+            const queryParamValue = deflate("123|*2456|789;999;*3123", {
+                to: "string"
+            });
+            const card1 = createCard("123");
+            mockCardDatabase.registerCard("123", card1);
+            const card2 = createCard("456");
+            mockCardDatabase.registerCard("456", card2);
+            const card3 = createCard("789");
+            mockCardDatabase.registerCard("789", card3);
+            const card4 = createCard("999");
+            mockCardDatabase.registerCard("999", card4);
+            expect(
+                deckImportExportService.fromLegacyUrlQueryParamValue(
+                    queryParamValue,
+                    (str: string): string => str
+                )
+            ).toEqual({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DECKPART_MAIN, [card1]],
+                    [DECKPART_EXTRA, [card2, card2]],
+                    [DECKPART_SIDE, [card3, card4, card1, card1, card1]]
+                ])
+            });
         });
     });
 });

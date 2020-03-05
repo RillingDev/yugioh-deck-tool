@@ -5,6 +5,7 @@ import { CardDatabase } from "./CardDatabase";
 import { Card } from "../model/Card";
 import { DECKPARTS } from "../data/DeckParts";
 import { DeckPart } from "../model/DeckPart";
+import { CompressionService } from "./CompressionService";
 
 interface ImportResult {
     deck: Deck;
@@ -18,20 +19,21 @@ interface DeckFile {
 
 @injectable()
 class DeckImportExportService {
-    @inject(TYPES.CardDatabase) private readonly cardDatabase: CardDatabase;
+    private readonly cardDatabase: CardDatabase;
+    private readonly compressionService: CompressionService;
 
     constructor(
         @inject(TYPES.CardDatabase)
-        cardDatabase: CardDatabase
+        cardDatabase: CardDatabase,
+        @inject(TYPES.CompressionService)
+        compressionService: CompressionService
     ) {
+        this.compressionService = compressionService;
         this.cardDatabase = cardDatabase;
     }
 
     public fromFile(deckFile: DeckFile): ImportResult {
-        const parts = new Map<DeckPart, Card[]>();
-        for (const deckPart of DECKPARTS) {
-            parts.set(deckPart, []);
-        }
+        const parts = this.createPartMap();
         const missing: string[] = [];
 
         const lines = deckFile.fileContent
@@ -79,6 +81,61 @@ class DeckImportExportService {
             fileName: `${deck.name}.ydk`,
             fileContent: fileLines.join("\n")
         };
+    }
+
+    public fromLegacyUrlQueryParamValue(
+        val: string,
+        base64Decoder: (val: string) => string
+    ): Deck {
+        const parts = this.createPartMap();
+        const uncompressedValue = this.compressionService.inflateString(
+            base64Decoder(val)
+        );
+
+        const DELIMITERS = {
+            deckPart: "|",
+            cardId: ";",
+            cardAmount: "*"
+        };
+
+        uncompressedValue
+            .split(DELIMITERS.deckPart)
+            .forEach((deckPartList: string, index) => {
+                const deckPart = DECKPARTS[index];
+                const deckPartCards = parts.get(deckPart)!;
+
+                if (deckPartList.length > 0) {
+                    deckPartList.split(DELIMITERS.cardId).forEach(entry => {
+                        let count = 1;
+                        let cardId = entry;
+                        if (entry.startsWith(DELIMITERS.cardAmount)) {
+                            count = Number(entry[1]);
+                            cardId = entry.slice(2);
+                        }
+
+                        if (!this.cardDatabase.hasCard(cardId)) {
+                            throw new TypeError(
+                                "Unknown card, this hopefully should never happen"
+                            );
+                        }
+                        const card = this.cardDatabase.getCard(cardId)!;
+
+                        for (let i = 0; i < count; i++) {
+                            deckPartCards.push(card);
+                        }
+                    });
+                }
+            });
+
+        return { name: null, parts };
+    }
+
+    private createPartMap(): Map<DeckPart, Card[]> {
+        const parts = new Map<DeckPart, Card[]>();
+        for (const deckPart of DECKPARTS) {
+            parts.set(deckPart, []);
+        }
+        return parts;
     }
 }
 
