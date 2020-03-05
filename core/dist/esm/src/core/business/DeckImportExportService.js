@@ -10,14 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var DeckImportExportService_1;
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { DECKPARTS } from "../data/DeckParts";
 import { CompressionService } from "./CompressionService";
-let DeckImportExportService = class DeckImportExportService {
+import { fromByteArray, toByteArray } from "base64-js";
+import { deflate, inflate } from "pako";
+import { isEqual } from "lodash";
+let DeckImportExportService = DeckImportExportService_1 = class DeckImportExportService {
     constructor(cardDatabase, compressionService) {
         this.compressionService = compressionService;
         this.cardDatabase = cardDatabase;
+        this.textEncoder = new TextEncoder();
+        this.textDecoder = new TextDecoder();
     }
     fromFile(deckFile) {
         const parts = this.createPartMap();
@@ -62,6 +68,72 @@ let DeckImportExportService = class DeckImportExportService {
             fileContent: fileLines.join("\n")
         };
     }
+    /**
+     * Encodes a deck to a URI query parameter value safe string.
+     *
+     * Encoding steps:
+     * <ol>
+     *     <li>Create byte array of deck name and cards (see below)</li>
+     *     <li>Deflate the byte array to producer shorter results</li>
+     *     <li>Base64 encode the value with an URI safe alphabet to allow usage in URI query parameter values</li>
+     * </ol>
+     *
+     * Byte Array structure:
+     * Blocks of {@link #BLOCK_SIZE} represent a single card ID number,
+     * with a special value {@link #DELIMITER_BLOCK} being used to separate deck-parts.
+     * After the last card of the last deckpart and the delimiter,
+     * the UTF-8 code-points of the deck name follow, if one is set.
+     *
+     * @param deck
+     * @return Value that can be decoded to yield the same deck.
+     */
+    toUrlQueryParamValue(deck) {
+        const result = [];
+        for (const deckPart of DECKPARTS) {
+            for (const card of deck.parts.get(deckPart)) {
+                result.push(...this.encodeCard(card));
+            }
+            result.push(...DeckImportExportService_1.DELIMITER_BLOCK);
+        }
+        if (deck.name != null && deck.name !== "") {
+            result.push(...this.textEncoder.encode(deck.name));
+        }
+        const deflated = deflate(result);
+        return this.encodeUriSafeBase64(deflated);
+    }
+    /**
+     * Creates a deck from a query parameter value created by {@link toUrlQueryParamValue}.
+     *
+     * @param queryParamValue query parameter value.
+     * @return Deck.
+     */
+    fromUrlQueryParamValue(queryParamValue) {
+        const parts = this.createPartMap();
+        const decoded = this.decodeUriSafeBase64(queryParamValue);
+        const inflated = inflate(decoded);
+        let deckPartIndex = 0;
+        let metaDataStart = null;
+        for (let i = 0; i < inflated.length; i += DeckImportExportService_1.BLOCK_SIZE) {
+            const block = inflated.subarray(i, i + DeckImportExportService_1.BLOCK_SIZE);
+            if (isEqual(block, DeckImportExportService_1.DELIMITER_BLOCK)) {
+                // After the last deckpart, meta data starts
+                if (deckPartIndex === DECKPARTS.length - 1) {
+                    metaDataStart = i + DeckImportExportService_1.BLOCK_SIZE;
+                    break;
+                }
+                deckPartIndex++;
+            }
+            else {
+                const deckPart = parts.get(DECKPARTS[deckPartIndex]);
+                deckPart.push(this.decodeCard(block));
+            }
+        }
+        let name = null;
+        if (metaDataStart != null && metaDataStart < inflated.length) {
+            name = this.textDecoder.decode(inflated.subarray(metaDataStart));
+        }
+        return { name, parts };
+    }
     fromLegacyUrlQueryParamValue(val, base64Decoder) {
         const parts = this.createPartMap();
         const uncompressedValue = this.compressionService.inflateString(base64Decoder(val));
@@ -95,6 +167,41 @@ let DeckImportExportService = class DeckImportExportService {
         });
         return { name: null, parts };
     }
+    encodeCard(card) {
+        const idNumber = Number(card.id);
+        if (idNumber === 0 || idNumber >= DeckImportExportService_1.ID_LIMIT) {
+            throw new TypeError(`card '${card}' has an illegal value ${idNumber} as ID.`);
+        }
+        const buffer = new ArrayBuffer(DeckImportExportService_1.BLOCK_SIZE);
+        // Create a 32 bit int view which allows easy access to the 4 byte
+        // representation of the 32 bit number we set on it.
+        const uint32Array = new Uint32Array(buffer);
+        uint32Array[0] = idNumber;
+        return new Uint8Array(buffer);
+    }
+    decodeCard(block) {
+        // Copy input array to allow buffer access
+        const uint8Array = new Uint8Array(block);
+        // See #encodeCard for details
+        const uint32Array = new Uint32Array(uint8Array.buffer);
+        const cardId = String(uint32Array[0]);
+        if (!this.cardDatabase.hasCard(cardId)) {
+            throw new TypeError(`Could not find card for ID ${cardId}.`);
+        }
+        return this.cardDatabase.getCard(cardId);
+    }
+    encodeUriSafeBase64(val) {
+        return fromByteArray(val)
+            .replace(/=/g, "~")
+            .replace(/\+/g, "_")
+            .replace(/\//g, "-");
+    }
+    decodeUriSafeBase64(val) {
+        return toByteArray(val
+            .replace(/~/g, "=")
+            .replace(/_/g, "+")
+            .replace(/-/g, "/"));
+    }
     createPartMap() {
         const parts = new Map();
         for (const deckPart of DECKPARTS) {
@@ -103,7 +210,11 @@ let DeckImportExportService = class DeckImportExportService {
         return parts;
     }
 };
-DeckImportExportService = __decorate([
+// 4 bytes is enough to hold a 32 bit integer which is able to store all 9 digit IDs
+DeckImportExportService.BLOCK_SIZE = 4;
+DeckImportExportService.DELIMITER_BLOCK = new Uint8Array(DeckImportExportService_1.BLOCK_SIZE).fill(0);
+DeckImportExportService.ID_LIMIT = 2 ** 32;
+DeckImportExportService = DeckImportExportService_1 = __decorate([
     injectable(),
     __param(0, inject(TYPES.CardDatabase)),
     __param(1, inject(TYPES.CompressionService)),

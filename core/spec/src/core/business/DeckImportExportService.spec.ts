@@ -5,7 +5,11 @@ import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { createCard } from "../../helper/dataFactories";
-import { DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE } from "../../../../src/core/data/DeckParts";
+import {
+    DECKPART_EXTRA,
+    DECKPART_MAIN,
+    DECKPART_SIDE
+} from "../../../../src/core/data/DeckParts";
 import { DeckPart } from "src/core/model/DeckPart";
 import { Card } from "src/core/model/Card";
 import { deflate } from "pako";
@@ -214,6 +218,91 @@ describe("DeckImportExportService", () => {
                     [DECKPART_MAIN, [card1]],
                     [DECKPART_EXTRA, [card2, card2]],
                     [DECKPART_SIDE, [card3, card4, card1, card1, card1]]
+                ])
+            });
+        });
+    });
+
+    describe("toUrlQueryParamValue", () => {
+        it("creates value", () => {
+            const card1 = createCard("123");
+            const card2 = createCard("456");
+            const card3 = createCard("789");
+            const card4 = createCard("999999999");
+
+            const result = deckImportExportService.toUrlQueryParamValue({
+                name: "foo",
+                parts: new Map<DeckPart, Card[]>([
+                    [DECKPART_MAIN, [card1]],
+                    [DECKPART_EXTRA, [card2, card2]],
+                    [DECKPART_SIDE, [card3, card4, card1, card1, card1]]
+                ])
+            });
+            expect(result).toEqual(
+                "eJyrZoCAE4wQDAKizAwM-0-Osq4GsmEYBNLy8wGk7Ad4"
+            );
+        });
+
+        it("works with null name", () => {
+            const card1 = createCard("123");
+            const card2 = createCard("456");
+            const card3 = createCard("789");
+
+            const result = deckImportExportService.toUrlQueryParamValue({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DECKPART_MAIN, [card1]],
+                    [DECKPART_EXTRA, [card2]],
+                    [DECKPART_SIDE, [card3]]
+                ])
+            });
+            expect(result).toEqual("eJyrZoCAE4wQWpQZQgMAGOwBXQ~~");
+        });
+    });
+
+    describe("fromUrlQueryParamValue", () => {
+        it("creates value", () => {
+            const card1 = createCard("123");
+            mockCardDatabase.registerCard("123", card1);
+            const card2 = createCard("456");
+            mockCardDatabase.registerCard("456", card2);
+            const card3 = createCard("789");
+            mockCardDatabase.registerCard("789", card3);
+            const card4 = createCard("999999999");
+            mockCardDatabase.registerCard("999999999", card4);
+
+            const result = deckImportExportService.fromUrlQueryParamValue(
+                "eJyrZoCAE4wQDAKizAwM-0-Osq4GsmEYBNLy8wGk7Ad4"
+            );
+
+            expect(result).toEqual({
+                name: "foo",
+                parts: new Map<DeckPart, Card[]>([
+                    [DECKPART_MAIN, [card1]],
+                    [DECKPART_EXTRA, [card2, card2]],
+                    [DECKPART_SIDE, [card3, card4, card1, card1, card1]]
+                ])
+            });
+        });
+
+        it("works with null name", () => {
+            const card1 = createCard("123");
+            mockCardDatabase.registerCard("123", card1);
+            const card2 = createCard("456");
+            mockCardDatabase.registerCard("456", card2);
+            const card3 = createCard("789");
+            mockCardDatabase.registerCard("789", card3);
+
+            const result = deckImportExportService.fromUrlQueryParamValue(
+                "eJyrZoCAE4wQWpQZQgMAGOwBXQ~~"
+            );
+
+            expect(result).toEqual({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DECKPART_MAIN, [card1]],
+                    [DECKPART_EXTRA, [card2]],
+                    [DECKPART_SIDE, [card3]]
                 ])
             });
         });
