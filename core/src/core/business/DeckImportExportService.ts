@@ -11,6 +11,11 @@ interface ImportResult {
     missing: string[];
 }
 
+interface DeckFile {
+    fileName: string;
+    fileContent: string;
+}
+
 @injectable()
 class DeckImportExportService {
     @inject(TYPES.CardDatabase) private readonly cardDatabase: CardDatabase;
@@ -22,18 +27,17 @@ class DeckImportExportService {
         this.cardDatabase = cardDatabase;
     }
 
-    public fromFile(fileContent: string, fileName: string): ImportResult {
+    public fromFile(deckFile: DeckFile): ImportResult {
         const parts = new Map<DeckPart, Card[]>();
-        for (const deckpart of DECKPARTS) {
-            parts.set(deckpart, []);
+        for (const deckPart of DECKPARTS) {
+            parts.set(deckPart, []);
         }
         const missing: string[] = [];
 
-        const lines = fileContent
-            .trim()
+        const lines = deckFile.fileContent
             .split("\n")
-            .map(str => str.trim());
-
+            .map(line => line.trim())
+            .filter(line => line.length > 0);
         let currentDeckPart = null;
         for (const line of lines) {
             const foundDeckPart = DECKPARTS.find(
@@ -55,8 +59,26 @@ class DeckImportExportService {
             }
         }
 
-        const name = fileName.replace(".ydk", "");
-        return { deck: { name, parts }, missing };
+        return {
+            deck: { name: deckFile.fileName.replace(".ydk", ""), parts },
+            missing
+        };
+    }
+
+    public toFile(deck: Deck): DeckFile {
+        const fileLines: string[] = [];
+
+        for (const deckPart of DECKPARTS) {
+            const deckPartCards = deck.parts.get(deckPart)!;
+            fileLines.push(deckPart.indicator);
+            fileLines.push(...deckPartCards.map(card => card.id));
+            fileLines.push("");
+        }
+
+        return {
+            fileName: `${deck.name}.ydk`,
+            fileContent: fileLines.join("\n")
+        };
     }
 }
 

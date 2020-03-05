@@ -17,16 +17,16 @@ let DeckImportExportService = class DeckImportExportService {
     constructor(cardDatabase) {
         this.cardDatabase = cardDatabase;
     }
-    fromFile(fileContent, fileName) {
+    fromFile(deckFile) {
         const parts = new Map();
-        for (const deckpart of DECKPARTS) {
-            parts.set(deckpart, []);
+        for (const deckPart of DECKPARTS) {
+            parts.set(deckPart, []);
         }
         const missing = [];
-        const lines = fileContent
-            .trim()
+        const lines = deckFile.fileContent
             .split("\n")
-            .map(str => str.trim());
+            .map(line => line.trim())
+            .filter(line => line.length > 0);
         let currentDeckPart = null;
         for (const line of lines) {
             const foundDeckPart = DECKPARTS.find(part => part.indicator === line);
@@ -45,8 +45,23 @@ let DeckImportExportService = class DeckImportExportService {
                 }
             }
         }
-        const name = fileName.replace(".ydk", "");
-        return { deck: { name, parts }, missing };
+        return {
+            deck: { name: deckFile.fileName.replace(".ydk", ""), parts },
+            missing
+        };
+    }
+    toFile(deck) {
+        const fileLines = [];
+        for (const deckPart of DECKPARTS) {
+            const deckPartCards = deck.parts.get(deckPart);
+            fileLines.push(deckPart.indicator);
+            fileLines.push(...deckPartCards.map(card => card.id));
+            fileLines.push("");
+        }
+        return {
+            fileName: `${deck.name}.ydk`,
+            fileContent: fileLines.join("\n")
+        };
     }
 };
 __decorate([

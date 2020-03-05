@@ -4,9 +4,14 @@ interface ImportResult {
     deck: Deck;
     missing: string[];
 }
+interface DeckFile {
+    fileName: string;
+    fileContent: string;
+}
 declare class DeckImportExportService {
     private readonly cardDatabase;
     constructor(cardDatabase: CardDatabase);
-    fromFile(fileContent: string, fileName: string): ImportResult;
+    fromFile(deckFile: DeckFile): ImportResult;
+    toFile(deck: Deck): DeckFile;
 }
 export { DeckImportExportService };
