@@ -15,7 +15,7 @@ class MockCardDatabase implements CardDatabase {
         this.cards.set(cardId, card);
     }
 
-    public reset():void{
+    public reset(): void {
         this.cards.clear();
     }
 

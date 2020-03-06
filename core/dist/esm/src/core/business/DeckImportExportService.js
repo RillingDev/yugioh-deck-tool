@@ -18,16 +18,20 @@ import { CompressionService } from "./CompressionService";
 import { fromByteArray, toByteArray } from "base64-js";
 import { deflate, inflate } from "pako";
 import { isEqual } from "lodash";
+import { groupMapReducingBy } from "lightdash";
+import { DeckService } from "./DeckService";
 let DeckImportExportService = DeckImportExportService_1 = class DeckImportExportService {
-    constructor(cardDatabase, compressionService) {
+    constructor(cardDatabase, deckService, compressionService) {
         this.compressionService = compressionService;
+        this.deckService = deckService;
         this.cardDatabase = cardDatabase;
         this.textEncoder = new TextEncoder();
         this.textDecoder = new TextDecoder();
     }
     fromFile(deckFile) {
-        const parts = this.createPartMap();
         const missing = [];
+        const deck = this.deckService.createEmptyDeck();
+        deck.name = deckFile.fileName.replace(".ydk", "");
         const lines = deckFile.fileContent
             .split("\n")
             .map(line => line.trim())
@@ -46,12 +50,12 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
                 }
                 else {
                     const card = this.cardDatabase.getCard(line);
-                    parts.get(currentDeckPart).push(card);
+                    deck.parts.get(currentDeckPart).push(card);
                 }
             }
         }
         return {
-            deck: { name: deckFile.fileName.replace(".ydk", ""), parts },
+            deck,
             missing
         };
     }
@@ -108,7 +112,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
      * @return Deck.
      */
     fromUrlQueryParamValue(queryParamValue) {
-        const parts = this.createPartMap();
+        const deck = this.deckService.createEmptyDeck();
         const decoded = this.decodeUriSafeBase64(queryParamValue);
         const inflated = inflate(decoded);
         let deckPartIndex = 0;
@@ -124,18 +128,17 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
                 deckPartIndex++;
             }
             else {
-                const deckPart = parts.get(DECKPARTS[deckPartIndex]);
+                const deckPart = deck.parts.get(DECKPARTS[deckPartIndex]);
                 deckPart.push(this.decodeCard(block));
             }
         }
-        let name = null;
         if (metaDataStart != null && metaDataStart < inflated.length) {
-            name = this.textDecoder.decode(inflated.subarray(metaDataStart));
+            deck.name = this.textDecoder.decode(inflated.subarray(metaDataStart));
         }
-        return { name, parts };
+        return deck;
     }
     fromLegacyUrlQueryParamValue(val, base64Decoder) {
-        const parts = this.createPartMap();
+        const deck = this.deckService.createEmptyDeck();
         const uncompressedValue = this.compressionService.inflateString(base64Decoder(val));
         const DELIMITERS = {
             deckPart: "|",
@@ -146,7 +149,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
             .split(DELIMITERS.deckPart)
             .forEach((deckPartList, index) => {
             const deckPart = DECKPARTS[index];
-            const deckPartCards = parts.get(deckPart);
+            const deckPartCards = deck.parts.get(deckPart);
             if (deckPartList.length > 0) {
                 deckPartList.split(DELIMITERS.cardId).forEach(entry => {
                     let count = 1;
@@ -165,7 +168,26 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
                 });
             }
         });
-        return { name: null, parts };
+        return deck;
+    }
+    toShareableText(deck) {
+        const result = [];
+        for (const deckPart of DECKPARTS) {
+            result.push(`${deckPart.name}:`);
+            const deckPartCards = deck.parts.get(deckPart);
+            const counted = this.countCards(deckPartCards);
+            for (const [card, count] of counted.entries()) {
+                result.push(`${card.name} x${count}`);
+            }
+            result.push("");
+        }
+        return result.join("\n");
+    }
+    toBuyLink(deck) {
+        const counted = this.countCards(this.deckService.getAllCards(deck));
+        const cardList = Array.from(counted.entries()).map(([card, count]) => `${count} ${card.name}`);
+        return ("https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh&c=" +
+            encodeURIComponent(["", ...cardList, ""].join("||")));
     }
     encodeCard(card) {
         const idNumber = Number(card.id);
@@ -202,12 +224,8 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
             .replace(/_/g, "+")
             .replace(/-/g, "/"));
     }
-    createPartMap() {
-        const parts = new Map();
-        for (const deckPart of DECKPARTS) {
-            parts.set(deckPart, []);
-        }
-        return parts;
+    countCards(cards) {
+        return groupMapReducingBy(cards, card => card, () => 0, current => current + 1);
     }
 };
 // 4 bytes is enough to hold a 32 bit integer which is able to store all 9 digit IDs
@@ -217,7 +235,9 @@ DeckImportExportService.ID_LIMIT = 2 ** 32;
 DeckImportExportService = DeckImportExportService_1 = __decorate([
     injectable(),
     __param(0, inject(TYPES.CardDatabase)),
-    __param(1, inject(TYPES.CompressionService)),
-    __metadata("design:paramtypes", [Object, CompressionService])
+    __param(1, inject(TYPES.DeckService)),
+    __param(2, inject(TYPES.CompressionService)),
+    __metadata("design:paramtypes", [Object, DeckService,
+        CompressionService])
 ], DeckImportExportService);
 export { DeckImportExportService };

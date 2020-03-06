@@ -1,9 +1,9 @@
 import { Card } from "../../../src/core/model/Card";
 import { BanState } from "../../../src/core/model/BanState";
 
-const createCard = (id: string): Card => ({
+const createCard = (id: string, name = "name"): Card => ({
     id,
-    name: "123",
+    name,
     desc: "desc",
     type: "type",
 

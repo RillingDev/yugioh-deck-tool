@@ -307,4 +307,54 @@ describe("DeckImportExportService", () => {
             });
         });
     });
+
+    describe("toShareableText", () => {
+        it("creates text", () => {
+            const card1 = createCard("123", "foo");
+            const card2 = createCard("456", "bar");
+            const card3 = createCard("789", "fizz");
+
+            const result = deckImportExportService.toShareableText({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DECKPART_MAIN, [card1]],
+                    [DECKPART_EXTRA, [card2, card2]],
+                    [DECKPART_SIDE, [card3, card3, card1, card3]]
+                ])
+            });
+            expect(result).toEqual(
+                `Main:
+foo x1
+
+Extra:
+bar x2
+
+Side:
+fizz x3
+foo x1
+`
+            );
+        });
+    });
+
+    describe("toBuyLink", () => {
+        it("creates text", () => {
+            const card1 = createCard("123", "foo");
+            const card2 = createCard("456", "bar");
+            const card3 = createCard("789", "fizz");
+
+            const result = deckImportExportService.toBuyLink({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DECKPART_MAIN, [card1]],
+                    [DECKPART_EXTRA, [card2, card2]],
+                    [DECKPART_SIDE, [card3, card3, card1, card3]]
+                ])
+            });
+            expect(result).toEqual(
+                "https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh" +
+                    `&c=${encodeURIComponent("||2 foo||2 bar||3 fizz||")}`
+            );
+        });
+    });
 });

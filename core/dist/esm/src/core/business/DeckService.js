@@ -5,7 +5,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { injectable } from "inversify";
+import { DECKPARTS } from "../data/DeckParts";
 let DeckService = class DeckService {
+    getAllCards(deck) {
+        const result = [];
+        for (const deckPart of DECKPARTS) {
+            result.push(...deck.parts.get(deckPart));
+        }
+        return result;
+    }
+    createEmptyDeck() {
+        const parts = new Map();
+        for (const deckPart of DECKPARTS) {
+            parts.set(deckPart, []);
+        }
+        return { name: null, parts };
+    }
 };
 DeckService = __decorate([
     injectable()

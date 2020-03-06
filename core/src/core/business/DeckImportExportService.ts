@@ -4,11 +4,12 @@ import { TYPES } from "../../types";
 import { CardDatabase } from "./CardDatabase";
 import { Card } from "../model/Card";
 import { DECKPARTS } from "../data/DeckParts";
-import { DeckPart } from "../model/DeckPart";
 import { CompressionService } from "./CompressionService";
 import { fromByteArray, toByteArray } from "base64-js";
 import { deflate, inflate } from "pako";
 import { isEqual } from "lodash";
+import { groupMapReducingBy } from "lightdash";
+import { DeckService } from "./DeckService";
 
 interface ImportResult {
     deck: Deck;
@@ -28,26 +29,32 @@ class DeckImportExportService {
         DeckImportExportService.BLOCK_SIZE
     ).fill(0);
     private static readonly ID_LIMIT = 2 ** 32;
+
     private readonly textEncoder: TextEncoder;
     private readonly textDecoder: TextDecoder;
     private readonly cardDatabase: CardDatabase;
     private readonly compressionService: CompressionService;
+    private readonly deckService: DeckService;
 
     constructor(
         @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase,
+        @inject(TYPES.DeckService)
+        deckService: DeckService,
         @inject(TYPES.CompressionService)
         compressionService: CompressionService
     ) {
         this.compressionService = compressionService;
+        this.deckService = deckService;
         this.cardDatabase = cardDatabase;
         this.textEncoder = new TextEncoder();
         this.textDecoder = new TextDecoder();
     }
 
     public fromFile(deckFile: DeckFile): ImportResult {
-        const parts = this.createPartMap();
         const missing: string[] = [];
+        const deck = this.deckService.createEmptyDeck();
+        deck.name = deckFile.fileName.replace(".ydk", "");
 
         const lines = deckFile.fileContent
             .split("\n")
@@ -69,13 +76,12 @@ class DeckImportExportService {
                     missing.push(line);
                 } else {
                     const card = this.cardDatabase.getCard(line)!;
-                    parts.get(currentDeckPart)!.push(card);
+                    deck.parts.get(currentDeckPart)!.push(card);
                 }
             }
         }
-
         return {
-            deck: { name: deckFile.fileName.replace(".ydk", ""), parts },
+            deck,
             missing
         };
     }
@@ -139,7 +145,7 @@ class DeckImportExportService {
      * @return Deck.
      */
     public fromUrlQueryParamValue(queryParamValue: string): Deck {
-        const parts = this.createPartMap();
+        const deck = this.deckService.createEmptyDeck();
 
         const decoded = this.decodeUriSafeBase64(queryParamValue);
         const inflated = inflate(decoded);
@@ -163,22 +169,23 @@ class DeckImportExportService {
                 }
                 deckPartIndex++;
             } else {
-                const deckPart = parts.get(DECKPARTS[deckPartIndex])!;
+                const deckPart = deck.parts.get(DECKPARTS[deckPartIndex])!;
                 deckPart.push(this.decodeCard(block));
             }
         }
-        let name: string | null = null;
         if (metaDataStart != null && metaDataStart < inflated.length) {
-            name = this.textDecoder.decode(inflated.subarray(metaDataStart));
+            deck.name = this.textDecoder.decode(
+                inflated.subarray(metaDataStart)
+            );
         }
-        return { name, parts };
+        return deck;
     }
 
     public fromLegacyUrlQueryParamValue(
         val: string,
         base64Decoder: (val: string) => string
     ): Deck {
-        const parts = this.createPartMap();
+        const deck = this.deckService.createEmptyDeck();
         const uncompressedValue = this.compressionService.inflateString(
             base64Decoder(val)
         );
@@ -193,7 +200,7 @@ class DeckImportExportService {
             .split(DELIMITERS.deckPart)
             .forEach((deckPartList: string, index) => {
                 const deckPart = DECKPARTS[index];
-                const deckPartCards = parts.get(deckPart)!;
+                const deckPartCards = deck.parts.get(deckPart)!;
 
                 if (deckPartList.length > 0) {
                     deckPartList.split(DELIMITERS.cardId).forEach(entry => {
@@ -218,7 +225,35 @@ class DeckImportExportService {
                 }
             });
 
-        return { name: null, parts };
+        return deck;
+    }
+
+    public toShareableText(deck: Deck): string {
+        const result = [];
+        for (const deckPart of DECKPARTS) {
+            result.push(`${deckPart.name}:`);
+
+            const deckPartCards = deck.parts.get(deckPart)!;
+            const counted: Map<Card, number> = this.countCards(deckPartCards);
+            for (const [card, count] of counted.entries()) {
+                result.push(`${card.name} x${count}`);
+            }
+            result.push("");
+        }
+        return result.join("\n");
+    }
+
+    public toBuyLink(deck: Deck): string {
+        const counted: Map<Card, number> = this.countCards(
+            this.deckService.getAllCards(deck)
+        );
+        const cardList = Array.from(counted.entries()).map(
+            ([card, count]) => `${count} ${card.name}`
+        );
+        return (
+            "https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh&c=" +
+            encodeURIComponent(["", ...cardList, ""].join("||"))
+        );
     }
 
     private encodeCard(card: Card): Uint8Array {
@@ -265,12 +300,13 @@ class DeckImportExportService {
         );
     }
 
-    private createPartMap(): Map<DeckPart, Card[]> {
-        const parts = new Map<DeckPart, Card[]>();
-        for (const deckPart of DECKPARTS) {
-            parts.set(deckPart, []);
-        }
-        return parts;
+    private countCards(cards: Card[]): Map<Card, number> {
+        return groupMapReducingBy(
+            cards,
+            card => card,
+            () => 0,
+            current => current + 1
+        );
     }
 }
 

@@ -1,6 +1,7 @@
 import { Deck } from "../model/Deck";
 import { CardDatabase } from "./CardDatabase";
 import { CompressionService } from "./CompressionService";
+import { DeckService } from "./DeckService";
 interface ImportResult {
     deck: Deck;
     missing: string[];
@@ -17,7 +18,8 @@ declare class DeckImportExportService {
     private readonly textDecoder;
     private readonly cardDatabase;
     private readonly compressionService;
-    constructor(cardDatabase: CardDatabase, compressionService: CompressionService);
+    private readonly deckService;
+    constructor(cardDatabase: CardDatabase, deckService: DeckService, compressionService: CompressionService);
     fromFile(deckFile: DeckFile): ImportResult;
     toFile(deck: Deck): DeckFile;
     /**
@@ -48,10 +50,12 @@ declare class DeckImportExportService {
      */
     fromUrlQueryParamValue(queryParamValue: string): Deck;
     fromLegacyUrlQueryParamValue(val: string, base64Decoder: (val: string) => string): Deck;
+    toShareableText(deck: Deck): string;
+    toBuyLink(deck: Deck): string;
     private encodeCard;
     private decodeCard;
     private encodeUriSafeBase64;
     private decodeUriSafeBase64;
-    private createPartMap;
+    private countCards;
 }
 export { DeckImportExportService };
