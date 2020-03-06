@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { DeckPart } from "../model/DeckPart";
 import { Card } from "../model/Card";
-import { DECKPARTS } from "../data/DeckParts";
+import { DEFAULT_DECKPART_ARR } from "../model/DefaultDeckPart";
 import { Deck } from "../model/Deck";
 import { TYPES } from "../../types";
 import { CardService } from "./CardService";
@@ -38,7 +38,7 @@ class DeckService {
 
     public getAllCards(deck: Deck): Card[] {
         const result = [];
-        for (const deckPart of DECKPARTS) {
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
             result.push(...deck.parts.get(deckPart)!);
         }
         return result;
@@ -46,7 +46,7 @@ class DeckService {
 
     public createEmptyDeck(): Deck {
         const parts = new Map<DeckPart, Card[]>();
-        for (const deckPart of DECKPARTS) {
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
             parts.set(deckPart, []);
         }
         return { name: null, parts };

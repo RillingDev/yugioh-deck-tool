@@ -11,7 +11,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { inject, injectable } from "inversify";
-import { DECKPARTS } from "../data/DeckParts";
+import { DEFAULT_DECKPART_ARR } from "../model/DefaultDeckPart";
 import { TYPES } from "../../types";
 import { CardService } from "./CardService";
 let DeckService = class DeckService {
@@ -31,14 +31,14 @@ let DeckService = class DeckService {
     }
     getAllCards(deck) {
         const result = [];
-        for (const deckPart of DECKPARTS) {
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
             result.push(...deck.parts.get(deckPart));
         }
         return result;
     }
     createEmptyDeck() {
         const parts = new Map();
-        for (const deckPart of DECKPARTS) {
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
             parts.set(deckPart, []);
         }
         return { name: null, parts };

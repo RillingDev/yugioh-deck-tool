@@ -1,5 +1,5 @@
 import { CardTypeGroup } from "../../core/model/CardTypeGroup";
-import { DECKPART_EXTRA, DECKPART_SIDE } from "../../core/data/DeckParts";
+import { DefaultDeckPart } from "../../core/model/DefaultDeckPart";
 const mapGroup = (type) => {
     if (type.group === "SKILL") {
         return CardTypeGroup.SKILL;
@@ -14,12 +14,12 @@ const mapGroup = (type) => {
 };
 const mapDeckPart = (type) => new Set(type.area.map(area => {
     if (area === "SIDE") {
-        return DECKPART_SIDE;
+        return DefaultDeckPart.SIDE;
     }
     if (area === "EXTRA") {
-        return DECKPART_EXTRA;
+        return DefaultDeckPart.EXTRA;
     }
-    return DECKPART_SIDE;
+    return DefaultDeckPart.MAIN;
 }));
 const mapCardValues = (data) => {
     return {

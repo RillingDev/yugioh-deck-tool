@@ -8,7 +8,7 @@ import { BanlistInfo } from "../../../src/core/model/BanlistInfo";
 import { CardType } from "../../../src/core/model/CardType";
 import { CardSet } from "../../../src/core/model/CardSet";
 import { CardTypeGroup } from "../../../src/core/model/CardTypeGroup";
-import { DECKPART_MAIN, DECKPART_SIDE } from "../../../src/core/data/DeckParts";
+import { DefaultDeckPart } from "../../../src/core/model/DefaultDeckPart";
 import { DeckPart } from "../../../src/core/model/DeckPart";
 
 const createCardType = (data: {
@@ -20,7 +20,8 @@ const createCardType = (data: {
     name: data.name ?? "Spell Card",
     group: data.group ?? CardTypeGroup.SPELL,
     sortGroup: data.sortGroup ?? 0,
-    deckPart: data.deckPart ?? new Set([DECKPART_MAIN, DECKPART_SIDE])
+    deckPart:
+        data.deckPart ?? new Set([DefaultDeckPart.MAIN, DefaultDeckPart.SIDE])
 });
 
 const createCard = (data: {

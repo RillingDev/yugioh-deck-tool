@@ -5,11 +5,7 @@ import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { createCard } from "../../helper/dataFactories";
-import {
-    DECKPART_EXTRA,
-    DECKPART_MAIN,
-    DECKPART_SIDE
-} from "../../../../src/core/data/DeckParts";
+import { DefaultDeckPart } from "../../../../src/core/model/DefaultDeckPart";
 import { DeckPart } from "../../../../src/core/model/DeckPart";
 import { Card } from "../../../../src/core/model/Card";
 import { deflate } from "pako";
@@ -66,8 +62,8 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 fileName: "foo.ydk"
             });
-            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DECKPART_MAIN)).toContain(card);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
             expect(result.missing.length).toBe(0);
         });
 
@@ -84,8 +80,8 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 fileName: "foo.ydk"
             });
-            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(3);
-            expect(result.deck.parts.get(DECKPART_MAIN)).toEqual([
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(3);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toEqual([
                 card,
                 card,
                 card
@@ -114,12 +110,20 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 fileName: "foo.ydk"
             });
-            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DECKPART_MAIN)).toContain(card1);
-            expect(result.deck.parts.get(DECKPART_EXTRA)!.length).toBe(1);
-            expect(result.deck.parts.get(DECKPART_EXTRA)).toContain(card2);
-            expect(result.deck.parts.get(DECKPART_SIDE)!.length).toBe(1);
-            expect(result.deck.parts.get(DECKPART_SIDE)).toContain(card3);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(
+                card1
+            );
+            expect(result.deck.parts.get(DefaultDeckPart.EXTRA)!.length).toBe(
+                1
+            );
+            expect(result.deck.parts.get(DefaultDeckPart.EXTRA)).toContain(
+                card2
+            );
+            expect(result.deck.parts.get(DefaultDeckPart.SIDE)!.length).toBe(1);
+            expect(result.deck.parts.get(DefaultDeckPart.SIDE)).toContain(
+                card3
+            );
             expect(result.missing.length).toBe(0);
         });
 
@@ -135,8 +139,8 @@ describe("DeckImportExportService", () => {
                 fileContent,
                 fileName: "foo.ydk"
             });
-            expect(result.deck.parts.get(DECKPART_MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DECKPART_MAIN)).toContain(card);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
         });
     });
 
@@ -146,9 +150,9 @@ describe("DeckImportExportService", () => {
                 deckImportExportService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
-                        [DECKPART_MAIN, []],
-                        [DECKPART_EXTRA, []],
-                        [DECKPART_SIDE, []]
+                        [DefaultDeckPart.MAIN, []],
+                        [DefaultDeckPart.EXTRA, []],
+                        [DefaultDeckPart.SIDE, []]
                     ])
                 }).fileName
             ).toBe("foo.ydk");
@@ -159,9 +163,9 @@ describe("DeckImportExportService", () => {
                 deckImportExportService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
-                        [DECKPART_MAIN, [createCard({ id: "123" })]],
-                        [DECKPART_EXTRA, []],
-                        [DECKPART_SIDE, []]
+                        [DefaultDeckPart.MAIN, [createCard({ id: "123" })]],
+                        [DefaultDeckPart.EXTRA, []],
+                        [DefaultDeckPart.SIDE, []]
                     ])
                 }).fileContent
             ).toContain(
@@ -175,9 +179,9 @@ describe("DeckImportExportService", () => {
                 deckImportExportService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
-                        [DECKPART_MAIN, [createCard({ id: "123" })]],
-                        [DECKPART_EXTRA, [createCard({ id: "456" })]],
-                        [DECKPART_SIDE, [createCard({ id: "789" })]]
+                        [DefaultDeckPart.MAIN, [createCard({ id: "123" })]],
+                        [DefaultDeckPart.EXTRA, [createCard({ id: "456" })]],
+                        [DefaultDeckPart.SIDE, [createCard({ id: "789" })]]
                     ])
                 }).fileContent
             ).toBe(
@@ -215,9 +219,9 @@ describe("DeckImportExportService", () => {
             ).toEqual({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, [card1]],
-                    [DECKPART_EXTRA, [card2, card2]],
-                    [DECKPART_SIDE, [card3, card4, card1, card1, card1]]
+                    [DefaultDeckPart.MAIN, [card1]],
+                    [DefaultDeckPart.EXTRA, [card2, card2]],
+                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]]
                 ])
             });
         });
@@ -233,9 +237,9 @@ describe("DeckImportExportService", () => {
             const result = deckImportExportService.toUrlQueryParamValue({
                 name: "foo",
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, [card1]],
-                    [DECKPART_EXTRA, [card2, card2]],
-                    [DECKPART_SIDE, [card3, card4, card1, card1, card1]]
+                    [DefaultDeckPart.MAIN, [card1]],
+                    [DefaultDeckPart.EXTRA, [card2, card2]],
+                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]]
                 ])
             });
             expect(result).toEqual(
@@ -251,9 +255,9 @@ describe("DeckImportExportService", () => {
             const result = deckImportExportService.toUrlQueryParamValue({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, [card1]],
-                    [DECKPART_EXTRA, [card2]],
-                    [DECKPART_SIDE, [card3]]
+                    [DefaultDeckPart.MAIN, [card1]],
+                    [DefaultDeckPart.EXTRA, [card2]],
+                    [DefaultDeckPart.SIDE, [card3]]
                 ])
             });
             expect(result).toEqual("eJyrZoCAE4wQWpQZQgMAGOwBXQ~~");
@@ -278,9 +282,9 @@ describe("DeckImportExportService", () => {
             expect(result).toEqual({
                 name: "foo",
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, [card1]],
-                    [DECKPART_EXTRA, [card2, card2]],
-                    [DECKPART_SIDE, [card3, card4, card1, card1, card1]]
+                    [DefaultDeckPart.MAIN, [card1]],
+                    [DefaultDeckPart.EXTRA, [card2, card2]],
+                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]]
                 ])
             });
         });
@@ -300,9 +304,9 @@ describe("DeckImportExportService", () => {
             expect(result).toEqual({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, [card1]],
-                    [DECKPART_EXTRA, [card2]],
-                    [DECKPART_SIDE, [card3]]
+                    [DefaultDeckPart.MAIN, [card1]],
+                    [DefaultDeckPart.EXTRA, [card2]],
+                    [DefaultDeckPart.SIDE, [card3]]
                 ])
             });
         });
@@ -317,9 +321,9 @@ describe("DeckImportExportService", () => {
             const result = deckImportExportService.toShareableText({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, [card1]],
-                    [DECKPART_EXTRA, [card2, card2]],
-                    [DECKPART_SIDE, [card3, card3, card1, card3]]
+                    [DefaultDeckPart.MAIN, [card1]],
+                    [DefaultDeckPart.EXTRA, [card2, card2]],
+                    [DefaultDeckPart.SIDE, [card3, card3, card1, card3]]
                 ])
             });
             expect(result).toEqual(
@@ -346,9 +350,9 @@ foo x1
             const result = deckImportExportService.toBuyLink({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, [card1]],
-                    [DECKPART_EXTRA, [card2, card2]],
-                    [DECKPART_SIDE, [card3, card3, card1, card3]]
+                    [DefaultDeckPart.MAIN, [card1]],
+                    [DefaultDeckPart.EXTRA, [card2, card2]],
+                    [DefaultDeckPart.SIDE, [card3, card3, card1, card3]]
                 ])
             });
             expect(result).toEqual(

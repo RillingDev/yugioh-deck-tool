@@ -13,7 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var DeckImportExportService_1;
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
-import { DECKPARTS } from "../data/DeckParts";
+import { DEFAULT_DECKPART_ARR } from "../model/DefaultDeckPart";
 import { CompressionService } from "./CompressionService";
 import { isEqual } from "lodash";
 import { groupMapReducingBy } from "lightdash";
@@ -35,7 +35,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
             .filter(line => line.length > 0);
         let currentDeckPart = null;
         for (const line of lines) {
-            const foundDeckPart = DECKPARTS.find(part => part.indicator === line);
+            const foundDeckPart = DEFAULT_DECKPART_ARR.find(part => part.indicator === line);
             if (foundDeckPart != null) {
                 currentDeckPart = foundDeckPart;
                 continue;
@@ -59,7 +59,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
     }
     toFile(deck) {
         const fileLines = [];
-        for (const deckPart of DECKPARTS) {
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
             const deckPartCards = deck.parts.get(deckPart);
             fileLines.push(deckPart.indicator);
             fileLines.push(...deckPartCards.map(card => card.id));
@@ -91,7 +91,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
      */
     toUrlQueryParamValue(deck) {
         const result = [];
-        for (const deckPart of DECKPARTS) {
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
             for (const card of deck.parts.get(deckPart)) {
                 result.push(...this.encodeCard(card));
             }
@@ -119,14 +119,14 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
             const block = inflated.subarray(i, i + DeckImportExportService_1.BLOCK_SIZE);
             if (isEqual(block, DeckImportExportService_1.DELIMITER_BLOCK)) {
                 // After the last deckpart, meta data starts
-                if (deckPartIndex === DECKPARTS.length - 1) {
+                if (deckPartIndex === DEFAULT_DECKPART_ARR.length - 1) {
                     metaDataStart = i + DeckImportExportService_1.BLOCK_SIZE;
                     break;
                 }
                 deckPartIndex++;
             }
             else {
-                const deckPart = deck.parts.get(DECKPARTS[deckPartIndex]);
+                const deckPart = deck.parts.get(DEFAULT_DECKPART_ARR[deckPartIndex]);
                 deckPart.push(this.decodeCard(block));
             }
         }
@@ -146,7 +146,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
         uncompressedValue
             .split(DELIMITERS.deckPart)
             .forEach((deckPartList, index) => {
-            const deckPart = DECKPARTS[index];
+            const deckPart = DEFAULT_DECKPART_ARR[index];
             const deckPartCards = deck.parts.get(deckPart);
             if (deckPartList.length > 0) {
                 deckPartList.split(DELIMITERS.cardId).forEach(entry => {
@@ -170,7 +170,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
     }
     toShareableText(deck) {
         const result = [];
-        for (const deckPart of DECKPARTS) {
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
             result.push(`${deckPart.name}:`);
             const deckPartCards = deck.parts.get(deckPart);
             const counted = this.countCards(deckPartCards);

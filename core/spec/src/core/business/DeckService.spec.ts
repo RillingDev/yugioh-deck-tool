@@ -4,11 +4,7 @@ import { TYPES } from "../../../../src/types";
 import { DeckService } from "../../../../src/core/business/DeckService";
 import { DeckPart } from "../../../../src/core/model/DeckPart";
 import { Card } from "../../../../src/core/model/Card";
-import {
-    DECKPART_EXTRA,
-    DECKPART_MAIN,
-    DECKPART_SIDE
-} from "../../../../src/core/data/DeckParts";
+import { DefaultDeckPart } from "../../../../src/core/model/DefaultDeckPart";
 import { createCard, createCardType } from "../../helper/dataFactories";
 import { Format } from "../../../../src/core/model/Format";
 import { BanState } from "../../../../src/core/model/BanState";
@@ -25,9 +21,9 @@ describe("DeckService", () => {
             expect(deckService.createEmptyDeck()).toEqual({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DECKPART_MAIN, []],
-                    [DECKPART_EXTRA, []],
-                    [DECKPART_SIDE, []]
+                    [DefaultDeckPart.MAIN, []],
+                    [DefaultDeckPart.EXTRA, []],
+                    [DefaultDeckPart.SIDE, []]
                 ])
             });
         });
@@ -42,9 +38,9 @@ describe("DeckService", () => {
                 deckService.getAllCards({
                     name: null,
                     parts: new Map<DeckPart, Card[]>([
-                        [DECKPART_MAIN, [card1]],
-                        [DECKPART_EXTRA, [card2, card2]],
-                        [DECKPART_SIDE, [card3]]
+                        [DefaultDeckPart.MAIN, [card1]],
+                        [DefaultDeckPart.EXTRA, [card2, card2]],
+                        [DefaultDeckPart.SIDE, [card3]]
                     ])
                 })
             ).toEqual([card1, card2, card2, card3]);
@@ -58,17 +54,17 @@ describe("DeckService", () => {
                     {
                         name: null,
                         parts: new Map<DeckPart, Card[]>([
-                            [DECKPART_MAIN, []],
-                            [DECKPART_EXTRA, []],
-                            [DECKPART_SIDE, []]
+                            [DefaultDeckPart.MAIN, []],
+                            [DefaultDeckPart.EXTRA, []],
+                            [DefaultDeckPart.SIDE, []]
                         ])
                     },
-                    DECKPART_MAIN,
+                    DefaultDeckPart.MAIN,
                     Format.TCG,
                     createCard({
                         id: "456",
                         type: createCardType({
-                            deckPart: new Set([DECKPART_EXTRA])
+                            deckPart: new Set([DefaultDeckPart.EXTRA])
                         })
                     })
                 )
@@ -81,15 +77,15 @@ describe("DeckService", () => {
                     {
                         name: null,
                         parts: new Map<DeckPart, Card[]>([
-                            [DECKPART_MAIN, []],
-                            [DECKPART_EXTRA, []],
+                            [DefaultDeckPart.MAIN, []],
+                            [DefaultDeckPart.EXTRA, []],
                             [
-                                DECKPART_SIDE,
+                                DefaultDeckPart.SIDE,
                                 new Array(15).fill(createCard({ id: "123" }))
                             ]
                         ])
                     },
-                    DECKPART_SIDE,
+                    DefaultDeckPart.SIDE,
                     Format.TCG,
                     createCard({ id: "456" })
                 )
@@ -110,12 +106,12 @@ describe("DeckService", () => {
                     {
                         name: null,
                         parts: new Map<DeckPart, Card[]>([
-                            [DECKPART_MAIN, []],
-                            [DECKPART_EXTRA, []],
-                            [DECKPART_SIDE, [card]]
+                            [DefaultDeckPart.MAIN, []],
+                            [DefaultDeckPart.EXTRA, []],
+                            [DefaultDeckPart.SIDE, [card]]
                         ])
                     },
-                    DECKPART_SIDE,
+                    DefaultDeckPart.SIDE,
                     Format.OCG,
                     card
                 )
@@ -131,12 +127,12 @@ describe("DeckService", () => {
                     {
                         name: null,
                         parts: new Map<DeckPart, Card[]>([
-                            [DECKPART_MAIN, []],
-                            [DECKPART_EXTRA, []],
-                            [DECKPART_SIDE, []]
+                            [DefaultDeckPart.MAIN, []],
+                            [DefaultDeckPart.EXTRA, []],
+                            [DefaultDeckPart.SIDE, []]
                         ])
                     },
-                    DECKPART_SIDE,
+                    DefaultDeckPart.SIDE,
                     Format.OCG,
                     card
                 )

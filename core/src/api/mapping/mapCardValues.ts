@@ -1,7 +1,7 @@
 import { CardValues } from "../../core/model/CardValues";
 import { CardTypeGroup } from "../../core/model/CardTypeGroup";
 import { DeckPart } from "../../core/model/DeckPart";
-import { DECKPART_EXTRA, DECKPART_SIDE } from "../../core/data/DeckParts";
+import { DefaultDeckPart } from "../../core/model/DefaultDeckPart";
 
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {
@@ -49,12 +49,12 @@ const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
     new Set(
         type.area.map(area => {
             if (area === "SIDE") {
-                return DECKPART_SIDE;
+                return DefaultDeckPart.SIDE;
             }
             if (area === "EXTRA") {
-                return DECKPART_EXTRA;
+                return DefaultDeckPart.EXTRA;
             }
-            return DECKPART_SIDE;
+            return DefaultDeckPart.MAIN;
         })
     );
 

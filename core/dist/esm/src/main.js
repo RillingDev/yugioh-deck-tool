@@ -1,5 +1,5 @@
 import { BanState } from "./core/model/BanState";
-import { DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE, DECKPARTS } from "./core/data/DeckParts";
+import { DEFAULT_DECKPART_ARR, DefaultDeckPart } from "./core/model/DefaultDeckPart";
 import { TYPES } from "./types";
 import { container } from "./inversify.config";
 import { CardService } from "./core/business/CardService";
@@ -12,8 +12,4 @@ export {
 /*
  * Business logic and container access
  */
-container, TYPES, CardService, PriceService, DeckService, DeckImportExportService, CompressionService, BanState, Format, 
-/*
- * Static data
- */
-DECKPARTS, DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE };
+container, TYPES, CardService, PriceService, DeckService, DeckImportExportService, CompressionService, BanState, Format, DefaultDeckPart, DEFAULT_DECKPART_ARR };
