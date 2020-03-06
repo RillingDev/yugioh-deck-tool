@@ -12,6 +12,7 @@ import axios from "axios";
 import { mapCardInfo } from "./mapping/mapCardInfo";
 import { mapCardSets } from "./mapping/mapCardSets";
 import { injectable } from "inversify";
+import { mapCardValues } from "./mapping/mapCardValues";
 let YgoprodeckApiService = YgoprodeckApiService_1 = class YgoprodeckApiService {
     constructor() {
         this.httpClient = axios.create({
@@ -38,6 +39,10 @@ let YgoprodeckApiService = YgoprodeckApiService_1 = class YgoprodeckApiService {
     async getCardSets() {
         const response = await this.httpClient.get("cardsets.php");
         return mapCardSets(response.data);
+    }
+    async getCardValues() {
+        const response = await this.httpClient.get("cardvalues.php");
+        return mapCardValues(response.data);
     }
     async loadPaginated(pageSize, fetcher) {
         const result = [];

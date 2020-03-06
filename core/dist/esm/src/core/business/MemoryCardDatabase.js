@@ -12,35 +12,52 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
+import { CardTypeGroup } from "../model/types/CardTypeGroup";
 let MemoryCardDatabase = class MemoryCardDatabase {
     constructor(dataLoaderClient) {
         this.dataLoaderClient = dataLoaderClient;
         this.cards = new Map();
-        this.races = new Set();
-        this.attributes = new Set();
-        this.types = new Set();
         this.sets = [];
+        this.types = [];
+        this.spellValues = {
+            races: []
+        };
+        this.trapValues = {
+            races: []
+        };
+        this.skillValues = {
+            races: []
+        };
+        this.monsterValues = {
+            races: [],
+            attributes: [],
+            linkmarkers: [],
+            levels: []
+        };
         this.ready = false;
     }
     async init() {
-        const [cardInfo, cardSets] = await Promise.all([
+        const [cardInfo, cardSets, cardValues] = await Promise.all([
             this.dataLoaderClient.getCardInfo(),
-            this.dataLoaderClient.getCardSets()
+            this.dataLoaderClient.getCardSets(),
+            this.dataLoaderClient.getCardValues()
         ]);
         for (const card of cardInfo) {
             this.cards.set(card.id, card);
-            if (!this.types.has(card.type)) {
-                this.types.add(card.type);
-            }
-            if (!this.races.has(card.race)) {
-                this.races.add(card.race);
-            }
-            if (card.attribute != null &&
-                !this.attributes.has(card.attribute)) {
-                this.attributes.add(card.attribute);
-            }
         }
         this.sets.push(...cardSets);
+        this.types.push(...cardValues.types);
+        const monsterGroupValues = cardValues.values[CardTypeGroup.MONSTER];
+        this.monsterValues.races = monsterGroupValues.races;
+        this.monsterValues.attributes = monsterGroupValues.attributes;
+        this.monsterValues.levels = monsterGroupValues.levels;
+        this.monsterValues.linkmarkers = monsterGroupValues.linkmarkers;
+        const spellGroupValues = cardValues.values[CardTypeGroup.SPELL];
+        this.spellValues.races = spellGroupValues.races;
+        const trapGroupValues = cardValues.values[CardTypeGroup.TRAP];
+        this.trapValues.races = trapGroupValues.races;
+        const skillGroupValues = cardValues.values[CardTypeGroup.SKILL];
+        this.skillValues.races = skillGroupValues.races;
     }
     isReady() {
         return this.ready;
@@ -54,17 +71,32 @@ let MemoryCardDatabase = class MemoryCardDatabase {
     getCards() {
         return Array.from(this.cards.values());
     }
+    getSets() {
+        return Array.from(this.sets);
+    }
     getTypes() {
         return Array.from(this.types.values());
     }
-    getRaces() {
-        return Array.from(this.races.values());
+    getSkillRaces() {
+        return Array.from(this.skillValues.races);
     }
-    getAttributes() {
-        return Array.from(this.attributes.values());
+    getSpellRaces() {
+        return Array.from(this.spellValues.races);
     }
-    getSets() {
-        return Array.from(this.sets);
+    getTrapRaces() {
+        return Array.from(this.trapValues.races);
+    }
+    getMonsterRaces() {
+        return Array.from(this.monsterValues.races);
+    }
+    getMonsterAttributes() {
+        return Array.from(this.monsterValues.attributes);
+    }
+    getMonsterLevels() {
+        return Array.from(this.monsterValues.levels);
+    }
+    getMonsterLinkMarkers() {
+        return Array.from(this.monsterValues.linkmarkers);
     }
 };
 MemoryCardDatabase = __decorate([

@@ -6,6 +6,8 @@ import { CardSet } from "../core/model/CardSet";
 import { CardDataLoaderService } from "../core/business/CardDataLoaderService";
 import { PaginatedResponse } from "./PaginatedResponse";
 import { injectable } from "inversify";
+import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
+import { CardValues } from "../core/model/types/CardValues";
 
 @injectable()
 class YgoprodeckApiService implements CardDataLoaderService {
@@ -46,6 +48,13 @@ class YgoprodeckApiService implements CardDataLoaderService {
             "cardsets.php"
         );
         return mapCardSets(response.data);
+    }
+
+    public async getCardValues(): Promise<CardValues> {
+        const response = await this.httpClient.get<RawCardValues>(
+            "cardvalues.php"
+        );
+        return mapCardValues(response.data);
     }
 
     private async loadPaginated<T>(

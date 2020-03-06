@@ -101,6 +101,9 @@ const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
         if (format === "Duel Links") {
             return Format.DUEL_LINKS;
         }
+        console.warn(
+            `Encountered unknown format ${format}, attempting to continue.`
+        );
         return Format.UNKNOWN;
     });
 };

@@ -24,6 +24,7 @@ import { DeckImportExportService } from "./core/business/DeckImportExportService
 import { DeckService } from "./core/business/DeckService";
 import { Format } from "./core/model/Format";
 import { CompressionService } from "./core/business/CompressionService";
+import { CardValues } from "./core/model/types/CardValues";
 
 export {
     /*
@@ -52,6 +53,7 @@ export {
     Deck,
     DeckPart,
     Format,
+    CardValues,
     /*
      * Static data
      */

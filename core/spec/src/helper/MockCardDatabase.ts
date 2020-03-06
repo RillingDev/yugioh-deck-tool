@@ -2,6 +2,7 @@ import { CardDatabase } from "../../../src/core/business/CardDatabase";
 import { Card } from "../../../src/core/model/Card";
 import { CardSet } from "../../../src/core/model/CardSet";
 import { injectable } from "inversify";
+import { CardType } from "../../../src/core/model/types/CardType";
 
 @injectable()
 class MockCardDatabase implements CardDatabase {
@@ -27,23 +28,11 @@ class MockCardDatabase implements CardDatabase {
         return this.cards.has(cardId);
     }
 
-    getAttributes(): string[] {
-        return [];
-    }
-
     getCards(): Card[] {
         return [];
     }
 
-    getRaces(): string[] {
-        return [];
-    }
-
     getSets(): CardSet[] {
-        return [];
-    }
-
-    getTypes(): string[] {
         return [];
     }
 
@@ -53,6 +42,38 @@ class MockCardDatabase implements CardDatabase {
 
     isReady(): boolean {
         return false;
+    }
+
+    getMonsterAttributes(): string[] {
+        return [];
+    }
+
+    getMonsterLevels(): number[] {
+        return [];
+    }
+
+    getMonsterLinkMarkers(): string[] {
+        return [];
+    }
+
+    getMonsterRaces(): string[] {
+        return [];
+    }
+
+    getSkillRaces(): string[] {
+        return [];
+    }
+
+    getSpellRaces(): string[] {
+        return [];
+    }
+
+    getTrapRaces(): string[] {
+        return [];
+    }
+
+    getTypes(): CardType[] {
+        return [];
     }
 }
 
