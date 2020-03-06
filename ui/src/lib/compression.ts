@@ -5,7 +5,7 @@ const compressionService = container.get<CompressionService>(
 );
 
 const compressToBase64Legacy = val =>
-    btoa(compressionService.deflateString(val));
+    btoa("OH NO");
 const decompressFromBase64Legacy = val =>
     compressionService.inflateString(atob(val));
 

@@ -1,7 +1,7 @@
 import { URL_BUY_API } from "../data/urls";
-import { DECKPARTS } from "../data/deck";
 import { countBy } from "lodash";
 import { toMap } from "lightdash";
+import { DECKPARTS } from '../../../../core/src/main';
 
 const getName = (cardDb, cardId) =>
     cardDb.hasCard(cardId) ? cardDb.getCard(cardId).name : `[${cardId}]`;

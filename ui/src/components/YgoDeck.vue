@@ -16,10 +16,10 @@
 </template>
 <script lang="ts">
 import Deck from "../lib/deck/Deck";
-import { DECKPARTS } from "../lib/data/deck";
 
 import ygoDeckPart from "./YgoDeckPart.vue";
 import ygoPriceView from "./YgoPriceView.vue";
+import { DECKPARTS } from '../../../core/src/main';
 
 export default {
     components: {

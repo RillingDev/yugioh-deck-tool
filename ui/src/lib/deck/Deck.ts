@@ -1,5 +1,4 @@
 import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
-import { DECKPARTS } from "../data/deck";
 import sort from "./sort";
 import { getBuyLink, getShareText } from "./toText";
 import logger from "loglevel";
@@ -7,7 +6,8 @@ import {
     CardDatabase,
     CardService,
     container,
-    TYPES
+    TYPES,
+    DECKPARTS
 } from "../../../../core/src/main";
 
 const REGEX_CREATED = /#created.+/;

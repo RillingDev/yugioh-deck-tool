@@ -59,10 +59,9 @@
 </template>
 
 <script lang="ts">
-import { DECKPARTS } from "../lib/data/deck";
 import { BANLISTS } from "../lib/data/banlist";
 import YgoFilter from "./YgoFilter.vue";
-import { CardDatabase, container, TYPES } from "../../../core";
+import { CardDatabase, container, TYPES, DECKPARTS } from "../../../core";
 
 export default {
     components: { YgoFilter },

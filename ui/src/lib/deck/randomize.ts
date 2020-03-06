@@ -1,6 +1,6 @@
 import Deck from "./Deck";
-import { DECKPARTS } from "../data/deck";
 import { random, shuffle } from "lodash";
+import { DECKPARTS } from '../../../../core/src/main';
 
 const REGEX_NAME_DELIMITER = /\s?[,;:\- ]?\s/;
 const IGNORED_WORDS = ["of", "the", "a", "an", "in"];
@@ -55,7 +55,7 @@ const randomizeDeck = (cardDb, getPools) => {
 
     const deckpartCanAdd = (card, deckpartIndex) =>
         deckpartHasSpace(deckpartIndex) &&
-        DECKPARTS[deckpartIndex].check(card[1]) &&
+        DECKPARTS[deckpartIndex].allowsCard(card[1]) &&
         card[1].type != "Skill Card";
     const fillDeck = (subResult, pool, ratios = null) => {
         let i = 0;
