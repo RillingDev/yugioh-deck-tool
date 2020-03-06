@@ -21,7 +21,7 @@ class DeckService {
         format: Format.TCG | Format.OCG | Format.GOAT,
         card: Card
     ): boolean {
-        if (!deckPart.allowsCard(card)) {
+        if (!card.type.deckPart.has(deckPart)) {
             return false;
         }
 

@@ -1,9 +1,9 @@
-import { Card } from "../../core/model/Card";
 import { BanState } from "../../core/model/BanState";
 import { CardImage } from "../../core/model/CardImage";
 import { CardPrices } from "../../core/model/CardPrices";
 import { CardSetAppearance } from "../../core/model/CardSetAppearance";
 import { Format } from "../../core/model/Format";
+import { UnlinkedCard } from "../../core/business/CardDataLoaderService";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -147,7 +147,7 @@ const mapPrices = (rawCard: RawCard): CardPrices | null => {
     };
 };
 
-const mapCardInfo = (data: RawCard[]): Card[] => {
+const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
     return data.map(rawCard => {
         const miscInfo: RawMiscInfo | null =
             rawCard.misc_info != null ? rawCard.misc_info[0] : null;

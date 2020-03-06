@@ -4,8 +4,12 @@ import { TYPES } from "../../../../src/types";
 import { DeckService } from "../../../../src/core/business/DeckService";
 import { DeckPart } from "../../../../src/core/model/DeckPart";
 import { Card } from "../../../../src/core/model/Card";
-import { DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE } from "../../../../src/core/data/DeckParts";
-import { createCard } from "../../helper/dataFactories";
+import {
+    DECKPART_EXTRA,
+    DECKPART_MAIN,
+    DECKPART_SIDE
+} from "../../../../src/core/data/DeckParts";
+import { createCard, createCardType } from "../../helper/dataFactories";
 import { Format } from "../../../../src/core/model/Format";
 import { BanState } from "../../../../src/core/model/BanState";
 
@@ -61,7 +65,12 @@ describe("DeckService", () => {
                     },
                     DECKPART_MAIN,
                     Format.TCG,
-                    createCard({ id: "456", type: "XYZ Monster" })
+                    createCard({
+                        id: "456",
+                        type: createCardType({
+                            deckPart: new Set([DECKPART_EXTRA])
+                        })
+                    })
                 )
             ).toBeFalse();
         });

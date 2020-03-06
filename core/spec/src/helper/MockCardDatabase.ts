@@ -2,7 +2,7 @@ import { CardDatabase } from "../../../src/core/business/CardDatabase";
 import { Card } from "../../../src/core/model/Card";
 import { CardSet } from "../../../src/core/model/CardSet";
 import { injectable } from "inversify";
-import { CardType } from "../../../src/core/model/types/CardType";
+import { CardType } from "../../../src/core/model/CardType";
 
 @injectable()
 class MockCardDatabase implements CardDatabase {

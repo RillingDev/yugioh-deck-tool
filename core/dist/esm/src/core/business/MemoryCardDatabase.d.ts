@@ -2,7 +2,7 @@ import { CardDataLoaderService } from "./CardDataLoaderService";
 import { Card } from "../model/Card";
 import { CardSet } from "../model/CardSet";
 import { CardDatabase } from "./CardDatabase";
-import { CardType } from "../model/types/CardType";
+import { CardType } from "../model/CardType";
 declare class MemoryCardDatabase implements CardDatabase {
     private readonly dataLoaderClient;
     private readonly ready;
@@ -28,5 +28,8 @@ declare class MemoryCardDatabase implements CardDatabase {
     getMonsterAttributes(): string[];
     getMonsterLevels(): number[];
     getMonsterLinkMarkers(): string[];
+    private createLinkedCard;
+    private linkSets;
+    private linkType;
 }
 export { MemoryCardDatabase };

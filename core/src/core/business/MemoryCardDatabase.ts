@@ -1,13 +1,15 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
-import { CardDataLoaderService } from "./CardDataLoaderService";
+import { CardDataLoaderService, UnlinkedCard } from "./CardDataLoaderService";
 import { Card } from "../model/Card";
 import { CardSet } from "../model/CardSet";
 import { CardDatabase } from "./CardDatabase";
-import { CardType } from "../model/types/CardType";
-import { CardTypeGroup } from "../model/types/CardTypeGroup";
-import { MonsterGroupValues } from "../model/types/MonsterGroupValues";
-import { GroupValues } from "../model/types/GroupValues";
+import { CardType } from "../model/CardType";
+import { CardTypeGroup } from "../model/CardTypeGroup";
+import { MonsterGroupValues } from "../model/MonsterGroupValues";
+import { GroupValues } from "../model/GroupValues";
+import { CardValues } from "../model/CardValues";
+import { CardSetAppearance } from "../model/CardSetAppearance";
 
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
@@ -54,9 +56,6 @@ class MemoryCardDatabase implements CardDatabase {
             this.dataLoaderClient.getCardValues()
         ]);
 
-        for (const card of cardInfo) {
-            this.cards.set(card.id, card);
-        }
         this.sets.push(...cardSets);
 
         this.types.push(...cardValues.types);
@@ -75,6 +74,13 @@ class MemoryCardDatabase implements CardDatabase {
 
         const skillGroupValues = cardValues.values[CardTypeGroup.SKILL];
         this.skillValues.races = skillGroupValues.races;
+
+        for (const unlinkedCard of cardInfo) {
+            this.cards.set(
+                unlinkedCard.id,
+                this.createLinkedCard(unlinkedCard, cardSets, cardValues)
+            );
+        }
     }
 
     public isReady(): boolean {
@@ -127,6 +133,64 @@ class MemoryCardDatabase implements CardDatabase {
 
     public getMonsterLinkMarkers(): string[] {
         return Array.from(this.monsterValues.linkmarkers);
+    }
+
+    private createLinkedCard(
+        unlinkedCard: UnlinkedCard,
+        cardSets: CardSet[],
+        cardValues: CardValues
+    ): Card {
+        return {
+            id: unlinkedCard.id,
+            name: unlinkedCard.name,
+            desc: unlinkedCard.desc,
+            type: this.linkType(unlinkedCard.type, cardValues.types),
+
+            race: unlinkedCard.race,
+            attribute: unlinkedCard.attribute,
+            atk: unlinkedCard.atk,
+            def: unlinkedCard.def,
+            level: unlinkedCard.level,
+            scale: unlinkedCard.scale,
+            linkval: unlinkedCard.linkval,
+            linkmarkers: unlinkedCard.linkmarkers,
+
+            sets: this.linkSets(unlinkedCard.sets, cardSets),
+            image: unlinkedCard.image,
+            prices: unlinkedCard.prices,
+            betaName: unlinkedCard.betaName,
+            treatedAs: unlinkedCard.treatedAs,
+            archetype: unlinkedCard.archetype,
+
+            formats: unlinkedCard.formats,
+            release: unlinkedCard.release,
+            banlist: unlinkedCard.banlist,
+
+            views: unlinkedCard.views
+        };
+    }
+
+    private linkSets(
+        setAppearances: CardSetAppearance[],
+        cardSets: CardSet[]
+    ): CardSet[] {
+        return setAppearances.map(setAppearance => {
+            const matchingType = cardSets.find(
+                set => set.name === setAppearance.name
+            );
+            if (matchingType == null) {
+                throw new TypeError(`Could not find set '${setAppearance}'.`);
+            }
+            return matchingType;
+        });
+    }
+
+    private linkType(typeName: string, types: CardType[]): CardType {
+        const matchingType = types.find(type => type.name === typeName);
+        if (matchingType == null) {
+            throw new TypeError(`Could not find type '${typeName}'.`);
+        }
+        return matchingType;
     }
 }
 

@@ -1,4 +1,4 @@
-import { CardTypeGroup } from "../../core/model/types/CardTypeGroup";
+import { CardTypeGroup } from "../../core/model/CardTypeGroup";
 import { DECKPART_EXTRA, DECKPART_SIDE } from "../../core/data/DeckParts";
 const mapGroup = (type) => {
     if (type.group === "SKILL") {

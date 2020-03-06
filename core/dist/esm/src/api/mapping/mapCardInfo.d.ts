@@ -1,4 +1,4 @@
-import { Card } from "../../core/model/Card";
+import { UnlinkedCard } from "../../core/business/CardDataLoaderService";
 interface RawCard {
     id: number;
     name: string;
@@ -49,5 +49,5 @@ interface RawBanlistInfo {
     ban_ocg?: string;
     ban_goat?: string;
 }
-declare const mapCardInfo: (data: RawCard[]) => Card[];
+declare const mapCardInfo: (data: RawCard[]) => UnlinkedCard[];
 export { mapCardInfo, RawCard };

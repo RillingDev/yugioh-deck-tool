@@ -1,18 +1,34 @@
 import { Card } from "../../../src/core/model/Card";
 import { BanState } from "../../../src/core/model/BanState";
 import { Format } from "../../../src/core/model/Format";
-import { CardSetAppearance } from "../../../src/core/model/CardSetAppearance";
 import { CardImage } from "../../../src/core/model/CardImage";
 import { CardPrices } from "../../../src/core/model/CardPrices";
 import { ReleaseInfo } from "../../../src/core/model/ReleaseInfo";
 import { BanlistInfo } from "../../../src/core/model/BanlistInfo";
+import { CardType } from "../../../src/core/model/CardType";
+import { CardSet } from "../../../src/core/model/CardSet";
+import { CardTypeGroup } from "../../../src/core/model/CardTypeGroup";
+import { DECKPART_MAIN, DECKPART_SIDE } from "../../../src/core/data/DeckParts";
+import { DeckPart } from "../../../src/core/model/DeckPart";
 
-interface CardCreationData {
+const createCardType = (data: {
+    name?: string;
+    group?: CardTypeGroup;
+    sortGroup?: number;
+    deckPart?: Set<DeckPart>;
+}): CardType => ({
+    name: data.name ?? "Spell Card",
+    group: data.group ?? CardTypeGroup.SPELL,
+    sortGroup: data.sortGroup ?? 0,
+    deckPart: data.deckPart ?? new Set([DECKPART_MAIN, DECKPART_SIDE])
+});
+
+const createCard = (data: {
     id?: string;
     name?: string;
     desc?: string;
 
-    type?: string;
+    type?: CardType;
     race?: string;
     attribute?: string | null;
     atk?: number | null;
@@ -22,7 +38,7 @@ interface CardCreationData {
     linkval?: number | null;
     linkmarkers?: string[] | null;
 
-    sets?: CardSetAppearance[];
+    sets?: CardSet[];
     image?: CardImage | null;
     prices?: CardPrices | null;
 
@@ -34,13 +50,11 @@ interface CardCreationData {
     banlist?: BanlistInfo;
 
     views?: number;
-}
-
-const createCard = (data: CardCreationData): Card => ({
+}): Card => ({
     id: data.id ?? "123",
     name: data.name ?? "name",
     desc: data.desc ?? "desc",
-    type: data.type ?? "type",
+    type: data.type ?? createCardType({}),
 
     race: data.race ?? "race",
     attribute: data.attribute ?? null,
@@ -69,4 +83,4 @@ const createCard = (data: CardCreationData): Card => ({
     views: 0
 });
 
-export { createCard };
+export { createCard, createCardType };

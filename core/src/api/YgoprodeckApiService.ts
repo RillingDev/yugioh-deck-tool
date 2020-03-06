@@ -1,13 +1,15 @@
 import axios, { AxiosInstance } from "axios";
 import { mapCardInfo, RawCard } from "./mapping/mapCardInfo";
-import { Card } from "../core/model/Card";
 import { mapCardSets, RawCardSet } from "./mapping/mapCardSets";
 import { CardSet } from "../core/model/CardSet";
-import { CardDataLoaderService } from "../core/business/CardDataLoaderService";
+import {
+    CardDataLoaderService,
+    UnlinkedCard
+} from "../core/business/CardDataLoaderService";
 import { PaginatedResponse } from "./PaginatedResponse";
 import { injectable } from "inversify";
 import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
-import { CardValues } from "../core/model/types/CardValues";
+import { CardValues } from "../core/model/CardValues";
 
 @injectable()
 class YgoprodeckApiService implements CardDataLoaderService {
@@ -23,7 +25,7 @@ class YgoprodeckApiService implements CardDataLoaderService {
         });
     }
 
-    public async getCardInfo(): Promise<Card[]> {
+    public async getCardInfo(): Promise<UnlinkedCard[]> {
         const responseData = await this.loadPaginated<RawCard>(
             YgoprodeckApiService.CARD_INFO_CHUNK_SIZE,
             async offset => {

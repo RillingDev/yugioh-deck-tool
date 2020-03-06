@@ -1,4 +1,4 @@
-import { CardValues } from "../../core/model/types/CardValues";
+import { CardValues } from "../../core/model/CardValues";
 interface RawCardValues {
     types: RawCardType[];
     MONSTER: RawMonsterGroupValues;

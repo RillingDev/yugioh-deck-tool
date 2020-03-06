@@ -19,7 +19,7 @@ let DeckService = class DeckService {
         this.cardService = cardService;
     }
     canAdd(deck, deckPart, format, card) {
-        if (!deckPart.allowsCard(card)) {
+        if (!card.type.deckPart.has(deckPart)) {
             return false;
         }
         const deckPartSize = deck.parts.get(deckPart).length;

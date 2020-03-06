@@ -1,5 +1,5 @@
-import { CardValues } from "../../core/model/types/CardValues";
-import { CardTypeGroup } from "../../core/model/types/CardTypeGroup";
+import { CardValues } from "../../core/model/CardValues";
+import { CardTypeGroup } from "../../core/model/CardTypeGroup";
 import { DeckPart } from "../../core/model/DeckPart";
 import { DECKPART_EXTRA, DECKPART_SIDE } from "../../core/data/DeckParts";
 

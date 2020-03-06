@@ -1,6 +1,6 @@
 import { Card } from "../model/Card";
 import { CardSet } from "../model/CardSet";
-import { CardType } from "../model/types/CardType";
+import { CardType } from "../model/CardType";
 
 export interface CardDatabase {
     init(): Promise<void>;
