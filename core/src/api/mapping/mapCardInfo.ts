@@ -80,16 +80,28 @@ const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
         return [];
     }
     return rawMiscInfo.formats.map(format => {
-        if (format === "GOAT") {
-            return Format.GOAT;
+        if (format === "TCG") {
+            return Format.TCG;
         }
         if (format === "OCG") {
             return Format.OCG;
         }
-        if (format === "TCG") {
-            return Format.TCG;
+        if (format === "GOAT") {
+            return Format.GOAT;
         }
-        throw new TypeError(`Unexpected format '${format}'`);
+        if (format === "OCG GOAT") {
+            return Format.OCG_GOAT;
+        }
+        if (format === "Speed Duel") {
+            return Format.SPEED_DUEL;
+        }
+        if (format === "Rush Duel") {
+            return Format.RUSH_DUEL;
+        }
+        if (format === "Duel Links") {
+            return Format.DUEL_LINKS;
+        }
+        return Format.UNKNOWN;
     });
 };
 

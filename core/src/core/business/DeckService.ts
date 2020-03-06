@@ -18,7 +18,7 @@ class DeckService {
     public canAdd(
         deck: Deck,
         deckPart: DeckPart,
-        format: Format,
+        format: Format.TCG | Format.OCG | Format.GOAT,
         card: Card
     ): boolean {
         if (!deckPart.allowsCard(card)) {

@@ -6,7 +6,7 @@ import { Format } from "../model/Format";
 declare class DeckService {
     private readonly cardService;
     constructor(cardService: CardService);
-    canAdd(deck: Deck, deckPart: DeckPart, format: Format, card: Card): boolean;
+    canAdd(deck: Deck, deckPart: DeckPart, format: Format.TCG | Format.OCG | Format.GOAT, card: Card): boolean;
     getAllCards(deck: Deck): Card[];
     createEmptyDeck(): Deck;
 }
