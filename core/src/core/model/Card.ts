@@ -3,6 +3,7 @@ import { BanlistInfo } from "./BanlistInfo";
 import { CardSetAppearance } from "./CardSetAppearance";
 import { CardImage } from "./CardImage";
 import { CardPrices } from "./CardPrices";
+import { Format } from "./Format";
 
 interface Card {
     readonly id: string;
@@ -26,7 +27,7 @@ interface Card {
     readonly betaName: string | null;
     readonly treatedAs: string | null;
     readonly archetype: string | null;
-    readonly formats: string[];
+    readonly formats: Format[];
     readonly release: ReleaseInfo;
     readonly banlist: BanlistInfo;
 

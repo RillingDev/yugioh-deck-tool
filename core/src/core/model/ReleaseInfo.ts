@@ -1,6 +1,8 @@
+import { Format } from "./Format";
+
 interface ReleaseInfo {
-    readonly tcg: string | null;
-    readonly ocg: string | null;
+    readonly [Format.TCG]: string | null;
+    readonly [Format.OCG]: string | null;
 }
 
 export { ReleaseInfo };

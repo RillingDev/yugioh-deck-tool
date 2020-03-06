@@ -1,5 +1,6 @@
 import { Card } from "../../../src/core/model/Card";
 import { BanState } from "../../../src/core/model/BanState";
+import { Format } from "../../../src/core/model/Format";
 
 const createCard = (id: string, name = "name"): Card => ({
     id,
@@ -24,11 +25,11 @@ const createCard = (id: string, name = "name"): Card => ({
     archetype: null,
 
     formats: [],
-    release: { ocg: null, tcg: null },
+    release: { [Format.TCG]: null, [Format.OCG]: null },
     banlist: {
-        ocg: BanState.UNLIMITED,
-        tcg: BanState.UNLIMITED,
-        goat: BanState.UNLIMITED
+        [Format.TCG]: BanState.UNLIMITED,
+        [Format.OCG]: BanState.UNLIMITED,
+        [Format.GOAT]: BanState.UNLIMITED
     },
 
     views: 0

@@ -3,6 +3,7 @@ import { BanState } from "../../core/model/BanState";
 import { CardImage } from "../../core/model/CardImage";
 import { CardPrices } from "../../core/model/CardPrices";
 import { CardSetAppearance } from "../../core/model/CardSetAppearance";
+import { Format } from "../../core/model/Format";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -74,6 +75,24 @@ const mapBanListState = (name: string | null): BanState => {
     return BanState.UNLIMITED;
 };
 
+const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
+    if (rawMiscInfo == null || rawMiscInfo.formats == null) {
+        return [];
+    }
+    return rawMiscInfo.formats.map(format => {
+        if (format === "GOAT") {
+            return Format.GOAT;
+        }
+        if (format === "OCG") {
+            return Format.OCG;
+        }
+        if (format === "TCG") {
+            return Format.TCG;
+        }
+        throw new TypeError(`Unexpected format '${format}'`);
+    });
+};
+
 const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
     if (rawCard.card_sets == null) {
         return [];
@@ -139,15 +158,21 @@ const mapCardInfo = (data: RawCard[]): Card[] => {
             betaName: miscInfo?.beta_name ?? null,
             treatedAs: miscInfo?.treated_as ?? null,
             archetype: rawCard.archetype ?? null,
-            formats: miscInfo?.formats ?? [],
+            formats: mapFormats(miscInfo),
             release: {
-                ocg: miscInfo?.ocg_date ?? null,
-                tcg: miscInfo?.tcg_date ?? null
+                [Format.TCG]: miscInfo?.tcg_date ?? null,
+                [Format.OCG]: miscInfo?.ocg_date ?? null
             },
             banlist: {
-                tcg: mapBanListState(rawCard.banlist_info?.ban_tcg ?? null),
-                ocg: mapBanListState(rawCard.banlist_info?.ban_ocg ?? null),
-                goat: mapBanListState(rawCard.banlist_info?.ban_goat ?? null)
+                [Format.TCG]: mapBanListState(
+                    rawCard.banlist_info?.ban_tcg ?? null
+                ),
+                [Format.OCG]: mapBanListState(
+                    rawCard.banlist_info?.ban_ocg ?? null
+                ),
+                [Format.GOAT]: mapBanListState(
+                    rawCard.banlist_info?.ban_goat ?? null
+                )
             },
 
             views: miscInfo?.views ?? 0

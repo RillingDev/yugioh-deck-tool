@@ -1,5 +1,6 @@
 // https://jvilk.com/MakeTypes/
 import { CardSet } from "../../core/model/CardSet";
+import { Format } from "../../core/model/Format";
 
 interface RawCardSet {
     set_name: string;
@@ -15,8 +16,8 @@ const mapCardSets = (data: RawCardSet[]): CardSet[] =>
             code: rawCardSet.set_code,
             cardCount: rawCardSet.num_of_cards,
             release: {
-                tcg: rawCardSet.tcg_date ?? null,
-                ocg: null // Not exposed yet
+                [Format.TCG]: rawCardSet.tcg_date ?? null,
+                [Format.OCG]: null // Not exposed
             }
         };
     });
