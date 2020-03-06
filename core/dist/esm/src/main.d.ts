@@ -1,5 +1,4 @@
 import { CardDataLoaderService } from "./core/business/CardDataLoaderService";
-import { CompressionService } from "./core/business/CompressionService";
 import { BanlistInfo } from "./core/model/BanlistInfo";
 import { Card } from "./core/model/Card";
 import { ReleaseInfo } from "./core/model/ReleaseInfo";
@@ -16,4 +15,6 @@ import { container } from "./inversify.config";
 import { CardDatabase } from "./core/business/CardDatabase";
 import { CardService } from "./core/business/CardService";
 import { PriceService } from "./core/business/PriceService";
-export { container, TYPES, CardDataLoaderService, CardDatabase, CardService, PriceService, CompressionService, Card, CardPrices, CardImage, CardSet, CardSetAppearance, BanlistInfo, BanState, ReleaseInfo, Deck, DeckPart, DECKPARTS, DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE };
+import { DeckImportExportService } from "./core/business/DeckImportExportService";
+import { DeckService } from "./core/business/DeckService";
+export { container, TYPES, CardDataLoaderService, CardDatabase, CardService, PriceService, DeckService, DeckImportExportService, Card, CardPrices, CardImage, CardSet, CardSetAppearance, BanlistInfo, BanState, ReleaseInfo, Deck, DeckPart, DECKPARTS, DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE };

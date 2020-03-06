@@ -3,14 +3,16 @@ import { injectable } from "inversify";
 
 @injectable()
 class CompressionService {
-    deflateString(val: string): string {
-        return deflate(val, {
-            to: "string"
-        });
+    public deflate(arr: Uint8Array | number[]): Uint8Array {
+        return deflate(arr);
     }
 
-    inflateString(val: string): string {
-        return inflate(val, {
+    public inflate(arr: Uint8Array | number[]): Uint8Array {
+        return inflate(arr);
+    }
+
+    public inflateString(str: string): string {
+        return inflate(str, {
             to: "string"
         });
     }

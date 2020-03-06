@@ -1,5 +1,6 @@
 declare class CompressionService {
-    deflateString(val: string): string;
-    inflateString(val: string): string;
+    deflate(arr: Uint8Array | number[]): Uint8Array;
+    inflate(arr: Uint8Array | number[]): Uint8Array;
+    inflateString(str: string): string;
 }
 export { CompressionService };

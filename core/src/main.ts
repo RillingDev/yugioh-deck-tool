@@ -1,5 +1,4 @@
 import { CardDataLoaderService } from "./core/business/CardDataLoaderService";
-import { CompressionService } from "./core/business/CompressionService";
 import { BanlistInfo } from "./core/model/BanlistInfo";
 import { Card } from "./core/model/Card";
 import { ReleaseInfo } from "./core/model/ReleaseInfo";
@@ -21,6 +20,8 @@ import { container } from "./inversify.config";
 import { CardDatabase } from "./core/business/CardDatabase";
 import { CardService } from "./core/business/CardService";
 import { PriceService } from "./core/business/PriceService";
+import { DeckImportExportService } from "./core/business/DeckImportExportService";
+import { DeckService } from "./core/business/DeckService";
 
 export {
     /*
@@ -32,7 +33,8 @@ export {
     CardDatabase,
     CardService,
     PriceService,
-    CompressionService,
+    DeckService,
+    DeckImportExportService,
     /*
      * Data models
      */

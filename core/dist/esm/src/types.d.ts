@@ -2,9 +2,10 @@ declare const TYPES: {
     CardDataLoaderService: symbol;
     CardDatabase: symbol;
     CardService: symbol;
-    DeckImportExportService: symbol;
     DeckService: symbol;
-    CompressionService: symbol;
+    DeckImportExportService: symbol;
     PriceService: symbol;
+    CompressionService: symbol;
+    EncodingService: symbol;
 };
 export { TYPES };

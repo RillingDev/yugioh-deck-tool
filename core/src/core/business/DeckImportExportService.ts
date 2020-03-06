@@ -5,11 +5,10 @@ import { CardDatabase } from "./CardDatabase";
 import { Card } from "../model/Card";
 import { DECKPARTS } from "../data/DeckParts";
 import { CompressionService } from "./CompressionService";
-import { fromByteArray, toByteArray } from "base64-js";
-import { deflate, inflate } from "pako";
 import { isEqual } from "lodash";
 import { groupMapReducingBy } from "lightdash";
 import { DeckService } from "./DeckService";
+import { EncodingService } from "./EncodingService";
 
 interface ImportResult {
     deck: Deck;
@@ -30,8 +29,7 @@ class DeckImportExportService {
     ).fill(0);
     private static readonly ID_LIMIT = 2 ** 32;
 
-    private readonly textEncoder: TextEncoder;
-    private readonly textDecoder: TextDecoder;
+    private readonly encodingService: EncodingService;
     private readonly cardDatabase: CardDatabase;
     private readonly compressionService: CompressionService;
     private readonly deckService: DeckService;
@@ -41,14 +39,15 @@ class DeckImportExportService {
         cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
         deckService: DeckService,
+        @inject(TYPES.EncodingService)
+        encodingService: EncodingService,
         @inject(TYPES.CompressionService)
         compressionService: CompressionService
     ) {
+        this.encodingService = encodingService;
         this.compressionService = compressionService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
-        this.textEncoder = new TextEncoder();
-        this.textDecoder = new TextDecoder();
     }
 
     public fromFile(deckFile: DeckFile): ImportResult {
@@ -131,11 +130,11 @@ class DeckImportExportService {
             result.push(...DeckImportExportService.DELIMITER_BLOCK);
         }
         if (deck.name != null && deck.name !== "") {
-            result.push(...this.textEncoder.encode(deck.name));
+            result.push(...this.encodingService.encodeString(deck.name));
         }
 
-        const deflated = deflate(result);
-        return this.encodeUriSafeBase64(deflated);
+        const deflated = this.compressionService.deflate(result);
+        return this.encodingService.encodeUriSafeBase64String(deflated);
     }
 
     /**
@@ -147,8 +146,10 @@ class DeckImportExportService {
     public fromUrlQueryParamValue(queryParamValue: string): Deck {
         const deck = this.deckService.createEmptyDeck();
 
-        const decoded = this.decodeUriSafeBase64(queryParamValue);
-        const inflated = inflate(decoded);
+        const decoded = this.encodingService.decodeUriSafeBase64String(
+            queryParamValue
+        );
+        const inflated = this.compressionService.inflate(decoded);
 
         let deckPartIndex = 0;
         let metaDataStart: null | number = null;
@@ -174,7 +175,7 @@ class DeckImportExportService {
             }
         }
         if (metaDataStart != null && metaDataStart < inflated.length) {
-            deck.name = this.textDecoder.decode(
+            deck.name = this.encodingService.decodeString(
                 inflated.subarray(metaDataStart)
             );
         }
@@ -282,22 +283,6 @@ class DeckImportExportService {
         }
 
         return this.cardDatabase.getCard(cardId)!;
-    }
-
-    private encodeUriSafeBase64(val: Uint8Array): string {
-        return fromByteArray(val)
-            .replace(/=/g, "~")
-            .replace(/\+/g, "_")
-            .replace(/\//g, "-");
-    }
-
-    private decodeUriSafeBase64(val: string): Uint8Array {
-        return toByteArray(
-            val
-                .replace(/~/g, "=")
-                .replace(/_/g, "+")
-                .replace(/-/g, "/")
-        );
     }
 
     private countCards(cards: Card[]): Map<Card, number> {

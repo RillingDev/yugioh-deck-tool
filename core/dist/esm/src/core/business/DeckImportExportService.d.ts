@@ -2,6 +2,7 @@ import { Deck } from "../model/Deck";
 import { CardDatabase } from "./CardDatabase";
 import { CompressionService } from "./CompressionService";
 import { DeckService } from "./DeckService";
+import { EncodingService } from "./EncodingService";
 interface ImportResult {
     deck: Deck;
     missing: string[];
@@ -14,12 +15,11 @@ declare class DeckImportExportService {
     private static readonly BLOCK_SIZE;
     private static readonly DELIMITER_BLOCK;
     private static readonly ID_LIMIT;
-    private readonly textEncoder;
-    private readonly textDecoder;
+    private readonly encodingService;
     private readonly cardDatabase;
     private readonly compressionService;
     private readonly deckService;
-    constructor(cardDatabase: CardDatabase, deckService: DeckService, compressionService: CompressionService);
+    constructor(cardDatabase: CardDatabase, deckService: DeckService, encodingService: EncodingService, compressionService: CompressionService);
     fromFile(deckFile: DeckFile): ImportResult;
     toFile(deck: Deck): DeckFile;
     /**
@@ -54,8 +54,6 @@ declare class DeckImportExportService {
     toBuyLink(deck: Deck): string;
     private encodeCard;
     private decodeCard;
-    private encodeUriSafeBase64;
-    private decodeUriSafeBase64;
     private countCards;
 }
 export { DeckImportExportService };

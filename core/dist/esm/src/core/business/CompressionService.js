@@ -7,13 +7,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { deflate, inflate } from "pako";
 import { injectable } from "inversify";
 let CompressionService = class CompressionService {
-    deflateString(val) {
-        return deflate(val, {
-            to: "string"
-        });
+    deflate(arr) {
+        return deflate(arr);
     }
-    inflateString(val) {
-        return inflate(val, {
+    inflate(arr) {
+        return inflate(arr);
+    }
+    inflateString(str) {
+        return inflate(str, {
             to: "string"
         });
     }

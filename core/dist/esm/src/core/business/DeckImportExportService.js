@@ -15,18 +15,16 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { DECKPARTS } from "../data/DeckParts";
 import { CompressionService } from "./CompressionService";
-import { fromByteArray, toByteArray } from "base64-js";
-import { deflate, inflate } from "pako";
 import { isEqual } from "lodash";
 import { groupMapReducingBy } from "lightdash";
 import { DeckService } from "./DeckService";
+import { EncodingService } from "./EncodingService";
 let DeckImportExportService = DeckImportExportService_1 = class DeckImportExportService {
-    constructor(cardDatabase, deckService, compressionService) {
+    constructor(cardDatabase, deckService, encodingService, compressionService) {
+        this.encodingService = encodingService;
         this.compressionService = compressionService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
-        this.textEncoder = new TextEncoder();
-        this.textDecoder = new TextDecoder();
     }
     fromFile(deckFile) {
         const missing = [];
@@ -100,10 +98,10 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
             result.push(...DeckImportExportService_1.DELIMITER_BLOCK);
         }
         if (deck.name != null && deck.name !== "") {
-            result.push(...this.textEncoder.encode(deck.name));
+            result.push(...this.encodingService.encodeString(deck.name));
         }
-        const deflated = deflate(result);
-        return this.encodeUriSafeBase64(deflated);
+        const deflated = this.compressionService.deflate(result);
+        return this.encodingService.encodeUriSafeBase64String(deflated);
     }
     /**
      * Creates a deck from a query parameter value created by {@link toUrlQueryParamValue}.
@@ -113,8 +111,8 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
      */
     fromUrlQueryParamValue(queryParamValue) {
         const deck = this.deckService.createEmptyDeck();
-        const decoded = this.decodeUriSafeBase64(queryParamValue);
-        const inflated = inflate(decoded);
+        const decoded = this.encodingService.decodeUriSafeBase64String(queryParamValue);
+        const inflated = this.compressionService.inflate(decoded);
         let deckPartIndex = 0;
         let metaDataStart = null;
         for (let i = 0; i < inflated.length; i += DeckImportExportService_1.BLOCK_SIZE) {
@@ -133,7 +131,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
             }
         }
         if (metaDataStart != null && metaDataStart < inflated.length) {
-            deck.name = this.textDecoder.decode(inflated.subarray(metaDataStart));
+            deck.name = this.encodingService.decodeString(inflated.subarray(metaDataStart));
         }
         return deck;
     }
@@ -212,18 +210,6 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
         }
         return this.cardDatabase.getCard(cardId);
     }
-    encodeUriSafeBase64(val) {
-        return fromByteArray(val)
-            .replace(/=/g, "~")
-            .replace(/\+/g, "_")
-            .replace(/\//g, "-");
-    }
-    decodeUriSafeBase64(val) {
-        return toByteArray(val
-            .replace(/~/g, "=")
-            .replace(/_/g, "+")
-            .replace(/-/g, "/"));
-    }
     countCards(cards) {
         return groupMapReducingBy(cards, card => card, () => 0, current => current + 1);
     }
@@ -236,8 +222,10 @@ DeckImportExportService = DeckImportExportService_1 = __decorate([
     injectable(),
     __param(0, inject(TYPES.CardDatabase)),
     __param(1, inject(TYPES.DeckService)),
-    __param(2, inject(TYPES.CompressionService)),
+    __param(2, inject(TYPES.EncodingService)),
+    __param(3, inject(TYPES.CompressionService)),
     __metadata("design:paramtypes", [Object, DeckService,
+        EncodingService,
         CompressionService])
 ], DeckImportExportService);
 export { DeckImportExportService };
