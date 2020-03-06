@@ -5,6 +5,7 @@ import { PriceController } from "@/lib/controller/PriceController";
 const uiContainer = new Container();
 uiContainer
     .bind<PriceController>(UI_TYPES.PriceController)
-    .to(PriceController).inSingletonScope();
+    .to(PriceController)
+    .inSingletonScope();
 
 export { uiContainer };

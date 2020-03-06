@@ -1,4 +1,5 @@
 import { BanState } from "../../core/model/BanState";
+import { Format } from "../../core/model/Format";
 const mapBanListState = (name) => {
     if (name === "Banned") {
         return BanState.BANNED;
@@ -10,6 +11,23 @@ const mapBanListState = (name) => {
         return BanState.SEMI_LIMITED;
     }
     return BanState.UNLIMITED;
+};
+const mapFormats = (rawMiscInfo) => {
+    if (rawMiscInfo == null || rawMiscInfo.formats == null) {
+        return [];
+    }
+    return rawMiscInfo.formats.map(format => {
+        if (format === "GOAT") {
+            return Format.GOAT;
+        }
+        if (format === "OCG") {
+            return Format.OCG;
+        }
+        if (format === "TCG") {
+            return Format.TCG;
+        }
+        throw new TypeError(`Unexpected format '${format}'`);
+    });
 };
 const mapCardSets = (rawCard) => {
     if (rawCard.card_sets == null) {
@@ -69,15 +87,15 @@ const mapCardInfo = (data) => {
             betaName: miscInfo?.beta_name ?? null,
             treatedAs: miscInfo?.treated_as ?? null,
             archetype: rawCard.archetype ?? null,
-            formats: miscInfo?.formats ?? [],
+            formats: mapFormats(miscInfo),
             release: {
-                ocg: miscInfo?.ocg_date ?? null,
-                tcg: miscInfo?.tcg_date ?? null
+                [Format.TCG]: miscInfo?.tcg_date ?? null,
+                [Format.OCG]: miscInfo?.ocg_date ?? null
             },
             banlist: {
-                tcg: mapBanListState(rawCard.banlist_info?.ban_tcg ?? null),
-                ocg: mapBanListState(rawCard.banlist_info?.ban_ocg ?? null),
-                goat: mapBanListState(rawCard.banlist_info?.ban_goat ?? null)
+                [Format.TCG]: mapBanListState(rawCard.banlist_info?.ban_tcg ?? null),
+                [Format.OCG]: mapBanListState(rawCard.banlist_info?.ban_ocg ?? null),
+                [Format.GOAT]: mapBanListState(rawCard.banlist_info?.ban_goat ?? null)
             },
             views: miscInfo?.views ?? 0
         };

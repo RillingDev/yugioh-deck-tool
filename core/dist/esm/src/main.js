@@ -6,11 +6,12 @@ import { CardService } from "./core/business/CardService";
 import { PriceService } from "./core/business/PriceService";
 import { DeckImportExportService } from "./core/business/DeckImportExportService";
 import { DeckService } from "./core/business/DeckService";
+import { Format } from "./core/model/Format";
 export { 
 /*
  * Business logic and container access
  */
-container, TYPES, CardService, PriceService, DeckService, DeckImportExportService, BanState, 
+container, TYPES, CardService, PriceService, DeckService, DeckImportExportService, BanState, Format, 
 /*
  * Static data
  */

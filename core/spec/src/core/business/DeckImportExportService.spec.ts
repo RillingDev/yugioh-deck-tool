@@ -59,7 +59,7 @@ describe("DeckImportExportService", () => {
             const fileContent = `
 #main
 123`;
-            const card = createCard("123");
+            const card = createCard({ id: "123" });
             mockCardDatabase.registerCard("123", card);
 
             const result = deckImportExportService.fromFile({
@@ -77,7 +77,7 @@ describe("DeckImportExportService", () => {
 123
 123
 123`;
-            const card = createCard("123");
+            const card = createCard({ id: "123" });
             mockCardDatabase.registerCard("123", card);
 
             const result = deckImportExportService.fromFile({
@@ -103,11 +103,11 @@ describe("DeckImportExportService", () => {
 
 !side
 789`;
-            const card1 = createCard("123");
+            const card1 = createCard({ id: "123" });
             mockCardDatabase.registerCard("123", card1);
-            const card2 = createCard("456");
+            const card2 = createCard({ id: "456" });
             mockCardDatabase.registerCard("456", card2);
-            const card3 = createCard("789");
+            const card3 = createCard({ id: "789" });
             mockCardDatabase.registerCard("789", card3);
 
             const result = deckImportExportService.fromFile({
@@ -128,7 +128,7 @@ describe("DeckImportExportService", () => {
 #created by ...
 #main
 123`;
-            const card = createCard("123");
+            const card = createCard({ id: "123" });
             mockCardDatabase.registerCard("123", card);
 
             const result = deckImportExportService.fromFile({
@@ -159,7 +159,7 @@ describe("DeckImportExportService", () => {
                 deckImportExportService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
-                        [DECKPART_MAIN, [createCard("123")]],
+                        [DECKPART_MAIN, [createCard({ id: "123" })]],
                         [DECKPART_EXTRA, []],
                         [DECKPART_SIDE, []]
                     ])
@@ -175,9 +175,9 @@ describe("DeckImportExportService", () => {
                 deckImportExportService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
-                        [DECKPART_MAIN, [createCard("123")]],
-                        [DECKPART_EXTRA, [createCard("456")]],
-                        [DECKPART_SIDE, [createCard("789")]]
+                        [DECKPART_MAIN, [createCard({ id: "123" })]],
+                        [DECKPART_EXTRA, [createCard({ id: "456" })]],
+                        [DECKPART_SIDE, [createCard({ id: "789" })]]
                     ])
                 }).fileContent
             ).toBe(
@@ -199,13 +199,13 @@ describe("DeckImportExportService", () => {
             const queryParamValue = deflate("123|*2456|789;999;*3123", {
                 to: "string"
             });
-            const card1 = createCard("123");
+            const card1 = createCard({ id: "123" });
             mockCardDatabase.registerCard("123", card1);
-            const card2 = createCard("456");
+            const card2 = createCard({ id: "456" });
             mockCardDatabase.registerCard("456", card2);
-            const card3 = createCard("789");
+            const card3 = createCard({ id: "789" });
             mockCardDatabase.registerCard("789", card3);
-            const card4 = createCard("999");
+            const card4 = createCard({ id: "999" });
             mockCardDatabase.registerCard("999", card4);
             expect(
                 deckImportExportService.fromLegacyUrlQueryParamValue(
@@ -225,10 +225,10 @@ describe("DeckImportExportService", () => {
 
     describe("toUrlQueryParamValue", () => {
         it("creates value", () => {
-            const card1 = createCard("123");
-            const card2 = createCard("456");
-            const card3 = createCard("789");
-            const card4 = createCard("999999999");
+            const card1 = createCard({ id: "123" });
+            const card2 = createCard({ id: "456" });
+            const card3 = createCard({ id: "789" });
+            const card4 = createCard({ id: "999999999" });
 
             const result = deckImportExportService.toUrlQueryParamValue({
                 name: "foo",
@@ -244,9 +244,9 @@ describe("DeckImportExportService", () => {
         });
 
         it("works with null name", () => {
-            const card1 = createCard("123");
-            const card2 = createCard("456");
-            const card3 = createCard("789");
+            const card1 = createCard({ id: "123" });
+            const card2 = createCard({ id: "456" });
+            const card3 = createCard({ id: "789" });
 
             const result = deckImportExportService.toUrlQueryParamValue({
                 name: null,
@@ -262,13 +262,13 @@ describe("DeckImportExportService", () => {
 
     describe("fromUrlQueryParamValue", () => {
         it("creates value", () => {
-            const card1 = createCard("123");
+            const card1 = createCard({ id: "123" });
             mockCardDatabase.registerCard("123", card1);
-            const card2 = createCard("456");
+            const card2 = createCard({ id: "456" });
             mockCardDatabase.registerCard("456", card2);
-            const card3 = createCard("789");
+            const card3 = createCard({ id: "789" });
             mockCardDatabase.registerCard("789", card3);
-            const card4 = createCard("999999999");
+            const card4 = createCard({ id: "999999999" });
             mockCardDatabase.registerCard("999999999", card4);
 
             const result = deckImportExportService.fromUrlQueryParamValue(
@@ -286,11 +286,11 @@ describe("DeckImportExportService", () => {
         });
 
         it("works with null name", () => {
-            const card1 = createCard("123");
+            const card1 = createCard({ id: "123" });
             mockCardDatabase.registerCard("123", card1);
-            const card2 = createCard("456");
+            const card2 = createCard({ id: "456" });
             mockCardDatabase.registerCard("456", card2);
-            const card3 = createCard("789");
+            const card3 = createCard({ id: "789" });
             mockCardDatabase.registerCard("789", card3);
 
             const result = deckImportExportService.fromUrlQueryParamValue(
@@ -310,9 +310,9 @@ describe("DeckImportExportService", () => {
 
     describe("toShareableText", () => {
         it("creates text", () => {
-            const card1 = createCard("123", "foo");
-            const card2 = createCard("456", "bar");
-            const card3 = createCard("789", "fizz");
+            const card1 = createCard({ id: "123", name: "foo" });
+            const card2 = createCard({ id: "456", name: "bar" });
+            const card3 = createCard({ id: "789", name: "fizz" });
 
             const result = deckImportExportService.toShareableText({
                 name: null,
@@ -339,9 +339,9 @@ foo x1
 
     describe("toBuyLink", () => {
         it("creates text", () => {
-            const card1 = createCard("123", "foo");
-            const card2 = createCard("456", "bar");
-            const card3 = createCard("789", "fizz");
+            const card1 = createCard({ id: "123", name: "foo" });
+            const card2 = createCard({ id: "456", name: "bar" });
+            const card3 = createCard({ id: "789", name: "fizz" });
 
             const result = deckImportExportService.toBuyLink({
                 name: null,

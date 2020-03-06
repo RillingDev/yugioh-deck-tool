@@ -17,4 +17,5 @@ import { CardService } from "./core/business/CardService";
 import { PriceService } from "./core/business/PriceService";
 import { DeckImportExportService } from "./core/business/DeckImportExportService";
 import { DeckService } from "./core/business/DeckService";
-export { container, TYPES, CardDataLoaderService, CardDatabase, CardService, PriceService, DeckService, DeckImportExportService, Card, CardPrices, CardImage, CardSet, CardSetAppearance, BanlistInfo, BanState, ReleaseInfo, Deck, DeckPart, DECKPARTS, DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE };
+import { Format } from "./core/model/Format";
+export { container, TYPES, CardDataLoaderService, CardDatabase, CardService, PriceService, DeckService, DeckImportExportService, Card, CardPrices, CardImage, CardSet, CardSetAppearance, BanlistInfo, BanState, ReleaseInfo, Deck, DeckPart, Format, DECKPARTS, DECKPART_EXTRA, DECKPART_MAIN, DECKPART_SIDE };

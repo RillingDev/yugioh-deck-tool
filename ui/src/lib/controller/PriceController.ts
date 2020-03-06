@@ -2,7 +2,7 @@ import { PRICE_CURRENCIES, PRICE_MODES } from "../data/price";
 import { injectable } from "inversify";
 
 @injectable()
- class PriceController{
+class PriceController {
     public readonly modes: any[];
     public readonly currencies: any[];
     public readonly activeCurrency: any;
@@ -40,7 +40,7 @@ import { injectable } from "inversify";
         return localeIndex === -1
             ? PRICE_CURRENCIES[0]
             : PRICE_CURRENCIES[localeIndex];
-    };
-};
+    }
+}
 
 export { PriceController };
