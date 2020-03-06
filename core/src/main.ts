@@ -23,6 +23,7 @@ import { PriceService } from "./core/business/PriceService";
 import { DeckImportExportService } from "./core/business/DeckImportExportService";
 import { DeckService } from "./core/business/DeckService";
 import { Format } from "./core/model/Format";
+import { CompressionService } from "./core/business/CompressionService";
 
 export {
     /*
@@ -36,6 +37,7 @@ export {
     PriceService,
     DeckService,
     DeckImportExportService,
+    CompressionService,
     /*
      * Data models
      */
