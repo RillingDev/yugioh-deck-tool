@@ -29,7 +29,6 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
     fromFile(deckFile) {
         const missing = [];
         const deck = this.deckService.createEmptyDeck();
-        deck.name = deckFile.fileName.replace(".ydk", "");
         const lines = deckFile.fileContent
             .split("\n")
             .map(line => line.trim())
@@ -52,6 +51,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
                 }
             }
         }
+        deck.name = deckFile.fileName.replace(".ydk", "");
         return {
             deck,
             missing
@@ -157,7 +157,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
                         cardId = entry.slice(2);
                     }
                     if (!this.cardDatabase.hasCard(cardId)) {
-                        throw new TypeError("Unknown card, this hopefully should never happen");
+                        throw new TypeError(`Unknown card ${cardId}, this hopefully should never happen.`);
                     }
                     const card = this.cardDatabase.getCard(cardId);
                     for (let i = 0; i < count; i++) {
@@ -190,7 +190,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
     encodeCard(card) {
         const idNumber = Number(card.id);
         if (idNumber === 0 || idNumber >= DeckImportExportService_1.ID_LIMIT) {
-            throw new TypeError(`card '${card}' has an illegal value ${idNumber} as ID.`);
+            throw new TypeError(`Card '${card}' has an illegal value ${idNumber} as ID.`);
         }
         const buffer = new ArrayBuffer(DeckImportExportService_1.BLOCK_SIZE);
         // Create a 32 bit int view which allows easy access to the 4 byte

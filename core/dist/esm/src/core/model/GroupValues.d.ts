@@ -1,3 +1,4 @@
-export interface GroupValues {
+interface GroupValues {
     races: string[];
 }
+export { GroupValues };

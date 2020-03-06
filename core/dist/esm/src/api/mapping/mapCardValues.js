@@ -36,7 +36,7 @@ const mapCardValues = (data) => {
                 races: data.MONSTER.race,
                 attributes: data.MONSTER.attributes,
                 levels: data.MONSTER.level,
-                linkmarkers: data.MONSTER.linkmarkers
+                linkMarkers: data.MONSTER.linkmarkers
             },
             [CardTypeGroup.SPELL]: {
                 races: data.SPELL.race

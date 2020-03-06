@@ -11,13 +11,13 @@ import { DeckService } from "./DeckService";
 import { EncodingService } from "./EncodingService";
 
 interface ImportResult {
-    deck: Deck;
-    missing: string[];
+    readonly deck: Deck;
+    readonly missing: string[];
 }
 
 interface DeckFile {
-    fileName: string;
-    fileContent: string;
+    readonly fileName: string;
+    readonly fileContent: string;
 }
 
 @injectable()
@@ -53,7 +53,6 @@ class DeckImportExportService {
     public fromFile(deckFile: DeckFile): ImportResult {
         const missing: string[] = [];
         const deck = this.deckService.createEmptyDeck();
-        deck.name = deckFile.fileName.replace(".ydk", "");
 
         const lines = deckFile.fileContent
             .split("\n")
@@ -79,6 +78,7 @@ class DeckImportExportService {
                 }
             }
         }
+        deck.name = deckFile.fileName.replace(".ydk", "");
         return {
             deck,
             missing
@@ -214,7 +214,7 @@ class DeckImportExportService {
 
                         if (!this.cardDatabase.hasCard(cardId)) {
                             throw new TypeError(
-                                "Unknown card, this hopefully should never happen"
+                                `Unknown card ${cardId}, this hopefully should never happen.`
                             );
                         }
                         const card = this.cardDatabase.getCard(cardId)!;
@@ -261,7 +261,7 @@ class DeckImportExportService {
         const idNumber = Number(card.id);
         if (idNumber === 0 || idNumber >= DeckImportExportService.ID_LIMIT) {
             throw new TypeError(
-                `card '${card}' has an illegal value ${idNumber} as ID.`
+                `Card '${card}' has an illegal value ${idNumber} as ID.`
             );
         }
         const buffer = new ArrayBuffer(DeckImportExportService.BLOCK_SIZE);

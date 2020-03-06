@@ -10,8 +10,8 @@ import {
     DECKPART_MAIN,
     DECKPART_SIDE
 } from "../../../../src/core/data/DeckParts";
-import { DeckPart } from "src/core/model/DeckPart";
-import { Card } from "src/core/model/Card";
+import { DeckPart } from "../../../../src/core/model/DeckPart";
+import { Card } from "../../../../src/core/model/Card";
 import { deflate } from "pako";
 
 describe("DeckImportExportService", () => {

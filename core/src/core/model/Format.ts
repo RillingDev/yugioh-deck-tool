@@ -1,4 +1,4 @@
-export enum Format {
+enum Format {
     OCG = "OCG",
     TCG = "TCG",
     GOAT = "GOAT",
@@ -10,3 +10,5 @@ export enum Format {
 
     UNKNOWN = "UNKNOWN"
 }
+
+export { Format };

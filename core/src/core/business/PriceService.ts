@@ -1,5 +1,6 @@
 import { injectable } from "inversify";
-import { Card, CardPrices } from "../../main";
+import { Card } from "../model/Card";
+import { CardPrices } from "../model/CardPrices";
 
 interface PriceLookupResult {
     prices: CardPrices;

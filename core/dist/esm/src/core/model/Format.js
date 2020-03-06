@@ -1,4 +1,4 @@
-export var Format;
+var Format;
 (function (Format) {
     Format["OCG"] = "OCG";
     Format["TCG"] = "TCG";
@@ -9,3 +9,4 @@ export var Format;
     Format["DUEL_LINKS"] = "Duel Links";
     Format["UNKNOWN"] = "UNKNOWN";
 })(Format || (Format = {}));
+export { Format };

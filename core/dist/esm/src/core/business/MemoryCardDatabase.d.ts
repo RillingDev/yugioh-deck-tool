@@ -5,7 +5,7 @@ import { CardDatabase } from "./CardDatabase";
 import { CardType } from "../model/CardType";
 declare class MemoryCardDatabase implements CardDatabase {
     private readonly dataLoaderClient;
-    private readonly ready;
+    private ready;
     private readonly cards;
     private readonly sets;
     private readonly monsterValues;

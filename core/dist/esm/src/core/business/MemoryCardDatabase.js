@@ -31,7 +31,7 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         this.monsterValues = {
             races: [],
             attributes: [],
-            linkmarkers: [],
+            linkMarkers: [],
             levels: []
         };
         this.ready = false;
@@ -48,7 +48,7 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         this.monsterValues.races = monsterGroupValues.races;
         this.monsterValues.attributes = monsterGroupValues.attributes;
         this.monsterValues.levels = monsterGroupValues.levels;
-        this.monsterValues.linkmarkers = monsterGroupValues.linkmarkers;
+        this.monsterValues.linkMarkers = monsterGroupValues.linkMarkers;
         const spellGroupValues = cardValues.values[CardTypeGroup.SPELL];
         this.spellValues.races = spellGroupValues.races;
         const trapGroupValues = cardValues.values[CardTypeGroup.TRAP];
@@ -58,6 +58,7 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         for (const unlinkedCard of cardInfo) {
             this.cards.set(unlinkedCard.id, this.createLinkedCard(unlinkedCard, cardSets, cardValues));
         }
+        this.ready = true;
     }
     isReady() {
         return this.ready;
@@ -72,31 +73,31 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         return Array.from(this.cards.values());
     }
     getSets() {
-        return Array.from(this.sets);
+        return this.sets;
     }
     getTypes() {
-        return Array.from(this.types.values());
+        return this.types;
     }
     getSkillRaces() {
-        return Array.from(this.skillValues.races);
+        return this.skillValues.races;
     }
     getSpellRaces() {
-        return Array.from(this.spellValues.races);
+        return this.spellValues.races;
     }
     getTrapRaces() {
-        return Array.from(this.trapValues.races);
+        return this.trapValues.races;
     }
     getMonsterRaces() {
-        return Array.from(this.monsterValues.races);
+        return this.monsterValues.races;
     }
     getMonsterAttributes() {
-        return Array.from(this.monsterValues.attributes);
+        return this.monsterValues.attributes;
     }
     getMonsterLevels() {
-        return Array.from(this.monsterValues.levels);
+        return this.monsterValues.levels;
     }
     getMonsterLinkMarkers() {
-        return Array.from(this.monsterValues.linkmarkers);
+        return this.monsterValues.linkMarkers;
     }
     createLinkedCard(unlinkedCard, cardSets, cardValues) {
         return {
@@ -110,8 +111,8 @@ let MemoryCardDatabase = class MemoryCardDatabase {
             def: unlinkedCard.def,
             level: unlinkedCard.level,
             scale: unlinkedCard.scale,
-            linkval: unlinkedCard.linkval,
-            linkmarkers: unlinkedCard.linkmarkers,
+            linkVal: unlinkedCard.linkVal,
+            linkMarkers: unlinkedCard.linkMarkers,
             sets: this.linkSets(unlinkedCard.sets, cardSets),
             image: unlinkedCard.image,
             prices: unlinkedCard.prices,
@@ -128,7 +129,7 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         return setAppearances.map(setAppearance => {
             const matchingType = cardSets.find(set => set.name === setAppearance.name);
             if (matchingType == null) {
-                throw new TypeError(`Could not find set '${setAppearance}'.`);
+                throw new TypeError(`Could not find set '${setAppearance.name}'.`);
             }
             return matchingType;
         });

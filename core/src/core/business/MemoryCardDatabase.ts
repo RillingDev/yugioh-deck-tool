@@ -14,7 +14,7 @@ import { CardSetAppearance } from "../model/CardSetAppearance";
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
     private readonly dataLoaderClient: CardDataLoaderService;
-    private readonly ready: boolean;
+    private ready: boolean;
     private readonly cards: Map<string, Card>;
     private readonly sets: CardSet[];
     private readonly monsterValues: MonsterGroupValues;
@@ -43,7 +43,7 @@ class MemoryCardDatabase implements CardDatabase {
         this.monsterValues = {
             races: [],
             attributes: [],
-            linkmarkers: [],
+            linkMarkers: [],
             levels: []
         };
         this.ready = false;
@@ -64,7 +64,7 @@ class MemoryCardDatabase implements CardDatabase {
         this.monsterValues.races = monsterGroupValues.races;
         this.monsterValues.attributes = monsterGroupValues.attributes;
         this.monsterValues.levels = monsterGroupValues.levels;
-        this.monsterValues.linkmarkers = monsterGroupValues.linkmarkers;
+        this.monsterValues.linkMarkers = monsterGroupValues.linkMarkers;
 
         const spellGroupValues = cardValues.values[CardTypeGroup.SPELL];
         this.spellValues.races = spellGroupValues.races;
@@ -81,6 +81,7 @@ class MemoryCardDatabase implements CardDatabase {
                 this.createLinkedCard(unlinkedCard, cardSets, cardValues)
             );
         }
+        this.ready = true;
     }
 
     public isReady(): boolean {
@@ -100,39 +101,39 @@ class MemoryCardDatabase implements CardDatabase {
     }
 
     public getSets(): CardSet[] {
-        return Array.from(this.sets);
+        return this.sets;
     }
 
     public getTypes(): CardType[] {
-        return Array.from(this.types.values());
+        return this.types;
     }
 
     public getSkillRaces(): string[] {
-        return Array.from(this.skillValues.races);
+        return this.skillValues.races;
     }
 
     public getSpellRaces(): string[] {
-        return Array.from(this.spellValues.races);
+        return this.spellValues.races;
     }
 
     public getTrapRaces(): string[] {
-        return Array.from(this.trapValues.races);
+        return this.trapValues.races;
     }
 
     public getMonsterRaces(): string[] {
-        return Array.from(this.monsterValues.races);
+        return this.monsterValues.races;
     }
 
     public getMonsterAttributes(): string[] {
-        return Array.from(this.monsterValues.attributes);
+        return this.monsterValues.attributes;
     }
 
     public getMonsterLevels(): number[] {
-        return Array.from(this.monsterValues.levels);
+        return this.monsterValues.levels;
     }
 
     public getMonsterLinkMarkers(): string[] {
-        return Array.from(this.monsterValues.linkmarkers);
+        return this.monsterValues.linkMarkers;
     }
 
     private createLinkedCard(
@@ -152,8 +153,8 @@ class MemoryCardDatabase implements CardDatabase {
             def: unlinkedCard.def,
             level: unlinkedCard.level,
             scale: unlinkedCard.scale,
-            linkval: unlinkedCard.linkval,
-            linkmarkers: unlinkedCard.linkmarkers,
+            linkVal: unlinkedCard.linkVal,
+            linkMarkers: unlinkedCard.linkMarkers,
 
             sets: this.linkSets(unlinkedCard.sets, cardSets),
             image: unlinkedCard.image,
@@ -179,7 +180,9 @@ class MemoryCardDatabase implements CardDatabase {
                 set => set.name === setAppearance.name
             );
             if (matchingType == null) {
-                throw new TypeError(`Could not find set '${setAppearance}'.`);
+                throw new TypeError(
+                    `Could not find set '${setAppearance.name}'.`
+                );
             }
             return matchingType;
         });

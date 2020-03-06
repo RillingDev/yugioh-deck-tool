@@ -1,7 +1,9 @@
 import { GroupValues } from "./GroupValues";
 
-export interface MonsterGroupValues extends GroupValues {
+interface MonsterGroupValues extends GroupValues {
     attributes: string[];
     levels: number[];
-    linkmarkers: string[];
+    linkMarkers: string[];
 }
+
+export { MonsterGroupValues };

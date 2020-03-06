@@ -35,8 +35,8 @@ const createCard = (data: {
     def?: number | null;
     level?: number | null;
     scale?: number | null;
-    linkval?: number | null;
-    linkmarkers?: string[] | null;
+    linkVal?: number | null;
+    linkMarkers?: string[] | null;
 
     sets?: CardSet[];
     image?: CardImage | null;
@@ -62,8 +62,8 @@ const createCard = (data: {
     def: data.def ?? null,
     level: data.level ?? null,
     scale: data.scale ?? null,
-    linkval: data.linkval ?? null,
-    linkmarkers: data.linkmarkers ?? null,
+    linkVal: data.linkVal ?? null,
+    linkMarkers: data.linkMarkers ?? null,
 
     sets: data.sets ?? [],
     image: data.image ?? null,

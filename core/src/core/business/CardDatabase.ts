@@ -3,6 +3,10 @@ import { CardSet } from "../model/CardSet";
 import { CardType } from "../model/CardType";
 
 export interface CardDatabase {
+    /**
+     * Initializes the database.
+     * Consumer has to ensure this is only called once.
+     */
     init(): Promise<void>;
 
     isReady(): boolean;

@@ -4,12 +4,12 @@ import { CompressionService } from "./CompressionService";
 import { DeckService } from "./DeckService";
 import { EncodingService } from "./EncodingService";
 interface ImportResult {
-    deck: Deck;
-    missing: string[];
+    readonly deck: Deck;
+    readonly missing: string[];
 }
 interface DeckFile {
-    fileName: string;
-    fileContent: string;
+    readonly fileName: string;
+    readonly fileContent: string;
 }
 declare class DeckImportExportService {
     private static readonly BLOCK_SIZE;

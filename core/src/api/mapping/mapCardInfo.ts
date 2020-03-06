@@ -163,8 +163,8 @@ const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
             def: rawCard.def ?? null,
             level: rawCard.level ?? null,
             scale: rawCard.scale ?? null,
-            linkval: rawCard.linkval ?? null,
-            linkmarkers: rawCard.linkmarkers ?? null,
+            linkVal: rawCard.linkval ?? null,
+            linkMarkers: rawCard.linkmarkers ?? null,
 
             sets: mapCardSets(rawCard),
             image: mapImage(rawCard),

@@ -1,6 +1,8 @@
-export enum CardTypeGroup {
+enum CardTypeGroup {
     MONSTER = "MONSTER",
     SPELL = "SPELL",
     TRAP = "TRAP",
     SKILL = "SKILL"
 }
+
+export { CardTypeGroup };

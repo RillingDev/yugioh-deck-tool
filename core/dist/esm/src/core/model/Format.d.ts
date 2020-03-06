@@ -1,4 +1,4 @@
-export declare enum Format {
+declare enum Format {
     OCG = "OCG",
     TCG = "TCG",
     GOAT = "GOAT",
@@ -8,3 +8,4 @@ export declare enum Format {
     DUEL_LINKS = "Duel Links",
     UNKNOWN = "UNKNOWN"
 }
+export { Format };

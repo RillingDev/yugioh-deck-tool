@@ -20,8 +20,8 @@ interface UnlinkedCard {
     readonly def: number | null;
     readonly level: number | null;
     readonly scale: number | null;
-    readonly linkval: number | null;
-    readonly linkmarkers: string[] | null;
+    readonly linkVal: number | null;
+    readonly linkMarkers: string[] | null;
 
     readonly sets: CardSetAppearance[];
     readonly image: CardImage | null;

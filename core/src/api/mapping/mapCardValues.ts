@@ -3,6 +3,7 @@ import { CardTypeGroup } from "../../core/model/CardTypeGroup";
 import { DeckPart } from "../../core/model/DeckPart";
 import { DECKPART_EXTRA, DECKPART_SIDE } from "../../core/data/DeckParts";
 
+// https://jvilk.com/MakeTypes/
 interface RawCardValues {
     types: RawCardType[];
     MONSTER: RawMonsterGroupValues;
@@ -72,7 +73,7 @@ const mapCardValues = (data: RawCardValues): CardValues => {
                 races: data.MONSTER.race,
                 attributes: data.MONSTER.attributes,
                 levels: data.MONSTER.level,
-                linkmarkers: data.MONSTER.linkmarkers
+                linkMarkers: data.MONSTER.linkmarkers
             },
             [CardTypeGroup.SPELL]: {
                 races: data.SPELL.race
