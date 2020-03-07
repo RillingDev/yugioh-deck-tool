@@ -5,6 +5,7 @@ declare const TYPES: {
     DeckService: symbol;
     DeckImportExportService: symbol;
     PriceService: symbol;
+    SortingService: symbol;
     CompressionService: symbol;
     EncodingService: symbol;
 };

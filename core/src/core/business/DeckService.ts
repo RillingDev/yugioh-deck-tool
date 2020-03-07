@@ -6,6 +6,7 @@ import { Deck } from "../model/Deck";
 import { TYPES } from "../../types";
 import { CardService } from "./CardService";
 import { Format } from "../model/Format";
+import { removeItem } from "lightdash";
 
 @injectable()
 class DeckService {
@@ -34,6 +35,14 @@ class DeckService {
             this.cardService.isTreatedAsSame(existingCard, card)
         ).length;
         return count < card.banlist[format];
+    }
+
+    public addCard(deck: Deck, deckPart: DeckPart, card: Card): void {
+        deck.parts.get(deckPart)!.push(card);
+    }
+
+    public removeCard(deck: Deck, deckPart: DeckPart, card: Card): void {
+        removeItem<Card>(deck.parts.get(deckPart)!, card, false);
     }
 
     public getAllCards(deck: Deck): Card[] {

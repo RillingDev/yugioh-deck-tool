@@ -19,21 +19,10 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         this.cards = new Map();
         this.sets = [];
         this.types = [];
-        this.spellValues = {
-            races: []
-        };
-        this.trapValues = {
-            races: []
-        };
-        this.skillValues = {
-            races: []
-        };
-        this.monsterValues = {
-            races: [],
-            attributes: [],
-            linkMarkers: [],
-            levels: []
-        };
+        this.races = new Map();
+        this.monsterAttributes = [];
+        this.monsterLinkMarkers = [];
+        this.monsterLevels = [];
         this.ready = false;
     }
     async init() {
@@ -44,17 +33,13 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         ]);
         this.sets.push(...cardSets);
         this.types.push(...cardValues.types);
-        const monsterGroupValues = cardValues.values[CardTypeGroup.MONSTER];
-        this.monsterValues.races = monsterGroupValues.races;
-        this.monsterValues.attributes = monsterGroupValues.attributes;
-        this.monsterValues.levels = monsterGroupValues.levels;
-        this.monsterValues.linkMarkers = monsterGroupValues.linkMarkers;
-        const spellGroupValues = cardValues.values[CardTypeGroup.SPELL];
-        this.spellValues.races = spellGroupValues.races;
-        const trapGroupValues = cardValues.values[CardTypeGroup.TRAP];
-        this.trapValues.races = trapGroupValues.races;
-        const skillGroupValues = cardValues.values[CardTypeGroup.SKILL];
-        this.skillValues.races = skillGroupValues.races;
+        this.races.set(CardTypeGroup.MONSTER, cardValues.values[CardTypeGroup.MONSTER].races);
+        this.races.set(CardTypeGroup.SPELL, cardValues.values[CardTypeGroup.SPELL].races);
+        this.races.set(CardTypeGroup.TRAP, cardValues.values[CardTypeGroup.TRAP].races);
+        this.races.set(CardTypeGroup.SKILL, cardValues.values[CardTypeGroup.SKILL].races);
+        this.monsterAttributes.push(...cardValues.values[CardTypeGroup.MONSTER].attributes);
+        this.monsterLevels.push(...cardValues.values[CardTypeGroup.MONSTER].levels);
+        this.monsterLinkMarkers.push(...cardValues.values[CardTypeGroup.MONSTER].linkMarkers);
         for (const unlinkedCard of cardInfo) {
             this.cards.set(unlinkedCard.id, this.createLinkedCard(unlinkedCard, cardSets, cardValues));
         }
@@ -78,26 +63,17 @@ let MemoryCardDatabase = class MemoryCardDatabase {
     getTypes() {
         return this.types;
     }
-    getSkillRaces() {
-        return this.skillValues.races;
-    }
-    getSpellRaces() {
-        return this.spellValues.races;
-    }
-    getTrapRaces() {
-        return this.trapValues.races;
-    }
-    getMonsterRaces() {
-        return this.monsterValues.races;
+    getRaces(cardTypeGroup) {
+        return this.races.get(cardTypeGroup);
     }
     getMonsterAttributes() {
-        return this.monsterValues.attributes;
+        return this.monsterAttributes;
     }
     getMonsterLevels() {
-        return this.monsterValues.levels;
+        return this.monsterLevels;
     }
     getMonsterLinkMarkers() {
-        return this.monsterValues.linkMarkers;
+        return this.monsterLinkMarkers;
     }
     createLinkedCard(unlinkedCard, cardSets, cardValues) {
         return {
@@ -126,13 +102,16 @@ let MemoryCardDatabase = class MemoryCardDatabase {
         };
     }
     linkSets(setAppearances, cardSets) {
-        return setAppearances.map(setAppearance => {
+        return setAppearances
+            .map(setAppearance => {
             const matchingType = cardSets.find(set => set.name === setAppearance.name);
             if (matchingType == null) {
-                throw new TypeError(`Could not find set '${setAppearance.name}'.`);
+                console.warn(`Could not find set '${setAppearance.name}'.`);
+                return null;
             }
             return matchingType;
-        });
+        })
+            .filter(set => set != null);
     }
     linkType(typeName, types) {
         const matchingType = types.find(type => type.name === typeName);

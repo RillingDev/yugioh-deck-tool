@@ -14,6 +14,7 @@ import { inject, injectable } from "inversify";
 import { DEFAULT_DECKPART_ARR } from "../model/DefaultDeckPart";
 import { TYPES } from "../../types";
 import { CardService } from "./CardService";
+import { removeItem } from "lightdash";
 let DeckService = class DeckService {
     constructor(cardService) {
         this.cardService = cardService;
@@ -28,6 +29,12 @@ let DeckService = class DeckService {
         }
         const count = this.getAllCards(deck).filter(existingCard => this.cardService.isTreatedAsSame(existingCard, card)).length;
         return count < card.banlist[format];
+    }
+    addCard(deck, deckPart, card) {
+        deck.parts.get(deckPart).push(card);
+    }
+    removeCard(deck, deckPart, card) {
+        removeItem(deck.parts.get(deckPart), card, false);
     }
     getAllCards(deck) {
         const result = [];

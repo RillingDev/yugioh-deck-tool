@@ -8,6 +8,7 @@ import { PriceService } from "./core/business/PriceService";
 import { DeckImportExportService } from "./core/business/DeckImportExportService";
 import { DeckService } from "./core/business/DeckService";
 import { EncodingService } from "./core/business/EncodingService";
+import { SortingService } from "./core/business/SortingService";
 const container = new Container();
 container
     .bind(TYPES.CardDataLoaderService)
@@ -18,6 +19,7 @@ container
     .to(DeckImportExportService);
 container.bind(TYPES.DeckService).to(DeckService);
 container.bind(TYPES.PriceService).to(PriceService);
+container.bind(TYPES.SortingService).to(SortingService);
 container
     .bind(TYPES.CompressionService)
     .to(CompressionService);
