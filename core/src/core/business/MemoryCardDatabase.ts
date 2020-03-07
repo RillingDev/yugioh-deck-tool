@@ -6,8 +6,6 @@ import { CardSet } from "../model/CardSet";
 import { CardDatabase } from "./CardDatabase";
 import { CardType } from "../model/CardType";
 import { CardTypeGroup } from "../model/CardTypeGroup";
-import { MonsterGroupValues } from "../model/MonsterGroupValues";
-import { GroupValues } from "../model/GroupValues";
 import { CardValues } from "../model/CardValues";
 import { CardSetAppearance } from "../model/CardSetAppearance";
 
@@ -17,11 +15,11 @@ class MemoryCardDatabase implements CardDatabase {
     private ready: boolean;
     private readonly cards: Map<string, Card>;
     private readonly sets: CardSet[];
-    private readonly monsterValues: MonsterGroupValues;
-    private readonly spellValues: GroupValues;
-    private readonly trapValues: GroupValues;
-    private readonly skillValues: GroupValues;
     private readonly types: CardType[];
+    private readonly races: Map<CardTypeGroup, string[]>;
+    private readonly monsterAttributes: string[];
+    private readonly monsterLinkMarkers: string[];
+    private readonly monsterLevels: number[];
 
     constructor(
         @inject(TYPES.CardDataLoaderService)
@@ -31,21 +29,10 @@ class MemoryCardDatabase implements CardDatabase {
         this.cards = new Map<string, Card>();
         this.sets = [];
         this.types = [];
-        this.spellValues = {
-            races: []
-        };
-        this.trapValues = {
-            races: []
-        };
-        this.skillValues = {
-            races: []
-        };
-        this.monsterValues = {
-            races: [],
-            attributes: [],
-            linkMarkers: [],
-            levels: []
-        };
+        this.races = new Map<CardTypeGroup, string[]>();
+        this.monsterAttributes = [];
+        this.monsterLinkMarkers = [];
+        this.monsterLevels = [];
         this.ready = false;
     }
 
@@ -60,20 +47,32 @@ class MemoryCardDatabase implements CardDatabase {
 
         this.types.push(...cardValues.types);
 
-        const monsterGroupValues = cardValues.values[CardTypeGroup.MONSTER];
-        this.monsterValues.races = monsterGroupValues.races;
-        this.monsterValues.attributes = monsterGroupValues.attributes;
-        this.monsterValues.levels = monsterGroupValues.levels;
-        this.monsterValues.linkMarkers = monsterGroupValues.linkMarkers;
+        this.races.set(
+            CardTypeGroup.MONSTER,
+            cardValues.values[CardTypeGroup.MONSTER].races
+        );
+        this.races.set(
+            CardTypeGroup.SPELL,
+            cardValues.values[CardTypeGroup.SPELL].races
+        );
+        this.races.set(
+            CardTypeGroup.TRAP,
+            cardValues.values[CardTypeGroup.TRAP].races
+        );
+        this.races.set(
+            CardTypeGroup.SKILL,
+            cardValues.values[CardTypeGroup.SKILL].races
+        );
 
-        const spellGroupValues = cardValues.values[CardTypeGroup.SPELL];
-        this.spellValues.races = spellGroupValues.races;
-
-        const trapGroupValues = cardValues.values[CardTypeGroup.TRAP];
-        this.trapValues.races = trapGroupValues.races;
-
-        const skillGroupValues = cardValues.values[CardTypeGroup.SKILL];
-        this.skillValues.races = skillGroupValues.races;
+        this.monsterAttributes.push(
+            ...cardValues.values[CardTypeGroup.MONSTER].attributes
+        );
+        this.monsterLevels.push(
+            ...cardValues.values[CardTypeGroup.MONSTER].levels
+        );
+        this.monsterLinkMarkers.push(
+            ...cardValues.values[CardTypeGroup.MONSTER].linkMarkers
+        );
 
         for (const unlinkedCard of cardInfo) {
             this.cards.set(
@@ -108,32 +107,20 @@ class MemoryCardDatabase implements CardDatabase {
         return this.types;
     }
 
-    public getSkillRaces(): string[] {
-        return this.skillValues.races;
-    }
-
-    public getSpellRaces(): string[] {
-        return this.spellValues.races;
-    }
-
-    public getTrapRaces(): string[] {
-        return this.trapValues.races;
-    }
-
-    public getMonsterRaces(): string[] {
-        return this.monsterValues.races;
+    public getRaces(cardTypeGroup: CardTypeGroup): string[] {
+        return this.races.get(cardTypeGroup)!;
     }
 
     public getMonsterAttributes(): string[] {
-        return this.monsterValues.attributes;
+        return this.monsterAttributes;
     }
 
     public getMonsterLevels(): number[] {
-        return this.monsterValues.levels;
+        return this.monsterLevels;
     }
 
     public getMonsterLinkMarkers(): string[] {
-        return this.monsterValues.linkMarkers;
+        return this.monsterLinkMarkers;
     }
 
     private createLinkedCard(

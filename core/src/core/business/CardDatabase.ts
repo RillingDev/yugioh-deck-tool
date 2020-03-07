@@ -1,6 +1,7 @@
 import { Card } from "../model/Card";
 import { CardSet } from "../model/CardSet";
 import { CardType } from "../model/CardType";
+import { CardTypeGroup } from "../model/CardTypeGroup";
 
 export interface CardDatabase {
     /**
@@ -21,13 +22,7 @@ export interface CardDatabase {
 
     getTypes(): CardType[];
 
-    getSkillRaces(): string[];
-
-    getSpellRaces(): string[];
-
-    getTrapRaces(): string[];
-
-    getMonsterRaces(): string[];
+    getRaces(cardTypeGroup: CardTypeGroup): string[];
 
     getMonsterAttributes(): string[];
 
