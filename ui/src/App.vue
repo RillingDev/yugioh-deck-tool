@@ -98,12 +98,7 @@
         <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
-            <ygo-deck
-                :card-db="cardDatabase"
-                :deck="deck"
-                :price-db="priceController"
-                v-if="!ajax.currentlyLoading"
-            />
+            <ygo-deck :deck="deck" v-if="!ajax.currentlyLoading" />
         </div>
 
         <!-- app-builder -->
@@ -131,15 +126,23 @@
 import logger, { levels } from "loglevel";
 import Vue from "vue";
 import { PriceController } from "./lib/controller/PriceController";
-import Deck from "./lib/deck/Deck";
 
-import { CardDatabase } from "../../core";
+import {
+    Card,
+    CardDatabase,
+    Deck,
+    DeckImportExportService,
+    DeckPart,
+    DeckService,
+    Format
+} from "../../core";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
 import YgoDeck from "./components/YgoDeck.vue";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
+import { readFile } from "@/lib/readFile";
 
 logger.setLevel(levels.INFO);
 
@@ -150,71 +153,71 @@ logger.setLevel(levels.INFO);
     name: "Index"
 })
 export default class App extends Vue {
-    private readonly cardDatabase = uiContainer.get<CardDatabase>(
-        UI_TYPES.CardDatabase
-    );
-    private readonly priceController = uiContainer.get<PriceController>(
-        UI_TYPES.PriceController
-    );
-    public deck = new Deck();
     public readonly ajax = {
         currentlyLoading: true
     };
+    private readonly cardDatabase = uiContainer.get<CardDatabase>(
+        UI_TYPES.CardDatabase
+    );
+    private readonly deckService = uiContainer.get<DeckService>(
+        UI_TYPES.DeckService
+    );
+    public deck: Deck = this.deckService.createEmptyDeck();
+    private readonly deckImportExportService = uiContainer.get<
+        DeckImportExportService
+    >(UI_TYPES.DeckImportExportService);
+    private readonly priceController = uiContainer.get<PriceController>(
+        UI_TYPES.PriceController
+    );
 
     get shareLink() {
         const currentUri = location.origin + location.pathname;
-        const deckUri = this.deck.toUri();
+        const deckUri = this.deckImportExportService.toUrlQueryParamValue(
+            this.deck
+        );
 
-        return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
+        return `${currentUri}?e=${deckUri}`;
     }
 
     get buyLink() {
-        return this.deck.toBuyLink(this.cardDatabase);
+        return this.deckImportExportService.toBuyLink(this.deck);
     }
 
     get isDeckEmpty() {
-        return this.deck.getAll().length === 0;
-    }
-
-    fetchCards() {
-        this.ajax.currentlyLoading = true;
-
-        this.cardDatabase
-            .init()
-            .then(() => {
-                this.ajax.currentlyLoading = false;
-            })
-            .catch(logger.error);
+        return this.deckService.getAllCards(this.deck).length === 0;
     }
 
     deckToFile() {
-        saveFile(this.deck.toFile());
-    }
-
-    deckCardCanAdd(deckPart, cardId, banlist) {
-        return this.deck.cardCanAdd(
-            deckPart,
-            cardId,
-            this.cardDatabase,
-            banlist
+        const { fileName, fileContent } = this.deckImportExportService.toFile(
+            this.deck
         );
+        saveFile(new File([fileContent], fileName));
     }
 
-    deckCardAdd(deckPart, cardId, banlist) {
-        this.deck.cardAdd(deckPart, cardId, this.cardDatabase, banlist);
+    canAdd(
+        deckPart: DeckPart,
+        card: Card,
+        format: Format.TCG | Format.OCG | Format.GOAT
+    ) {
+        return this.deckService.canAdd(this.deck, deckPart, format, card);
     }
 
-    deckRandomize(newDeck) {
-        this.deck = newDeck;
+    cardAdd(deckPart: DeckPart, card: Card) {
+        return this.deckService.addCard(this.deck, deckPart, card);
     }
 
     fileOnUpload(e) {
         const files = e.target.files || e.dataTransfer.files;
 
         if (files.length > 0) {
-            Deck.fromFile(files[0])
-                .then((deck: Deck) => {
-                    this.deck = deck;
+            const file = files[0];
+            readFile(file)
+                .then(fileContent => {
+                    const result = this.deckImportExportService.fromFile({
+                        fileContent,
+                        fileName: file.name
+                    });
+                    this.deck = result.deck;
                 })
                 .catch(logger.error);
         }
@@ -225,23 +228,47 @@ export default class App extends Vue {
     }
 
     copyShareText() {
-        copyText(this.deck.toText(this.cardDatabase));
+        copyText(this.deckImportExportService.toShareableText(this.deck));
     }
 
     mounted() {
+        this.ajax.currentlyLoading = true;
+
+        this.cardDatabase
+            .init()
+            .then(() => {
+                this.ajax.currentlyLoading = false;
+                return this.loadUriDeck();
+            })
+            .then(() => logger.info("Ready."))
+            .catch(logger.error);
+    }
+
+    private async loadUriDeck(): Promise<void> {
         const uriQuery = location.search;
-
-        this.fetchCards();
-
-        if (uriQuery.includes("?d=")) {
+        if (uriQuery.includes("?u=")) {
+            return fetch(uriQuery.replace("?u=", ""))
+                .then(res => res.text())
+                .then(text => {
+                    this.deck = this.deckImportExportService.fromFile({
+                        fileContent: text,
+                        fileName: null
+                    }).deck;
+                });
+        } else if (uriQuery.includes("?e=")) {
             // Load encoded uriDeck
-            this.deck = Deck.fromUri(uriQuery.replace("?d=", ""));
-        } else if (uriQuery.includes("?u=")) {
-            // Load remote deck file
-            Deck.fromRemoteFile(uriQuery.replace("?u=", ""))
-                .then((deck: Deck) => (this.deck = deck))
-                .catch(logger.error);
+            this.deck = this.deckImportExportService.fromUrlQueryParamValue(
+                uriQuery.replace("?e=", "")
+            );
+        } else if (uriQuery.includes("?d=")) {
+            // Load encoded uriDeck
+            this.deck = this.deckImportExportService.fromLegacyUrlQueryParamValue(
+                uriQuery.replace("?d=", ""),
+                atob
+            );
         }
+
+        return Promise.resolve();
     }
 }
 </script>

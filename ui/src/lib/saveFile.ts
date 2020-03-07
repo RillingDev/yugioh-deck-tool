@@ -1,4 +1,4 @@
-const saveFile = (file:File) => {
+const saveFile = (file: File) => {
     const el = document.createElement("a");
 
     el.href = window.URL.createObjectURL(file);

@@ -1,18 +1,21 @@
 <template>
     <div :class="`deck-part-${deckPart.id}`" class="deck-part">
-        <h3>{{ deckPart.name }} Deck ({{ deckPartList.length }} Cards):</h3>
-        <template v-if="deckPartList.length">
-            <ygo-price-view :item="deckPartList" />
+        <h3>
+            {{ deckPart.name }} Deck ({{ deck.parts.get(deckPart).length }}
+            Cards):
+        </h3>
+        <template v-if="deck.parts.get(deckPart).length > 0">
+            <ygo-price-view :cards="deck.parts.get(deckPart)" />
             <div class="deck-content">
                 <ygo-card
-                    :card="cardDatabase.getCard(cardId)"
-                    :key="`${cardId}_${cardIndex}`"
+                    :card="card"
+                    :key="`${card.id}_${cardIndex}`"
                     @deckcardrightclick.prevent="
-                        deck.cardRemove(deckPart, cardId)
+                        deckService.removeCard(deck, deckPart, card)
                     "
-                    v-for="(cardId, cardIndex) in deckPartList"
+                    v-for="(card, cardIndex) in deck.parts.get(deckPart)"
                 >
-                    <ygo-price-view :item="cardId" slot="price" />
+                    <ygo-price-view :cards="[card]" slot="price" />
                 </ygo-card>
             </div>
         </template>
@@ -20,11 +23,9 @@
 </template>
 
 <script lang="ts">
-import Deck from "../lib/deck/Deck";
-
 import YgoCard from "./YgoCard.vue";
 import YgoPriceView from "./YgoPriceView.vue";
-import { CardDatabase } from "../../../core";
+import { CardDatabase, Deck, DeckPart, DeckService } from "../../../core";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
@@ -41,11 +42,10 @@ export default class YgoDeckPart extends Vue {
     @Prop({ required: true })
     deck: Deck;
     @Prop({ required: true })
-    deckPart: any;
-    @Prop({ required: true })
-    deckPartList: any;
+    deckPart: DeckPart;
 
     cardDatabase = uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase);
+    deckService = uiContainer.get<DeckService>(UI_TYPES.DeckService);
 }
 </script>
 
