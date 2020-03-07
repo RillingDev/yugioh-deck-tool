@@ -36,13 +36,13 @@ class DeckImportExportService {
 
     constructor(
         @inject(TYPES.CardDatabase)
-        cardDatabase: CardDatabase,
+            cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-        deckService: DeckService,
+            deckService: DeckService,
         @inject(TYPES.EncodingService)
-        encodingService: EncodingService,
+            encodingService: EncodingService,
         @inject(TYPES.CompressionService)
-        compressionService: CompressionService
+            compressionService: CompressionService
     ) {
         this.encodingService = encodingService;
         this.compressionService = compressionService;
@@ -96,7 +96,7 @@ class DeckImportExportService {
         }
 
         return {
-            fileName: `${deck.name}.ydk`,
+            fileName: `${deck.name ?? "Unnamed"}.ydk`,
             fileContent: fileLines.join("\n")
         };
     }
