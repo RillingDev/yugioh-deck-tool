@@ -162,17 +162,18 @@ class MemoryCardDatabase implements CardDatabase {
         setAppearances: CardSetAppearance[],
         cardSets: CardSet[]
     ): CardSet[] {
-        return setAppearances.map(setAppearance => {
-            const matchingType = cardSets.find(
-                set => set.name === setAppearance.name
-            );
-            if (matchingType == null) {
-                throw new TypeError(
-                    `Could not find set '${setAppearance.name}'.`
+        return <CardSet[]>setAppearances
+            .map(setAppearance => {
+                const matchingType = cardSets.find(
+                    set => set.name === setAppearance.name
                 );
-            }
-            return matchingType;
-        });
+                if (matchingType == null) {
+                    console.warn(`Could not find set '${setAppearance.name}'.`);
+                    return null;
+                }
+                return matchingType;
+            })
+            .filter(set => set != null);
     }
 
     private linkType(typeName: string, types: CardType[]): CardType {
