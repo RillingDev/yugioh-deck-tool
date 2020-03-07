@@ -1,7 +1,7 @@
 import { URL_BUY_API } from "../data/urls";
 import { countBy } from "lodash";
 import { toMap } from "lightdash";
-import { DECKPARTS } from '../../../../core/src/main';
+import { DEFAULT_DECKPART_ARR } from "../../../../core";
 
 const getName = (cardDb, cardId) =>
     cardDb.hasCard(cardId) ? cardDb.getCard(cardId).name : `[${cardId}]`;
@@ -9,7 +9,7 @@ const getName = (cardDb, cardId) =>
 const getShareText = (list, cardDb) => {
     const result = [];
 
-    DECKPARTS.forEach((deckPart, index) => {
+    DEFAULT_DECKPART_ARR.forEach((deckPart, index) => {
         const deckPartCards = list[index];
 
         if (deckPartCards.length > 0) {

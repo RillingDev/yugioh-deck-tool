@@ -1,4 +1,4 @@
-const copyText = str => {
+const copyText = (str:string):void => {
     const el = document.createElement("textarea");
 
     el.value = str;

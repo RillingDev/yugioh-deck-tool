@@ -1,14 +1,9 @@
 import { uriDeckDecode, uriDeckEncode } from "./uriDeck";
-import sort from "./sort";
 import { getBuyLink, getShareText } from "./toText";
 import logger from "loglevel";
-import {
-    CardDatabase,
-    CardService,
-    container,
-    TYPES,
-    DECKPARTS
-} from "../../../../core/src/main";
+import { CardDatabase, CardService, DEFAULT_DECKPART_ARR } from "../../../../core";
+import { uiContainer } from "@/inversify.config";
+import { UI_TYPES } from "@/types";
 
 const REGEX_CREATED = /#created.+/;
 const REGEX_DECKPARTS = /[#!].+\n?/g;
@@ -20,7 +15,7 @@ const fileToList = fileContent => {
         .split(REGEX_DECKPARTS)
         .slice(1);
 
-    return DECKPARTS.map((deckPart, index) =>
+    return DEFAULT_DECKPART_ARR.map((deckPart, index) =>
         fileParts[index]
             .split(/\n\r?/g)
             .map(line => line.trim())
@@ -28,9 +23,9 @@ const fileToList = fileContent => {
     );
 };
 
-const cardService = container.get<CardService>(TYPES.CardService);
-const cardDatabase = container.get<CardDatabase>(TYPES.CardDatabase);
-const Deck = class {
+const cardService = uiContainer.get<CardService>(UI_TYPES.CardService);
+const cardDatabase = uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase);
+class Deck{
     private readonly name: string;
     private readonly main: any[];
     private readonly extra: any[];
@@ -92,7 +87,7 @@ const Deck = class {
     toFile() {
         const fileParts = [];
 
-        DECKPARTS.forEach(deckPart => {
+        DEFAULT_DECKPART_ARR.forEach(deckPart => {
             fileParts.push(deckPart.indicator, ...this[deckPart.id], "");
         });
 
@@ -155,14 +150,6 @@ const Deck = class {
 
     getAll() {
         return [...this.main, ...this.extra, ...this.side];
-    }
-
-    sort(cardDb) {
-        DECKPARTS.forEach(deckPart => {
-            this[deckPart.id] = sort(this[deckPart.id], cardDatabase);
-        });
-
-        return this;
     }
 };
 

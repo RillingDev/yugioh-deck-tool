@@ -1,8 +1,4 @@
-import {
-    CARD_SPELL_TYPE,
-    CARD_TRAP_TYPE,
-    CARD_TYPE_SORTED
-} from "../data/cards";
+import { CARD_SPELL_TYPE, CARD_TRAP_TYPE, CARD_TYPE_SORTED } from "../data/cards.ts.d";
 
 const compareType = (dataA, dataB) => {
     const typeComp =

@@ -18,7 +18,7 @@ import { isString } from "lodash";
 import { uiContainer } from "@/inversify.config";
 import { PriceController } from "@/lib/controller/PriceController";
 import { UI_TYPES } from "@/types";
-import { CardDatabase, container, PriceService, TYPES } from "../../../core";
+import { CardDatabase, PriceService } from "../../../core";
 
 export default {
     props: {
@@ -32,8 +32,8 @@ export default {
             priceController: uiContainer.get<PriceController>(
                 UI_TYPES.PriceController
             ),
-            priceService: container.get<PriceService>(TYPES.PriceService),
-            cardDatabase: container.get<CardDatabase>(TYPES.CardDatabase)
+            priceService: uiContainer.get<PriceService>(UI_TYPES.PriceService),
+            cardDatabase: uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase)
         };
     },
     computed: {

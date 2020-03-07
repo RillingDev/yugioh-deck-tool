@@ -1,102 +1,102 @@
 @import "../mixins/screen";
 
 .decktool-header {
-  text-align: center;
+    text-align: center;
 }
 
 .decktool {
-  label {
-    margin-bottom: 0;
-    margin-right: 0.25rem;
-  }
-
-  .close {
-    margin: 0;
-    padding: 0;
-    font-size: 1.4em;
-    cursor: pointer;
-  }
-
-  .container {
-    @include screen(max, xl) {
-      max-width: 100%;
+    label {
+        margin-right: 0.25rem;
+        margin-bottom: 0;
     }
-  }
 
-  a.btn {
-    /* fix for weird things */
-    background-color: $primary;
-  }
-
-  .btn {
-    cursor: pointer;
-    border: 0;
-    line-height: 24px;
-  }
-
-  .btn-primary {
-    &:focus {
-      background-color: $primary;
-      color: $white;
+    .close {
+        font-size: 1.4em;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
     }
-  }
+
+    .container {
+        @include screen(max, xl) {
+            max-width: 100%;
+        }
+    }
+
+    a.btn {
+        /* fix for weird things */
+        background-color: $primary;
+    }
+
+    .btn {
+        line-height: 24px;
+        cursor: pointer;
+        border: 0;
+    }
+
+    .btn-primary {
+        &:focus {
+            color: $white;
+            background-color: $primary;
+        }
+    }
 }
 
 .app {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .app-section {
-  margin-top: 0.5rem;
-  width: 100%;
+    width: 100%;
+    margin-top: 0.5rem;
 }
 
 .app-forms {
-  order: 1;
+    order: 1;
 }
 
 .app-deck {
-  order: 3;
-  @include screen(min, md) {
-    width: calc(100% - 454px);
-    order: 2;
-  }
+    order: 3;
+    @include screen(min, md) {
+        order: 2;
+        width: calc(100% - 454px);
+    }
 }
 
 .app-builder {
-  order: 2;
-  @include screen(min, md) {
-    width: 434px;
-    margin-left: 20px;
-    order: 3;
-  }
+    order: 2;
+    @include screen(min, md) {
+        order: 3;
+        width: 434px;
+        margin-left: 20px;
+    }
 }
 
 .app-builder-intro {
-  display: flex;
-  margin-bottom: 1rem;
+    display: flex;
+    margin-bottom: 1rem;
 
-  > div {
-    margin-right: 1rem;
-  }
+    > div {
+        margin-right: 1rem;
+    }
 }
 
 /* modal is not inside app in DOM */
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .modal-title {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .modal-body {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
 }

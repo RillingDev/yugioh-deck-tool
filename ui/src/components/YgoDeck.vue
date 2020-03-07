@@ -19,7 +19,7 @@ import Deck from "../lib/deck/Deck";
 
 import ygoDeckPart from "./YgoDeckPart.vue";
 import ygoPriceView from "./YgoPriceView.vue";
-import { DECKPARTS } from '../../../core/src/main';
+import { DEFAULT_DECKPART_ARR } from "../../../core";
 
 export default {
     components: {
@@ -34,7 +34,7 @@ export default {
     },
     data: () => {
         return {
-            deckParts: DECKPARTS
+            deckParts: DEFAULT_DECKPART_ARR
         };
     }
 };

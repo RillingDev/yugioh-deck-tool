@@ -24,7 +24,9 @@ import Deck from "../lib/deck/Deck";
 
 import ygoCard from "./YgoCard.vue";
 import ygoPriceView from "./YgoPriceView.vue";
-import { CardDatabase, container, TYPES } from "../../../core";
+import { CardDatabase } from "../../../core";
+import { uiContainer } from "@/inversify.config";
+import { UI_TYPES } from "@/types";
 
 export default {
     components: {
@@ -47,7 +49,7 @@ export default {
     },
     data: () => {
         return {
-            cardDatabase: container.get<CardDatabase>(TYPES.CardDatabase)
+            cardDatabase: uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase)
         };
     }
 };

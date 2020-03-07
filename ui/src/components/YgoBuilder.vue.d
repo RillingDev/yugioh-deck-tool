@@ -61,7 +61,9 @@
 <script lang="ts">
 import { BANLISTS } from "../lib/data/banlist";
 import YgoFilter from "./YgoFilter.vue";
-import { CardDatabase, container, TYPES, DECKPARTS } from "../../../core";
+import { CardDatabase, DEFAULT_DECKPART_ARR } from "../../../core";
+import { uiContainer } from "@/inversify.config";
+import { UI_TYPES } from "@/types";
 
 export default {
     components: { YgoFilter },
@@ -73,9 +75,11 @@ export default {
         }
     },
     data: () => {
-        const cardDatabase = container.get<CardDatabase>(TYPES.CardDatabase);
+        const cardDatabase = uiContainer.get<CardDatabase>(
+            UI_TYPES.CardDatabase
+        );
         return {
-            deckParts: DECKPARTS,
+            deckParts: DEFAULT_DECKPART_ARR,
             pairsArrFiltered: [],
             banlist: BANLISTS[0],
             pairsArr: cardDatabase.getCards(),

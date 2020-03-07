@@ -133,7 +133,7 @@ import logger, { levels } from "loglevel";
 import { PriceController } from "./lib/controller/PriceController";
 import Deck from "./lib/deck/Deck";
 
-import { CardDatabase, container, TYPES } from "../../core";
+import { CardDatabase } from "../../core";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
 import ygoDeck from "./components/YgoDeck.vue";
@@ -148,7 +148,7 @@ export default {
     components: { ygoDeck },
     data: () => {
         return {
-            cardDatabase: container.get<CardDatabase>(TYPES.CardDatabase),
+            cardDatabase: uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase),
             priceController: uiContainer.get<PriceController>(
                 UI_TYPES.PriceController
             ),

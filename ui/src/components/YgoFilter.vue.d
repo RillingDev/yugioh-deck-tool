@@ -391,8 +391,8 @@ export default {
 }
 
 /**
-              * Multiselect
-              */
+                  * Multiselect
+                  */
 .decktool {
     .multiselect__tags {
         border: 1px solid #ced4da;

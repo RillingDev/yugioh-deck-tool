@@ -1,7 +1,4 @@
-import {
-    compressToBase64Legacy,
-    decompressFromBase64Legacy
-} from "../compression";
+import { compressToBase64Legacy, decompressFromBase64Legacy } from "../compression";
 import { countBy } from "lodash";
 import { toMap } from "lightdash";
 
@@ -18,8 +15,8 @@ const createOptimizeList = deckList =>
                 .map(entry =>
                     entry[1] > 1
                         ? `${DELIMITERS.cardAmount}${entry[1]}${String(
-                              entry[0]
-                          )}`
+                        entry[0]
+                        )}`
                         : entry[0]
                 )
                 .join(DELIMITERS.cardId)
