@@ -34,7 +34,7 @@ let DeckService = class DeckService {
         deck.parts.get(deckPart).push(card);
     }
     removeCard(deck, deckPart, card) {
-        removeItem(deck.parts.get(deckPart), card, false);
+        deck.parts.set(deckPart, Array.from(removeItem(deck.parts.get(deckPart), card, false)));
     }
     getAllCards(deck) {
         const result = [];

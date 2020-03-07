@@ -42,7 +42,10 @@ class DeckService {
     }
 
     public removeCard(deck: Deck, deckPart: DeckPart, card: Card): void {
-        removeItem<Card>(deck.parts.get(deckPart)!, card, false);
+        deck.parts.set(
+            deckPart,
+            Array.from(removeItem<Card>(deck.parts.get(deckPart)!, card, false))
+        );
     }
 
     public getAllCards(deck: Deck): Card[] {
