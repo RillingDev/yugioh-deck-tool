@@ -17,25 +17,23 @@
 <script lang="ts">
 import Deck from "../lib/deck/Deck";
 
-import ygoDeckPart from "./YgoDeckPart.vue";
-import ygoPriceView from "./YgoPriceView.vue";
+import YgoDeckPart from "./YgoDeckPart.vue";
+import YgoPriceView from "./YgoPriceView.vue";
 import { DEFAULT_DECKPART_ARR } from "../../../core";
+import Component from "vue-class-component";
+import Vue from "vue";
+import { Prop } from "vue-property-decorator";
 
-export default {
+@Component({
     components: {
-        ygoDeckPart,
-        ygoPriceView
-    },
-    props: {
-        deck: {
-            type: Deck,
-            required: true
-        }
-    },
-    data: () => {
-        return {
-            deckParts: DEFAULT_DECKPART_ARR
-        };
+        YgoDeckPart,
+        YgoPriceView
     }
-};
+})
+export default class YgoDeck extends Vue {
+    @Prop({ required: true })
+    public deck: Deck;
+
+    public deckParts = DEFAULT_DECKPART_ARR;
+}
 </script>

@@ -22,37 +22,31 @@
 <script lang="ts">
 import Deck from "../lib/deck/Deck";
 
-import ygoCard from "./YgoCard.vue";
-import ygoPriceView from "./YgoPriceView.vue";
+import YgoCard from "./YgoCard.vue";
+import YgoPriceView from "./YgoPriceView.vue";
 import { CardDatabase } from "../../../core";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
+import Component from "vue-class-component";
+import Vue from "vue";
+import { Prop } from "vue-property-decorator";
 
-export default {
+@Component({
     components: {
-        ygoCard,
-        ygoPriceView
-    },
-    props: {
-        deck: {
-            type: Deck,
-            required: true
-        },
-        deckPart: {
-            type: Object,
-            required: true
-        },
-        deckPartList: {
-            type: Array,
-            required: true
-        }
-    },
-    data: () => {
-        return {
-            cardDatabase: uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase)
-        };
+        YgoCard,
+        YgoPriceView
     }
-};
+})
+export default class YgoDeckPart extends Vue {
+    @Prop({ required: true })
+    deck: Deck;
+    @Prop({ required: true })
+    deckPart: any;
+    @Prop({ required: true })
+    deckPartList: any;
+
+    cardDatabase = uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase);
+}
 </script>
 
 <style lang="scss">

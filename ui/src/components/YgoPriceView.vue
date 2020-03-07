@@ -18,36 +18,35 @@ import { isString } from "lodash";
 import { uiContainer } from "@/inversify.config";
 import { PriceController } from "@/lib/controller/PriceController";
 import { UI_TYPES } from "@/types";
-import { CardDatabase, PriceService } from "../../../core";
+import { CardDatabase, PriceService, Card } from "../../../core";
+import Component from "vue-class-component";
+import Vue from "vue";
+import { Prop } from "vue-property-decorator";
 
-export default {
-    props: {
-        item: {
-            type: [String, Array],
-            required: true
-        }
-    },
-    data: () => {
-        return {
-            priceController: uiContainer.get<PriceController>(
-                UI_TYPES.PriceController
-            ),
-            priceService: uiContainer.get<PriceService>(UI_TYPES.PriceService),
-            cardDatabase: uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase)
-        };
-    },
-    computed: {
-        isGroup() {
-            return !isString(this.item);
-        },
-        priceValues() {
-            const cards = this.isGroup
-                ? this.item.map(item => this.cardDatabase.getCard(item))
-                : [this.cardDatabase.hasCard(this.item)];
-            return this.priceService.getPrice(...cards).prices;
-        }
+@Component({})
+export default class YgoPriceView extends Vue {
+    @Prop()
+    item: string | Array<string>;
+
+    priceController = uiContainer.get<PriceController>(
+        UI_TYPES.PriceController
+    );
+    priceService = uiContainer.get<PriceService>(UI_TYPES.PriceService);
+    cardDatabase = uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase);
+
+    get isGroup() {
+        return !isString(this.item);
     }
-};
+
+    get priceValues() {
+        const cards = this.isGroup
+            ? (this.item as Array<string>).map(item =>
+                  this.cardDatabase.getCard(item)
+              )
+            : [this.cardDatabase.hasCard(this.item as string)];
+        return this.priceService.getPrice(...(cards as Card[])).prices;
+    }
+}
 </script>
 
 <style lang="scss">

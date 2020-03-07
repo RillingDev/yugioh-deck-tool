@@ -129,49 +129,105 @@
 
 <script lang="ts">
 import logger, { levels } from "loglevel";
-
+import Vue from "vue";
 import { PriceController } from "./lib/controller/PriceController";
 import Deck from "./lib/deck/Deck";
 
 import { CardDatabase } from "../../core";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
-import ygoDeck from "./components/YgoDeck.vue";
+import YgoDeck from "./components/YgoDeck.vue";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
+import Component from "vue-class-component";
 
 logger.setLevel(levels.INFO);
 
-export default {
-    name: "Index",
-    //components: { ygoBuilder, ygoDeck, ygoSorter, ygoDrawSim, ygoRandomizer },
-    components: { ygoDeck },
-    data: () => {
-        return {
-            cardDatabase: uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase),
-            priceController: uiContainer.get<PriceController>(
-                UI_TYPES.PriceController
-            ),
-            deck: new Deck(),
-            ajax: {
-                currentlyLoading: true
-            }
-        };
+@Component({
+    components: {
+        YgoDeck
     },
-    computed: {
-        shareLink() {
-            const currentUri = location.origin + location.pathname;
-            const deckUri = this.deck.toUri();
+    name: "Index"
+})
+export default class App extends Vue {
+    private readonly cardDatabase = uiContainer.get<CardDatabase>(
+        UI_TYPES.CardDatabase
+    );
+    private readonly priceController = uiContainer.get<PriceController>(
+        UI_TYPES.PriceController
+    );
+    public deck = new Deck();
+    public readonly ajax = {
+        currentlyLoading: true
+    };
 
-            return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
-        },
-        buyLink() {
-            return this.deck.toBuyLink(this.cardDatabase);
-        },
-        isDeckEmpty() {
-            return this.deck.getAll().length === 0;
+    get shareLink() {
+        const currentUri = location.origin + location.pathname;
+        const deckUri = this.deck.toUri();
+
+        return deckUri.length ? `${currentUri}?d=${deckUri}` : currentUri;
+    }
+
+    get buyLink() {
+        return this.deck.toBuyLink(this.cardDatabase);
+    }
+
+    get isDeckEmpty() {
+        return this.deck.getAll().length === 0;
+    }
+
+    fetchCards() {
+        this.ajax.currentlyLoading = true;
+
+        this.cardDatabase
+            .init()
+            .then(() => {
+                this.ajax.currentlyLoading = false;
+            })
+            .catch(logger.error);
+    }
+
+    deckToFile() {
+        saveFile(this.deck.toFile());
+    }
+
+    deckCardCanAdd(deckPart, cardId, banlist) {
+        return this.deck.cardCanAdd(
+            deckPart,
+            cardId,
+            this.cardDatabase,
+            banlist
+        );
+    }
+
+    deckCardAdd(deckPart, cardId, banlist) {
+        this.deck.cardAdd(deckPart, cardId, this.cardDatabase, banlist);
+    }
+
+    deckRandomize(newDeck) {
+        this.deck = newDeck;
+    }
+
+    fileOnUpload(e) {
+        const files = e.target.files || e.dataTransfer.files;
+
+        if (files.length > 0) {
+            Deck.fromFile(files[0])
+                .then((deck: Deck) => {
+                    this.deck = deck;
+                })
+                .catch(logger.error);
         }
-    },
+    }
+
+    copyShareLink() {
+        copyText(this.shareLink);
+    }
+
+    copyShareText() {
+        copyText(this.deck.toText(this.cardDatabase));
+    }
+
     mounted() {
         const uriQuery = location.search;
 
@@ -183,57 +239,11 @@ export default {
         } else if (uriQuery.includes("?u=")) {
             // Load remote deck file
             Deck.fromRemoteFile(uriQuery.replace("?u=", ""))
-                .then(deck => (this.deck = deck))
+                .then((deck: Deck) => (this.deck = deck))
                 .catch(logger.error);
-        }
-    },
-    methods: {
-        fetchCards() {
-            this.ajax.currentlyLoading = true;
-
-            this.cardDatabase
-                .init()
-                .then(() => {
-                    this.ajax.currentlyLoading = false;
-                })
-                .catch(logger.error);
-        },
-        deckToFile() {
-            saveFile(this.deck.toFile());
-        },
-        deckCardCanAdd(deckPart, cardId, banlist) {
-            return this.deck.cardCanAdd(
-                deckPart,
-                cardId,
-                this.cardDatabase,
-                banlist
-            );
-        },
-        deckCardAdd(deckPart, cardId, banlist) {
-            this.deck.cardAdd(deckPart, cardId, this.cardDatabase, banlist);
-        },
-        deckRandomize(newDeck) {
-            this.deck = newDeck;
-        },
-        fileOnUpload(e) {
-            const files = e.target.files || e.dataTransfer.files;
-
-            if (files.length > 0) {
-                Deck.fromFile(files[0])
-                    .then(deck => {
-                        this.deck = deck;
-                    })
-                    .catch(logger.error);
-            }
-        },
-        copyShareLink() {
-            copyText(this.shareLink);
-        },
-        copyShareText() {
-            copyText(this.deck.toText(this.cardDatabase));
         }
     }
-};
+}
 </script>
 
 <style lang="scss">

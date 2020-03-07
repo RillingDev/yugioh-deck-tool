@@ -16,38 +16,38 @@
 
 <script lang="ts">
 import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../lib/data/urls";
+import Component from "vue-class-component";
+import ygoDeck from "@/components/YgoDeck.vue";
+import Vue from "vue";
+import { Prop } from "vue-property-decorator";
+import { Card } from "../../../core";
 
 const NAME_UNKNOWN = "Unknown";
-export default {
-    props: {
-        card: {
-            type: Object,
-            default: () => {
-                return {
-                    name: NAME_UNKNOWN,
-                    imageUrl: URL_IMAGE_UNKNOWN,
-                    referenceUrl: URL_DB_API
-                };
-            }
-        }
-    },
-    computed: {
-        imageUrl() {
-            return this.card.image?.urlSmall ?? URL_IMAGE_UNKNOWN;
-        },
-        referenceUrl() {
-            if (this.card.name === NAME_UNKNOWN) {
-                return URL_DB_API;
-            }
-            return URL_DB_API + encodeURI(this.card.name);
-        }
-    },
-    methods: {
-        contextEvent(e) {
-            this.$emit("deckcardrightclick", e);
-        }
+
+@Component({
+    components: {
+        ygoDeck
     }
-};
+})
+export default class YgoCard extends Vue {
+    @Prop({ required: true })
+    public card: Card;
+
+    get imageUrl() {
+        return this.card.image?.urlSmall ?? URL_IMAGE_UNKNOWN;
+    }
+
+    get referenceUrl() {
+        if (this.card.name === NAME_UNKNOWN) {
+            return URL_DB_API;
+        }
+        return URL_DB_API + encodeURI(this.card.name);
+    }
+
+    contextEvent(e) {
+        this.$emit("deckcardrightclick", e);
+    }
+}
 </script>
 
 <style lang="scss">
