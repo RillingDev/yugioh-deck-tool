@@ -66,7 +66,7 @@ let DeckImportExportService = DeckImportExportService_1 = class DeckImportExport
             fileLines.push("");
         }
         return {
-            fileName: `${deck.name}.ydk`,
+            fileName: `${deck.name ?? "Unnamed"}.ydk`,
             fileContent: fileLines.join("\n")
         };
     }
