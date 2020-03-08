@@ -2,17 +2,17 @@
     <div class="sorter">
         <button
             :disabled="deckService.getAllCards(this.deck).length < 2"
-            v-on:click="() => sort()"
             class="btn btn-primary btn-sm"
             title="Sort Deck"
+            v-on:click="() => sort()"
         >
             Sort Deck
         </button>
         <button
             :disabled="deckService.getAllCards(this.deck).length < 2"
-            v-on:click="() => shuffle()"
             class="btn btn-primary btn-sm"
             title="Shuffle Deck"
+            v-on:click="() => shuffle()"
         >
             Shuffle Deck
         </button>
@@ -39,6 +39,7 @@ export default class YgoSorter extends Vue {
     sort() {
         this.deck.parts = this.deckService.sort(this.deck).parts;
     }
+
     shuffle() {
         this.deck.parts = this.deckService.shuffle(this.deck).parts;
     }

@@ -81,12 +81,6 @@ class DeckService {
         return deckClone;
     }
 
-    private cloneDeck(deck: Deck): Deck {
-        const deckClone = clone(deck);
-        deckClone.parts = new Map<DeckPart, Card[]>(deckClone.parts);
-        return deckClone;
-    }
-
     public getAllCards(deck: Deck): Card[] {
         const result = [];
         for (const deckPart of DEFAULT_DECKPART_ARR) {
@@ -101,6 +95,12 @@ class DeckService {
             parts.set(deckPart, []);
         }
         return { name: null, parts };
+    }
+
+    private cloneDeck(deck: Deck): Deck {
+        const deckClone = clone(deck);
+        deckClone.parts = new Map<DeckPart, Card[]>(deckClone.parts);
+        return deckClone;
     }
 }
 

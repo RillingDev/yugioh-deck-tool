@@ -2,9 +2,9 @@
     <div class="drawsim">
         <button
             :disabled="mainDeckCards.length === 0"
-            v-on:click="() => showModal()"
             class="btn btn-primary btn-sm"
             title="Open Start-Hand Simulation"
+            v-on:click="() => showModal()"
         >
             Start-Hand
         </button>
@@ -19,15 +19,15 @@
             <div class="btn-group" role="group">
                 <button
                     :class="{ active: drawMode === 5 }"
-                    v-on:click="() => setDrawMode(5)"
                     class="btn btn-primary"
+                    v-on:click="() => setDrawMode(5)"
                 >
                     Going First
                 </button>
                 <button
                     :class="{ active: drawMode === 6 }"
-                    v-on:click="() => setDrawMode(6)"
                     class="btn btn-primary"
+                    v-on:click="() => setDrawMode(6)"
                 >
                     Going Second
                 </button>
@@ -40,9 +40,9 @@
                 />
             </div>
             <button
-                v-on:click="() => draw()"
                 class="btn btn-primary"
                 title="Simulate a new Starting-Hand"
+                v-on:click="() => draw()"
             >
                 Draw
             </button>
@@ -74,6 +74,10 @@ export default class YgoDrawSim extends Vue {
         UI_TYPES.SortingService
     );
 
+    get mainDeckCards() {
+        return this.deck.parts.get(DefaultDeckPart.MAIN);
+    }
+
     showModal() {
         (this.$refs.modalDrawSim as BModal).show();
         this.draw();
@@ -82,9 +86,6 @@ export default class YgoDrawSim extends Vue {
     setDrawMode(newMode) {
         this.drawMode = newMode;
         this.draw();
-    }
-    get mainDeckCards() {
-        return this.deck.parts.get(DefaultDeckPart.MAIN);
     }
 
     draw() {
