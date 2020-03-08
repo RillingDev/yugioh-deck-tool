@@ -8,6 +8,7 @@ import { CardType } from "../model/CardType";
 import { CardTypeGroup } from "../model/CardTypeGroup";
 import { CardValues } from "../model/CardValues";
 import { CardSetAppearance } from "../model/CardSetAppearance";
+import * as logger from "loglevel";
 
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
@@ -37,15 +38,19 @@ class MemoryCardDatabase implements CardDatabase {
     }
 
     public async init(): Promise<void> {
+        logger.info("Loading data from API...");
         const [cardInfo, cardSets, cardValues] = await Promise.all([
             this.dataLoaderClient.getCardInfo(),
             this.dataLoaderClient.getCardSets(),
             this.dataLoaderClient.getCardValues()
         ]);
+        logger.info("Loaded data from API.", cardSets, cardInfo, cardValues);
 
         this.sets.push(...cardSets);
+        logger.debug("Registered sets.", this.sets);
 
         this.types.push(...cardValues.types);
+        logger.debug("Registered types.", this.types);
 
         this.races.set(
             CardTypeGroup.MONSTER,
@@ -73,14 +78,26 @@ class MemoryCardDatabase implements CardDatabase {
         this.monsterLinkMarkers.push(
             ...cardValues.values[CardTypeGroup.MONSTER].linkMarkers
         );
+        logger.debug(
+            "Registered static values.",
+            this.races,
+            this.monsterAttributes,
+            this.monsterLevels,
+            this.monsterLinkMarkers
+        );
 
         for (const unlinkedCard of cardInfo) {
             this.cards.set(
                 unlinkedCard.id,
                 this.createLinkedCard(unlinkedCard, cardSets, cardValues)
             );
+            logger.debug(
+                `Registered card ${unlinkedCard.id}.`,
+                this.cards.get(unlinkedCard.id)
+            );
         }
         this.ready = true;
+        logger.info("Initialized database.");
     }
 
     public isReady(): boolean {
@@ -164,14 +181,17 @@ class MemoryCardDatabase implements CardDatabase {
     ): CardSet[] {
         return <CardSet[]>setAppearances
             .map(setAppearance => {
-                const matchingType = cardSets.find(
+                const matchingSet = cardSets.find(
                     set => set.name === setAppearance.name
                 );
-                if (matchingType == null) {
-                    console.warn(`Could not find set '${setAppearance.name}'.`);
+                if (matchingSet == null) {
+                    logger.warn(`Could not find set '${setAppearance.name}'.`);
                     return null;
                 }
-                return matchingType;
+                logger.debug(
+                    `Matched set ${setAppearance.name} to ${matchingSet}.`
+                );
+                return matchingSet;
             })
             .filter(set => set != null);
     }
@@ -181,6 +201,7 @@ class MemoryCardDatabase implements CardDatabase {
         if (matchingType == null) {
             throw new TypeError(`Could not find type '${typeName}'.`);
         }
+        logger.debug(`Matched type ${typeName} to ${matchingType}.`);
         return matchingType;
     }
 }
