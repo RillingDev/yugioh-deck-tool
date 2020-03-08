@@ -50,7 +50,11 @@ export default class YgoDeck extends Vue {
     }
 
     onDeckCardRightClicked(card: Card, deckPart) {
-        this.deckService.removeCard(this.deck, deckPart, card);
+        this.deck.parts = this.deckService.removeCard(
+            this.deck,
+            deckPart,
+            card
+        ).parts;
     }
 }
 </script>

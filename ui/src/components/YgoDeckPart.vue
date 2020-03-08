@@ -20,7 +20,7 @@
 <script lang="ts">
 import YgoCard from "./YgoCard.vue";
 import YgoPriceView from "./YgoPriceView.vue";
-import { Card, Deck, DeckPart } from "../../../core";
+import { Card, Deck, DeckPart } from "../../../core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";

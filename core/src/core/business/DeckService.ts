@@ -7,6 +7,7 @@ import { TYPES } from "../../types";
 import { CardService } from "./CardService";
 import { Format } from "../model/Format";
 import { removeItem } from "lightdash";
+import { clone } from "lodash";
 
 @injectable()
 class DeckService {
@@ -37,15 +38,25 @@ class DeckService {
         return count < card.banlist[format];
     }
 
-    public addCard(deck: Deck, deckPart: DeckPart, card: Card): void {
-        deck.parts.get(deckPart)!.push(card);
+    public addCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
+        const deckClone = this.cloneDeck(deck);
+        deckClone.parts.get(deckPart)!.push(card);
+        return deckClone;
     }
 
-    public removeCard(deck: Deck, deckPart: DeckPart, card: Card): void {
-        deck.parts.set(
+    public removeCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
+        const deckClone = this.cloneDeck(deck);
+        deckClone.parts.set(
             deckPart,
             Array.from(removeItem<Card>(deck.parts.get(deckPart)!, card, false))
         );
+        return deckClone;
+    }
+
+    private cloneDeck(deck: Deck): Deck {
+        const deckClone = clone(deck);
+        deckClone.parts = new Map<DeckPart, Card[]>(deckClone.parts);
+        return deckClone;
     }
 
     public getAllCards(deck: Deck): Card[] {

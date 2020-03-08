@@ -3,7 +3,7 @@ import { Card } from "./Card";
 
 interface Deck {
     name: string | null;
-    readonly parts: Map<DeckPart, Card[]>;
+    parts: Map<DeckPart, Card[]>;
 }
 
 export { Deck };
