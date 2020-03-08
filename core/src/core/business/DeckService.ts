@@ -8,13 +8,19 @@ import { CardService } from "./CardService";
 import { Format } from "../model/Format";
 import { removeItem } from "lightdash";
 import { clone } from "lodash";
+import { SortingService } from "./SortingService";
 
 @injectable()
 class DeckService {
     private readonly cardService: CardService;
+    private readonly sortingService: SortingService;
 
-    constructor(@inject(TYPES.CardService) cardService: CardService) {
+    constructor(
+        @inject(TYPES.CardService) cardService: CardService,
+        @inject(TYPES.SortingService) sortingService: SortingService
+    ) {
         this.cardService = cardService;
+        this.sortingService = sortingService;
     }
 
     public canAdd(
@@ -50,6 +56,28 @@ class DeckService {
             deckPart,
             Array.from(removeItem<Card>(deck.parts.get(deckPart)!, card, false))
         );
+        return deckClone;
+    }
+
+    public sort(deck: Deck): Deck {
+        const deckClone = this.cloneDeck(deck);
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
+            deckClone.parts.set(
+                deckPart,
+                this.sortingService.sort(deckClone.parts.get(deckPart)!)
+            );
+        }
+        return deckClone;
+    }
+
+    public shuffle(deck: Deck): Deck {
+        const deckClone = this.cloneDeck(deck);
+        for (const deckPart of DEFAULT_DECKPART_ARR) {
+            deckClone.parts.set(
+                deckPart,
+                this.sortingService.shuffle(deckClone.parts.get(deckPart)!)
+            );
+        }
         return deckClone;
     }
 
