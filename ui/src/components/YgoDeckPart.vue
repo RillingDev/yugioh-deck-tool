@@ -9,8 +9,8 @@
             <ygo-card
                 :card="card"
                 :key="`${card.id}_${cardIndex}`"
-                @deckcardrightclick.prevent="() => onRightClick(card)"
                 v-for="(card, cardIndex) in cards"
+                v-on:deck-card-right-click="() => onDeckCardRightClicked(card)"
             >
             </ygo-card>
         </div>
@@ -20,9 +20,7 @@
 <script lang="ts">
 import YgoCard from "./YgoCard.vue";
 import YgoPriceView from "./YgoPriceView.vue";
-import { Card, Deck, DeckPart, DeckService } from "../../../core";
-import { uiContainer } from "@/inversify.config";
-import { UI_TYPES } from "@/types";
+import { Card, Deck, DeckPart } from "../../../core";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
@@ -38,16 +36,13 @@ export default class YgoDeckPart extends Vue {
     deck: Deck;
     @Prop({ required: true })
     deckPart: DeckPart;
-    private readonly deckService = uiContainer.get<DeckService>(
-        UI_TYPES.DeckService
-    );
 
     get cards() {
         return this.deck.parts.get(this.deckPart);
     }
 
-    onRightClick(card: Card) {
-        this.deckService.removeCard(this.deck, this.deckPart, card);
+    onDeckCardRightClicked(card: Card) {
+        this.$emit("deck-card-right-click", card);
     }
 }
 </script>

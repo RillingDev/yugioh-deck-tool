@@ -2,10 +2,7 @@
     <div class="deck">
         <div class="deck-part deck-part-total">
             <span>Total:</span>
-            <ygo-price-view
-                :cards="allCards"
-                :group="true"
-            />
+            <ygo-price-view :cards="allCards" :group="true" />
         </div>
         <ygo-deck-part
             :class="`deck-part-${deckPart.id}`"
@@ -13,13 +10,16 @@
             :deck-part="deckPart"
             :key="deckPart.id"
             v-for="deckPart in deckParts"
+            v-on:deck-card-right-click="
+                card => onDeckCardRightClicked(card, deckPart)
+            "
         />
     </div>
 </template>
 <script lang="ts">
 import YgoDeckPart from "./YgoDeckPart.vue";
 import YgoPriceView from "./YgoPriceView.vue";
-import { Deck, DeckService, DEFAULT_DECKPART_ARR } from "../../../core";
+import { Card, Deck, DeckService, DEFAULT_DECKPART_ARR } from "../../../core";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
@@ -42,6 +42,10 @@ export default class YgoDeck extends Vue {
 
     get allCards() {
         return this.deckService.getAllCards(this.deck);
+    }
+
+    onDeckCardRightClicked(card: Card, deckPart) {
+        this.deckService.removeCard(this.deck, deckPart, card);
     }
 }
 </script>
