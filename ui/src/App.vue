@@ -153,7 +153,7 @@ logger.setLevel(levels.INFO);
     name: "Index"
 })
 export default class App extends Vue {
-    public readonly ajax = {
+    readonly ajax = {
         currentlyLoading: true
     };
     private readonly cardDatabase = uiContainer.get<CardDatabase>(
@@ -162,7 +162,7 @@ export default class App extends Vue {
     private readonly deckService = uiContainer.get<DeckService>(
         UI_TYPES.DeckService
     );
-    public deck: Deck = this.deckService.createEmptyDeck();
+    deck: Deck = this.deckService.createEmptyDeck();
     private readonly deckImportExportService = uiContainer.get<
         DeckImportExportService
     >(UI_TYPES.DeckImportExportService);

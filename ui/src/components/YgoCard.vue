@@ -9,7 +9,7 @@
         <img :alt="card.name" :src="imageUrl" height="135" width="100" />
         <div class="deck-card-text">
             <span class="deck-card-name">{{ card.name }}</span>
-            <slot class="deck-card-price" name="price" />
+            <ygo-price-view :cards="[card]" />
         </div>
     </a>
 </template>
@@ -17,16 +17,16 @@
 <script lang="ts">
 import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../lib/data/urls";
 import Component from "vue-class-component";
-import ygoDeck from "@/components/YgoDeck.vue";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
 import { Card } from "../../../core";
+import YgoPriceView from "@/components/YgoPriceView.vue";
 
 const NAME_UNKNOWN = "Unknown";
 
 @Component({
     components: {
-        ygoDeck
+        YgoPriceView
     }
 })
 export default class YgoCard extends Vue {

@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'price--group': isGroup }" class="price">
+    <div :class="{ 'price--group': group }" class="price">
         <span
             :class="'price-mode-' + priceMode.id"
             :key="priceMode.id"
@@ -7,7 +7,7 @@
             class="price-mode"
             v-for="priceMode in priceController.modes"
         >
-            <span v-if="isGroup">{{ priceMode.name }}: </span>
+            <span v-if="group">{{ priceMode.name }}: </span>
             {{ priceController.format(priceValues[priceMode.id]) }}
         </span>
     </div>
@@ -24,17 +24,17 @@ import { Prop } from "vue-property-decorator";
 
 @Component({})
 export default class YgoPriceView extends Vue {
-    @Prop()
+    @Prop({ required: true })
     cards: Card[];
+    @Prop({ required: false, default: () => false })
+    group: boolean;
 
     priceController = uiContainer.get<PriceController>(
         UI_TYPES.PriceController
     );
-    priceService = uiContainer.get<PriceService>(UI_TYPES.PriceService);
-
-    get isGroup() {
-        return this.cards.length > 1;
-    }
+    private readonly priceService = uiContainer.get<PriceService>(
+        UI_TYPES.PriceService
+    );
 
     get priceValues() {
         return this.priceService.getPrice(...this.cards).prices;

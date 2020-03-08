@@ -2,7 +2,10 @@
     <div class="deck">
         <div class="deck-part deck-part-total">
             <span>Total:</span>
-            <ygo-price-view :cards="deckService.getAllCards(deck)" />
+            <ygo-price-view
+                :cards="allCards"
+                :group="true"
+            />
         </div>
         <ygo-deck-part
             :class="`deck-part-${deckPart.id}`"
@@ -31,10 +34,14 @@ import { UI_TYPES } from "@/types";
 })
 export default class YgoDeck extends Vue {
     @Prop({ required: true })
-    public deck: Deck;
+    deck: Deck;
+    deckParts = DEFAULT_DECKPART_ARR;
+    private readonly deckService = uiContainer.get<DeckService>(
+        UI_TYPES.DeckService
+    );
 
-    deckService = uiContainer.get<DeckService>(UI_TYPES.DeckService);
-
-    public deckParts = DEFAULT_DECKPART_ARR;
+    get allCards() {
+        return this.deckService.getAllCards(this.deck);
+    }
 }
 </script>

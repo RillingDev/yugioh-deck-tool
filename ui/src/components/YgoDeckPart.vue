@@ -1,31 +1,26 @@
 <template>
     <div :class="`deck-part-${deckPart.id}`" class="deck-part">
         <h3>
-            {{ deckPart.name }} Deck ({{ deck.parts.get(deckPart).length }}
+            {{ deckPart.name }} Deck ({{ cards.length }}
             Cards):
         </h3>
-        <template v-if="deck.parts.get(deckPart).length > 0">
-            <ygo-price-view :cards="deck.parts.get(deckPart)" />
-            <div class="deck-content">
-                <ygo-card
-                    :card="card"
-                    :key="`${card.id}_${cardIndex}`"
-                    @deckcardrightclick.prevent="
-                        deckService.removeCard(deck, deckPart, card)
-                    "
-                    v-for="(card, cardIndex) in deck.parts.get(deckPart)"
-                >
-                    <ygo-price-view :cards="[card]" slot="price" />
-                </ygo-card>
-            </div>
-        </template>
+        <ygo-price-view :cards="cards" :group="true" />
+        <div class="deck-content" v-if="cards.length > 0">
+            <ygo-card
+                :card="card"
+                :key="`${card.id}_${cardIndex}`"
+                @deckcardrightclick.prevent="() => onRightClick(card)"
+                v-for="(card, cardIndex) in cards"
+            >
+            </ygo-card>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import YgoCard from "./YgoCard.vue";
 import YgoPriceView from "./YgoPriceView.vue";
-import { CardDatabase, Deck, DeckPart, DeckService } from "../../../core";
+import { Card, Deck, DeckPart, DeckService } from "../../../core";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
@@ -43,9 +38,17 @@ export default class YgoDeckPart extends Vue {
     deck: Deck;
     @Prop({ required: true })
     deckPart: DeckPart;
+    private readonly deckService = uiContainer.get<DeckService>(
+        UI_TYPES.DeckService
+    );
 
-    cardDatabase = uiContainer.get<CardDatabase>(UI_TYPES.CardDatabase);
-    deckService = uiContainer.get<DeckService>(UI_TYPES.DeckService);
+    get cards() {
+        return this.deck.parts.get(this.deckPart);
+    }
+
+    onRightClick(card: Card) {
+        this.deckService.removeCard(this.deck, this.deckPart, card);
+    }
 }
 </script>
 
