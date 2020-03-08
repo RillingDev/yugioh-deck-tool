@@ -8,7 +8,6 @@
         >
             Sort Deck
         </button>
-        &nbsp;
         <button
             :disabled="deckService.getAllCards(this.deck).length < 2"
             v-on:click="() => shuffle()"

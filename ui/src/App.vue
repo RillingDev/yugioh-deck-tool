@@ -101,24 +101,24 @@
             <ygo-deck :deck="deck" v-if="!ajax.currentlyLoading" />
         </div>
 
-<!--         app-builder -->
-                <div class="app-section app-builder">
-                    <h2>Deckbuilder:</h2>
-                    <div class="app-builder-intro">
-                        <ygo-sorter :deck="deck" />
-<!--                        <ygo-draw-sim :card-db="cardDb" :deck-list-main="deck.main" />-->
-<!--                        <ygo-randomizer-->
-<!--                            :card-db="cardDb"-->
-<!--                            @randomize="deckRandomize"-->
-<!--                            v-if="!ajax.currentlyLoading"-->
-<!--                        />-->
-                    </div>
-<!--                    <ygo-builder-->
-<!--                        :deck-card-can-add="deckCardCanAdd"-->
-<!--                        @deckcardadd="deckCardAdd"-->
-<!--                        v-if="!ajax.currentlyLoading"-->
-<!--                    />-->
-                </div>
+        <!--         app-builder -->
+        <div class="app-section app-builder">
+            <h2>Deckbuilder:</h2>
+            <div class="app-builder-intro">
+                <ygo-sorter :deck="deck" />
+                <ygo-draw-sim :deck="deck" />
+                <!--                        <ygo-randomizer-->
+                <!--                            :card-db="cardDb"-->
+                <!--                            @randomize="deckRandomize"-->
+                <!--                            v-if="!ajax.currentlyLoading"-->
+                <!--                        />-->
+            </div>
+            <!--                    <ygo-builder-->
+            <!--                        :deck-card-can-add="deckCardCanAdd"-->
+            <!--                        @deckcardadd="deckCardAdd"-->
+            <!--                        v-if="!ajax.currentlyLoading"-->
+            <!--                    />-->
+        </div>
     </div>
 </template>
 
@@ -144,12 +144,15 @@ import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
 import { readFile } from "@/lib/readFile";
 import YgoSorter from "@/components/YgoSorter.vue";
+import YgoDrawSim from "@/components/YgoDrawSim.vue";
 
 logger.setLevel(levels.INFO);
 
 @Component({
     components: {
-        YgoDeck,YgoSorter
+        YgoDeck,
+        YgoSorter,
+        YgoDrawSim
     },
     name: "Index"
 })

@@ -1,8 +1,8 @@
 <template>
     <div class="drawsim">
         <button
-            :disabled="deckListMain.length === 0"
-            @click="showModal"
+            :disabled="mainDeckCards.length === 0"
+            v-on:click="() => showModal()"
             class="btn btn-primary btn-sm"
             title="Open Start-Hand Simulation"
         >
@@ -19,14 +19,14 @@
             <div class="btn-group" role="group">
                 <button
                     :class="{ active: drawMode === 5 }"
-                    @click="setDrawMode(5)"
+                    v-on:click="() => setDrawMode(5)"
                     class="btn btn-primary"
                 >
                     Going First
                 </button>
                 <button
                     :class="{ active: drawMode === 6 }"
-                    @click="setDrawMode(6)"
+                    v-on:click="() => setDrawMode(6)"
                     class="btn btn-primary"
                 >
                     Going Second
@@ -34,13 +34,13 @@
             </div>
             <div class="drawsim-output">
                 <ygo-card
-                    :card="cardDb.getCard(drawItemId)"
-                    :key="`${drawItemId}_${index}`"
-                    v-for="(drawItemId, index) of drawItems"
+                    :card="drawItem"
+                    :key="`${drawItem.id}_${index}`"
+                    v-for="(drawItem, index) of drawItems"
                 />
             </div>
             <button
-                @click="draw"
+                v-on:click="() => draw()"
                 class="btn btn-primary"
                 title="Simulate a new Starting-Hand"
             >
@@ -51,43 +51,48 @@
 </template>
 
 <script lang="ts">
-import ygoCard from "./YgoCard.vue";
+import YgoCard from "./YgoCard.vue";
 
-import startHand from "../lib/deck/startHand";
+import Component from "vue-class-component";
+import Vue from "vue";
+import { Card, Deck, DefaultDeckPart } from "../../../core/src/main";
+import { BModal } from "bootstrap-vue";
+import { Prop } from "vue-property-decorator";
+import { uiContainer } from "@/inversify.config";
+import { UI_TYPES } from "@/types";
+import { SortingService } from "../../../core/src/core/business/SortingService";
 
-export default {
-    components: {
-        ygoCard
-    },
-    props: {
-        deckListMain: {
-            type: Array,
-            required: true
-        },
-        cardDatabase: {
-            required: true
-        }
-    },
-    data() {
-        return {
-            drawMode: 5,
-            drawItems: []
-        };
-    },
-    methods: {
-        showModal() {
-            this.$refs.modalDrawSim.show();
-            this.draw();
-        },
-        setDrawMode(newMode) {
-            this.drawMode = newMode;
-            this.draw();
-        },
-        draw() {
-            this.drawItems = startHand(this.deckListMain, this.drawMode);
-        }
+@Component({ components: { YgoCard, BModal } })
+export default class YgoDrawSim extends Vue {
+    @Prop({ required: true })
+    deck: Deck;
+
+    drawMode = 5;
+    drawItems: Card[] = [];
+
+    private readonly sortingService = uiContainer.get<SortingService>(
+        UI_TYPES.SortingService
+    );
+
+    showModal() {
+        (this.$refs.modalDrawSim as BModal).show();
+        this.draw();
     }
-};
+
+    setDrawMode(newMode) {
+        this.drawMode = newMode;
+        this.draw();
+    }
+    get mainDeckCards() {
+        return this.deck.parts.get(DefaultDeckPart.MAIN);
+    }
+
+    draw() {
+        this.drawItems = this.sortingService
+            .shuffle(this.mainDeckCards)
+            .slice(0, this.drawMode);
+    }
+}
 </script>
 
 <style lang="scss">
