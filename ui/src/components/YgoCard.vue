@@ -22,8 +22,6 @@ import { Prop } from "vue-property-decorator";
 import { Card } from "../../../core";
 import YgoPriceView from "@/components/YgoPriceView.vue";
 
-const NAME_UNKNOWN = "Unknown";
-
 @Component({
     components: {
         YgoPriceView
@@ -38,9 +36,6 @@ export default class YgoCard extends Vue {
     }
 
     get referenceUrl() {
-        if (this.card.name === NAME_UNKNOWN) {
-            return URL_DB_API;
-        }
         return URL_DB_API + encodeURI(this.card.name);
     }
 
