@@ -15,16 +15,17 @@ let PriceService = class PriceService {
             .filter(card => this.hasPrice(card))
             .map(card => card.prices)
             .reduce((previousValue, currentValue) => {
-            return this.createPrices(previousValue.cardmarket + currentValue.cardmarket, previousValue.tcgplayer + currentValue.tcgplayer, previousValue.ebay + currentValue.ebay, previousValue.amazon + currentValue.amazon);
-        }, this.createPrices(0, 0, 0, 0));
+            return this.createPrices(previousValue.cardmarket + currentValue.cardmarket, previousValue.tcgplayer + currentValue.tcgplayer, previousValue.ebay + currentValue.ebay, previousValue.amazon + currentValue.amazon, previousValue.coolstuffinc + currentValue.coolstuffinc);
+        }, this.createPrices(0, 0, 0, 0, 0));
         return { prices, missing };
     }
-    createPrices(cardmarket, tcgplayer, ebay, amazon) {
+    createPrices(cardmarket, tcgplayer, ebay, amazon, coolstuffinc) {
         return {
             cardmarket: cardmarket,
             tcgplayer: tcgplayer,
             ebay: ebay,
-            amazon: amazon
+            amazon: amazon,
+            coolstuffinc: coolstuffinc
         };
     }
 };

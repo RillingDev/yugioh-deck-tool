@@ -8,9 +8,9 @@ interface RawCardValues {
 }
 interface RawCardType {
     name: string;
-    group: "MONSTER" | "SPELL" | "TRAP" | "SKILL";
+    group: string;
     sortGroup: number;
-    area: Array<"MAIN" | "EXTRA" | "SIDE">;
+    area: string[];
 }
 interface RawMonsterGroupValues {
     type: string[];

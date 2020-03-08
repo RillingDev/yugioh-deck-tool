@@ -10,7 +10,10 @@ const mapGroup = (type) => {
     if (type.group === "TRAP") {
         return CardTypeGroup.TRAP;
     }
-    return CardTypeGroup.MONSTER;
+    if (type.group === "MONSTER") {
+        return CardTypeGroup.MONSTER;
+    }
+    throw new TypeError(`Unexpected group '${type.group}'.`);
 };
 const mapDeckPart = (type) => new Set(type.area.map(area => {
     if (area === "SIDE") {
@@ -19,7 +22,10 @@ const mapDeckPart = (type) => new Set(type.area.map(area => {
     if (area === "EXTRA") {
         return DefaultDeckPart.EXTRA;
     }
-    return DefaultDeckPart.MAIN;
+    if (area === "MAIN") {
+        return DefaultDeckPart.MAIN;
+    }
+    throw new TypeError(`Unexpected deck part type '${area}'.`);
 }));
 const mapCardValues = (data) => {
     return {
