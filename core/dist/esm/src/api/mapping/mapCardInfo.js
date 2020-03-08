@@ -75,7 +75,8 @@ const mapPrices = (rawCard) => {
         cardmarket: Number(prices.cardmarket_price),
         tcgplayer: Number(prices.tcgplayer_price),
         ebay: Number(prices.ebay_price),
-        amazon: Number(prices.amazon_price)
+        amazon: Number(prices.amazon_price),
+        coolstuffinc: Number(prices.coolstuffinc_price)
     };
 };
 const mapCardInfo = (data) => {

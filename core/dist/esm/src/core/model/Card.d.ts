@@ -5,6 +5,9 @@ import { CardPrices } from "./CardPrices";
 import { Format } from "./Format";
 import { CardSet } from "./CardSet";
 import { CardType } from "./CardType";
+/**
+ * Regular card. Also see {@link UnlinkedCard}.
+ */
 interface Card {
     readonly id: string;
     readonly name: string;

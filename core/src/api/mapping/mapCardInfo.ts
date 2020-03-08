@@ -9,25 +9,28 @@ import { UnlinkedCard } from "../../core/business/CardDataLoaderService";
 interface RawCard {
     id: number;
     name: string;
-    type: string;
     desc: string;
-    attribute?: string;
+
+    type: string;
     race: string;
-    archetype?: string;
+    attribute?: string;
     atk?: number;
     def?: number;
     level?: number;
     scale?: number;
     linkval?: number;
     linkmarkers?: string[];
-    card_sets?: RawCardSet[];
+
+    card_sets?: RawCardSetAppearance[];
     card_images?: RawCardImage[];
     card_prices?: RawCardPrices[];
+
+    archetype?: string;
     misc_info?: RawMiscInfo[];
     banlist_info?: RawBanlistInfo;
 }
 
-interface RawCardSet {
+interface RawCardSetAppearance {
     set_name: string;
     set_code: string;
     set_rarity: string;
@@ -45,6 +48,7 @@ interface RawCardPrices {
     tcgplayer_price: string;
     ebay_price: string;
     amazon_price: string;
+    coolstuffinc_price: string;
 }
 
 interface RawMiscInfo {
@@ -143,7 +147,8 @@ const mapPrices = (rawCard: RawCard): CardPrices | null => {
         cardmarket: Number(prices.cardmarket_price),
         tcgplayer: Number(prices.tcgplayer_price),
         ebay: Number(prices.ebay_price),
-        amazon: Number(prices.amazon_price)
+        amazon: Number(prices.amazon_price),
+        coolstuffinc: Number(prices.coolstuffinc_price)
     };
 };
 

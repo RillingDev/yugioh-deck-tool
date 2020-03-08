@@ -23,9 +23,10 @@ class PriceService {
                     previousValue!.cardmarket + currentValue!.cardmarket,
                     previousValue!.tcgplayer + currentValue!.tcgplayer,
                     previousValue!.ebay + currentValue!.ebay,
-                    previousValue!.amazon + currentValue!.amazon
+                    previousValue!.amazon + currentValue!.amazon,
+                    previousValue!.coolstuffinc + currentValue!.coolstuffinc
                 );
-            }, this.createPrices(0, 0, 0, 0))!;
+            }, this.createPrices(0, 0, 0, 0, 0))!;
         return { prices, missing };
     }
 
@@ -33,13 +34,15 @@ class PriceService {
         cardmarket: number,
         tcgplayer: number,
         ebay: number,
-        amazon: number
+        amazon: number,
+        coolstuffinc: number
     ): CardPrices {
         return {
             cardmarket: cardmarket,
             tcgplayer: tcgplayer,
             ebay: ebay,
-            amazon: amazon
+            amazon: amazon,
+            coolstuffinc: coolstuffinc
         };
     }
 }

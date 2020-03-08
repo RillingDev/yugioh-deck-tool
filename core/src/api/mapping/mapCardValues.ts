@@ -14,9 +14,9 @@ interface RawCardValues {
 
 interface RawCardType {
     name: string;
-    group: "MONSTER" | "SPELL" | "TRAP" | "SKILL";
+    group: string;
     sortGroup: number;
-    area: Array<"MAIN" | "EXTRA" | "SIDE">;
+    area: string[];
 }
 
 interface RawMonsterGroupValues {
@@ -42,7 +42,10 @@ const mapGroup = (type: RawCardType): CardTypeGroup => {
     if (type.group === "TRAP") {
         return CardTypeGroup.TRAP;
     }
-    return CardTypeGroup.MONSTER;
+    if (type.group === "MONSTER") {
+        return CardTypeGroup.MONSTER;
+    }
+    throw new TypeError(`Unexpected group '${type.group}'.`);
 };
 
 const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
@@ -54,7 +57,10 @@ const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
             if (area === "EXTRA") {
                 return DefaultDeckPart.EXTRA;
             }
-            return DefaultDeckPart.MAIN;
+            if (area === "MAIN") {
+                return DefaultDeckPart.MAIN;
+            }
+            throw new TypeError(`Unexpected deck part type '${area}'.`);
         })
     );
 

@@ -3,7 +3,7 @@ interface RawCardSet {
     set_name: string;
     set_code: string;
     num_of_cards: number;
-    tcg_date?: string | null;
+    tcg_date: string;
 }
 declare const mapCardSets: (data: RawCardSet[]) => CardSet[];
 export { mapCardSets, RawCardSet };
