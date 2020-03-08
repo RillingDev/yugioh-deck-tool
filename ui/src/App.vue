@@ -176,7 +176,7 @@ export default class App extends Vue {
             this.deck
         );
 
-        return `${currentUri}?e=${deckUri}`;
+        return this.isDeckEmpty ? currentUri : `${currentUri}?e=${deckUri}`;
     }
 
     get buyLink() {
