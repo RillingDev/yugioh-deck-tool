@@ -119,9 +119,7 @@ const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
     return rawCard.card_sets.map(rawSet => {
         return {
             name: rawSet.set_name,
-            code: rawSet.set_code,
-            rarity: rawSet.set_rarity,
-            price: rawSet.set_price
+            code: rawSet.set_code
         };
     });
 };
@@ -132,7 +130,6 @@ const mapImage = (rawCard: RawCard): CardImage | null => {
     }
     const image = rawCard.card_images[0];
     return {
-        id: image.id,
         url: image.image_url,
         urlSmall: image.image_url_small
     };
