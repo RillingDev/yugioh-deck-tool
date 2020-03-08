@@ -19,7 +19,12 @@
 <script lang="ts">
 import YgoDeckPart from "./YgoDeckPart.vue";
 import YgoPriceView from "./YgoPriceView.vue";
-import { Card, Deck, DeckService, DEFAULT_DECKPART_ARR } from "../../../core";
+import {
+    Card,
+    Deck,
+    DeckService,
+    DEFAULT_DECKPART_ARR
+} from "../../../core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";

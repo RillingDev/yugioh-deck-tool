@@ -1,4 +1,4 @@
-import { TYPES } from "../../core";
+import { TYPES } from "../../core/src/main";
 
 const UI_TYPES = Object.assign({ PriceController: Symbol.for("PriceController") }, TYPES);
 

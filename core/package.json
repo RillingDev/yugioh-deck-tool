@@ -1,18 +1,13 @@
 {
-    "name": "yugioh-deck-tool-api",
+    "name": "yugioh-deck-tool-core",
     "version": "1.0.0",
     "private": true,
-    "description": "API for ygoprodeck.com",
-    "module": "./dist/esm/src/main.js",
-    "types": "./dist/esm/src/main.d.ts",
+    "description": "Core business logic for for the decktool",
     "scripts": {
-        "start": "npm run dist",
-        "dist": "npm-run-all clean lint build",
-        "clean": "rimraf ./dist ./spec/dist",
-        "build": "tsc --build ./tsconfig.json",
-        "watch": "tsc --build ./tsconfig.json -w",
+        "clean": "rimraf ./spec/dist",
         "lint": "eslint ./src/ ./spec/src/ --ext .ts",
         "fix": "eslint ./src/ ./spec/src/ --ext .ts --fix",
+        "build": "tsc --build ./tsconfig.json",
         "test": "npm-run-all build test:jasmine",
         "test:jasmine": "jasmine --require=source-map-support/register"
     },

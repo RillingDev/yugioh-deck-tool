@@ -4,9 +4,7 @@
         "rootDir": "./",
         "baseUrl": "./",
         "target": "esnext",
-        "composite": true,
         "newLine": "LF",
-        "removeComments": false,
         "strict": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true

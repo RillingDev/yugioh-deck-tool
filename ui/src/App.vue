@@ -135,7 +135,7 @@ import {
     DeckPart,
     DeckService,
     Format
-} from "../../core";
+} from "../../core/src/main";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
 import YgoDeck from "./components/YgoDeck.vue";
