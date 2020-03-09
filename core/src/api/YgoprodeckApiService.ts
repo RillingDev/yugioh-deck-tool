@@ -19,7 +19,7 @@ class YgoprodeckApiService implements CardDataLoaderService {
     constructor() {
         this.httpClient = axios.create({
             baseURL: "https://db.ygoprodeck.com/api/v7/",
-            timeout: 3000,
+            timeout: 10000,
             responseType: "json",
             validateStatus: status => status === 200
         });
