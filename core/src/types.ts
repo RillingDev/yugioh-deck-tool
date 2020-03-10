@@ -6,6 +6,7 @@ const TYPES = {
     DeckImportExportService: Symbol.for("DeckImportExportService"),
     PriceService: Symbol.for("PriceService"),
     SortingService: Symbol.for("SortingService"),
+    FilterService: Symbol.for("FilterService"),
     CompressionService: Symbol.for("CompressionService"),
     EncodingService: Symbol.for("EncodingService")
 };

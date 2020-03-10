@@ -8,7 +8,7 @@ import { CardService } from "./CardService";
 import { Format } from "../model/Format";
 import { removeItem } from "lightdash";
 import { clone } from "lodash";
-import { SortingService } from "./SortingService";
+import { SortingService, SortingStrategy } from "./SortingService";
 
 @injectable()
 class DeckService {
@@ -64,7 +64,10 @@ class DeckService {
         for (const deckPart of DEFAULT_DECKPART_ARR) {
             deckClone.parts.set(
                 deckPart,
-                this.sortingService.sort(deckClone.parts.get(deckPart)!)
+                this.sortingService.sort(
+                    deckClone.parts.get(deckPart)!,
+                    SortingStrategy.DECK
+                )
             );
         }
         return deckClone;
@@ -75,7 +78,10 @@ class DeckService {
         for (const deckPart of DEFAULT_DECKPART_ARR) {
             deckClone.parts.set(
                 deckPart,
-                this.sortingService.shuffle(deckClone.parts.get(deckPart)!)
+                this.sortingService.sort(
+                    deckClone.parts.get(deckPart)!,
+                    SortingStrategy.SHUFFLE
+                )
             );
         }
         return deckClone;

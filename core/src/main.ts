@@ -23,6 +23,8 @@ import { DeckService } from "./core/business/DeckService";
 import { Format } from "./core/model/Format";
 import { CompressionService } from "./core/business/CompressionService";
 import { CardValues } from "./core/model/CardValues";
+import { SortingService, SortingStrategy } from "./core/business/SortingService";
+import { FilterService, CardFilter } from "./core/business/FilterService";
 
 export {
     /*
@@ -37,6 +39,10 @@ export {
     DeckService,
     DeckImportExportService,
     CompressionService,
+    FilterService,
+    CardFilter,
+    SortingService,
+    SortingStrategy,
     /*
      * Data models
      */

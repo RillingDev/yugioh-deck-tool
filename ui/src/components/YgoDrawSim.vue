@@ -1,3 +1,5 @@
+import { SortingStrategy } from
+"../../../core/src/core/business/SortingService.js";
 <template>
     <div class="drawsim">
         <button
@@ -60,7 +62,10 @@ import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
-import { SortingService } from "../../../core/src/core/business/SortingService";
+import {
+    SortingService,
+    SortingStrategy
+} from "../../../core/src/core/business/SortingService";
 
 @Component({ components: { YgoCard, BModal } })
 export default class YgoDrawSim extends Vue {
@@ -90,7 +95,7 @@ export default class YgoDrawSim extends Vue {
 
     draw() {
         this.drawItems = this.sortingService
-            .shuffle(this.mainDeckCards)
+            .sort(this.mainDeckCards, SortingStrategy.SHUFFLE)
             .slice(0, this.drawMode);
     }
 }

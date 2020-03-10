@@ -11,6 +11,7 @@ import { DeckImportExportService } from "./core/business/DeckImportExportService
 import { DeckService } from "./core/business/DeckService";
 import { EncodingService } from "./core/business/EncodingService";
 import { SortingService } from "./core/business/SortingService";
+import { FilterService } from "./core/business/FilterService";
 
 const container = new Container();
 container
@@ -23,6 +24,7 @@ container
 container.bind<DeckService>(TYPES.DeckService).to(DeckService);
 container.bind<PriceService>(TYPES.PriceService).to(PriceService);
 container.bind<SortingService>(TYPES.SortingService).to(SortingService);
+container.bind<FilterService>(TYPES.FilterService).to(FilterService);
 container
     .bind<CompressionService>(TYPES.CompressionService)
     .to(CompressionService);

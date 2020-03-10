@@ -1,9 +1,33 @@
 import { inject, injectable } from "inversify";
 import { Card } from "../model/Card";
-import { TYPES } from "../../types";
-import { CardDatabase } from "./CardDatabase";
 import { CardTypeGroup } from "../model/CardTypeGroup";
 import { shuffle } from "lodash";
+import { EncodingService } from "./EncodingService";
+import { CardDatabase } from "./CardDatabase";
+import { CompressionService } from "./CompressionService";
+import { DeckService } from "./DeckService";
+import { TYPES } from "../../types";
+
+enum SortingStrategy {
+    /**
+     * Shuffle cards
+     */
+    SHUFFLE,
+
+    /**
+     * Sort cards like they would appear in a sorted deck
+     */
+    DECK,
+
+    NAME,
+    NAME_REVERSE,
+    ATK,
+    DEF,
+    LEVEL,
+    VIEWS
+}
+
+type Comparator<T> = (a: T, b: T) => number;
 
 @injectable()
 class SortingService {
@@ -15,32 +39,93 @@ class SortingService {
     ) {
         this.cardDatabase = cardDatabase;
     }
-
-    public shuffle(cards: Card[]): Card[] {
-        return shuffle(cards);
+    public sort(cards: Card[], strategy: SortingStrategy): Card[] {
+        if (strategy === SortingStrategy.SHUFFLE) {
+            return shuffle(cards);
+        }
+        return cards.sort(this.findSortFn(strategy));
     }
 
-    public sort(cards: Card[]): Card[] {
-        return cards.sort((a: Card, b: Card) => {
-            // First, sort after the sort group.
-            if (a.type.sortGroup != b.type.sortGroup) {
-                return a.type.sortGroup - b.type.sortGroup;
-            }
+    private findSortFn(
+        strategy:
+            | SortingStrategy.DECK
+            | SortingStrategy.NAME
+            | SortingStrategy.NAME_REVERSE
+            | SortingStrategy.ATK
+            | SortingStrategy.DEF
+            | SortingStrategy.LEVEL
+            | SortingStrategy.VIEWS
+    ): Comparator<Card> {
+        let sortFn: Comparator<Card>;
+        if (strategy === SortingStrategy.DECK) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            sortFn = (a, b) => this.compareDeck(a, b);
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        } else if (strategy === SortingStrategy.NAME) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            sortFn = (a, b) => this.compareName(a, b);
+        } else if (strategy === SortingStrategy.NAME_REVERSE) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            sortFn = (a, b) => this.compareNameReverse(a, b);
+        } else if (strategy === SortingStrategy.ATK) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            sortFn = (a, b) => this.compareAtk(a, b);
+        } else if (strategy === SortingStrategy.DEF) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            sortFn = (a, b) => this.compareDef(a, b);
+        } else if (strategy === SortingStrategy.LEVEL) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            sortFn = (a, b) => this.compareLevel(a, b);
+        } else {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            sortFn = (a, b) => this.compareViews(a, b);
+        }
+        return sortFn;
+    }
 
-            // For non-monsters, sort by sub-type (race).
-            if (a.type.group !== CardTypeGroup.MONSTER && a.race != b.race) {
-                const races = this.cardDatabase.getRaces(a.type.group);
-                return races.indexOf(b.race) - races.indexOf(a.race);
-            }
-            // For monsters, sort by level.
-            if (a.type.group === CardTypeGroup.MONSTER && a.level !== b.level) {
-                return b.level! - a.level!; // Sort descending rather than ascending.
-            }
+    private compareName(a: Card, b: Card): number {
+        return a.name.localeCompare(b.name);
+    }
 
-            // As the last step, sort by name.
-            return a.name.localeCompare(b.name);
-        });
+    private compareNameReverse(a: Card, b: Card): number {
+        return this.compareName(a, b) * -1;
+    }
+
+    private compareAtk(a: Card, b: Card): number {
+        return (b.atk ?? 0) - (a.atk ?? 0);
+    }
+
+    private compareDef(a: Card, b: Card): number {
+        return (b.def ?? 0) - (a.def ?? 0);
+    }
+
+    private compareLevel(a: Card, b: Card): number {
+        return (b.level ?? 0) - (a.level ?? 0);
+    }
+
+    private compareViews(a: Card, b: Card): number {
+        return b.views - a.views;
+    }
+
+    private compareDeck(a: Card, b: Card): number {
+        // First, sort after the sort group.
+        if (a.type.sortGroup != b.type.sortGroup) {
+            return a.type.sortGroup - b.type.sortGroup;
+        }
+
+        // For non-monsters, sort by sub-type (race).
+        if (a.type.group !== CardTypeGroup.MONSTER && a.race != b.race) {
+            const races = this.cardDatabase.getRaces(a.type.group);
+            return races.indexOf(b.race) - races.indexOf(a.race);
+        }
+        // For monsters, sort by level.
+        if (a.type.group === CardTypeGroup.MONSTER && a.level !== b.level) {
+            return this.compareLevel(a, b);
+        }
+
+        // As the last step, sort by name.
+        return this.compareName(a, b);
     }
 }
 
-export { SortingService };
+export { SortingService, SortingStrategy };
