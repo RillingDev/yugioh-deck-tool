@@ -39,6 +39,7 @@ class SortingService {
     ) {
         this.cardDatabase = cardDatabase;
     }
+
     public sort(cards: Card[], strategy: SortingStrategy): Card[] {
         if (strategy === SortingStrategy.SHUFFLE) {
             return shuffle(cards);

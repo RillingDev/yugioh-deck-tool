@@ -9,6 +9,7 @@ import { Format } from "../model/Format";
 import { removeItem } from "lightdash";
 import { clone } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
+import { BanlistInfo } from "../model/BanlistInfo";
 
 @injectable()
 class DeckService {
@@ -26,7 +27,7 @@ class DeckService {
     public canAdd(
         deck: Deck,
         deckPart: DeckPart,
-        format: Format.TCG | Format.OCG | Format.GOAT,
+        format: Format,
         card: Card
     ): boolean {
         if (!card.type.deckPart.has(deckPart)) {
@@ -41,7 +42,11 @@ class DeckService {
         const count = this.getAllCards(deck).filter(existingCard =>
             this.cardService.isTreatedAsSame(existingCard, card)
         ).length;
-        return count < card.banlist[format];
+
+        if (!(format in card.banlist)) {
+            return false;
+        }
+        return count < card.banlist[<keyof BanlistInfo>format];
     }
 
     public addCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
