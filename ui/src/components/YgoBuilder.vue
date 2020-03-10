@@ -1,43 +1,33 @@
 <template>
     <div class="builder">
         <span
-            >Showing {{ pairsArrFilteredPrepared.length }} of
-            {{ pairsArr.length }} Cards</span
+            >Showing {{ filteredCards.length }} of
+            {{ filteredCards.length }} Cards</span
         >
 
-        <ygo-filter
-            :pairs-arr="pairsArr"
-            :sets="sets"
-            :show-advanced-filters="true"
-            @change="handleFilterUpdate"
-        />
+        <!--        <ygo-filter-->
+        <!--            :show-advanced-filters="true"-->
+        <!--            @change="handleFilterUpdate"-->
+        <!--        />-->
 
         <!-- builder-list -->
-        <template v-if="pairsArrFilteredPrepared.length">
+        <template v-if="filteredCards.length">
             <ul class="builder-list">
-                <li :key="pair[0]" v-for="pair in pairsArrFilteredPrepared">
+                <li :key="card.id" v-for="card in filteredCards">
                     <span class="builder-card">
                         <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
-                        <a :data-name="pair[0]" class="builder-card-name">{{
-                            pair[1]
+                        <a :data-name="card.name" class="builder-card-name">{{
+                            card.name
                         }}</a>
                         <div class="builder-card-action">
                             <button
                                 :class="`builder-add-${deckPart.id}`"
                                 :disabled="
-                                    !deckCardCanAdd(deckPart, pair[0], banlist)
+                                    !canAdd(deckPart, card, filter.format)
                                 "
                                 :key="deckPart.id"
                                 :title="`Add Card to ${deckPart.name} Deck`"
-                                @click="
-                                    e =>
-                                        clickEvent(
-                                            e,
-                                            deckPart,
-                                            pair[0],
-                                            banlist
-                                        )
-                                "
+                                @click="e => onAddCard(e, deckPart, card)"
                                 class="builder-add btn"
                                 v-for="deckPart in deckParts"
                             >
@@ -59,49 +49,79 @@
 </template>
 
 <script lang="ts">
-import { BANLISTS } from "../lib/data/banlist";
-import YgoFilter from "./YgoFilter.vue";
-import { CardDatabase, DEFAULT_DECKPART_ARR } from "../../../core";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
+import {
+    Card,
+    CardDatabase,
+    CardFilter,
+    DeckPart,
+    DEFAULT_DECKPART_ARR,
+    FilterService,
+    Format,
+    SortingService,
+    SortingStrategy
+} from "../../../core/src/main";
 
-export default {
-    components: { YgoFilter },
-    props: {
-        deckCardCanAdd: {
-            type: Function,
-            required: false,
-            default: () => true
+@Component({
+    components: {}
+})
+export default class YgoCard extends Vue {
+    @Prop({ required: true })
+    canAdd: (deckPart: DeckPart, card: Card, format: Format) => boolean;
+    deckParts = DEFAULT_DECKPART_ARR;
+    sorting: SortingStrategy = SortingStrategy.NAME;
+    filter: CardFilter = {
+        name: null,
+        type: null,
+
+        attribute: null,
+        race: null,
+        level: null,
+        linkMarker: null,
+
+        sets: null,
+        format: Format.TCG
+    };
+    private readonly cardDatabase = uiContainer.get<CardDatabase>(
+        UI_TYPES.CardDatabase
+    );
+    private readonly sortingService = uiContainer.get<SortingService>(
+        UI_TYPES.SortingService
+    );
+    private readonly filterService = uiContainer.get<FilterService>(
+        UI_TYPES.FilterService
+    );
+
+    get cards() {
+        if (this.cardDatabase == null) {
+            return [];
         }
-    },
-    data: () => {
-        const cardDatabase = uiContainer.get<CardDatabase>(
-            UI_TYPES.CardDatabase
-        );
-        return {
-            deckParts: DEFAULT_DECKPART_ARR,
-            pairsArrFiltered: [],
-            banlist: BANLISTS[0],
-            pairsArr: cardDatabase.getCards(),
-            sets: cardDatabase.getSets()
-        };
-    },
-    computed: {
-        pairsArrFilteredPrepared() {
-            return this.pairsArrFiltered
-                .slice(0, 100)
-                .map(pair => [pair[0], pair[1].name]);
-        }
-    },
-    methods: {
-        clickEvent(e, deckPart, cardId, banlist) {
-            this.$emit("deckcardadd", deckPart, cardId, banlist, e);
-        },
-        handleFilterUpdate(pairsArrFiltered) {
-            this.pairsArrFiltered = pairsArrFiltered;
-        }
+        return this.cardDatabase.getCards();
     }
-};
+
+    get sets() {
+        if (this.cardDatabase == null) {
+            return [];
+        }
+        return this.cardDatabase.getSets();
+    }
+
+    get filteredCards(): Card[] {
+        if (this.cardDatabase == null) {
+            return [];
+        }
+        const filtered = this.filterService.filter(this.cards, this.filter);
+        const sorted = this.sortingService.sort(filtered, this.sorting);
+        return sorted.slice(0, 100);
+    }
+
+    onAddCard(e: any, deckPart: DeckPart, card: Card) {
+        this.$emit("deck-card-add", e, { deckPart, card });
+    }
+}
 </script>
 
 <style lang="scss">

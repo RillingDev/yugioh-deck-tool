@@ -4,7 +4,7 @@
         :href="referenceUrl"
         class="deck-card"
         target="_blank"
-        v-on:contextmenu="onDeckCardRightClicked"
+        v-on:contextmenu="e => onDeckCardRightClicked(e)"
     >
         <img :alt="card.name" :src="imageUrl" height="135" width="100" />
         <div class="deck-card-text">
@@ -41,7 +41,7 @@ export default class YgoCard extends Vue {
 
     onDeckCardRightClicked(e: Event) {
         e.preventDefault();
-        this.$emit("deck-card-right-click");
+        this.$emit("deck-card-right-click", e);
     }
 }
 </script>

@@ -10,7 +10,9 @@
                 :card="card"
                 :key="`${card.id}_${cardIndex}`"
                 v-for="(card, cardIndex) in cards"
-                v-on:deck-card-right-click="() => onDeckCardRightClicked(card)"
+                v-on:deck-card-right-click="
+                    e => onDeckCardRightClicked(e, card)
+                "
             >
             </ygo-card>
         </div>
@@ -41,8 +43,8 @@ export default class YgoDeckPart extends Vue {
         return this.deck.parts.get(this.deckPart);
     }
 
-    onDeckCardRightClicked(card: Card) {
-        this.$emit("deck-card-right-click", card);
+    onDeckCardRightClicked(e: any, card: Card) {
+        this.$emit("deck-card-right-click", e, card);
     }
 }
 </script>

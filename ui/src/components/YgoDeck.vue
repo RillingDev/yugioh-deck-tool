@@ -11,7 +11,7 @@
             :key="deckPart.id"
             v-for="deckPart in deckParts"
             v-on:deck-card-right-click="
-                card => onDeckCardRightClicked(card, deckPart)
+                (e, card) => onDeckCardRightClicked(card, { card, deckPart })
             "
         />
     </div>
@@ -49,11 +49,11 @@ export default class YgoDeck extends Vue {
         return this.deckService.getAllCards(this.deck);
     }
 
-    onDeckCardRightClicked(card: Card, deckPart) {
+    onDeckCardRightClicked(e: any, data: { card: Card; deckPart }) {
         this.deck.parts = this.deckService.removeCard(
             this.deck,
-            deckPart,
-            card
+            data.deckPart,
+            data.card
         ).parts;
     }
 }
