@@ -82,7 +82,7 @@ export default class YgoCard extends Vue {
         level: null,
         linkMarker: null,
 
-        sets: null,
+        sets: [],
         format: Format.TCG
     };
     private readonly cardDatabase = uiContainer.get<CardDatabase>(

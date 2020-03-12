@@ -14,7 +14,7 @@ interface CardFilter {
     level: number | null;
     linkMarker: string | null;
 
-    sets: CardSet[] | null;
+    sets: CardSet[];
     format: Format | null;
 }
 
@@ -32,13 +32,10 @@ class FilterService {
             if (filter.type != null && card.type != filter.type) {
                 return false;
             }
-            if (filter.race != null && card.attribute != filter.race) {
+            if (filter.race != null && card.race != filter.race) {
                 return false;
             }
-            if (
-                filter.attribute != null &&
-                card.attribute != filter.attribute
-            ) {
+            if (filter.level != null && card.level != filter.level) {
                 return false;
             }
             if (
@@ -50,14 +47,21 @@ class FilterService {
 
             if (
                 filter.linkMarker != null &&
-                card.linkMarkers != null &&
-                !card.linkMarkers.includes(filter.linkMarker)
+                (card.linkMarkers == null ||
+                    !card.linkMarkers.includes(filter.linkMarker))
             ) {
                 return false;
             }
 
             if (
-                filter.sets != null &&
+                filter.format != null &&
+                !card.formats.includes(filter.format)
+            ) {
+                return false;
+            }
+
+            if (
+                filter.sets.length > 0 &&
                 isEmpty(intersection(card.sets, filter.sets))
             ) {
                 return false;
