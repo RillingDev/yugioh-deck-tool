@@ -113,11 +113,13 @@
                 <!--                            v-if="!ajax.currentlyLoading"-->
                 <!--                        />-->
             </div>
-            <!--                    <ygo-builder-->
-            <!--                        :deck-card-can-add="deckCardCanAdd"-->
-            <!--                        @deckcardadd="deckCardAdd"-->
-            <!--                        v-if="!ajax.currentlyLoading"-->
-            <!--                    />-->
+            <ygo-builder
+                :can-add="canAdd"
+                v-on:deck-card-add="
+                    (e, { deckPart, card }) => addCard(deckPart, card)
+                "
+                v-if="!ajax.currentlyLoading"
+            />
         </div>
     </div>
 </template>
@@ -145,6 +147,7 @@ import Component from "vue-class-component";
 import { readFile } from "@/lib/readFile";
 import YgoSorter from "@/components/YgoSorter.vue";
 import YgoDrawSim from "@/components/YgoDrawSim.vue";
+import YgoBuilder from "@/components/YgoBuilder.vue";
 
 logger.setLevel(levels.INFO);
 
@@ -152,7 +155,8 @@ logger.setLevel(levels.INFO);
     components: {
         YgoDeck,
         YgoSorter,
-        YgoDrawSim
+        YgoDrawSim,
+        YgoBuilder
     },
     name: "Index"
 })
@@ -198,16 +202,16 @@ export default class App extends Vue {
         saveFile(new File([fileContent], fileName));
     }
 
-    canAdd(
-        deckPart: DeckPart,
-        card: Card,
-        format: Format.TCG | Format.OCG | Format.GOAT
-    ) {
+    canAdd(deckPart: DeckPart, card: Card, format: Format) {
         return this.deckService.canAdd(this.deck, deckPart, format, card);
     }
 
-    cardAdd(deckPart: DeckPart, card: Card) {
-        return this.deckService.addCard(this.deck, deckPart, card);
+    addCard(deckPart: DeckPart, card: Card) {
+        this.deck.parts = this.deckService.addCard(
+            this.deck,
+            deckPart,
+            card
+        ).parts;
     }
 
     fileOnUpload(e) {

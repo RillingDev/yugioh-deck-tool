@@ -5,10 +5,13 @@
             {{ filteredCards.length }} Cards</span
         >
 
-        <!--        <ygo-filter-->
-        <!--            :show-advanced-filters="true"-->
-        <!--            @change="handleFilterUpdate"-->
-        <!--        />-->
+        <ygo-filter
+            :initial-filter="filter"
+            :initial-sorting="sorting"
+            :show-advanced-filters="true"
+            v-on:filter-change="newFilter => (filter = newFilter)"
+            v-on:sorting-change="newSorting => (sorting = newSorting)"
+        />
 
         <!-- builder-list -->
         <template v-if="filteredCards.length">
@@ -64,15 +67,16 @@ import {
     SortingService,
     SortingStrategy
 } from "../../../core/src/main";
+import YgoFilter from "@/components/YgoFilter.vue";
 
 @Component({
-    components: {}
+    components: { YgoFilter }
 })
-export default class YgoCard extends Vue {
+export default class YgoBuiler extends Vue {
     @Prop({ required: true })
     canAdd: (deckPart: DeckPart, card: Card, format: Format) => boolean;
     deckParts = DEFAULT_DECKPART_ARR;
-    sorting: SortingStrategy = SortingStrategy.NAME;
+    sorting = SortingStrategy.NAME;
     filter: CardFilter = {
         name: null,
         type: null,
@@ -100,13 +104,6 @@ export default class YgoCard extends Vue {
             return [];
         }
         return this.cardDatabase.getCards();
-    }
-
-    get sets() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getSets();
     }
 
     get filteredCards(): Card[] {

@@ -2,29 +2,26 @@ import { inject, injectable } from "inversify";
 import { Card } from "../model/Card";
 import { CardTypeGroup } from "../model/CardTypeGroup";
 import { shuffle } from "lodash";
-import { EncodingService } from "./EncodingService";
 import { CardDatabase } from "./CardDatabase";
-import { CompressionService } from "./CompressionService";
-import { DeckService } from "./DeckService";
 import { TYPES } from "../../types";
 
 enum SortingStrategy {
     /**
      * Shuffle cards
      */
-    SHUFFLE,
+    SHUFFLE = "Shuffle",
 
     /**
      * Sort cards like they would appear in a sorted deck
      */
-    DECK,
+    DECK = "Deck",
 
-    NAME,
-    NAME_REVERSE,
-    ATK,
-    DEF,
-    LEVEL,
-    VIEWS
+    NAME = "Name (A-Z)",
+    NAME_REVERSE = "Name (Z-A)",
+    ATK = "ATK",
+    DEF = "DEF",
+    LEVEL = "Level",
+    VIEWS = "Views"
 }
 
 type Comparator<T> = (a: T, b: T) => number;
