@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { mapCardInfo, RawCard } from "./mapping/mapCardInfo";
 import { mapCardSets, RawCardSet } from "./mapping/mapCardSets";
-import { CardSet } from "../core/model/CardSet";
+import { CardSet } from "../core/model/ygo/CardSet";
 import {
     CardDataLoaderService,
     UnlinkedCard
@@ -9,7 +9,7 @@ import {
 import { PaginatedResponse } from "./PaginatedResponse";
 import { injectable } from "inversify";
 import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
-import { CardValues } from "../core/model/CardValues";
+import { CardValues } from "../core/model/ygo/CardValues";
 
 @injectable()
 class YgoprodeckApiService implements CardDataLoaderService {

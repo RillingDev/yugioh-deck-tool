@@ -1,5 +1,5 @@
 // https://jvilk.com/MakeTypes/
-import { CardSet } from "../../core/model/CardSet";
+import { CardSet } from "../../core/model/ygo/CardSet";
 
 interface RawCardSet {
     set_name: string;

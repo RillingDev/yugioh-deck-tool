@@ -1,10 +1,10 @@
 import { inject, injectable } from "inversify";
-import { Card } from "../model/Card";
-import { CardSet } from "../model/CardSet";
-import { Format } from "../model/Format";
-import { CardType } from "../model/CardType";
+import { Card } from "../model/ygo/Card";
+import { CardSet } from "../model/ygo/CardSet";
+import { Format } from "../model/ygo/Format";
+import { CardType } from "../model/ygo/CardType";
 import { intersection, isEmpty } from "lodash";
-import { BanState } from "../model/BanState";
+import { BanState } from "../model/ygo/BanState";
 import { CardService } from "./CardService";
 import { TYPES } from "../../types";
 

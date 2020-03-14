@@ -1,13 +1,13 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
 import { CardDataLoaderService, UnlinkedCard } from "./CardDataLoaderService";
-import { Card } from "../model/Card";
-import { CardSet } from "../model/CardSet";
+import { Card } from "../model/ygo/Card";
+import { CardSet } from "../model/ygo/CardSet";
 import { CardDatabase } from "./CardDatabase";
-import { CardType } from "../model/CardType";
-import { CardTypeGroup } from "../model/CardTypeGroup";
-import { CardValues } from "../model/CardValues";
-import { CardSetAppearance } from "../model/CardSetAppearance";
+import { CardType } from "../model/ygo/CardType";
+import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
+import { CardValues } from "../model/ygo/CardValues";
+import { CardSetAppearance } from "../model/ygo/CardSetAppearance";
 import * as logger from "loglevel";
 
 @injectable()

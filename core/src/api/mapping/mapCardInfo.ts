@@ -1,10 +1,11 @@
-import { BanState } from "../../core/model/BanState";
-import { CardImage } from "../../core/model/CardImage";
-import { CardPrices } from "../../core/model/CardPrices";
-import { CardSetAppearance } from "../../core/model/CardSetAppearance";
-import { Format } from "../../core/model/Format";
+import { BanState } from "../../core/model/ygo/BanState";
+import { CardImage } from "../../core/model/ygo/CardImage";
+import { CardPrices } from "../../core/model/ygo/CardPrices";
+import { CardSetAppearance } from "../../core/model/ygo/CardSetAppearance";
+import { Format } from "../../core/model/ygo/Format";
 import { UnlinkedCard } from "../../core/business/CardDataLoaderService";
-import { DefaultBanState } from "../../core/model/DefaultBanState";
+import { DefaultBanState } from "../../core/model/ygo/DefaultBanState";
+import { DefaultVendor } from "../../core/model/price/DefaultVendor";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -138,13 +139,13 @@ const mapPrices = (rawCard: RawCard): CardPrices | null => {
         return null;
     }
     const prices = rawCard.card_prices[0];
-    return {
-        cardmarket: Number(prices.cardmarket_price),
-        tcgplayer: Number(prices.tcgplayer_price),
-        ebay: Number(prices.ebay_price),
-        amazon: Number(prices.amazon_price),
-        coolstuffinc: Number(prices.coolstuffinc_price)
-    };
+    return new Map([
+        [DefaultVendor.CARDMARKET, Number(prices.cardmarket_price)],
+        [DefaultVendor.TCGPLAYER, Number(prices.tcgplayer_price)],
+        [DefaultVendor.COOL_STUFF_INC, Number(prices.coolstuffinc_price)],
+        [DefaultVendor.EBAY, Number(prices.ebay_price)],
+        [DefaultVendor.AMAZON, Number(prices.amazon_price)]
+    ]);
 };
 
 const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {

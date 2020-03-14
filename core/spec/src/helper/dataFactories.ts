@@ -1,15 +1,15 @@
-import { Card } from "../../../src/core/model/Card";
-import { Format } from "../../../src/core/model/Format";
-import { CardImage } from "../../../src/core/model/CardImage";
-import { CardPrices } from "../../../src/core/model/CardPrices";
-import { ReleaseInfo } from "../../../src/core/model/ReleaseInfo";
-import { BanlistInfo } from "../../../src/core/model/BanlistInfo";
-import { CardType } from "../../../src/core/model/CardType";
-import { CardSet } from "../../../src/core/model/CardSet";
-import { CardTypeGroup } from "../../../src/core/model/CardTypeGroup";
-import { DefaultDeckPart } from "../../../src/core/model/DefaultDeckPart";
-import { DeckPart } from "../../../src/core/model/DeckPart";
-import { DefaultBanState } from "../../../src/core/model/DefaultBanState";
+import { Card } from "../../../src/core/model/ygo/Card";
+import { Format } from "../../../src/core/model/ygo/Format";
+import { CardImage } from "../../../src/core/model/ygo/CardImage";
+import { CardPrices } from "../../../src/core/model/ygo/CardPrices";
+import { ReleaseInfo } from "../../../src/core/model/ygo/ReleaseInfo";
+import { BanlistInfo } from "../../../src/core/model/ygo/BanlistInfo";
+import { CardType } from "../../../src/core/model/ygo/CardType";
+import { CardSet } from "../../../src/core/model/ygo/CardSet";
+import { CardTypeGroup } from "../../../src/core/model/ygo/CardTypeGroup";
+import { DefaultDeckPart } from "../../../src/core/model/ygo/DefaultDeckPart";
+import { DeckPart } from "../../../src/core/model/ygo/DeckPart";
+import { DefaultBanState } from "../../../src/core/model/ygo/DefaultBanState";
 
 const createCardType = (data: {
     name?: string;

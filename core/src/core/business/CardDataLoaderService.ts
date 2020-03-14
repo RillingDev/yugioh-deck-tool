@@ -1,11 +1,11 @@
-import { CardSet } from "../model/CardSet";
-import { CardValues } from "../model/CardValues";
-import { CardSetAppearance } from "../model/CardSetAppearance";
-import { CardImage } from "../model/CardImage";
-import { CardPrices } from "../model/CardPrices";
-import { Format } from "../model/Format";
-import { ReleaseInfo } from "../model/ReleaseInfo";
-import { BanlistInfo } from "../model/BanlistInfo";
+import { CardSet } from "../model/ygo/CardSet";
+import { CardValues } from "../model/ygo/CardValues";
+import { CardSetAppearance } from "../model/ygo/CardSetAppearance";
+import { CardImage } from "../model/ygo/CardImage";
+import { CardPrices } from "../model/ygo/CardPrices";
+import { Format } from "../model/ygo/Format";
+import { ReleaseInfo } from "../model/ygo/ReleaseInfo";
+import { BanlistInfo } from "../model/ygo/BanlistInfo";
 
 // Version of Card without references to CardType
 interface UnlinkedCard {

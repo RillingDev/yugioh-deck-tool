@@ -1,5 +1,5 @@
 <template>
-    <select v-on:change="() => onChange()" :title="title" v-model="value">
+    <select :title="title" v-model="value" v-on:change="() => onChange()">
         <option
             :key="option == null ? '__ANY' : trackBy(option)"
             :value="option"
@@ -29,11 +29,11 @@ export default class AdvancedSelect<T> extends Vue {
     @Prop({ required: false, default: () => null })
     title: string | null;
 
-    @Prop({ required: false, default: ()=>(val) => val })
-    label: (T)=>string;
+    @Prop({ required: false, default: () => val => val })
+    label: (T) => string;
 
-    @Prop({ required: false, default:  ()=>(val) => val })
-    trackBy: (T)=>string;
+    @Prop({ required: false, default: () => val => val })
+    trackBy: (T) => string;
 
     value: T | null;
 

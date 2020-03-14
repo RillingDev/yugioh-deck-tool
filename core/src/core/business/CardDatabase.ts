@@ -1,7 +1,7 @@
-import { Card } from "../model/Card";
-import { CardSet } from "../model/CardSet";
-import { CardType } from "../model/CardType";
-import { CardTypeGroup } from "../model/CardTypeGroup";
+import { Card } from "../model/ygo/Card";
+import { CardSet } from "../model/ygo/CardSet";
+import { CardType } from "../model/ygo/CardType";
+import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 
 export interface CardDatabase {
     /**

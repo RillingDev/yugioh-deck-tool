@@ -218,13 +218,13 @@ import {
     BanState,
     CardDatabase,
     CardFilter,
+    CardTypeGroup,
     DEFAULT_BAN_STATE_ARR,
     Format,
     SortingStrategy
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
-import { CardTypeGroup } from "../../../core/src/core/model/CardTypeGroup";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 
 @Component({
@@ -393,8 +393,8 @@ export default class YgoFilter extends Vue {
 }
 
 /**
-                                      * Multiselect
-                                      */
+                                          * Multiselect
+                                          */
 .decktool {
     .multiselect__tags {
         border: 1px solid #ced4da;

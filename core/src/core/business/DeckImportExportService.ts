@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
-import { Deck } from "../model/Deck";
+import { Deck } from "../model/ygo/Deck";
 import { TYPES } from "../../types";
 import { CardDatabase } from "./CardDatabase";
-import { Card } from "../model/Card";
-import { DEFAULT_DECK_PART_ARR } from "../model/DefaultDeckPart";
+import { Card } from "../model/ygo/Card";
+import { DEFAULT_DECK_PART_ARR } from "../model/ygo/DefaultDeckPart";
 import { CompressionService } from "./CompressionService";
 import { isEqual } from "lodash";
 import { groupMapReducingBy } from "lightdash";

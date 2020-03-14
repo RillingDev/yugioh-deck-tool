@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
-import { Card } from "../model/Card";
-import { CardPrices } from "../model/CardPrices";
+import { Card } from "../model/ygo/Card";
+import { CardPrices } from "../model/ygo/CardPrices";
+import { DefaultVendor } from "../model/price/DefaultVendor";
 
 interface PriceLookupResult {
     prices: CardPrices;
@@ -15,35 +16,33 @@ class PriceService {
 
     public getPrice(...cards: Card[]): PriceLookupResult {
         const missing: Card[] = cards.filter(card => !this.hasPrice(card));
-        const prices: CardPrices = cards
-            .filter(card => this.hasPrice(card))
-            .map(card => card.prices)
-            .reduce((previousValue, currentValue) => {
-                return this.createPrices(
-                    previousValue!.cardmarket + currentValue!.cardmarket,
-                    previousValue!.tcgplayer + currentValue!.tcgplayer,
-                    previousValue!.ebay + currentValue!.ebay,
-                    previousValue!.amazon + currentValue!.amazon,
-                    previousValue!.coolstuffinc + currentValue!.coolstuffinc
+        const cardsWithPrice = cards.filter(card => this.hasPrice(card));
+        const prices = this.createPrices(0, 0, 0, 0, 0);
+        for (const card of cardsWithPrice) {
+            for (const vendor of prices.keys()) {
+                prices.set(
+                    vendor,
+                    prices.get(vendor)! + card.prices!.get(vendor)!
                 );
-            }, this.createPrices(0, 0, 0, 0, 0))!;
+            }
+        }
         return { prices, missing };
     }
 
-    private createPrices(
-        cardmarket: number,
-        tcgplayer: number,
+    public createPrices(
+        cardMarket: number,
+        tcgPlayer: number,
+        coolStuffInc: number,
         ebay: number,
-        amazon: number,
-        coolstuffinc: number
+        amazon: number
     ): CardPrices {
-        return {
-            cardmarket: cardmarket,
-            tcgplayer: tcgplayer,
-            ebay: ebay,
-            amazon: amazon,
-            coolstuffinc: coolstuffinc
-        };
+        return new Map([
+            [DefaultVendor.CARDMARKET, cardMarket],
+            [DefaultVendor.TCGPLAYER, tcgPlayer],
+            [DefaultVendor.COOL_STUFF_INC, coolStuffInc],
+            [DefaultVendor.EBAY, ebay],
+            [DefaultVendor.AMAZON, amazon]
+        ]);
     }
 }
 

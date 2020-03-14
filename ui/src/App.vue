@@ -115,10 +115,10 @@
             </div>
             <ygo-builder
                 :can-add="canAdd"
+                v-if="!ajax.currentlyLoading"
                 v-on:deck-card-add="
                     (e, { deckPart, card }) => addCard(deckPart, card)
                 "
-                v-if="!ajax.currentlyLoading"
             />
         </div>
     </div>

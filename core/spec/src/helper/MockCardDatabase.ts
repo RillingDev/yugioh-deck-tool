@@ -1,9 +1,9 @@
 import { CardDatabase } from "../../../src/core/business/CardDatabase";
-import { Card } from "../../../src/core/model/Card";
-import { CardSet } from "../../../src/core/model/CardSet";
+import { Card } from "../../../src/core/model/ygo/Card";
+import { CardSet } from "../../../src/core/model/ygo/CardSet";
 import { injectable } from "inversify";
-import { CardType } from "../../../src/core/model/CardType";
-import { CardTypeGroup } from "../../../src/core/model/CardTypeGroup";
+import { CardType } from "../../../src/core/model/ygo/CardType";
+import { CardTypeGroup } from "../../../src/core/model/ygo/CardTypeGroup";
 
 @injectable()
 class MockCardDatabase implements CardDatabase {

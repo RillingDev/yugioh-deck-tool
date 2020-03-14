@@ -1,14 +1,14 @@
 <template>
     <div :class="{ 'price--group': group }" class="price">
         <span
-            :class="'price-mode-' + priceMode.id"
-            :key="priceMode.id"
-            :title="`${priceMode.name} Price`"
+            :class="'price-mode-' + vendor.id"
+            :key="vendor.id"
+            :title="`${vendor.name} Price`"
             class="price-mode"
-            v-for="priceMode in priceController.modes"
+            v-for="vendor in priceController.vendors"
         >
-            <span v-if="group">{{ priceMode.name }}: </span>
-            {{ priceController.format(priceValues[priceMode.id]) }}
+            <span v-if="group">{{ vendor.name }}: </span>
+            {{ priceController.format(priceValues.get(vendor)) }}
         </span>
     </div>
 </template>
