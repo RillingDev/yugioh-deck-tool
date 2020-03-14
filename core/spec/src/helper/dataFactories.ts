@@ -56,7 +56,6 @@ const createCard = (data: {
 }): Card => ({
     id: data.id ?? "123",
     name: data.name ?? "name",
-    desc: data.desc ?? "desc",
     type: data.type ?? createCardType({}),
 
     race: data.race ?? "race",

@@ -12,7 +12,6 @@ import { CardType } from "./CardType";
 interface Card {
     readonly id: string;
     readonly name: string;
-    readonly desc: string;
 
     readonly type: CardType;
     readonly race: string;

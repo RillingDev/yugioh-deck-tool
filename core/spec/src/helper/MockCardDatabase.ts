@@ -57,7 +57,7 @@ class MockCardDatabase implements CardDatabase {
         return [];
     }
 
-    getRaces(cardTypeGroup: CardTypeGroup): string[] {
+    getRaces(): string[] {
         return [];
     }
 

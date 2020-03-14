@@ -147,7 +147,6 @@ class MemoryCardDatabase implements CardDatabase {
         return {
             id: unlinkedCard.id,
             name: unlinkedCard.name,
-            desc: unlinkedCard.desc,
             type: this.linkType(unlinkedCard.type, cardValues.types),
 
             race: unlinkedCard.race,

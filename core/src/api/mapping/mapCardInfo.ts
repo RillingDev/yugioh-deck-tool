@@ -154,7 +154,6 @@ const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
         return {
             id: String(rawCard.id),
             name: rawCard.name,
-            desc: rawCard.desc,
 
             type: rawCard.type,
             race: rawCard.race,
