@@ -16,11 +16,4 @@ const DefaultBanState: {
     BANNED: { name: "Banned", count: 0 }
 };
 
-const DEFAULT_BAN_STATE_ARR = [
-    DefaultBanState.UNLIMITED,
-    DefaultBanState.SEMI_LIMITED,
-    DefaultBanState.LIMITED,
-    DefaultBanState.BANNED
-];
-
-export { BanState, DEFAULT_BAN_STATE_ARR, DefaultBanState };
+export { BanState, DefaultBanState };

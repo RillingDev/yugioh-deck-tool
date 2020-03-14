@@ -219,9 +219,9 @@ import {
     CardDatabase,
     CardFilter,
     CardTypeGroup,
-    DEFAULT_BAN_STATE_ARR,
     Format,
-    SortingStrategy
+    SortingStrategy,
+    DefaultBanState
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
@@ -352,7 +352,12 @@ export default class YgoFilter extends Vue {
                 SortingStrategy.LEVEL,
                 SortingStrategy.VIEWS
             ],
-            banStates: DEFAULT_BAN_STATE_ARR,
+            banStates: [
+                DefaultBanState.UNLIMITED,
+                DefaultBanState.SEMI_LIMITED,
+                DefaultBanState.LIMITED,
+                DefaultBanState.BANNED
+            ],
             formats: Object.values(Format)
         };
     }

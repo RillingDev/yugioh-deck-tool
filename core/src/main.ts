@@ -2,11 +2,7 @@ import { CardDataLoaderService } from "./core/business/CardDataLoaderService";
 import { BanlistInfo } from "./core/model/ygo/BanlistInfo";
 import { Card } from "./core/model/ygo/Card";
 import { ReleaseInfo } from "./core/model/ygo/ReleaseInfo";
-import {
-    BanState,
-    DEFAULT_BAN_STATE_ARR,
-    DefaultBanState
-} from "./core/model/ygo/BanState";
+import { BanState, DefaultBanState } from "./core/model/ygo/BanState";
 import { CardSet } from "./core/model/ygo/CardSet";
 import { CardSetAppearance } from "./core/model/ygo/intermediate/CardSetAppearance";
 import { CardImage } from "./core/model/ygo/CardImage";
@@ -65,7 +61,6 @@ export {
     BanlistInfo,
     BanState,
     DefaultBanState,
-    DEFAULT_BAN_STATE_ARR,
     ReleaseInfo,
     Deck,
     DeckPart,
