@@ -1,14 +1,15 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
-import { CardDataLoaderService, UnlinkedCard } from "./CardDataLoaderService";
+import { CardDataLoaderService } from "./CardDataLoaderService";
 import { Card } from "../model/ygo/Card";
 import { CardSet } from "../model/ygo/CardSet";
 import { CardDatabase } from "./CardDatabase";
 import { CardType } from "../model/ygo/CardType";
 import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 import { CardValues } from "../model/ygo/CardValues";
-import { CardSetAppearance } from "../model/ygo/CardSetAppearance";
+import { CardSetAppearance } from "../model/ygo/intermediate/CardSetAppearance";
 import * as logger from "loglevel";
+import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
 
 @injectable()
 class MemoryCardDatabase implements CardDatabase {

@@ -8,7 +8,7 @@ import {
     DefaultBanState
 } from "./core/model/ygo/BanState";
 import { CardSet } from "./core/model/ygo/CardSet";
-import { CardSetAppearance } from "./core/model/ygo/CardSetAppearance";
+import { CardSetAppearance } from "./core/model/ygo/intermediate/CardSetAppearance";
 import { CardImage } from "./core/model/ygo/CardImage";
 import { CardPrices } from "./core/model/ygo/CardPrices";
 import { Deck } from "./core/model/ygo/Deck";
@@ -35,7 +35,7 @@ import { CardFilter, FilterService } from "./core/business/FilterService";
 import { Currency, DEFAULT_CURRENCY_ARR } from "./core/model/price/Currency";
 import { CardType } from "./core/model/ygo/CardType";
 import { CardTypeGroup } from "./core/model/ygo/CardTypeGroup";
-import { Vendor, DefaultVendor } from "./core/model/price/Vendor";
+import { DefaultVendor, Vendor } from "./core/model/price/Vendor";
 
 export {
     /*

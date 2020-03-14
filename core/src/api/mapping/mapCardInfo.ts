@@ -1,10 +1,10 @@
 import { BanState, DefaultBanState } from "../../core/model/ygo/BanState";
 import { CardImage } from "../../core/model/ygo/CardImage";
 import { CardPrices } from "../../core/model/ygo/CardPrices";
-import { CardSetAppearance } from "../../core/model/ygo/CardSetAppearance";
+import { CardSetAppearance } from "../../core/model/ygo/intermediate/CardSetAppearance";
 import { Format } from "../../core/model/ygo/Format";
-import { UnlinkedCard } from "../../core/business/CardDataLoaderService";
 import { DefaultVendor } from "../../core/model/price/Vendor";
+import { UnlinkedCard } from "../../core/model/ygo/intermediate/UnlinkedCard";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
