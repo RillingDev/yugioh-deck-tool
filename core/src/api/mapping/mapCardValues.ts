@@ -73,22 +73,20 @@ const mapCardValues = (data: RawCardValues): CardValues => {
                 deckPart: mapDeckPart(type)
             };
         }),
-        values: {
-            [CardTypeGroup.MONSTER]: {
-                races: data.MONSTER.race,
-                attributes: data.MONSTER.attributes,
-                levels: data.MONSTER.level,
-                linkMarkers: data.MONSTER.linkmarkers
-            },
-            [CardTypeGroup.SPELL]: {
-                races: data.SPELL.race
-            },
-            [CardTypeGroup.TRAP]: {
-                races: data.TRAP.race
-            },
-            [CardTypeGroup.SKILL]: {
-                races: data.SKILL.race
-            }
+        [CardTypeGroup.MONSTER]: {
+            races: data.MONSTER.race,
+            attributes: data.MONSTER.attributes,
+            levels: data.MONSTER.level,
+            linkMarkers: data.MONSTER.linkmarkers
+        },
+        [CardTypeGroup.SPELL]: {
+            races: data.SPELL.race
+        },
+        [CardTypeGroup.TRAP]: {
+            races: data.TRAP.race
+        },
+        [CardTypeGroup.SKILL]: {
+            races: data.SKILL.race
         }
     };
 };

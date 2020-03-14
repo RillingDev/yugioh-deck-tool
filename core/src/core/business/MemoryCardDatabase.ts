@@ -55,29 +55,27 @@ class MemoryCardDatabase implements CardDatabase {
 
         this.races.set(
             CardTypeGroup.MONSTER,
-            cardValues.values[CardTypeGroup.MONSTER].races
+            cardValues[CardTypeGroup.MONSTER].races
         );
         this.races.set(
             CardTypeGroup.SPELL,
-            cardValues.values[CardTypeGroup.SPELL].races
+            cardValues[CardTypeGroup.SPELL].races
         );
         this.races.set(
             CardTypeGroup.TRAP,
-            cardValues.values[CardTypeGroup.TRAP].races
+            cardValues[CardTypeGroup.TRAP].races
         );
         this.races.set(
             CardTypeGroup.SKILL,
-            cardValues.values[CardTypeGroup.SKILL].races
+            cardValues[CardTypeGroup.SKILL].races
         );
 
         this.monsterAttributes.push(
-            ...cardValues.values[CardTypeGroup.MONSTER].attributes
+            ...cardValues[CardTypeGroup.MONSTER].attributes
         );
-        this.monsterLevels.push(
-            ...cardValues.values[CardTypeGroup.MONSTER].levels
-        );
+        this.monsterLevels.push(...cardValues[CardTypeGroup.MONSTER].levels);
         this.monsterLinkMarkers.push(
-            ...cardValues.values[CardTypeGroup.MONSTER].linkMarkers
+            ...cardValues[CardTypeGroup.MONSTER].linkMarkers
         );
         logger.debug(
             "Registered static values.",
