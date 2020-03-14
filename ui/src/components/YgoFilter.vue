@@ -4,12 +4,12 @@
         <template v-if="showAdvancedFilters">
             <div class="form-group">
                 <input
-                    v-on:input="onFilterChange"
                     class="form-control"
                     placeholder="Search"
                     title="Search"
                     type="search"
                     v-model="filter.name"
+                    v-on:input="onFilterChange"
                 />
             </div>
         </template>
@@ -19,12 +19,12 @@
             <div class="form-group form-group-builder">
                 <label>Sort:</label>
                 <AdvancedSelect
-                    class="form-control"
-                    v-on:input="onSortingChange"
-                    title="Active Sorting"
-                    v-model="sorting"
                     :initial-options="sortingStrategies"
                     :no-selection-allowed="false"
+                    class="form-control"
+                    title="Active Sorting"
+                    v-model="sorting"
+                    v-on:input="onSortingChange"
                 />
             </div>
         </template>
@@ -34,14 +34,14 @@
             <div class="form-group form-group-builder">
                 <label>Type:</label>
                 <AdvancedSelect
+                    :initial-options="types"
+                    :label="type => type.name"
+                    :no-selection-allowed="true"
+                    :track-by="type => type.name"
                     class="form-control"
-                    v-on:input="onFilterChange"
                     title="Active Type"
                     v-model="filter.type"
-                    :initial-options="types"
-                    :no-selection-allowed="true"
-                    :label="type => type.name"
-                    :track-by="type => type.name"
+                    v-on:input="onFilterChange"
                 />
             </div>
         </template>
@@ -53,36 +53,33 @@
                     <div class=" form-group-builder">
                         <label>Format:</label>
                         <AdvancedSelect
-                            class="form-control"
-                            v-on:input="onFilterChange"
-                            title="Active Format"
-                            v-model="filter.format"
                             :initial-options="formats"
                             :no-selection-allowed="true"
+                            class="form-control"
+                            title="Active Format"
+                            v-model="filter.format"
+                            v-on:input="onFilterChange"
                         />
                     </div>
                 </div>
 
                 <!-- builder-banlist -->
-                <!--                        <div class="col-xs-12 col-sm-6">-->
-                <!--                            <div class=" form-group-builder">-->
-                <!--                                <label>Banlist:</label>-->
-                <!--                                <select-->
-                <!--                                    @change="filterCards"-->
-                <!--                                    class="form-control"-->
-                <!--                                    title="Active Banlist"-->
-                <!--                                    v-model="filter.banlist.active"-->
-                <!--                                >-->
-                <!--                                    <option-->
-                <!--                                        :key="option.name"-->
-                <!--                                        :value="option"-->
-                <!--                                        v-for="option in filter.banlist.options"-->
-                <!--                                    >-->
-                <!--                                        {{ option.name }}-->
-                <!--                                    </option>-->
-                <!--                                </select>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
+                <div class="col-xs-12 col-sm-6" v-if="filter.format != null">
+                    <div class=" form-group-builder">
+                        <label>Ban:</label>
+
+                        <AdvancedSelect
+                            :initial-options="banStates"
+                            :label="banState => banState.name"
+                            :no-selection-allowed="true"
+                            :track-by="banState => banState.name"
+                            class="form-control"
+                            title="Active Ban State"
+                            v-model="filter.banState"
+                            v-on:input="onFilterChange"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -94,11 +91,11 @@
                 :options="sets"
                 :show-labels="false"
                 :show-no-results="false"
-                v-on:input="onFilterChange"
                 label="name"
                 placeholder="All Sets"
                 track-by="name"
                 v-model="filter.sets"
+                v-on:input="onFilterChange"
             />
         </div>
 
@@ -112,12 +109,12 @@
                         <div class="form-group-builder">
                             <label>Attribute:</label>
                             <AdvancedSelect
-                                class="form-control"
-                                v-on:input="onFilterChange"
-                                title="Active Attribute"
-                                v-model="filter.attribute"
                                 :initial-options="monsterAttributes"
                                 :no-selection-allowed="true"
+                                class="form-control"
+                                title="Active Attribute"
+                                v-model="filter.attribute"
+                                v-on:input="onFilterChange"
                             />
                         </div>
                     </div>
@@ -128,12 +125,12 @@
                             <!-- builder-race -->
                             <label>Race:</label>
                             <AdvancedSelect
-                                class="form-control"
-                                v-on:input="onFilterChange"
-                                title="Active Race"
-                                v-model="filter.race"
                                 :initial-options="monsterRaces"
                                 :no-selection-allowed="true"
+                                class="form-control"
+                                title="Active Race"
+                                v-model="filter.race"
+                                v-on:input="onFilterChange"
                             />
                         </div>
                     </div>
@@ -143,24 +140,24 @@
             <div class="form-group form-group-builder">
                 <label>Level:</label>
                 <AdvancedSelect
-                    class="form-control"
-                    v-on:input="onFilterChange"
-                    title="Active Level"
-                    v-model="filter.level"
                     :initial-options="monsterLevels"
                     :no-selection-allowed="true"
+                    class="form-control"
+                    title="Active Level"
+                    v-model="filter.level"
+                    v-on:input="onFilterChange"
                 />
             </div>
             <!-- builder-linkmarkers -->
             <div class="form-group form-group-builder" v-if="isLinkMonster">
                 <label>Link Markers:</label>
                 <AdvancedSelect
-                    class="form-control"
-                    v-on:input="onFilterChange"
-                    title="Active Link Markers"
-                    v-model="filter.linkMarker"
                     :initial-options="monsterLinkMarkers"
                     :no-selection-allowed="true"
+                    class="form-control"
+                    title="Active Link Markers"
+                    v-model="filter.linkMarker"
+                    v-on:input="onFilterChange"
                 />
             </div>
         </template>
@@ -170,12 +167,12 @@
             <div class="form-group form-group-builder">
                 <label>Spell Type:</label>
                 <AdvancedSelect
-                    class="form-control"
-                    v-on:input="onFilterChange"
-                    title="Active Spell Type"
-                    v-model="filter.race"
                     :initial-options="spellRaces"
                     :no-selection-allowed="true"
+                    class="form-control"
+                    title="Active Spell Type"
+                    v-model="filter.race"
+                    v-on:input="onFilterChange"
                 />
             </div>
         </template>
@@ -185,12 +182,12 @@
             <div class="form-group form-group-builder">
                 <label>Trap Type:</label>
                 <AdvancedSelect
-                    class="form-control"
-                    v-on:input="onFilterChange"
-                    title="Active Trap Type"
-                    v-model="filter.race"
                     :initial-options="trapRaces"
                     :no-selection-allowed="true"
+                    class="form-control"
+                    title="Active Trap Type"
+                    v-model="filter.race"
+                    v-on:input="onFilterChange"
                 />
             </div>
         </template>
@@ -200,12 +197,12 @@
             <div class="form-group form-group-builder">
                 <label>Skill Type:</label>
                 <AdvancedSelect
-                    class="form-control"
-                    v-on:input="onFilterChange"
-                    title="Active Skill Type"
-                    v-model="filter.race"
                     :initial-options="skillRaces"
                     :no-selection-allowed="true"
+                    class="form-control"
+                    title="Active Skill Type"
+                    v-model="filter.race"
+                    v-on:input="onFilterChange"
                 />
             </div>
         </template>
@@ -218,8 +215,10 @@ import { Prop } from "vue-property-decorator";
 import Component from "vue-class-component";
 import MultiSelect from "vue-multiselect";
 import {
+    BanState,
     CardDatabase,
     CardFilter,
+    DEFAULT_BAN_STATE_ARR,
     Format,
     SortingStrategy
 } from "../../../core/src/main";
@@ -252,25 +251,11 @@ export default class YgoFilter extends Vue {
 
     formats: Format[];
 
+    banStates: BanState[];
+
     private readonly cardDatabase = uiContainer.get<CardDatabase>(
         UI_TYPES.CardDatabase
     );
-
-    data() {
-        return {
-            filter: this.initialFilter,
-            sorting: this.initialSorting,
-            sortingStrategies: [
-                SortingStrategy.NAME,
-                SortingStrategy.NAME_REVERSE,
-                SortingStrategy.ATK,
-                SortingStrategy.DEF,
-                SortingStrategy.LEVEL,
-                SortingStrategy.VIEWS
-            ],
-            formats: Object.values(Format)
-        };
-    }
 
     get types() {
         if (this.cardDatabase == null) {
@@ -342,6 +327,7 @@ export default class YgoFilter extends Vue {
     get isLinkMonster() {
         return this.isMonster && this.filter.type?.name.includes("Link");
     }
+
     get isSpell() {
         return this.filter.type?.group === CardTypeGroup.SPELL;
     }
@@ -352,6 +338,23 @@ export default class YgoFilter extends Vue {
 
     get isSkill() {
         return this.filter.type?.group === CardTypeGroup.SKILL;
+    }
+
+    data() {
+        return {
+            filter: this.initialFilter,
+            sorting: this.initialSorting,
+            sortingStrategies: [
+                SortingStrategy.NAME,
+                SortingStrategy.NAME_REVERSE,
+                SortingStrategy.ATK,
+                SortingStrategy.DEF,
+                SortingStrategy.LEVEL,
+                SortingStrategy.VIEWS
+            ],
+            banStates: DEFAULT_BAN_STATE_ARR,
+            formats: Object.values(Format)
+        };
     }
 
     onFilterChange() {
@@ -390,8 +393,8 @@ export default class YgoFilter extends Vue {
 }
 
 /**
-                                  * Multiselect
-                                  */
+                                      * Multiselect
+                                      */
 .decktool {
     .multiselect__tags {
         border: 1px solid #ced4da;

@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { URL_DB_API, URL_IMAGE_UNKNOWN } from "../lib/data/urls";
+import { URL_DB_API, URL_IMAGE_UNKNOWN } from "@/lib/data/urls";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";

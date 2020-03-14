@@ -1,9 +1,12 @@
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import { Card } from "../model/Card";
 import { CardSet } from "../model/CardSet";
 import { Format } from "../model/Format";
 import { CardType } from "../model/CardType";
 import { intersection, isEmpty } from "lodash";
+import { BanState } from "../model/BanState";
+import { CardService } from "./CardService";
+import { TYPES } from "../../types";
 
 interface CardFilter {
     name: string | null;
@@ -16,10 +19,17 @@ interface CardFilter {
 
     sets: CardSet[];
     format: Format | null;
+    banState: BanState | null;
 }
 
 @injectable()
 class FilterService {
+    private readonly cardService: CardService;
+
+    constructor(@inject(TYPES.CardService) cardService: CardService) {
+        this.cardService = cardService;
+    }
+
     public filter(cards: Card[], filter: CardFilter): Card[] {
         return cards.filter(card => {
             if (
@@ -44,7 +54,6 @@ class FilterService {
             ) {
                 return false;
             }
-
             if (
                 filter.linkMarker != null &&
                 (card.linkMarkers == null ||
@@ -59,7 +68,14 @@ class FilterService {
             ) {
                 return false;
             }
-
+            if (
+                filter.banState != null &&
+                filter.format != null &&
+                this.cardService.getBanStateByFormat(card, filter.format) !==
+                    filter.banState
+            ) {
+                return false;
+            }
             if (
                 filter.sets.length > 0 &&
                 isEmpty(intersection(card.sets, filter.sets))

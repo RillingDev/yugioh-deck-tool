@@ -1,5 +1,4 @@
 import { Card } from "../../../src/core/model/Card";
-import { BanState } from "../../../src/core/model/BanState";
 import { Format } from "../../../src/core/model/Format";
 import { CardImage } from "../../../src/core/model/CardImage";
 import { CardPrices } from "../../../src/core/model/CardPrices";
@@ -10,6 +9,7 @@ import { CardSet } from "../../../src/core/model/CardSet";
 import { CardTypeGroup } from "../../../src/core/model/CardTypeGroup";
 import { DefaultDeckPart } from "../../../src/core/model/DefaultDeckPart";
 import { DeckPart } from "../../../src/core/model/DeckPart";
+import { DefaultBanState } from "../../../src/core/model/DefaultBanState";
 
 const createCardType = (data: {
     name?: string;
@@ -73,12 +73,12 @@ const createCard = (data: {
     treatedAs: data.treatedAs ?? null,
     archetype: data.archetype ?? null,
 
-    formats: data.formats ?? [],
+    formats: data.formats ?? [Format.TCG, Format.OCG],
     release: { [Format.TCG]: data.release?.TCG ?? null, [Format.OCG]: null },
     banlist: {
-        [Format.TCG]: data.banlist?.TCG ?? BanState.UNLIMITED,
-        [Format.OCG]: data.banlist?.OCG ?? BanState.UNLIMITED,
-        [Format.GOAT]: data.banlist?.GOAT ?? BanState.UNLIMITED
+        [Format.TCG]: data.banlist?.TCG ?? DefaultBanState.UNLIMITED,
+        [Format.OCG]: data.banlist?.OCG ?? DefaultBanState.UNLIMITED,
+        [Format.GOAT]: data.banlist?.GOAT ?? DefaultBanState.UNLIMITED
     },
 
     views: 0

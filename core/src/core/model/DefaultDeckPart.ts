@@ -31,10 +31,10 @@ const DefaultDeckPart: DefaultDeckParts = {
     }
 };
 
-const DEFAULT_DECKPART_ARR: DeckPart[] = [
+const DEFAULT_DECK_PART_ARR: DeckPart[] = [
     DefaultDeckPart.MAIN,
     DefaultDeckPart.EXTRA,
     DefaultDeckPart.SIDE
 ];
 
-export { DEFAULT_DECKPART_ARR, DefaultDeckPart };
+export { DEFAULT_DECK_PART_ARR, DefaultDeckPart };

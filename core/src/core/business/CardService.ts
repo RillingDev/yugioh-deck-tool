@@ -1,6 +1,10 @@
 import { injectable } from "inversify";
 import { Card } from "../model/Card";
 import { intersection } from "lodash";
+import { Format } from "../model/Format";
+import { BanState } from "../model/BanState";
+import { BanlistInfo } from "../model/BanlistInfo";
+import { DefaultBanState } from "../model/DefaultBanState";
 
 @injectable()
 class CardService {
@@ -9,6 +13,20 @@ class CardService {
             intersection(this.getAllNames(cardA), this.getAllNames(cardB))
                 .length > 0
         );
+    }
+
+    public getBanStateByFormat(card: Card, format: Format): BanState {
+        // If the format is not listed, it is not allowed -> banned
+        if (!card.formats.includes(format)) {
+            return DefaultBanState.BANNED;
+        }
+
+        // If the format is listed,but no explicit ban state is set -> unlimited
+        if (!(format in card.banlist)) {
+            return DefaultBanState.UNLIMITED;
+        }
+        // If a ban state is set -> use ban state
+        return card.banlist[<keyof BanlistInfo>format];
     }
 
     private getAllNames(card: Card): string[] {

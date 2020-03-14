@@ -3,7 +3,7 @@ import { Deck } from "../model/Deck";
 import { TYPES } from "../../types";
 import { CardDatabase } from "./CardDatabase";
 import { Card } from "../model/Card";
-import { DEFAULT_DECKPART_ARR } from "../model/DefaultDeckPart";
+import { DEFAULT_DECK_PART_ARR } from "../model/DefaultDeckPart";
 import { CompressionService } from "./CompressionService";
 import { isEqual } from "lodash";
 import { groupMapReducingBy } from "lightdash";
@@ -60,7 +60,7 @@ class DeckImportExportService {
             .filter(line => line.length > 0);
         let currentDeckPart = null;
         for (const line of lines) {
-            const foundDeckPart = DEFAULT_DECKPART_ARR.find(
+            const foundDeckPart = DEFAULT_DECK_PART_ARR.find(
                 part => part.indicator === line
             );
             if (foundDeckPart != null) {
@@ -88,7 +88,7 @@ class DeckImportExportService {
     public toFile(deck: Deck): DeckFile {
         const fileLines: string[] = [];
 
-        for (const deckPart of DEFAULT_DECKPART_ARR) {
+        for (const deckPart of DEFAULT_DECK_PART_ARR) {
             const deckPartCards = deck.parts.get(deckPart)!;
             fileLines.push(deckPart.indicator);
             fileLines.push(...deckPartCards.map(card => card.id));
@@ -123,7 +123,7 @@ class DeckImportExportService {
     public toUrlQueryParamValue(deck: Deck): string {
         const result: number[] = [];
 
-        for (const deckPart of DEFAULT_DECKPART_ARR) {
+        for (const deckPart of DEFAULT_DECK_PART_ARR) {
             for (const card of deck.parts.get(deckPart)!) {
                 result.push(...this.encodeCard(card));
             }
@@ -164,14 +164,14 @@ class DeckImportExportService {
             );
             if (isEqual(block, DeckImportExportService.DELIMITER_BLOCK)) {
                 // After the last deckpart, meta data starts
-                if (deckPartIndex === DEFAULT_DECKPART_ARR.length - 1) {
+                if (deckPartIndex === DEFAULT_DECK_PART_ARR.length - 1) {
                     metaDataStart = i + DeckImportExportService.BLOCK_SIZE;
                     break;
                 }
                 deckPartIndex++;
             } else {
                 const deckPart = deck.parts.get(
-                    DEFAULT_DECKPART_ARR[deckPartIndex]
+                    DEFAULT_DECK_PART_ARR[deckPartIndex]
                 )!;
                 deckPart.push(this.decodeCard(block));
             }
@@ -202,7 +202,7 @@ class DeckImportExportService {
         uncompressedValue
             .split(DELIMITERS.deckPart)
             .forEach((deckPartList: string, index) => {
-                const deckPart = DEFAULT_DECKPART_ARR[index];
+                const deckPart = DEFAULT_DECK_PART_ARR[index];
                 const deckPartCards = deck.parts.get(deckPart)!;
 
                 if (deckPartList.length > 0) {
@@ -233,7 +233,7 @@ class DeckImportExportService {
 
     public toShareableText(deck: Deck): string {
         const result = [];
-        for (const deckPart of DEFAULT_DECKPART_ARR) {
+        for (const deckPart of DEFAULT_DECK_PART_ARR) {
             result.push(`${deckPart.name}:`);
 
             const deckPartCards = deck.parts.get(deckPart)!;

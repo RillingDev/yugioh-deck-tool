@@ -10,7 +10,11 @@ import { CardPrices } from "./core/model/CardPrices";
 import { Deck } from "./core/model/Deck";
 import { DeckPart } from "./core/model/DeckPart";
 import {
-    DEFAULT_DECKPART_ARR,
+    DEFAULT_BAN_STATE_ARR,
+    DefaultBanState
+} from "./core/model/DefaultBanState";
+import {
+    DEFAULT_DECK_PART_ARR,
     DefaultDeckPart
 } from "./core/model/DefaultDeckPart";
 import { TYPES } from "./types";
@@ -23,8 +27,11 @@ import { DeckService } from "./core/business/DeckService";
 import { Format } from "./core/model/Format";
 import { CompressionService } from "./core/business/CompressionService";
 import { CardValues } from "./core/model/CardValues";
-import { SortingService, SortingStrategy } from "./core/business/SortingService";
-import { FilterService, CardFilter } from "./core/business/FilterService";
+import {
+    SortingService,
+    SortingStrategy
+} from "./core/business/SortingService";
+import { CardFilter, FilterService } from "./core/business/FilterService";
 
 export {
     /*
@@ -53,11 +60,13 @@ export {
     CardSetAppearance,
     BanlistInfo,
     BanState,
+    DefaultBanState,
+    DEFAULT_BAN_STATE_ARR,
     ReleaseInfo,
     Deck,
     DeckPart,
     Format,
     CardValues,
     DefaultDeckPart,
-    DEFAULT_DECKPART_ARR
+    DEFAULT_DECK_PART_ARR
 };

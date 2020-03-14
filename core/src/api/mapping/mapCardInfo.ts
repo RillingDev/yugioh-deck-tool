@@ -4,6 +4,7 @@ import { CardPrices } from "../../core/model/CardPrices";
 import { CardSetAppearance } from "../../core/model/CardSetAppearance";
 import { Format } from "../../core/model/Format";
 import { UnlinkedCard } from "../../core/business/CardDataLoaderService";
+import { DefaultBanState } from "../../core/model/DefaultBanState";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -68,15 +69,15 @@ interface RawBanlistInfo {
 
 const mapBanListState = (name: string | null): BanState => {
     if (name === "Banned") {
-        return BanState.BANNED;
+        return DefaultBanState.BANNED;
     }
     if (name === "Limited") {
-        return BanState.LIMITED;
+        return DefaultBanState.LIMITED;
     }
     if (name === "Semi-Limited") {
-        return BanState.SEMI_LIMITED;
+        return DefaultBanState.SEMI_LIMITED;
     }
-    return BanState.UNLIMITED;
+    return DefaultBanState.UNLIMITED;
 };
 
 const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {

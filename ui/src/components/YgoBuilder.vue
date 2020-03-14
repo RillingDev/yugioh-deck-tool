@@ -61,7 +61,7 @@ import {
     CardDatabase,
     CardFilter,
     DeckPart,
-    DEFAULT_DECKPART_ARR,
+    DEFAULT_DECK_PART_ARR,
     FilterService,
     Format,
     SortingService,
@@ -72,10 +72,10 @@ import YgoFilter from "@/components/YgoFilter.vue";
 @Component({
     components: { YgoFilter }
 })
-export default class YgoBuiler extends Vue {
+export default class YgoBuilder extends Vue {
     @Prop({ required: true })
     canAdd: (deckPart: DeckPart, card: Card, format: Format) => boolean;
-    deckParts = DEFAULT_DECKPART_ARR;
+    deckParts = DEFAULT_DECK_PART_ARR;
     sorting = SortingStrategy.NAME;
     filter: CardFilter = {
         name: null,
@@ -87,7 +87,8 @@ export default class YgoBuiler extends Vue {
         linkMarker: null,
 
         sets: [],
-        format: Format.TCG
+        format: Format.TCG,
+        banState: null
     };
     private readonly cardDatabase = uiContainer.get<CardDatabase>(
         UI_TYPES.CardDatabase

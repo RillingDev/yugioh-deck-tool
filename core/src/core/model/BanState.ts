@@ -1,8 +1,6 @@
-enum BanState {
-    BANNED = 0,
-    LIMITED = 1,
-    SEMI_LIMITED = 2,
-    UNLIMITED = 3
+interface BanState {
+    readonly name: string;
+    readonly count: number;
 }
 
 export { BanState };

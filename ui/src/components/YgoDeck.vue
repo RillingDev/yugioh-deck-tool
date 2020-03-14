@@ -23,7 +23,7 @@ import {
     Card,
     Deck,
     DeckService,
-    DEFAULT_DECKPART_ARR
+    DEFAULT_DECK_PART_ARR
 } from "../../../core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
@@ -40,7 +40,7 @@ import { UI_TYPES } from "@/types";
 export default class YgoDeck extends Vue {
     @Prop({ required: true })
     deck: Deck;
-    deckParts = DEFAULT_DECKPART_ARR;
+    deckParts = DEFAULT_DECK_PART_ARR;
     private readonly deckService = uiContainer.get<DeckService>(
         UI_TYPES.DeckService
     );

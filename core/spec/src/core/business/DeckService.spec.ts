@@ -7,7 +7,7 @@ import { Card } from "../../../../src/core/model/Card";
 import { DefaultDeckPart } from "../../../../src/core/model/DefaultDeckPart";
 import { createCard, createCardType } from "../../helper/dataFactories";
 import { Format } from "../../../../src/core/model/Format";
-import { BanState } from "../../../../src/core/model/BanState";
+import { DefaultBanState } from "../../../../src/core/model/DefaultBanState";
 
 describe("DeckService", () => {
     let deckService: DeckService;
@@ -96,9 +96,9 @@ describe("DeckService", () => {
             const card = createCard({
                 id: "456",
                 banlist: {
-                    [Format.OCG]: BanState.LIMITED,
-                    [Format.TCG]: BanState.UNLIMITED,
-                    [Format.GOAT]: BanState.UNLIMITED
+                    [Format.OCG]: DefaultBanState.LIMITED,
+                    [Format.TCG]: DefaultBanState.UNLIMITED,
+                    [Format.GOAT]: DefaultBanState.UNLIMITED
                 }
             });
             expect(
