@@ -4,12 +4,12 @@ import { MonsterGroupValues } from "./MonsterGroupValues";
 import { GroupValues } from "./GroupValues";
 
 interface CardValues {
-    types: CardType[];
-    values: {
-        [CardTypeGroup.MONSTER]: MonsterGroupValues;
-        [CardTypeGroup.SPELL]: GroupValues;
-        [CardTypeGroup.TRAP]: GroupValues;
-        [CardTypeGroup.SKILL]: GroupValues;
+    readonly types: CardType[];
+    readonly values: {
+        readonly [CardTypeGroup.MONSTER]: MonsterGroupValues;
+        readonly [CardTypeGroup.SPELL]: GroupValues;
+        readonly [CardTypeGroup.TRAP]: GroupValues;
+        readonly [CardTypeGroup.SKILL]: GroupValues;
     };
 }
 

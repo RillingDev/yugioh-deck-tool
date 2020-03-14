@@ -5,8 +5,10 @@ import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { createCard } from "../../helper/dataFactories";
-import { DefaultDeckPart } from "../../../../src/core/model/ygo/DefaultDeckPart";
-import { DeckPart } from "../../../../src/core/model/ygo/DeckPart";
+import {
+    DefaultDeckPart,
+    DeckPart
+} from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { deflate } from "pako";
 

@@ -2,9 +2,8 @@ import { injectable } from "inversify";
 import { Card } from "../model/ygo/Card";
 import { intersection } from "lodash";
 import { Format } from "../model/ygo/Format";
-import { BanState } from "../model/ygo/BanState";
+import { BanState, DefaultBanState } from "../model/ygo/BanState";
 import { BanlistInfo } from "../model/ygo/BanlistInfo";
-import { DefaultBanState } from "../model/ygo/DefaultBanState";
 
 @injectable()
 class CardService {

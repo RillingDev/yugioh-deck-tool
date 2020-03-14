@@ -1,7 +1,6 @@
 import { CardValues } from "../../core/model/ygo/CardValues";
 import { CardTypeGroup } from "../../core/model/ygo/CardTypeGroup";
-import { DeckPart } from "../../core/model/ygo/DeckPart";
-import { DefaultDeckPart } from "../../core/model/ygo/DefaultDeckPart";
+import { DeckPart, DefaultDeckPart } from "../../core/model/ygo/DeckPart";
 
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {

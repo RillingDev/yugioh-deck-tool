@@ -3,12 +3,12 @@ import { Deck } from "../model/ygo/Deck";
 import { TYPES } from "../../types";
 import { CardDatabase } from "./CardDatabase";
 import { Card } from "../model/ygo/Card";
-import { DEFAULT_DECK_PART_ARR } from "../model/ygo/DefaultDeckPart";
 import { CompressionService } from "./CompressionService";
 import { isEqual } from "lodash";
 import { groupMapReducingBy } from "lightdash";
 import { DeckService } from "./DeckService";
 import { EncodingService } from "./EncodingService";
+import { DEFAULT_DECK_PART_ARR } from "../model/ygo/DeckPart";
 
 interface ImportResult {
     readonly deck: Deck;

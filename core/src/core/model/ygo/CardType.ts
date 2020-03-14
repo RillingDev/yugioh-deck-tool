@@ -2,10 +2,10 @@ import { CardTypeGroup } from "./CardTypeGroup";
 import { DeckPart } from "./DeckPart";
 
 interface CardType {
-    name: string;
-    group: CardTypeGroup;
-    sortGroup: number;
-    deckPart: Set<DeckPart>;
+    readonly name: string;
+    readonly group: CardTypeGroup;
+    readonly sortGroup: number;
+    readonly deckPart: Set<DeckPart>;
 }
 
 export { CardType };

@@ -7,9 +7,11 @@ import { BanlistInfo } from "../../../src/core/model/ygo/BanlistInfo";
 import { CardType } from "../../../src/core/model/ygo/CardType";
 import { CardSet } from "../../../src/core/model/ygo/CardSet";
 import { CardTypeGroup } from "../../../src/core/model/ygo/CardTypeGroup";
-import { DefaultDeckPart } from "../../../src/core/model/ygo/DefaultDeckPart";
-import { DeckPart } from "../../../src/core/model/ygo/DeckPart";
-import { DefaultBanState } from "../../../src/core/model/ygo/DefaultBanState";
+import {
+    DefaultDeckPart,
+    DeckPart
+} from "../../../src/core/model/ygo/DeckPart";
+import { DefaultBanState } from "../../../src/core/model/ygo/BanState";
 
 const createCardType = (data: {
     name?: string;

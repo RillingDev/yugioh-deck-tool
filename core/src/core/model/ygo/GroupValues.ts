@@ -1,5 +1,5 @@
 interface GroupValues {
-    races: string[];
+    readonly races: string[];
 }
 
 export { GroupValues };
