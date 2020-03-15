@@ -1,39 +1,46 @@
-import axios, { AxiosInstance } from "axios";
 import { mapCardInfo, RawCard } from "./mapping/mapCardInfo";
 import { mapCardSets, RawCardSet } from "./mapping/mapCardSets";
 import { CardSet } from "../core/model/ygo/CardSet";
 import { CardDataLoaderService } from "../core/business/CardDataLoaderService";
 import { PaginatedResponse } from "./PaginatedResponse";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
 import { CardValues } from "../core/model/ygo/CardValues";
 import { UnlinkedCard } from "../core/model/ygo/intermediate/UnlinkedCard";
+import { TYPES } from "../types";
+import { HttpService } from "../core/business/HttpService";
 
 @injectable()
-class YgoprodeckApiService implements CardDataLoaderService {
+class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private static readonly CARD_INFO_CHUNK_SIZE = 2500;
-    private readonly httpClient: AxiosInstance;
+    private static readonly DEFAULT_TIMEOUT = 10000;
 
-    constructor() {
-        this.httpClient = axios.create({
-            baseURL: "https://db.ygoprodeck.com/api/v7/",
-            timeout: 10000,
-            responseType: "json",
-            validateStatus: status => status === 200
-        });
+    private static readonly API_BASE_URL = "https://db.ygoprodeck.com/api/v7/";
+
+    private readonly httpService: HttpService;
+
+    constructor(
+        @inject(TYPES.HttpService)
+        httpService: HttpService
+    ) {
+        this.httpService = httpService;
     }
 
     public async getCardInfo(): Promise<UnlinkedCard[]> {
         const responseData = await this.loadPaginated<RawCard>(
-            YgoprodeckApiService.CARD_INFO_CHUNK_SIZE,
+            YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,
             async offset => {
-                const response = await this.httpClient.get<
+                const response = await this.httpService.get<
                     PaginatedResponse<RawCard[]>
                 >("cardinfo.php", {
+                    baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
+                    timeout: YgoprodeckCardDataLoaderService.DEFAULT_TIMEOUT,
+                    responseType: "json",
                     params: {
                         misc: "yes",
                         includeAliased: "yes",
-                        num: YgoprodeckApiService.CARD_INFO_CHUNK_SIZE,
+                        num:
+                            YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,
                         offset
                     }
                 });
@@ -44,15 +51,25 @@ class YgoprodeckApiService implements CardDataLoaderService {
     }
 
     public async getCardSets(): Promise<CardSet[]> {
-        const response = await this.httpClient.get<RawCardSet[]>(
-            "cardsets.php"
+        const response = await this.httpService.get<RawCardSet[]>(
+            "cardsets.php",
+            {
+                baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
+                timeout: YgoprodeckCardDataLoaderService.DEFAULT_TIMEOUT,
+                responseType: "json"
+            }
         );
         return mapCardSets(response.data);
     }
 
     public async getCardValues(): Promise<CardValues> {
-        const response = await this.httpClient.get<RawCardValues>(
-            "cardvalues.php"
+        const response = await this.httpService.get<RawCardValues>(
+            "cardvalues.php",
+            {
+                baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
+                timeout: YgoprodeckCardDataLoaderService.DEFAULT_TIMEOUT,
+                responseType: "json"
+            }
         );
         return mapCardValues(response.data);
     }
@@ -78,4 +95,4 @@ class YgoprodeckApiService implements CardDataLoaderService {
     }
 }
 
-export { YgoprodeckApiService };
+export { YgoprodeckCardDataLoaderService };
