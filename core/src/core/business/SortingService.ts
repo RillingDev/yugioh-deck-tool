@@ -105,20 +105,41 @@ class SortingService {
         return b.views - a.views;
     }
 
+    private compareRace(a: Card, b: Card): number {
+        const races = this.cardDatabase.getRaces(a.type.group);
+        return races.indexOf(a.race) - races.indexOf(b.race);
+    }
+
+    /**
+     * Deck-sorting function loosely based on
+     * {@see https://github.com/Fluorohydride/ygopro}'s ./gframe/client_card.cpp sorting methods
+     *
+     * @param a Card A
+     * @param b Card B
+     * @return comparator result.
+     */
     private compareDeck(a: Card, b: Card): number {
         // First, sort after the sort group.
         if (a.type.sortGroup != b.type.sortGroup) {
             return a.type.sortGroup - b.type.sortGroup;
         }
 
-        // For non-monsters, sort by sub-type (race).
-        if (a.type.group !== CardTypeGroup.MONSTER && a.race != b.race) {
-            const races = this.cardDatabase.getRaces(a.type.group);
-            return races.indexOf(b.race) - races.indexOf(a.race);
-        }
-        // For monsters, sort by level.
-        if (a.type.group === CardTypeGroup.MONSTER && a.level !== b.level) {
-            return this.compareLevel(a, b);
+        // For monsters, sort by monster related attributes.
+        if (a.type.group === CardTypeGroup.MONSTER) {
+            if (a.level !== b.level) {
+                return this.compareLevel(a, b);
+            }
+            if (a.atk !== b.atk) {
+                return this.compareAtk(a, b);
+            }
+            if (a.def !== b.def) {
+                return this.compareDef(a, b);
+            }
+        } else {
+            // For non-monsters, sort just by race.
+            if (a.race != b.race) {
+                return this.compareRace(a, b);
+            }
         }
 
         // As the last step, sort by name.
