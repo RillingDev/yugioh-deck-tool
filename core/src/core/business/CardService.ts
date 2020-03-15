@@ -14,6 +14,17 @@ class CardService {
         );
     }
 
+    public getUniqueByName(cards: Card[]): Card[] {
+        const names = new Set<string>();
+        return cards.filter(card => {
+            if (names.has(card.name)) {
+                return false;
+            }
+            names.add(card.name);
+            return true;
+        });
+    }
+
     public getBanStateByFormat(card: Card, format: Format): BanState {
         // If the format is not listed, it is not allowed -> banned
         if (!card.formats.includes(format)) {

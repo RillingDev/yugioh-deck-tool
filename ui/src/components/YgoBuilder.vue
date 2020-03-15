@@ -65,7 +65,8 @@ import {
     FilterService,
     Format,
     SortingService,
-    SortingStrategy
+    SortingStrategy,
+    CardService
 } from "../../../core/src/main";
 import YgoFilter from "@/components/YgoFilter.vue";
 
@@ -102,12 +103,17 @@ export default class YgoBuilder extends Vue {
     private readonly filterService = uiContainer.get<FilterService>(
         UI_TYPES.FilterService
     );
+    private readonly cardService = uiContainer.get<CardService>(
+        UI_TYPES.CardService
+    );
 
     get cards() {
         if (this.cardDatabase == null) {
             return [];
         }
-        return this.cardDatabase.getCards();
+        return this.cardService.getUniqueByName(
+            this.cardDatabase.getCards()
+        );
     }
 
     get filteredCards(): Card[] {
