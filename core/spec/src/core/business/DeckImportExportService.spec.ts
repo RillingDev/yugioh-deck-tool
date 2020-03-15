@@ -3,7 +3,6 @@ import { container } from "../../../../src/inversify.config";
 import { DeckImportExportService } from "../../../../src/core/business/DeckImportExportService";
 import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { createCard } from "../../helper/dataFactories";
 import {
     DefaultDeckPart,
@@ -14,30 +13,27 @@ import { deflate } from "pako";
 import { HttpService } from "../../../../src/core/business/HttpService";
 import { anyString, anything, instance, mock, verify, when } from "ts-mockito";
 import { AxiosHttpService } from "../../../../src/core/business/AxiosHttpService";
+import { MemoryCardDatabase } from "../../../../src/core/business/MemoryCardDatabase";
 
 describe("DeckImportExportService", () => {
     let deckImportExportService: DeckImportExportService;
-    let mockCardDatabase: MockCardDatabase;
+    let mockCardDatabase: CardDatabase;
     let mockHttpServiceInstance: AxiosHttpService;
 
     beforeEach(() => {
+        mockCardDatabase = mock(MemoryCardDatabase);
         container
             .rebind<CardDatabase>(TYPES.CardDatabase)
-            .to(MockCardDatabase)
-            .inSingletonScope();
+            .toConstantValue(instance(mockCardDatabase));
         mockHttpServiceInstance = mock(AxiosHttpService);
+
         container
             .rebind<HttpService>(TYPES.HttpService)
             .toConstantValue(instance(mockHttpServiceInstance));
 
-        mockCardDatabase = container.get<MockCardDatabase>(TYPES.CardDatabase);
         deckImportExportService = container.get<DeckImportExportService>(
             TYPES.DeckImportExportService
         );
-    });
-
-    afterEach(() => {
-        mockCardDatabase.reset();
     });
 
     describe("fromFile", () => {
@@ -67,7 +63,8 @@ describe("DeckImportExportService", () => {
 #main
 123`;
             const card = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card);
 
             const result = deckImportExportService.fromFile({
                 fileContent,
@@ -85,7 +82,8 @@ describe("DeckImportExportService", () => {
 123
 123`;
             const card = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card);
 
             const result = deckImportExportService.fromFile({
                 fileContent,
@@ -110,12 +108,18 @@ describe("DeckImportExportService", () => {
 
 !side
 789`;
+
             const card1 = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card1);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card1);
             const card2 = createCard({ id: "456" });
-            mockCardDatabase.registerCard("456", card2);
+
+            when(mockCardDatabase.hasCard("456")).thenReturn(true);
+            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+
             const card3 = createCard({ id: "789" });
-            mockCardDatabase.registerCard("789", card3);
+            when(mockCardDatabase.hasCard("789")).thenReturn(true);
+            when(mockCardDatabase.getCard("789")).thenReturn(card3);
 
             const result = deckImportExportService.fromFile({
                 fileContent,
@@ -144,7 +148,8 @@ describe("DeckImportExportService", () => {
 #main
 123`;
             const card = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card);
 
             const result = deckImportExportService.fromFile({
                 fileContent,
@@ -195,7 +200,8 @@ describe("DeckImportExportService", () => {
 #main
 123`;
             const card = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card);
             when(
                 mockHttpServiceInstance.get(anyString(), anything())
             ).thenResolve({
@@ -274,13 +280,21 @@ describe("DeckImportExportService", () => {
                 to: "string"
             });
             const card1 = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card1);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card1);
+
             const card2 = createCard({ id: "456" });
-            mockCardDatabase.registerCard("456", card2);
+            when(mockCardDatabase.hasCard("456")).thenReturn(true);
+            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+
             const card3 = createCard({ id: "789" });
-            mockCardDatabase.registerCard("789", card3);
+            when(mockCardDatabase.hasCard("789")).thenReturn(true);
+            when(mockCardDatabase.getCard("789")).thenReturn(card3);
+
             const card4 = createCard({ id: "999" });
-            mockCardDatabase.registerCard("999", card4);
+            when(mockCardDatabase.hasCard("999")).thenReturn(true);
+            when(mockCardDatabase.getCard("999")).thenReturn(card4);
+
             expect(
                 deckImportExportService.fromLegacyUrlQueryParamValue(
                     queryParamValue,
@@ -335,15 +349,22 @@ describe("DeckImportExportService", () => {
     });
 
     describe("fromUrlQueryParamValue", () => {
-        it("creates value", () => {
+        it("reads value", () => {
             const card1 = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card1);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card1);
+
             const card2 = createCard({ id: "456" });
-            mockCardDatabase.registerCard("456", card2);
+            when(mockCardDatabase.hasCard("456")).thenReturn(true);
+            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+
             const card3 = createCard({ id: "789" });
-            mockCardDatabase.registerCard("789", card3);
+            when(mockCardDatabase.hasCard("789")).thenReturn(true);
+            when(mockCardDatabase.getCard("789")).thenReturn(card3);
+
             const card4 = createCard({ id: "999999999" });
-            mockCardDatabase.registerCard("999999999", card4);
+            when(mockCardDatabase.hasCard("999999999")).thenReturn(true);
+            when(mockCardDatabase.getCard("999999999")).thenReturn(card4);
 
             const result = deckImportExportService.fromUrlQueryParamValue(
                 "eJyrZoCAE4wQDAKizAwM-0-Osq4GsmEYBNLy8wGk7Ad4"
@@ -361,11 +382,16 @@ describe("DeckImportExportService", () => {
 
         it("works with null name", () => {
             const card1 = createCard({ id: "123" });
-            mockCardDatabase.registerCard("123", card1);
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card1);
+
             const card2 = createCard({ id: "456" });
-            mockCardDatabase.registerCard("456", card2);
+            when(mockCardDatabase.hasCard("456")).thenReturn(true);
+            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+
             const card3 = createCard({ id: "789" });
-            mockCardDatabase.registerCard("789", card3);
+            when(mockCardDatabase.hasCard("789")).thenReturn(true);
+            when(mockCardDatabase.getCard("789")).thenReturn(card3);
 
             const result = deckImportExportService.fromUrlQueryParamValue(
                 "eJyrZoCAE4wQWpQZQgMAGOwBXQ~~"
