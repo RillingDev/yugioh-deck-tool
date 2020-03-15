@@ -1,6 +1,7 @@
 interface HttpResponse<TData> {
     data: TData;
     status: number;
+    statusText: string;
 }
 
 interface HttpRequestConfig {

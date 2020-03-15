@@ -21,7 +21,6 @@ import { PriceService } from "./core/business/PriceService";
 import { DeckImportExportService } from "./core/business/DeckImportExportService";
 import { DeckService } from "./core/business/DeckService";
 import { Format } from "./core/model/ygo/Format";
-import { CompressionService } from "./core/business/CompressionService";
 import { CardValues } from "./core/model/ygo/CardValues";
 import {
     SortingService,
@@ -45,7 +44,6 @@ export {
     PriceService,
     DeckService,
     DeckImportExportService,
-    CompressionService,
     FilterService,
     CardFilter,
     SortingService,

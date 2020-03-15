@@ -7,7 +7,10 @@
         "newLine": "LF",
         "strict": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "allowSyntheticDefaultImports": true,
+        "importHelpers": true,
+        "esModuleInterop": true
     },
     "include": [],
     "exclude": [

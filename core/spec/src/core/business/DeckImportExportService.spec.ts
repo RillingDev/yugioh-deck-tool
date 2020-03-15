@@ -11,16 +11,25 @@ import {
 } from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { deflate } from "pako";
+import { HttpService } from "../../../../src/core/business/HttpService";
+import { anyString, anything, instance, mock, verify, when } from "ts-mockito";
+import { AxiosHttpService } from "../../../../src/core/business/AxiosHttpService";
 
 describe("DeckImportExportService", () => {
     let deckImportExportService: DeckImportExportService;
     let mockCardDatabase: MockCardDatabase;
+    let mockHttpServiceInstance: AxiosHttpService;
 
     beforeEach(() => {
         container
             .rebind<CardDatabase>(TYPES.CardDatabase)
             .to(MockCardDatabase)
             .inSingletonScope();
+        mockHttpServiceInstance = mock(AxiosHttpService);
+        container
+            .rebind<HttpService>(TYPES.HttpService)
+            .toConstantValue(instance(mockHttpServiceInstance));
+
         mockCardDatabase = container.get<MockCardDatabase>(TYPES.CardDatabase);
         deckImportExportService = container.get<DeckImportExportService>(
             TYPES.DeckImportExportService
@@ -143,6 +152,65 @@ describe("DeckImportExportService", () => {
             });
             expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
             expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
+        });
+    });
+
+    describe("fromRemoteFile", () => {
+        it("errors for different origin", async () => {
+            try {
+                await deckImportExportService.fromRemoteFile(
+                    "https://example.com",
+                    "https://attacker.website.hax/foo/bar.ydk"
+                );
+                fail("Promise did not reject.");
+            } catch (e) {
+                expect(e.message).toBe(
+                    "Decks can only be loaded from the same origin."
+                );
+            }
+
+            verify(
+                mockHttpServiceInstance.get(anyString(), anything())
+            ).never();
+        });
+
+        it("loads name from path", async () => {
+            when(
+                mockHttpServiceInstance.get(anyString(), anything())
+            ).thenResolve({
+                data: "deck file content",
+                status: 200,
+                statusText: "status"
+            });
+
+            const result = await deckImportExportService.fromRemoteFile(
+                "https://example.com",
+                "https://example.com/foo/bar.ydk"
+            );
+            expect(result.deck.name).toBe("bar");
+        });
+
+        it("loads deck", async () => {
+            const fileContent = `
+#main
+123`;
+            const card = createCard({ id: "123" });
+            mockCardDatabase.registerCard("123", card);
+            when(
+                mockHttpServiceInstance.get(anyString(), anything())
+            ).thenResolve({
+                data: fileContent,
+                status: 200,
+                statusText: "status"
+            });
+
+            const result = await deckImportExportService.fromRemoteFile(
+                "https://example.com",
+                "https://example.com/foo/bar.ydk"
+            );
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
+            expect(result.missing.length).toBe(0);
         });
     });
 

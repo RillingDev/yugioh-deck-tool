@@ -148,6 +148,7 @@ import { readFile } from "@/lib/readFile";
 import YgoSorter from "@/components/YgoSorter.vue";
 import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
+import parseUrl from "url-parse";
 
 logger.setLevel(levels.INFO);
 
@@ -253,25 +254,22 @@ export default class App extends Vue {
     }
 
     private async loadUriDeck(): Promise<void> {
-        const uriQuery = location.search;
-        if (uriQuery.includes("?u=")) {
-            return fetch(uriQuery.replace("?u=", ""))
-                .then(res => res.text())
-                .then(text => {
-                    this.deck = this.deckImportExportService.fromFile({
-                        fileContent: text,
-                        fileName: null
-                    }).deck;
+        const uriQuery = parseUrl(location.toString(), true).query;
+        if ("u" in uriQuery) {
+            return this.deckImportExportService
+                .fromRemoteFile(location.origin, uriQuery["u"])
+                .then(result => {
+                    this.deck = result.deck;
                 });
-        } else if (uriQuery.includes("?e=")) {
+        } else if ("e" in uriQuery) {
             // Load encoded uriDeck
             this.deck = this.deckImportExportService.fromUrlQueryParamValue(
-                uriQuery.replace("?e=", "")
+                uriQuery["e"]
             );
-        } else if (uriQuery.includes("?d=")) {
+        } else if ("d" in uriQuery) {
             // Load encoded uriDeck
             this.deck = this.deckImportExportService.fromLegacyUrlQueryParamValue(
-                uriQuery.replace("?d=", ""),
+                uriQuery["d"],
                 atob
             );
         }

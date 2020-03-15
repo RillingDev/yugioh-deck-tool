@@ -9,6 +9,8 @@ import { groupMapReducingBy } from "lightdash";
 import { DeckService } from "./DeckService";
 import { EncodingService } from "./EncodingService";
 import { DEFAULT_DECK_PART_ARR } from "../model/ygo/DeckPart";
+import { HttpService } from "./HttpService";
+import parseUrl from "url-parse";
 
 interface ImportResult {
     readonly deck: Deck;
@@ -30,11 +32,14 @@ class DeckImportExportService {
     private static readonly ID_LIMIT = 2 ** 32;
 
     private readonly encodingService: EncodingService;
+    private readonly httpService: HttpService;
     private readonly cardDatabase: CardDatabase;
     private readonly compressionService: CompressionService;
     private readonly deckService: DeckService;
 
     constructor(
+        @inject(TYPES.HttpService)
+        httpService: HttpService,
         @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
@@ -44,10 +49,33 @@ class DeckImportExportService {
         @inject(TYPES.CompressionService)
         compressionService: CompressionService
     ) {
+        this.httpService = httpService;
         this.encodingService = encodingService;
         this.compressionService = compressionService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
+    }
+
+    public async fromRemoteFile(
+        currentOrigin: string,
+        urlString: string
+    ): Promise<ImportResult> {
+        const url = parseUrl(urlString);
+        if (currentOrigin !== url.origin) {
+            throw new Error("Decks can only be loaded from the same origin.");
+        }
+
+        const fileName = url.pathname.substring(
+            url.pathname.lastIndexOf("/") + 1
+        );
+        const response = await this.httpService.get<string>(urlString, {
+            responseType: "text",
+            timeout: 5000
+        });
+        return this.fromFile({
+            fileName,
+            fileContent: response.data
+        });
     }
 
     public fromFile(deckFile: DeckFile): ImportResult {
