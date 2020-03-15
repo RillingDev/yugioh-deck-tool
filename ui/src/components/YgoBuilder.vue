@@ -2,7 +2,7 @@
     <div class="builder">
         <span
             >Showing {{ filteredCards.length }} of
-            {{ filteredCards.length }} Cards</span
+            {{ cards.length }} Cards</span
         >
 
         <ygo-filter
