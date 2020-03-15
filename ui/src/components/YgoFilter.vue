@@ -1,12 +1,11 @@
 <template>
     <div>
         <!-- builder-name -->
-        <template v-if="showAdvancedFilters">
+        <template>
             <div class="form-group">
                 <input
                     class="form-control"
                     placeholder="Search"
-                    title="Search"
                     type="search"
                     v-model="filter.name"
                     v-on:input="onFilterChange"
@@ -15,193 +14,134 @@
         </template>
 
         <!-- builder-sort -->
-        <template v-if="showAdvancedFilters">
+        <template>
             <div class="form-group form-group-builder">
-                <label>Sort:</label>
+                <label>Sorting:</label>
                 <AdvancedSelect
                     :initial-options="sortingStrategies"
                     :no-selection-allowed="false"
                     class="form-control"
-                    title="Active Sorting"
                     v-model="sorting"
                     v-on:input="onSortingChange"
                 />
             </div>
         </template>
+        <hr />
 
         <!-- builder-type -->
-        <template v-if="showAdvancedFilters">
+        <template>
             <div class="form-group form-group-builder">
                 <label>Type:</label>
                 <AdvancedSelect
+                    :initial-options="cardTypeGroups"
+                    :no-selection-allowed="true"
+                    class="form-control"
+                    v-model="filter.typeGroup"
+                    v-on:input="onFilterChange"
+                />
+                <AdvancedSelect
                     :initial-options="types"
-                    :label="type => type.name"
+                    :label="type => type.name.replace('Monster', '')"
                     :no-selection-allowed="true"
                     :track-by="type => type.name"
                     class="form-control"
-                    title="Active Type"
+                    v-if="types.length > 1"
                     v-model="filter.type"
                     v-on:input="onFilterChange"
                 />
             </div>
         </template>
 
-        <div class="form-group">
-            <div class="row">
-                <!-- builder-type -->
-                <div class="col-xs-12 col-sm-6">
-                    <div class=" form-group-builder">
-                        <label>Format:</label>
-                        <AdvancedSelect
-                            :initial-options="formats"
-                            :no-selection-allowed="true"
-                            class="form-control"
-                            title="Active Format"
-                            v-model="filter.format"
-                            v-on:input="onFilterChange"
-                        />
-                    </div>
-                </div>
-
-                <!-- builder-banlist -->
-                <div class="col-xs-12 col-sm-6" v-if="filter.format != null">
-                    <div class=" form-group-builder">
-                        <label>Ban:</label>
-
-                        <AdvancedSelect
-                            :initial-options="banStates"
-                            :label="banState => banState.name"
-                            :no-selection-allowed="true"
-                            :track-by="banState => banState.name"
-                            class="form-control"
-                            title="Active Ban State"
-                            v-model="filter.banState"
-                            v-on:input="onFilterChange"
-                        />
-                    </div>
-                </div>
+        <template v-if="filter.typeGroup != null">
+            <div class="form-group form-group-builder">
+                <label>{{ isMonster ? "Race" : "Subtype" }}:</label>
+                <AdvancedSelect
+                    :initial-options="races"
+                    :no-selection-allowed="true"
+                    class="form-control"
+                    v-model="filter.race"
+                    v-on:input="onFilterChange"
+                />
             </div>
-        </div>
+        </template>
 
-        <!-- builder-set -->
-        <div class="form-group form-group-builder">
-            <label>Set:</label>
-            <MultiSelect
-                :multiple="true"
-                :options="sets"
-                :show-labels="false"
-                :show-no-results="false"
-                label="name"
-                placeholder="All Sets"
-                track-by="name"
-                v-model="filter.sets"
-                v-on:input="onFilterChange"
-            />
-        </div>
-
-        <!-- builder-expanded -->
-        <template v-if="isMonster && showAdvancedFilters">
-            <div class="form-group">
-                <div class="row">
-                    <!-- builder-type -->
-                    <div class="col-xs-12 col-sm-6">
-                        <!-- builder-attribute -->
-                        <div class="form-group-builder">
-                            <label>Attribute:</label>
-                            <AdvancedSelect
-                                :initial-options="monsterAttributes"
-                                :no-selection-allowed="true"
-                                class="form-control"
-                                title="Active Attribute"
-                                v-model="filter.attribute"
-                                v-on:input="onFilterChange"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-6">
-                        <!-- builder-attribute -->
-                        <div class="form-group-builder">
-                            <!-- builder-race -->
-                            <label>Race:</label>
-                            <AdvancedSelect
-                                :initial-options="monsterRaces"
-                                :no-selection-allowed="true"
-                                class="form-control"
-                                title="Active Race"
-                                v-model="filter.race"
-                                v-on:input="onFilterChange"
-                            />
-                        </div>
-                    </div>
-                </div>
+        <template v-if="isMonster">
+            <div class="form-group form-group-builder">
+                <label>Attribute:</label>
+                <AdvancedSelect
+                    :initial-options="monsterAttributes"
+                    :no-selection-allowed="true"
+                    class="form-control"
+                    v-model="filter.attribute"
+                    v-on:input="onFilterChange"
+                />
             </div>
-            <!-- builder-level -->
+
             <div class="form-group form-group-builder">
                 <label>Level:</label>
                 <AdvancedSelect
                     :initial-options="monsterLevels"
                     :no-selection-allowed="true"
                     class="form-control"
-                    title="Active Level"
                     v-model="filter.level"
                     v-on:input="onFilterChange"
                 />
             </div>
-            <!-- builder-linkmarkers -->
+
             <div class="form-group form-group-builder" v-if="isLinkMonster">
                 <label>Link Markers:</label>
                 <AdvancedSelect
                     :initial-options="monsterLinkMarkers"
                     :no-selection-allowed="true"
                     class="form-control"
-                    title="Active Link Markers"
                     v-model="filter.linkMarker"
                     v-on:input="onFilterChange"
                 />
             </div>
         </template>
+        <hr />
 
-        <template v-if="isSpell && showAdvancedFilters">
-            <!-- builder-spelltype -->
+        <template>
             <div class="form-group form-group-builder">
-                <label>Spell Type:</label>
+                <label>Format:</label>
                 <AdvancedSelect
-                    :initial-options="spellRaces"
+                    :initial-options="formats"
                     :no-selection-allowed="true"
                     class="form-control"
-                    title="Active Spell Type"
-                    v-model="filter.race"
+                    v-model="filter.format"
                     v-on:input="onFilterChange"
                 />
             </div>
         </template>
-
-        <template v-if="isTrap && showAdvancedFilters">
-            <!-- builder-traptype -->
+        <template v-if="filter.format != null">
             <div class="form-group form-group-builder">
-                <label>Trap Type:</label>
+                <label>Ban State:</label>
+
                 <AdvancedSelect
-                    :initial-options="trapRaces"
+                    :initial-options="banStates"
+                    :label="banState => banState.name"
                     :no-selection-allowed="true"
+                    :track-by="banState => banState.name"
                     class="form-control"
-                    title="Active Trap Type"
-                    v-model="filter.race"
+                    v-model="filter.banState"
                     v-on:input="onFilterChange"
                 />
             </div>
         </template>
+        <hr />
 
-        <template v-if="isSkill && showAdvancedFilters">
-            <!-- builder-traptype -->
+        <template>
             <div class="form-group form-group-builder">
-                <label>Skill Type:</label>
-                <AdvancedSelect
-                    :initial-options="skillRaces"
-                    :no-selection-allowed="true"
-                    class="form-control"
-                    title="Active Skill Type"
-                    v-model="filter.race"
+                <label>Set:</label>
+                <MultiSelect
+                    :multiple="true"
+                    :options="sets"
+                    :show-labels="false"
+                    :show-no-results="false"
+                    label="name"
+                    placeholder="All Sets"
+                    track-by="name"
+                    v-model="filter.sets"
                     v-on:input="onFilterChange"
                 />
             </div>
@@ -211,21 +151,23 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Prop } from "vue-property-decorator";
+import { Prop, Watch } from "vue-property-decorator";
 import Component from "vue-class-component";
 import MultiSelect from "vue-multiselect";
 import {
     BanState,
     CardDatabase,
     CardFilter,
+    CardSet,
     CardTypeGroup,
+    DefaultBanState,
     Format,
-    SortingStrategy,
-    DefaultBanState
+    SortingStrategy
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
+import { clone } from "lodash";
 
 @Component({
     components: {
@@ -234,9 +176,6 @@ import AdvancedSelect from "@/components/AdvancedSelect.vue";
     }
 })
 export default class YgoFilter extends Vue {
-    @Prop({ required: false, default: () => true })
-    showAdvancedFilters: boolean;
-
     @Prop({ required: true })
     initialFilter: CardFilter;
 
@@ -253,94 +192,67 @@ export default class YgoFilter extends Vue {
 
     banStates: BanState[];
 
+    cardTypeGroups: CardTypeGroup[];
+
     private readonly cardDatabase = uiContainer.get<CardDatabase>(
         UI_TYPES.CardDatabase
     );
 
     get types() {
-        return [];
+        if (this.filter.typeGroup == null) {
+            return [];
+        }
+        return this.loadArrFromCardDatabase(cardDatabase =>
+            cardDatabase.getTypes(this.filter.typeGroup)
+        );
     }
 
     get sets() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getSets();
+        return this.loadArrFromCardDatabase<CardSet>(cardDatabase =>
+            cardDatabase.getSets()
+        );
     }
 
     get monsterAttributes() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getMonsterAttributes();
+        return this.loadArrFromCardDatabase<string>(cardDatabase =>
+            cardDatabase.getMonsterAttributes()
+        );
     }
 
     get monsterLevels() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getMonsterLevels();
+        return this.loadArrFromCardDatabase<number>(cardDatabase =>
+            cardDatabase.getMonsterLevels()
+        );
     }
 
     get monsterLinkMarkers() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getMonsterLinkMarkers();
-    }
-
-    get monsterRaces() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getRaces(CardTypeGroup.MONSTER);
-    }
-
-    get spellRaces() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getRaces(CardTypeGroup.SPELL);
-    }
-
-    get trapRaces() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getRaces(CardTypeGroup.TRAP);
-    }
-
-    get skillRaces() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getRaces(CardTypeGroup.SKILL);
+        return this.loadArrFromCardDatabase<string>(cardDatabase =>
+            cardDatabase.getMonsterLinkMarkers()
+        );
     }
 
     get isMonster() {
-        return this.filter.type?.group === CardTypeGroup.MONSTER;
+        return this.filter.typeGroup === CardTypeGroup.MONSTER;
     }
 
     get isLinkMonster() {
         return this.isMonster && this.filter.type?.name.includes("Link");
     }
 
-    get isSpell() {
-        return this.filter.type?.group === CardTypeGroup.SPELL;
-    }
-
-    get isTrap() {
-        return this.filter.type?.group === CardTypeGroup.TRAP;
-    }
-
-    get isSkill() {
-        return this.filter.type?.group === CardTypeGroup.SKILL;
+    get races() {
+        if (this.filter.typeGroup == null) {
+            return [];
+        }
+        return this.loadArrFromCardDatabase(cardDatabase =>
+            cardDatabase.getRaces(this.filter.typeGroup)
+        );
     }
 
     data() {
         return {
-            filter: this.initialFilter,
+            filter: clone(this.initialFilter),
             sorting: this.initialSorting,
+            cardTypeGroup: null,
             sortingStrategies: [
                 SortingStrategy.NAME,
                 SortingStrategy.NAME_REVERSE,
@@ -355,8 +267,24 @@ export default class YgoFilter extends Vue {
                 DefaultBanState.LIMITED,
                 DefaultBanState.BANNED
             ],
-            formats: Object.values(Format)
+            formats: Object.values(Format),
+            cardTypeGroups: Object.values(CardTypeGroup)
         };
+    }
+
+    @Watch("filter.type")
+    typeWatcher() {
+        this.filter.linkMarker = null;
+    }
+
+    @Watch("filter.typeGroup")
+    typeGroupWatcher() {
+        this.filter.type = null;
+        this.filter.race = null;
+        this.filter.attribute = null;
+        this.filter.linkMarker = null;
+        this.filter.level = null;
+        this.typeWatcher();
     }
 
     onFilterChange() {
@@ -366,10 +294,17 @@ export default class YgoFilter extends Vue {
     onSortingChange() {
         this.$emit("sorting-change", this.sorting);
     }
+
+    private loadArrFromCardDatabase<T>(
+        accessor: (cardDatabase: CardDatabase) => T[]
+    ): T[] {
+        if (this.cardDatabase == null) {
+            return [];
+        }
+        return accessor(this.cardDatabase);
+    }
 }
 </script>
-
-<!--<style lang="scss" src="vue-multiselect/dist/vue-multiselect.min.css"></style>-->
 
 <style lang="scss">
 @import "~bootstrap/scss/functions";
@@ -395,8 +330,8 @@ export default class YgoFilter extends Vue {
 }
 
 /**
-                                          * Multiselect
-                                          */
+                                                  * Multiselect
+                                                  */
 .decktool {
     .multiselect__tags {
         border: 1px solid #ced4da;

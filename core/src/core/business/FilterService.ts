@@ -7,19 +7,23 @@ import { intersection, isEmpty } from "lodash";
 import { BanState } from "../model/ygo/BanState";
 import { CardService } from "./CardService";
 import { TYPES } from "../../types";
+import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 
 interface CardFilter {
     name: string | null;
+
+    typeGroup: CardTypeGroup | null;
     type: CardType | null;
 
-    attribute: string | null;
     race: string | null;
+    attribute: string | null;
     level: number | null;
     linkMarker: string | null;
 
-    sets: CardSet[];
     format: Format | null;
     banState: BanState | null;
+
+    sets: CardSet[];
 }
 
 @injectable()
@@ -39,9 +43,16 @@ class FilterService {
                 return false;
             }
 
+            if (
+                filter.typeGroup != null &&
+                card.type.group != filter.typeGroup
+            ) {
+                return false;
+            }
             if (filter.type != null && card.type != filter.type) {
                 return false;
             }
+
             if (filter.race != null && card.race != filter.race) {
                 return false;
             }
@@ -76,6 +87,7 @@ class FilterService {
             ) {
                 return false;
             }
+
             if (
                 filter.sets.length > 0 &&
                 isEmpty(intersection(card.sets, filter.sets))

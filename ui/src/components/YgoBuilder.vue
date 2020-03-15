@@ -79,16 +79,19 @@ export default class YgoBuilder extends Vue {
     sorting = SortingStrategy.NAME;
     filter: CardFilter = {
         name: null,
+
+        typeGroup: null,
         type: null,
 
-        attribute: null,
         race: null,
+        attribute: null,
         level: null,
         linkMarker: null,
 
-        sets: [],
-        format: Format.TCG,
-        banState: null
+        format: null,
+        banState: null,
+
+        sets: []
     };
     private readonly cardDatabase = uiContainer.get<CardDatabase>(
         UI_TYPES.CardDatabase
