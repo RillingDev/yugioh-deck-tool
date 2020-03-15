@@ -17,7 +17,7 @@ class MemoryCardDatabase implements CardDatabase {
     private ready: boolean;
     private readonly cards: Map<string, Card>;
     private readonly sets: CardSet[];
-    private readonly types: CardType[];
+    private readonly types: Map<CardTypeGroup, CardType[]>;
     private readonly races: Map<CardTypeGroup, string[]>;
     private readonly monsterAttributes: string[];
     private readonly monsterLinkMarkers: string[];
@@ -30,7 +30,7 @@ class MemoryCardDatabase implements CardDatabase {
         this.dataLoaderClient = dataLoaderClient;
         this.cards = new Map<string, Card>();
         this.sets = [];
-        this.types = [];
+        this.types = new Map<CardTypeGroup, CardType[]>();
         this.races = new Map<CardTypeGroup, string[]>();
         this.monsterAttributes = [];
         this.monsterLinkMarkers = [];
@@ -50,7 +50,22 @@ class MemoryCardDatabase implements CardDatabase {
         this.sets.push(...cardSets);
         logger.debug("Registered sets.", this.sets);
 
-        this.types.push(...cardValues.types);
+        this.types.set(
+            CardTypeGroup.MONSTER,
+            cardValues[CardTypeGroup.MONSTER].types
+        );
+        this.types.set(
+            CardTypeGroup.SPELL,
+            cardValues[CardTypeGroup.SPELL].types
+        );
+        this.types.set(
+            CardTypeGroup.TRAP,
+            cardValues[CardTypeGroup.TRAP].types
+        );
+        this.types.set(
+            CardTypeGroup.SKILL,
+            cardValues[CardTypeGroup.SKILL].types
+        );
         logger.debug("Registered types.", this.types);
 
         this.races.set(
@@ -69,6 +84,7 @@ class MemoryCardDatabase implements CardDatabase {
             CardTypeGroup.SKILL,
             cardValues[CardTypeGroup.SKILL].races
         );
+        logger.debug("Registered races.", this.races);
 
         this.monsterAttributes.push(
             ...cardValues[CardTypeGroup.MONSTER].attributes
@@ -78,8 +94,7 @@ class MemoryCardDatabase implements CardDatabase {
             ...cardValues[CardTypeGroup.MONSTER].linkMarkers
         );
         logger.debug(
-            "Registered static values.",
-            this.races,
+            "Registered monster values.",
             this.monsterAttributes,
             this.monsterLevels,
             this.monsterLinkMarkers
@@ -119,8 +134,8 @@ class MemoryCardDatabase implements CardDatabase {
         return this.sets;
     }
 
-    public getTypes(): CardType[] {
-        return this.types;
+    public getTypes(cardTypeGroup: CardTypeGroup): CardType[] {
+        return this.types.get(cardTypeGroup)!;
     }
 
     public getRaces(cardTypeGroup: CardTypeGroup): string[] {

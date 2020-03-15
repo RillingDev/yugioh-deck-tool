@@ -1,8 +1,8 @@
 enum CardTypeGroup {
-    MONSTER = "MONSTER",
-    SPELL = "SPELL",
-    TRAP = "TRAP",
-    SKILL = "SKILL"
+    MONSTER = "Monster",
+    SPELL = "Spell",
+    TRAP = "Trap",
+    SKILL = "Skill"
 }
 
 export { CardTypeGroup };

@@ -20,7 +20,7 @@ export interface CardDatabase {
 
     getSets(): CardSet[];
 
-    getTypes(): CardType[];
+    getTypes(cardTypeGroup: CardTypeGroup): CardType[];
 
     getRaces(cardTypeGroup: CardTypeGroup): string[];
 

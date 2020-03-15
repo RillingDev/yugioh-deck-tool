@@ -258,10 +258,7 @@ export default class YgoFilter extends Vue {
     );
 
     get types() {
-        if (this.cardDatabase == null) {
-            return [];
-        }
-        return this.cardDatabase.getTypes();
+        return [];
     }
 
     get sets() {
