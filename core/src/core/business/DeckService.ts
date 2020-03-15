@@ -25,7 +25,7 @@ class DeckService {
     public canAdd(
         deck: Deck,
         deckPart: DeckPart,
-        format: Format,
+        format: Format | null,
         card: Card
     ): boolean {
         if (!card.type.deckPart.has(deckPart)) {

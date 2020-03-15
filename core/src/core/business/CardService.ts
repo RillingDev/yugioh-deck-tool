@@ -25,7 +25,12 @@ class CardService {
         });
     }
 
-    public getBanStateByFormat(card: Card, format: Format): BanState {
+    public getBanStateByFormat(card: Card, format: Format | null): BanState {
+        // If no format is specified, it is unknown -> unlimited
+        if (format == null) {
+            return DefaultBanState.UNLIMITED;
+        }
+
         // If the format is not listed, it is not allowed -> banned
         if (!card.formats.includes(format)) {
             return DefaultBanState.BANNED;
