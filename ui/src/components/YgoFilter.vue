@@ -28,6 +28,35 @@
         </template>
         <hr />
 
+        <template>
+            <div class="form-group form-group-builder">
+                <label>Format:</label>
+                <AdvancedSelect
+                    :initial-options="formats"
+                    :no-selection-allowed="true"
+                    class="form-control"
+                    v-model="filter.format"
+                    v-on:input="onFilterChange"
+                />
+            </div>
+        </template>
+        <template v-if="filter.format != null">
+            <div class="form-group form-group-builder">
+                <label>Ban State:</label>
+
+                <AdvancedSelect
+                    :initial-options="banStates"
+                    :label="banState => banState.name"
+                    :no-selection-allowed="true"
+                    :track-by="banState => banState.name"
+                    class="form-control"
+                    v-model="filter.banState"
+                    v-on:input="onFilterChange"
+                />
+            </div>
+        </template>
+        <hr />
+
         <!-- builder-type -->
         <template>
             <div class="form-group form-group-builder">
@@ -95,35 +124,6 @@
                     :no-selection-allowed="true"
                     class="form-control"
                     v-model="filter.linkMarker"
-                    v-on:input="onFilterChange"
-                />
-            </div>
-        </template>
-        <hr />
-
-        <template>
-            <div class="form-group form-group-builder">
-                <label>Format:</label>
-                <AdvancedSelect
-                    :initial-options="formats"
-                    :no-selection-allowed="true"
-                    class="form-control"
-                    v-model="filter.format"
-                    v-on:input="onFilterChange"
-                />
-            </div>
-        </template>
-        <template v-if="filter.format != null">
-            <div class="form-group form-group-builder">
-                <label>Ban State:</label>
-
-                <AdvancedSelect
-                    :initial-options="banStates"
-                    :label="banState => banState.name"
-                    :no-selection-allowed="true"
-                    :track-by="banState => banState.name"
-                    class="form-control"
-                    v-model="filter.banState"
                     v-on:input="onFilterChange"
                 />
             </div>

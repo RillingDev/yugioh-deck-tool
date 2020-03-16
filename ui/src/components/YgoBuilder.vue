@@ -2,7 +2,7 @@
     <div class="builder">
         <span
             >Showing {{ filteredCards.length }} of
-            {{ cards.length }} Cards</span
+            {{ formatCards.length }} Cards</span
         >
 
         <ygo-filter
@@ -17,7 +17,7 @@
         <template v-if="filteredCards.length">
             <ul class="builder-list">
                 <li :key="card.id" v-for="card in filteredCards">
-                    <span class="builder-card">
+                    <div class="builder-card">
                         <!-- Has to be an anchor tag because of how ygoprodeck.com's tooltip script works -->
                         <a :data-name="card.name" class="builder-card-name">{{
                             card.name
@@ -39,7 +39,7 @@
                                 </span>
                             </button>
                         </div>
-                    </span>
+                    </div>
                 </li>
             </ul>
         </template>
@@ -111,9 +111,7 @@ export default class YgoBuilder extends Vue {
         if (this.cardDatabase == null) {
             return [];
         }
-        return this.cardService.getUniqueByName(
-            this.cardDatabase.getCards()
-        );
+        return this.cardService.getUniqueByName(this.cardDatabase.getCards());
     }
 
     get filteredCards(): Card[] {
@@ -123,6 +121,28 @@ export default class YgoBuilder extends Vue {
         const filtered = this.filterService.filter(this.cards, this.filter);
         const sorted = this.sortingService.sort(filtered, this.sorting);
         return sorted.slice(0, 100);
+    }
+
+    get formatCards(): Card[] {
+        if (this.cardDatabase == null) {
+            return [];
+        }
+        return this.filterService.filter(this.cards, {
+            name: null,
+
+            typeGroup: null,
+            type: null,
+
+            race: null,
+            attribute: null,
+            level: null,
+            linkMarker: null,
+
+            format: this.filter.format,
+            banState: null,
+
+            sets: []
+        });
     }
 
     onAddCard(e: any, deckPart: DeckPart, card: Card) {
