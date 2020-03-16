@@ -30,8 +30,18 @@ class MemoryCardDatabase implements CardDatabase {
         this.dataLoaderClient = dataLoaderClient;
         this.cards = new Map<string, Card>();
         this.sets = [];
-        this.types = new Map<CardTypeGroup, CardType[]>();
-        this.races = new Map<CardTypeGroup, string[]>();
+        this.types = new Map<CardTypeGroup, CardType[]>(
+            Object.values(CardTypeGroup).map(cardTypeGroup => [
+                cardTypeGroup,
+                []
+            ])
+        );
+        this.races = new Map<CardTypeGroup, string[]>(
+            Object.values(CardTypeGroup).map(cardTypeGroup => [
+                cardTypeGroup,
+                []
+            ])
+        );
         this.monsterAttributes = [];
         this.monsterLinkMarkers = [];
         this.monsterLevels = [];
@@ -50,41 +60,15 @@ class MemoryCardDatabase implements CardDatabase {
         this.sets.push(...cardSets);
         logger.debug("Registered sets.", this.sets);
 
-        this.types.set(
-            CardTypeGroup.MONSTER,
-            cardValues[CardTypeGroup.MONSTER].types
-        );
-        this.types.set(
-            CardTypeGroup.SPELL,
-            cardValues[CardTypeGroup.SPELL].types
-        );
-        this.types.set(
-            CardTypeGroup.TRAP,
-            cardValues[CardTypeGroup.TRAP].types
-        );
-        this.types.set(
-            CardTypeGroup.SKILL,
-            cardValues[CardTypeGroup.SKILL].types
-        );
-        logger.debug("Registered types.", this.types);
-
-        this.races.set(
-            CardTypeGroup.MONSTER,
-            cardValues[CardTypeGroup.MONSTER].races
-        );
-        this.races.set(
-            CardTypeGroup.SPELL,
-            cardValues[CardTypeGroup.SPELL].races
-        );
-        this.races.set(
-            CardTypeGroup.TRAP,
-            cardValues[CardTypeGroup.TRAP].races
-        );
-        this.races.set(
-            CardTypeGroup.SKILL,
-            cardValues[CardTypeGroup.SKILL].races
-        );
-        logger.debug("Registered races.", this.races);
+        for (const cardTypeGroup of Object.values(CardTypeGroup)) {
+            this.types
+                .get(cardTypeGroup)!
+                .push(...cardValues[cardTypeGroup].types);
+            this.races
+                .get(cardTypeGroup)!
+                .push(...cardValues[cardTypeGroup].races);
+        }
+        logger.debug("Registered types and races.", this.types, this.races);
 
         this.monsterAttributes.push(
             ...cardValues[CardTypeGroup.MONSTER].attributes
