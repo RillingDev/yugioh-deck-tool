@@ -4,6 +4,7 @@ import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 import { shuffle } from "lodash";
 import { CardDatabase } from "./CardDatabase";
 import { TYPES } from "../../types";
+import { Format } from "../model/ygo/Format";
 
 enum SortingStrategy {
     /**
@@ -12,10 +13,13 @@ enum SortingStrategy {
     DECK = "Deck",
 
     NAME = "Name",
+
     ATK = "ATK",
     DEF = "DEF",
     LEVEL = "Level",
-    VIEWS = "Views"
+
+    VIEWS = "Views",
+    RELEASE_DATE = "Release Date"
 }
 
 enum SortingOrder {
@@ -67,6 +71,9 @@ class SortingService {
         } else if (strategy === SortingStrategy.LEVEL) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareLevel(a, b);
+        }else if(strategy===SortingStrategy.RELEASE_DATE){
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            return (a, b) => this.compareReleaseDate(a, b);
         }
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         return (a, b) => this.compareViews(a, b);
@@ -95,6 +102,10 @@ class SortingService {
     private compareRace(a: Card, b: Card): number {
         const races = this.cardDatabase.getRaces(a.type.group);
         return races.indexOf(a.race) - races.indexOf(b.race);
+    }
+
+    private compareReleaseDate(a: Card, b: Card): number {
+        return (a.release[Format.TCG] ?? 0) - (b.release[Format.TCG] ?? 0);
     }
 
     /**

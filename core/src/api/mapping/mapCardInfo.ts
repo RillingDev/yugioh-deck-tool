@@ -5,6 +5,7 @@ import { CardSetAppearance } from "../../core/model/ygo/intermediate/CardSetAppe
 import { Format } from "../../core/model/ygo/Format";
 import { DefaultVendor } from "../../core/model/price/Vendor";
 import { UnlinkedCard } from "../../core/model/ygo/intermediate/UnlinkedCard";
+import { ReleaseInfo } from "../../core/model/ygo/ReleaseInfo";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -147,6 +148,17 @@ const mapPrices = (rawCard: RawCard): CardPrices | null => {
     ]);
 };
 
+const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => ({
+    [Format.TCG]:
+        miscInfo?.tcg_date != null
+            ? new Date(miscInfo.tcg_date).getTime()
+            : Infinity,
+    [Format.OCG]:
+        miscInfo?.ocg_date != null
+            ? new Date(miscInfo.ocg_date).getTime()
+            : Infinity
+});
+
 const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
     return data.map(rawCard => {
         const miscInfo: RawMiscInfo | null =
@@ -173,10 +185,7 @@ const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
             treatedAs: miscInfo?.treated_as ?? null,
             archetype: rawCard.archetype ?? null,
             formats: mapFormats(miscInfo),
-            release: {
-                [Format.TCG]: miscInfo?.tcg_date ?? null,
-                [Format.OCG]: miscInfo?.ocg_date ?? null
-            },
+            release: mapRelease(miscInfo),
             banlist: {
                 [Format.TCG]: mapBanListState(
                     rawCard.banlist_info?.ban_tcg ?? null
