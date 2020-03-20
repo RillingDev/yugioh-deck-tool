@@ -66,7 +66,7 @@ class DeckService {
                 deckPart,
                 this.sortingService.sort(
                     deckClone.parts.get(deckPart)!,
-                    SortingStrategy.DECK
+                    SortingStrategy.DECK,
                 )
             );
         }
@@ -78,9 +78,8 @@ class DeckService {
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             deckClone.parts.set(
                 deckPart,
-                this.sortingService.sort(
-                    deckClone.parts.get(deckPart)!,
-                    SortingStrategy.SHUFFLE
+                this.sortingService.shuffle(
+                    deckClone.parts.get(deckPart)!
                 )
             );
         }

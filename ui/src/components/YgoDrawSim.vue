@@ -95,7 +95,7 @@ export default class YgoDrawSim extends Vue {
 
     draw() {
         this.drawItems = this.sortingService
-            .sort(this.mainDeckCards, SortingStrategy.SHUFFLE)
+            .shuffle(this.mainDeckCards)
             .slice(0, this.drawMode);
     }
 }

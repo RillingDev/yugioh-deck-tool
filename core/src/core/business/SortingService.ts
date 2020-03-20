@@ -7,11 +7,6 @@ import { TYPES } from "../../types";
 
 enum SortingStrategy {
     /**
-     * Shuffle cards
-     */
-    SHUFFLE = "Shuffle",
-
-    /**
      * Sort cards like they would appear in a sorted deck
      */
     DECK = "Deck",
@@ -37,23 +32,15 @@ class SortingService {
         this.cardDatabase = cardDatabase;
     }
 
+    public shuffle(cards: Card[]): Card[] {
+        return shuffle(cards);
+    }
+
     public sort(cards: Card[], strategy: SortingStrategy): Card[] {
-        if (strategy === SortingStrategy.SHUFFLE) {
-            return shuffle(cards);
-        }
         return cards.sort(this.findSortFn(strategy));
     }
 
-    private findSortFn(
-        strategy:
-            | SortingStrategy.DECK
-            | SortingStrategy.NAME
-            | SortingStrategy.NAME_REVERSE
-            | SortingStrategy.ATK
-            | SortingStrategy.DEF
-            | SortingStrategy.LEVEL
-            | SortingStrategy.VIEWS
-    ): Comparator<Card> {
+    private findSortFn(strategy: SortingStrategy): Comparator<Card> {
         let sortFn: Comparator<Card>;
         if (strategy === SortingStrategy.DECK) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
