@@ -7,10 +7,16 @@
 
         <ygo-filter
             :initial-filter="filter"
-            :initial-sorting="sorting"
+            :initial-sorting-strategy="sortingStrategy"
+            :initial-sorting-order="sortingOrder"
             :show-advanced-filters="true"
             v-on:filter-change="newFilter => (filter = newFilter)"
-            v-on:sorting-change="newSorting => (sorting = newSorting)"
+            v-on:sorting-change="
+                ({ strategy, order }) => {
+                    sortingStrategy = strategy;
+                    sortingOrder = order;
+                }
+            "
         />
 
         <!-- builder-list -->
@@ -60,13 +66,14 @@ import {
     Card,
     CardDatabase,
     CardFilter,
+    CardService,
     DeckPart,
     DEFAULT_DECK_PART_ARR,
     FilterService,
     Format,
+    SortingOrder,
     SortingService,
-    SortingStrategy,
-    CardService
+    SortingStrategy
 } from "../../../core/src/main";
 import YgoFilter from "@/components/YgoFilter.vue";
 
@@ -77,7 +84,8 @@ export default class YgoBuilder extends Vue {
     @Prop({ required: true })
     canAdd: (deckPart: DeckPart, card: Card, format: Format) => boolean;
     deckParts = DEFAULT_DECK_PART_ARR;
-    sorting = SortingStrategy.NAME;
+    sortingStrategy = SortingStrategy.NAME;
+    sortingOrder = SortingOrder.ASC;
     filter: CardFilter = {
         name: null,
 
@@ -119,7 +127,11 @@ export default class YgoBuilder extends Vue {
             return [];
         }
         const filtered = this.filterService.filter(this.cards, this.filter);
-        const sorted = this.sortingService.sort(filtered, this.sorting);
+        const sorted = this.sortingService.sort(
+            filtered,
+            this.sortingStrategy,
+            this.sortingOrder
+        );
         return sorted.slice(0, 100);
     }
 

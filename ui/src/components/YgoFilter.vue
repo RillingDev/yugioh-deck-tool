@@ -21,7 +21,14 @@
                     :initial-options="sortingStrategies"
                     :no-selection-allowed="false"
                     class="form-control"
-                    v-model="sorting"
+                    v-model="sortingStrategy"
+                    v-on:input="onSortingChange"
+                />
+                <AdvancedSelect
+                    :initial-options="sortingOrders"
+                    :no-selection-allowed="false"
+                    class="form-control"
+                    v-model="sortingOrder"
                     v-on:input="onSortingChange"
                 />
             </div>
@@ -162,6 +169,7 @@ import {
     CardTypeGroup,
     DefaultBanState,
     Format,
+    SortingOrder,
     SortingStrategy
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
@@ -180,19 +188,24 @@ export default class YgoFilter extends Vue {
     initialFilter: CardFilter;
 
     @Prop({ required: true, type: String })
-    initialSorting: SortingStrategy;
+    initialSortingStrategy: SortingStrategy;
+
+    @Prop({ required: true, type: String })
+    initialSortingOrder: SortingOrder;
 
     filter: CardFilter;
-
-    sorting: SortingStrategy;
-
-    sortingStrategies: SortingStrategy[];
 
     formats: Format[];
 
     banStates: BanState[];
 
     cardTypeGroups: CardTypeGroup[];
+
+    sortingStrategy: SortingStrategy;
+    sortingOrder: SortingOrder;
+
+    sortingStrategies: SortingStrategy[];
+    sortingOrders: SortingOrder[];
 
     private readonly cardDatabase = uiContainer.get<CardDatabase>(
         UI_TYPES.CardDatabase
@@ -251,16 +264,17 @@ export default class YgoFilter extends Vue {
     data() {
         return {
             filter: clone(this.initialFilter),
-            sorting: this.initialSorting,
+            sortingStrategy: this.initialSortingStrategy,
+            sortingOrder: this.initialSortingOrder,
             cardTypeGroup: null,
             sortingStrategies: [
                 SortingStrategy.NAME,
-                SortingStrategy.NAME_REVERSE,
                 SortingStrategy.ATK,
                 SortingStrategy.DEF,
                 SortingStrategy.LEVEL,
                 SortingStrategy.VIEWS
             ],
+            sortingOrders: [SortingOrder.ASC, SortingOrder.DESC],
             banStates: [
                 DefaultBanState.UNLIMITED,
                 DefaultBanState.SEMI_LIMITED,
@@ -292,7 +306,10 @@ export default class YgoFilter extends Vue {
     }
 
     onSortingChange() {
-        this.$emit("sorting-change", this.sorting);
+        this.$emit("sorting-change", {
+            strategy: this.sortingStrategy,
+            order: this.sortingOrder
+        });
     }
 
     private loadArrFromCardDatabase<T>(
@@ -330,8 +347,8 @@ export default class YgoFilter extends Vue {
 }
 
 /**
-                                                  * Multiselect
-                                                  */
+                                                          * Multiselect
+                                                          */
 .decktool {
     .multiselect__tags {
         border: 1px solid #ced4da;

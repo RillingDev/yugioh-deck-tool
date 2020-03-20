@@ -24,7 +24,8 @@ import { Format } from "./core/model/ygo/Format";
 import { CardValues } from "./core/model/ygo/CardValues";
 import {
     SortingService,
-    SortingStrategy
+    SortingStrategy,
+    SortingOrder
 } from "./core/business/SortingService";
 import { CardFilter, FilterService } from "./core/business/FilterService";
 import { Currency, DEFAULT_CURRENCY_ARR } from "./core/model/price/Currency";
@@ -48,6 +49,7 @@ export {
     CardFilter,
     SortingService,
     SortingStrategy,
+    SortingOrder,
     /*
      * Data models
      */

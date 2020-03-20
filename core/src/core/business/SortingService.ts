@@ -11,12 +11,16 @@ enum SortingStrategy {
      */
     DECK = "Deck",
 
-    NAME = "Name (A-Z)",
-    NAME_REVERSE = "Name (Z-A)",
+    NAME = "Name",
     ATK = "ATK",
     DEF = "DEF",
     LEVEL = "Level",
     VIEWS = "Views"
+}
+
+enum SortingOrder {
+    ASC = "Asc",
+    DESC = "Desc"
 }
 
 type Comparator<T> = (a: T, b: T) => number;
@@ -36,44 +40,40 @@ class SortingService {
         return shuffle(cards);
     }
 
-    public sort(cards: Card[], strategy: SortingStrategy): Card[] {
-        return cards.sort(this.findSortFn(strategy));
+    public sort(
+        cards: Card[],
+        strategy: SortingStrategy,
+        order: SortingOrder = SortingOrder.ASC
+    ): Card[] {
+        const modifier = order === SortingOrder.DESC ? -1 : 1;
+        const comparator = this.findComparator(strategy);
+        return cards.sort((a, b) => comparator(a, b) * modifier);
     }
 
-    private findSortFn(strategy: SortingStrategy): Comparator<Card> {
-        let sortFn: Comparator<Card>;
+    private findComparator(strategy: SortingStrategy): Comparator<Card> {
         if (strategy === SortingStrategy.DECK) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            sortFn = (a, b) => this.compareDeck(a, b);
+            return (a, b) => this.compareDeck(a, b);
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         } else if (strategy === SortingStrategy.NAME) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            sortFn = (a, b) => this.compareName(a, b);
-        } else if (strategy === SortingStrategy.NAME_REVERSE) {
-            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            sortFn = (a, b) => this.compareNameReverse(a, b);
+            return (a, b) => this.compareName(a, b);
         } else if (strategy === SortingStrategy.ATK) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            sortFn = (a, b) => this.compareAtk(a, b);
+            return (a, b) => this.compareAtk(a, b);
         } else if (strategy === SortingStrategy.DEF) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            sortFn = (a, b) => this.compareDef(a, b);
+            return (a, b) => this.compareDef(a, b);
         } else if (strategy === SortingStrategy.LEVEL) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            sortFn = (a, b) => this.compareLevel(a, b);
-        } else {
-            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-            sortFn = (a, b) => this.compareViews(a, b);
+            return (a, b) => this.compareLevel(a, b);
         }
-        return sortFn;
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        return (a, b) => this.compareViews(a, b);
     }
 
     private compareName(a: Card, b: Card): number {
         return a.name.localeCompare(b.name);
-    }
-
-    private compareNameReverse(a: Card, b: Card): number {
-        return this.compareName(a, b) * -1;
     }
 
     private compareAtk(a: Card, b: Card): number {
@@ -134,4 +134,4 @@ class SortingService {
     }
 }
 
-export { SortingService, SortingStrategy };
+export { SortingService, SortingStrategy, SortingOrder };
