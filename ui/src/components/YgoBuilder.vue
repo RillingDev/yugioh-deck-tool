@@ -9,7 +9,6 @@
             :initial-filter="filter"
             :initial-sorting-strategy="sortingStrategy"
             :initial-sorting-order="sortingOrder"
-            :show-advanced-filters="true"
             v-on:filter-change="newFilter => (filter = newFilter)"
             v-on:sorting-change="
                 ({ strategy, order }) => {

@@ -12,9 +12,10 @@
                 />
             </div>
         </template>
+        <hr />
 
         <!-- builder-sort -->
-        <template>
+        <template v-if="showSorting">
             <div class="form-group form-group-builder">
                 <label>Sorting:</label>
                 <AdvancedSelect
@@ -32,8 +33,8 @@
                     v-on:input="onSortingChange"
                 />
             </div>
+            <hr />
         </template>
-        <hr />
 
         <template>
             <div class="form-group form-group-builder">
@@ -200,10 +201,17 @@ export default class YgoFilter extends Vue {
     @Prop({ required: true })
     initialFilter: CardFilter;
 
-    @Prop({ required: true, type: String })
+    @Prop({ required: false, type: Boolean, default: () => true })
+    showSorting: boolean;
+
+    @Prop({
+        required: false,
+        type: String,
+        default: () => SortingStrategy.NAME
+    })
     initialSortingStrategy: SortingStrategy;
 
-    @Prop({ required: true, type: String })
+    @Prop({ required: false, type: String, default: () => SortingOrder.ASC })
     initialSortingOrder: SortingOrder;
 
     filter: CardFilter;

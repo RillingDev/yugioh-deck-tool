@@ -30,6 +30,14 @@
                     v-on:input="newStrategy => (strategy = newStrategy)"
                 ></AdvancedSelect>
             </div>
+            <hr />
+            <div class="form-group">
+                <YgoFilter
+                    :initial-filter="filter"
+                    :show-sorting="false"
+                    v-on:filter-change="newFilter => (filter = newFilter)"
+                ></YgoFilter>
+            </div>
         </b-modal>
     </div>
 </template>
@@ -37,21 +45,28 @@
 <script lang="ts">
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
-import { Deck, DeckRandomizationService } from "../../../core/src/main";
+import {
+    Deck,
+    DeckRandomizationService,
+    CardFilter
+} from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
 import { RandomizationStrategy } from "../../../core/src/core/business/service/DeckRandomizationService";
 import { BModal } from "bootstrap-vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
+import YgoFilter from "@/components/YgoFilter.vue";
 
-@Component({ components: { AdvancedSelect } })
+@Component({ components: { AdvancedSelect, YgoFilter } })
 export default class YgoRandomizer extends Vue {
     @Prop({ required: true })
     deck: Deck;
 
     strategy: RandomizationStrategy;
     strategies: RandomizationStrategy[];
+
+    filter: CardFilter;
 
     private readonly deckRandomizationService = uiContainer.get<
         DeckRandomizationService
@@ -60,13 +75,31 @@ export default class YgoRandomizer extends Vue {
     data() {
         return {
             strategy: RandomizationStrategy.NORMAL,
-            strategies: Object.values(RandomizationStrategy)
+            strategies: Object.values(RandomizationStrategy),
+            filter: {
+                name: null,
+
+                typeGroup: null,
+                type: null,
+
+                race: null,
+                attribute: null,
+                level: null,
+                linkMarker: null,
+                archetype: null,
+
+                format: null,
+                banState: null,
+
+                sets: []
+            }
         };
     }
 
     randomize() {
         const randomizedDeck = this.deckRandomizationService.randomize(
-            this.strategy
+            this.strategy,
+            this.filter
         );
         this.deck.parts = randomizedDeck.parts;
         this.deck.name = randomizedDeck.name;
