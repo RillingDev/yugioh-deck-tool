@@ -44,10 +44,13 @@ class CardService {
         return card.banlist[<keyof BanlistInfo>format];
     }
 
-    private getAllNames(card: Card): string[] {
+    public getAllNames(card: Card): string[] {
         const names = [card.name];
         if (card.treatedAs != null) {
             names.push(card.treatedAs);
+        }
+        if (card.betaName != null) {
+            names.push(card.betaName);
         }
         return names;
     }

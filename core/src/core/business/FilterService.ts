@@ -38,7 +38,12 @@ class FilterService {
         return cards.filter(card => {
             if (
                 filter.name != null &&
-                !card.name.toLowerCase().includes(filter.name.toLowerCase())
+                filter.name !== "" &&
+                !this.cardService
+                    .getAllNames(card)
+                    .every(name =>
+                        name.toLowerCase().includes(filter.name!.toLowerCase())
+                    )
             ) {
                 return false;
             }
