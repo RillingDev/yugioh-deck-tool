@@ -9,6 +9,7 @@ import { CardValues } from "../core/model/ygo/CardValues";
 import { UnlinkedCard } from "../core/model/ygo/intermediate/UnlinkedCard";
 import { TYPES } from "../types";
 import { HttpService } from "../core/business/HttpService";
+import { mapArchetypes, RawArchetype } from "./mapping/mapArchetypes";
 
 @injectable()
 class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
@@ -72,6 +73,18 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             }
         );
         return mapCardValues(response.data);
+    }
+
+    public async getArchetypes(): Promise<string[]> {
+        const response = await this.httpService.get<RawArchetype[]>(
+            "archetypes.php",
+            {
+                baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
+                timeout: YgoprodeckCardDataLoaderService.DEFAULT_TIMEOUT,
+                responseType: "json"
+            }
+        );
+        return mapArchetypes(response.data);
     }
 
     private async loadPaginated<T>(

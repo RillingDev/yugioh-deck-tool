@@ -17,6 +17,7 @@ class MemoryCardDatabase implements CardDatabase {
     private ready: boolean;
     private readonly cards: Map<string, Card>;
     private readonly sets: CardSet[];
+    private readonly archetypes: string[];
     private readonly types: Map<CardTypeGroup, CardType[]>;
     private readonly races: Map<CardTypeGroup, string[]>;
     private readonly monsterAttributes: string[];
@@ -30,6 +31,7 @@ class MemoryCardDatabase implements CardDatabase {
         this.dataLoaderClient = dataLoaderClient;
         this.cards = new Map<string, Card>();
         this.sets = [];
+        this.archetypes = [];
         this.types = new Map<CardTypeGroup, CardType[]>(
             Object.values(CardTypeGroup).map(cardTypeGroup => [
                 cardTypeGroup,
@@ -50,15 +52,18 @@ class MemoryCardDatabase implements CardDatabase {
 
     public async init(): Promise<void> {
         logger.info("Loading data from API...");
-        const [cardInfo, cardSets, cardValues] = await Promise.all([
+        const [cardInfo, cardSets, cardValues, archetypes] = await Promise.all([
             this.dataLoaderClient.getCardInfo(),
             this.dataLoaderClient.getCardSets(),
-            this.dataLoaderClient.getCardValues()
+            this.dataLoaderClient.getCardValues(),
+            this.dataLoaderClient.getArchetypes()
         ]);
-        logger.info("Loaded data from API.", cardSets, cardInfo, cardValues);
 
         this.sets.push(...cardSets);
         logger.debug("Registered sets.", this.sets);
+
+        this.archetypes.push(...archetypes);
+        logger.debug("Registered archetypes.", this.archetypes);
 
         for (const cardTypeGroup of Object.values(CardTypeGroup)) {
             this.types
@@ -116,6 +121,10 @@ class MemoryCardDatabase implements CardDatabase {
 
     public getSets(): CardSet[] {
         return this.sets;
+    }
+
+    public getArchetypes(): string[] {
+        return this.archetypes;
     }
 
     public getTypes(cardTypeGroup: CardTypeGroup): CardType[] {

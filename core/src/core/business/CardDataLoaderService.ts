@@ -8,6 +8,8 @@ interface CardDataLoaderService {
     getCardSets(): Promise<CardSet[]>;
 
     getCardValues(): Promise<CardValues>;
+
+    getArchetypes(): Promise<string[]>;
 }
 
 export { CardDataLoaderService };
