@@ -96,6 +96,7 @@ export default class YgoBuilder extends Vue {
         attribute: null,
         level: null,
         linkMarker: null,
+        archetype: null,
 
         format: null,
         banState: null,
@@ -149,6 +150,7 @@ export default class YgoBuilder extends Vue {
             attribute: null,
             level: null,
             linkMarker: null,
+            archetype: null,
 
             format: this.filter.format,
             banState: null,

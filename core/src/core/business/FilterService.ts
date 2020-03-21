@@ -19,6 +19,7 @@ interface CardFilter {
     attribute: string | null;
     level: number | null;
     linkMarker: string | null;
+    archetype: string | null;
 
     format: Format | null;
     banState: BanState | null;
@@ -74,6 +75,12 @@ class FilterService {
                 filter.linkMarker != null &&
                 (card.linkMarkers == null ||
                     !card.linkMarkers.includes(filter.linkMarker))
+            ) {
+                return false;
+            }
+            if (
+                filter.archetype != null &&
+                card.archetype !== filter.archetype
             ) {
                 return false;
             }

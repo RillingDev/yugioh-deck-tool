@@ -135,6 +135,19 @@
                 />
             </div>
         </template>
+
+        <template>
+            <div class="form-group form-group-builder">
+                <label>Archetype:</label>
+                <AdvancedSelect
+                    :initial-options="archetypes"
+                    :no-selection-allowed="true"
+                    class="form-control"
+                    v-model="filter.archetype"
+                    v-on:input="onFilterChange"
+                />
+            </div>
+        </template>
         <hr />
 
         <template>
@@ -223,6 +236,12 @@ export default class YgoFilter extends Vue {
     get sets() {
         return this.loadArrFromCardDatabase<CardSet>(cardDatabase =>
             cardDatabase.getSets()
+        );
+    }
+
+    get archetypes() {
+        return this.loadArrFromCardDatabase<string>(cardDatabase =>
+            cardDatabase.getArchetypes()
         );
     }
 
