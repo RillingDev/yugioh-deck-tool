@@ -52,10 +52,10 @@ class DeckRandomizationService {
         if (filter != null) {
             cards = this.filterService.filter(cards, filter);
         }
-        cards = this.sortingService.shuffle(cards);
 
         const format = filter?.format ?? null;
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
+            cards = this.sortingService.shuffle(cards);
             const deckPartCards = deck.parts.get(deckPart)!;
 
             let i = 0;
