@@ -49,7 +49,7 @@
         </template>
         <template v-if="filter.format != null">
             <div class="form-group form-group-builder">
-                <label>Ban State:</label>
+                <label>Limit:</label>
 
                 <AdvancedSelect
                     :initial-options="banStates"
@@ -114,7 +114,7 @@
             </div>
 
             <div class="form-group form-group-builder">
-                <label>Level:</label>
+                <label>Lv/Rank:</label>
                 <AdvancedSelect
                     :initial-options="monsterLevels"
                     :no-selection-allowed="true"
