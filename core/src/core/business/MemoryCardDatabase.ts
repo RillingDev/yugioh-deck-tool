@@ -58,6 +58,7 @@ class MemoryCardDatabase implements CardDatabase {
             this.dataLoaderClient.getCardValues(),
             this.dataLoaderClient.getArchetypes()
         ]);
+        logger.info("Loaded data from API.");
 
         this.sets.push(...cardSets);
         logger.debug("Registered sets.", this.sets);
@@ -90,15 +91,16 @@ class MemoryCardDatabase implements CardDatabase {
         );
 
         for (const unlinkedCard of cardInfo) {
-            this.cards.set(
-                unlinkedCard.id,
-                this.createLinkedCard(unlinkedCard, cardSets, cardValues)
+            const linkedCard = this.createLinkedCard(
+                unlinkedCard,
+                cardSets,
+                cardValues
             );
-            logger.debug(
-                `Registered card ${unlinkedCard.id}.`,
-                this.cards.get(unlinkedCard.id)
-            );
+            this.cards.set(unlinkedCard.id, linkedCard);
+            logger.trace(`Registered card '${unlinkedCard.id}'.`, linkedCard);
         }
+        logger.debug(`Registered ${this.cards.size} cards`, this.cards);
+
         this.ready = true;
         logger.info("Initialized database.");
     }
@@ -194,8 +196,8 @@ class MemoryCardDatabase implements CardDatabase {
                     logger.warn(`Could not find set '${setAppearance.name}'.`);
                     return null;
                 }
-                logger.debug(
-                    `Matched set ${setAppearance.name} to ${matchingSet}.`
+                logger.trace(
+                    `Matched set ${setAppearance.name} to ${matchingSet.name}.`
                 );
                 return matchingSet;
             })
@@ -207,7 +209,7 @@ class MemoryCardDatabase implements CardDatabase {
         if (matchingType == null) {
             throw new TypeError(`Could not find type '${typeName}'.`);
         }
-        logger.debug(`Matched type ${typeName} to ${matchingType}.`);
+        logger.trace(`Matched type ${typeName} to ${matchingType.name}.`);
         return matchingType;
     }
 }

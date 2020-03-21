@@ -150,8 +150,6 @@ import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
 import parseUrl from "url-parse";
 
-logger.setLevel(levels.INFO);
-
 @Component({
     components: {
         YgoDeck,
