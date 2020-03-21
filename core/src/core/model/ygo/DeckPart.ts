@@ -4,6 +4,7 @@ interface DeckPart {
     readonly indicator: string;
     readonly min: number;
     readonly max: number;
+    readonly recommended: number;
 }
 
 // Pseudo-enum of deck parts
@@ -17,21 +18,24 @@ const DefaultDeckPart: {
         name: "Main",
         indicator: "#main",
         min: 40,
-        max: 60
+        max: 60,
+        recommended: 40
     },
     EXTRA: {
         id: "extra",
         name: "Extra",
         indicator: "#extra",
         min: 0,
-        max: 15
+        max: 15,
+        recommended: 15
     },
     SIDE: {
         id: "side",
         name: "Side",
         indicator: "!side",
         min: 0,
-        max: 15
+        max: 15,
+        recommended: 15
     }
 };
 

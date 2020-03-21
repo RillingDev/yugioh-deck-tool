@@ -27,11 +27,18 @@ import {
     SortingStrategy,
     SortingOrder
 } from "./core/business/service/SortingService";
-import { CardFilter, FilterService } from "./core/business/service/FilterService";
+import {
+    CardFilter,
+    FilterService
+} from "./core/business/service/FilterService";
 import { Currency, DEFAULT_CURRENCY_ARR } from "./core/model/price/Currency";
 import { CardType } from "./core/model/ygo/CardType";
 import { CardTypeGroup } from "./core/model/ygo/CardTypeGroup";
 import { DefaultVendor, Vendor } from "./core/model/price/Vendor";
+import {
+    DeckRandomizationService,
+    RandomizationStrategy
+} from "./core/business/service/DeckRandomizationService";
 
 export {
     /*
@@ -45,6 +52,8 @@ export {
     PriceService,
     DeckService,
     DeckImportExportService,
+    DeckRandomizationService,
+    RandomizationStrategy,
     FilterService,
     CardFilter,
     SortingService,

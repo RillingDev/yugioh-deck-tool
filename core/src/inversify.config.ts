@@ -14,6 +14,7 @@ import { SortingService } from "./core/business/service/SortingService";
 import { FilterService } from "./core/business/service/FilterService";
 import { AxiosHttpService } from "./core/business/service/AxiosHttpService";
 import { HttpService } from "./core/business/service/HttpService";
+import { DeckRandomizationService } from "./core/business/service/DeckRandomizationService";
 
 const container = new Container();
 
@@ -29,6 +30,9 @@ container.bind<CardService>(TYPES.CardService).to(CardService);
 container
     .bind<DeckImportExportService>(TYPES.DeckImportExportService)
     .to(DeckImportExportService);
+container
+    .bind<DeckRandomizationService>(TYPES.DeckRandomizationService)
+    .to(DeckRandomizationService);
 container.bind<DeckService>(TYPES.DeckService).to(DeckService);
 container.bind<PriceService>(TYPES.PriceService).to(PriceService);
 container.bind<SortingService>(TYPES.SortingService).to(SortingService);

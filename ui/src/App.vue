@@ -107,11 +107,7 @@
             <div class="app-builder-intro">
                 <ygo-sorter :deck="deck" />
                 <ygo-draw-sim :deck="deck" />
-                <!--                        <ygo-randomizer-->
-                <!--                            :card-db="cardDb"-->
-                <!--                            @randomize="deckRandomize"-->
-                <!--                            v-if="!ajax.currentlyLoading"-->
-                <!--                        />-->
+                <ygo-randomizer :deck="deck" />
             </div>
             <ygo-builder
                 :can-add="canAdd"
@@ -125,7 +121,7 @@
 </template>
 
 <script lang="ts">
-import logger, { levels } from "loglevel";
+import logger from "loglevel";
 import Vue from "vue";
 import { PriceController } from "./lib/controller/PriceController";
 
@@ -149,13 +145,15 @@ import YgoSorter from "@/components/YgoSorter.vue";
 import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
 import parseUrl from "url-parse";
+import YgoRandomizer from "@/components/YgoRandomizer.vue";
 
 @Component({
     components: {
         YgoDeck,
         YgoSorter,
         YgoDrawSim,
-        YgoBuilder
+        YgoBuilder,
+        YgoRandomizer
     },
     name: "Index"
 })

@@ -5,6 +5,7 @@ const TYPES = {
     CardService: Symbol.for("CardService"),
     DeckService: Symbol.for("DeckService"),
     DeckImportExportService: Symbol.for("DeckImportExportService"),
+    DeckRandomizationService: Symbol.for("DeckRandomizationService"),
     PriceService: Symbol.for("PriceService"),
     SortingService: Symbol.for("SortingService"),
     FilterService: Symbol.for("FilterService"),
