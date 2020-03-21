@@ -65,6 +65,7 @@ import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
+import { sampleSize } from "lodash";
 
 @Component({ components: { YgoCard, BModal } })
 export default class YgoDrawSim extends Vue {
@@ -93,9 +94,7 @@ export default class YgoDrawSim extends Vue {
     }
 
     draw() {
-        this.drawItems = this.sortingService
-            .shuffle(this.mainDeckCards)
-            .slice(0, this.drawMode);
+        this.drawItems = sampleSize(this.mainDeckCards, this.drawMode);
     }
 }
 </script>

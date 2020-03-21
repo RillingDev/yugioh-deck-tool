@@ -6,7 +6,7 @@ import { TYPES } from "../../../types";
 import { CardService } from "./CardService";
 import { Format } from "../../model/ygo/Format";
 import { removeItem } from "lightdash";
-import { clone } from "lodash";
+import { clone, shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
@@ -93,7 +93,7 @@ class DeckService {
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             deckClone.parts.set(
                 deckPart,
-                this.sortingService.shuffle(deckClone.parts.get(deckPart)!)
+                shuffle(deckClone.parts.get(deckPart))
             );
         }
         return deckClone;

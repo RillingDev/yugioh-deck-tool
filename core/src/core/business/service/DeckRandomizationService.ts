@@ -11,7 +11,7 @@ import {
 } from "../../model/ygo/DeckPart";
 import { SortingService } from "./SortingService";
 import { CardService } from "./CardService";
-import { min, random, shuffle, words } from "lodash";
+import { random, sampleSize, shuffle, words } from "lodash";
 import { Card } from "../../model/ygo/Card";
 import { Format } from "../../model/ygo/Format";
 
@@ -54,7 +54,7 @@ class DeckRandomizationService {
 
     randomize(strategy: RandomizationStrategy, filter?: CardFilter): Deck {
         const deck = this.deckService.createEmptyDeck();
-        let cards = Array.from(this.cardDatabase.getCards());
+        let cards = this.cardDatabase.getCards();
         if (filter != null) {
             cards = this.filterService.filter(cards, filter);
         }
@@ -64,54 +64,62 @@ class DeckRandomizationService {
 
         const archetypeCount = this.getArchetypeCount(strategy);
         if (archetypeCount !== 0) {
-            for (const archetype of this.getRandomArchetypes(archetypeCount)) {
-                primaryPool.push(...this.findArchetypeCards(cards, archetype));
+            const archetypes = sampleSize(
+                this.cardDatabase.getArchetypes(),
+                archetypeCount
+            );
+            for (const archetype of archetypes) {
+                primaryPool.push(
+                    ...sampleSize(
+                        this.findArchetypeCards(cards, archetype),
+                        this.getCardPerArchetypeCount(strategy)
+                    )
+                );
             }
         }
 
         const format = filter?.format ?? null;
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            const deckPartCards = deck.parts.get(deckPart)!;
-
             for (const pool of [primaryPool, secondaryCardPool]) {
-                const isPrimaryPool = pool === primaryPool;
-                const shuffledPool = this.sortingService.shuffle(pool);
-
-                let i = 0;
-                while (
-                    deckPartCards.length < deckPart.recommended &&
-                    i < shuffledPool.length
-                ) {
-                    const card = shuffledPool[i];
-                    if (
-                        !this.shouldSkip(isPrimaryPool) &&
-                        this.deckService.canAdd(deck, deckPart, format, card)
-                    ) {
-                        deckPartCards.push(
-                            ...this.getRandomAmountOfCard(
-                                deckPart,
-                                deckPartCards,
-                                format,
-                                strategy,
-                                isPrimaryPool,
-                                card
-                            )
-                        );
-                    }
-
-                    i++;
-                }
+                const shuffledPool = shuffle(pool);
+                this.addRandomCards(
+                    deck,
+                    deckPart,
+                    format,
+                    strategy,
+                    pool === primaryPool,
+                    shuffledPool
+                );
             }
         }
         deck.name = this.createName(deck);
         return this.deckService.sort(deck);
     }
 
-    private getRandomArchetypes(archetypeCount: number): string[] {
-        return shuffle(Array.from(this.cardDatabase.getArchetypes())).slice(
-            0,
-            archetypeCount
-        );
+    private addRandomCards(
+        deck: Deck,
+        deckPart: DeckPart,
+        format: Format | null,
+        strategy: RandomizationStrategy,
+        isPrimaryPool: boolean,
+        shuffledPool: Card[]
+    ): void {
+        const deckPartCards = deck.parts.get(deckPart)!;
+        for (const card of shuffledPool) {
+            if (deckPartCards.length >= deckPart.recommended) {
+                break;
+            }
+            const randomCardCount = this.getRandomCardCount(
+                strategy,
+                isPrimaryPool
+            );
+            for (let i = 0; i < randomCardCount; i++) {
+                if (!this.deckService.canAdd(deck, deckPart, format, card)) {
+                    break;
+                }
+                deckPartCards.push(card);
+            }
+        }
     }
 
     private findArchetypeCards(cards: Card[], archetype: string): Card[] {
@@ -147,29 +155,19 @@ class DeckRandomizationService {
         return 0;
     }
 
-    private getRandomAmountOfCard(
-        deckPart: DeckPart,
-        deckPartCards: Card[],
-        format: Format | null,
-        strategy: RandomizationStrategy,
-        preferPlaySet: boolean,
-        card: Card
-    ): Card[] {
-        const banState = this.cardService.getBanStateByFormat(card, format);
-        const spaceLeft = deckPart.recommended - deckPartCards.length;
-        const limit = min([spaceLeft, banState.count])!;
-        let randomCardCount =
-            strategy === RandomizationStrategy.HIGHLANDER
-                ? 1
-                : this.getRandomCardCount(preferPlaySet);
-        if (randomCardCount > limit) {
-            randomCardCount = limit;
-        }
-        return new Array(randomCardCount).fill(card);
+    private getCardPerArchetypeCount(strategy: RandomizationStrategy): number {
+        return 18 - this.getArchetypeCount(strategy) * 3;
     }
 
-    private getRandomCardCount(isPrimaryPool: boolean): number {
-        const seed = Math.random();
+    private getRandomCardCount(
+        strategy: RandomizationStrategy,
+        isPrimaryPool: boolean
+    ): number {
+        if (strategy === RandomizationStrategy.HIGHLANDER) {
+            return 1;
+        }
+
+        const seed = random(0, 1);
         if (isPrimaryPool) {
             if (seed > 0.65) {
                 return 1;
@@ -189,7 +187,7 @@ class DeckRandomizationService {
     }
 
     private shouldSkip(isPrimaryPool: boolean): boolean {
-        const seed = Math.random();
+        const seed = random(0, 1);
         if (isPrimaryPool) {
             return seed > 0.85;
         }
@@ -202,9 +200,7 @@ class DeckRandomizationService {
             ...deck.parts.get(DefaultDeckPart.EXTRA)!
         ];
         const wordCount = random(2, 3, false);
-        return this.sortingService
-            .shuffle(cards)
-            .slice(0, wordCount)
+        return sampleSize(cards, wordCount)
             .map(card => this.getRandomWord(card))
             .join(" ");
     }

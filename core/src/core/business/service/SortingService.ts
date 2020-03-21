@@ -1,7 +1,6 @@
 import { inject, injectable } from "inversify";
 import { Card } from "../../model/ygo/Card";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
-import { shuffle } from "lodash";
 import { CardDatabase } from "../CardDatabase";
 import { TYPES } from "../../../types";
 import { Format } from "../../model/ygo/Format";
@@ -40,10 +39,6 @@ class SortingService {
         this.cardDatabase = cardDatabase;
     }
 
-    public shuffle(cards: Card[]): Card[] {
-        return shuffle(cards);
-    }
-
     public sort(
         cards: Card[],
         strategy: SortingStrategy,
@@ -71,7 +66,7 @@ class SortingService {
         } else if (strategy === SortingStrategy.LEVEL) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareLevel(a, b);
-        }else if(strategy===SortingStrategy.RELEASE_DATE){
+        } else if (strategy === SortingStrategy.RELEASE_DATE) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareReleaseDate(a, b);
         }
