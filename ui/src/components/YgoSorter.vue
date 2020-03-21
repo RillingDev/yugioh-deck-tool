@@ -6,7 +6,7 @@
             title="Sort Deck"
             v-on:click="() => sort()"
         >
-            Sort Deck
+            Sort
         </button>
         <button
             :disabled="deckService.getAllCards(this.deck).length < 2"
@@ -14,7 +14,7 @@
             title="Shuffle Deck"
             v-on:click="() => shuffle()"
         >
-            Shuffle Deck
+            Shuffle
         </button>
     </div>
 </template>

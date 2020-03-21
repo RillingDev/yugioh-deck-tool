@@ -1,12 +1,36 @@
 <template>
-    <div class="sorter">
+    <div class="randomizer btn-group" role="group">
         <button
             class="btn btn-primary btn-sm"
-            title="Sort Deck"
-            v-on:click="() => randomize()"
+            title="Randomize Deck"
+            v-on:click="randomize"
         >
             Randomize
         </button>
+        <button
+            class="btn btn-primary btn-sm"
+            title="Configure Randomizer"
+            v-on:click="showModal"
+        >
+            <span class="fas fa-cog"></span>
+        </button>
+        <b-modal
+            hide-footer
+            id="modalRandomizerSettings"
+            ref="modalRandomizerSettings"
+            size="lg"
+            title="Randomizer Settings"
+        >
+            <div class="form-group">
+                <label>Mode:</label>
+                <AdvancedSelect
+                    :initial-options="strategies"
+                    :initial-value="strategy"
+                    :no-selection-allowed="false"
+                    v-on:input="newStrategy => (strategy = newStrategy)"
+                ></AdvancedSelect>
+            </div>
+        </b-modal>
     </div>
 </template>
 
@@ -18,22 +42,43 @@ import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
 import { RandomizationStrategy } from "../../../core/src/core/business/service/DeckRandomizationService";
+import { BModal } from "bootstrap-vue";
+import AdvancedSelect from "@/components/AdvancedSelect.vue";
 
-@Component({})
+@Component({ components: { AdvancedSelect } })
 export default class YgoRandomizer extends Vue {
     @Prop({ required: true })
     deck: Deck;
+
+    strategy: RandomizationStrategy;
+    strategies: RandomizationStrategy[];
 
     private readonly deckRandomizationService = uiContainer.get<
         DeckRandomizationService
     >(UI_TYPES.DeckRandomizationService);
 
+    data() {
+        return {
+            strategy: RandomizationStrategy.NORMAL,
+            strategies: Object.values(RandomizationStrategy)
+        };
+    }
+
     randomize() {
         const randomizedDeck = this.deckRandomizationService.randomize(
-            RandomizationStrategy.NORMAL
+            this.strategy
         );
         this.deck.parts = randomizedDeck.parts;
         this.deck.name = randomizedDeck.name;
     }
+
+    showModal() {
+        (this.$refs.modalRandomizerSettings as BModal).show();
+    }
 }
 </script>
+<style lang="scss">
+.decktool .randomizer .btn {
+    margin-right: 0;
+}
+</style>

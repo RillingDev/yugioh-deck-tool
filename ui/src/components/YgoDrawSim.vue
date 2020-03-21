@@ -1,5 +1,3 @@
-import { SortingStrategy } from
-"../../../core/src/core/business/SortingService.js";
 <template>
     <div class="drawsim">
         <button
@@ -57,12 +55,16 @@ import YgoCard from "./YgoCard.vue";
 
 import Component from "vue-class-component";
 import Vue from "vue";
-import { Card, Deck, DefaultDeckPart } from "../../../core/src/main";
+import {
+    Card,
+    Deck,
+    DefaultDeckPart,
+    SortingService
+} from "../../../core/src/main";
 import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
-import { SortingService } from "../../../core/src/main";
 
 @Component({ components: { YgoCard, BModal } })
 export default class YgoDrawSim extends Vue {
