@@ -72,7 +72,7 @@ class DeckRandomizationService {
                 primaryPool.push(
                     ...sampleSize(
                         this.findArchetypeCards(cards, archetype),
-                        this.getCardPerArchetypeCount(strategy)
+                        this.getCardsPerArchetypeCount(strategy)
                     )
                 );
             }
@@ -105,8 +105,9 @@ class DeckRandomizationService {
         shuffledPool: Card[]
     ): void {
         const deckPartCards = deck.parts.get(deckPart)!;
+        const deckPartLimit = this.getDeckPartLimit(deckPart, strategy);
         for (const card of shuffledPool) {
-            if (deckPartCards.length >= deckPart.recommended) {
+            if (deckPartCards.length >= deckPartLimit) {
                 break;
             }
             const randomCardCount = this.getRandomCardCount(
@@ -155,8 +156,22 @@ class DeckRandomizationService {
         return 0;
     }
 
-    private getCardPerArchetypeCount(strategy: RandomizationStrategy): number {
+    private getCardsPerArchetypeCount(strategy: RandomizationStrategy): number {
         return 18 - this.getArchetypeCount(strategy) * 3;
+    }
+
+    private getDeckPartLimit(
+        deckPart: DeckPart,
+        strategy: RandomizationStrategy
+    ): number {
+        if (strategy === RandomizationStrategy.HIGHLANDER) {
+            if (deckPart === DefaultDeckPart.SIDE) {
+                return 0;
+            }
+            return deckPart.max;
+        }
+
+        return deckPart.recommended;
     }
 
     private getRandomCardCount(

@@ -48,7 +48,8 @@ import { Prop } from "vue-property-decorator";
 import {
     Deck,
     DeckRandomizationService,
-    CardFilter
+    CardFilter,
+    Format
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
@@ -88,7 +89,7 @@ export default class YgoRandomizer extends Vue {
                 linkMarker: null,
                 archetype: null,
 
-                format: null,
+                format: Format.TCG,
                 banState: null,
 
                 sets: []
