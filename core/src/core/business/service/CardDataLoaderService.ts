@@ -1,6 +1,6 @@
-import { CardSet } from "../model/ygo/CardSet";
-import { CardValues } from "../model/ygo/CardValues";
-import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
+import { CardSet } from "../../model/ygo/CardSet";
+import { CardValues } from "../../model/ygo/CardValues";
+import { UnlinkedCard } from "../../model/ygo/intermediate/UnlinkedCard";
 
 interface CardDataLoaderService {
     getCardInfo(): Promise<UnlinkedCard[]>;

@@ -1,10 +1,10 @@
 import { inject, injectable } from "inversify";
-import { DeckPart, DEFAULT_DECK_PART_ARR } from "../model/ygo/DeckPart";
-import { Card } from "../model/ygo/Card";
-import { Deck } from "../model/ygo/Deck";
-import { TYPES } from "../../types";
+import { DeckPart, DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
+import { Card } from "../../model/ygo/Card";
+import { Deck } from "../../model/ygo/Deck";
+import { TYPES } from "../../../types";
 import { CardService } from "./CardService";
-import { Format } from "../model/ygo/Format";
+import { Format } from "../../model/ygo/Format";
 import { removeItem } from "lightdash";
 import { clone } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";

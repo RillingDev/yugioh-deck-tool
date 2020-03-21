@@ -1,10 +1,10 @@
 import { inject, injectable } from "inversify";
-import { Card } from "../model/ygo/Card";
-import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
+import { Card } from "../../model/ygo/Card";
+import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 import { shuffle } from "lodash";
-import { CardDatabase } from "./CardDatabase";
-import { TYPES } from "../../types";
-import { Format } from "../model/ygo/Format";
+import { CardDatabase } from "../CardDatabase";
+import { TYPES } from "../../../types";
+import { Format } from "../../model/ygo/Format";
 
 enum SortingStrategy {
     /**

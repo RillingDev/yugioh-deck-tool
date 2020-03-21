@@ -1,13 +1,13 @@
 import { inject, injectable } from "inversify";
-import { Card } from "../model/ygo/Card";
-import { CardSet } from "../model/ygo/CardSet";
-import { Format } from "../model/ygo/Format";
-import { CardType } from "../model/ygo/CardType";
+import { Card } from "../../model/ygo/Card";
+import { CardSet } from "../../model/ygo/CardSet";
+import { Format } from "../../model/ygo/Format";
+import { CardType } from "../../model/ygo/CardType";
 import { intersection, isEmpty } from "lodash";
-import { BanState } from "../model/ygo/BanState";
+import { BanState } from "../../model/ygo/BanState";
 import { CardService } from "./CardService";
-import { TYPES } from "../../types";
-import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
+import { TYPES } from "../../../types";
+import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
 interface CardFilter {
     name: string | null;

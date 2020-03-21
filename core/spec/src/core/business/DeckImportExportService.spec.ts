@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { container } from "../../../../src/inversify.config";
-import { DeckImportExportService } from "../../../../src/core/business/DeckImportExportService";
+import { DeckImportExportService } from "../../../../src/core/business/service/DeckImportExportService";
 import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { createCard } from "../../helper/dataFactories";
@@ -10,9 +10,9 @@ import {
 } from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { deflate } from "pako";
-import { HttpService } from "../../../../src/core/business/HttpService";
+import { HttpService } from "../../../../src/core/business/service/HttpService";
 import { anyString, anything, instance, mock, verify, when } from "ts-mockito";
-import { AxiosHttpService } from "../../../../src/core/business/AxiosHttpService";
+import { AxiosHttpService } from "../../../../src/core/business/service/AxiosHttpService";
 import { MemoryCardDatabase } from "../../../../src/core/business/MemoryCardDatabase";
 
 describe("DeckImportExportService", () => {

@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../types";
-import { CardDataLoaderService } from "./CardDataLoaderService";
+import { CardDataLoaderService } from "./service/CardDataLoaderService";
 import { Card } from "../model/ygo/Card";
 import { CardSet } from "../model/ygo/CardSet";
 import { CardDatabase } from "./CardDatabase";

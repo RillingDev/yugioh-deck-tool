@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { container } from "../../../../src/inversify.config";
 import { TYPES } from "../../../../src/types";
-import { DeckService } from "../../../../src/core/business/DeckService";
+import { DeckService } from "../../../../src/core/business/service/DeckService";
 import {
     DefaultDeckPart,
     DeckPart

@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
-import { Card } from "../model/ygo/Card";
-import { CardPrices } from "../model/ygo/CardPrices";
-import { DefaultVendor } from "../model/price/Vendor";
+import { Card } from "../../model/ygo/Card";
+import { CardPrices } from "../../model/ygo/CardPrices";
+import { DefaultVendor } from "../../model/price/Vendor";
 
 interface PriceLookupResult {
     prices: CardPrices;

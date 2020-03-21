@@ -62,10 +62,7 @@ import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
-import {
-    SortingService,
-    SortingStrategy
-} from "../../../core/src/core/business/SortingService";
+import { SortingService } from "../../../core/src/main";
 
 @Component({ components: { YgoCard, BModal } })
 export default class YgoDrawSim extends Vue {
