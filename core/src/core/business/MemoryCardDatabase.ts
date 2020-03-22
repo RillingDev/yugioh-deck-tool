@@ -6,7 +6,6 @@ import { CardSet } from "../model/ygo/CardSet";
 import { CardDatabase } from "./CardDatabase";
 import { CardType } from "../model/ygo/CardType";
 import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
-import { CardValues } from "../model/ygo/CardValues";
 import { CardSetAppearance } from "../model/ygo/intermediate/CardSetAppearance";
 import * as logger from "loglevel";
 import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
@@ -90,11 +89,17 @@ class MemoryCardDatabase implements CardDatabase {
             this.monsterLinkMarkers
         );
 
+        const setCache = new Map<string, CardSet>(
+            cardSets.map(set => [set.name, set])
+        );
+        const typeCache = new Map<string, CardType>(
+            cardValues.types.map(type => [type.name, type])
+        );
         for (const unlinkedCard of cardInfo) {
             const linkedCard = this.createLinkedCard(
                 unlinkedCard,
-                cardSets,
-                cardValues
+                setCache,
+                typeCache
             );
             this.cards.set(unlinkedCard.id, linkedCard);
             logger.trace(`Registered card '${unlinkedCard.id}'.`, linkedCard);
@@ -151,13 +156,13 @@ class MemoryCardDatabase implements CardDatabase {
 
     private createLinkedCard(
         unlinkedCard: UnlinkedCard,
-        cardSets: CardSet[],
-        cardValues: CardValues
+        setCache: Map<string, CardSet>,
+        typeCache: Map<string, CardType>
     ): Card {
         return {
             id: unlinkedCard.id,
             name: unlinkedCard.name,
-            type: this.linkType(unlinkedCard.type, cardValues.types),
+            type: this.linkType(unlinkedCard.type, typeCache),
 
             race: unlinkedCard.race,
             attribute: unlinkedCard.attribute,
@@ -168,7 +173,7 @@ class MemoryCardDatabase implements CardDatabase {
             linkVal: unlinkedCard.linkVal,
             linkMarkers: unlinkedCard.linkMarkers,
 
-            sets: this.linkSets(unlinkedCard.sets, cardSets),
+            sets: this.linkSets(unlinkedCard.sets, setCache),
             image: unlinkedCard.image,
             prices: unlinkedCard.prices,
             betaName: unlinkedCard.betaName,
@@ -185,17 +190,15 @@ class MemoryCardDatabase implements CardDatabase {
 
     private linkSets(
         setAppearances: CardSetAppearance[],
-        cardSets: CardSet[]
+        setCache: Map<string, CardSet>
     ): CardSet[] {
         return <CardSet[]>setAppearances
             .map(setAppearance => {
-                const matchingSet = cardSets.find(
-                    set => set.name === setAppearance.name
-                );
-                if (matchingSet == null) {
+                if (!setCache.has(setAppearance.name)) {
                     logger.warn(`Could not find set '${setAppearance.name}'.`);
                     return null;
                 }
+                const matchingSet = setCache.get(setAppearance.name)!;
                 logger.trace(
                     `Matched set ${setAppearance.name} to ${matchingSet.name}.`
                 );
@@ -204,11 +207,14 @@ class MemoryCardDatabase implements CardDatabase {
             .filter(set => set != null);
     }
 
-    private linkType(typeName: string, types: CardType[]): CardType {
-        const matchingType = types.find(type => type.name === typeName);
-        if (matchingType == null) {
+    private linkType(
+        typeName: string,
+        typeCache: Map<string, CardType>
+    ): CardType {
+        if (!typeCache.has(typeName)) {
             throw new TypeError(`Could not find type '${typeName}'.`);
         }
+        const matchingType = typeCache.get(typeName)!;
         logger.trace(`Matched type ${typeName} to ${matchingType.name}.`);
         return matchingType;
     }
