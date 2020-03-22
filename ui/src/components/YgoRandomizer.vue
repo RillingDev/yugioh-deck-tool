@@ -34,7 +34,7 @@
             <div class="form-group">
                 <YgoFilter
                     :initial-filter="filter"
-                    :show-sorting="false"
+                    :show-advanced="false"
                     v-on:filter-change="(newFilter) => (filter = newFilter)"
                 ></YgoFilter>
             </div>

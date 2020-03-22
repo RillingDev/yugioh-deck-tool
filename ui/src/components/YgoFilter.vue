@@ -15,7 +15,7 @@
         <hr />
 
         <!-- builder-sort -->
-        <template v-if="showSorting">
+        <template v-if="showAdvanced">
             <div class="form-group form-group-builder">
                 <label>Sorting:</label>
                 <AdvancedSelect
@@ -125,7 +125,7 @@
                 />
             </div>
 
-            <div class="form-group form-group-builder" v-if="isLinkMonster">
+            <div class="form-group form-group-builder" v-if="isLinkMonster && showAdvanced">
                 <label>Link Markers:</label>
                 <AdvancedSelect
                     :initial-options="monsterLinkMarkers"
@@ -137,7 +137,7 @@
             </div>
         </template>
 
-        <template>
+        <template v-if="showAdvanced">
             <div class="form-group form-group-builder">
                 <label>Archetype:</label>
                 <AdvancedSelect
@@ -202,7 +202,7 @@ export default class YgoFilter extends Vue {
     initialFilter: CardFilter;
 
     @Prop({ required: false, type: Boolean, default: () => true })
-    showSorting: boolean;
+    showAdvanced: boolean;
 
     @Prop({
         required: false,
