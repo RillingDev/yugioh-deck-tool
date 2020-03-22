@@ -11,7 +11,7 @@ import {
 } from "../../model/ygo/DeckPart";
 import { SortingService } from "./SortingService";
 import { CardService } from "./CardService";
-import { random, sampleSize, shuffle, uniq, words } from "lodash";
+import { random, sampleSize, shuffle, uniq, words, flatten } from "lodash";
 import { Card } from "../../model/ygo/Card";
 import { Format } from "../../model/ygo/Format";
 
@@ -225,14 +225,14 @@ class DeckRandomizationService {
         )
             .filter(([, count]) => count === 3)
             .map(([card]) => card);
-        const cardsWithPlaySetsWords = cardsWithPlaySets
-            .map(card =>
+        const cardsWithPlaySetsWords = flatten(
+            cardsWithPlaySets.map(card =>
                 words(card.name).filter(
                     word =>
                         !DeckRandomizationService.IGNORED_WORDS.includes(word)
                 )
             )
-            .flat();
+        );
         return sampleSize(
             uniq(cardsWithPlaySetsWords),
             random(2, 3, false)
