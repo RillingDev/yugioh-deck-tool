@@ -74,11 +74,11 @@ class DeckImportExportService {
         );
         const response = await this.httpService.get<string>(urlString, {
             responseType: "text",
-            timeout: 5000
+            timeout: 5000,
         });
         return this.fromFile({
             fileName,
-            fileContent: response.data
+            fileContent: response.data,
         });
     }
 
@@ -88,12 +88,12 @@ class DeckImportExportService {
 
         const lines = deckFile.fileContent
             .split("\n")
-            .map(line => line.trim())
-            .filter(line => line.length > 0);
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0);
         let currentDeckPart = null;
         for (const line of lines) {
             const foundDeckPart = DEFAULT_DECK_PART_ARR.find(
-                part => part.indicator === line
+                (part) => part.indicator === line
             );
             if (foundDeckPart != null) {
                 currentDeckPart = foundDeckPart;
@@ -113,7 +113,7 @@ class DeckImportExportService {
         deck.name = deckFile.fileName.replace(".ydk", "");
         return {
             deck,
-            missing
+            missing,
         };
     }
 
@@ -123,13 +123,13 @@ class DeckImportExportService {
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             const deckPartCards = deck.parts.get(deckPart)!;
             fileLines.push(deckPart.indicator);
-            fileLines.push(...deckPartCards.map(card => card.id));
+            fileLines.push(...deckPartCards.map((card) => card.id));
             fileLines.push("");
         }
 
         return {
             fileName: `${deck.name ?? "Unnamed"}.ydk`,
-            fileContent: fileLines.join("\n")
+            fileContent: fileLines.join("\n"),
         };
     }
 
@@ -190,7 +190,7 @@ class DeckImportExportService {
             i < inflated.length;
             i += DeckImportExportService.BLOCK_SIZE
         ) {
-            const block = inflated.subarray(
+            const block = inflated.slice(
                 i,
                 i + DeckImportExportService.BLOCK_SIZE
             );
@@ -228,7 +228,7 @@ class DeckImportExportService {
         const DELIMITERS = {
             deckPart: "|",
             cardId: ";",
-            cardAmount: "*"
+            cardAmount: "*",
         };
 
         uncompressedValue
@@ -238,7 +238,7 @@ class DeckImportExportService {
                 const deckPartCards = deck.parts.get(deckPart)!;
 
                 if (deckPartList.length > 0) {
-                    deckPartList.split(DELIMITERS.cardId).forEach(entry => {
+                    deckPartList.split(DELIMITERS.cardId).forEach((entry) => {
                         let count = 1;
                         let cardId = entry;
                         if (entry.startsWith(DELIMITERS.cardAmount)) {
@@ -301,19 +301,16 @@ class DeckImportExportService {
             );
         }
         const buffer = new ArrayBuffer(DeckImportExportService.BLOCK_SIZE);
-        // Create a 32 bit int view which allows easy access to the 4 byte
-        // representation of the 32 bit number we set on it.
-        const uint32Array = new Uint32Array(buffer);
-        uint32Array[0] = idNumber;
+        // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
+        const dataView = new DataView(buffer);
+        dataView.setUint32(0, idNumber, true);
         return new Uint8Array(buffer);
     }
 
     private decodeCard(block: Uint8Array): Card {
-        // Copy input array to allow buffer access
-        const uint8Array = new Uint8Array(block);
+        const dataView = new DataView(block.buffer);
         // See #encodeCard for details
-        const uint32Array = new Uint32Array(uint8Array.buffer);
-        const cardId = String(uint32Array[0]);
+        const cardId = String(dataView.getUint32(0, true));
         if (!this.cardDatabase.hasCard(cardId)) {
             throw new TypeError(`Could not find card for ID ${cardId}.`);
         }
