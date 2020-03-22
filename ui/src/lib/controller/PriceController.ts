@@ -8,7 +8,11 @@ class PriceController {
     public readonly currencies: Currency[];
 
     constructor() {
-        this.vendors = [DefaultVendor.TCGPLAYER, DefaultVendor.CARDMARKET, DefaultVendor.EBAY];
+        this.vendors = [
+            DefaultVendor.TCGPLAYER,
+            DefaultVendor.CARDMARKET,
+            DefaultVendor.EBAY
+        ];
         this.currencies = DEFAULT_CURRENCY_ARR;
         this.activeCurrency = this.guessDefaultCurrency();
     }

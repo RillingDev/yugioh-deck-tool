@@ -5,8 +5,8 @@ import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { createCard } from "../../helper/dataFactories";
 import {
-    DefaultDeckPart,
-    DeckPart
+    DeckPart,
+    DefaultDeckPart
 } from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { deflate } from "pako";

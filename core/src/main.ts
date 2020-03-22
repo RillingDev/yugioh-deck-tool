@@ -23,9 +23,9 @@ import { DeckService } from "./core/business/service/DeckService";
 import { Format } from "./core/model/ygo/Format";
 import { CardValues } from "./core/model/ygo/CardValues";
 import {
+    SortingOrder,
     SortingService,
-    SortingStrategy,
-    SortingOrder
+    SortingStrategy
 } from "./core/business/service/SortingService";
 import {
     CardFilter,

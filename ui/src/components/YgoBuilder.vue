@@ -7,8 +7,8 @@
 
         <ygo-filter
             :initial-filter="filter"
-            :initial-sorting-strategy="sortingStrategy"
             :initial-sorting-order="sortingOrder"
+            :initial-sorting-strategy="sortingStrategy"
             v-on:filter-change="newFilter => (filter = newFilter)"
             v-on:sorting-change="
                 ({ strategy, order }) => {

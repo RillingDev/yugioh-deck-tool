@@ -8,8 +8,8 @@ import { CardType } from "../../../src/core/model/ygo/CardType";
 import { CardSet } from "../../../src/core/model/ygo/CardSet";
 import { CardTypeGroup } from "../../../src/core/model/ygo/CardTypeGroup";
 import {
-    DefaultDeckPart,
-    DeckPart
+    DeckPart,
+    DefaultDeckPart
 } from "../../../src/core/model/ygo/DeckPart";
 import { DefaultBanState } from "../../../src/core/model/ygo/BanState";
 

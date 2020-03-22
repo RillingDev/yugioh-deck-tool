@@ -37,16 +37,16 @@ export default class AdvancedSelect<T> extends Vue {
 
     value: T | null;
 
-    data() {
-        return {
-            value: this.initialValue
-        };
-    }
-
     get options(): Array<T | null> {
         return this.noSelectionAllowed
             ? [null, ...this.initialOptions]
             : this.initialOptions;
+    }
+
+    data() {
+        return {
+            value: this.initialValue
+        };
     }
 
     createOptionLabel(option: T): T | string {
