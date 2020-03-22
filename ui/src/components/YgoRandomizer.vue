@@ -75,7 +75,7 @@ export default class YgoRandomizer extends Vue {
 
     data() {
         return {
-            strategy: RandomizationStrategy.NORMAL,
+            strategy: RandomizationStrategy.ARCHETYPE_2,
             strategies: Object.values(RandomizationStrategy),
             filter: {
                 name: null,
