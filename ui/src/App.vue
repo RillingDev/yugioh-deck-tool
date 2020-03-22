@@ -161,9 +161,6 @@ export default class App extends Vue {
     readonly ajax = {
         currentlyLoading: true
     };
-    private readonly cardDatabase = uiContainer.get<CardDatabase>(
-        UI_TYPES.CardDatabase
-    );
     private readonly deckService = uiContainer.get<DeckService>(
         UI_TYPES.DeckService
     );
@@ -238,8 +235,11 @@ export default class App extends Vue {
 
     mounted() {
         this.ajax.currentlyLoading = true;
+        const cardDatabase = uiContainer.get<CardDatabase>(
+            UI_TYPES.CardDatabase
+        );
 
-        this.cardDatabase
+        cardDatabase
             .init()
             .then(() => {
                 this.ajax.currentlyLoading = false;

@@ -9,6 +9,14 @@ import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 import { CardSetAppearance } from "../model/ygo/intermediate/CardSetAppearance";
 import * as logger from "loglevel";
 import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
+import { forEach, isObject } from "lodash";
+
+const deepFreeze = (target: any): void => {
+    if (isObject(target)) {
+        Object.freeze(target);
+        forEach(target, deepFreeze);
+    }
+};
 
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
@@ -60,28 +68,37 @@ class MemoryCardDatabase implements CardDatabase {
         logger.info("Loaded data from API.");
 
         this.sets.push(...cardSets);
+        deepFreeze(this.sets);
         logger.debug("Registered sets.", this.sets);
 
         this.archetypes.push(...archetypes);
+        deepFreeze(this.archetypes);
         logger.debug("Registered archetypes.", this.archetypes);
 
         for (const cardTypeGroup of Object.values(CardTypeGroup)) {
-            this.types
-                .get(cardTypeGroup)!
-                .push(...cardValues[cardTypeGroup].types);
-            this.races
-                .get(cardTypeGroup)!
-                .push(...cardValues[cardTypeGroup].races);
+            const cardTypes = this.types.get(cardTypeGroup)!;
+            cardTypes.push(...cardValues[cardTypeGroup].types);
+            deepFreeze(cardTypes);
+
+            const cardRaces = this.races.get(cardTypeGroup)!;
+            cardRaces.push(...cardValues[cardTypeGroup].races);
+            deepFreeze(cardRaces);
         }
         logger.debug("Registered types and races.", this.types, this.races);
 
         this.monsterAttributes.push(
             ...cardValues[CardTypeGroup.MONSTER].attributes
         );
+        deepFreeze(this.monsterAttributes);
+
         this.monsterLevels.push(...cardValues[CardTypeGroup.MONSTER].levels);
+        deepFreeze(this.monsterLevels);
+
         this.monsterLinkMarkers.push(
             ...cardValues[CardTypeGroup.MONSTER].linkMarkers
         );
+        deepFreeze(this.monsterLinkMarkers);
+
         logger.debug(
             "Registered monster values.",
             this.monsterAttributes,
@@ -101,6 +118,7 @@ class MemoryCardDatabase implements CardDatabase {
                 setCache,
                 typeCache
             );
+            deepFreeze(linkedCard);
             this.cards.set(unlinkedCard.id, linkedCard);
             logger.trace(`Registered card '${unlinkedCard.id}'.`, linkedCard);
         }
