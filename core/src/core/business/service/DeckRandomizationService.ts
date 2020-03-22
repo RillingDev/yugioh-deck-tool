@@ -72,38 +72,51 @@ class DeckRandomizationService {
             cards = this.filterService.filter(cards, filter);
         }
 
-        const primaryPool: Card[] = [];
-        const secondaryCardPool: Card[] = cards;
+        const primaryPools: Card[][] = [];
+        const secondaryPool: Card[] = cards;
 
         const archetypeCount = this.getArchetypeCount(strategy);
-        if (archetypeCount !== 0) {
+        const isArchetypeStrategy = archetypeCount !== 0;
+        if (isArchetypeStrategy) {
             const archetypes = sampleSize(
                 this.cardDatabase.getArchetypes(),
                 archetypeCount
             );
             for (const archetype of archetypes) {
-                primaryPool.push(
-                    ...sampleSize(
-                        this.findArchetypeCards(cards, archetype),
-                        this.getCardsPerArchetypeCount(strategy)
-                    )
-                );
+                primaryPools.push(this.findArchetypeCards(cards, archetype));
             }
         }
 
         const format = filter?.format ?? null;
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            for (const pool of [primaryPool, secondaryCardPool]) {
-                const shuffledPool = shuffle(pool);
-                this.addRandomCards(
-                    deck,
-                    deckPart,
-                    format,
-                    strategy,
-                    pool === primaryPool,
-                    shuffledPool
-                );
+            // Primary pool(s)
+            for (const pool of primaryPools) {
+                if (isArchetypeStrategy) {
+                    const shuffledPool = sampleSize(
+                        pool,
+                        this.getCardsPerArchetypeCount(strategy)
+                    );
+                    this.addRandomCards(
+                        deck,
+                        deckPart,
+                        format,
+                        strategy,
+                        true,
+                        shuffledPool
+                    );
+                }
             }
+
+            // Secondary pool
+            const shuffledPool = shuffle(secondaryPool);
+            this.addRandomCards(
+                deck,
+                deckPart,
+                format,
+                strategy,
+                false,
+                shuffledPool
+            );
         }
         deck.name = this.createName(deck);
         return this.deckService.sort(deck);
