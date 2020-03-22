@@ -11,7 +11,7 @@ import {
 } from "../../model/ygo/DeckPart";
 import { SortingService } from "./SortingService";
 import { CardService } from "./CardService";
-import { random, sampleSize, shuffle, uniq, words, flatten } from "lodash";
+import { flatten, random, sampleSize, shuffle, uniq, words } from "lodash";
 import { Card } from "../../model/ygo/Card";
 import { Format } from "../../model/ygo/Format";
 
@@ -79,51 +79,61 @@ class DeckRandomizationService {
         const archetypeCount = this.getArchetypeCount(strategy);
         const isArchetypeStrategy = archetypeCount !== 0;
         if (isArchetypeStrategy) {
-            const archetypes = sampleSize(
-                this.cardDatabase.getArchetypes(),
-                archetypeCount
+            primaryPools.push(
+                ...this.getRandomArchetypeCardPools(cards, archetypeCount)
             );
-            for (const archetype of archetypes) {
-                primaryPools.push(this.findArchetypeCards(cards, archetype));
-            }
         }
 
         const format = filter?.format ?? null;
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            // Primary pool(s)
-            for (const pool of primaryPools) {
+            for (const primaryPool of primaryPools) {
                 if (isArchetypeStrategy) {
-                    const shuffledPool = sampleSize(
-                        pool,
-                        this.getCardsPerArchetypeCount(strategy)
-                    );
-                    this.addRandomCards(
+                    this.addCards(
                         deck,
                         deckPart,
                         format,
                         strategy,
                         true,
-                        shuffledPool
+                        sampleSize(
+                            primaryPool,
+                            this.getCardsPerArchetypeCount(strategy)
+                        )
                     );
                 }
             }
 
-            // Secondary pool
-            const shuffledPool = shuffle(secondaryPool);
-            this.addRandomCards(
+            this.addCards(
                 deck,
                 deckPart,
                 format,
                 strategy,
                 false,
-                shuffledPool
+                shuffle(secondaryPool)
             );
         }
         deck.name = this.createName(deck);
         return this.deckService.sort(deck);
     }
 
-    private addRandomCards(
+    private getRandomArchetypeCardPools(
+        cards: Card[],
+        archetypeCount: number
+    ): Card[][] {
+        const pool: Card[][] = [];
+        const archetypes = shuffle(this.cardDatabase.getArchetypes());
+        for (const archetype of archetypes) {
+            if (pool.length >= archetypeCount) {
+                break;
+            }
+            const archetypeCards = this.findArchetypeCards(cards, archetype);
+            if (archetypeCards.length > 0) {
+                pool.push(archetypeCards);
+            }
+        }
+        return pool;
+    }
+
+    private addCards(
         deck: Deck,
         deckPart: DeckPart,
         format: Format | null,
