@@ -13,7 +13,7 @@ class CompressionService {
 
     public inflateString(str: string): string {
         return inflate(str, {
-            to: "string"
+            to: "string",
         });
     }
 }

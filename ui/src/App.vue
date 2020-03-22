@@ -132,7 +132,7 @@ import {
     DeckImportExportService,
     DeckPart,
     DeckService,
-    Format
+    Format,
 } from "../../core/src/main";
 import saveFile from "./lib/saveFile";
 import copyText from "./lib/copyText";
@@ -153,13 +153,13 @@ import YgoRandomizer from "@/components/YgoRandomizer.vue";
         YgoSorter,
         YgoDrawSim,
         YgoBuilder,
-        YgoRandomizer
+        YgoRandomizer,
     },
-    name: "Index"
+    name: "Index",
 })
 export default class App extends Vue {
     readonly ajax = {
-        currentlyLoading: true
+        currentlyLoading: true,
     };
     private readonly deckService = uiContainer.get<DeckService>(
         UI_TYPES.DeckService
@@ -214,10 +214,10 @@ export default class App extends Vue {
         if (files.length > 0) {
             const file = files[0];
             readFile(file)
-                .then(fileContent => {
+                .then((fileContent) => {
                     const result = this.deckImportExportService.fromFile({
                         fileContent,
-                        fileName: file.name
+                        fileName: file.name,
                     });
                     this.deck = result.deck;
                 })
@@ -254,7 +254,7 @@ export default class App extends Vue {
         if ("u" in uriQuery) {
             return this.deckImportExportService
                 .fromRemoteFile(location.origin, uriQuery["u"])
-                .then(result => {
+                .then((result) => {
                     this.deck = result.deck;
                 });
         } else if ("e" in uriQuery) {

@@ -44,7 +44,8 @@ class DeckService {
         if (
             card.type.group === CardTypeGroup.SKILL &&
             this.getAllCards(deck).some(
-                existingCard => existingCard.type.group === CardTypeGroup.SKILL
+                (existingCard) =>
+                    existingCard.type.group === CardTypeGroup.SKILL
             )
         ) {
             return false;
@@ -52,7 +53,7 @@ class DeckService {
 
         // If adding this card would make the total count of this card in this deck
         // be larger than allowed by the banlist, return false
-        const count = this.getAllCards(deck).filter(existingCard =>
+        const count = this.getAllCards(deck).filter((existingCard) =>
             this.cardService.isTreatedAsSame(existingCard, card)
         ).length;
         const banState = this.cardService.getBanStateByFormat(card, format);

@@ -9,10 +9,10 @@ interface RawCardSet {
 }
 
 const mapCardSets = (data: RawCardSet[]): CardSet[] =>
-    data.map(rawCardSet => {
+    data.map((rawCardSet) => {
         return {
             name: rawCardSet.set_name,
-            code: rawCardSet.set_code
+            code: rawCardSet.set_code,
         };
     });
 

@@ -17,7 +17,7 @@ class CardService {
 
     public getUniqueByName(cards: Card[]): Card[] {
         const names = new Set<string>();
-        return cards.filter(card => {
+        return cards.filter((card) => {
             if (names.has(card.name)) {
                 return false;
             }
@@ -59,9 +59,9 @@ class CardService {
     public countCards(cards: Card[]): Map<Card, number> {
         return groupMapReducingBy(
             cards,
-            card => card,
+            (card) => card,
             () => 0,
-            current => current + 1
+            (current) => current + 1
         );
     }
 }

@@ -11,7 +11,7 @@
                 :key="`${card.id}_${cardIndex}`"
                 v-for="(card, cardIndex) in cards"
                 v-on:deck-card-right-click="
-                    e => onDeckCardRightClicked(e, card)
+                    (e) => onDeckCardRightClicked(e, card)
                 "
             >
             </ygo-card>
@@ -30,8 +30,8 @@ import { Prop } from "vue-property-decorator";
 @Component({
     components: {
         YgoCard,
-        YgoPriceView
-    }
+        YgoPriceView,
+    },
 })
 export default class YgoDeckPart extends Vue {
     @Prop({ required: true })

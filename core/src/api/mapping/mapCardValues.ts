@@ -50,7 +50,7 @@ const mapGroup = (type: RawCardType): CardTypeGroup => {
 
 const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
     new Set(
-        type.area.map(area => {
+        type.area.map((area) => {
             if (area === "SIDE") {
                 return DefaultDeckPart.SIDE;
             }
@@ -65,8 +65,8 @@ const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
     );
 
 const mapTypes = (typeNames: string[], types: CardType[]): CardType[] =>
-    typeNames.map(typeName => {
-        const matchingType = types.find(type => type.name === typeName);
+    typeNames.map((typeName) => {
+        const matchingType = types.find((type) => type.name === typeName);
 
         if (matchingType == null) {
             throw new TypeError(`Could not find type '${typeName}'.`);
@@ -75,12 +75,12 @@ const mapTypes = (typeNames: string[], types: CardType[]): CardType[] =>
     });
 
 const mapCardValues = (data: RawCardValues): CardValues => {
-    const types: CardType[] = data.types.map(type => {
+    const types: CardType[] = data.types.map((type) => {
         return {
             name: type.name,
             group: mapGroup(type),
             sortGroup: type.sortGroup,
-            deckPart: mapDeckPart(type)
+            deckPart: mapDeckPart(type),
         };
     });
     return {
@@ -90,20 +90,20 @@ const mapCardValues = (data: RawCardValues): CardValues => {
             races: data.MONSTER.race,
             attributes: data.MONSTER.attributes,
             levels: data.MONSTER.level,
-            linkMarkers: data.MONSTER.linkmarkers
+            linkMarkers: data.MONSTER.linkmarkers,
         },
         [CardTypeGroup.SPELL]: {
             types: mapTypes(data.SPELL.type, types),
-            races: data.SPELL.race
+            races: data.SPELL.race,
         },
         [CardTypeGroup.TRAP]: {
             types: mapTypes(data.TRAP.type, types),
-            races: data.TRAP.race
+            races: data.TRAP.race,
         },
         [CardTypeGroup.SKILL]: {
             types: mapTypes(data.SKILL.type, types),
-            races: data.SKILL.race
-        }
+            races: data.SKILL.race,
+        },
     };
 };
 

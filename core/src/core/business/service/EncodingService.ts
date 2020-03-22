@@ -28,10 +28,7 @@ class EncodingService {
 
     public decodeUriSafeBase64String(str: string): Uint8Array {
         return toByteArray(
-            str
-                .replace(/~/g, "=")
-                .replace(/_/g, "+")
-                .replace(/-/g, "/")
+            str.replace(/~/g, "=").replace(/_/g, "+").replace(/-/g, "/")
         );
     }
 }

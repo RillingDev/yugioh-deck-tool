@@ -13,7 +13,7 @@ const DefaultBanState: {
     UNLIMITED: { name: "Unlimited", count: 3 },
     SEMI_LIMITED: { name: "Semi-Limited", count: 2 },
     LIMITED: { name: "Limited", count: 1 },
-    BANNED: { name: "Banned", count: 0 }
+    BANNED: { name: "Banned", count: 0 },
 };
 
 export { BanState, DefaultBanState };

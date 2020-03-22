@@ -3,6 +3,6 @@ interface RawArchetype {
 }
 
 const mapArchetypes = (data: RawArchetype[]): string[] =>
-    data.map(archetype => archetype.archetype_name);
+    data.map((archetype) => archetype.archetype_name);
 
 export { mapArchetypes, RawArchetype };

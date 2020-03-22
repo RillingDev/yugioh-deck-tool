@@ -59,7 +59,7 @@ import {
     Card,
     Deck,
     DefaultDeckPart,
-    SortingService
+    SortingService,
 } from "../../../core/src/main";
 import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";

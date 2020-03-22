@@ -18,12 +18,12 @@ enum SortingStrategy {
     LEVEL = "Level",
 
     VIEWS = "Views",
-    RELEASE_DATE = "Release Date"
+    RELEASE_DATE = "Release Date",
 }
 
 enum SortingOrder {
     ASC = "Asc",
-    DESC = "Desc"
+    DESC = "Desc",
 }
 
 type Comparator<T> = (a: T, b: T) => number;

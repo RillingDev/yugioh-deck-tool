@@ -4,7 +4,7 @@ import { TYPES } from "../../../../src/types";
 import { DeckService } from "../../../../src/core/business/service/DeckService";
 import {
     DeckPart,
-    DefaultDeckPart
+    DefaultDeckPart,
 } from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { createCard, createCardType } from "../../helper/dataFactories";
@@ -25,8 +25,8 @@ describe("DeckService", () => {
                 parts: new Map<DeckPart, Card[]>([
                     [DefaultDeckPart.MAIN, []],
                     [DefaultDeckPart.EXTRA, []],
-                    [DefaultDeckPart.SIDE, []]
-                ])
+                    [DefaultDeckPart.SIDE, []],
+                ]),
             });
         });
     });
@@ -42,8 +42,8 @@ describe("DeckService", () => {
                     parts: new Map<DeckPart, Card[]>([
                         [DefaultDeckPart.MAIN, [card1]],
                         [DefaultDeckPart.EXTRA, [card2, card2]],
-                        [DefaultDeckPart.SIDE, [card3]]
-                    ])
+                        [DefaultDeckPart.SIDE, [card3]],
+                    ]),
                 })
             ).toEqual([card1, card2, card2, card3]);
         });
@@ -58,16 +58,16 @@ describe("DeckService", () => {
                         parts: new Map<DeckPart, Card[]>([
                             [DefaultDeckPart.MAIN, []],
                             [DefaultDeckPart.EXTRA, []],
-                            [DefaultDeckPart.SIDE, []]
-                        ])
+                            [DefaultDeckPart.SIDE, []],
+                        ]),
                     },
                     DefaultDeckPart.MAIN,
                     Format.TCG,
                     createCard({
                         id: "456",
                         type: createCardType({
-                            deckPart: new Set([DefaultDeckPart.EXTRA])
-                        })
+                            deckPart: new Set([DefaultDeckPart.EXTRA]),
+                        }),
                     })
                 )
             ).toBeFalse();
@@ -83,9 +83,9 @@ describe("DeckService", () => {
                             [DefaultDeckPart.EXTRA, []],
                             [
                                 DefaultDeckPart.SIDE,
-                                new Array(15).fill(createCard({ id: "123" }))
-                            ]
-                        ])
+                                new Array(15).fill(createCard({ id: "123" })),
+                            ],
+                        ]),
                     },
                     DefaultDeckPart.SIDE,
                     Format.TCG,
@@ -100,8 +100,8 @@ describe("DeckService", () => {
                 banlist: {
                     [Format.OCG]: DefaultBanState.LIMITED,
                     [Format.TCG]: DefaultBanState.UNLIMITED,
-                    [Format.GOAT]: DefaultBanState.UNLIMITED
-                }
+                    [Format.GOAT]: DefaultBanState.UNLIMITED,
+                },
             });
             expect(
                 deckService.canAdd(
@@ -110,8 +110,8 @@ describe("DeckService", () => {
                         parts: new Map<DeckPart, Card[]>([
                             [DefaultDeckPart.MAIN, []],
                             [DefaultDeckPart.EXTRA, []],
-                            [DefaultDeckPart.SIDE, [card]]
-                        ])
+                            [DefaultDeckPart.SIDE, [card]],
+                        ]),
                     },
                     DefaultDeckPart.SIDE,
                     Format.OCG,
@@ -122,7 +122,7 @@ describe("DeckService", () => {
 
         it("returns true if a card can be added", () => {
             const card = createCard({
-                id: "456"
+                id: "456",
             });
             expect(
                 deckService.canAdd(
@@ -131,8 +131,8 @@ describe("DeckService", () => {
                         parts: new Map<DeckPart, Card[]>([
                             [DefaultDeckPart.MAIN, []],
                             [DefaultDeckPart.EXTRA, []],
-                            [DefaultDeckPart.SIDE, []]
-                        ])
+                            [DefaultDeckPart.SIDE, []],
+                        ]),
                     },
                     DefaultDeckPart.SIDE,
                     Format.OCG,

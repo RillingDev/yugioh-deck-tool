@@ -54,9 +54,9 @@
 
                 <AdvancedSelect
                     :initial-options="banStates"
-                    :label="banState => banState.name"
+                    :label="(banState) => banState.name"
                     :no-selection-allowed="true"
-                    :track-by="banState => banState.name"
+                    :track-by="(banState) => banState.name"
                     class="form-control"
                     v-model="filter.banState"
                     v-on:input="onFilterChange"
@@ -78,9 +78,9 @@
                 />
                 <AdvancedSelect
                     :initial-options="types"
-                    :label="type => type.name.replace('Monster', '')"
+                    :label="(type) => type.name.replace('Monster', '')"
                     :no-selection-allowed="true"
-                    :track-by="type => type.name"
+                    :track-by="(type) => type.name"
                     class="form-control"
                     v-if="types.length > 1"
                     v-model="filter.type"
@@ -184,7 +184,7 @@ import {
     DefaultBanState,
     Format,
     SortingOrder,
-    SortingStrategy
+    SortingStrategy,
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
@@ -194,8 +194,8 @@ import { clone } from "lodash";
 @Component({
     components: {
         MultiSelect,
-        AdvancedSelect
-    }
+        AdvancedSelect,
+    },
 })
 export default class YgoFilter extends Vue {
     @Prop({ required: true })
@@ -207,7 +207,7 @@ export default class YgoFilter extends Vue {
     @Prop({
         required: false,
         type: String,
-        default: () => SortingStrategy.NAME
+        default: () => SortingStrategy.NAME,
     })
     initialSortingStrategy: SortingStrategy;
 
@@ -236,37 +236,37 @@ export default class YgoFilter extends Vue {
         if (this.filter.typeGroup == null) {
             return [];
         }
-        return this.loadArrFromCardDatabase(cardDatabase =>
+        return this.loadArrFromCardDatabase((cardDatabase) =>
             cardDatabase.getTypes(this.filter.typeGroup)
         );
     }
 
     get sets() {
-        return this.loadArrFromCardDatabase<CardSet>(cardDatabase =>
+        return this.loadArrFromCardDatabase<CardSet>((cardDatabase) =>
             cardDatabase.getSets()
         );
     }
 
     get archetypes() {
-        return this.loadArrFromCardDatabase<string>(cardDatabase =>
+        return this.loadArrFromCardDatabase<string>((cardDatabase) =>
             cardDatabase.getArchetypes()
         );
     }
 
     get monsterAttributes() {
-        return this.loadArrFromCardDatabase<string>(cardDatabase =>
+        return this.loadArrFromCardDatabase<string>((cardDatabase) =>
             cardDatabase.getMonsterAttributes()
         );
     }
 
     get monsterLevels() {
-        return this.loadArrFromCardDatabase<number>(cardDatabase =>
+        return this.loadArrFromCardDatabase<number>((cardDatabase) =>
             cardDatabase.getMonsterLevels()
         );
     }
 
     get monsterLinkMarkers() {
-        return this.loadArrFromCardDatabase<string>(cardDatabase =>
+        return this.loadArrFromCardDatabase<string>((cardDatabase) =>
             cardDatabase.getMonsterLinkMarkers()
         );
     }
@@ -283,7 +283,7 @@ export default class YgoFilter extends Vue {
         if (this.filter.typeGroup == null) {
             return [];
         }
-        return this.loadArrFromCardDatabase(cardDatabase =>
+        return this.loadArrFromCardDatabase((cardDatabase) =>
             cardDatabase.getRaces(this.filter.typeGroup)
         );
     }
@@ -300,17 +300,17 @@ export default class YgoFilter extends Vue {
                 SortingStrategy.DEF,
                 SortingStrategy.LEVEL,
                 SortingStrategy.VIEWS,
-                SortingStrategy.RELEASE_DATE
+                SortingStrategy.RELEASE_DATE,
             ],
             sortingOrders: [SortingOrder.ASC, SortingOrder.DESC],
             banStates: [
                 DefaultBanState.UNLIMITED,
                 DefaultBanState.SEMI_LIMITED,
                 DefaultBanState.LIMITED,
-                DefaultBanState.BANNED
+                DefaultBanState.BANNED,
             ],
             formats: Object.values(Format),
-            cardTypeGroups: Object.values(CardTypeGroup)
+            cardTypeGroups: Object.values(CardTypeGroup),
         };
     }
 
@@ -336,7 +336,7 @@ export default class YgoFilter extends Vue {
     onSortingChange() {
         this.$emit("sorting-change", {
             strategy: this.sortingStrategy,
-            order: this.sortingOrder
+            order: this.sortingOrder,
         });
     }
 

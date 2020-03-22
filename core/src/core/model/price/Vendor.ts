@@ -14,7 +14,7 @@ const DefaultVendor: {
     TCGPLAYER: { name: "TCGPlayer", id: "tcgplayer" },
     COOL_STUFF_INC: { name: "Cool Stuff Inc.", id: "coolstuffinc" },
     EBAY: { name: "eBay", id: "ebay" },
-    AMAZON: { name: "Amazon", id: "amazon" }
+    AMAZON: { name: "Amazon", id: "amazon" },
 };
 
 export { Vendor, DefaultVendor };

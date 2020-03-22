@@ -34,7 +34,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     public async getCardInfo(): Promise<UnlinkedCard[]> {
         const responseData = await this.loadPaginated<RawCard>(
             YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,
-            async offset => {
+            async (offset) => {
                 const response = await this.httpService.get<
                     PaginatedResponse<RawCard[]>
                 >(YgoprodeckCardDataLoaderService.ENDPOINT_CARD_INFO, {
@@ -46,8 +46,8 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
                         includeAliased: "yes",
                         num:
                             YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,
-                        offset
-                    }
+                        offset,
+                    },
                 });
                 return response.data;
             }
@@ -62,8 +62,8 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             params: {
                 misc: "yes",
                 includeAliased: "yes",
-                format: Format.RUSH_DUEL
-            }
+                format: Format.RUSH_DUEL,
+            },
         });
         responseData.push(...secondaryResponse.data.data);
 
@@ -76,7 +76,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             {
                 baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
                 timeout: YgoprodeckCardDataLoaderService.DEFAULT_TIMEOUT,
-                responseType: "json"
+                responseType: "json",
             }
         );
         return mapCardSets(response.data);
@@ -88,7 +88,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             {
                 baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
                 timeout: YgoprodeckCardDataLoaderService.DEFAULT_TIMEOUT,
-                responseType: "json"
+                responseType: "json",
             }
         );
         return mapCardValues(response.data);
@@ -100,7 +100,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             {
                 baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
                 timeout: YgoprodeckCardDataLoaderService.DEFAULT_TIMEOUT,
-                responseType: "json"
+                responseType: "json",
             }
         );
         return mapArchetypes(response.data);

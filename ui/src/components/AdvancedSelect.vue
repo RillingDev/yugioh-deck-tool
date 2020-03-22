@@ -45,7 +45,7 @@ export default class AdvancedSelect<T> extends Vue {
 
     data() {
         return {
-            value: this.initialValue
+            value: this.initialValue,
         };
     }
 

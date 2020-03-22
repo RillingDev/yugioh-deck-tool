@@ -36,13 +36,13 @@ class FilterService {
     }
 
     public filter(cards: Card[], filter: CardFilter): Card[] {
-        return cards.filter(card => {
+        return cards.filter((card) => {
             if (
                 filter.name != null &&
                 filter.name !== "" &&
                 !this.cardService
                     .getAllNames(card)
-                    .every(name =>
+                    .every((name) =>
                         name.toLowerCase().includes(filter.name!.toLowerCase())
                     )
             ) {

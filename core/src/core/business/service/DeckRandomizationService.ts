@@ -7,7 +7,7 @@ import { TYPES } from "../../../types";
 import {
     DeckPart,
     DEFAULT_DECK_PART_ARR,
-    DefaultDeckPart
+    DefaultDeckPart,
 } from "../../model/ygo/DeckPart";
 import { SortingService } from "./SortingService";
 import { CardService } from "./CardService";
@@ -20,7 +20,7 @@ enum RandomizationStrategy {
     ARCHETYPE_1 = "1 Archetype",
     ARCHETYPE_2 = "2 Archetypes",
     ARCHETYPE_3 = "3 Archetypes",
-    HIGHLANDER = "Highlander"
+    HIGHLANDER = "Highlander",
 }
 
 @injectable()
@@ -37,7 +37,7 @@ class DeckRandomizationService {
         "on",
         "the",
         "to",
-        "with"
+        "with",
     ];
 
     private readonly cardDatabase: CardDatabase;
@@ -152,7 +152,7 @@ class DeckRandomizationService {
             format: null,
             banState: null,
 
-            sets: []
+            sets: [],
         });
     }
 
@@ -219,16 +219,16 @@ class DeckRandomizationService {
             this.cardService
                 .countCards([
                     ...deck.parts.get(DefaultDeckPart.MAIN)!,
-                    ...deck.parts.get(DefaultDeckPart.EXTRA)!
+                    ...deck.parts.get(DefaultDeckPart.EXTRA)!,
                 ])
                 .entries()
         )
             .filter(([, count]) => count === 3)
             .map(([card]) => card);
         const cardsWithPlaySetsWords = flatten(
-            cardsWithPlaySets.map(card =>
+            cardsWithPlaySets.map((card) =>
                 words(card.name).filter(
-                    word =>
+                    (word) =>
                         !DeckRandomizationService.IGNORED_WORDS.includes(word)
                 )
             )

@@ -27,7 +27,7 @@
                     :initial-options="strategies"
                     :initial-value="strategy"
                     :no-selection-allowed="false"
-                    v-on:input="newStrategy => (strategy = newStrategy)"
+                    v-on:input="(newStrategy) => (strategy = newStrategy)"
                 ></AdvancedSelect>
             </div>
             <hr />
@@ -35,7 +35,7 @@
                 <YgoFilter
                     :initial-filter="filter"
                     :show-sorting="false"
-                    v-on:filter-change="newFilter => (filter = newFilter)"
+                    v-on:filter-change="(newFilter) => (filter = newFilter)"
                 ></YgoFilter>
             </div>
         </b-modal>
@@ -49,7 +49,7 @@ import {
     CardFilter,
     Deck,
     DeckRandomizationService,
-    Format
+    Format,
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
@@ -92,8 +92,8 @@ export default class YgoRandomizer extends Vue {
                 format: Format.TCG,
                 banState: null,
 
-                sets: []
-            }
+                sets: [],
+            },
         };
     }
 

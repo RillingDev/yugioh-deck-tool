@@ -85,7 +85,7 @@ const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
     if (rawMiscInfo == null || rawMiscInfo.formats == null) {
         return [];
     }
-    return rawMiscInfo.formats.map(format => {
+    return rawMiscInfo.formats.map((format) => {
         if (format === "TCG") {
             return Format.TCG;
         }
@@ -115,10 +115,10 @@ const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
     if (rawCard.card_sets == null) {
         return [];
     }
-    return rawCard.card_sets.map(rawSet => {
+    return rawCard.card_sets.map((rawSet) => {
         return {
             name: rawSet.set_name,
-            code: rawSet.set_code
+            code: rawSet.set_code,
         };
     });
 };
@@ -130,7 +130,7 @@ const mapImage = (rawCard: RawCard): CardImage | null => {
     const image = rawCard.card_images[0];
     return {
         url: image.image_url,
-        urlSmall: image.image_url_small
+        urlSmall: image.image_url_small,
     };
 };
 
@@ -144,7 +144,7 @@ const mapPrices = (rawCard: RawCard): CardPrices | null => {
         [DefaultVendor.TCGPLAYER, Number(prices.tcgplayer_price)],
         [DefaultVendor.COOL_STUFF_INC, Number(prices.coolstuffinc_price)],
         [DefaultVendor.EBAY, Number(prices.ebay_price)],
-        [DefaultVendor.AMAZON, Number(prices.amazon_price)]
+        [DefaultVendor.AMAZON, Number(prices.amazon_price)],
     ]);
 };
 
@@ -156,11 +156,11 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => ({
     [Format.OCG]:
         miscInfo?.ocg_date != null
             ? new Date(miscInfo.ocg_date).getTime()
-            : Infinity
+            : Infinity,
 });
 
 const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
-    return data.map(rawCard => {
+    return data.map((rawCard) => {
         const miscInfo: RawMiscInfo | null =
             rawCard.misc_info != null ? rawCard.misc_info[0] : null;
         return {
@@ -195,10 +195,10 @@ const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
                 ),
                 [Format.GOAT]: mapBanListState(
                     rawCard.banlist_info?.ban_goat ?? null
-                )
+                ),
             },
 
-            views: miscInfo?.views ?? 0
+            views: miscInfo?.views ?? 0,
         };
     });
 };

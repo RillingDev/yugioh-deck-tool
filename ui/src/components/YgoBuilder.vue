@@ -9,7 +9,7 @@
             :initial-filter="filter"
             :initial-sorting-order="sortingOrder"
             :initial-sorting-strategy="sortingStrategy"
-            v-on:filter-change="newFilter => (filter = newFilter)"
+            v-on:filter-change="(newFilter) => (filter = newFilter)"
             v-on:sorting-change="
                 ({ strategy, order }) => {
                     sortingStrategy = strategy;
@@ -35,7 +35,7 @@
                                 "
                                 :key="deckPart.id"
                                 :title="`Add Card to ${deckPart.name} Deck`"
-                                @click="e => onAddCard(e, deckPart, card)"
+                                @click="(e) => onAddCard(e, deckPart, card)"
                                 class="builder-add btn"
                                 v-for="deckPart in deckParts"
                             >
@@ -72,12 +72,12 @@ import {
     Format,
     SortingOrder,
     SortingService,
-    SortingStrategy
+    SortingStrategy,
 } from "../../../core/src/main";
 import YgoFilter from "@/components/YgoFilter.vue";
 
 @Component({
-    components: { YgoFilter }
+    components: { YgoFilter },
 })
 export default class YgoBuilder extends Vue {
     @Prop({ required: true })
@@ -100,7 +100,7 @@ export default class YgoBuilder extends Vue {
         format: null,
         banState: null,
 
-        sets: []
+        sets: [],
     };
     private readonly cardDatabase = uiContainer.get<CardDatabase>(
         UI_TYPES.CardDatabase
@@ -154,7 +154,7 @@ export default class YgoBuilder extends Vue {
             format: this.filter.format,
             banState: null,
 
-            sets: []
+            sets: [],
         });
     }
 

@@ -4,7 +4,7 @@
         :href="referenceUrl"
         class="deck-card"
         target="_blank"
-        v-on:contextmenu="e => onDeckCardRightClicked(e)"
+        v-on:contextmenu="(e) => onDeckCardRightClicked(e)"
     >
         <img :alt="card.name" :src="imageUrl" height="135" width="100" />
         <div class="deck-card-text">
@@ -24,8 +24,8 @@ import YgoPriceView from "@/components/YgoPriceView.vue";
 
 @Component({
     components: {
-        YgoPriceView
-    }
+        YgoPriceView,
+    },
 })
 export default class YgoCard extends Vue {
     @Prop({ required: true })

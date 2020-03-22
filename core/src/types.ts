@@ -11,7 +11,7 @@ const TYPES = {
     FilterService: Symbol.for("FilterService"),
     HttpService: Symbol.for("HttpService"),
     CompressionService: Symbol.for("CompressionService"),
-    EncodingService: Symbol.for("EncodingService")
+    EncodingService: Symbol.for("EncodingService"),
 };
 
 export { TYPES };

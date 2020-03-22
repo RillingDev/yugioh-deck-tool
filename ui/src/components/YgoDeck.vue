@@ -23,7 +23,7 @@ import {
     Card,
     Deck,
     DeckService,
-    DEFAULT_DECK_PART_ARR
+    DEFAULT_DECK_PART_ARR,
 } from "../../../core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
@@ -34,8 +34,8 @@ import { UI_TYPES } from "@/types";
 @Component({
     components: {
         YgoDeckPart,
-        YgoPriceView
-    }
+        YgoPriceView,
+    },
 })
 export default class YgoDeck extends Vue {
     @Prop({ required: true })

@@ -40,15 +40,15 @@ class MemoryCardDatabase implements CardDatabase {
         this.sets = [];
         this.archetypes = [];
         this.types = new Map<CardTypeGroup, CardType[]>(
-            Object.values(CardTypeGroup).map(cardTypeGroup => [
+            Object.values(CardTypeGroup).map((cardTypeGroup) => [
                 cardTypeGroup,
-                []
+                [],
             ])
         );
         this.races = new Map<CardTypeGroup, string[]>(
-            Object.values(CardTypeGroup).map(cardTypeGroup => [
+            Object.values(CardTypeGroup).map((cardTypeGroup) => [
                 cardTypeGroup,
-                []
+                [],
             ])
         );
         this.monsterAttributes = [];
@@ -63,7 +63,7 @@ class MemoryCardDatabase implements CardDatabase {
             this.dataLoaderClient.getCardInfo(),
             this.dataLoaderClient.getCardSets(),
             this.dataLoaderClient.getCardValues(),
-            this.dataLoaderClient.getArchetypes()
+            this.dataLoaderClient.getArchetypes(),
         ]);
         logger.info("Loaded data from API.");
 
@@ -107,10 +107,10 @@ class MemoryCardDatabase implements CardDatabase {
         );
 
         const setCache = new Map<string, CardSet>(
-            cardSets.map(set => [set.name, set])
+            cardSets.map((set) => [set.name, set])
         );
         const typeCache = new Map<string, CardType>(
-            cardValues.types.map(type => [type.name, type])
+            cardValues.types.map((type) => [type.name, type])
         );
         for (const unlinkedCard of cardInfo) {
             const linkedCard = this.createLinkedCard(
@@ -202,7 +202,7 @@ class MemoryCardDatabase implements CardDatabase {
             release: unlinkedCard.release,
             banlist: unlinkedCard.banlist,
 
-            views: unlinkedCard.views
+            views: unlinkedCard.views,
         };
     }
 
@@ -211,7 +211,7 @@ class MemoryCardDatabase implements CardDatabase {
         setCache: Map<string, CardSet>
     ): CardSet[] {
         return <CardSet[]>setAppearances
-            .map(setAppearance => {
+            .map((setAppearance) => {
                 if (!setCache.has(setAppearance.name)) {
                     logger.warn(`Could not find set '${setAppearance.name}'.`);
                     return null;
@@ -222,7 +222,7 @@ class MemoryCardDatabase implements CardDatabase {
                 );
                 return matchingSet;
             })
-            .filter(set => set != null);
+            .filter((set) => set != null);
     }
 
     private linkType(

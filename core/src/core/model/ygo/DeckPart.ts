@@ -19,7 +19,7 @@ const DefaultDeckPart: {
         indicator: "#main",
         min: 40,
         max: 60,
-        recommended: 40
+        recommended: 40,
     },
     EXTRA: {
         id: "extra",
@@ -27,7 +27,7 @@ const DefaultDeckPart: {
         indicator: "#extra",
         min: 0,
         max: 15,
-        recommended: 15
+        recommended: 15,
     },
     SIDE: {
         id: "side",
@@ -35,14 +35,14 @@ const DefaultDeckPart: {
         indicator: "!side",
         min: 0,
         max: 15,
-        recommended: 15
-    }
+        recommended: 15,
+    },
 };
 
 const DEFAULT_DECK_PART_ARR: DeckPart[] = [
     DefaultDeckPart.MAIN,
     DefaultDeckPart.EXTRA,
-    DefaultDeckPart.SIDE
+    DefaultDeckPart.SIDE,
 ];
 
 export { DeckPart, DEFAULT_DECK_PART_ARR, DefaultDeckPart };

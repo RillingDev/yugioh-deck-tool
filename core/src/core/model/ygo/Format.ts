@@ -6,7 +6,7 @@ enum Format {
     OCG_GOAT = "OCG GOAT",
     SPEED_DUEL = "Speed Duel",
     RUSH_DUEL = "Rush Duel",
-    DUEL_LINKS = "Duel Links"
+    DUEL_LINKS = "Duel Links",
 }
 
 export { Format };

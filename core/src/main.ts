@@ -11,7 +11,7 @@ import { Deck } from "./core/model/ygo/Deck";
 import {
     DeckPart,
     DEFAULT_DECK_PART_ARR,
-    DefaultDeckPart
+    DefaultDeckPart,
 } from "./core/model/ygo/DeckPart";
 import { TYPES } from "./types";
 import { container } from "./inversify.config";
@@ -25,11 +25,11 @@ import { CardValues } from "./core/model/ygo/CardValues";
 import {
     SortingOrder,
     SortingService,
-    SortingStrategy
+    SortingStrategy,
 } from "./core/business/service/SortingService";
 import {
     CardFilter,
-    FilterService
+    FilterService,
 } from "./core/business/service/FilterService";
 import { Currency, DEFAULT_CURRENCY_ARR } from "./core/model/price/Currency";
 import { CardType } from "./core/model/ygo/CardType";
@@ -37,7 +37,7 @@ import { CardTypeGroup } from "./core/model/ygo/CardTypeGroup";
 import { DefaultVendor, Vendor } from "./core/model/price/Vendor";
 import {
     DeckRandomizationService,
-    RandomizationStrategy
+    RandomizationStrategy,
 } from "./core/business/service/DeckRandomizationService";
 
 export {
@@ -82,5 +82,5 @@ export {
     Currency,
     DEFAULT_CURRENCY_ARR,
     Vendor,
-    DefaultVendor
+    DefaultVendor,
 };

@@ -8,7 +8,7 @@ class AxiosHttpService implements HttpService {
 
     constructor() {
         this.httpClient = axios.create({
-            validateStatus: status => status === 200
+            validateStatus: (status) => status === 200,
         });
     }
 
