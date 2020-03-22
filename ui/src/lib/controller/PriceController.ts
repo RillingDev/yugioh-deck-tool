@@ -1,5 +1,10 @@
 import { injectable } from "inversify";
-import { Currency, DEFAULT_CURRENCY_ARR, DefaultVendor, Vendor } from "../../../../core/src/main";
+import {
+    Currency,
+    DEFAULT_CURRENCY_ARR,
+    DefaultVendor,
+    Vendor,
+} from "../../../../core/src/main";
 
 @injectable()
 class PriceController {
@@ -11,7 +16,7 @@ class PriceController {
         this.vendors = [
             DefaultVendor.TCGPLAYER,
             DefaultVendor.CARDMARKET,
-            DefaultVendor.EBAY
+            DefaultVendor.EBAY,
         ];
         this.currencies = DEFAULT_CURRENCY_ARR;
         this.activeCurrency = this.guessDefaultCurrency();
@@ -25,7 +30,7 @@ class PriceController {
 
     private guessDefaultCurrency() {
         const localeIndex = DEFAULT_CURRENCY_ARR.findIndex(
-            currency => currency.locale === navigator.language
+            (currency) => currency.locale === navigator.language
         );
 
         return localeIndex === -1
@@ -38,7 +43,7 @@ class PriceController {
             style: "currency",
             currency: currency.id,
             minimumFractionDigits: currency.fractionDigits,
-            maximumFractionDigits: currency.fractionDigits
+            maximumFractionDigits: currency.fractionDigits,
         });
     }
 }

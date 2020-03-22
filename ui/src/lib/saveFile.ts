@@ -9,4 +9,4 @@ const saveFile = (file: File) => {
     el.remove();
 };
 
-export default saveFile;
+export { saveFile };

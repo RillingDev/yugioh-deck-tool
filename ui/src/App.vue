@@ -134,8 +134,8 @@ import {
     DeckService,
     Format,
 } from "../../core/src/main";
-import saveFile from "./lib/saveFile";
-import copyText from "./lib/copyText";
+import { saveFile } from "./lib/saveFile";
+import { copyText } from "./lib/copyText";
 import YgoDeck from "./components/YgoDeck.vue";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";

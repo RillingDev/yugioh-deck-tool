@@ -9,4 +9,4 @@ const copyText = (str: string): void => {
     el.remove();
 };
 
-export default copyText;
+export { copyText };
