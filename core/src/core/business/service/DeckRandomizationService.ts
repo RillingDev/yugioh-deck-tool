@@ -11,7 +11,7 @@ import {
 } from "../../model/ygo/DeckPart";
 import { SortingService } from "./SortingService";
 import { CardService } from "./CardService";
-import { random, sampleSize, shuffle, words } from "lodash";
+import { random, sampleSize, shuffle, uniq, words } from "lodash";
 import { Card } from "../../model/ygo/Card";
 import { Format } from "../../model/ygo/Format";
 
@@ -25,7 +25,20 @@ enum RandomizationStrategy {
 
 @injectable()
 class DeckRandomizationService {
-    private static readonly IGNORED_WORDS = ["of", "the", "a", "an", "in"];
+    private static readonly IGNORED_WORDS = [
+        "a",
+        "an",
+        "as",
+        "at",
+        "by",
+        "for",
+        "in",
+        "of",
+        "on",
+        "the",
+        "to",
+        "with"
+    ];
 
     private readonly cardDatabase: CardDatabase;
     private readonly deckService: DeckService;
@@ -157,7 +170,7 @@ class DeckRandomizationService {
     }
 
     private getCardsPerArchetypeCount(strategy: RandomizationStrategy): number {
-        return 18 - this.getArchetypeCount(strategy) * 3;
+        return Math.ceil(20 / this.getArchetypeCount(strategy));
     }
 
     private getDeckPartLimit(
@@ -182,7 +195,7 @@ class DeckRandomizationService {
             return 1;
         }
 
-        const seed = random(0, 1);
+        const seed = random(0, 1, true);
         if (isPrimaryPool) {
             if (seed > 0.65) {
                 return 1;
@@ -201,35 +214,29 @@ class DeckRandomizationService {
         return 3;
     }
 
-    private shouldSkip(isPrimaryPool: boolean): boolean {
-        const seed = random(0, 1);
-        if (isPrimaryPool) {
-            return seed > 0.85;
-        }
-        return seed > 0.5;
-    }
-
     private createName(deck: Deck): string {
-        const cards = [
-            ...deck.parts.get(DefaultDeckPart.MAIN)!,
-            ...deck.parts.get(DefaultDeckPart.EXTRA)!
-        ];
-        const wordCount = random(2, 3, false);
-        return sampleSize(cards, wordCount)
-            .map(card => this.getRandomWord(card))
-            .join(" ");
-    }
-
-    private getRandomWord(card: Card): string {
-        const shuffledWords = shuffle(
-            words(card.name).filter(
-                word => !DeckRandomizationService.IGNORED_WORDS.includes(word)
+        const cardsWithPlaySets = Array.from(
+            this.cardService
+                .countCards([
+                    ...deck.parts.get(DefaultDeckPart.MAIN)!,
+                    ...deck.parts.get(DefaultDeckPart.EXTRA)!
+                ])
+                .entries()
+        )
+            .filter(([, count]) => count === 3)
+            .map(([card]) => card);
+        const cardsWithPlaySetsWords = cardsWithPlaySets
+            .map(card =>
+                words(card.name).filter(
+                    word =>
+                        !DeckRandomizationService.IGNORED_WORDS.includes(word)
+                )
             )
-        );
-        if (shuffledWords.length === 0) {
-            throw new Error("No words lefter after filtering!");
-        }
-        return shuffledWords[0];
+            .flat();
+        return sampleSize(
+            uniq(cardsWithPlaySetsWords),
+            random(2, 3, false)
+        ).join(" ");
     }
 }
 
