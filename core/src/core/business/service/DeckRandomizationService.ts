@@ -38,6 +38,7 @@ class DeckRandomizationService {
         "the",
         "to",
         "with",
+        "from",
     ];
 
     private readonly cardDatabase: CardDatabase;
@@ -242,7 +243,9 @@ class DeckRandomizationService {
             cardsWithPlaySets.map((card) =>
                 words(card.name).filter(
                     (word) =>
-                        !DeckRandomizationService.IGNORED_WORDS.includes(word)
+                        !DeckRandomizationService.IGNORED_WORDS.includes(
+                            word.toLowerCase()
+                        )
                 )
             )
         );
