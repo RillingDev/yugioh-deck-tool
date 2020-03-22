@@ -1,0 +1,63 @@
+.multiselect__tags {
+    border: 1px solid #ced4da;
+    border-radius: 0;
+}
+
+.multiselect__tag {
+    border-radius: 0;
+    background: $primary;
+}
+
+.multiselect__tag-icon:after {
+    color: $white;
+}
+
+.multiselect__tag-icon:focus,
+.multiselect__tag-icon:hover {
+    background: lighten($primary, 10%);
+}
+
+.multiselect__option--highlight,
+.multiselect__option--highlight:after {
+    background: $primary;
+}
+
+.multiselect__option--selected.multiselect__option--highlight,
+.multiselect__option--selected.multiselect__option--highlight:after,
+.multiselect__option--group-selected.multiselect__option--highlight,
+.multiselect__option--group-selected.multiselect__option--highlight:after {
+    background: $danger;
+}
+
+.multiselect,
+.multiselect__tags,
+.multiselect__current,
+.multiselect__option {
+    min-height: 38px;
+}
+
+.multiselect__option:after {
+    line-height: 38px;
+}
+
+.multiselect,
+.multiselect__input,
+.multiselect__single {
+    font-size: 1rem;
+}
+
+.multiselect input[type="text"].multiselect__input,
+.multiselect input[type="text"].multiselect__input:focus {
+    margin: inherit;
+    padding: 0 0 0 5px;
+}
+
+.multiselect__tags,
+.multiselect__tag-icon:after,
+.multiselect__option:after {
+    font-size: 0.85em;
+}
+
+.multiselect__select {
+    display: none;
+}
