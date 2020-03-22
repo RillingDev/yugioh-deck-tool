@@ -221,21 +221,21 @@ class DeckRandomizationService {
 
         const seed = random(0, 1, true);
         if (isPrimaryPool) {
-            if (seed > 0.65) {
-                return 1;
-            }
             if (seed > 0.5) {
+                return 3;
+            }
+            if (seed > 0.35) {
                 return 2;
             }
-            return 3;
-        }
-        if (seed > 0.25) {
             return 1;
         }
-        if (seed > 0.1) {
+        if (seed > 0.75) {
+            return 3;
+        }
+        if (seed > 0.6) {
             return 2;
         }
-        return 3;
+        return 1;
     }
 
     private createName(deck: Deck): string {
