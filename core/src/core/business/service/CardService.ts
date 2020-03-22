@@ -4,6 +4,7 @@ import { intersection } from "lodash";
 import { Format } from "../../model/ygo/Format";
 import { BanState, DefaultBanState } from "../../model/ygo/BanState";
 import { BanlistInfo } from "../../model/ygo/BanlistInfo";
+import { groupMapReducingBy } from "lightdash";
 
 @injectable()
 class CardService {
@@ -53,6 +54,15 @@ class CardService {
             names.push(card.betaName);
         }
         return names;
+    }
+
+    public countCards(cards: Card[]): Map<Card, number> {
+        return groupMapReducingBy(
+            cards,
+            card => card,
+            () => 0,
+            current => current + 1
+        );
     }
 }
 

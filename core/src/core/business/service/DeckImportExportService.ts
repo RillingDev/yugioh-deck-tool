@@ -11,6 +11,7 @@ import { EncodingService } from "./EncodingService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { HttpService } from "./HttpService";
 import parseUrl from "url-parse";
+import { CardService } from "./CardService";
 
 interface ImportResult {
     readonly deck: Deck;
@@ -36,6 +37,7 @@ class DeckImportExportService {
     private readonly cardDatabase: CardDatabase;
     private readonly compressionService: CompressionService;
     private readonly deckService: DeckService;
+    private readonly cardService: CardService;
 
     constructor(
         @inject(TYPES.HttpService)
@@ -47,13 +49,16 @@ class DeckImportExportService {
         @inject(TYPES.EncodingService)
         encodingService: EncodingService,
         @inject(TYPES.CompressionService)
-        compressionService: CompressionService
+        compressionService: CompressionService,
+        @inject(TYPES.CardService)
+        cardService: CardService
     ) {
         this.httpService = httpService;
         this.encodingService = encodingService;
         this.compressionService = compressionService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
+        this.cardService = cardService;
     }
 
     public async fromRemoteFile(
@@ -265,7 +270,9 @@ class DeckImportExportService {
             result.push(`${deckPart.name}:`);
 
             const deckPartCards = deck.parts.get(deckPart)!;
-            const counted: Map<Card, number> = this.countCards(deckPartCards);
+            const counted: Map<Card, number> = this.cardService.countCards(
+                deckPartCards
+            );
             for (const [card, count] of counted.entries()) {
                 result.push(`${card.name} x${count}`);
             }
@@ -275,7 +282,7 @@ class DeckImportExportService {
     }
 
     public toBuyLink(deck: Deck): string {
-        const counted: Map<Card, number> = this.countCards(
+        const counted: Map<Card, number> = this.cardService.countCards(
             this.deckService.getAllCards(deck)
         );
         const cardList = Array.from(counted.entries()).map(
@@ -313,15 +320,6 @@ class DeckImportExportService {
         }
 
         return this.cardDatabase.getCard(cardId)!;
-    }
-
-    private countCards(cards: Card[]): Map<Card, number> {
-        return groupMapReducingBy(
-            cards,
-            card => card,
-            () => 0,
-            current => current + 1
-        );
     }
 }
 
