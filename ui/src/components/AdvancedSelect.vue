@@ -1,11 +1,11 @@
 <template>
     <select :title="title" v-model="value" v-on:change="() => onChange()">
         <option
-            :key="option == null ? '__ANY' : createOptionTrackBy(option)"
+            :key="option == null ? '__ANY' : trackBy(option)"
             :value="option"
             v-for="option in options"
         >
-            {{ option == null ? "---" : createOptionLabel(option) }}
+            {{ option == null ? "---" : label(option) }}
         </option>
     </select>
 </template>
@@ -29,10 +29,10 @@ export default class AdvancedSelect<T> extends Vue {
     @Prop({ required: false, default: () => null })
     title: string | null;
 
-    @Prop({ required: false, default: () => null })
+    @Prop({ required: false, default: () => (str: string): string => str })
     label: (T) => string;
 
-    @Prop({ required: false, default: () => null })
+    @Prop({ required: false, default: () => (key: string): string => key })
     trackBy: (T) => string;
 
     value: T | null;
@@ -47,20 +47,6 @@ export default class AdvancedSelect<T> extends Vue {
         return {
             value: this.initialValue,
         };
-    }
-
-    createOptionLabel(option: T): T | string {
-        if (this.label == null) {
-            return option;
-        }
-        return this.label(option);
-    }
-
-    createOptionTrackBy(option: T): T | string {
-        if (this.trackBy == null) {
-            return option;
-        }
-        return this.trackBy(option);
     }
 
     onChange() {

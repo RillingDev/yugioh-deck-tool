@@ -57,19 +57,13 @@
             <!-- app-forms-price -->
             <div class="form-group">
                 <label>Price:</label>
-                <select
+                <AdvancedSelect
                     class="form-control form-deck-currency"
-                    title="Price Currency"
+                    :initial-options="priceController.currencies"
+                    :track-by="(currency) => currency.name"
+                    :label="(currency) => currency.name"
                     v-model="priceController.activeCurrency"
-                >
-                    <option
-                        :key="currency.name"
-                        :value="currency"
-                        v-for="currency in priceController.currencies"
-                    >
-                        {{ currency.name }}
-                    </option>
-                </select>
+                ></AdvancedSelect>
                 <a
                     :class="{ disabled: isDeckEmpty }"
                     :disabled="isDeckEmpty"
@@ -146,6 +140,7 @@ import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
 import parseUrl from "url-parse";
 import YgoRandomizer from "@/components/YgoRandomizer.vue";
+import AdvancedSelect from "@/components/AdvancedSelect.vue";
 
 @Component({
     components: {
@@ -154,6 +149,7 @@ import YgoRandomizer from "@/components/YgoRandomizer.vue";
         YgoDrawSim,
         YgoBuilder,
         YgoRandomizer,
+        AdvancedSelect,
     },
     name: "Index",
 })
