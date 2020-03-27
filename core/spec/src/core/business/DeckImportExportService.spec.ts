@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { container } from "../../../../src/inversify.config";
 import { DeckImportExportService } from "../../../../src/core/business/service/DeckImportExportService";
 import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
@@ -11,29 +10,39 @@ import {
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { deflate } from "pako";
 import { HttpService } from "../../../../src/core/business/service/HttpService";
-import { anyString, anything, instance, mock, verify, when } from "ts-mockito";
+import { anyString, anything, verify, when } from "ts-mockito";
 import { AxiosHttpService } from "../../../../src/core/business/service/AxiosHttpService";
 import { MemoryCardDatabase } from "../../../../src/core/business/MemoryCardDatabase";
+import { container } from "../../../../src/inversify.config";
+import { bindMock } from "../../helper/bindMock";
 
 describe("DeckImportExportService", () => {
     let deckImportExportService: DeckImportExportService;
+
     let mockCardDatabase: CardDatabase;
-    let mockHttpServiceInstance: AxiosHttpService;
+    let mockHttpService: HttpService;
 
     beforeEach(() => {
-        mockCardDatabase = mock(MemoryCardDatabase);
-        container
-            .rebind<CardDatabase>(TYPES.CardDatabase)
-            .toConstantValue(instance(mockCardDatabase));
-        mockHttpServiceInstance = mock(AxiosHttpService);
+        container.snapshot();
 
-        container
-            .rebind<HttpService>(TYPES.HttpService)
-            .toConstantValue(instance(mockHttpServiceInstance));
+        mockCardDatabase = bindMock<CardDatabase>(
+            container,
+            TYPES.CardDatabase,
+            MemoryCardDatabase
+        );
+        mockHttpService = bindMock<HttpService>(
+            container,
+            TYPES.HttpService,
+            AxiosHttpService
+        );
 
         deckImportExportService = container.get<DeckImportExportService>(
             TYPES.DeckImportExportService
         );
+    });
+
+    afterEach(() => {
+        container.restore();
     });
 
     describe("fromFile", () => {
@@ -174,15 +183,11 @@ describe("DeckImportExportService", () => {
                 );
             }
 
-            verify(
-                mockHttpServiceInstance.get(anyString(), anything())
-            ).never();
+            verify(mockHttpService.get(anyString(), anything())).never();
         });
 
         it("loads name from path", async () => {
-            when(
-                mockHttpServiceInstance.get(anyString(), anything())
-            ).thenResolve({
+            when(mockHttpService.get(anyString(), anything())).thenResolve({
                 data: "deck file content",
                 status: 200,
                 statusText: "status",
@@ -202,9 +207,7 @@ describe("DeckImportExportService", () => {
             const card = createCard({ id: "123" });
             when(mockCardDatabase.hasCard("123")).thenReturn(true);
             when(mockCardDatabase.getCard("123")).thenReturn(card);
-            when(
-                mockHttpServiceInstance.get(anyString(), anything())
-            ).thenResolve({
+            when(mockHttpService.get(anyString(), anything())).thenResolve({
                 data: fileContent,
                 status: 200,
                 statusText: "status",

@@ -15,7 +15,13 @@ describe("DeckService", () => {
     let deckService: DeckService;
 
     beforeEach(() => {
+        container.snapshot();
+
         deckService = container.get<DeckService>(TYPES.DeckService);
+    });
+
+    afterEach(() => {
+        container.restore();
     });
 
     describe("createEmptyDeck", () => {
