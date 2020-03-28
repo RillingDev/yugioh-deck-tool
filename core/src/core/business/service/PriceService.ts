@@ -1,48 +1,43 @@
 import { injectable } from "inversify";
 import { Card } from "../../model/ygo/Card";
-import { CardPrices } from "../../model/ygo/CardPrices";
-import { DefaultVendor } from "../../model/price/Vendor";
+import { Vendor } from "../../model/price/Vendor";
+import { Currency } from "../../model/price/Currency";
 
 interface PriceLookupResult {
-    prices: CardPrices;
+    price: number;
     missing: Card[];
 }
 
 @injectable()
 class PriceService {
-    public hasPrice(card: Card): boolean {
-        return card.prices != null;
+    public getPrice(
+        cards: Card[],
+        vendor: Vendor,
+        currency: Currency
+    ): PriceLookupResult {
+        const missing: Card[] = cards.filter(
+            (card) => !this.hasPrice(card, vendor)
+        );
+        const prices = cards
+            .filter((card) => this.hasPrice(card, vendor))
+            .map((card) => this.getCardPrice(card, vendor, currency));
+        const price = prices.reduce((a, b) => a + b, 0);
+        return { price, missing };
     }
 
-    public getPrice(...cards: Card[]): PriceLookupResult {
-        const missing: Card[] = cards.filter((card) => !this.hasPrice(card));
-        const cardsWithPrice = cards.filter((card) => this.hasPrice(card));
-        const prices = this.createPrices(0, 0, 0, 0, 0);
-        for (const card of cardsWithPrice) {
-            for (const vendor of prices.keys()) {
-                prices.set(
-                    vendor,
-                    prices.get(vendor)! + card.prices!.get(vendor)!
-                );
-            }
+    private hasPrice(card: Card, vendor: Vendor): boolean {
+        return card.prices.has(vendor);
+    }
+
+    private getCardPrice(
+        card: Card,
+        vendor: Vendor,
+        currency: Currency
+    ): number {
+        if (!this.hasPrice(card, vendor)) {
+            throw new TypeError(`No price exists for this vendor: ${vendor}`);
         }
-        return { prices, missing };
-    }
-
-    public createPrices(
-        cardMarket: number,
-        tcgPlayer: number,
-        coolStuffInc: number,
-        ebay: number,
-        amazon: number
-    ): CardPrices {
-        return new Map([
-            [DefaultVendor.CARDMARKET, cardMarket],
-            [DefaultVendor.TCGPLAYER, tcgPlayer],
-            [DefaultVendor.COOL_STUFF_INC, coolStuffInc],
-            [DefaultVendor.EBAY, ebay],
-            [DefaultVendor.AMAZON, amazon],
-        ]);
+        return card.prices.get(vendor)! * currency.val;
     }
 }
 

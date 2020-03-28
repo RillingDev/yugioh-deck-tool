@@ -12,6 +12,7 @@ import {
     DefaultDeckPart
 } from "../../../src/core/model/ygo/DeckPart";
 import { DefaultBanState } from "../../../src/core/model/ygo/BanState";
+import { Vendor } from "../../../src/core/model/price/Vendor";
 
 const createCardType = (data: {
     name?: string;
@@ -69,7 +70,7 @@ const createCard = (data: {
 
     sets: data.sets ?? [],
     image: data.image ?? null,
-    prices: data.prices ?? null,
+    prices: data.prices ?? new Map<Vendor, number>(),
     betaName: data.betaName ?? null,
     treatedAs: data.treatedAs ?? null,
     archetype: data.archetype ?? null,

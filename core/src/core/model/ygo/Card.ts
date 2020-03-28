@@ -25,7 +25,7 @@ interface Card {
 
     readonly sets: CardSet[];
     readonly image: CardImage | null;
-    readonly prices: CardPrices | null;
+    readonly prices: CardPrices;
 
     readonly betaName: string | null;
     readonly treatedAs: string | null;

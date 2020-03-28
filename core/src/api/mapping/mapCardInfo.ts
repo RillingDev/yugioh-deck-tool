@@ -3,7 +3,7 @@ import { CardImage } from "../../core/model/ygo/CardImage";
 import { CardPrices } from "../../core/model/ygo/CardPrices";
 import { CardSetAppearance } from "../../core/model/ygo/intermediate/CardSetAppearance";
 import { Format } from "../../core/model/ygo/Format";
-import { DefaultVendor } from "../../core/model/price/Vendor";
+import { DefaultVendor, Vendor } from "../../core/model/price/Vendor";
 import { UnlinkedCard } from "../../core/model/ygo/intermediate/UnlinkedCard";
 import { ReleaseInfo } from "../../core/model/ygo/ReleaseInfo";
 
@@ -134,18 +134,20 @@ const mapImage = (rawCard: RawCard): CardImage | null => {
     };
 };
 
-const mapPrices = (rawCard: RawCard): CardPrices | null => {
-    if (rawCard.card_prices == null) {
-        return null;
+const mapPrices = (rawCard: RawCard): CardPrices => {
+    const result = new Map<Vendor, number>();
+    if (rawCard.card_prices != null) {
+        const prices = rawCard.card_prices[0];
+        result.set(DefaultVendor.CARDMARKET, Number(prices.cardmarket_price));
+        result.set(DefaultVendor.TCGPLAYER, Number(prices.tcgplayer_price));
+        result.set(
+            DefaultVendor.COOL_STUFF_INC,
+            Number(prices.coolstuffinc_price)
+        );
+        result.set(DefaultVendor.EBAY, Number(prices.ebay_price));
+        result.set(DefaultVendor.AMAZON, Number(prices.amazon_price));
     }
-    const prices = rawCard.card_prices[0];
-    return new Map([
-        [DefaultVendor.CARDMARKET, Number(prices.cardmarket_price)],
-        [DefaultVendor.TCGPLAYER, Number(prices.tcgplayer_price)],
-        [DefaultVendor.COOL_STUFF_INC, Number(prices.coolstuffinc_price)],
-        [DefaultVendor.EBAY, Number(prices.ebay_price)],
-        [DefaultVendor.AMAZON, Number(prices.amazon_price)],
-    ]);
+    return result;
 };
 
 const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => ({

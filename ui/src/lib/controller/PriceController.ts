@@ -1,8 +1,11 @@
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import {
+    Card,
     Currency,
     DEFAULT_CURRENCY_ARR,
     DefaultVendor,
+    PriceService,
+    TYPES,
     Vendor,
 } from "../../../../core/src/main";
 
@@ -11,8 +14,10 @@ class PriceController {
     public readonly activeCurrency: Currency;
     public readonly vendors: Vendor[];
     public readonly currencies: Currency[];
+    private readonly priceService: PriceService;
 
-    constructor() {
+    constructor(@inject(TYPES.PriceService) priceService: PriceService) {
+        this.priceService = priceService;
         this.vendors = [
             DefaultVendor.TCGPLAYER,
             DefaultVendor.CARDMARKET,
@@ -22,10 +27,21 @@ class PriceController {
         this.activeCurrency = this.guessDefaultCurrency();
     }
 
-    public format(val: number): string {
-        const currency = this.activeCurrency;
+    public getPriceByVendor(cards: Card[]): Map<Vendor, number> {
+        return new Map<Vendor, number>(
+            this.vendors.map((vendor) => {
+                const price = this.priceService.getPrice(
+                    cards,
+                    vendor,
+                    this.activeCurrency
+                );
+                return [vendor, price.price];
+            })
+        );
+    }
 
-        return this.createFormatter(currency).format(val * currency.val);
+    public format(val: number): string {
+        return this.createFormatter(this.activeCurrency).format(val);
     }
 
     private guessDefaultCurrency() {

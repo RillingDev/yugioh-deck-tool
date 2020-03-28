@@ -5,10 +5,10 @@
             :key="vendor.id"
             :title="`${vendor.name} Price`"
             class="price-mode"
-            v-for="vendor in priceController.vendors"
+            v-for="[vendor, price] in priceByVendor.entries()"
         >
             <span v-if="group">{{ vendor.name }}: </span>
-            {{ priceController.format(priceValues.get(vendor)) }}
+            {{ priceController.format(price) }}
         </span>
     </div>
 </template>
@@ -17,7 +17,7 @@
 import { uiContainer } from "@/inversify.config";
 import { PriceController } from "@/lib/controller/PriceController";
 import { UI_TYPES } from "@/types";
-import { Card, PriceService } from "../../../core/src/main";
+import { Card, Vendor } from "../../../core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
@@ -32,12 +32,9 @@ export default class YgoPriceView extends Vue {
     priceController = uiContainer.get<PriceController>(
         UI_TYPES.PriceController
     );
-    private readonly priceService = uiContainer.get<PriceService>(
-        UI_TYPES.PriceService
-    );
 
-    get priceValues() {
-        return this.priceService.getPrice(...this.cards).prices;
+    get priceByVendor(): Map<Vendor, number> {
+        return this.priceController.getPriceByVendor(this.cards);
     }
 }
 </script>
