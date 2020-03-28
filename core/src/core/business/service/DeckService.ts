@@ -6,7 +6,7 @@ import { TYPES } from "../../../types";
 import { CardService } from "./CardService";
 import { Format } from "../../model/ygo/Format";
 import { removeItem } from "lightdash";
-import { clone, shuffle } from "lodash";
+import { shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
@@ -117,8 +117,16 @@ class DeckService {
     }
 
     private cloneDeck(deck: Deck): Deck {
-        const deckClone = clone(deck);
-        deckClone.parts = new Map<DeckPart, Card[]>(deckClone.parts);
+        const deckClone = {
+            name: deck.name,
+            parts: new Map<DeckPart, Card[]>(deck.parts),
+        };
+        for (const deckPart of DEFAULT_DECK_PART_ARR) {
+            deckClone.parts.set(
+                deckPart,
+                Array.from(deckClone.parts.get(deckPart)!)
+            );
+        }
         return deckClone;
     }
 }
