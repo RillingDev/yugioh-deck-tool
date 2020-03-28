@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { DeckImportExportService } from "../../../../src/core/business/service/DeckImportExportService";
 import { TYPES } from "../../../../src/types";
 import { CardDatabase } from "../../../../src/core/business/CardDatabase";
 import { createCard } from "../../helper/dataFactories";
@@ -8,16 +7,16 @@ import {
     DefaultDeckPart,
 } from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
-import { deflate } from "pako";
 import { HttpService } from "../../../../src/core/business/service/HttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
 import { AxiosHttpService } from "../../../../src/core/business/service/AxiosHttpService";
 import { MemoryCardDatabase } from "../../../../src/core/business/MemoryCardDatabase";
 import { container } from "../../../../src/inversify.config";
 import { bindMock } from "../../helper/bindMock";
+import { DeckFileService } from "../../../../src/core/business/service/DeckFileService";
 
-describe("DeckImportExportService", () => {
-    let deckImportExportService: DeckImportExportService;
+describe("DeckFileService", () => {
+    let deckFileService: DeckFileService;
 
     let mockCardDatabase: CardDatabase;
     let mockHttpService: HttpService;
@@ -36,9 +35,7 @@ describe("DeckImportExportService", () => {
             AxiosHttpService
         );
 
-        deckImportExportService = container.get<DeckImportExportService>(
-            TYPES.DeckImportExportService
-        );
+        deckFileService = container.get<DeckFileService>(TYPES.DeckFileService);
     });
 
     afterEach(() => {
@@ -48,7 +45,7 @@ describe("DeckImportExportService", () => {
     describe("fromFile", () => {
         it("processes filename", () => {
             expect(
-                deckImportExportService.fromFile({
+                deckFileService.fromFile({
                     fileContent: "",
                     fileName: "foo.ydk",
                 }).deck.name
@@ -59,7 +56,7 @@ describe("DeckImportExportService", () => {
             const fileContent = `
 #main
 123`;
-            const result = deckImportExportService.fromFile({
+            const result = deckFileService.fromFile({
                 fileContent,
                 fileName: "foo.ydk",
             });
@@ -75,7 +72,7 @@ describe("DeckImportExportService", () => {
             when(mockCardDatabase.hasCard("123")).thenReturn(true);
             when(mockCardDatabase.getCard("123")).thenReturn(card);
 
-            const result = deckImportExportService.fromFile({
+            const result = deckFileService.fromFile({
                 fileContent,
                 fileName: "foo.ydk",
             });
@@ -94,7 +91,7 @@ describe("DeckImportExportService", () => {
             when(mockCardDatabase.hasCard("123")).thenReturn(true);
             when(mockCardDatabase.getCard("123")).thenReturn(card);
 
-            const result = deckImportExportService.fromFile({
+            const result = deckFileService.fromFile({
                 fileContent,
                 fileName: "foo.ydk",
             });
@@ -130,7 +127,7 @@ describe("DeckImportExportService", () => {
             when(mockCardDatabase.hasCard("789")).thenReturn(true);
             when(mockCardDatabase.getCard("789")).thenReturn(card3);
 
-            const result = deckImportExportService.fromFile({
+            const result = deckFileService.fromFile({
                 fileContent,
                 fileName: "foo.ydk",
             });
@@ -160,7 +157,7 @@ describe("DeckImportExportService", () => {
             when(mockCardDatabase.hasCard("123")).thenReturn(true);
             when(mockCardDatabase.getCard("123")).thenReturn(card);
 
-            const result = deckImportExportService.fromFile({
+            const result = deckFileService.fromFile({
                 fileContent,
                 fileName: "foo.ydk",
             });
@@ -172,7 +169,7 @@ describe("DeckImportExportService", () => {
     describe("fromRemoteFile", () => {
         it("errors for different origin", async () => {
             try {
-                await deckImportExportService.fromRemoteFile(
+                await deckFileService.fromRemoteFile(
                     "https://example.com",
                     "https://attacker.website.hax/foo/bar.ydk"
                 );
@@ -193,7 +190,7 @@ describe("DeckImportExportService", () => {
                 statusText: "status",
             });
 
-            const result = await deckImportExportService.fromRemoteFile(
+            const result = await deckFileService.fromRemoteFile(
                 "https://example.com",
                 "https://example.com/foo/bar.ydk"
             );
@@ -213,7 +210,7 @@ describe("DeckImportExportService", () => {
                 statusText: "status",
             });
 
-            const result = await deckImportExportService.fromRemoteFile(
+            const result = await deckFileService.fromRemoteFile(
                 "https://example.com",
                 "https://example.com/foo/bar.ydk"
             );
@@ -226,7 +223,7 @@ describe("DeckImportExportService", () => {
     describe("toFile", () => {
         it("processes name", () => {
             expect(
-                deckImportExportService.toFile({
+                deckFileService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
                         [DefaultDeckPart.MAIN, []],
@@ -239,7 +236,7 @@ describe("DeckImportExportService", () => {
 
         it("puts cards", () => {
             expect(
-                deckImportExportService.toFile({
+                deckFileService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
                         [DefaultDeckPart.MAIN, [createCard({ id: "123" })]],
@@ -255,7 +252,7 @@ describe("DeckImportExportService", () => {
 
         it("puts per deckpart", () => {
             expect(
-                deckImportExportService.toFile({
+                deckFileService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
                         [DefaultDeckPart.MAIN, [createCard({ id: "123" })]],
@@ -273,190 +270,6 @@ describe("DeckImportExportService", () => {
 !side
 789
 `
-            );
-        });
-    });
-
-    describe("fromLegacyUrlQueryParamValue", () => {
-        it("puts per deckpart", () => {
-            const queryParamValue = deflate("123|*2456|789;999;*3123", {
-                to: "string",
-            });
-            const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card1);
-
-            const card2 = createCard({ id: "456" });
-            when(mockCardDatabase.hasCard("456")).thenReturn(true);
-            when(mockCardDatabase.getCard("456")).thenReturn(card2);
-
-            const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789")).thenReturn(true);
-            when(mockCardDatabase.getCard("789")).thenReturn(card3);
-
-            const card4 = createCard({ id: "999" });
-            when(mockCardDatabase.hasCard("999")).thenReturn(true);
-            when(mockCardDatabase.getCard("999")).thenReturn(card4);
-
-            expect(
-                deckImportExportService.fromLegacyUrlQueryParamValue(
-                    queryParamValue,
-                    (str: string): string => str
-                )
-            ).toEqual({
-                name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]],
-                ]),
-            });
-        });
-    });
-
-    describe("toUrlQueryParamValue", () => {
-        it("creates value", () => {
-            const card1 = createCard({ id: "123" });
-            const card2 = createCard({ id: "456" });
-            const card3 = createCard({ id: "789" });
-            const card4 = createCard({ id: "999999999" });
-
-            const result = deckImportExportService.toUrlQueryParamValue({
-                name: "foo",
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]],
-                ]),
-            });
-            expect(result).toEqual(
-                "eJyrZoCAE4wQDAKizAwM-0-Osq4GsmEYBNLy8wGk7Ad4"
-            );
-        });
-
-        it("works with null name", () => {
-            const card1 = createCard({ id: "123" });
-            const card2 = createCard({ id: "456" });
-            const card3 = createCard({ id: "789" });
-
-            const result = deckImportExportService.toUrlQueryParamValue({
-                name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2]],
-                    [DefaultDeckPart.SIDE, [card3]],
-                ]),
-            });
-            expect(result).toEqual("eJyrZoCAE4wQWpQZQgMAGOwBXQ~~");
-        });
-    });
-
-    describe("fromUrlQueryParamValue", () => {
-        it("reads value", () => {
-            const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card1);
-
-            const card2 = createCard({ id: "456" });
-            when(mockCardDatabase.hasCard("456")).thenReturn(true);
-            when(mockCardDatabase.getCard("456")).thenReturn(card2);
-
-            const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789")).thenReturn(true);
-            when(mockCardDatabase.getCard("789")).thenReturn(card3);
-
-            const card4 = createCard({ id: "999999999" });
-            when(mockCardDatabase.hasCard("999999999")).thenReturn(true);
-            when(mockCardDatabase.getCard("999999999")).thenReturn(card4);
-
-            const result = deckImportExportService.fromUrlQueryParamValue(
-                "eJyrZoCAE4wQDAKizAwM-0-Osq4GsmEYBNLy8wGk7Ad4"
-            );
-
-            expect(result).toEqual({
-                name: "foo",
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]],
-                ]),
-            });
-        });
-
-        it("works with null name", () => {
-            const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card1);
-
-            const card2 = createCard({ id: "456" });
-            when(mockCardDatabase.hasCard("456")).thenReturn(true);
-            when(mockCardDatabase.getCard("456")).thenReturn(card2);
-
-            const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789")).thenReturn(true);
-            when(mockCardDatabase.getCard("789")).thenReturn(card3);
-
-            const result = deckImportExportService.fromUrlQueryParamValue(
-                "eJyrZoCAE4wQWpQZQgMAGOwBXQ~~"
-            );
-
-            expect(result).toEqual({
-                name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2]],
-                    [DefaultDeckPart.SIDE, [card3]],
-                ]),
-            });
-        });
-    });
-
-    describe("toShareableText", () => {
-        it("creates text", () => {
-            const card1 = createCard({ id: "123", name: "foo" });
-            const card2 = createCard({ id: "456", name: "bar" });
-            const card3 = createCard({ id: "789", name: "fizz" });
-
-            const result = deckImportExportService.toShareableText({
-                name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card3, card1, card3]],
-                ]),
-            });
-            expect(result).toEqual(
-                `Main:
-foo x1
-
-Extra:
-bar x2
-
-Side:
-fizz x3
-foo x1
-`
-            );
-        });
-    });
-
-    describe("toBuyLink", () => {
-        it("creates text", () => {
-            const card1 = createCard({ id: "123", name: "foo" });
-            const card2 = createCard({ id: "456", name: "bar" });
-            const card3 = createCard({ id: "789", name: "fizz" });
-
-            const result = deckImportExportService.toBuyLink({
-                name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card3, card1, card3]],
-                ]),
-            });
-            expect(result).toEqual(
-                "https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh" +
-                    `&c=${encodeURIComponent("||2 foo||2 bar||3 fizz||")}`
             );
         });
     });

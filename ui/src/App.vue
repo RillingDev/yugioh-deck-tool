@@ -123,10 +123,12 @@ import {
     Card,
     CardDatabase,
     Deck,
-    DeckImportExportService,
+    DeckExportService,
     DeckPart,
     DeckService,
     Format,
+    DeckUriEncodingService,
+    DeckFileService,
 } from "../../core/src/main";
 import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
@@ -161,16 +163,22 @@ export default class App extends Vue {
         UI_TYPES.DeckService
     );
     deck: Deck = this.deckService.createEmptyDeck();
-    private readonly deckImportExportService = uiContainer.get<
-        DeckImportExportService
-    >(UI_TYPES.DeckImportExportService);
+    private readonly deckExportService = uiContainer.get<
+        DeckExportService
+    >(UI_TYPES.DeckExportService);
+    private readonly deckUriEncodingService = uiContainer.get<
+        DeckUriEncodingService
+        >(UI_TYPES.DeckUriEncodingService);
+    private readonly deckFileService = uiContainer.get<
+        DeckFileService
+        >(UI_TYPES.DeckFileService);
     private readonly priceController = uiContainer.get<PriceController>(
         UI_TYPES.PriceController
     );
 
     get shareLink() {
         const currentUri = location.origin + location.pathname;
-        const deckUri = this.deckImportExportService.toUrlQueryParamValue(
+        const deckUri = this.deckUriEncodingService.toUrlQueryParamValue(
             this.deck
         );
 
@@ -178,7 +186,7 @@ export default class App extends Vue {
     }
 
     get buyLink() {
-        return this.deckImportExportService.toBuyLink(this.deck);
+        return this.deckExportService.toBuyLink(this.deck);
     }
 
     get isDeckEmpty() {
@@ -186,7 +194,7 @@ export default class App extends Vue {
     }
 
     deckToFile() {
-        const { fileName, fileContent } = this.deckImportExportService.toFile(
+        const { fileName, fileContent } = this.deckFileService.toFile(
             this.deck
         );
         saveFile(new File([fileContent], fileName));
@@ -211,7 +219,7 @@ export default class App extends Vue {
             const file = files[0];
             readFile(file)
                 .then((fileContent) => {
-                    const result = this.deckImportExportService.fromFile({
+                    const result = this.deckFileService.fromFile({
                         fileContent,
                         fileName: file.name,
                     });
@@ -226,7 +234,7 @@ export default class App extends Vue {
     }
 
     copyShareText() {
-        copyText(this.deckImportExportService.toShareableText(this.deck));
+        copyText(this.deckExportService.toShareableText(this.deck));
     }
 
     mounted() {
@@ -248,19 +256,19 @@ export default class App extends Vue {
     private async loadUriDeck(): Promise<void> {
         const uriQuery = parseUrl(location.toString(), true).query;
         if ("u" in uriQuery) {
-            return this.deckImportExportService
+            return this.deckFileService
                 .fromRemoteFile(location.origin, uriQuery["u"])
                 .then((result) => {
                     this.deck = result.deck;
                 });
         } else if ("e" in uriQuery) {
             // Load encoded uriDeck
-            this.deck = this.deckImportExportService.fromUrlQueryParamValue(
+            this.deck = this.deckUriEncodingService.fromUrlQueryParamValue(
                 uriQuery["e"]
             );
         } else if ("d" in uriQuery) {
             // Load encoded uriDeck
-            this.deck = this.deckImportExportService.fromLegacyUrlQueryParamValue(
+            this.deck = this.deckUriEncodingService.fromLegacyUrlQueryParamValue(
                 uriQuery["d"],
                 atob
             );

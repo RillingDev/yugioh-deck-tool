@@ -18,7 +18,7 @@ import { container } from "./inversify.config";
 import { CardDatabase } from "./core/business/CardDatabase";
 import { CardService } from "./core/business/service/CardService";
 import { PriceService } from "./core/business/service/PriceService";
-import { DeckImportExportService } from "./core/business/service/DeckImportExportService";
+import { DeckExportService } from "./core/business/service/DeckExportService";
 import { DeckService } from "./core/business/service/DeckService";
 import { Format } from "./core/model/ygo/Format";
 import { CardValues } from "./core/model/ygo/CardValues";
@@ -39,6 +39,8 @@ import {
     DeckRandomizationService,
     RandomizationStrategy,
 } from "./core/business/service/DeckRandomizationService";
+import { DeckUriEncodingService } from "./core/business/service/DeckUriEncodingService";
+import { DeckFileService } from "./core/business/service/DeckFileService";
 
 export {
     /*
@@ -51,7 +53,9 @@ export {
     CardService,
     PriceService,
     DeckService,
-    DeckImportExportService,
+    DeckExportService,
+    DeckUriEncodingService,
+    DeckFileService,
     DeckRandomizationService,
     RandomizationStrategy,
     FilterService,

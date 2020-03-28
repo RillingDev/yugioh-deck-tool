@@ -8,39 +8,22 @@ import { isEqual } from "lodash";
 import { DeckService } from "./DeckService";
 import { EncodingService } from "./EncodingService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
-import { HttpService } from "./HttpService";
-import parseUrl from "url-parse";
-import { CardService } from "./CardService";
-
-interface ImportResult {
-    readonly deck: Deck;
-    readonly missing: string[];
-}
-
-interface DeckFile {
-    readonly fileName: string;
-    readonly fileContent: string;
-}
 
 @injectable()
-class DeckImportExportService {
+class DeckUriEncodingService {
     // 4 bytes is enough to hold a 32 bit integer which is able to store all 9 digit IDs
     private static readonly BLOCK_SIZE = 4;
     private static readonly DELIMITER_BLOCK: Uint8Array = new Uint8Array(
-        DeckImportExportService.BLOCK_SIZE
+        DeckUriEncodingService.BLOCK_SIZE
     ).fill(0);
     private static readonly ID_LIMIT = 2 ** 32;
 
     private readonly encodingService: EncodingService;
-    private readonly httpService: HttpService;
     private readonly cardDatabase: CardDatabase;
     private readonly compressionService: CompressionService;
     private readonly deckService: DeckService;
-    private readonly cardService: CardService;
 
     constructor(
-        @inject(TYPES.HttpService)
-        httpService: HttpService,
         @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
@@ -48,89 +31,12 @@ class DeckImportExportService {
         @inject(TYPES.EncodingService)
         encodingService: EncodingService,
         @inject(TYPES.CompressionService)
-        compressionService: CompressionService,
-        @inject(TYPES.CardService)
-        cardService: CardService
+        compressionService: CompressionService
     ) {
-        this.httpService = httpService;
         this.encodingService = encodingService;
         this.compressionService = compressionService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
-        this.cardService = cardService;
-    }
-
-    public async fromRemoteFile(
-        currentOrigin: string,
-        urlString: string
-    ): Promise<ImportResult> {
-        const url = parseUrl(urlString);
-        if (currentOrigin !== url.origin) {
-            throw new Error("Decks can only be loaded from the same origin.");
-        }
-
-        const fileName = url.pathname.substring(
-            url.pathname.lastIndexOf("/") + 1
-        );
-        const response = await this.httpService.get<string>(urlString, {
-            responseType: "text",
-            timeout: 5000,
-        });
-        return this.fromFile({
-            fileName,
-            fileContent: response.data,
-        });
-    }
-
-    public fromFile(deckFile: DeckFile): ImportResult {
-        const missing: string[] = [];
-        const deck = this.deckService.createEmptyDeck();
-
-        const lines = deckFile.fileContent
-            .split("\n")
-            .map((line) => line.trim())
-            .filter((line) => line.length > 0);
-        let currentDeckPart = null;
-        for (const line of lines) {
-            const foundDeckPart = DEFAULT_DECK_PART_ARR.find(
-                (part) => part.indicator === line
-            );
-            if (foundDeckPart != null) {
-                currentDeckPart = foundDeckPart;
-                continue;
-            }
-
-            // Only start processing once a deckpart indicator was found. this allows for arbitrary file metadata as "head" of the file.
-            if (currentDeckPart != null) {
-                if (!this.cardDatabase.hasCard(line)) {
-                    missing.push(line);
-                } else {
-                    const card = this.cardDatabase.getCard(line)!;
-                    deck.parts.get(currentDeckPart)!.push(card);
-                }
-            }
-        }
-        deck.name = deckFile.fileName.replace(".ydk", "");
-        return {
-            deck,
-            missing,
-        };
-    }
-
-    public toFile(deck: Deck): DeckFile {
-        const fileLines: string[] = [];
-
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            const deckPartCards = deck.parts.get(deckPart)!;
-            fileLines.push(deckPart.indicator);
-            fileLines.push(...deckPartCards.map((card) => card.id));
-            fileLines.push("");
-        }
-
-        return {
-            fileName: `${deck.name ?? "Unnamed"}.ydk`,
-            fileContent: fileLines.join("\n"),
-        };
     }
 
     /**
@@ -159,7 +65,7 @@ class DeckImportExportService {
             for (const card of deck.parts.get(deckPart)!) {
                 result.push(...this.encodeCard(card));
             }
-            result.push(...DeckImportExportService.DELIMITER_BLOCK);
+            result.push(...DeckUriEncodingService.DELIMITER_BLOCK);
         }
         if (deck.name != null && deck.name !== "") {
             result.push(...this.encodingService.encodeString(deck.name));
@@ -188,16 +94,16 @@ class DeckImportExportService {
         for (
             let i = 0;
             i < inflated.length;
-            i += DeckImportExportService.BLOCK_SIZE
+            i += DeckUriEncodingService.BLOCK_SIZE
         ) {
             const block = inflated.slice(
                 i,
-                i + DeckImportExportService.BLOCK_SIZE
+                i + DeckUriEncodingService.BLOCK_SIZE
             );
-            if (isEqual(block, DeckImportExportService.DELIMITER_BLOCK)) {
+            if (isEqual(block, DeckUriEncodingService.DELIMITER_BLOCK)) {
                 // After the last deckpart, meta data starts
                 if (deckPartIndex === DEFAULT_DECK_PART_ARR.length - 1) {
-                    metaDataStart = i + DeckImportExportService.BLOCK_SIZE;
+                    metaDataStart = i + DeckUriEncodingService.BLOCK_SIZE;
                     break;
                 }
                 deckPartIndex++;
@@ -263,44 +169,14 @@ class DeckImportExportService {
         return deck;
     }
 
-    public toShareableText(deck: Deck): string {
-        const result = [];
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            result.push(`${deckPart.name}:`);
-
-            const deckPartCards = deck.parts.get(deckPart)!;
-            const counted: Map<Card, number> = this.cardService.countCards(
-                deckPartCards
-            );
-            for (const [card, count] of counted.entries()) {
-                result.push(`${card.name} x${count}`);
-            }
-            result.push("");
-        }
-        return result.join("\n");
-    }
-
-    public toBuyLink(deck: Deck): string {
-        const counted: Map<Card, number> = this.cardService.countCards(
-            this.deckService.getAllCards(deck)
-        );
-        const cardList = Array.from(counted.entries()).map(
-            ([card, count]) => `${count} ${card.name}`
-        );
-        return (
-            "https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh&c=" +
-            encodeURIComponent(["", ...cardList, ""].join("||"))
-        );
-    }
-
     private encodeCard(card: Card): Uint8Array {
         const idNumber = Number(card.id);
-        if (idNumber === 0 || idNumber >= DeckImportExportService.ID_LIMIT) {
+        if (idNumber === 0 || idNumber >= DeckUriEncodingService.ID_LIMIT) {
             throw new TypeError(
                 `Card '${card}' has an illegal value ${idNumber} as ID.`
             );
         }
-        const buffer = new ArrayBuffer(DeckImportExportService.BLOCK_SIZE);
+        const buffer = new ArrayBuffer(DeckUriEncodingService.BLOCK_SIZE);
         // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
         const dataView = new DataView(buffer);
         dataView.setUint32(0, idNumber, true);
@@ -319,4 +195,4 @@ class DeckImportExportService {
     }
 }
 
-export { DeckImportExportService };
+export { DeckUriEncodingService };
