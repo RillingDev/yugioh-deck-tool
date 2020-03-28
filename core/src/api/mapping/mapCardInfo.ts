@@ -137,15 +137,20 @@ const mapImage = (rawCard: RawCard): CardImage | null => {
 const mapPrices = (rawCard: RawCard): CardPrices => {
     const result = new Map<Vendor, number>();
     if (rawCard.card_prices != null) {
+        const putPrice = (vendor: Vendor, price: string): void => {
+            const priceValue = Number(price);
+
+            // API puts "0" for no price, we skip those
+            if (priceValue > 0) {
+                result.set(vendor, priceValue);
+            }
+        };
         const prices = rawCard.card_prices[0];
-        result.set(DefaultVendor.CARDMARKET, Number(prices.cardmarket_price));
-        result.set(DefaultVendor.TCGPLAYER, Number(prices.tcgplayer_price));
-        result.set(
-            DefaultVendor.COOL_STUFF_INC,
-            Number(prices.coolstuffinc_price)
-        );
-        result.set(DefaultVendor.EBAY, Number(prices.ebay_price));
-        result.set(DefaultVendor.AMAZON, Number(prices.amazon_price));
+        putPrice(DefaultVendor.CARDMARKET, prices.cardmarket_price);
+        putPrice(DefaultVendor.TCGPLAYER, prices.tcgplayer_price);
+        putPrice(DefaultVendor.COOL_STUFF_INC, prices.coolstuffinc_price);
+        putPrice(DefaultVendor.EBAY, prices.ebay_price);
+        putPrice(DefaultVendor.AMAZON, prices.amazon_price);
     }
     return result;
 };
