@@ -22,7 +22,7 @@ const createCardType = (data: {
     name: data.name ?? "Spell Card",
     group: data.group ?? CardTypeGroup.SPELL,
     sortGroup: data.sortGroup ?? 0,
-    deckPart:
+    deckParts:
         data.deckPart ?? new Set([DefaultDeckPart.MAIN, DefaultDeckPart.SIDE])
 });
 

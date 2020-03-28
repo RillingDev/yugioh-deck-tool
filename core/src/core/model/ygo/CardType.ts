@@ -5,7 +5,7 @@ interface CardType {
     readonly name: string;
     readonly group: CardTypeGroup;
     readonly sortGroup: number;
-    readonly deckPart: Set<DeckPart>;
+    readonly deckParts: Set<DeckPart>;
 }
 
 export { CardType };

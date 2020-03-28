@@ -80,7 +80,7 @@ const mapCardValues = (data: RawCardValues): CardValues => {
             name: type.name,
             group: mapGroup(type),
             sortGroup: type.sortGroup,
-            deckPart: mapDeckPart(type),
+            deckParts: mapDeckPart(type),
         };
     });
     return {

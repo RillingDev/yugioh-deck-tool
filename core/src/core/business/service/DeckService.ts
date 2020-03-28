@@ -30,7 +30,7 @@ class DeckService {
         card: Card
     ): boolean {
         // If the card is not allowed in this deckpart, return false
-        if (!card.type.deckPart.has(deckPart)) {
+        if (!card.type.deckParts.has(deckPart)) {
             return false;
         }
 
