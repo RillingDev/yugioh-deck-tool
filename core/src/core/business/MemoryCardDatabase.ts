@@ -9,7 +9,7 @@ import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 import { CardSetAppearance } from "../model/ygo/intermediate/CardSetAppearance";
 import * as logger from "loglevel";
 import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
-import { forEach, isObject } from "lodash";
+import { forEach, isObject, flatten } from "lodash";
 
 const deepFreeze = (target: any): void => {
     if (isObject(target)) {
@@ -109,8 +109,9 @@ class MemoryCardDatabase implements CardDatabase {
         const setCache = new Map<string, CardSet>(
             cardSets.map((set) => [set.name, set])
         );
+        const allTypes = flatten(Array.from(this.types.values()));
         const typeCache = new Map<string, CardType>(
-            cardValues.types.map((type) => [type.name, type])
+            allTypes.map((type) => [type.name, type])
         );
         for (const unlinkedCard of cardInfo) {
             const linkedCard = this.createLinkedCard(

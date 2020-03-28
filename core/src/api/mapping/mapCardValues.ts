@@ -84,7 +84,6 @@ const mapCardValues = (data: RawCardValues): CardValues => {
         };
     });
     return {
-        types,
         [CardTypeGroup.MONSTER]: {
             types: mapTypes(data.MONSTER.type, types),
             races: data.MONSTER.race,
