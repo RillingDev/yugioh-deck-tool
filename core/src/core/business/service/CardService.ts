@@ -8,24 +8,6 @@ import { groupMapReducingBy } from "lightdash";
 
 @injectable()
 class CardService {
-    public isTreatedAsSame(cardA: Card, cardB: Card): boolean {
-        return (
-            intersection(this.getAllNames(cardA), this.getAllNames(cardB))
-                .length > 0
-        );
-    }
-
-    public getUniqueByName(cards: Card[]): Card[] {
-        const names = new Set<string>();
-        return cards.filter((card) => {
-            if (names.has(card.name)) {
-                return false;
-            }
-            names.add(card.name);
-            return true;
-        });
-    }
-
     public getBanStateByFormat(card: Card, format: Format | null): BanState {
         // If no format is specified, it is unknown -> unlimited
         if (format == null) {
@@ -45,6 +27,17 @@ class CardService {
         return card.banlist[<keyof BanlistInfo>format];
     }
 
+    public getUniqueByName(cards: Card[]): Card[] {
+        const names = new Set<string>();
+        return cards.filter((card) => {
+            if (names.has(card.name)) {
+                return false;
+            }
+            names.add(card.name);
+            return true;
+        });
+    }
+
     public getAllNames(card: Card): string[] {
         const names = [card.name];
         if (card.treatedAs != null) {
@@ -54,6 +47,13 @@ class CardService {
             names.push(card.betaName);
         }
         return names;
+    }
+
+    public isTreatedAsSame(cardA: Card, cardB: Card): boolean {
+        return (
+            intersection(this.getAllNames(cardA), this.getAllNames(cardB))
+                .length > 0
+        );
     }
 
     public countCards(cards: Card[]): Map<Card, number> {

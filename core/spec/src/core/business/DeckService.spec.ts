@@ -2,14 +2,12 @@ import "reflect-metadata";
 import { container } from "../../../../src/inversify.config";
 import { TYPES } from "../../../../src/types";
 import { DeckService } from "../../../../src/core/business/service/DeckService";
-import {
-    DeckPart,
-    DefaultDeckPart,
-} from "../../../../src/core/model/ygo/DeckPart";
+import { DeckPart, DefaultDeckPart, } from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { createCard, createCardType } from "../../helper/dataFactories";
 import { Format } from "../../../../src/core/model/ygo/Format";
 import { DefaultBanState } from "../../../../src/core/model/ygo/BanState";
+import { CardTypeGroup } from "../../../../src/core/model/ygo/CardTypeGroup";
 
 describe("DeckService", () => {
     let deckService: DeckService;
@@ -56,7 +54,7 @@ describe("DeckService", () => {
     });
 
     describe("canAdd", () => {
-        it("checks deck part check", () => {
+        it("checks deck part card types", () => {
             expect(
                 deckService.canAdd(
                     {
@@ -96,6 +94,28 @@ describe("DeckService", () => {
                     DefaultDeckPart.SIDE,
                     Format.TCG,
                     createCard({ id: "456" })
+                )
+            ).toBeFalse();
+        });
+
+        it("checks total link card count", () => {
+            const card = createCard({
+                id: "456",
+                type: createCardType({ group: CardTypeGroup.SKILL }),
+            });
+            expect(
+                deckService.canAdd(
+                    {
+                        name: null,
+                        parts: new Map<DeckPart, Card[]>([
+                            [DefaultDeckPart.MAIN, []],
+                            [DefaultDeckPart.EXTRA, []],
+                            [DefaultDeckPart.SIDE, [card]],
+                        ]),
+                    },
+                    DefaultDeckPart.SIDE,
+                    Format.OCG,
+                    card
                 )
             ).toBeFalse();
         });
@@ -145,6 +165,66 @@ describe("DeckService", () => {
                     card
                 )
             ).toBeTrue();
+        });
+    });
+
+    describe("addCard", () => {
+        it("adds card", () => {
+            const card = createCard({
+                id: "456",
+            });
+            const deck = {
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DefaultDeckPart.MAIN, []],
+                    [DefaultDeckPart.EXTRA, []],
+                    [DefaultDeckPart.SIDE, []],
+                ]),
+            };
+
+            const result = deckService.addCard(
+                deck,
+                DefaultDeckPart.SIDE,
+                card
+            );
+            expect(result).toEqual({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DefaultDeckPart.MAIN, []],
+                    [DefaultDeckPart.EXTRA, []],
+                    [DefaultDeckPart.SIDE, [card]],
+                ]),
+            });
+        });
+    });
+
+    describe("removeCard", () => {
+        it("removes card", () => {
+            const card = createCard({
+                id: "456",
+            });
+            const deck = {
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DefaultDeckPart.MAIN, []],
+                    [DefaultDeckPart.EXTRA, []],
+                    [DefaultDeckPart.SIDE, [card]],
+                ]),
+            };
+
+            const result = deckService.removeCard(
+                deck,
+                DefaultDeckPart.SIDE,
+                card
+            );
+            expect(result).toEqual({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DefaultDeckPart.MAIN, []],
+                    [DefaultDeckPart.EXTRA, []],
+                    [DefaultDeckPart.SIDE, []],
+                ]),
+            });
         });
     });
 });
