@@ -32,7 +32,7 @@ export default class YgoCard extends Vue {
     public card: Card;
 
     get imageUrl() {
-        return this.card.image?.urlSmall ?? URL_IMAGE_UNKNOWN;
+        return this.card.image.urlSmall ?? URL_IMAGE_UNKNOWN;
     }
 
     get referenceUrl() {

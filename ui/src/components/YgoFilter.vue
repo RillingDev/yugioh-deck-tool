@@ -125,7 +125,10 @@
                 />
             </div>
 
-            <div class="form-group form-group-builder" v-if="isLinkMonster && showAdvanced">
+            <div
+                class="form-group form-group-builder"
+                v-if="isLinkMonster && showAdvanced"
+            >
                 <label>Link Markers:</label>
                 <AdvancedSelect
                     :initial-options="monsterLinkMarkers"
@@ -276,7 +279,7 @@ export default class YgoFilter extends Vue {
     }
 
     get isLinkMonster() {
-        return this.isMonster && this.filter.type?.name.includes("Link");
+        return this.isMonster && this.filter.type.name.includes("Link");
     }
 
     get races() {

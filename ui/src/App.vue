@@ -163,15 +163,15 @@ export default class App extends Vue {
         UI_TYPES.DeckService
     );
     deck: Deck = this.deckService.createEmptyDeck();
-    private readonly deckExportService = uiContainer.get<
-        DeckExportService
-    >(UI_TYPES.DeckExportService);
+    private readonly deckExportService = uiContainer.get<DeckExportService>(
+        UI_TYPES.DeckExportService
+    );
     private readonly deckUriEncodingService = uiContainer.get<
         DeckUriEncodingService
-        >(UI_TYPES.DeckUriEncodingService);
-    private readonly deckFileService = uiContainer.get<
-        DeckFileService
-        >(UI_TYPES.DeckFileService);
+    >(UI_TYPES.DeckUriEncodingService);
+    private readonly deckFileService = uiContainer.get<DeckFileService>(
+        UI_TYPES.DeckFileService
+    );
     private readonly priceController = uiContainer.get<PriceController>(
         UI_TYPES.PriceController
     );
