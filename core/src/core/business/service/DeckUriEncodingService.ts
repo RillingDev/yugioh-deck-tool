@@ -7,7 +7,7 @@ import { isEqual } from "lodash";
 import { DeckService } from "./DeckService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { fromByteArray, toByteArray } from "base64-js";
-import { deflate, inflate } from "pako";
+import { deflateRaw, inflate, inflateRaw } from "pako";
 
 @injectable()
 class DeckUriEncodingService {
@@ -26,9 +26,9 @@ class DeckUriEncodingService {
 
     constructor(
         @inject(TYPES.CardDatabase)
-            cardDatabase: CardDatabase,
+        cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-            deckService: DeckService
+        deckService: DeckService
     ) {
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
@@ -56,7 +56,7 @@ class DeckUriEncodingService {
      * @return Value that can be decoded to yield the same deck.
      */
     public toUrlQueryParamValue(deck: Deck): string {
-        const result: number[] = [];
+        const result: number[] = []; // Array of unsigned 8  bit numbers, using this over Uint8Array for convenience.
 
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             for (const card of deck.parts.get(deckPart)!) {
@@ -68,7 +68,7 @@ class DeckUriEncodingService {
             result.push(...this.textEncoder.encode(deck.name));
         }
 
-        const deflated = deflate(result);
+        const deflated = deflateRaw(result);
         return this.encodeUriSafeBase64String(deflated);
     }
 
@@ -82,7 +82,7 @@ class DeckUriEncodingService {
         const deck = this.deckService.createEmptyDeck();
 
         const decoded = this.decodeUriSafeBase64String(queryParamValue);
-        const inflated = inflate(decoded);
+        const inflated = inflateRaw(decoded);
 
         let deckPartIndex = 0;
         let metaDataStart: null | number = null;

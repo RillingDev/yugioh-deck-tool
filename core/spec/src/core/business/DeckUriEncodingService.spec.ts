@@ -90,7 +90,7 @@ describe("DeckUriEncodingService", () => {
                 ]),
             });
             expect(result).toEqual(
-                "eJyrZoCAE4wQDAKizAwM-0-Osq4GsmEYBNLy8wGk7Ad4"
+                "q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB"
             );
         });
 
@@ -107,7 +107,7 @@ describe("DeckUriEncodingService", () => {
                     [DefaultDeckPart.SIDE, [card3]],
                 ]),
             });
-            expect(result).toEqual("eJyrZoCAE4wQWpQZQgMAGOwBXQ~~");
+            expect(result).toEqual("q2aAgBOMEFqUGUIDAA~~");
         });
     });
 
@@ -130,7 +130,7 @@ describe("DeckUriEncodingService", () => {
             when(mockCardDatabase.getCard("999999999")).thenReturn(card4);
 
             const result = deckUriEncodingService.fromUrlQueryParamValue(
-                "eJyrZoCAE4wQDAKizAwM-0-Osq4GsmEYBNLy8wGk7Ad4"
+                "q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB"
             );
 
             expect(result).toEqual({
@@ -157,7 +157,7 @@ describe("DeckUriEncodingService", () => {
             when(mockCardDatabase.getCard("789")).thenReturn(card3);
 
             const result = deckUriEncodingService.fromUrlQueryParamValue(
-                "eJyrZoCAE4wQWpQZQgMAGOwBXQ~~"
+                "q2aAgBOMEFqUGUIDAA~~"
             );
 
             expect(result).toEqual({
