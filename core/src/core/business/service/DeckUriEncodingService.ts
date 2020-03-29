@@ -3,40 +3,37 @@ import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { CardDatabase } from "../CardDatabase";
 import { Card } from "../../model/ygo/Card";
-import { CompressionService } from "./CompressionService";
 import { isEqual } from "lodash";
 import { DeckService } from "./DeckService";
-import { EncodingService } from "./EncodingService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
+import { fromByteArray, toByteArray } from "base64-js";
+import { deflate, inflate } from "pako";
 
 @injectable()
 class DeckUriEncodingService {
-    // 4 bytes is enough to hold a 32 bit integer which is able to store all 9 digit IDs
-    private static readonly BLOCK_SIZE = 4;
+    // A 32 bit integer is able to store all 9 digit IDs
+    private static readonly BLOCK_SIZE = Uint32Array.BYTES_PER_ELEMENT;
     private static readonly DELIMITER_BLOCK: Uint8Array = new Uint8Array(
         DeckUriEncodingService.BLOCK_SIZE
     ).fill(0);
-    private static readonly ID_LIMIT = 2 ** 32;
+    private static readonly ID_LIMIT =
+        2 ** (DeckUriEncodingService.BLOCK_SIZE * 8); // Max number that can be stored in BLOCK_SIZE bytes.
 
-    private readonly encodingService: EncodingService;
     private readonly cardDatabase: CardDatabase;
-    private readonly compressionService: CompressionService;
     private readonly deckService: DeckService;
+    private readonly textEncoder: TextEncoder;
+    private readonly textDecoder: TextDecoder;
 
     constructor(
         @inject(TYPES.CardDatabase)
-        cardDatabase: CardDatabase,
+            cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-        deckService: DeckService,
-        @inject(TYPES.EncodingService)
-        encodingService: EncodingService,
-        @inject(TYPES.CompressionService)
-        compressionService: CompressionService
+            deckService: DeckService
     ) {
-        this.encodingService = encodingService;
-        this.compressionService = compressionService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
+        this.textEncoder = new TextEncoder();
+        this.textDecoder = new TextDecoder();
     }
 
     /**
@@ -63,16 +60,16 @@ class DeckUriEncodingService {
 
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             for (const card of deck.parts.get(deckPart)!) {
-                result.push(...this.encodeCard(card));
+                result.push(...this.encodeCardBlock(card));
             }
             result.push(...DeckUriEncodingService.DELIMITER_BLOCK);
         }
         if (deck.name != null && deck.name !== "") {
-            result.push(...this.encodingService.encodeString(deck.name));
+            result.push(...this.textEncoder.encode(deck.name));
         }
 
-        const deflated = this.compressionService.deflate(result);
-        return this.encodingService.encodeUriSafeBase64String(deflated);
+        const deflated = deflate(result);
+        return this.encodeUriSafeBase64String(deflated);
     }
 
     /**
@@ -84,10 +81,8 @@ class DeckUriEncodingService {
     public fromUrlQueryParamValue(queryParamValue: string): Deck {
         const deck = this.deckService.createEmptyDeck();
 
-        const decoded = this.encodingService.decodeUriSafeBase64String(
-            queryParamValue
-        );
-        const inflated = this.compressionService.inflate(decoded);
+        const decoded = this.decodeUriSafeBase64String(queryParamValue);
+        const inflated = inflate(decoded);
 
         let deckPartIndex = 0;
         let metaDataStart: null | number = null;
@@ -111,25 +106,66 @@ class DeckUriEncodingService {
                 const deckPart = deck.parts.get(
                     DEFAULT_DECK_PART_ARR[deckPartIndex]
                 )!;
-                deckPart.push(this.decodeCard(block));
+                deckPart.push(this.decodeCardBlock(block));
             }
         }
         if (metaDataStart != null && metaDataStart < inflated.length) {
-            deck.name = this.encodingService.decodeString(
+            deck.name = this.textDecoder.decode(
                 inflated.subarray(metaDataStart)
             );
         }
         return deck;
     }
 
+    private encodeCardBlock(card: Card): Uint8Array {
+        const idNumber = Number(card.id);
+        if (idNumber === 0 || idNumber >= DeckUriEncodingService.ID_LIMIT) {
+            throw new TypeError(
+                `Card '${card}' has an illegal value ${idNumber} as ID.`
+            );
+        }
+        const buffer = new ArrayBuffer(DeckUriEncodingService.BLOCK_SIZE);
+        // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
+        const dataView = new DataView(buffer);
+        dataView.setUint32(0, idNumber, true);
+        return new Uint8Array(buffer);
+    }
+
+    private decodeCardBlock(block: Uint8Array): Card {
+        const dataView = new DataView(block.buffer);
+        // See #encodeCard for details
+        const cardId = String(dataView.getUint32(0, true));
+        if (!this.cardDatabase.hasCard(cardId)) {
+            throw new TypeError(`Could not find card for ID ${cardId}.`);
+        }
+
+        return this.cardDatabase.getCard(cardId)!;
+    }
+
+    private encodeUriSafeBase64String(arr: Uint8Array): string {
+        return fromByteArray(arr)
+            .replace(/=/g, "~")
+            .replace(/\+/g, "_")
+            .replace(/\//g, "-");
+    }
+
+    private decodeUriSafeBase64String(str: string): Uint8Array {
+        return toByteArray(
+            str.replace(/~/g, "=").replace(/_/g, "+").replace(/-/g, "/")
+        );
+    }
+
+    /**
+     * @deprecated
+     */
     public fromLegacyUrlQueryParamValue(
         val: string,
         base64Decoder: (val: string) => string
     ): Deck {
         const deck = this.deckService.createEmptyDeck();
-        const uncompressedValue = this.compressionService.inflateString(
-            base64Decoder(val)
-        );
+        const uncompressedValue = inflate(base64Decoder(val), {
+            to: "string",
+        });
 
         const DELIMITERS = {
             deckPart: "|",
@@ -167,31 +203,6 @@ class DeckUriEncodingService {
             });
 
         return deck;
-    }
-
-    private encodeCard(card: Card): Uint8Array {
-        const idNumber = Number(card.id);
-        if (idNumber === 0 || idNumber >= DeckUriEncodingService.ID_LIMIT) {
-            throw new TypeError(
-                `Card '${card}' has an illegal value ${idNumber} as ID.`
-            );
-        }
-        const buffer = new ArrayBuffer(DeckUriEncodingService.BLOCK_SIZE);
-        // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
-        const dataView = new DataView(buffer);
-        dataView.setUint32(0, idNumber, true);
-        return new Uint8Array(buffer);
-    }
-
-    private decodeCard(block: Uint8Array): Card {
-        const dataView = new DataView(block.buffer);
-        // See #encodeCard for details
-        const cardId = String(dataView.getUint32(0, true));
-        if (!this.cardDatabase.hasCard(cardId)) {
-            throw new TypeError(`Could not find card for ID ${cardId}.`);
-        }
-
-        return this.cardDatabase.getCard(cardId)!;
     }
 }
 
