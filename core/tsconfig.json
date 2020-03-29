@@ -1,16 +1,8 @@
 {
+    "extends": "../tsconfig.json",
     "compilerOptions": {
-        "moduleResolution": "node",
         "rootDir": "./",
-        "baseUrl": "./",
-        "target": "esnext",
-        "newLine": "LF",
-        "strict": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "allowSyntheticDefaultImports": true,
-        "importHelpers": true,
-        "esModuleInterop": true
+        "baseUrl": "./"
     },
     "include": [],
     "exclude": [
