@@ -2,9 +2,7 @@ import { inject, injectable } from "inversify";
 import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { CardDatabase } from "../CardDatabase";
-import { CompressionService } from "./CompressionService";
 import { DeckService } from "./DeckService";
-import { EncodingService } from "./EncodingService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { HttpService } from "./HttpService";
 import parseUrl from "url-parse";
@@ -22,12 +20,9 @@ interface DeckFile {
 
 @injectable()
 class DeckFileService {
-    private readonly encodingService: EncodingService;
     private readonly httpService: HttpService;
     private readonly cardDatabase: CardDatabase;
-    private readonly compressionService: CompressionService;
     private readonly deckService: DeckService;
-    private readonly cardService: CardService;
 
     constructor(
         @inject(TYPES.HttpService)
@@ -35,20 +30,11 @@ class DeckFileService {
         @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-        deckService: DeckService,
-        @inject(TYPES.EncodingService)
-        encodingService: EncodingService,
-        @inject(TYPES.CompressionService)
-        compressionService: CompressionService,
-        @inject(TYPES.CardService)
-        cardService: CardService
+        deckService: DeckService
     ) {
         this.httpService = httpService;
-        this.encodingService = encodingService;
-        this.compressionService = compressionService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
-        this.cardService = cardService;
     }
 
     /**
