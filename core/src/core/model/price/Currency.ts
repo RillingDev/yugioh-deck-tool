@@ -1,3 +1,5 @@
+import { deepFreeze } from "../../deepFreeze";
+
 interface Currency {
     readonly name: string;
     readonly locale: string;
@@ -71,5 +73,6 @@ const DEFAULT_CURRENCY_ARR: Currency[] = [
         fractionDigits: 0,
     },
 ];
+deepFreeze(DEFAULT_CURRENCY_ARR);
 
 export { Currency, DEFAULT_CURRENCY_ARR };

@@ -1,3 +1,5 @@
+import { deepFreeze } from "../../deepFreeze";
+
 interface Vendor {
     readonly id: string;
     readonly name: string;
@@ -16,5 +18,6 @@ const DefaultVendor: {
     EBAY: { name: "eBay", id: "ebay" },
     AMAZON: { name: "Amazon", id: "amazon" },
 };
+deepFreeze(DefaultVendor);
 
 export { Vendor, DefaultVendor };

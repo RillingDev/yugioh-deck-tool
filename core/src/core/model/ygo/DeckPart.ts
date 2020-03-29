@@ -1,3 +1,5 @@
+import { deepFreeze } from "../../deepFreeze";
+
 interface DeckPart {
     readonly id: string;
     readonly name: string;
@@ -38,11 +40,13 @@ const DefaultDeckPart: {
         recommended: 15,
     },
 };
+deepFreeze(DefaultDeckPart);
 
 const DEFAULT_DECK_PART_ARR: DeckPart[] = [
     DefaultDeckPart.MAIN,
     DefaultDeckPart.EXTRA,
     DefaultDeckPart.SIDE,
 ];
+deepFreeze(DEFAULT_DECK_PART_ARR);
 
 export { DeckPart, DEFAULT_DECK_PART_ARR, DefaultDeckPart };

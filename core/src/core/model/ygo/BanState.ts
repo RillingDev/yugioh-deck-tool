@@ -1,3 +1,5 @@
+import { deepFreeze } from "../../deepFreeze";
+
 interface BanState {
     readonly name: string;
     readonly count: number;
@@ -15,5 +17,6 @@ const DefaultBanState: {
     LIMITED: { name: "Limited", count: 1 },
     BANNED: { name: "Banned", count: 0 },
 };
+deepFreeze(DefaultBanState);
 
 export { BanState, DefaultBanState };
