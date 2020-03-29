@@ -13,8 +13,8 @@ import { flatten, forEach, isObject } from "lodash";
 
 const deepFreeze = (target: any): void => {
     if (isObject(target)) {
+        forEach(target, (val) => deepFreeze(val));
         Object.freeze(target);
-        forEach(target, deepFreeze);
     }
 };
 
@@ -123,7 +123,7 @@ class MemoryCardDatabase implements CardDatabase {
             this.cards.set(unlinkedCard.id, linkedCard);
             logger.trace(`Registered card '${unlinkedCard.id}'.`, linkedCard);
         }
-        logger.debug(`Registered ${this.cards.size} cards`, this.cards);
+        logger.debug(`Registered ${this.cards.size} cards.`, this.cards);
 
         this.ready = true;
         logger.info("Initialized database.");
