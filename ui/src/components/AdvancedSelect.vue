@@ -23,16 +23,16 @@ export default class AdvancedSelect<T> extends Vue {
     @Prop({ required: true })
     initialOptions: T[];
 
-    @Prop({ required: false, default: () => false })
+    @Prop({ required: false, default: false })
     noSelectionAllowed: boolean;
 
-    @Prop({ required: false, default: () => null })
+    @Prop({ required: false, default: null })
     title: string | null;
 
-    @Prop({ required: false, default: () => (str: string): string => str })
+    @Prop({ required: false, default: (str: string): string => str })
     label: (T) => string;
 
-    @Prop({ required: false, default: () => (key: string): string => key })
+    @Prop({ required: false, default: (key: string): string => key })
     trackBy: (T) => string;
 
     value: T | null;
