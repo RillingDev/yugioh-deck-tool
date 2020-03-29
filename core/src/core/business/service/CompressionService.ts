@@ -11,6 +11,9 @@ class CompressionService {
         return inflate(arr);
     }
 
+    /**
+     * @deprecated Only kept for {@link DeckUriEncodingService#fromLegacyUrlQueryParamValue}.
+     */
     public inflateString(str: string): string {
         return inflate(str, {
             to: "string",

@@ -35,6 +35,13 @@ class FilterService {
         this.cardService = cardService;
     }
 
+    /**
+     * Filters a list of cards by a filter.
+     *
+     * @param cards Cards to filter.
+     * @param filter Filter to apply. Generally null or empty array properties mean a check should be skipped.
+     * @return Filtered cards.
+     */
     public filter(cards: Card[], filter: CardFilter): Card[] {
         return cards.filter((card) => {
             if (

@@ -12,6 +12,9 @@ import { HttpService } from "../core/business/service/HttpService";
 import { mapArchetypes, RawArchetype } from "./mapping/mapArchetypes";
 import { Format } from "../core/model/ygo/Format";
 
+/**
+ * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
+ */
 @injectable()
 class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private static readonly CARD_INFO_CHUNK_SIZE = 2000;

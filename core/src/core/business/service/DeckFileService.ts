@@ -51,6 +51,14 @@ class DeckFileService {
         this.cardService = cardService;
     }
 
+    /**
+     * Loads a deck from a remote .ydk file URL. The name is inferred from the URL.
+     *
+     * @param currentOrigin The current origin to ensure same-site loading will take place.
+     * @param urlString URL to load from, MUST be the same origin as currentOrigin.
+     * @throws Error if origins do not match.
+     * @return Loaded deck.
+     */
     public async fromRemoteFile(
         currentOrigin: string,
         urlString: string
@@ -73,6 +81,12 @@ class DeckFileService {
         });
     }
 
+    /**
+     * Loads deck from a.ydk file.
+     *
+     * @param deckFile File to load.
+     * @return Deck.
+     */
     public fromFile(deckFile: DeckFile): ImportResult {
         const missing: string[] = [];
         const deck = this.deckService.createEmptyDeck();
@@ -108,6 +122,12 @@ class DeckFileService {
         };
     }
 
+    /**
+     * Creates a .ydk deck file for a deck.
+     *
+     * @param deck Deck to create a file for.
+     * @return Deck file.
+     */
     public toFile(deck: Deck): DeckFile {
         const fileLines: string[] = [];
 

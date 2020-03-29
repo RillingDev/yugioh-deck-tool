@@ -13,6 +13,9 @@ interface HttpRequestConfig {
     responseType: "json" | "text";
 }
 
+/**
+ * HTTP client abstraction allowing for simple GET requests.
+ */
 interface HttpService {
     get<TData>(
         url: string,

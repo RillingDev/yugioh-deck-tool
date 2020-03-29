@@ -66,7 +66,17 @@ class DeckRandomizationService {
         this.cardService = cardService;
     }
 
-    randomize(strategy: RandomizationStrategy, filter?: CardFilter): Deck {
+    /**
+     * Creates a random deck for the given strategy and filter.
+     *
+     * @param strategy Strategy to use.
+     * @param filter Filter to apply to card pool before randomization (e.g. a certain format).
+     * @return Randomized deck.
+     */
+    public randomize(
+        strategy: RandomizationStrategy,
+        filter?: CardFilter
+    ): Deck {
         const deck = this.deckService.createEmptyDeck();
         let cards = this.cardDatabase.getCards();
         if (filter != null) {

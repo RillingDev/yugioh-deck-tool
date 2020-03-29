@@ -9,7 +9,7 @@ import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 import { CardSetAppearance } from "../model/ygo/intermediate/CardSetAppearance";
 import * as logger from "loglevel";
 import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
-import { forEach, isObject, flatten } from "lodash";
+import { flatten, forEach, isObject } from "lodash";
 
 const deepFreeze = (target: any): void => {
     if (isObject(target)) {

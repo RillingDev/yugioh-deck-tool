@@ -23,6 +23,17 @@ class DeckService {
         this.sortingService = sortingService;
     }
 
+    /**
+     * Checks if a given card can be added to the deck.
+     * Checks done include deck size check, banlist check, max count of card check
+     * and special handling for certain card types (e.g. skill cards)
+     *
+     * @param deck Deck to check addition for.
+     * @param deckPart Deck part to check addition for.
+     * @param format Format to check for, may be null for none.
+     * @param card Card to check.
+     * @return if the card can be added for these parameters.
+     */
     public canAdd(
         deck: Deck,
         deckPart: DeckPart,
@@ -60,12 +71,29 @@ class DeckService {
         return count < banState.count;
     }
 
+    /**
+     * Returns a copy of the deck with the card added.
+     * Make sure to use {@link #canAdd} before.
+     *
+     * @param deck Deck to add to.
+     * @param deckPart Deck part to add to.
+     * @param card Card to add.
+     * @return Copy of the deck with the card added.
+     */
     public addCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
         const deckClone = this.cloneDeck(deck);
         deckClone.parts.get(deckPart)!.push(card);
         return deckClone;
     }
 
+    /**
+     * Returns a copy of the deck with the card removed. if the card cannot be found, nothing will be done.
+     *
+     * @param deck Deck to remove from.
+     * @param deckPart Deck part to remove from.
+     * @param card Card to remove.
+     * @return Copy of the deck with the card removed.
+     */
     public removeCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
         const deckClone = this.cloneDeck(deck);
         deckClone.parts.set(
@@ -75,6 +103,12 @@ class DeckService {
         return deckClone;
     }
 
+    /**
+     * Returns a sorted copy of the deck.
+     *
+     * @param deck Deck to sort.
+     * @return Sorted copy.
+     */
     public sort(deck: Deck): Deck {
         const deckClone = this.cloneDeck(deck);
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
@@ -89,6 +123,12 @@ class DeckService {
         return deckClone;
     }
 
+    /**
+     * Returns a shuffled copy of the deck.
+     *
+     * @param deck Deck to shuffle.
+     * @return Shuffled copy.
+     */
     public shuffle(deck: Deck): Deck {
         const deckClone = this.cloneDeck(deck);
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
@@ -100,6 +140,12 @@ class DeckService {
         return deckClone;
     }
 
+    /**
+     * Gets a list of all cards of all parts.
+     *
+     * @param deck Deck to get cards for.
+     * @return All cards of the deck.
+     */
     public getAllCards(deck: Deck): Card[] {
         const result = [];
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
@@ -108,6 +154,11 @@ class DeckService {
         return result;
     }
 
+    /**
+     * Creates a new empty deck.
+     *
+     * @return Created deck.
+     */
     public createEmptyDeck(): Deck {
         const parts = new Map<DeckPart, Card[]>();
         for (const deckPart of DEFAULT_DECK_PART_ARR) {

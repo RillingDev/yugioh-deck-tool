@@ -10,6 +10,14 @@ interface PriceLookupResult {
 
 @injectable()
 class PriceService {
+    /**
+     * Gets the price of the card(s) for the given vendor and currency, using the sum of all existing prices.
+     *
+     * @param cards Cards to check.
+     * @param vendor Vendor to get the price for.
+     * @param currency Currency to calculate for.
+     * @return Object containing total sum for this currency, as well as a list of cards for which no price could be found.
+     */
     public getPrice(
         cards: Card[],
         vendor: Vendor,

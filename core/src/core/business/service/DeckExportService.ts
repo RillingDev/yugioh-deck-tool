@@ -21,6 +21,19 @@ class DeckExportService {
         this.cardService = cardService;
     }
 
+    /**
+     * Creates a shareable text in the following format for a deck:
+     * <pre>
+     * Main:
+     * Foo x1
+     * Bar x3
+     *
+     * Side:
+     * Foo x1
+     * </pre>
+     * @param deck Deck to create the text for.
+     * @return Text form of the deck.
+     */
     public toShareableText(deck: Deck): string {
         const result = [];
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
@@ -38,6 +51,12 @@ class DeckExportService {
         return result.join("\n");
     }
 
+    /**
+     * Creates a buy link of a deck for tcgplayer.com.
+     *
+     * @param deck Deck to create a link for.
+     * @return Buy link.
+     */
     public toBuyLink(deck: Deck): string {
         const counted: Map<Card, number> = this.cardService.countCards(
             this.deckService.getAllCards(deck)

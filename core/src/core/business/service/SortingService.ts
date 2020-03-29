@@ -39,6 +39,14 @@ class SortingService {
         this.cardDatabase = cardDatabase;
     }
 
+    /**
+     * Sorts a list of cards.
+     *
+     * @param cards Cards to filter.
+     * @param strategy Strategy to sort by.
+     * @param order If the result should be sorted ascending or descending.
+     * @return Sorted cards.
+     */
     public sort(
         cards: Card[],
         strategy: SortingStrategy,
