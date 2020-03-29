@@ -3,8 +3,12 @@ import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { Card } from "../../model/ygo/Card";
 import { DeckService } from "./DeckService";
-import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
+import {
+    DEFAULT_DECK_PART_ARR,
+    DefaultDeckPart,
+} from "../../model/ygo/DeckPart";
 import { CardService } from "./CardService";
+import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
 @injectable()
 class DeckExportService {
@@ -24,8 +28,11 @@ class DeckExportService {
     /**
      * Creates a shareable text in the following format for a deck:
      * <pre>
-     * Main:
+     * Monster:
      * Foo x1
+     * Fizz x3
+     *
+     * Spell:
      * Bar x3
      *
      * Side:
@@ -35,20 +42,41 @@ class DeckExportService {
      * @return Text form of the deck.
      */
     public toShareableText(deck: Deck): string {
-        const result = [];
+        const result: string[] = [];
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            result.push(`${deckPart.name}:`);
-
-            const deckPartCards = deck.parts.get(deckPart)!;
-            const counted: Map<Card, number> = this.cardService.countCards(
-                deckPartCards
-            );
-            for (const [card, count] of counted.entries()) {
-                result.push(`${card.name} x${count}`);
+            const cards = deck.parts.get(deckPart)!;
+            // Main deck cards also get split up by type group
+            if (deckPart === DefaultDeckPart.MAIN) {
+                for (const cardTypeGroup of Object.values(CardTypeGroup)) {
+                    result.push(
+                        ...this.createCardList(
+                            cardTypeGroup,
+                            cards.filter(
+                                (card) => card.type.group === cardTypeGroup
+                            )
+                        )
+                    );
+                }
+            } else {
+                result.push(...this.createCardList(deckPart.name, cards));
             }
-            result.push("");
         }
         return result.join("\n");
+    }
+
+    private createCardList(sectionName: string, cards: Card[]): string[] {
+        if (cards.length === 0) {
+            return [];
+        }
+        const result: string[] = [];
+        result.push(`${sectionName}:`);
+
+        const counted: Map<Card, number> = this.cardService.countCards(cards);
+        for (const [card, count] of counted.entries()) {
+            result.push(`${card.name} x${count}`);
+        }
+        result.push("");
+        return result;
     }
 
     /**

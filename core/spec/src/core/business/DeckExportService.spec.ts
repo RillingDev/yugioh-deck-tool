@@ -1,13 +1,14 @@
 import "reflect-metadata";
 import { DeckExportService } from "../../../../src/core/business/service/DeckExportService";
 import { TYPES } from "../../../../src/types";
-import { createCard } from "../../helper/dataFactories";
+import { createCard, createCardType } from "../../helper/dataFactories";
 import {
     DeckPart,
     DefaultDeckPart,
 } from "../../../../src/core/model/ygo/DeckPart";
 import { Card } from "../../../../src/core/model/ygo/Card";
 import { container } from "../../../../src/inversify.config";
+import { CardTypeGroup } from "../../../../src/core/model/ygo/CardTypeGroup";
 
 describe("DeckExportService", () => {
     let deckExportService: DeckExportService;
@@ -26,20 +27,32 @@ describe("DeckExportService", () => {
 
     describe("toShareableText", () => {
         it("creates text", () => {
-            const card1 = createCard({ id: "123", name: "foo" });
-            const card2 = createCard({ id: "456", name: "bar" });
-            const card3 = createCard({ id: "789", name: "fizz" });
+            const card1 = createCard({
+                id: "123",
+                name: "foo",
+                type: createCardType({ group: CardTypeGroup.SPELL }),
+            });
+            const card2 = createCard({
+                id: "321",
+                name: "foo ooo",
+                type: createCardType({ group: CardTypeGroup.MONSTER }),
+            });
+            const card3 = createCard({ id: "456", name: "bar" });
+            const card4 = createCard({ id: "789", name: "fizz" });
 
             const result = deckExportService.toShareableText({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card3, card1, card3]],
+                    [DefaultDeckPart.MAIN, [card1,card2,card2]],
+                    [DefaultDeckPart.EXTRA, [card3, card3]],
+                    [DefaultDeckPart.SIDE, [card4, card4, card1, card4]],
                 ]),
             });
             expect(result).toEqual(
-                `Main:
+                `Monster:
+foo ooo x2
+
+Spell:
 foo x1
 
 Extra:
