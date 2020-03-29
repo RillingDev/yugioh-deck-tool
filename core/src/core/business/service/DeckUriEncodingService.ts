@@ -12,6 +12,7 @@ import { deflateRaw, inflate, inflateRaw } from "pako";
 @injectable()
 class DeckUriEncodingService {
     // A 32 bit integer is able to store all 9 digit IDs
+    // Note that currently we assume only little endian systems are used.
     private static readonly BLOCK_SIZE = Uint32Array.BYTES_PER_ELEMENT;
     private static readonly DELIMITER_BLOCK: Uint8Array = new Uint8Array(
         DeckUriEncodingService.BLOCK_SIZE
