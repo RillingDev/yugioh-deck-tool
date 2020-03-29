@@ -14,7 +14,7 @@ import { Format } from "../core/model/ygo/Format";
 
 @injectable()
 class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
-    private static readonly CARD_INFO_CHUNK_SIZE = 2500;
+    private static readonly CARD_INFO_CHUNK_SIZE = 2000;
     private static readonly DEFAULT_TIMEOUT = 10000;
 
     private static readonly API_BASE_URL = "https://db.ygoprodeck.com/api/v7/";
