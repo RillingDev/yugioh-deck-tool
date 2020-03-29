@@ -1,18 +1,18 @@
 import "reflect-metadata";
-import { TYPES } from "../../../../src/types";
-import { CardDatabase } from "../../../../src/core/business/CardDatabase";
-import { createCard } from "../../helper/dataFactories";
+import { TYPES } from "../../../../../src/types";
+import { CardDatabase } from "../../../../../src/core/business/CardDatabase";
+import { createCard } from "../../../helper/dataFactories";
 import {
     DeckPart,
     DefaultDeckPart,
-} from "../../../../src/core/model/ygo/DeckPart";
-import { Card } from "../../../../src/core/model/ygo/Card";
+} from "../../../../../src/core/model/ygo/DeckPart";
+import { Card } from "../../../../../src/core/model/ygo/Card";
 import { deflate } from "pako";
 import { when } from "ts-mockito";
-import { MemoryCardDatabase } from "../../../../src/core/business/MemoryCardDatabase";
-import { container } from "../../../../src/inversify.config";
-import { bindMock } from "../../helper/bindMock";
-import { DeckUriEncodingService } from "../../../../src/core/business/service/DeckUriEncodingService";
+import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardDatabase";
+import { container } from "../../../../../src/inversify.config";
+import { bindMock } from "../../../helper/bindMock";
+import { DeckUriEncodingService } from "../../../../../src/core/business/service/DeckUriEncodingService";
 
 describe("DeckUriEncodingService", () => {
     let deckUriEncodingService: DeckUriEncodingService;

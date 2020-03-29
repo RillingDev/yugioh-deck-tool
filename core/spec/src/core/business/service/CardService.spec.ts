@@ -1,10 +1,10 @@
 import "reflect-metadata";
-import { TYPES } from "../../../../src/types";
-import { createCard } from "../../helper/dataFactories";
-import { container } from "../../../../src/inversify.config";
-import { CardService } from "../../../../src/core/business/service/CardService";
-import { DefaultBanState } from "../../../../src/core/model/ygo/BanState";
-import { Format } from "../../../../src/core/model/ygo/Format";
+import { TYPES } from "../../../../../src/types";
+import { createCard } from "../../../helper/dataFactories";
+import { container } from "../../../../../src/inversify.config";
+import { CardService } from "../../../../../src/core/business/service/CardService";
+import { DefaultBanState } from "../../../../../src/core/model/ygo/BanState";
+import { Format } from "../../../../../src/core/model/ygo/Format";
 
 describe("CardService", () => {
     let cardService: CardService;
