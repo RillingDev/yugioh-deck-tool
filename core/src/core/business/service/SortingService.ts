@@ -54,19 +54,24 @@ class SortingService {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareDeck(a, b);
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        } else if (strategy === SortingStrategy.NAME) {
+        }
+        if (strategy === SortingStrategy.NAME) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareName(a, b);
-        } else if (strategy === SortingStrategy.ATK) {
+        }
+        if (strategy === SortingStrategy.ATK) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareAtk(a, b);
-        } else if (strategy === SortingStrategy.DEF) {
+        }
+        if (strategy === SortingStrategy.DEF) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareDef(a, b);
-        } else if (strategy === SortingStrategy.LEVEL) {
+        }
+        if (strategy === SortingStrategy.LEVEL) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareLevel(a, b);
-        } else if (strategy === SortingStrategy.RELEASE_DATE) {
+        }
+        if (strategy === SortingStrategy.RELEASE_DATE) {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareReleaseDate(a, b);
         }

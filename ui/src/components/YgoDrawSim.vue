@@ -75,10 +75,6 @@ export default class YgoDrawSim extends Vue {
     drawMode = 5;
     drawItems: Card[] = [];
 
-    private readonly sortingService = uiContainer.get<SortingService>(
-        UI_TYPES.SortingService
-    );
-
     get mainDeckCards() {
         return this.deck.parts.get(DefaultDeckPart.MAIN);
     }
