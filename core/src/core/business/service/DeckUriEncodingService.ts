@@ -13,12 +13,12 @@ import { deflateRaw, inflate, inflateRaw } from "pako";
 class DeckUriEncodingService {
     // A 32 bit integer is able to store all 9 digit IDs
     // Note that currently we assume only little endian systems are used.
-    private static readonly BLOCK_SIZE = Uint32Array.BYTES_PER_ELEMENT;
+    private static readonly BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
     private static readonly DELIMITER_BLOCK: Uint8Array = new Uint8Array(
-        DeckUriEncodingService.BLOCK_SIZE
+        DeckUriEncodingService.BLOCK_BYTE_SIZE
     ).fill(0);
     private static readonly ID_LIMIT =
-        2 ** (DeckUriEncodingService.BLOCK_SIZE * 8); // Max number that can be stored in BLOCK_SIZE bytes.
+        2 ** (DeckUriEncodingService.BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.
 
     private readonly cardDatabase: CardDatabase;
     private readonly deckService: DeckService;
@@ -48,7 +48,7 @@ class DeckUriEncodingService {
      * </ol>
      *
      * Byte Array structure:
-     * Blocks of {@link #BLOCK_SIZE} represent a single card ID number,
+     * Blocks of {@link #BLOCK_BYTE_SIZE} represent a single card ID number,
      * with a special value {@link #DELIMITER_BLOCK} being used to separate deck-parts.
      * After the last card of the last deckpart and the delimiter,
      * the UTF-8 code-points of the deck name follow, if one is set.
@@ -57,7 +57,7 @@ class DeckUriEncodingService {
      * @return Value that can be decoded to yield the same deck.
      */
     public toUrlQueryParamValue(deck: Deck): string {
-        const result: number[] = []; // Array of unsigned 8  bit numbers, using this over Uint8Array for convenience.
+        const result: number[] = []; // Array of unsigned 8 bit numbers, using this over Uint8Array for convenience.
 
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             for (const card of deck.parts.get(deckPart)!) {
@@ -88,18 +88,18 @@ class DeckUriEncodingService {
         let deckPartIndex = 0;
         let metaDataStart: null | number = null;
         for (
-            let i = 0;
-            i < inflated.length;
-            i += DeckUriEncodingService.BLOCK_SIZE
+            let blockStart = 0;
+            blockStart < inflated.length;
+            blockStart += DeckUriEncodingService.BLOCK_BYTE_SIZE
         ) {
-            const block = inflated.slice(
-                i,
-                i + DeckUriEncodingService.BLOCK_SIZE
-            );
+            const blockEnd =
+                blockStart + DeckUriEncodingService.BLOCK_BYTE_SIZE;
+            const block = inflated.slice(blockStart, blockEnd);
+
             if (isEqual(block, DeckUriEncodingService.DELIMITER_BLOCK)) {
                 // After the last deckpart, meta data starts
                 if (deckPartIndex === DEFAULT_DECK_PART_ARR.length - 1) {
-                    metaDataStart = i + DeckUriEncodingService.BLOCK_SIZE;
+                    metaDataStart = blockEnd;
                     break;
                 }
                 deckPartIndex++;
@@ -120,27 +120,33 @@ class DeckUriEncodingService {
 
     private encodeCardBlock(card: Card): Uint8Array {
         const idNumber = Number(card.id);
-        if (idNumber === 0 || idNumber >= DeckUriEncodingService.ID_LIMIT) {
+        if (idNumber <= 0 || idNumber >= DeckUriEncodingService.ID_LIMIT) {
             throw new TypeError(
                 `Card '${card}' has an illegal value ${idNumber} as ID.`
             );
         }
-        const buffer = new ArrayBuffer(DeckUriEncodingService.BLOCK_SIZE);
-        // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
-        const dataView = new DataView(buffer);
-        dataView.setUint32(0, idNumber, true);
-        return new Uint8Array(buffer);
+        return this.encodeId(idNumber);
     }
 
     private decodeCardBlock(block: Uint8Array): Card {
-        const dataView = new DataView(block.buffer);
-        // See #encodeCard for details
-        const cardId = String(dataView.getUint32(0, true));
-        if (!this.cardDatabase.hasCard(cardId)) {
-            throw new TypeError(`Could not find card for ID ${cardId}.`);
+        const id = String(this.decodeId(block));
+        if (!this.cardDatabase.hasCard(id)) {
+            throw new TypeError(`Could not find card for ID ${id}.`);
         }
 
-        return this.cardDatabase.getCard(cardId)!;
+        return this.cardDatabase.getCard(id)!;
+    }
+
+    private encodeId(idNumber: number): Uint8Array {
+        // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
+        const buffer = new ArrayBuffer(DeckUriEncodingService.BLOCK_BYTE_SIZE);
+        new DataView(buffer).setUint32(0, idNumber, true);
+        return new Uint8Array(buffer);
+    }
+
+    private decodeId(block: Uint8Array): number {
+        // See #encodeCard for details
+        return new DataView(block.buffer).getUint32(0, true);
     }
 
     private encodeUriSafeBase64String(arr: Uint8Array): string {
