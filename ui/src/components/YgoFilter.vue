@@ -47,26 +47,26 @@
                     v-on:input="onFilterChange"
                 />
             </div>
-        </template>
-        <template v-if="filter.format != null">
-            <div class="form-group form-group-builder">
-                <label>Limit:</label>
+            <template v-if="filter.format != null">
+                <div class="form-group form-group-builder">
+                    <label>Limit:</label>
 
-                <AdvancedSelect
-                    :initial-options="banStates"
-                    :label="(banState) => banState.name"
-                    :no-selection-allowed="true"
-                    :track-by="(banState) => banState.name"
-                    class="form-control"
-                    v-model="filter.banState"
-                    v-on:input="onFilterChange"
-                />
-            </div>
+                    <AdvancedSelect
+                        :initial-options="banStates"
+                        :label="(banState) => banState.name"
+                        :no-selection-allowed="true"
+                        :track-by="(banState) => banState.name"
+                        class="form-control"
+                        v-model="filter.banState"
+                        v-on:input="onFilterChange"
+                    />
+                </div>
+            </template>
+            <hr />
         </template>
-        <hr />
 
         <!-- builder-type -->
-        <template>
+        <template v-if="showAdvanced">
             <div class="form-group form-group-builder">
                 <label>Type:</label>
                 <AdvancedSelect
@@ -87,60 +87,57 @@
                     v-on:input="onFilterChange"
                 />
             </div>
-        </template>
 
-        <template v-if="filter.typeGroup != null">
-            <div class="form-group form-group-builder">
-                <label>{{ isMonster ? "Race" : "Subtype" }}:</label>
-                <AdvancedSelect
-                    :initial-options="races"
-                    :no-selection-allowed="true"
-                    class="form-control"
-                    v-model="filter.race"
-                    v-on:input="onFilterChange"
-                />
-            </div>
-        </template>
+            <template v-if="filter.typeGroup != null">
+                <div class="form-group form-group-builder">
+                    <label>{{ isMonster ? "Race" : "Subtype" }}:</label>
+                    <AdvancedSelect
+                        :initial-options="races"
+                        :no-selection-allowed="true"
+                        class="form-control"
+                        v-model="filter.race"
+                        v-on:input="onFilterChange"
+                    />
+                </div>
+            </template>
+            <template v-if="isMonster">
+                <div class="form-group form-group-builder">
+                    <label>Attribute:</label>
+                    <AdvancedSelect
+                        :initial-options="monsterAttributes"
+                        :no-selection-allowed="true"
+                        class="form-control"
+                        v-model="filter.attribute"
+                        v-on:input="onFilterChange"
+                    />
+                </div>
 
-        <template v-if="isMonster">
-            <div class="form-group form-group-builder">
-                <label>Attribute:</label>
-                <AdvancedSelect
-                    :initial-options="monsterAttributes"
-                    :no-selection-allowed="true"
-                    class="form-control"
-                    v-model="filter.attribute"
-                    v-on:input="onFilterChange"
-                />
-            </div>
+                <div class="form-group form-group-builder">
+                    <label>Lv/Rank:</label>
+                    <AdvancedSelect
+                        :initial-options="monsterLevels"
+                        :no-selection-allowed="true"
+                        class="form-control"
+                        v-model="filter.level"
+                        v-on:input="onFilterChange"
+                    />
+                </div>
 
-            <div class="form-group form-group-builder">
-                <label>Lv/Rank:</label>
-                <AdvancedSelect
-                    :initial-options="monsterLevels"
-                    :no-selection-allowed="true"
-                    class="form-control"
-                    v-model="filter.level"
-                    v-on:input="onFilterChange"
-                />
-            </div>
+                <div
+                    class="form-group form-group-builder"
+                    v-if="isLinkMonster && showAdvanced"
+                >
+                    <label>Link Markers:</label>
+                    <AdvancedSelect
+                        :initial-options="monsterLinkMarkers"
+                        :no-selection-allowed="true"
+                        class="form-control"
+                        v-model="filter.linkMarker"
+                        v-on:input="onFilterChange"
+                    />
+                </div>
+            </template>
 
-            <div
-                class="form-group form-group-builder"
-                v-if="isLinkMonster && showAdvanced"
-            >
-                <label>Link Markers:</label>
-                <AdvancedSelect
-                    :initial-options="monsterLinkMarkers"
-                    :no-selection-allowed="true"
-                    class="form-control"
-                    v-model="filter.linkMarker"
-                    v-on:input="onFilterChange"
-                />
-            </div>
-        </template>
-
-        <template v-if="showAdvanced">
             <div class="form-group form-group-builder">
                 <label>Archetype:</label>
                 <AdvancedSelect
@@ -151,8 +148,8 @@
                     v-on:input="onFilterChange"
                 />
             </div>
+            <hr />
         </template>
-        <hr />
 
         <template>
             <div class="form-group form-group-builder">
