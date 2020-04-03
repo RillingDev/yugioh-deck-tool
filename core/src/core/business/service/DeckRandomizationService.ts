@@ -25,7 +25,7 @@ enum RandomizationStrategy {
 
 @injectable()
 class DeckRandomizationService {
-    private static readonly IGNORED_WORDS = [
+    private static readonly IGNORED_WORDS = new Set([
         "a",
         "an",
         "as",
@@ -39,7 +39,7 @@ class DeckRandomizationService {
         "to",
         "with",
         "from",
-    ];
+    ]);
 
     private readonly cardDatabase: CardDatabase;
     private readonly deckService: DeckService;
@@ -97,19 +97,20 @@ class DeckRandomizationService {
         const format = filter?.format ?? null;
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             for (const primaryPool of primaryPools) {
+                let cardsPerPool = 0;
                 if (isArchetypeStrategy) {
-                    this.addCards(
-                        deck,
-                        deckPart,
-                        format,
-                        strategy,
-                        true,
-                        sampleSize(
-                            primaryPool,
-                            this.getCardsPerArchetypeCount(strategy)
-                        )
-                    );
+                    cardsPerPool = this.getCardsPerArchetypeCount(strategy);
                 }
+
+                this.addCards(
+                    deck,
+                    deckPart,
+                    format,
+                    strategy,
+                    true,
+                    primaryPool,
+                    cardsPerPool
+                );
             }
 
             this.addCards(
@@ -118,7 +119,8 @@ class DeckRandomizationService {
                 format,
                 strategy,
                 false,
-                shuffle(secondaryPool)
+                secondaryPool,
+                null
             );
         }
         deck.name = this.createName(deck);
@@ -143,24 +145,47 @@ class DeckRandomizationService {
         return pool;
     }
 
+    /**
+     * Attempts to adds cards from the pool to the deck for the given part.
+     *
+     * @param deck Deck to add to.
+     * @param deckPart Deck part to add to.
+     * @param format Format to validate against.
+     * @param strategy Strategy that is in use.
+     * @param isPrimaryPool If the pool should be treated as primary pool. (different card count calculation)
+     * @param pool Pool to pick cards from.
+     * @param limit Optional limit of how many cards should be added. Note that is only a soft limit,
+     *              only limiting the next cycle of card picking, not the card count of an already picked card.
+     */
     private addCards(
         deck: Deck,
         deckPart: DeckPart,
         format: Format | null,
         strategy: RandomizationStrategy,
         isPrimaryPool: boolean,
-        shuffledPool: Card[]
+        pool: Card[],
+        limit: number | null
     ): void {
         const deckPartCards = deck.parts.get(deckPart)!;
+        const initialLength = deckPartCards.length;
         const deckPartLimit = this.getDeckPartLimit(deckPart, strategy);
-        for (const card of shuffledPool) {
+        for (const card of shuffle(pool)) {
+            // If we reached the deckpart limit: break, skipping all other cards in the pool
             if (deckPartCards.length >= deckPartLimit) {
+                break;
+            }
+            // If a limit is set and the count of cards added in this #addCards invocation reaches the limit: break
+            if (
+                limit != null &&
+                deckPartCards.length - initialLength >= limit
+            ) {
                 break;
             }
             const randomCardCount = this.getRandomCardCount(
                 strategy,
                 isPrimaryPool
             );
+            // Attempt to add n cards, stopping if one of the additions is not possible.
             for (let i = 0; i < randomCardCount; i++) {
                 if (!this.deckService.canAdd(deck, deckPart, format, card)) {
                     break;
@@ -168,26 +193,6 @@ class DeckRandomizationService {
                 deckPartCards.push(card);
             }
         }
-    }
-
-    private findArchetypeCards(cards: Card[], archetype: string): Card[] {
-        return this.filterService.filter(cards, {
-            name: null,
-
-            typeGroup: null,
-            type: null,
-
-            race: null,
-            attribute: null,
-            level: null,
-            linkMarker: null,
-            archetype: archetype,
-
-            format: null,
-            banState: null,
-
-            sets: [],
-        });
     }
 
     private getArchetypeCount(strategy: RandomizationStrategy): number {
@@ -204,7 +209,7 @@ class DeckRandomizationService {
     }
 
     private getCardsPerArchetypeCount(strategy: RandomizationStrategy): number {
-        return Math.ceil(20 / this.getArchetypeCount(strategy));
+        return Math.ceil(30 / this.getArchetypeCount(strategy));
     }
 
     private getDeckPartLimit(
@@ -231,7 +236,7 @@ class DeckRandomizationService {
 
         const seed = random(0, 1, true);
         if (isPrimaryPool) {
-            if (seed > 0.5) {
+            if (seed > 0.65) {
                 return 3;
             }
             if (seed > 0.35) {
@@ -263,7 +268,7 @@ class DeckRandomizationService {
             cardsWithPlaySets.map((card) =>
                 words(card.name).filter(
                     (word) =>
-                        !DeckRandomizationService.IGNORED_WORDS.includes(
+                        !DeckRandomizationService.IGNORED_WORDS.has(
                             word.toLowerCase()
                         )
                 )
@@ -273,6 +278,26 @@ class DeckRandomizationService {
             uniq(cardsWithPlaySetsWords),
             random(2, 3, false)
         ).join(" ");
+    }
+
+    private findArchetypeCards(cards: Card[], archetype: string): Card[] {
+        return this.filterService.filter(cards, {
+            name: null,
+
+            typeGroup: null,
+            type: null,
+
+            race: null,
+            attribute: null,
+            level: null,
+            linkMarker: null,
+            archetype: archetype,
+
+            format: null,
+            banState: null,
+
+            sets: [],
+        });
     }
 }
 
