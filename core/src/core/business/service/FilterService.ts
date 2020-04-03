@@ -49,7 +49,7 @@ class FilterService {
                 filter.name !== "" &&
                 !this.cardService
                     .getAllNames(card)
-                    .every((name) =>
+                    .some((name) =>
                         name.toLowerCase().includes(filter.name!.toLowerCase())
                     )
             ) {
