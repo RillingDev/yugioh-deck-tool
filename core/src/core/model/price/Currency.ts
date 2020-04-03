@@ -8,6 +8,7 @@ interface Currency {
     readonly fractionDigits: number;
 }
 
+// Values from https://api.exchangeratesapi.io/latest?base=USD
 const DEFAULT_CURRENCY_ARR: Currency[] = [
     {
         name: "US Dollar",
@@ -20,56 +21,56 @@ const DEFAULT_CURRENCY_ARR: Currency[] = [
         name: "Euro",
         locale: "de-DE",
         id: "EUR",
-        val: 0.881,
+        val: 0.9272137228,
         fractionDigits: 2,
     },
     {
         name: "British Pound",
         locale: "en-GB",
         id: "GBP",
-        val: 0.792,
+        val: 0.8145572554,
         fractionDigits: 2,
     },
     {
         name: "Canadian Dollar",
         locale: "en-CA",
         id: "CAD",
-        val: 1.341,
+        val: 1.4185442745,
         fractionDigits: 2,
     },
     {
         name: "Australian Dollar",
         locale: "en-AU",
         id: "AUD",
-        val: 1.393,
+        val: 1.6693555865,
         fractionDigits: 2,
     },
     {
         name: "Mexican Peso",
         locale: "es-MX",
         id: "MXN",
-        val: 20.09,
+        val: 24.6147426982,
         fractionDigits: 1,
     },
     {
         name: "Brazilian Real",
         locale: "pt-BR",
         id: "BRL",
-        val: 3.9,
+        val: 5.2751970329,
         fractionDigits: 1,
     },
     {
         name: "Thai Baht",
         locale: "th-TH",
         id: "THB",
-        val: 32.8,
+        val: 33.0097357441,
         fractionDigits: 0,
     },
     {
         name: "Indonesian Rupiah",
         locale: "id-ID",
         id: "IDR",
-        val: 14578,
+        val: 16614.4459898006,
         fractionDigits: 0,
     },
 ];
