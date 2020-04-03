@@ -124,11 +124,11 @@ import {
     CardDatabase,
     Deck,
     DeckExportService,
+    DeckFileService,
     DeckPart,
     DeckService,
-    Format,
     DeckUriEncodingService,
-    DeckFileService,
+    Format,
 } from "../../core/src/main";
 import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
@@ -256,24 +256,31 @@ export default class App extends Vue {
     private async loadUriDeck(): Promise<void> {
         const uriQuery = parseUrl(location.toString(), true).query;
         if ("u" in uriQuery) {
+            // Load deck file from a remote URL
+            const remoteUrl = uriQuery["u"];
             return this.deckFileService
-                .fromRemoteFile(location.origin, uriQuery["u"])
+                .fromRemoteFile(location.origin, remoteUrl)
                 .then((result) => {
                     this.deck = result.deck;
                 });
         } else if ("e" in uriQuery) {
-            // Load encoded uriDeck
+            // Load encoded uri deck
+            const uriEncodedDeck = uriQuery["e"];
             this.deck = this.deckUriEncodingService.fromUrlQueryParamValue(
-                uriQuery["e"]
+                uriEncodedDeck
             );
-        } else if ("d" in uriQuery) {
-            // Load encoded uriDeck
-            this.deck = this.deckUriEncodingService.fromLegacyUrlQueryParamValue(
-                uriQuery["d"],
-                atob
-            );
+        } else {
+            // Check for legacy share link
+            // Due to the old link containing illegal characters parseUrl causes issues
+            const legacyUriQuery = location.search;
+            if (legacyUriQuery.includes("?d=")) {
+                // Load encoded uriDeck
+                this.deck = this.deckUriEncodingService.fromLegacyUrlQueryParamValue(
+                    legacyUriQuery.replace("?d=", ""),
+                    atob
+                );
+            }
         }
-
         return Promise.resolve();
     }
 }
