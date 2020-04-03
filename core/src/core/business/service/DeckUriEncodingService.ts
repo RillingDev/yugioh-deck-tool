@@ -20,6 +20,8 @@ class DeckUriEncodingService {
     private static readonly ID_LIMIT =
         2 ** (DeckUriEncodingService.BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.
 
+    private static readonly USE_LITTLE_ENDIAN = true;
+
     private readonly cardDatabase: CardDatabase;
     private readonly deckService: DeckService;
     private readonly textEncoder: TextEncoder;
@@ -119,17 +121,11 @@ class DeckUriEncodingService {
     }
 
     private encodeCardBlock(card: Card): Uint8Array {
-        const idNumber = Number(card.id);
-        if (idNumber <= 0 || idNumber >= DeckUriEncodingService.ID_LIMIT) {
-            throw new TypeError(
-                `Card '${card}' has an illegal value ${idNumber} as ID.`
-            );
-        }
-        return this.encodeId(idNumber);
+        return this.encodeNumber(Number(card.id));
     }
 
     private decodeCardBlock(block: Uint8Array): Card {
-        const id = String(this.decodeId(block));
+        const id = String(this.decodeNumber(block));
         if (!this.cardDatabase.hasCard(id)) {
             throw new TypeError(`Could not find card for ID ${id}.`);
         }
@@ -137,16 +133,28 @@ class DeckUriEncodingService {
         return this.cardDatabase.getCard(id)!;
     }
 
-    private encodeId(idNumber: number): Uint8Array {
+    private encodeNumber(number: number): Uint8Array {
+        if (number <= 0 || number >= DeckUriEncodingService.ID_LIMIT) {
+            throw new TypeError(
+                `Number '${number} is of range (has to be > 0 and < ${DeckUriEncodingService.ID_LIMIT})'.`
+            );
+        }
         // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
         const buffer = new ArrayBuffer(DeckUriEncodingService.BLOCK_BYTE_SIZE);
-        new DataView(buffer).setUint32(0, idNumber, true);
+        new DataView(buffer).setUint32(
+            0,
+            number,
+            DeckUriEncodingService.USE_LITTLE_ENDIAN
+        );
         return new Uint8Array(buffer);
     }
 
-    private decodeId(block: Uint8Array): number {
-        // See #encodeCard for details
-        return new DataView(block.buffer).getUint32(0, true);
+    private decodeNumber(block: Uint8Array): number {
+        // See #encodeNumber for details
+        return new DataView(block.buffer).getUint32(
+            0,
+            DeckUriEncodingService.USE_LITTLE_ENDIAN
+        );
     }
 
     private encodeUriSafeBase64String(arr: Uint8Array): string {
