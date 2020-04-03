@@ -6,7 +6,6 @@ import { DeckService } from "./DeckService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { HttpService } from "./HttpService";
 import parseUrl from "url-parse";
-import { CardService } from "./CardService";
 
 interface ImportResult {
     readonly deck: Deck;
@@ -26,11 +25,11 @@ class DeckFileService {
 
     constructor(
         @inject(TYPES.HttpService)
-        httpService: HttpService,
+            httpService: HttpService,
         @inject(TYPES.CardDatabase)
-        cardDatabase: CardDatabase,
+            cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-        deckService: DeckService
+            deckService: DeckService
     ) {
         this.httpService = httpService;
         this.deckService = deckService;
@@ -93,10 +92,11 @@ class DeckFileService {
 
             // Only start processing once a deckpart indicator was found. this allows for arbitrary file metadata as "head" of the file.
             if (currentDeckPart != null) {
-                if (!this.cardDatabase.hasCard(line)) {
-                    missing.push(line);
+                const cardId = line.replace(/^0+/, ""); // Some applications pad the start with zeros, remove those.
+                if (!this.cardDatabase.hasCard(cardId)) {
+                    missing.push(cardId);
                 } else {
-                    const card = this.cardDatabase.getCard(line)!;
+                    const card = this.cardDatabase.getCard(cardId)!;
                     deck.parts.get(currentDeckPart)!.push(card);
                 }
             }

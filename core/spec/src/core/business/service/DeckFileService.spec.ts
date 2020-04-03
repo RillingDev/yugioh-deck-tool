@@ -164,6 +164,23 @@ describe("DeckFileService", () => {
             expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
             expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
         });
+
+        it("supports zero-padded", () => {
+            const fileContent = `
+#created by ...
+#main
+0000123`;
+            const card = createCard({ id: "123" });
+            when(mockCardDatabase.hasCard("123")).thenReturn(true);
+            when(mockCardDatabase.getCard("123")).thenReturn(card);
+
+            const result = deckFileService.fromFile({
+                fileContent,
+                fileName: "foo.ydk",
+            });
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
+            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
+        });
     });
 
     describe("fromRemoteFile", () => {
