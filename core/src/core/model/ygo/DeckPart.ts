@@ -1,4 +1,4 @@
-import { deepFreeze } from "../../deepFreeze";
+import { deepFreeze } from "../../business/deepFreeze";
 
 interface DeckPart {
     readonly id: string;

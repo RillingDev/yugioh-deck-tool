@@ -1,11 +1,11 @@
-import { BanState, DefaultBanState } from "../../core/model/ygo/BanState";
-import { CardImage } from "../../core/model/ygo/CardImage";
-import { CardPrices } from "../../core/model/ygo/CardPrices";
-import { CardSetAppearance } from "../../core/model/ygo/intermediate/CardSetAppearance";
-import { Format } from "../../core/model/ygo/Format";
-import { DefaultVendor, Vendor } from "../../core/model/price/Vendor";
-import { UnlinkedCard } from "../../core/model/ygo/intermediate/UnlinkedCard";
-import { ReleaseInfo } from "../../core/model/ygo/ReleaseInfo";
+import { BanState, DefaultBanState } from "../../../core/model/ygo/BanState";
+import { CardImage } from "../../../core/model/ygo/CardImage";
+import { CardPrices } from "../../../core/model/ygo/CardPrices";
+import { CardSetAppearance } from "../../../core/model/ygo/intermediate/CardSetAppearance";
+import { Format } from "../../../core/model/ygo/Format";
+import { DefaultVendor, Vendor } from "../../../core/model/price/Vendor";
+import { UnlinkedCard } from "../../../core/model/ygo/intermediate/UnlinkedCard";
+import { ReleaseInfo } from "../../../core/model/ygo/ReleaseInfo";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {

@@ -1,7 +1,7 @@
 import { Container } from "inversify";
 import { TYPES } from "./types";
 import { CardDataLoaderService } from "./core/business/service/CardDataLoaderService";
-import { YgoprodeckCardDataLoaderService } from "./api/YgoprodeckCardDataLoaderService";
+import { YgoprodeckCardDataLoaderService } from "./api/ygoprodeck/YgoprodeckCardDataLoaderService";
 import { CardDatabase } from "./core/business/CardDatabase";
 import { MemoryCardDatabase } from "./core/business/MemoryCardDatabase";
 import { CardService } from "./core/business/service/CardService";

@@ -1,16 +1,16 @@
 import { mapCardInfo, RawCard } from "./mapping/mapCardInfo";
 import { mapCardSets, RawCardSet } from "./mapping/mapCardSets";
-import { CardSet } from "../core/model/ygo/CardSet";
-import { CardDataLoaderService } from "../core/business/service/CardDataLoaderService";
+import { CardSet } from "../../core/model/ygo/CardSet";
+import { CardDataLoaderService } from "../../core/business/service/CardDataLoaderService";
 import { PaginatedResponse } from "./PaginatedResponse";
 import { inject, injectable } from "inversify";
 import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
-import { CardValues } from "../core/model/ygo/CardValues";
-import { UnlinkedCard } from "../core/model/ygo/intermediate/UnlinkedCard";
-import { TYPES } from "../types";
-import { HttpService } from "../core/business/service/HttpService";
+import { CardValues } from "../../core/model/ygo/CardValues";
+import { UnlinkedCard } from "../../core/model/ygo/intermediate/UnlinkedCard";
+import { TYPES } from "../../types";
+import { HttpService } from "../../core/business/service/HttpService";
 import { mapArchetypes, RawArchetype } from "./mapping/mapArchetypes";
-import { Format } from "../core/model/ygo/Format";
+import { Format } from "../../core/model/ygo/Format";
 
 /**
  * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).

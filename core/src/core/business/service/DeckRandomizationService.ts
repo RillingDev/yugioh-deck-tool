@@ -14,6 +14,7 @@ import { CardService } from "./CardService";
 import { flatten, random, sampleSize, shuffle, uniq, words } from "lodash";
 import { Card } from "../../model/ygo/Card";
 import { Format } from "../../model/ygo/Format";
+import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
 enum RandomizationStrategy {
     NORMAL = "Normal",
@@ -39,6 +40,21 @@ class DeckRandomizationService {
         "to",
         "with",
         "from",
+    ]);
+
+    /**
+     * Percentage of cards a deck should have by card type group.
+     * E.g. MONSTER with 0.65 would mean the deck should have around 65% monster cards.
+     * null means the ratio check will be skipped.
+     */
+    private static readonly CARD_TYPE_GROUP_RATIO = new Map<
+        CardTypeGroup,
+        number | null
+    >([
+        [CardTypeGroup.MONSTER, 0.625],
+        [CardTypeGroup.SPELL, 0.275],
+        [CardTypeGroup.TRAP, 0.1],
+        [CardTypeGroup.SKILL, null],
     ]);
 
     private readonly cardDatabase: CardDatabase;
@@ -107,8 +123,8 @@ class DeckRandomizationService {
                     deckPart,
                     format,
                     strategy,
-                    true,
                     primaryPool,
+                    deckPart === DefaultDeckPart.MAIN,
                     cardsPerPool
                 );
             }
@@ -118,8 +134,8 @@ class DeckRandomizationService {
                 deckPart,
                 format,
                 strategy,
-                false,
                 secondaryPool,
+                false,
                 null
             );
         }
@@ -152,18 +168,18 @@ class DeckRandomizationService {
      * @param deckPart Deck part to add to.
      * @param format Format to validate against.
      * @param strategy Strategy that is in use.
-     * @param isPrimaryPool If the pool should be treated as primary pool. (different card count calculation)
      * @param pool Pool to pick cards from.
-     * @param limit Optional limit of how many cards should be added. Note that is only a soft limit,
      *              only limiting the next cycle of card picking, not the card count of an already picked card.
+     * @param preferPlaySet If higher counts of cards should be preferred.
+     * @param limit Optional limit of how many cards should be added. Note that is only a soft limit,
      */
     private addCards(
         deck: Deck,
         deckPart: DeckPart,
         format: Format | null,
         strategy: RandomizationStrategy,
-        isPrimaryPool: boolean,
         pool: Card[],
+        preferPlaySet: boolean,
         limit: number | null
     ): void {
         const deckPartCards = deck.parts.get(deckPart)!;
@@ -174,6 +190,7 @@ class DeckRandomizationService {
             if (deckPartCards.length >= deckPartLimit) {
                 break;
             }
+
             // If a limit is set and the count of cards added in this #addCards invocation reaches the limit: break
             if (
                 limit != null &&
@@ -181,9 +198,33 @@ class DeckRandomizationService {
             ) {
                 break;
             }
+
+            // Once half of the main deck part is full, check against ratios
+            // If a card ratio is exceeded: continue with the next card
+            if (
+                deckPart === DefaultDeckPart.MAIN &&
+                deckPartCards.length >= deckPartLimit / 2
+            ) {
+                const cardTypeGroupRatio:
+                    | number
+                    | null = DeckRandomizationService.CARD_TYPE_GROUP_RATIO.get(
+                    card.type.group
+                )!;
+                const cardsOfTypeGroupCount = deckPartCards.filter(
+                    (deckPartCard) =>
+                        deckPartCard.type.group === card.type.group
+                ).length;
+                if (
+                    cardTypeGroupRatio != null &&
+                    cardsOfTypeGroupCount >= deckPartLimit * cardTypeGroupRatio
+                ) {
+                    continue;
+                }
+            }
+
             const randomCardCount = this.getRandomCardCount(
                 strategy,
-                isPrimaryPool
+                preferPlaySet
             );
             // Attempt to add n cards, stopping if one of the additions is not possible.
             for (let i = 0; i < randomCardCount; i++) {
@@ -228,14 +269,14 @@ class DeckRandomizationService {
 
     private getRandomCardCount(
         strategy: RandomizationStrategy,
-        isPrimaryPool: boolean
+        preferPlaySet: boolean
     ): number {
         if (strategy === RandomizationStrategy.HIGHLANDER) {
             return 1;
         }
 
         const seed = random(0, 1, true);
-        if (isPrimaryPool) {
+        if (preferPlaySet) {
             if (seed > 0.65) {
                 return 3;
             }
@@ -244,10 +285,10 @@ class DeckRandomizationService {
             }
             return 1;
         }
-        if (seed > 0.75) {
+        if (seed > 0.8) {
             return 3;
         }
-        if (seed > 0.6) {
+        if (seed > 0.65) {
             return 2;
         }
         return 1;
