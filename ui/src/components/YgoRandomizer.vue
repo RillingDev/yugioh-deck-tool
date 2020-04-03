@@ -14,7 +14,7 @@
         >
             <span class="fas fa-cog"></span>
         </button>
-        <b-modal
+        <BModal
             hide-footer
             id="modalRandomizerSettings"
             ref="modalRandomizerSettings"
@@ -38,7 +38,7 @@
                     v-on:filter-change="(newFilter) => (filter = newFilter)"
                 ></YgoFilter>
             </div>
-        </b-modal>
+        </BModal>
     </div>
 </template>
 
@@ -59,7 +59,7 @@ import { BModal } from "bootstrap-vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 import YgoFilter from "@/components/YgoFilter.vue";
 
-@Component({ components: { AdvancedSelect, YgoFilter } })
+@Component({ components: { AdvancedSelect, YgoFilter, BModal } })
 export default class YgoRandomizer extends Vue {
     @Prop({ required: true })
     deck: Deck;

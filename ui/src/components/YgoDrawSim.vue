@@ -9,7 +9,7 @@
             Start-Hand
         </button>
 
-        <b-modal
+        <BModal
             hide-footer
             id="modalDrawSim"
             ref="modalDrawSim"
@@ -46,7 +46,7 @@
             >
                 Draw
             </button>
-        </b-modal>
+        </BModal>
     </div>
 </template>
 
@@ -55,16 +55,9 @@ import YgoCard from "./YgoCard.vue";
 
 import Component from "vue-class-component";
 import Vue from "vue";
-import {
-    Card,
-    Deck,
-    DefaultDeckPart,
-    SortingService,
-} from "../../../core/src/main";
+import { Card, Deck, DefaultDeckPart } from "../../../core/src/main";
 import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
-import { uiContainer } from "@/inversify.config";
-import { UI_TYPES } from "@/types";
 import { sampleSize } from "lodash";
 
 @Component({ components: { YgoCard, BModal } })
