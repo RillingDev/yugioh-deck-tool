@@ -1,12 +1,6 @@
-import { CardDataLoaderService } from "./core/business/service/CardDataLoaderService";
-import { BanlistInfo } from "./core/model/ygo/BanlistInfo";
 import { Card } from "./core/model/ygo/Card";
-import { ReleaseInfo } from "./core/model/ygo/ReleaseInfo";
 import { BanState, DefaultBanState } from "./core/model/ygo/BanState";
 import { CardSet } from "./core/model/ygo/CardSet";
-import { CardSetAppearance } from "./core/model/ygo/intermediate/CardSetAppearance";
-import { CardImage } from "./core/model/ygo/CardImage";
-import { CardPrices } from "./core/model/ygo/CardPrices";
 import { Deck } from "./core/model/ygo/Deck";
 import {
     DeckPart,
@@ -21,7 +15,6 @@ import { PriceService } from "./core/business/service/PriceService";
 import { DeckExportService } from "./core/business/service/DeckExportService";
 import { DeckService } from "./core/business/service/DeckService";
 import { Format } from "./core/model/ygo/Format";
-import { CardValues } from "./core/model/ygo/CardValues";
 import {
     SortingOrder,
     SortingService,
@@ -48,7 +41,6 @@ export {
      */
     container,
     TYPES,
-    CardDataLoaderService,
     CardDatabase,
     CardService,
     PriceService,
@@ -67,18 +59,12 @@ export {
      * Data models
      */
     Card,
-    CardPrices,
-    CardImage,
     CardSet,
-    CardSetAppearance,
-    BanlistInfo,
     BanState,
     DefaultBanState,
-    ReleaseInfo,
     Deck,
     DeckPart,
     Format,
-    CardValues,
     CardTypeGroup,
     CardType,
     DefaultDeckPart,
