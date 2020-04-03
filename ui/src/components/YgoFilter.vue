@@ -279,7 +279,11 @@ export default class YgoFilter extends Vue {
     }
 
     get isLinkMonster() {
-        return this.isMonster && this.filter.type.name.includes("Link");
+        return (
+            this.isMonster &&
+            this.filter.type != null &&
+            this.filter.type.name.includes("Link")
+        );
     }
 
     get races() {
