@@ -84,7 +84,7 @@ export default class YgoBuilder extends Vue {
     canAdd: (deckPart: DeckPart, card: Card, format: Format) => boolean;
     deckParts = DEFAULT_DECK_PART_ARR;
     sortingStrategy = SortingStrategy.NAME;
-    sortingOrder = SortingOrder.ASC;
+    sortingOrder = SortingOrder.DESC;
     filter: CardFilter = {
         name: null,
 

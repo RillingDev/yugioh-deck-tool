@@ -50,9 +50,9 @@ class SortingService {
     public sort(
         cards: Card[],
         strategy: SortingStrategy,
-        order: SortingOrder = SortingOrder.ASC
+        order: SortingOrder = SortingOrder.DESC
     ): Card[] {
-        const modifier = order === SortingOrder.DESC ? -1 : 1;
+        const modifier = order === SortingOrder.ASC ? -1 : 1;
         const comparator = this.findComparator(strategy);
         return cards.sort((a, b) => comparator(a, b) * modifier);
     }

@@ -214,7 +214,7 @@ export default class YgoFilter extends Vue {
     })
     initialSortingStrategy: SortingStrategy;
 
-    @Prop({ required: false, type: String, default: () => SortingOrder.ASC })
+    @Prop({ required: false, type: String, default: () => SortingOrder.DESC })
     initialSortingOrder: SortingOrder;
 
     filter: CardFilter;
