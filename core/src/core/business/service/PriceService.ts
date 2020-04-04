@@ -2,6 +2,7 @@ import { injectable } from "inversify";
 import { Card } from "../../model/ygo/Card";
 import { Vendor } from "../../model/price/Vendor";
 import { Currency } from "../../model/price/Currency";
+import { sum } from "lodash";
 
 interface PriceLookupResult {
     price: number;
@@ -29,8 +30,7 @@ class PriceService {
         const prices = cards
             .filter((card) => this.hasPrice(card, vendor))
             .map((card) => this.getCardPrice(card, vendor, currency));
-        const price = prices.reduce((a, b) => a + b, 0);
-        return { price, missing };
+        return { price: sum(prices), missing };
     }
 
     private hasPrice(card: Card, vendor: Vendor): boolean {

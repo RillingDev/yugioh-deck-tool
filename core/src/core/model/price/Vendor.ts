@@ -1,4 +1,4 @@
-import { deepFreeze } from "../../business/deepFreeze";
+import { deepFreeze } from "lightdash";
 
 interface Vendor {
     readonly id: string;

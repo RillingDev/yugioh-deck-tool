@@ -1,10 +1,10 @@
 import { injectable } from "inversify";
 import { Card } from "../../model/ygo/Card";
-import { intersection } from "lodash";
+import { intersection, uniqBy } from "lodash";
 import { Format } from "../../model/ygo/Format";
 import { BanState, DefaultBanState } from "../../model/ygo/BanState";
 import { BanlistInfo } from "../../model/ygo/BanlistInfo";
-import { groupMapReducingBy } from "lightdash";
+import { countMapBy } from "lightdash";
 
 @injectable()
 class CardService {
@@ -43,14 +43,7 @@ class CardService {
      * @return Cards with unique names.
      */
     public getUniqueByName(cards: Card[]): Card[] {
-        const names = new Set<string>();
-        return cards.filter((card) => {
-            if (names.has(card.name)) {
-                return false;
-            }
-            names.add(card.name);
-            return true;
-        });
+        return uniqBy(cards, (card) => card.name);
     }
 
     /**
@@ -91,12 +84,7 @@ class CardService {
      * @return Map mapping the card to its count.
      */
     public countCards(cards: Card[]): Map<Card, number> {
-        return groupMapReducingBy(
-            cards,
-            (card) => card,
-            () => 0,
-            (current) => current + 1
-        );
+        return countMapBy(cards, (card: Card) => card);
     }
 }
 

@@ -10,7 +10,7 @@ import { CardSetAppearance } from "../model/ygo/intermediate/CardSetAppearance";
 import * as logger from "loglevel";
 import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
 import { flatten } from "lodash";
-import { deepFreeze } from "./deepFreeze";
+import { deepFreeze } from "lightdash";
 
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
