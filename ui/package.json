@@ -1,6 +1,6 @@
 {
   "name": "yugioh-deck-tool",
-  "version": "v4.14.0",
+  "version": "4.15.0-0",
   "private": true,
   "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
   "author": "FelixRilling",

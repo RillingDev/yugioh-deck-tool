@@ -1,6 +1,5 @@
 {
     "name": "yugioh-deck-tool-core",
-    "version": "1.0.0",
     "private": true,
     "description": "Core business logic for for the decktool",
     "scripts": {
