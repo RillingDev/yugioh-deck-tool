@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { URL_DB_API, URL_IMAGE_UNKNOWN } from "@/lib/urls";
+import { URL_DB_API } from "@/lib/urls";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
@@ -32,7 +32,7 @@ export default class YgoCard extends Vue {
     public card: Card;
 
     get imageUrl() {
-        return this.card.image.urlSmall ?? URL_IMAGE_UNKNOWN;
+        return this.card.image.urlSmall;
     }
 
     get referenceUrl() {

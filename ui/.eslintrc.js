@@ -24,5 +24,8 @@ module.exports = {
     env: {
         "browser": true,
         "node": true
+    },
+    rules: {
+        "import/no-default-export": "off" // Causes Issues which vue
     }
 };

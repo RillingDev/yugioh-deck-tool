@@ -31,7 +31,7 @@ class CardService {
             return DefaultBanState.UNLIMITED;
         }
         // If a ban state is set -> use ban state
-        return card.banlist[<keyof BanlistInfo>format];
+        return card.banlist[format as keyof BanlistInfo];
     }
 
     /**

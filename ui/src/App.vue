@@ -225,7 +225,7 @@ export default class App extends Vue {
                     });
                     this.deck = result.deck;
                 })
-                .catch(logger.error);
+                .catch((err) => logger.error(err));
         }
     }
 
@@ -250,7 +250,7 @@ export default class App extends Vue {
                 return this.loadUriDeck();
             })
             .then(() => logger.info("Ready."))
-            .catch(logger.error);
+            .catch((err) => logger.error(err));
     }
 
     private async loadUriDeck(): Promise<void> {

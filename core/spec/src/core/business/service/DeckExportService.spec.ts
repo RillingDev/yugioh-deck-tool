@@ -43,7 +43,7 @@ describe("DeckExportService", () => {
             const result = deckExportService.toShareableText({
                 name: null,
                 parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1,card2,card2]],
+                    [DefaultDeckPart.MAIN, [card1, card2, card2]],
                     [DefaultDeckPart.EXTRA, [card3, card3]],
                     [DefaultDeckPart.SIDE, [card4, card4, card1, card4]],
                 ]),

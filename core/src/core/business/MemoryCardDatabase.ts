@@ -205,7 +205,7 @@ class MemoryCardDatabase implements CardDatabase {
         setAppearances: CardSetAppearance[],
         setCache: Map<string, CardSet>
     ): CardSet[] {
-        return <CardSet[]>setAppearances
+        return setAppearances
             .map((setAppearance) => {
                 if (!setCache.has(setAppearance.name)) {
                     logger.warn(`Could not find set '${setAppearance.name}'.`);
@@ -217,7 +217,7 @@ class MemoryCardDatabase implements CardDatabase {
                 );
                 return matchingSet;
             })
-            .filter((set) => set != null);
+            .filter((set) => set != null) as CardSet[];
     }
 
     private linkType(

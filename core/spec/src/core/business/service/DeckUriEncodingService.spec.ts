@@ -89,9 +89,7 @@ describe("DeckUriEncodingService", () => {
                     [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]],
                 ]),
             });
-            expect(result).toEqual(
-                "q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB"
-            );
+            expect(result).toEqual("q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB");
         });
 
         it("works with null name", () => {

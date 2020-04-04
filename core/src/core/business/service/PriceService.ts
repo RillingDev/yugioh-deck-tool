@@ -43,7 +43,9 @@ class PriceService {
         currency: Currency
     ): number {
         if (!this.hasPrice(card, vendor)) {
-            throw new TypeError(`No price exists for this vendor: ${vendor}`);
+            throw new TypeError(
+                `No price exists for this vendor: ${vendor.id}`
+            );
         }
         return card.prices.get(vendor)! * currency.val;
     }

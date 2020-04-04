@@ -25,11 +25,11 @@ class DeckFileService {
 
     constructor(
         @inject(TYPES.HttpService)
-            httpService: HttpService,
+        httpService: HttpService,
         @inject(TYPES.CardDatabase)
-            cardDatabase: CardDatabase,
+        cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-            deckService: DeckService
+        deckService: DeckService
     ) {
         this.httpService = httpService;
         this.deckService = deckService;

@@ -9,7 +9,7 @@ import { CardSet } from "../../../src/core/model/ygo/CardSet";
 import { CardTypeGroup } from "../../../src/core/model/ygo/CardTypeGroup";
 import {
     DeckPart,
-    DefaultDeckPart
+    DefaultDeckPart,
 } from "../../../src/core/model/ygo/DeckPart";
 import { DefaultBanState } from "../../../src/core/model/ygo/BanState";
 import { Vendor } from "../../../src/core/model/price/Vendor";
@@ -24,7 +24,7 @@ const createCardType = (data: {
     group: data.group ?? CardTypeGroup.SPELL,
     sortGroup: data.sortGroup ?? 0,
     deckParts:
-        data.deckPart ?? new Set([DefaultDeckPart.MAIN, DefaultDeckPart.SIDE])
+        data.deckPart ?? new Set([DefaultDeckPart.MAIN, DefaultDeckPart.SIDE]),
 });
 
 const createCard = (data: {
@@ -80,10 +80,10 @@ const createCard = (data: {
     banlist: {
         [Format.TCG]: data.banlist?.TCG ?? DefaultBanState.UNLIMITED,
         [Format.OCG]: data.banlist?.OCG ?? DefaultBanState.UNLIMITED,
-        [Format.GOAT]: data.banlist?.GOAT ?? DefaultBanState.UNLIMITED
+        [Format.GOAT]: data.banlist?.GOAT ?? DefaultBanState.UNLIMITED,
     },
 
-    views: 0
+    views: 0,
 });
 
 export { createCard, createCardType };
