@@ -1,5 +1,5 @@
 <template>
-    <div class="sorter">
+    <div class="btn-group">
         <button
             :disabled="deckService.getAllCards(this.deck).length < 2"
             class="btn btn-primary btn-sm"
