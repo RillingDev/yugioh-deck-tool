@@ -123,14 +123,21 @@ const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
     });
 };
 
+// Map back against main source instead of google's CDN.
+const mapCardImage = (imageUrl: string): string =>
+    imageUrl.replace(
+        "https://storage.googleapis.com/ygoprodeck.com/",
+        "https://ygoprodeck.com/"
+    );
+
 const mapImage = (rawCard: RawCard): CardImage | null => {
     if (rawCard.card_images == null) {
         return null;
     }
     const image = rawCard.card_images[0];
     return {
-        url: image.image_url,
-        urlSmall: image.image_url_small,
+        url: mapCardImage(image.image_url),
+        urlSmall: mapCardImage(image.image_url_small),
     };
 };
 
