@@ -1,0 +1,21 @@
+{
+    "name": "yugioh-deck-tool",
+    "version": "4.15.0-1",
+    "private": true,
+    "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
+    "author": "FelixRilling",
+    "bugs": {
+        "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
+    },
+    "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
+    "keywords": [
+        "yugioh",
+        "deck",
+        "app"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
+    }
+}

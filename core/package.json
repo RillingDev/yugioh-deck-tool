@@ -1,7 +1,6 @@
 {
     "name": "yugioh-deck-tool-core",
     "private": true,
-    "description": "Core business logic for for the decktool",
     "scripts": {
         "clean:test": "rimraf ./spec/dist",
         "lint": "eslint ./src/ ./spec/src/ --ext .ts",
@@ -9,20 +8,6 @@
         "build:tsc": "tsc --build ./tsconfig.json",
         "test": "npm-run-all clean:test build:tsc test:jasmine",
         "test:jasmine": "jasmine --require=source-map-support/register"
-    },
-    "bugs": {
-        "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
-    },
-    "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
-    "keywords": [
-        "yugioh",
-        "deck",
-        "app"
-    ],
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
     },
     "dependencies": {
         "axios": "^0.19.2",

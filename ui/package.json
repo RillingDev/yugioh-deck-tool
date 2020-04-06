@@ -1,9 +1,6 @@
 {
-    "name": "yugioh-deck-tool",
-    "version": "4.15.0-1",
+    "name": "yugioh-deck-tool-ui",
     "private": true,
-    "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
-    "author": "FelixRilling",
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
@@ -50,19 +47,5 @@
         "typescript": "^3.8.3",
         "vue-cli-plugin-bootstrap-vue": "~0.6.0",
         "vue-template-compiler": "^2.6.11"
-    },
-    "bugs": {
-        "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
-    },
-    "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
-    "keywords": [
-        "yugioh",
-        "deck",
-        "app"
-    ],
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
     }
 }
