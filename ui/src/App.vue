@@ -74,28 +74,19 @@
                 >
                     <span class="fas fa-shopping-cart"><!-- icon--></span>
                 </a>
-                <button
-                    class="btn btn-primary form-control"
-                    disabled="disabled"
-                    title="Load Prices"
-                >
-                    <span :hidden="ajax.currentlyLoading">Ready</span>
-                    <span :hidden="!ajax.currentlyLoading">
-                        <span class="fas fa-spinner fa-spin fa-fw">
-                            <!-- icon -->
-                        </span>
-                    </span>
-                </button>
             </div>
         </div>
 
         <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
+            <div v-if="ajax.currentlyLoading" class="text-center">
+                <span>Loading Card Database...</span>
+            </div>
             <ygo-deck :deck="deck" v-if="!ajax.currentlyLoading" />
         </div>
 
-        <!--         app-builder -->
+        <!-- app-builder -->
         <div class="app-section app-builder">
             <h2>Deckbuilder:</h2>
             <div class="app-builder-intro">
