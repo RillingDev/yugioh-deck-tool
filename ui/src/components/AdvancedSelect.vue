@@ -1,11 +1,11 @@
 <template>
     <select :title="title" v-model="value" v-on:change="() => onChange()">
         <option
-            :key="option == null ? '__ANY' : trackBy(option)"
+            :key="option == null ? '__ANY' : renderByProp(option, trackBy)"
             :value="option"
             v-for="option in options"
         >
-            {{ option == null ? "---" : label(option) }}
+            {{ option == null ? "---" : renderByProp(option, label) }}
         </option>
     </select>
 </template>
@@ -29,10 +29,10 @@ export default class AdvancedSelect<T> extends Vue {
     @Prop({ required: false, default: null })
     title: string | null;
 
-    @Prop({ required: false, default: (str: string): string => str })
+    @Prop({ required: false })
     label: (T) => string;
 
-    @Prop({ required: false, default: (key: string): string => key })
+    @Prop({ required: false })
     trackBy: (T) => string;
 
     value: T | null;
@@ -41,6 +41,11 @@ export default class AdvancedSelect<T> extends Vue {
         return this.noSelectionAllowed
             ? [null, ...this.initialOptions]
             : this.initialOptions;
+    }
+
+    // Default props seem to sporadically have incorrect types, this is a workaround.
+    renderByProp(val: T, fn?: (val: T) => string) {
+        return fn != null ? fn(val) : String(val);
     }
 
     data() {
