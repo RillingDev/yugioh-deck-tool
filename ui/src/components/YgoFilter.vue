@@ -154,16 +154,19 @@
         <template>
             <div class="form-group form-group-builder">
                 <label>Set:</label>
-                <MultiSelect
-                    :multiple="true"
-                    :options="sets"
-                    :show-labels="false"
-                    :show-no-results="false"
-                    label="name"
-                    placeholder="All Sets"
-                    track-by="name"
-                    v-model="filter.sets"
-                    v-on:input="onFilterChange"
+                <AdvancedSelect
+                    :initial-options="sets"
+                    :initial-value="null"
+                    :label="(cardSet) => cardSet.name"
+                    :track-by="(cardSet) => cardSet.name"
+                    :no-selection-allowed="true"
+                    class="form-control"
+                    v-on:input="
+                        (cardSet) => {
+                            filter.sets = cardSet == null ? [] : [cardSet];
+                            onFilterChange();
+                        }
+                    "
                 />
             </div>
         </template>
@@ -174,7 +177,6 @@
 import Vue from "vue";
 import { Prop, Watch } from "vue-property-decorator";
 import Component from "vue-class-component";
-import MultiSelect from "vue-multiselect";
 import {
     BanState,
     CardDatabase,
@@ -193,7 +195,6 @@ import { clone } from "lodash";
 
 @Component({
     components: {
-        MultiSelect,
         AdvancedSelect,
     },
 })
@@ -375,6 +376,9 @@ export default class YgoFilter extends Vue {
         &:not(:first-child) {
             margin-left: 1rem;
         }
+    }
+    select {
+        max-width: 85%;
     }
 }
 </style>

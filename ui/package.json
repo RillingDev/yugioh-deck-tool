@@ -19,7 +19,6 @@
         "url-parse": "^1.4.7",
         "vue": "^2.6.11",
         "vue-class-component": "^7.2.2",
-        "vue-multiselect": "^2.1.6",
         "vue-property-decorator": "^8.4.1"
     },
     "devDependencies": {

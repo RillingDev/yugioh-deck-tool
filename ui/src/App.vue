@@ -293,7 +293,6 @@ export default class App extends Vue {
 @import "~bootstrap/scss/utilities";
 
 @import "~bootstrap-vue/dist/bootstrap-vue.css";
-@import "~vue-multiselect/dist/vue-multiselect.min.css";
 
 @import "styles/blocks/general";
 @import "styles/blocks/forms";
