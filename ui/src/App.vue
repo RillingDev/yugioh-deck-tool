@@ -120,6 +120,7 @@ import {
     DeckService,
     DeckUriEncodingService,
     Format,
+    UrlService,
 } from "../../core/src/main";
 import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
@@ -131,7 +132,6 @@ import { readFile } from "@/lib/readFile";
 import YgoSorter from "@/components/YgoSorter.vue";
 import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
-import parseUrl from "url-parse";
 import YgoRandomizer from "@/components/YgoRandomizer.vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 
@@ -245,32 +245,35 @@ export default class App extends Vue {
     }
 
     private async loadUriDeck(): Promise<void> {
-        const uriQuery = parseUrl(location.toString(), true).query;
-        if ("u" in uriQuery) {
+        const urlService = uiContainer.get<UrlService>(UI_TYPES.UrlService);
+        const url = location.toString();
+        const remoteUrlValue = urlService.getSingleQueryParam(url, "u");
+        const uriEncodedDeck = urlService.getSingleQueryParam(url, "e");
+        const legacyUriEncodedDeck = urlService.getSingleQueryParam(
+            url,
+            "d",
+            false
+        );
+
+        if (remoteUrlValue != null) {
             // Load deck file from a remote URL
-            const remoteUrl = uriQuery["u"];
             return this.deckFileService
-                .fromRemoteFile(location.origin, remoteUrl)
+                .fromRemoteFile(location.origin, remoteUrlValue)
                 .then((result) => {
                     this.deck = result.deck;
                 });
-        } else if ("e" in uriQuery) {
+        } else if (uriEncodedDeck != null) {
             // Load encoded uri deck
-            const uriEncodedDeck = uriQuery["e"];
             this.deck = this.deckUriEncodingService.fromUrlQueryParamValue(
                 uriEncodedDeck
             );
-        } else {
+        } else if (legacyUriEncodedDeck != null) {
             // Check for legacy share link
             // Due to the old link containing illegal characters parseUrl causes issues
-            const legacyUriQuery = location.search;
-            if (legacyUriQuery.includes("?d=")) {
-                // Load encoded uriDeck
-                this.deck = this.deckUriEncodingService.fromLegacyUrlQueryParamValue(
-                    legacyUriQuery.replace("?d=", ""),
-                    atob
-                );
-            }
+            this.deck = this.deckUriEncodingService.fromLegacyUrlQueryParamValue(
+                legacyUriEncodedDeck,
+                atob
+            );
         }
         return Promise.resolve();
     }

@@ -5,7 +5,7 @@ import { CardDatabase } from "../CardDatabase";
 import { DeckService } from "./DeckService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { HttpService } from "./HttpService";
-import parseUrl from "url-parse";
+import { UrlService } from "./UrlService";
 
 interface ImportResult {
     readonly deck: Deck;
@@ -22,6 +22,7 @@ class DeckFileService {
     private readonly httpService: HttpService;
     private readonly cardDatabase: CardDatabase;
     private readonly deckService: DeckService;
+    private readonly urlService: UrlService;
 
     constructor(
         @inject(TYPES.HttpService)
@@ -29,34 +30,34 @@ class DeckFileService {
         @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-        deckService: DeckService
+        deckService: DeckService,
+        @inject(TYPES.UrlService)
+        urlService: UrlService
     ) {
         this.httpService = httpService;
         this.deckService = deckService;
         this.cardDatabase = cardDatabase;
+        this.urlService = urlService;
     }
 
     /**
      * Loads a deck from a remote .ydk file URL. The name is inferred from the URL.
      *
-     * @param currentOrigin The current origin to ensure same-site loading will take place.
-     * @param urlString URL to load from, MUST be the same origin as currentOrigin.
+     * @param currentUrl The current origin to ensure same-site loading will take place.
+     * @param remoteUrl URL to load from, MUST be the same origin as currentOrigin.
      * @throws Error if origins do not match.
      * @return Loaded deck.
      */
     public async fromRemoteFile(
-        currentOrigin: string,
-        urlString: string
+        currentUrl: string,
+        remoteUrl: string
     ): Promise<ImportResult> {
-        const url = parseUrl(urlString);
-        if (currentOrigin !== url.origin) {
+        if (!this.urlService.hasSameOrigin(currentUrl, remoteUrl)) {
             throw new Error("Decks can only be loaded from the same origin.");
         }
 
-        const fileName = url.pathname.substring(
-            url.pathname.lastIndexOf("/") + 1
-        );
-        const response = await this.httpService.get<string>(urlString, {
+        const fileName = this.urlService.getFileName(remoteUrl);
+        const response = await this.httpService.get<string>(remoteUrl, {
             responseType: "text",
             timeout: 5000,
         });

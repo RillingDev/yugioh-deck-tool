@@ -15,6 +15,7 @@ import { HttpService } from "./core/business/service/HttpService";
 import { DeckRandomizationService } from "./core/business/service/DeckRandomizationService";
 import { DeckUriEncodingService } from "./core/business/service/DeckUriEncodingService";
 import { DeckFileService } from "./core/business/service/DeckFileService";
+import { UrlService } from "./core/business/service/UrlService";
 
 const container = new Container();
 
@@ -45,5 +46,6 @@ container.bind<SortingService>(TYPES.SortingService).to(SortingService);
 container.bind<FilterService>(TYPES.FilterService).to(FilterService);
 
 container.bind<HttpService>(TYPES.HttpService).to(AxiosHttpService);
+container.bind<UrlService>(TYPES.UrlService).to(UrlService);
 
 export { container };
