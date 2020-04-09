@@ -2,10 +2,9 @@ import "reflect-metadata";
 import Vue from "vue";
 import App from "./App.vue";
 import logger, { levels } from "loglevel";
+import { DEVELOPMENT_MODE } from "../../core/src/main";
 
-logger.setLevel(
-    process?.env?.NODE_ENV === "development" ? levels.DEBUG : levels.WARN
-);
+logger.setLevel(DEVELOPMENT_MODE ? levels.DEBUG : levels.WARN);
 
 new Vue({
     render: (h) => h(App),

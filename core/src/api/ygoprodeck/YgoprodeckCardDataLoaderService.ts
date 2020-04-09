@@ -11,6 +11,7 @@ import { TYPES } from "../../types";
 import { HttpService } from "../../core/business/service/HttpService";
 import { mapArchetypes, RawArchetype } from "./mapping/mapArchetypes";
 import { Format } from "../../core/model/ygo/Format";
+import { DEVELOPMENT_MODE } from "../../mode";
 
 /**
  * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
@@ -20,10 +21,9 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private static readonly CARD_INFO_CHUNK_SIZE = 2000;
     private static readonly DEFAULT_TIMEOUT = 10000;
 
-    private static readonly API_BASE_URL =
-        process?.env?.NODE_ENV === "development"
-            ? "https://db.ygoprodeck.com/api/v7/"
-            : "https://ygoprodeck.com/api/deck-builder/";
+    private static readonly API_BASE_URL = DEVELOPMENT_MODE
+        ? "https://db.ygoprodeck.com/api/v7/"
+        : "https://ygoprodeck.com/api/deck-builder/";
     private static readonly ENDPOINT_CARD_INFO = "cardinfo.php";
     private static readonly ENDPOINT_CARD_SETS = "cardsets.php";
     private static readonly ENDPOINT_CARD_VALUES = "cardvalues.php";
