@@ -36,7 +36,7 @@ export default class YgoCard extends Vue {
     }
 
     get referenceUrl() {
-        return URL_DB_API + encodeURI(this.card.name);
+        return URL_DB_API + encodeURIComponent(this.card.name);
     }
 
     onDeckCardRightClicked(e: Event) {
