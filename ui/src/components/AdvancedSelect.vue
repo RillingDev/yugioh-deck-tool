@@ -60,42 +60,4 @@ export default class AdvancedSelect<T> extends Vue {
 }
 </script>
 
-<style lang="scss">
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
-
-@import "../styles/variables.custom";
-
-.price {
-    &.price--group {
-        margin-bottom: 0.5rem;
-    }
-
-    &:not(.price--group) {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-}
-
-.price-mode {
-    font-size: 0.9em;
-    display: inline-block;
-    padding: 5px 8px 2px;
-    text-align: center;
-
-    &-tcgplayer {
-        color: #fff;
-        background-color: $color-pricemode-tcgplayer;
-    }
-
-    &-cardmarket {
-        background-color: $color-pricemode-cardmarket;
-    }
-
-    &-ebay {
-        background-color: $color-pricemode-ebay;
-    }
-}
-</style>
+<style lang="scss"></style>

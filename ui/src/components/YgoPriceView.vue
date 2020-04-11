@@ -73,8 +73,9 @@ export default class YgoPriceView extends Vue {
         background-color: $color-pricemode-cardmarket;
     }
 
-    &-ebay {
-        background-color: $color-pricemode-ebay;
+    &-coolstuffinc {
+        color: #fff;
+        background-color: $color-pricemode-coolstuffinc;
     }
 }
 </style>

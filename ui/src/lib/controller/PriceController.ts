@@ -21,7 +21,7 @@ class PriceController {
         this.vendors = [
             DefaultVendor.TCGPLAYER,
             DefaultVendor.CARDMARKET,
-            DefaultVendor.EBAY,
+            DefaultVendor.COOL_STUFF_INC,
         ];
         this.currencies = DEFAULT_CURRENCY_ARR;
         this.activeCurrency = this.guessDefaultCurrency();
