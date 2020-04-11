@@ -2,9 +2,9 @@ module.exports = {
     parser: "vue-eslint-parser",
     parserOptions: {
         tsconfigRootDir: __dirname,
-        project: ["./tsconfig.json"]
+        project: ["./tsconfig.json"],
     },
-    plugins: ["import", "@typescript-eslint", "prettier","vue"],
+    plugins: ["import", "@typescript-eslint", "prettier", "vue"],
     extends: [
         "eslint:recommended",
         "plugin:import/errors",
@@ -22,10 +22,9 @@ module.exports = {
         "../.eslintrc.js",
     ],
     env: {
-        "browser": true,
-        "node": true
+        browser: true,
     },
     rules: {
-        "import/no-default-export": "off" // Causes Issues which vue
-    }
+        "import/no-default-export": "off", // Causes Issues with Vue
+    },
 };
