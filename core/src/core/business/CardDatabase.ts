@@ -9,6 +9,15 @@ export interface CardDatabase {
      */
     prepareAll(): Promise<void>;
 
+    /**
+     * Partially fills the database, loading a single card and direct dependencies.
+     */
+    prepareCardByName(cardName: string): Promise<void>;
+
+    hasCardByName(cardName: string): boolean;
+
+    getCardByName(cardName: string): Card | null;
+
     hasCardById(cardId: string): boolean;
 
     getCardById(cardId: string): Card | null;

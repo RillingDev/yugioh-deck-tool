@@ -35,6 +35,26 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         this.httpService = httpService;
     }
 
+    public async getCardByName(name: string): Promise<UnlinkedCard | null> {
+        const response = await this.httpService.get<{ data: RawCard[] }>(
+            "cardinfo.php",
+            merge(this.createBaseRequestConfig(), {
+                params: {
+                    misc: "yes",
+                    name: name,
+                },
+                validateStatus: (status: number) =>
+                    status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found
+            })
+        );
+        if (response.status === 400) {
+            return null;
+        }
+        const responseData = response.data;
+        // If a match is found, a single element array is returned.
+        return mapCard(responseData.data[0]);
+    }
+
     public async getAllCards(): Promise<UnlinkedCard[]> {
         const responseData = await this.loadPaginated<RawCard>(
             YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,

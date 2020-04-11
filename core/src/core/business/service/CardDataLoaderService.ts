@@ -7,6 +7,11 @@ import { UnlinkedCard } from "../../model/ygo/intermediate/UnlinkedCard";
  */
 interface CardDataLoaderService {
     /**
+     * Gets a card by its exact name, or null if none is found.
+     */
+    getCardByName(name: string): Promise<UnlinkedCard | null>;
+
+    /**
      * Get all available cards. Note that this may be several thousands.
      * Before working with the result, a conversion to {@link Card}s should be made.
      */

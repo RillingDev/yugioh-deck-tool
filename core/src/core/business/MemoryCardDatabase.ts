@@ -22,6 +22,7 @@ class MemoryCardDatabase implements CardDatabase {
     private loadingAllCards: Promise<void> | null;
 
     private readonly cardsById: Map<string, Card>;
+    private readonly cardsByName: Map<string, Card>;
     private readonly sets: CardSet[];
     private readonly archetypes: string[];
     private readonly types: Map<CardTypeGroup, CardType[]>;
@@ -41,6 +42,7 @@ class MemoryCardDatabase implements CardDatabase {
         this.loadingAllCards = null;
 
         this.cardsById = new Map<string, Card>();
+        this.cardsByName = new Map<string, Card>();
         this.sets = [];
         this.archetypes = [];
         this.types = new Map<CardTypeGroup, CardType[]>(
@@ -67,6 +69,19 @@ class MemoryCardDatabase implements CardDatabase {
             this.loadArchetypes(),
         ]);
         await this.loadAllCards();
+    }
+
+    public async prepareCardByName(cardName: string): Promise<void> {
+        await Promise.all([this.loadSets(), this.loadCardValues()]);
+        await this.loadCardByName(cardName);
+    }
+
+    public hasCardByName(cardName: string): boolean {
+        return this.cardsByName.has(cardName);
+    }
+
+    public getCardByName(cardName: string): Card | null {
+        return this.cardsByName.get(cardName) ?? null;
     }
 
     public hasCardById(cardId: string): boolean {
@@ -109,6 +124,16 @@ class MemoryCardDatabase implements CardDatabase {
         return this.monsterLinkMarkers;
     }
 
+    private async loadCardByName(cardName: string): Promise<void> {
+        if (this.cardsByName.has(cardName)) {
+            return;
+        }
+        const card = await this.cardDataLoaderService.getCardByName(cardName);
+        if (card != null) {
+            this.registerCards([card]);
+        }
+    }
+
     private async loadAllCards(): Promise<void> {
         if (this.loadingAllCards == null) {
             this.loadingAllCards = this.cardDataLoaderService
@@ -117,7 +142,8 @@ class MemoryCardDatabase implements CardDatabase {
                     this.registerCards(cards);
                     logger.debug(
                         `Registered ${this.cardsById.size} card(s).`,
-                        this.cardsById
+                        this.cardsById,
+                        this.cardsByName
                     );
                 });
         }
@@ -212,6 +238,7 @@ class MemoryCardDatabase implements CardDatabase {
                 );
                 deepFreeze(linkedCard);
                 this.cardsById.set(unlinkedCard.id, linkedCard);
+                this.cardsByName.set(unlinkedCard.name, linkedCard);
                 logger.trace(
                     `Registered card '${unlinkedCard.id}'.`,
                     linkedCard
