@@ -1,0 +1,24 @@
+#ygoCardTooltipContainer {
+    pointer-events: none;
+}
+
+.yugioh-tooltip__content {
+    position: absolute;
+    background-color: yellow;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &__details {
+        width: 70%;
+    }
+
+    &__image {
+        width: 30%;
+        max-height: 50%;
+    }
+
+    &__misc {
+        width: 100%;
+    }
+}
