@@ -1,16 +1,17 @@
 <template>
     <a
         :data-name="card.name"
-        :href="referenceUrl"
+        href="#"
         class="deck-card"
         target="_blank"
         v-on:contextmenu="(e) => onDeckCardRightClicked(e)"
     >
-        <img :alt="card.name" :src="imageUrl" height="135" width="100" />
-        <div class="deck-card-text">
-            <span class="deck-card-name">{{ card.name }}</span>
-            <ygo-price-view :cards="[card]" />
-        </div>
+        <img
+            :alt="card.name"
+            :src="card.image.urlSmall"
+            height="135"
+            width="100"
+        />
     </a>
 </template>
 
@@ -18,10 +19,8 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
-import { Card, CardService } from "../../../core/src/main";
+import { Card } from "../../../core/src/main";
 import YgoPriceView from "@/components/YgoPriceView.vue";
-import { uiContainer } from "@/inversify.config";
-import { UI_TYPES } from "@/types";
 
 @Component({
     components: {
@@ -31,18 +30,6 @@ import { UI_TYPES } from "@/types";
 export default class YgoCard extends Vue {
     @Prop({ required: true })
     public card: Card;
-    private readonly cardService = uiContainer.get<CardService>(
-        UI_TYPES.CardService
-    );
-
-    get imageUrl() {
-        return this.card.image.urlSmall;
-    }
-
-    get referenceUrl() {
-        return this.cardService.getReferenceLink(this.card);
-    }
-
     onDeckCardRightClicked(e: Event) {
         e.preventDefault();
         this.$emit("deck-card-right-click", e);
@@ -64,29 +51,6 @@ export default class YgoCard extends Vue {
 
 .deck-card img {
     margin-bottom: 0;
-}
-
-.deck-card-text {
-    font-size: 0.85em;
-    line-height: 1.125em;
-    position: absolute;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    padding: 6px;
-    transition: opacity 0.15s;
-    text-align: center;
-    word-wrap: break-word;
-    opacity: 0;
-    color: $gray-800;
-    background-color: $gray-200;
-
-    &:focus,
-    &:hover {
-        opacity: 1;
-    }
+    pointer-events: none;
 }
 </style>
