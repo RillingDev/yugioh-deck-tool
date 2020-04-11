@@ -43,20 +43,20 @@ describe("DeckUriEncodingService", () => {
                 to: "string",
             });
             const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card1);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card1);
 
             const card2 = createCard({ id: "456" });
-            when(mockCardDatabase.hasCard("456")).thenReturn(true);
-            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+            when(mockCardDatabase.hasCardById("456")).thenReturn(true);
+            when(mockCardDatabase.getCardById("456")).thenReturn(card2);
 
             const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789")).thenReturn(true);
-            when(mockCardDatabase.getCard("789")).thenReturn(card3);
+            when(mockCardDatabase.hasCardById("789")).thenReturn(true);
+            when(mockCardDatabase.getCardById("789")).thenReturn(card3);
 
             const card4 = createCard({ id: "999" });
-            when(mockCardDatabase.hasCard("999")).thenReturn(true);
-            when(mockCardDatabase.getCard("999")).thenReturn(card4);
+            when(mockCardDatabase.hasCardById("999")).thenReturn(true);
+            when(mockCardDatabase.getCardById("999")).thenReturn(card4);
 
             expect(
                 deckUriEncodingService.fromLegacyUrlQueryParamValue(
@@ -112,20 +112,20 @@ describe("DeckUriEncodingService", () => {
     describe("fromUrlQueryParamValue", () => {
         it("reads value", () => {
             const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card1);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card1);
 
             const card2 = createCard({ id: "456" });
-            when(mockCardDatabase.hasCard("456")).thenReturn(true);
-            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+            when(mockCardDatabase.hasCardById("456")).thenReturn(true);
+            when(mockCardDatabase.getCardById("456")).thenReturn(card2);
 
             const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789")).thenReturn(true);
-            when(mockCardDatabase.getCard("789")).thenReturn(card3);
+            when(mockCardDatabase.hasCardById("789")).thenReturn(true);
+            when(mockCardDatabase.getCardById("789")).thenReturn(card3);
 
             const card4 = createCard({ id: "999999999" });
-            when(mockCardDatabase.hasCard("999999999")).thenReturn(true);
-            when(mockCardDatabase.getCard("999999999")).thenReturn(card4);
+            when(mockCardDatabase.hasCardById("999999999")).thenReturn(true);
+            when(mockCardDatabase.getCardById("999999999")).thenReturn(card4);
 
             const result = deckUriEncodingService.fromUrlQueryParamValue(
                 "q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB"
@@ -143,16 +143,16 @@ describe("DeckUriEncodingService", () => {
 
         it("works with null name", () => {
             const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card1);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card1);
 
             const card2 = createCard({ id: "456" });
-            when(mockCardDatabase.hasCard("456")).thenReturn(true);
-            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+            when(mockCardDatabase.hasCardById("456")).thenReturn(true);
+            when(mockCardDatabase.getCardById("456")).thenReturn(card2);
 
             const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789")).thenReturn(true);
-            when(mockCardDatabase.getCard("789")).thenReturn(card3);
+            when(mockCardDatabase.hasCardById("789")).thenReturn(true);
+            when(mockCardDatabase.getCardById("789")).thenReturn(card3);
 
             const result = deckUriEncodingService.fromUrlQueryParamValue(
                 "q2aAgBOMEFqUGUIDAA~~"

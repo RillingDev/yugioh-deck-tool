@@ -9,6 +9,7 @@ import { BanlistInfo } from "../BanlistInfo";
 interface UnlinkedCard {
     readonly id: string;
     readonly name: string;
+    readonly desc: string;
 
     readonly type: string;
     readonly race: string;

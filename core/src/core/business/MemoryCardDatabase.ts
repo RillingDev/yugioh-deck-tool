@@ -14,9 +14,14 @@ import { deepFreeze } from "lightdash";
 
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
-    private readonly dataLoaderClient: CardDataLoaderService;
-    private ready: boolean;
-    private readonly cards: Map<string, Card>;
+    private readonly cardDataLoaderService: CardDataLoaderService;
+
+    private loadingSets: Promise<void> | null;
+    private loadingArchetypes: Promise<void> | null;
+    private loadingCardValues: Promise<void> | null;
+    private loadingAllCards: Promise<void> | null;
+
+    private readonly cardsById: Map<string, Card>;
     private readonly sets: CardSet[];
     private readonly archetypes: string[];
     private readonly types: Map<CardTypeGroup, CardType[]>;
@@ -29,8 +34,13 @@ class MemoryCardDatabase implements CardDatabase {
         @inject(TYPES.CardDataLoaderService)
         dataLoaderClient: CardDataLoaderService
     ) {
-        this.dataLoaderClient = dataLoaderClient;
-        this.cards = new Map<string, Card>();
+        this.cardDataLoaderService = dataLoaderClient;
+        this.loadingSets = null;
+        this.loadingArchetypes = null;
+        this.loadingCardValues = null;
+        this.loadingAllCards = null;
+
+        this.cardsById = new Map<string, Card>();
         this.sets = [];
         this.archetypes = [];
         this.types = new Map<CardTypeGroup, CardType[]>(
@@ -48,95 +58,27 @@ class MemoryCardDatabase implements CardDatabase {
         this.monsterAttributes = [];
         this.monsterLinkMarkers = [];
         this.monsterLevels = [];
-        this.ready = false;
     }
 
-    public async init(): Promise<void> {
-        logger.info("Loading data from API...");
-        const [cardInfo, cardSets, cardValues, archetypes] = await Promise.all([
-            this.dataLoaderClient.getCardInfo(),
-            this.dataLoaderClient.getCardSets(),
-            this.dataLoaderClient.getCardValues(),
-            this.dataLoaderClient.getArchetypes(),
+    public async prepareAll(): Promise<void> {
+        await Promise.all([
+            this.loadSets(),
+            this.loadCardValues(),
+            this.loadArchetypes(),
         ]);
-        logger.info("Loaded data from API.");
-
-        this.sets.push(...cardSets);
-        deepFreeze(this.sets);
-        logger.debug("Registered sets.", this.sets);
-
-        this.archetypes.push(...archetypes);
-        deepFreeze(this.archetypes);
-        logger.debug("Registered archetypes.", this.archetypes);
-
-        for (const cardTypeGroup of Object.values(CardTypeGroup)) {
-            const cardTypes = this.types.get(cardTypeGroup)!;
-            cardTypes.push(...cardValues[cardTypeGroup].types);
-            deepFreeze(cardTypes);
-
-            const cardRaces = this.races.get(cardTypeGroup)!;
-            cardRaces.push(...cardValues[cardTypeGroup].races);
-            deepFreeze(cardRaces);
-        }
-        logger.debug("Registered types and races.", this.types, this.races);
-
-        this.monsterAttributes.push(
-            ...cardValues[CardTypeGroup.MONSTER].attributes
-        );
-        deepFreeze(this.monsterAttributes);
-
-        this.monsterLevels.push(...cardValues[CardTypeGroup.MONSTER].levels);
-        deepFreeze(this.monsterLevels);
-
-        this.monsterLinkMarkers.push(
-            ...cardValues[CardTypeGroup.MONSTER].linkMarkers
-        );
-        deepFreeze(this.monsterLinkMarkers);
-
-        logger.debug(
-            "Registered monster values.",
-            this.monsterAttributes,
-            this.monsterLevels,
-            this.monsterLinkMarkers
-        );
-
-        const setCache = new Map<string, CardSet>(
-            cardSets.map((set) => [set.name, set])
-        );
-        const allTypes = flatten(Array.from(this.types.values()));
-        const typeCache = new Map<string, CardType>(
-            allTypes.map((type) => [type.name, type])
-        );
-        for (const unlinkedCard of cardInfo) {
-            const linkedCard = this.createLinkedCard(
-                unlinkedCard,
-                setCache,
-                typeCache
-            );
-            deepFreeze(linkedCard);
-            this.cards.set(unlinkedCard.id, linkedCard);
-            logger.trace(`Registered card '${unlinkedCard.id}'.`, linkedCard);
-        }
-        logger.debug(`Registered ${this.cards.size} cards.`, this.cards);
-
-        this.ready = true;
-        logger.info("Initialized database.");
+        await this.loadAllCards();
     }
 
-    public isReady(): boolean {
-        return this.ready;
+    public hasCardById(cardId: string): boolean {
+        return this.cardsById.has(cardId);
     }
 
-    public hasCard(cardId: string): boolean {
-        return this.cards.has(cardId);
-    }
-
-    public getCard(cardId: string): Card | null {
-        return this.cards.get(cardId) ?? null;
+    public getCardById(cardId: string): Card | null {
+        return this.cardsById.get(cardId) ?? null;
     }
 
     public getCards(): Card[] {
-        return Array.from(this.cards.values());
+        return Array.from(this.cardsById.values());
     }
 
     public getSets(): CardSet[] {
@@ -167,6 +109,117 @@ class MemoryCardDatabase implements CardDatabase {
         return this.monsterLinkMarkers;
     }
 
+    private async loadAllCards(): Promise<void> {
+        if (this.loadingAllCards == null) {
+            this.loadingAllCards = this.cardDataLoaderService
+                .getAllCards()
+                .then((cards) => {
+                    this.registerCards(cards);
+                    logger.debug(
+                        `Registered ${this.cardsById.size} card(s).`,
+                        this.cardsById
+                    );
+                });
+        }
+        return this.loadingAllCards;
+    }
+
+    private loadArchetypes(): Promise<void> {
+        if (this.loadingArchetypes == null) {
+            this.loadingArchetypes = this.cardDataLoaderService
+                .getArchetypes()
+                .then((archetypes) => {
+                    this.archetypes.push(...archetypes);
+                    deepFreeze(this.archetypes);
+                    logger.debug("Registered archetypes.", this.archetypes);
+                });
+        }
+        return this.loadingArchetypes;
+    }
+
+    private loadSets(): Promise<void> {
+        if (this.loadingSets == null) {
+            this.loadingSets = this.cardDataLoaderService
+                .getAllCardSets()
+                .then((cardSets) => {
+                    this.sets.push(...cardSets);
+                    deepFreeze(this.sets);
+                    logger.debug("Registered sets.", this.sets);
+                });
+        }
+        return this.loadingSets;
+    }
+
+    private async loadCardValues(): Promise<void> {
+        if (this.loadingCardValues == null) {
+            this.loadingCardValues = this.cardDataLoaderService
+                .getCardValues()
+                .then((cardValues) => {
+                    for (const cardTypeGroup of Object.values(CardTypeGroup)) {
+                        const cardTypes = this.types.get(cardTypeGroup)!;
+                        cardTypes.push(...cardValues[cardTypeGroup].types);
+                        deepFreeze(cardTypes);
+
+                        const cardRaces = this.races.get(cardTypeGroup)!;
+                        cardRaces.push(...cardValues[cardTypeGroup].races);
+                        deepFreeze(cardRaces);
+                    }
+                    logger.debug(
+                        "Registered types and races.",
+                        this.types,
+                        this.races
+                    );
+
+                    this.monsterAttributes.push(
+                        ...cardValues[CardTypeGroup.MONSTER].attributes
+                    );
+                    deepFreeze(this.monsterAttributes);
+
+                    this.monsterLevels.push(
+                        ...cardValues[CardTypeGroup.MONSTER].levels
+                    );
+                    deepFreeze(this.monsterLevels);
+
+                    this.monsterLinkMarkers.push(
+                        ...cardValues[CardTypeGroup.MONSTER].linkMarkers
+                    );
+                    deepFreeze(this.monsterLinkMarkers);
+                    logger.debug(
+                        "Registered monster values.",
+                        this.monsterAttributes,
+                        this.monsterLevels,
+                        this.monsterLinkMarkers
+                    );
+                });
+        }
+        return this.loadingCardValues;
+    }
+
+    private registerCards(unlinkedCards: UnlinkedCard[]): void {
+        const setCache = new Map<string, CardSet>(
+            this.sets.map((set) => [set.name, set])
+        );
+        const allTypes = flatten(Array.from(this.types.values()));
+        const typeCache = new Map<string, CardType>(
+            allTypes.map((type) => [type.name, type])
+        );
+        for (const unlinkedCard of unlinkedCards) {
+            if (!this.cardsById.has(unlinkedCard.id)) {
+                const linkedCard = this.createLinkedCard(
+                    unlinkedCard,
+                    setCache,
+                    typeCache
+                );
+                deepFreeze(linkedCard);
+                this.cardsById.set(unlinkedCard.id, linkedCard);
+                logger.trace(
+                    `Registered card '${unlinkedCard.id}'.`,
+                    linkedCard
+                );
+            }
+        }
+    }
+
     private createLinkedCard(
         unlinkedCard: UnlinkedCard,
         setCache: Map<string, CardSet>,
@@ -175,8 +228,9 @@ class MemoryCardDatabase implements CardDatabase {
         return {
             id: unlinkedCard.id,
             name: unlinkedCard.name,
-            type: this.linkType(unlinkedCard.type, typeCache),
+            desc: unlinkedCard.desc,
 
+            type: this.linkType(unlinkedCard.type, typeCache),
             race: unlinkedCard.race,
             attribute: unlinkedCard.attribute,
             atk: unlinkedCard.atk,

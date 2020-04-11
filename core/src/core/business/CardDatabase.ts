@@ -5,16 +5,13 @@ import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 
 export interface CardDatabase {
     /**
-     * Initializes the database.
-     * Consumer has to ensure this is only called once.
+     * Fully fills the database.
      */
-    init(): Promise<void>;
+    prepareAll(): Promise<void>;
 
-    isReady(): boolean;
+    hasCardById(cardId: string): boolean;
 
-    hasCard(cardId: string): boolean;
-
-    getCard(cardId: string): Card | null;
+    getCardById(cardId: string): Card | null;
 
     getCards(): Card[];
 

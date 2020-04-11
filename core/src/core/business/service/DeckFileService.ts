@@ -94,10 +94,10 @@ class DeckFileService {
             // Only start processing once a deckpart indicator was found. this allows for arbitrary file metadata as "head" of the file.
             if (currentDeckPart != null) {
                 const cardId = line.replace(/^0+/, ""); // Some applications pad the start with zeros, remove those.
-                if (!this.cardDatabase.hasCard(cardId)) {
+                if (!this.cardDatabase.hasCardById(cardId)) {
                     missing.push(cardId);
                 } else {
-                    const card = this.cardDatabase.getCard(cardId)!;
+                    const card = this.cardDatabase.getCardById(cardId)!;
                     deck.parts.get(currentDeckPart)!.push(card);
                 }
             }

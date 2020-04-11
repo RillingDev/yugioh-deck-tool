@@ -2,12 +2,12 @@
     "name": "yugioh-deck-tool-core",
     "private": true,
     "scripts": {
-        "clean:test": "rimraf ./spec/dist",
         "lint": "eslint ./src/ ./spec/src/ --ext .ts",
         "fix": "eslint ./src/ ./spec/src/ --ext .ts --fix",
         "build:tsc": "tsc --build ./tsconfig.json",
         "test": "npm-run-all clean:test build:tsc test:jasmine",
-        "test:jasmine": "jasmine --require=source-map-support/register"
+        "test:jasmine": "jasmine --require=source-map-support/register",
+        "clean:test": "rimraf ./spec/dist"
     },
     "dependencies": {
         "axios": "^0.19.2",

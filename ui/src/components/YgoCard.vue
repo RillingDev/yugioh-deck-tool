@@ -15,12 +15,13 @@
 </template>
 
 <script lang="ts">
-import { URL_DB_API } from "@/lib/urls";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
-import { Card } from "../../../core/src/main";
+import { Card, CardService } from "../../../core/src/main";
 import YgoPriceView from "@/components/YgoPriceView.vue";
+import { uiContainer } from "@/inversify.config";
+import { UI_TYPES } from "@/types";
 
 @Component({
     components: {
@@ -30,13 +31,16 @@ import YgoPriceView from "@/components/YgoPriceView.vue";
 export default class YgoCard extends Vue {
     @Prop({ required: true })
     public card: Card;
+    private readonly cardService = uiContainer.get<CardService>(
+        UI_TYPES.CardService
+    );
 
     get imageUrl() {
         return this.card.image.urlSmall;
     }
 
     get referenceUrl() {
-        return URL_DB_API + encodeURIComponent(this.card.name);
+        return this.cardService.getReferenceLink(this.card);
     }
 
     onDeckCardRightClicked(e: Event) {

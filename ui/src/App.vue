@@ -58,10 +58,10 @@
             <div class="form-group">
                 <label>Price:</label>
                 <AdvancedSelect
-                    class="form-control form-deck-currency"
                     :initial-options="priceController.currencies"
-                    :track-by="(currency) => currency.name"
                     :label="(currency) => currency.name"
+                    :track-by="(currency) => currency.name"
+                    class="form-control form-deck-currency"
                     v-model="priceController.activeCurrency"
                 ></AdvancedSelect>
                 <a
@@ -80,7 +80,7 @@
         <!-- app-deck -->
         <div class="app-section app-deck">
             <h2>Decklist:</h2>
-            <div v-if="ajax.currentlyLoading" class="text-center">
+            <div class="text-center" v-if="ajax.currentlyLoading">
                 <span>Loading Card Database...</span>
             </div>
             <ygo-deck :deck="deck" v-if="!ajax.currentlyLoading" />
@@ -235,7 +235,7 @@ export default class App extends Vue {
         );
 
         cardDatabase
-            .init()
+            .prepareAll()
             .then(() => {
                 this.ajax.currentlyLoading = false;
                 return this.loadUriDeck();

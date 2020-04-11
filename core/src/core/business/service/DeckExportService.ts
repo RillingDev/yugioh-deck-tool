@@ -64,21 +64,6 @@ class DeckExportService {
         return result.join("\n");
     }
 
-    private createCardList(sectionName: string, cards: Card[]): string[] {
-        if (cards.length === 0) {
-            return [];
-        }
-        const result: string[] = [];
-        result.push(`${sectionName}:`);
-
-        const counted: Map<Card, number> = this.cardService.countCards(cards);
-        for (const [card, count] of counted.entries()) {
-            result.push(`${card.name} x${count}`);
-        }
-        result.push("");
-        return result;
-    }
-
     /**
      * Creates a buy link of a deck for tcgplayer.com.
      *
@@ -96,6 +81,21 @@ class DeckExportService {
             "https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh&c=" +
             encodeURIComponent(["", ...cardList, ""].join("||"))
         );
+    }
+
+    private createCardList(sectionName: string, cards: Card[]): string[] {
+        if (cards.length === 0) {
+            return [];
+        }
+        const result: string[] = [];
+        result.push(`${sectionName}:`);
+
+        const counted: Map<Card, number> = this.cardService.countCards(cards);
+        for (const [card, count] of counted.entries()) {
+            result.push(`${card.name} x${count}`);
+        }
+        result.push("");
+        return result;
     }
 }
 

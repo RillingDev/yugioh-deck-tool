@@ -158,8 +158,8 @@
                     :initial-options="sets"
                     :initial-value="null"
                     :label="(cardSet) => cardSet.name"
-                    :track-by="(cardSet) => cardSet.name"
                     :no-selection-allowed="true"
+                    :track-by="(cardSet) => cardSet.name"
                     class="form-control"
                     v-on:input="
                         (cardSet) => {
@@ -377,6 +377,7 @@ export default class YgoFilter extends Vue {
             margin-left: 1rem;
         }
     }
+
     select {
         max-width: 85%;
     }

@@ -10,12 +10,12 @@ interface CardDataLoaderService {
      * Get all available cards. Note that this may be several thousands.
      * Before working with the result, a conversion to {@link Card}s should be made.
      */
-    getCardInfo(): Promise<UnlinkedCard[]>;
+    getAllCards(): Promise<UnlinkedCard[]>;
 
     /**
      * Get all available sets. Note that this may be several hundreds.
      */
-    getCardSets(): Promise<CardSet[]>;
+    getAllCardSets(): Promise<CardSet[]>;
 
     /**
      * Get card values, containing possible card types, races or other generic values which apply to the game as a whole.

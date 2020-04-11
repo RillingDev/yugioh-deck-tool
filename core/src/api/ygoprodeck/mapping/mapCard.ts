@@ -156,8 +156,6 @@ const mapPrices = (rawCard: RawCard): CardPrices => {
         putPrice(DefaultVendor.CARDMARKET, prices.cardmarket_price);
         putPrice(DefaultVendor.TCGPLAYER, prices.tcgplayer_price);
         putPrice(DefaultVendor.COOL_STUFF_INC, prices.coolstuffinc_price);
-        putPrice(DefaultVendor.EBAY, prices.ebay_price);
-        putPrice(DefaultVendor.AMAZON, prices.amazon_price);
     }
     return result;
 };
@@ -173,48 +171,47 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => ({
             : Infinity,
 });
 
-const mapCardInfo = (data: RawCard[]): UnlinkedCard[] => {
-    return data.map((rawCard) => {
-        const miscInfo: RawMiscInfo | null =
-            rawCard.misc_info != null ? rawCard.misc_info[0] : null;
-        return {
-            id: String(rawCard.id),
-            name: rawCard.name,
+const mapCard = (rawCard: RawCard): UnlinkedCard => {
+    const miscInfo: RawMiscInfo | null =
+        rawCard.misc_info != null ? rawCard.misc_info[0] : null;
+    return {
+        id: String(rawCard.id),
+        name: rawCard.name,
+        desc: rawCard.desc,
 
-            type: rawCard.type,
-            race: rawCard.race,
-            attribute: rawCard.attribute ?? null,
-            atk: rawCard.atk ?? null,
-            def: rawCard.def ?? null,
-            level: rawCard.level ?? null,
-            scale: rawCard.scale ?? null,
-            linkVal: rawCard.linkval ?? null,
-            linkMarkers: rawCard.linkmarkers ?? null,
+        type: rawCard.type,
+        race: rawCard.race,
+        attribute: rawCard.attribute ?? null,
+        atk: rawCard.atk ?? null,
+        def: rawCard.def ?? null,
+        level: rawCard.level ?? null,
+        scale: rawCard.scale ?? null,
+        linkVal: rawCard.linkval ?? null,
+        linkMarkers: rawCard.linkmarkers ?? null,
 
-            sets: mapCardSets(rawCard),
-            image: mapImage(rawCard),
-            prices: mapPrices(rawCard),
+        sets: mapCardSets(rawCard),
+        image: mapImage(rawCard),
+        prices: mapPrices(rawCard),
 
-            betaName: miscInfo?.beta_name ?? null,
-            treatedAs: miscInfo?.treated_as ?? null,
-            archetype: rawCard.archetype ?? null,
-            formats: mapFormats(miscInfo),
-            release: mapRelease(miscInfo),
-            banlist: {
-                [Format.TCG]: mapBanListState(
-                    rawCard.banlist_info?.ban_tcg ?? null
-                ),
-                [Format.OCG]: mapBanListState(
-                    rawCard.banlist_info?.ban_ocg ?? null
-                ),
-                [Format.GOAT]: mapBanListState(
-                    rawCard.banlist_info?.ban_goat ?? null
-                ),
-            },
+        betaName: miscInfo?.beta_name ?? null,
+        treatedAs: miscInfo?.treated_as ?? null,
+        archetype: rawCard.archetype ?? null,
+        formats: mapFormats(miscInfo),
+        release: mapRelease(miscInfo),
+        banlist: {
+            [Format.TCG]: mapBanListState(
+                rawCard.banlist_info?.ban_tcg ?? null
+            ),
+            [Format.OCG]: mapBanListState(
+                rawCard.banlist_info?.ban_ocg ?? null
+            ),
+            [Format.GOAT]: mapBanListState(
+                rawCard.banlist_info?.ban_goat ?? null
+            ),
+        },
 
-            views: miscInfo?.views ?? 0,
-        };
-    });
+        views: miscInfo?.views ?? 0,
+    };
 };
 
-export { mapCardInfo, RawCard };
+export { mapCard, RawCard };

@@ -86,6 +86,18 @@ class CardService {
     public countCards(cards: Card[]): Map<Card, number> {
         return countMapBy(cards, (card: Card) => card);
     }
+
+    /**
+     * Gets a link to more details about a card.
+     *
+     * @param card Card to create link for.
+     * @return Link.
+     */
+    public getReferenceLink(card: Card): string {
+        return `https://db.ygoprodeck.com/card/?search=${encodeURIComponent(
+            card.name
+        )}`;
+    }
 }
 
 export { CardService };

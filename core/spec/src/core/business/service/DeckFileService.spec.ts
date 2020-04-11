@@ -69,8 +69,8 @@ describe("DeckFileService", () => {
 #main
 123`;
             const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -88,8 +88,8 @@ describe("DeckFileService", () => {
 123
 123`;
             const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -116,16 +116,16 @@ describe("DeckFileService", () => {
 789`;
 
             const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card1);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card1);
             const card2 = createCard({ id: "456" });
 
-            when(mockCardDatabase.hasCard("456")).thenReturn(true);
-            when(mockCardDatabase.getCard("456")).thenReturn(card2);
+            when(mockCardDatabase.hasCardById("456")).thenReturn(true);
+            when(mockCardDatabase.getCardById("456")).thenReturn(card2);
 
             const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789")).thenReturn(true);
-            when(mockCardDatabase.getCard("789")).thenReturn(card3);
+            when(mockCardDatabase.hasCardById("789")).thenReturn(true);
+            when(mockCardDatabase.getCardById("789")).thenReturn(card3);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -154,8 +154,8 @@ describe("DeckFileService", () => {
 #main
 123`;
             const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -171,8 +171,8 @@ describe("DeckFileService", () => {
 #main
 0000123`;
             const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -219,8 +219,8 @@ describe("DeckFileService", () => {
 #main
 123`;
             const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123")).thenReturn(true);
-            when(mockCardDatabase.getCard("123")).thenReturn(card);
+            when(mockCardDatabase.hasCardById("123")).thenReturn(true);
+            when(mockCardDatabase.getCardById("123")).thenReturn(card);
             when(mockHttpService.get(anyString(), anything())).thenResolve({
                 data: fileContent,
                 status: 200,

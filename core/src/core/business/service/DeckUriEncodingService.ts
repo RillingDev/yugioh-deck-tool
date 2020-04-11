@@ -120,17 +120,67 @@ class DeckUriEncodingService {
         return deck;
     }
 
+    /**
+     * @deprecated
+     */
+    public fromLegacyUrlQueryParamValue(
+        val: string,
+        base64Decoder: (val: string) => string
+    ): Deck {
+        const deck = this.deckService.createEmptyDeck();
+        const uncompressedValue = inflate(base64Decoder(val), {
+            to: "string",
+        });
+
+        const DELIMITERS = {
+            deckPart: "|",
+            cardId: ";",
+            cardAmount: "*",
+        };
+
+        uncompressedValue
+            .split(DELIMITERS.deckPart)
+            .forEach((deckPartList: string, index) => {
+                const deckPart = DEFAULT_DECK_PART_ARR[index];
+                const deckPartCards = deck.parts.get(deckPart)!;
+
+                if (deckPartList.length > 0) {
+                    deckPartList.split(DELIMITERS.cardId).forEach((entry) => {
+                        let count = 1;
+                        let cardId = entry;
+                        if (entry.startsWith(DELIMITERS.cardAmount)) {
+                            count = Number(entry[1]);
+                            cardId = entry.slice(2);
+                        }
+
+                        if (!this.cardDatabase.hasCardById(cardId)) {
+                            throw new TypeError(
+                                `Unknown card ${cardId}, this hopefully should never happen.`
+                            );
+                        }
+                        const card = this.cardDatabase.getCardById(cardId)!;
+
+                        for (let i = 0; i < count; i++) {
+                            deckPartCards.push(card);
+                        }
+                    });
+                }
+            });
+
+        return deck;
+    }
+
     private encodeCardBlock(card: Card): Uint8Array {
         return this.encodeNumber(Number(card.id));
     }
 
     private decodeCardBlock(block: Uint8Array): Card {
         const id = String(this.decodeNumber(block));
-        if (!this.cardDatabase.hasCard(id)) {
+        if (!this.cardDatabase.hasCardById(id)) {
             throw new TypeError(`Could not find card for ID ${id}.`);
         }
 
-        return this.cardDatabase.getCard(id)!;
+        return this.cardDatabase.getCardById(id)!;
     }
 
     private encodeNumber(number: number): Uint8Array {
@@ -168,56 +218,6 @@ class DeckUriEncodingService {
         return toByteArray(
             str.replace(/~/g, "=").replace(/_/g, "+").replace(/-/g, "/")
         );
-    }
-
-    /**
-     * @deprecated
-     */
-    public fromLegacyUrlQueryParamValue(
-        val: string,
-        base64Decoder: (val: string) => string
-    ): Deck {
-        const deck = this.deckService.createEmptyDeck();
-        const uncompressedValue = inflate(base64Decoder(val), {
-            to: "string",
-        });
-
-        const DELIMITERS = {
-            deckPart: "|",
-            cardId: ";",
-            cardAmount: "*",
-        };
-
-        uncompressedValue
-            .split(DELIMITERS.deckPart)
-            .forEach((deckPartList: string, index) => {
-                const deckPart = DEFAULT_DECK_PART_ARR[index];
-                const deckPartCards = deck.parts.get(deckPart)!;
-
-                if (deckPartList.length > 0) {
-                    deckPartList.split(DELIMITERS.cardId).forEach((entry) => {
-                        let count = 1;
-                        let cardId = entry;
-                        if (entry.startsWith(DELIMITERS.cardAmount)) {
-                            count = Number(entry[1]);
-                            cardId = entry.slice(2);
-                        }
-
-                        if (!this.cardDatabase.hasCard(cardId)) {
-                            throw new TypeError(
-                                `Unknown card ${cardId}, this hopefully should never happen.`
-                            );
-                        }
-                        const card = this.cardDatabase.getCard(cardId)!;
-
-                        for (let i = 0; i < count; i++) {
-                            deckPartCards.push(card);
-                        }
-                    });
-                }
-            });
-
-        return deck;
     }
 }
 

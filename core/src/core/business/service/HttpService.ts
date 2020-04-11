@@ -5,12 +5,12 @@ interface HttpResponse<TData> {
 }
 
 interface HttpRequestConfig {
-    baseURL?: string;
-    headers?: any;
-    params?: any;
-    data?: any;
     timeout: number;
     responseType: "json" | "text";
+    baseURL?: string;
+    params?: any;
+    data?: any;
+    validateStatus?: (status: number) => boolean;
 }
 
 /**
