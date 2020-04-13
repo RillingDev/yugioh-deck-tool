@@ -1,9 +1,7 @@
 <template>
     <a
         :data-name="card.name"
-        href="#"
         class="deck-card"
-        target="_blank"
         v-on:contextmenu="(e) => onDeckCardRightClicked(e)"
     >
         <img
