@@ -141,6 +141,12 @@ const createCardDetails = (card: Card): HTMLElement => {
 const createCardImage = (card: Card): HTMLElement =>
     createImg(card.image?.url ?? "#", ["yugioh-tooltip__content__image"]);
 
+const createVote = (val: number, icon: string): HTMLElement =>
+    createDiv([
+        createSpan("icon", ["fa", `fa-arrow-${icon}`]),
+        createSpan(String(val)),
+    ]);
+
 const createCardMisc = (card: Card): HTMLElement => {
     const prices = createElement("ul", [
         "yugioh-tooltip__content__misc__prices",
@@ -152,8 +158,12 @@ const createCardMisc = (card: Card): HTMLElement => {
         )}`;
         prices.appendChild(priceItem);
     }
+    const votes = createDiv(
+        [createVote(card.votes.up, "up"), createVote(card.votes.down, "down")],
+        ["yugioh-tooltip__content__misc__prices"]
+    );
 
-    return createDiv([prices], ["yugioh-tooltip__content__misc"]);
+    return createDiv([prices, votes], ["yugioh-tooltip__content__misc"]);
 };
 
 export const createTooltipElement = (
