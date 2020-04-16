@@ -279,6 +279,7 @@ class MemoryCardDatabase implements CardDatabase {
             banlist: unlinkedCard.banlist,
 
             views: unlinkedCard.views,
+            votes: unlinkedCard.votes,
         };
     }
 

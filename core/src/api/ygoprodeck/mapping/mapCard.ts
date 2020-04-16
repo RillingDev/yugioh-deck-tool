@@ -54,12 +54,15 @@ interface RawCardPrices {
 }
 
 interface RawMiscInfo {
-    beta_name?: string;
     views: number;
+    viewsweek: number;
+    upvotes: number;
+    downvotes: number;
+    treated_as?: string;
+    beta_name?: string;
     formats?: string[];
     tcg_date?: string;
     ocg_date?: string;
-    treated_as?: string;
 }
 
 interface RawBanlistInfo {
@@ -211,6 +214,7 @@ const mapCard = (rawCard: RawCard): UnlinkedCard => {
         },
 
         views: miscInfo?.views ?? 0,
+        votes: { up: miscInfo?.upvotes ?? 0, down: miscInfo?.downvotes ?? 0 },
     };
 };
 
