@@ -2,6 +2,9 @@ import { injectable } from "inversify";
 
 import parseUrl from "url-parse";
 
+/**
+ * @public
+ */
 @injectable()
 class UrlService {
     /**

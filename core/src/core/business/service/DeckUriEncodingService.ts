@@ -9,6 +9,9 @@ import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { fromByteArray, toByteArray } from "base64-js";
 import { deflateRaw, inflate, inflateRaw } from "pako";
 
+/**
+ * @public
+ */
 @injectable()
 class DeckUriEncodingService {
     // A 32 bit integer is able to store all 9 digit IDs

@@ -24,6 +24,9 @@ enum RandomizationStrategy {
     HIGHLANDER = "Highlander",
 }
 
+/**
+ * @public
+ */
 @injectable()
 class DeckRandomizationService {
     private static readonly IGNORED_WORDS = new Set([

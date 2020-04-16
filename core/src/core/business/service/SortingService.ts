@@ -28,6 +28,9 @@ enum SortingOrder {
 
 type Comparator<T> = (a: T, b: T) => number;
 
+/**
+ * @public
+ */
 @injectable()
 class SortingService {
     private readonly cardDatabase: CardDatabase;

@@ -15,6 +15,8 @@ interface HttpRequestConfig {
 
 /**
  * HTTP client abstraction allowing for simple GET requests.
+ *
+ * @public
  */
 interface HttpService {
     get<TData>(

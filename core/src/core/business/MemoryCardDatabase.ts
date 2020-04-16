@@ -12,6 +12,9 @@ import { deepFreeze } from "lightdash";
 import { CardLinkingService } from "./service/CardLinkingService";
 import { flatten } from "lodash";
 
+/**
+ * @private
+ */
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
     private readonly cardDataLoaderService: CardDataLoaderService;

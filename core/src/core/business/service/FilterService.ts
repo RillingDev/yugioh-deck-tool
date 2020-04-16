@@ -27,6 +27,9 @@ interface CardFilter {
     sets: CardSet[];
 }
 
+/**
+ * @public
+ */
 @injectable()
 class FilterService {
     private readonly cardService: CardService;

@@ -10,6 +10,9 @@ import { shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
+/**
+ * @public
+ */
 @injectable()
 class DeckService {
     private readonly cardService: CardService;

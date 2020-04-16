@@ -2,6 +2,9 @@ import { HttpRequestConfig, HttpResponse, HttpService } from "./HttpService";
 import axios, { AxiosInstance } from "axios";
 import { injectable } from "inversify";
 
+/**
+ * @private
+ */
 @injectable()
 class AxiosHttpService implements HttpService {
     private readonly httpClient: AxiosInstance;

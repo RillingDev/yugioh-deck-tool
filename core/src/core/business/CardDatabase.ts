@@ -3,6 +3,9 @@ import { CardSet } from "../model/ygo/CardSet";
 import { CardType } from "../model/ygo/CardType";
 import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 
+/**
+ * @public
+ */
 export interface CardDatabase {
     /**
      * Fully fills the database.

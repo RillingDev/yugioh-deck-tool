@@ -6,6 +6,9 @@ import { BanState, DefaultBanState } from "../../model/ygo/BanState";
 import { BanlistInfo } from "../../model/ygo/BanlistInfo";
 import { countMapBy } from "lightdash";
 
+/**
+ * @public
+ */
 @injectable()
 class CardService {
     /**

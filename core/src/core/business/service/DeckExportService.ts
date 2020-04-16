@@ -10,6 +10,9 @@ import {
 import { CardService } from "./CardService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
+/**
+ * @public
+ */
 @injectable()
 class DeckExportService {
     private readonly deckService: DeckService;
