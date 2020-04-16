@@ -166,21 +166,8 @@ const createCardMisc = (card: Card): HTMLElement => {
     return createDiv([prices, votes], ["yugioh-tooltip__content__misc"]);
 };
 
-export const createTooltipElement = (
-    card: Card,
-    x: number,
-    y: number
-): HTMLElement => {
-    const WIDTH = 525;
-    const HEIGHT = 350;
-    const yugiohTooltipContent = createDiv(
+export const createTooltipElement = (card: Card): HTMLElement =>
+    createDiv(
         [createCardDetails(card), createCardImage(card), createCardMisc(card)],
         ["yugioh-tooltip__content"]
     );
-    yugiohTooltipContent.classList.add();
-    yugiohTooltipContent.style.width = px(WIDTH);
-    yugiohTooltipContent.style.height = px(HEIGHT);
-    yugiohTooltipContent.style.top = px(y - HEIGHT);
-    yugiohTooltipContent.style.left = px(x - WIDTH);
-    return yugiohTooltipContent;
-};

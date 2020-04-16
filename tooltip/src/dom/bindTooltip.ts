@@ -5,6 +5,7 @@ import logger from "loglevel";
 import { createTooltipElement } from "./createTooltipElement";
 import { bindReferenceLink } from "./bindReferenceLink";
 import { debounce } from "lodash";
+import { createPopper, Instance } from "@popperjs/core";
 
 const cardDatabase = tooltipContainer.get<CardDatabase>(
     TOOLTIP_TYPES.CardDatabase
@@ -12,15 +13,16 @@ const cardDatabase = tooltipContainer.get<CardDatabase>(
 
 class CardTooltip {
     private tooltipElement: HTMLElement | null;
+    private popperInstance: Instance | null;
 
     constructor(private readonly tooltipContainerElement: HTMLElement) {
         this.tooltipElement = null;
+        this.popperInstance = null;
     }
 
-    public scheduleOpen(
+    public open(
+        target: HTMLElement,
         cardName: string,
-        x: number,
-        y: number,
         onTooltipReady: (card: Card) => void
     ): void {
         logger.trace(`Attempting to show tooltip for '${cardName}'.`);
@@ -30,7 +32,7 @@ class CardTooltip {
                 const card = cardDatabase.getCardByName(cardName);
                 if (card != null) {
                     logger.trace("Loaded card.", card);
-                    this.open(card, x, y);
+                    this.attachTooltip(target, card);
                     onTooltipReady(card);
                 } else {
                     logger.warn(`Could not find card '${cardName}'.`);
@@ -42,14 +44,18 @@ class CardTooltip {
     public close(): void {
         if (this.tooltipElement != null) {
             this.tooltipElement.remove();
+            this.popperInstance?.destroy();
         }
     }
 
-    private open(card: Card, x: number, y: number): void {
+    private attachTooltip(target: HTMLElement, card: Card): void {
         this.close();
-        const tooltipElement = createTooltipElement(card, x, y);
-        this.tooltipElement = tooltipElement;
-        this.tooltipContainerElement.appendChild(tooltipElement);
+
+        this.tooltipElement = createTooltipElement(card);
+        this.popperInstance = createPopper(target, this.tooltipElement, {
+            placement: "top",
+        });
+        this.tooltipContainerElement.appendChild(this.tooltipElement);
     }
 }
 
@@ -63,19 +69,14 @@ export const bindTooltipHandlers = (
         if (target instanceof HTMLElement) {
             const cardName = target.dataset["name"];
             if (cardName != null) {
-                tooltip.scheduleOpen(
-                    cardName,
-                    event.pageX,
-                    event.pageY,
-                    (card) => {
-                        if (
-                            target instanceof HTMLAnchorElement &&
-                            target.href.length === 0
-                        ) {
-                            bindReferenceLink(target, card);
-                        }
+                tooltip.open(target, cardName, (card) => {
+                    if (
+                        target instanceof HTMLAnchorElement &&
+                        target.href.length === 0
+                    ) {
+                        bindReferenceLink(target, card);
                     }
-                );
+                });
             }
         }
     };
