@@ -20,25 +20,18 @@ class CardTooltip {
         this.popperInstance = null;
     }
 
-    public open(
-        target: HTMLElement,
-        cardName: string,
-        onTooltipReady: (card: Card) => void
-    ): void {
+    public async open(target: HTMLElement, cardName: string): Promise<Card> {
         logger.trace(`Attempting to show tooltip for '${cardName}'.`);
-        cardDatabase
-            .prepareCardByName(cardName)
-            .then(() => {
-                const card = cardDatabase.getCardByName(cardName);
-                if (card != null) {
-                    logger.trace("Loaded card.", card);
-                    this.attachTooltip(target, card);
-                    onTooltipReady(card);
-                } else {
-                    logger.warn(`Could not find card '${cardName}'.`);
-                }
-            })
-            .catch((e) => logger.error(e));
+        await cardDatabase.prepareCardByName(cardName);
+
+        const card = cardDatabase.getCardByName(cardName);
+        if (card == null) {
+            throw new Error(`Could not find card '${cardName}'.`);
+        }
+
+        logger.trace("Loaded card.", card);
+        this.attachTooltip(target, card);
+        return card;
     }
 
     public close(): void {
@@ -53,7 +46,7 @@ class CardTooltip {
 
         this.tooltipElement = createTooltipElement(card);
         this.popperInstance = createPopper(target, this.tooltipElement, {
-            placement: "top",
+            placement: "left",
         });
         this.tooltipContainerElement.appendChild(this.tooltipElement);
     }
@@ -64,19 +57,28 @@ export const bindTooltipHandlers = (
     tooltipContainerElement: HTMLElement
 ): void => {
     const tooltip = new CardTooltip(tooltipContainerElement);
+    const openTooltip = (target: HTMLElement, cardName: string): void => {
+        tooltip
+            .open(target, cardName)
+            .then((card) => {
+                if (
+                    target instanceof HTMLAnchorElement &&
+                    target.href.length === 0
+                ) {
+                    bindReferenceLink(target, card);
+                }
+            })
+            .catch((e) =>
+                logger.error("An error occurred opening the tooltip.", e)
+            );
+    };
+
     const mouseOverHandler = (event: MouseEvent): void => {
         const target = event.target;
         if (target instanceof HTMLElement) {
             const cardName = target.dataset["name"];
             if (cardName != null) {
-                tooltip.open(target, cardName, (card) => {
-                    if (
-                        target instanceof HTMLAnchorElement &&
-                        target.href.length === 0
-                    ) {
-                        bindReferenceLink(target, card);
-                    }
-                });
+                openTooltip(target, cardName);
             }
         }
     };

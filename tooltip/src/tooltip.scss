@@ -3,6 +3,8 @@
 }
 
 .yugioh-tooltip__content {
+    max-width: 500px;
+    max-height: 350px;
     background-color: yellow;
     display: flex;
     flex-direction: row;

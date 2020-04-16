@@ -10,7 +10,6 @@ import {
     createImg,
     createParagraph,
     createSpan,
-    px,
 } from "./domHelper";
 
 const currencyFormat = new Intl.NumberFormat(DEFAULT_CURRENCY.locale, {
@@ -143,7 +142,7 @@ const createCardImage = (card: Card): HTMLElement =>
 
 const createVote = (val: number, icon: string): HTMLElement =>
     createDiv([
-        createSpan("icon", ["fa", `fa-arrow-${icon}`]),
+        createSpan("", ["fa", `fa-arrow-${icon}`]),
         createSpan(String(val)),
     ]);
 
