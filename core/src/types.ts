@@ -3,6 +3,7 @@ const TYPES = {
 
     CardDataLoaderService: Symbol.for("CardDataLoaderService"),
     CardService: Symbol.for("CardService"),
+    CardLinkingService: Symbol.for("CardLinkingService"),
 
     DeckService: Symbol.for("DeckService"),
     DeckExportService: Symbol.for("DeckExportService"),

@@ -5,7 +5,11 @@ import { Format } from "../Format";
 import { ReleaseInfo } from "../ReleaseInfo";
 import { BanlistInfo } from "../BanlistInfo";
 
-// Version of Card without references to CardType
+/**
+ * Version of Card without references to CardType
+ *
+ * @see CardLinkingService
+ */
 interface UnlinkedCard {
     readonly id: string;
     readonly name: string;

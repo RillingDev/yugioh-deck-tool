@@ -6,15 +6,16 @@ import { CardSet } from "../model/ygo/CardSet";
 import { CardDatabase } from "./CardDatabase";
 import { CardType } from "../model/ygo/CardType";
 import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
-import { CardSetAppearance } from "../model/ygo/intermediate/CardSetAppearance";
 import * as logger from "loglevel";
 import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
-import { flatten } from "lodash";
 import { deepFreeze } from "lightdash";
+import { CardLinkingService } from "./service/CardLinkingService";
+import { flatten } from "lodash";
 
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
     private readonly cardDataLoaderService: CardDataLoaderService;
+    private readonly cardLinkingService: CardLinkingService;
 
     private loadingSets: Promise<void> | null;
     private loadingArchetypes: Promise<void> | null;
@@ -33,9 +34,13 @@ class MemoryCardDatabase implements CardDatabase {
 
     constructor(
         @inject(TYPES.CardDataLoaderService)
-        dataLoaderClient: CardDataLoaderService
+        cardDataLoaderService: CardDataLoaderService,
+        @inject(TYPES.CardLinkingService)
+        cardLinkingService: CardLinkingService
     ) {
-        this.cardDataLoaderService = dataLoaderClient;
+        this.cardDataLoaderService = cardDataLoaderService;
+        this.cardLinkingService = cardLinkingService;
+
         this.loadingSets = null;
         this.loadingArchetypes = null;
         this.loadingCardValues = null;
@@ -222,96 +227,22 @@ class MemoryCardDatabase implements CardDatabase {
     }
 
     private registerCards(unlinkedCards: UnlinkedCard[]): void {
-        const setCache = new Map<string, CardSet>(
-            this.sets.map((set) => [set.name, set])
+        const types = flatten(Array.from(this.types.values()));
+        const linkedCards = this.cardLinkingService.linkCards(
+            Array.from(this.sets),
+            types,
+            unlinkedCards
         );
-        const allTypes = flatten(Array.from(this.types.values()));
-        const typeCache = new Map<string, CardType>(
-            allTypes.map((type) => [type.name, type])
+        for (const card of linkedCards) {
+            deepFreeze(card);
+            this.cardsById.set(card.id, card);
+            this.cardsByName.set(card.name, card);
+            logger.trace(`Registered card '${card.id}'.`);
+        }
+        logger.debug(
+            `Registered ${linkedCards.length} card(s).`,
+            this.cardsById
         );
-        for (const unlinkedCard of unlinkedCards) {
-            if (!this.cardsById.has(unlinkedCard.id)) {
-                const linkedCard = this.createLinkedCard(
-                    unlinkedCard,
-                    setCache,
-                    typeCache
-                );
-                deepFreeze(linkedCard);
-                this.cardsById.set(unlinkedCard.id, linkedCard);
-                this.cardsByName.set(unlinkedCard.name, linkedCard);
-                logger.trace(
-                    `Registered card '${unlinkedCard.id}'.`,
-                    linkedCard
-                );
-            }
-        }
-    }
-
-    private createLinkedCard(
-        unlinkedCard: UnlinkedCard,
-        setCache: Map<string, CardSet>,
-        typeCache: Map<string, CardType>
-    ): Card {
-        return {
-            id: unlinkedCard.id,
-            name: unlinkedCard.name,
-            desc: unlinkedCard.desc,
-
-            type: this.linkType(unlinkedCard.type, typeCache),
-            race: unlinkedCard.race,
-            attribute: unlinkedCard.attribute,
-            atk: unlinkedCard.atk,
-            def: unlinkedCard.def,
-            level: unlinkedCard.level,
-            scale: unlinkedCard.scale,
-            linkVal: unlinkedCard.linkVal,
-            linkMarkers: unlinkedCard.linkMarkers,
-
-            sets: this.linkSets(unlinkedCard.sets, setCache),
-            image: unlinkedCard.image,
-            prices: unlinkedCard.prices,
-            betaName: unlinkedCard.betaName,
-            treatedAs: unlinkedCard.treatedAs,
-            archetype: unlinkedCard.archetype,
-
-            formats: unlinkedCard.formats,
-            release: unlinkedCard.release,
-            banlist: unlinkedCard.banlist,
-
-            views: unlinkedCard.views,
-            votes: unlinkedCard.votes,
-        };
-    }
-
-    private linkSets(
-        setAppearances: CardSetAppearance[],
-        setCache: Map<string, CardSet>
-    ): CardSet[] {
-        return setAppearances
-            .map((setAppearance) => {
-                if (!setCache.has(setAppearance.name)) {
-                    logger.warn(`Could not find set '${setAppearance.name}'.`);
-                    return null;
-                }
-                const matchingSet = setCache.get(setAppearance.name)!;
-                logger.trace(
-                    `Matched set ${setAppearance.name} to ${matchingSet.name}.`
-                );
-                return matchingSet;
-            })
-            .filter((set) => set != null) as CardSet[];
-    }
-
-    private linkType(
-        typeName: string,
-        typeCache: Map<string, CardType>
-    ): CardType {
-        if (!typeCache.has(typeName)) {
-            throw new TypeError(`Could not find type '${typeName}'.`);
-        }
-        const matchingType = typeCache.get(typeName)!;
-        logger.trace(`Matched type ${typeName} to ${matchingType.name}.`);
-        return matchingType;
     }
 }
 

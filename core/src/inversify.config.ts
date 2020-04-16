@@ -16,6 +16,7 @@ import { DeckRandomizationService } from "./core/business/service/DeckRandomizat
 import { DeckUriEncodingService } from "./core/business/service/DeckUriEncodingService";
 import { DeckFileService } from "./core/business/service/DeckFileService";
 import { UrlService } from "./core/business/service/UrlService";
+import { CardLinkingService } from "./core/business/service/CardLinkingService";
 
 const container = new Container();
 
@@ -28,6 +29,9 @@ container
     .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
     .to(YgoprodeckCardDataLoaderService);
 container.bind<CardService>(TYPES.CardService).to(CardService);
+container
+    .bind<CardLinkingService>(TYPES.CardLinkingService)
+    .to(CardLinkingService);
 
 container
     .bind<DeckExportService>(TYPES.DeckExportService)
