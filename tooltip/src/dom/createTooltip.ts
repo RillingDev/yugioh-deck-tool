@@ -4,13 +4,6 @@ import {
     DEFAULT_CURRENCY,
     Format,
 } from "../../../core/src/main";
-import {
-    createDiv,
-    createElement,
-    createImg,
-    createParagraph,
-    createSpan,
-} from "./domHelper";
 
 const currencyFormat = new Intl.NumberFormat(DEFAULT_CURRENCY.locale, {
     style: "currency",
@@ -18,6 +11,45 @@ const currencyFormat = new Intl.NumberFormat(DEFAULT_CURRENCY.locale, {
     minimumFractionDigits: DEFAULT_CURRENCY.fractionDigits,
     maximumFractionDigits: DEFAULT_CURRENCY.fractionDigits,
 });
+
+const createElement = (type: string, classes: string[] = []): HTMLElement => {
+    const element = document.createElement(type);
+    classes.forEach((className) => element.classList.add(className));
+    return element;
+};
+
+const createDiv = (
+    children: HTMLElement[],
+    classes: string[] = []
+): HTMLDivElement => {
+    const element = createElement("span", classes) as HTMLDivElement;
+    children.forEach((child) => element.appendChild(child));
+    return element;
+};
+
+const createSpan = (
+    textContent: string,
+    classes: string[] = []
+): HTMLSpanElement => {
+    const element = createElement("span", classes) as HTMLSpanElement;
+    element.textContent = textContent;
+    return element;
+};
+
+const createParagraph = (
+    textContent: string,
+    classes: string[] = []
+): HTMLSpanElement => {
+    const element = createElement("p", classes) as HTMLParagraphElement;
+    element.textContent = textContent;
+    return element;
+};
+
+const createImg = (src: string, classes: string[] = []): HTMLImageElement => {
+    const element = createElement("img", classes) as HTMLImageElement;
+    element.src = src;
+    return element;
+};
 
 const createStats = (card: Card): HTMLElement => {
     const statsChildren: HTMLElement[] = [];
@@ -165,7 +197,7 @@ const createCardMisc = (card: Card): HTMLElement => {
     return createDiv([prices, votes], ["yugioh-tooltip__content__misc"]);
 };
 
-export const createTooltipElement = (card: Card): HTMLElement =>
+export const createTooltip = (card: Card): HTMLElement =>
     createDiv(
         [createCardDetails(card), createCardImage(card), createCardMisc(card)],
         ["yugioh-tooltip__content"]

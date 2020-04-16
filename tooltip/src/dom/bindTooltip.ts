@@ -2,7 +2,7 @@ import { tooltipContainer } from "../inversify.config";
 import { Card, CardDatabase } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import logger from "loglevel";
-import { createTooltipElement } from "./createTooltipElement";
+import { createTooltip } from "./createTooltip";
 import { bindReferenceLink } from "./bindReferenceLink";
 import { debounce } from "lodash";
 import { createPopper, Instance } from "@popperjs/core";
@@ -44,9 +44,9 @@ class CardTooltip {
     private attachTooltip(target: HTMLElement, card: Card): void {
         this.close();
 
-        this.tooltipElement = createTooltipElement(card);
+        this.tooltipElement = createTooltip(card);
         this.popperInstance = createPopper(target, this.tooltipElement, {
-            placement: "left",
+            placement: "right",
         });
         this.tooltipContainerElement.appendChild(this.tooltipElement);
     }
