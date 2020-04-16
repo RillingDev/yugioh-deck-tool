@@ -6,10 +6,15 @@ import { Card } from "../../../core/src/main";
 const cardService = tooltipContainer.get<CardService>(
     TOOLTIP_TYPES.CardService
 );
+
+const browserSupportsTouch = (): boolean => navigator.maxTouchPoints > 0;
+
 export const bindReferenceLink = (
     target: HTMLAnchorElement,
     card: Card
 ): void => {
-    target.href = cardService.getReferenceLink(card);
-    target.target = "_blank";
+    if (!browserSupportsTouch()) {
+        target.href = cardService.getReferenceLink(card);
+        target.target = "_blank";
+    }
 };
