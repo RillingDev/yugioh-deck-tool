@@ -146,14 +146,7 @@ class MemoryCardDatabase implements CardDatabase {
         if (this.loadingAllCards == null) {
             this.loadingAllCards = this.cardDataLoaderService
                 .getAllCards()
-                .then((cards) => {
-                    this.registerCards(cards);
-                    logger.debug(
-                        `Registered ${this.cardsById.size} card(s).`,
-                        this.cardsById,
-                        this.cardsByName
-                    );
-                });
+                .then((cards) => this.registerCards(cards));
         }
         return this.loadingAllCards;
     }
@@ -234,7 +227,9 @@ class MemoryCardDatabase implements CardDatabase {
         const linkedCards = this.cardLinkingService.linkCards(
             Array.from(this.sets),
             types,
-            unlinkedCards
+            unlinkedCards.filter(
+                (unlinkedCard) => !this.cardsById.has(unlinkedCard.id)
+            )
         );
         for (const card of linkedCards) {
             deepFreeze(card);
@@ -244,7 +239,8 @@ class MemoryCardDatabase implements CardDatabase {
         }
         logger.debug(
             `Registered ${linkedCards.length} card(s).`,
-            this.cardsById
+            this.cardsById,
+            this.cardsByName
         );
     }
 }
