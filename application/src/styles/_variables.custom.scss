@@ -1,3 +1,5 @@
+@import "../ui/src/styles/variables.custom";
+
 $enable-caret: false;
 $enable-rounded: false;
 $enable-shadows: false;
@@ -11,32 +13,8 @@ $enable-responsive-font-sizes: false;
 $enable-validation-icons: true;
 $enable-deprecation-messages: true;
 
-$brown: #b97b51;
-$blue: #9683b8;
-$green: #799a60;
-$greenyellow: #b8d46c;
-$yellow: #ffd275;
-$orange: #f1a64a;
-$red: #d26c6c;
-
 $colors: ();
-
-$primary: $brown;
-$dark: desaturate(darken($primary, 5%), 10%);
-$danger: $red;
 
 $theme-colors: (
     "primary": $primary
 );
-
-$color-deckpart-main: $dark;
-$color-deckpart-extra: $blue;
-$color-deckpart-side: $green;
-
-$color-pricemode-tcgplayer: #145488;
-$color-pricemode-cardmarket: #dfc463;
-$color-pricemode-coolstuffinc: #41bfc3;
-
-$font-family-sans-serif: "Open Sans", "Segoe UI", Roboto, "Helvetica Neue",
-Arial, "Noto Sans", sans-serif;
-$font-family-base: $font-family-sans-serif;

@@ -1,1 +1,1 @@
-export { createCurrencyFormatter } from "./createCurrencyFormatter";
+export { createCurrencyFormatter } from "./lib/createCurrencyFormatter";

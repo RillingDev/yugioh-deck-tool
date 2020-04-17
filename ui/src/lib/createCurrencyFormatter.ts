@@ -1,4 +1,4 @@
-import { Currency } from "../../core/src/main";
+import { Currency } from "../../../core/src/main";
 
 export const createCurrencyFormatter = (
     currency: Currency

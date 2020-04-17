@@ -1,22 +1,19 @@
-#ygoCardTooltipContainer {
-    pointer-events: none;
-}
+@import "../ui/src/styles/variables.custom";
 
 .yugioh-tooltip__content {
-    max-width: 500px;
+    background-color: $brown;
+    max-width: 550px;
     max-height: 350px;
-    background-color: yellow;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 
     &__details {
-        width: 70%;
+        width: 65%;
     }
 
     &__image {
-        width: 30%;
-        max-height: 50%;
+        width: 35%;
     }
 
     &__misc {

@@ -1,8 +1,8 @@
 import "reflect-metadata";
-import { bindTooltipHandlers } from "./dom/bindTooltip";
+import { bindTooltipHandlers } from "./tooltip/bindTooltip";
 import logger, { levels } from "loglevel";
 import { DEVELOPMENT_MODE } from "../../core/src/main";
-import "./tooltip.scss";
+import "./styles/tooltip.scss";
 
 const TOOLTIP_CONTAINER_ID = "ygoCardTooltipContainer";
 
