@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { bindTooltipHandlers } from "./dom/bindTooltip";
 import logger, { levels } from "loglevel";
 import { DEVELOPMENT_MODE } from "../../core/src/main";
