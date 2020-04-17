@@ -8,6 +8,7 @@ import {
     TYPES,
     Vendor,
 } from "../../../../core/src/main";
+import { createCurrencyFormatter } from "../../../../ui/src/main";
 
 @injectable()
 class PriceController {
@@ -41,7 +42,7 @@ class PriceController {
     }
 
     public format(val: number): string {
-        return this.createFormatter(this.activeCurrency).format(val);
+        return createCurrencyFormatter(this.activeCurrency).format(val);
     }
 
     private guessDefaultCurrency() {
@@ -52,15 +53,6 @@ class PriceController {
         return localeIndex === -1
             ? DEFAULT_CURRENCY_ARR[0]
             : DEFAULT_CURRENCY_ARR[localeIndex];
-    }
-
-    private createFormatter(currency: Currency): Intl.NumberFormat {
-        return new Intl.NumberFormat(currency.locale, {
-            style: "currency",
-            currency: currency.id,
-            minimumFractionDigits: currency.fractionDigits,
-            maximumFractionDigits: currency.fractionDigits,
-        });
     }
 }
 

@@ -13,5 +13,6 @@ Live version: <https://ygoprodeck.com/card-database/deck-prices/>.
 ### Directory Structure
 
 - `core` Shared business logic and communication with the [YGOProDeck API](https://db.ygoprodeck.com/api-guide/).
+- `ui` Shared UI logic/styling.
 - `application` Vue app source code.
 - `tooltip` Card tooltip.

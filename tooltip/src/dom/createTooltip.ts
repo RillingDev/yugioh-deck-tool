@@ -4,13 +4,9 @@ import {
     DEFAULT_CURRENCY,
     Format,
 } from "../../../core/src/main";
+import { createCurrencyFormatter } from "../../../ui/src/main";
 
-const currencyFormat = new Intl.NumberFormat(DEFAULT_CURRENCY.locale, {
-    style: "currency",
-    currency: DEFAULT_CURRENCY.id,
-    minimumFractionDigits: DEFAULT_CURRENCY.fractionDigits,
-    maximumFractionDigits: DEFAULT_CURRENCY.fractionDigits,
-});
+const currencyFormat = createCurrencyFormatter(DEFAULT_CURRENCY);
 
 const createElement = (type: string, classes: string[] = []): HTMLElement => {
     const element = document.createElement(type);
