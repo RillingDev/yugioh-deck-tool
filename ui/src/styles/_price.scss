@@ -2,21 +2,20 @@
 
 @mixin price {
     .price {
-        &.price--group {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        &--group {
+            justify-content: flex-start;
+            flex-direction: row;
             margin-bottom: 0.5rem;
-        }
-
-        &:not(.price--group) {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
     }
 
     .price__vendor {
-        font-size: 0.8em;
+        font-size: 0.9em;
         display: inline-block;
-        padding: 5px;
+        padding: 4px 6px;
         text-align: center;
         color: $white;
 

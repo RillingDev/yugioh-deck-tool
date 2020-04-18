@@ -126,7 +126,7 @@ const createPrices = (card: Card): HTMLElement => {
     }
     return createDiv(
         ["card-tooltip__prices"],
-        [createDiv(["price", "price--group"], priceItems)]
+        [createDiv(["price"], priceItems)]
     );
 };
 
