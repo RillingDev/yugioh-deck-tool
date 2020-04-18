@@ -2,7 +2,7 @@ import { tooltipContainer } from "../inversify.config";
 import { Card, CardDatabase } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import logger from "loglevel";
-import { createTooltip } from "./createTooltip";
+import { createCardTooltip, createLoadingTooltip } from "./createCardTooltip";
 import { bindReferenceLink } from "./bindReferenceLink";
 import { debounce } from "lodash";
 import { createPopper, Instance } from "@popperjs/core";
@@ -22,6 +22,7 @@ class CardTooltip {
 
     public async open(target: HTMLElement, cardName: string): Promise<Card> {
         logger.trace(`Attempting to show tooltip for '${cardName}'.`);
+        this.attachTooltip(target, createLoadingTooltip());
         await cardDatabase.prepareCardByName(cardName);
 
         const card = cardDatabase.getCardByName(cardName);
@@ -30,7 +31,7 @@ class CardTooltip {
         }
 
         logger.trace("Loaded card.", card);
-        this.attachTooltip(target, card);
+        this.attachTooltip(target, createCardTooltip(card));
         return card;
     }
 
@@ -41,10 +42,9 @@ class CardTooltip {
         }
     }
 
-    private attachTooltip(target: HTMLElement, card: Card): void {
+    private attachTooltip(target: HTMLElement, tooltip: HTMLElement): void {
         this.close();
-
-        this.tooltipElement = createTooltip(card);
+        this.tooltipElement = tooltip;
         this.popperInstance = createPopper(target, this.tooltipElement, {
             placement: "auto",
         });

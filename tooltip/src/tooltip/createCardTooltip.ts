@@ -47,6 +47,20 @@ const createImg = (classes: string[], src: string): HTMLImageElement => {
     return element;
 };
 
+export const createLoadingTooltip = (): HTMLElement =>
+    createDiv(
+        ["card-tooltip__content", "card-tooltip__content--loading"],
+        [
+            createDiv(
+                ["card-tooltip__loading"],
+                [
+                    createSpan(["fas", "fa-spinner", "fa-spin"], ""),
+                    createSpan([], "Loading..."),
+                ]
+            ),
+        ]
+    );
+
 const createMonsterStats = (card: Card): HTMLElement => {
     const statsChildren: HTMLElement[] = [];
     const statImage = createImg(
@@ -225,7 +239,7 @@ const createCardImageCol = (card: Card): HTMLElement => {
     return createDiv(["card-tooltip__image__col"], [cardImage, votes]);
 };
 
-export const createTooltip = (card: Card): HTMLElement =>
+export const createCardTooltip = (card: Card): HTMLElement =>
     createDiv(
         ["card-tooltip__content"],
         [createCardDetailsCol(card), createCardImageCol(card)]

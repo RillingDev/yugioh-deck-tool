@@ -51,7 +51,8 @@
     &__stats,
     &__subtype,
     &__level,
-    &__link-markers {
+    &__link-markers,
+    &__loading {
         display: flex;
         align-items: center;
         margin-bottom: 0.5rem;
@@ -65,10 +66,14 @@
             align-items: center;
         }
 
-        span,
-        img {
+        span:not(:last-child),
+        img:not(:last-child) {
             margin-right: 0.35rem;
         }
+    }
+
+    &__loading {
+        margin-bottom: 0;
     }
 
     &__name {
@@ -117,11 +122,14 @@
                 margin-right: 1rem;
             }
         }
+
         .fas {
             margin-right: 0.25rem;
+
             &.fa-arrow-up {
                 color: $color-vote-up;
             }
+
             &.fa-arrow-down {
                 color: $color-vote-down;
             }
