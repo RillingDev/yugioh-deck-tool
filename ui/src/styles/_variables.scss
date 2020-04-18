@@ -1,0 +1,37 @@
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$brown: #b97b51;
+$purple: #9683b8;
+$green: #799a60;
+$greenyellow: #b8d46c;
+$yellow: #ffd275;
+$orange: #f1a64a;
+$red: #d26c6c;
+
+$primary: $brown;
+$dark: desaturate(darken($primary, 5%), 10%);
+
+$color-deckpart-main: $dark;
+$color-deckpart-extra: $purple;
+$color-deckpart-side: $green;
+
+$color-vendor-tcgplayer: #145488;
+$color-vendor-cardmarket: #dfc463;
+$color-vendor-coolstuffinc: #41bfc3;
+
+$color-vote-up: $orange;
+$color-vote-down: $purple;
+
+$font-family-sans-serif: "Open Sans", "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif;
+$font-family-base: $font-family-sans-serif;

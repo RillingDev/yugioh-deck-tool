@@ -14,7 +14,6 @@
     //
     // Normalize is licensed MIT. https://github.com/necolas/normalize.css
 
-
     // Document
     //
     // 1. Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
@@ -39,7 +38,16 @@
     // Shim for "new" HTML5 structural elements to display correctly (IE10, older browsers)
     // TODO: remove in v5
     // stylelint-disable-next-line selector-list-comma-newline-after
-    article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    article,
+    aside,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    main,
+    nav,
+    section {
         display: block;
     }
 
@@ -74,7 +82,6 @@
         outline: 0 !important;
     }
 
-
     // Content grouping
     //
     // 1. Add the correct box sizing in Firefox.
@@ -86,7 +93,6 @@
         height: 0; // 1
     }
 
-
     //
     // Typography
     //
@@ -96,7 +102,12 @@
     // By default, `<h1>`-`<h6>` all receive top and bottom margins. We nuke the top
     // margin for easier control within type scales as it avoids margin collapsing.
     // stylelint-disable-next-line selector-list-comma-newline-after
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         margin-top: 0;
         margin-bottom: $headings-margin-bottom;
     }
@@ -119,7 +130,8 @@
     // 5. Prevent the text-decoration to be skipped.
 
     abbr[title],
-    abbr[data-original-title] { // 1
+    abbr[data-original-title] {
+        // 1
         cursor: help; // 3
         text-decoration: underline; // 2
         text-decoration: underline dotted; // 2
@@ -152,7 +164,7 @@
     }
 
     dd {
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
         margin-left: 0; // Undo browser default
     }
 
@@ -183,13 +195,12 @@
     }
 
     sub {
-        bottom: -.25em;
+        bottom: -0.25em;
     }
 
     sup {
-        top: -.5em;
+        top: -0.5em;
     }
-
 
     //
     // Links
@@ -221,7 +232,6 @@
         }
     }
 
-
     //
     // Code
     //
@@ -231,7 +241,9 @@
     kbd,
     samp {
         font-family: $font-family-monospace;
-        @include font-size(1em); // Correct the odd `em` font sizing in all browsers.
+        @include font-size(
+            1em
+        ); // Correct the odd `em` font sizing in all browsers.
     }
 
     pre {
@@ -243,7 +255,6 @@
         margin-bottom: 1rem;
     }
 
-
     //
     // Figures
     //
@@ -252,7 +263,6 @@
         // Apply a consistent margin strategy (matches our type styles).
         margin: 0 0 1rem;
     }
-
 
     //
     // Images and content
@@ -269,7 +279,6 @@
         overflow: hidden;
         vertical-align: middle;
     }
-
 
     //
     // Tables
@@ -292,7 +301,6 @@
         // closest parent with a set `text-align`.
         text-align: inherit;
     }
-
 
     //
     // Forms
@@ -349,7 +357,6 @@
         word-wrap: normal;
     }
 
-
     // 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
     //    controls in Android 4.
     // 2. Correct the inability to style clickable types in iOS and Safari.
@@ -386,7 +393,6 @@
         box-sizing: border-box; // 1. Add the correct box sizing in IE 10-
         padding: 0; // 2. Remove the padding in IE 10-
     }
-
 
     input[type="date"],
     input[type="time"],
@@ -426,7 +432,7 @@
         display: block;
         width: 100%;
         max-width: 100%; // 1
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
         @include font-size(1.5rem);
         padding: 0;
         white-space: normal; // 1
@@ -492,5 +498,4 @@
     [hidden] {
         display: none !important;
     }
-
 }

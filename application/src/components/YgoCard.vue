@@ -36,11 +36,10 @@ export default class YgoCard extends Vue {
 </script>
 
 <style lang="scss">
+@import "../styles/variables.custom";
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
-
-@import "../styles/variables.custom";
 
 .deck-card {
     position: relative;

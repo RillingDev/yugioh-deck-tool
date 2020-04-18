@@ -1,4 +1,4 @@
-@import "../ui/src/styles/variables.custom";
+@import "../ui/src/styles/variables";
 
 $enable-caret: false;
 $enable-rounded: false;
@@ -16,5 +16,5 @@ $enable-deprecation-messages: true;
 $colors: ();
 
 $theme-colors: (
-    "primary": $primary
+    "primary": $primary,
 );

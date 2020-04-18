@@ -1,10 +1,10 @@
 <template>
     <div :class="{ 'price--group': group }" class="price">
         <span
-            :class="'price-mode-' + vendor.id"
+            :class="'price__vendor--' + vendor.id"
             :key="vendor.id"
             :title="`${vendor.name} Price`"
-            class="price-mode"
+            class="price__vendor"
             v-for="[vendor, price] in priceByVendor.entries()"
         >
             <span v-if="group">{{ vendor.name }}: </span>
@@ -40,42 +40,12 @@ export default class YgoPriceView extends Vue {
 </script>
 
 <style lang="scss">
+@import "../styles/variables.custom";
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
 
-@import "../styles/variables.custom";
+@import "../ui/src/styles/price";
 
-.price {
-    &.price--group {
-        margin-bottom: 0.5rem;
-    }
-
-    &:not(.price--group) {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-}
-
-.price-mode {
-    font-size: 0.9em;
-    display: inline-block;
-    padding: 5px 8px 2px;
-    text-align: center;
-
-    &-tcgplayer {
-        color: #fff;
-        background-color: $color-pricemode-tcgplayer;
-    }
-
-    &-cardmarket {
-        background-color: $color-pricemode-cardmarket;
-    }
-
-    &-coolstuffinc {
-        color: #fff;
-        background-color: $color-pricemode-coolstuffinc;
-    }
-}
+@include price();
 </style>

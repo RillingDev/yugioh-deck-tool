@@ -8,193 +8,223 @@ import { createCurrencyFormatter } from "../../../ui/src/main";
 
 const currencyFormat = createCurrencyFormatter(DEFAULT_CURRENCY);
 
-const createElement = (type: string, classes: string[] = []): HTMLElement => {
+const createElement = (classes: string[], type: string): HTMLElement => {
     const element = document.createElement(type);
     classes.forEach((className) => element.classList.add(className));
     return element;
 };
 
 const createDiv = (
-    children: HTMLElement[],
-    classes: string[] = []
+    classes: string[],
+    children: HTMLElement[]
 ): HTMLDivElement => {
-    const element = createElement("span", classes) as HTMLDivElement;
+    const element = createElement(classes, "span") as HTMLDivElement;
     children.forEach((child) => element.appendChild(child));
     return element;
 };
 
 const createSpan = (
-    textContent: string,
-    classes: string[] = []
+    classes: string[],
+    textContent: string
 ): HTMLSpanElement => {
-    const element = createElement("span", classes) as HTMLSpanElement;
+    const element = createElement(classes, "span") as HTMLSpanElement;
     element.textContent = textContent;
     return element;
 };
 
 const createParagraph = (
-    textContent: string,
-    classes: string[] = []
+    classes: string[],
+    textContent: string
 ): HTMLSpanElement => {
-    const element = createElement("p", classes) as HTMLParagraphElement;
+    const element = createElement(classes, "p") as HTMLParagraphElement;
     element.textContent = textContent;
     return element;
 };
 
-const createImg = (src: string, classes: string[] = []): HTMLImageElement => {
-    const element = createElement("img", classes) as HTMLImageElement;
+const createImg = (classes: string[], src: string): HTMLImageElement => {
+    const element = createElement(classes, "img") as HTMLImageElement;
     element.src = src;
     return element;
 };
 
-const createStats = (card: Card): HTMLElement => {
+const createMonsterStats = (card: Card): HTMLElement => {
     const statsChildren: HTMLElement[] = [];
     const statImage = createImg(
+        [],
         "https://ygoprodeck.com/wp-content/uploads/2017/01/atk.png"
     );
     statsChildren.push(statImage);
     if (card.atk != null) {
-        statsChildren.push(createSpan(`ATK/ ${card.atk}`));
+        statsChildren.push(createSpan([], `ATK/ ${card.atk}`));
     }
     if (card.def != null) {
-        statsChildren.push(createSpan(`DEF/ ${card.def}`));
+        statsChildren.push(createSpan([], `DEF/ ${card.def}`));
     } else if (card.linkVal != null) {
-        statsChildren.push(createSpan(`LINK-${card.linkVal}`));
+        statsChildren.push(createSpan([], `LINK-${card.linkVal}`));
     }
-    return createDiv(statsChildren, ["yugioh-tooltip__content__stats"]);
+    return createDiv(["card-tooltip__stats"], statsChildren);
 };
 
 const createSubType = (card: Card, isMonster: boolean): HTMLElement => {
     const subTypeChildren: HTMLElement[] = [];
 
     if (isMonster) {
-        const attribute = createDiv([
-            createImg(
-                `https://ygoprodeck.com/pics/${encodeURIComponent(
-                    card.attribute!
-                )}.jpg`
-            ),
-            createSpan(`Attribute: ${card.attribute!}`),
-        ]);
+        const attribute = createDiv(
+            [],
+            [
+                createImg(
+                    [],
+                    `https://ygoprodeck.com/pics/${encodeURIComponent(
+                        card.attribute!
+                    )}.jpg`
+                ),
+                createSpan([], `Attribute: ${card.attribute!}`),
+            ]
+        );
         subTypeChildren.push(attribute);
 
-        const race = createDiv([
-            createImg(
-                `https://ygoprodeck.com/pics/${encodeURIComponent(
-                    card.race
-                )}.png`
-            ),
-            createSpan(`Race: ${card.race}`),
-        ]);
+        const race = createDiv(
+            [],
+            [
+                createImg(
+                    [],
+                    `https://ygoprodeck.com/pics/${encodeURIComponent(
+                        card.race
+                    )}.png`
+                ),
+                createSpan([], `Race: ${card.race}`),
+            ]
+        );
         subTypeChildren.push(race);
     } else {
-        const subtype = createDiv([
-            createImg(
-                `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-                    card.race
-                )}.png`
-            ),
-            createSpan(`Sub-type: ${card.race}`),
-        ]);
+        const subtype = createDiv(
+            [],
+            [
+                createImg(
+                    [],
+                    `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
+                        card.race
+                    )}.png`
+                ),
+                createSpan([], `Sub-type: ${card.race}`),
+            ]
+        );
         subTypeChildren.push(subtype);
     }
 
-    return createDiv(subTypeChildren, ["yugioh-tooltip__content__subtype"]);
+    return createDiv(["card-tooltip__subtype"], subTypeChildren);
 };
 
-const createLevel = (card: Card): HTMLElement =>
-    createDiv([
-        createImg(
-            "https://ygoprodeck.com/wp-content/uploads/2017/01/level.png"
-        ),
-        createSpan(`Level/Rank: ${card.level}`),
-    ]);
-
-const createLinkMarkers = (card: Card): HTMLElement =>
-    createDiv([
-        createImg(
-            "https://ygoprodeck.com/wp-content/uploads/2019/04/link-arrow-right.png"
-        ),
-        createSpan(`Link Markers: ${card.linkMarkers!.join(", ")}`),
-    ]);
-
-const createType = (card: Card): HTMLElement => {
-    return createDiv([
-        createImg(
-            `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-                card.type.name
-            )}.jpg`
-        ),
-    ]);
+const createPrices = (card: Card): HTMLElement => {
+    const priceItems: HTMLElement[] = [];
+    for (const [vendor, price] of card.prices.entries()) {
+        const priceItem = createSpan(
+            ["price__vendor", `price__vendor--${vendor.id}`],
+            `${vendor.name}: ${currencyFormat.format(price)}`
+        );
+        priceItems.push(priceItem);
+    }
+    return createDiv(
+        ["card-tooltip__prices"],
+        [createDiv(["price", "price--group"], priceItems)]
+    );
 };
 
-const createCardDetails = (card: Card): HTMLElement => {
+const createCardDetailsCol = (card: Card): HTMLElement => {
     const children: HTMLElement[] = [];
 
-    const name = createSpan(card.name);
-    children.push(name);
-
-    const type = createType(card);
-    children.push(type);
-
-    const banState = createImg(
-        `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-            card.banlist[Format.TCG].name
-        )}.png`
+    const primaryDetails = createDiv(
+        ["card-tooltip__details"],
+        [
+            createImg(
+                [],
+                `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
+                    card.type.name
+                )}.jpg`
+            ),
+            createSpan(["card-tooltip__name"], card.name),
+            createImg(
+                [],
+                `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
+                    card.banlist[Format.TCG].name
+                )}.png`
+            ),
+        ]
     );
-    children.push(banState);
+    children.push(primaryDetails);
 
     const isMonster = card.type.group === CardTypeGroup.MONSTER;
     if (isMonster) {
-        children.push(createStats(card));
+        children.push(createMonsterStats(card));
     }
 
     children.push(createSubType(card, isMonster));
 
     if (isMonster) {
         if (card.level != null) {
-            children.push(createLevel(card));
+            const level = createDiv(
+                ["card-tooltip__level"],
+                [
+                    createImg(
+                        [],
+                        "https://ygoprodeck.com/wp-content/uploads/2017/01/level.png"
+                    ),
+                    createSpan([], `Level/Rank: ${card.level}`),
+                ]
+            );
+            children.push(level);
         } else if (card.linkMarkers != null) {
-            children.push(createLinkMarkers(card));
+            const linkMarkers = createDiv(
+                [],
+                [
+                    createImg(
+                        [],
+                        "https://ygoprodeck.com/wp-content/uploads/2019/04/link-arrow-right.png"
+                    ),
+                    createSpan(
+                        [],
+                        `Link Markers: ${card.linkMarkers.join(", ")}`
+                    ),
+                ]
+            );
+            children.push(linkMarkers);
         }
     }
 
-    const desc = createDiv([createParagraph(card.desc)]);
+    const desc = createDiv(
+        ["card-tooltip__description"],
+        [createParagraph([], card.desc)]
+    );
     children.push(desc);
 
-    return createDiv(children, ["yugioh-tooltip__content__details"]);
+    children.push(createPrices(card));
+
+    return createDiv(["card-tooltip__details__col"], children);
 };
 
-const createCardImage = (card: Card): HTMLElement =>
-    createImg(card.image?.url ?? "#", ["yugioh-tooltip__content__image"]);
-
 const createVote = (val: number, icon: string): HTMLElement =>
-    createDiv([
-        createSpan("", ["fa", `fa-arrow-${icon}`]),
-        createSpan(String(val)),
-    ]);
-
-const createCardMisc = (card: Card): HTMLElement => {
-    const prices = createElement("ul", [
-        "yugioh-tooltip__content__misc__prices",
-    ]);
-    for (const [vendor, price] of card.prices.entries()) {
-        const priceItem = createElement("li");
-        priceItem.textContent = `${vendor.name}: ${currencyFormat.format(
-            price
-        )}`;
-        prices.appendChild(priceItem);
-    }
-    const votes = createDiv(
-        [createVote(card.votes.up, "up"), createVote(card.votes.down, "down")],
-        ["yugioh-tooltip__content__misc__prices"]
+    createDiv(
+        [],
+        [
+            createSpan(["fas", `fa-arrow-${icon}`], ""),
+            createSpan([], String(val)),
+        ]
     );
 
-    return createDiv([prices, votes], ["yugioh-tooltip__content__misc"]);
+const createCardImageCol = (card: Card): HTMLElement => {
+    const votes = createDiv(
+        ["card-tooltip__votes"],
+        [createVote(card.votes.up, "up"), createVote(card.votes.down, "down")]
+    );
+    const cardImage = createImg(
+        ["card-tooltip__image"],
+        card.image?.url ?? "#"
+    );
+    return createDiv(["card-tooltip__image__col"], [cardImage, votes]);
 };
 
 export const createTooltip = (card: Card): HTMLElement =>
     createDiv(
-        [createCardDetails(card), createCardImage(card), createCardMisc(card)],
-        ["yugioh-tooltip__content"]
+        ["card-tooltip__content"],
+        [createCardDetailsCol(card), createCardImageCol(card)]
     );

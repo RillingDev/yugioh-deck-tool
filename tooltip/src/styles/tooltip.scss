@@ -1,22 +1,102 @@
-@import "../ui/src/styles/variables.custom";
+@import "../ui/src/styles/variables";
+@import "../ui/src/styles/price";
 
-.yugioh-tooltip__content {
-    background-color: $brown;
-    max-width: 550px;
-    max-height: 350px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.card-tooltip {
+    * {
+        box-sizing: border-box;
+    }
 
-    &__details {
-        width: 65%;
+    &__content {
+        font-family: $font-family-base;
+        font-size: 0.9em;
+        color: $white;
+        background-color: $gray-800;
+        border: 1px solid $black;
+        opacity: 0.95;
+
+        max-width: 550px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0.5rem;
+    }
+
+    &__details__col {
+        width: 66%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__image__col {
+        width: 32%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__details,
+    &__stats,
+    &__subtype,
+    &__level {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        img {
+            height: 20px;
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+        }
+
+        span,
+        img {
+            margin-right: 0.35rem;
+        }
+    }
+
+    &__name {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    &__description {
+        p {
+            margin: 0;
+        }
+    }
+
+    &__prices {
+        margin-top: 0.75rem;
+        @include price();
     }
 
     &__image {
-        width: 35%;
+        max-width: 100%;
+        max-height: 230px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 0.75rem;
     }
 
-    &__misc {
-        width: 100%;
+    &__votes {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.25em;
+        > span:not(:last-child) {
+            margin-right: 1rem;
+        }
+        .fas {
+            margin-right: 0.25rem;
+            &.fa-arrow-up {
+                color: $color-vote-up;
+            }
+            &.fa-arrow-down {
+                color: $color-vote-down;
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ import logger, { levels } from "loglevel";
 import { DEVELOPMENT_MODE } from "../../core/src/main";
 import "./styles/tooltip.scss";
 
-const TOOLTIP_CONTAINER_ID = "ygoCardTooltipContainer";
+const TOOLTIP_CONTAINER_ID = "cardTooltipContainer";
 
 logger.setLevel(DEVELOPMENT_MODE ? levels.DEBUG : levels.WARN);
 

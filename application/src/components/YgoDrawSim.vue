@@ -89,11 +89,10 @@ export default class YgoDrawSim extends Vue {
 </script>
 
 <style lang="scss">
+@import "../styles/variables.custom";
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
-
-@import "../styles/variables.custom";
 
 @import "~bootstrap/scss/button-group";
 @import "~bootstrap/scss/close";
