@@ -171,81 +171,87 @@ export default class YgoBuilder extends Vue {
 @import "~bootstrap/scss/variables";
 
 @import "../styles/mixins/screen";
-
-.builder-list {
-    overflow-x: auto;
-    overflow-y: scroll;
-    width: 100%;
-    max-height: 250px;
-    padding: 0;
-    list-style: none;
-    resize: vertical;
-    border: 1px solid $gray-400;
-    @include screen(min, md) {
-        max-height: 60vh;
-    }
-}
-
-.builder-list li {
-    border-top: 1px solid $gray-400;
-
-    &:first-child {
-        border-top: 0;
-    }
-}
-
-.builder-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 10px;
-}
-
-.builder-card-name {
-    width: 100%;
-    padding: 10px 0;
-}
-
-.builder-card-action {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 80px;
-}
-
-.btn.builder-add {
-    font-size: 1.2em;
-    width: 34px;
-    padding: 0;
-    cursor: pointer;
-    opacity: 0.8;
-    background-color: transparent;
-
-    &:active {
-        opacity: 1;
+.decktool {
+    .builder-list {
+        overflow-x: auto;
+        overflow-y: scroll;
+        width: 100%;
+        max-height: 250px;
+        padding: 0;
+        list-style: none;
+        resize: vertical;
+        border: 1px solid $gray-400;
+        @include screen(min, md) {
+            max-height: 60vh;
+        }
     }
 
-    &[disabled] {
-        opacity: 0.4;
+    .builder-list li {
+        border-top: 1px solid $gray-400;
+
+        &:first-child {
+            border-top: 0;
+        }
     }
 
-    &-main .fas {
-        color: $color-deckpart-main;
+    .builder-card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 10px;
     }
 
-    &-extra .fas {
-        color: $color-deckpart-extra;
+    .builder-card-name {
+        &,
+        &:hover {
+            width: 100%;
+            padding: 10px 0;
+            color: $black;
+            text-decoration: none;
+        }
     }
 
-    &-side .fas {
-        color: $color-deckpart-side;
+    .builder-card-action {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 80px;
     }
-}
 
-.builder-noresults {
-    padding: 0.5rem 0;
-    text-align: center;
-    color: $gray-600;
+    .btn.builder-add {
+        font-size: 1.2em;
+        width: 34px;
+        padding: 0;
+        cursor: pointer;
+        opacity: 0.8;
+        background-color: transparent;
+
+        &:active {
+            opacity: 1;
+        }
+
+        &[disabled] {
+            opacity: 0.4;
+        }
+
+        &-main .fas {
+            color: $color-deckpart-main;
+        }
+
+        &-extra .fas {
+            color: $color-deckpart-extra;
+        }
+
+        &-side .fas {
+            color: $color-deckpart-side;
+        }
+    }
+
+    .builder-noresults {
+        padding: 0.5rem 0;
+        text-align: center;
+        color: $gray-600;
+    }
 }
 </style>
