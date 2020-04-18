@@ -45,7 +45,9 @@ export default class YgoPriceView extends Vue {
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
 
-@import "../ui/src/styles/price";
+@import "../ui/src/styles/component/price";
 
-@include price();
+.price {
+    @include price();
+}
 </style>

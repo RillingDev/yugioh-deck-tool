@@ -35,3 +35,11 @@ $color-vote-down: $purple;
 $font-family-sans-serif: "Open Sans", "Segoe UI", Roboto, "Helvetica Neue",
     Arial, "Noto Sans", sans-serif;
 $font-family-base: $font-family-sans-serif;
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+);

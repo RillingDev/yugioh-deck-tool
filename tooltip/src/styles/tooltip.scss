@@ -1,5 +1,6 @@
 @import "../ui/src/styles/variables";
-@import "../ui/src/styles/price";
+@import "../ui/src/styles/component/price";
+@import "../ui/src/styles/mixin/screen";
 
 .card-tooltip {
     * {
@@ -8,7 +9,7 @@
 
     &__content {
         font-family: $font-family-base;
-        font-size: 0.9em;
+        font-size: 0.7em;
         color: $white;
         background-color: $gray-800;
         border: 1px solid $black;
@@ -20,6 +21,10 @@
         flex-wrap: wrap;
         justify-content: space-between;
         padding: 0.5rem;
+
+        @include screen(min,sm){
+            font-size: 0.9em;
+        }
     }
 
     &__details__col {
@@ -68,7 +73,7 @@
         }
     }
 
-    &__prices {
+    &__price {
         margin-top: 0.75rem;
         font-size: 1.1em;
         @include price();

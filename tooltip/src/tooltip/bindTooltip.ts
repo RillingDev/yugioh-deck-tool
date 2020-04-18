@@ -46,7 +46,7 @@ class CardTooltip {
 
         this.tooltipElement = createTooltip(card);
         this.popperInstance = createPopper(target, this.tooltipElement, {
-            placement: "right",
+            placement: "auto",
         });
         this.tooltipContainerElement.appendChild(this.tooltipElement);
     }

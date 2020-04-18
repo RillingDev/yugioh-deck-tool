@@ -1,18 +1,16 @@
-@import "variables";
+@import "../variables";
 
 @mixin price {
-    .price {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        &--group {
-            justify-content: flex-start;
-            flex-direction: row;
-            margin-bottom: 0.5rem;
-        }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &--group {
+        justify-content: flex-start;
+        flex-direction: row;
+        margin-bottom: 0.5rem;
     }
 
-    .price__vendor {
+    &__vendor {
         font-size: 0.9em;
         display: inline-block;
         padding: 4px 6px;

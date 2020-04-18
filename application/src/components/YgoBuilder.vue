@@ -170,7 +170,8 @@ export default class YgoBuilder extends Vue {
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
 
-@import "../styles/mixins/screen";
+@import "../../../ui/src/styles/mixin/screen";
+
 .decktool {
     .builder-list {
         overflow-x: auto;

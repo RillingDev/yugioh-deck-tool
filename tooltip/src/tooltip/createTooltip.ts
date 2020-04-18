@@ -115,19 +115,19 @@ const createSubType = (card: Card, isMonster: boolean): HTMLElement => {
     return createDiv(["card-tooltip__subtype"], subTypeChildren);
 };
 
-const createPrices = (card: Card): HTMLElement => {
+const createPrice = (card: Card): HTMLElement => {
     const priceItems: HTMLElement[] = [];
     for (const [vendor, price] of card.prices.entries()) {
         const priceItem = createSpan(
-            ["price__vendor", `price__vendor--${vendor.id}`],
+            [
+                "card-tooltip__price__vendor",
+                `card-tooltip__price__vendor--${vendor.id}`,
+            ],
             `${vendor.name}: ${currencyFormat.format(price)}`
         );
         priceItems.push(priceItem);
     }
-    return createDiv(
-        ["card-tooltip__prices"],
-        [createDiv(["price"], priceItems)]
-    );
+    return createDiv(["card-tooltip__price"], priceItems);
 };
 
 const createCardDetailsCol = (card: Card): HTMLElement => {
@@ -197,7 +197,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
     );
     children.push(desc);
 
-    children.push(createPrices(card));
+    children.push(createPrice(card));
 
     return createDiv(["card-tooltip__details__col"], children);
 };
