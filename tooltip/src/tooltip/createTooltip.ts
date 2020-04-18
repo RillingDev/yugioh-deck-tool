@@ -175,7 +175,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
             children.push(level);
         } else if (card.linkMarkers != null) {
             const linkMarkers = createDiv(
-                [],
+                ["card-tooltip__link-markers"],
                 [
                     createImg(
                         [],

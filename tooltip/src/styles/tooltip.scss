@@ -22,7 +22,7 @@
         justify-content: space-between;
         padding: 0.5rem;
 
-        @include screen(min,sm){
+        @include screen(min, sm) {
             font-size: 0.9em;
         }
     }
@@ -42,7 +42,8 @@
     &__details,
     &__stats,
     &__subtype,
-    &__level {
+    &__level,
+    &__link-markers {
         display: flex;
         align-items: center;
         margin-bottom: 0.5rem;
@@ -67,6 +68,12 @@
         font-size: 1.1em;
     }
 
+    &__link-markers {
+        img {
+            width: 16px;
+        }
+    }
+
     &__description {
         p {
             margin: 0;
@@ -80,8 +87,6 @@
     }
 
     &__image {
-        max-width: 100%;
-        max-height: 230px;
         width: 100%;
         height: auto;
         margin-bottom: 0.75rem;
