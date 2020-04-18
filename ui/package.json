@@ -18,7 +18,7 @@
     },
     "devDependencies": {
         "@types/jasmine": "^3.5.10",
-        "@types/lodash": "^4.14.149",
+        "@types/lodash": "^4.14.150",
         "@types/webpack-env": "^1.15.1",
         "@typescript-eslint/eslint-plugin": "^2.27.0",
         "@typescript-eslint/parser": "^2.27.0",
