@@ -92,7 +92,7 @@ const createSubType = (card: Card, isMonster: boolean): HTMLElement => {
                         card.race
                     )}.png`
                 ),
-                createSpan([], `Race: ${card.race}`),
+                createSpan([], `Type: ${card.race}`),
             ]
         );
         subTypeChildren.push(race);
@@ -106,7 +106,7 @@ const createSubType = (card: Card, isMonster: boolean): HTMLElement => {
                         card.race
                     )}.png`
                 ),
-                createSpan([], `Sub-type: ${card.race}`),
+                createSpan([], `Type: ${card.race}`),
             ]
         );
         subTypeChildren.push(subtype);

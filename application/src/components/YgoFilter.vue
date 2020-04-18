@@ -90,7 +90,7 @@
 
             <template v-if="filter.typeGroup != null">
                 <div class="form-group form-group-builder">
-                    <label>{{ isMonster ? "Race" : "Subtype" }}:</label>
+                    <label>{{ filter.typeGroup }} Type:</label>
                     <AdvancedSelect
                         :initial-options="races"
                         :no-selection-allowed="true"
@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="form-group form-group-builder">
-                    <label>Lv/Rank:</label>
+                    <label>Level/Rank:</label>
                     <AdvancedSelect
                         :initial-options="monsterLevels"
                         :no-selection-allowed="true"
