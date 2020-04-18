@@ -9,7 +9,7 @@
 
     &__content {
         font-family: $font-family-base;
-        font-size: 0.7em;
+        font-size: 0.75em;
         color: $white;
         background-color: $gray-800;
         border: 1px solid $black;
@@ -28,15 +28,23 @@
     }
 
     &__details__col {
-        width: 66%;
+        width: 80%;
         display: flex;
         flex-direction: column;
+
+        @include screen(min, sm) {
+            width: 70%;
+        }
     }
 
     &__image__col {
-        width: 32%;
+        width: calc(20% - 0.75rem);
         display: flex;
         flex-direction: column;
+
+        @include screen(min, sm) {
+            width: calc(30% - 0.75rem);
+        }
     }
 
     &__details,
@@ -96,9 +104,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 1.25em;
+        font-size: 1.1em;
+
+        @include screen(min, sm) {
+            font-size: 1.25em;
+        }
+
         > span:not(:last-child) {
-            margin-right: 1rem;
+            margin-right: 0.5rem;
+
+            @include screen(min, sm) {
+                margin-right: 1rem;
+            }
         }
         .fas {
             margin-right: 0.25rem;
