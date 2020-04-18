@@ -12,7 +12,7 @@ const DefaultVendor: {
 } = {
     CARDMARKET: { name: "Cardmarket", id: "cardmarket" },
     TCGPLAYER: { name: "TCGPlayer", id: "tcgplayer" },
-    COOL_STUFF_INC: { name: "Cool Stuff Inc.", id: "coolstuffinc" },
+    COOL_STUFF_INC: { name: "CoolStuffInc", id: "coolstuffinc" },
 };
 deepFreeze(DefaultVendor);
 

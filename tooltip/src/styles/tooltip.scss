@@ -70,6 +70,7 @@
 
     &__prices {
         margin-top: 0.75rem;
+        font-size: 1.1em;
         @include price();
     }
 
