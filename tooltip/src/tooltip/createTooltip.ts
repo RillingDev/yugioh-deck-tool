@@ -130,6 +130,12 @@ const createPrice = (card: Card): HTMLElement => {
     return createDiv(["card-tooltip__price"], priceItems);
 };
 
+const createDescription = (card: Card): HTMLElement =>
+    createDiv(
+        ["card-tooltip__description"],
+        card.desc.split("\n").map((paragraph) => createParagraph([], paragraph))
+    );
+
 const createCardDetailsCol = (card: Card): HTMLElement => {
     const children: HTMLElement[] = [];
 
@@ -191,11 +197,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
         }
     }
 
-    const desc = createDiv(
-        ["card-tooltip__description"],
-        [createParagraph([], card.desc)]
-    );
-    children.push(desc);
+    children.push(createDescription(card));
 
     children.push(createPrice(card));
 
