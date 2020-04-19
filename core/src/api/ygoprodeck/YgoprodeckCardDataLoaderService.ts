@@ -40,8 +40,10 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             "cardinfo.php",
             merge(this.createBaseRequestConfig(), {
                 params: {
-                    misc: "yes",
                     name: name,
+                    misc: "yes",
+                    includeAliased: "yes",
+                    format: "all",
                 },
                 validateStatus: (status: number) =>
                     status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found
@@ -66,6 +68,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
                     merge(this.createBaseRequestConfig(), {
                         params: {
                             misc: "yes",
+                            format: "all",
                             includeAliased: "yes",
                             num:
                                 YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,
@@ -76,20 +79,6 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
                 return response.data;
             }
         );
-        // Rush Duel is excluded by default, load it separately.
-        const secondaryResponse = await this.httpService.get<
-            PaginatedResponse<RawCard[]>
-        >(
-            "cardinfo.php",
-            merge(this.createBaseRequestConfig(), {
-                params: {
-                    misc: "yes",
-                    includeAliased: "yes",
-                    format: Format.RUSH_DUEL,
-                },
-            })
-        );
-        responseData.push(...secondaryResponse.data.data);
 
         return responseData.map(mapCard);
     }
