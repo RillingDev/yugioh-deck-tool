@@ -19,6 +19,8 @@ enum SortingStrategy {
 
     VIEWS = "Views",
     RELEASE_DATE = "Release Date",
+    UPVOTES = "Upvotes",
+    DOWNVOTES = "Downvotes",
 }
 
 enum SortingOrder {
@@ -86,6 +88,14 @@ class SortingService {
             // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
             return (a, b) => this.compareReleaseDate(a, b);
         }
+        if (strategy === SortingStrategy.UPVOTES) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            return (a, b) => this.compareUpvotes(a, b);
+        }
+        if (strategy === SortingStrategy.DOWNVOTES) {
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            return (a, b) => this.compareDownvotes(a, b);
+        }
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         return (a, b) => this.compareViews(a, b);
     }
@@ -108,6 +118,14 @@ class SortingService {
 
     private compareViews(a: Card, b: Card): number {
         return b.views - a.views;
+    }
+
+    private compareUpvotes(a: Card, b: Card): number {
+        return b.votes.up - a.votes.up;
+    }
+
+    private compareDownvotes(a: Card, b: Card): number {
+        return b.votes.down - a.votes.down;
     }
 
     private compareRace(a: Card, b: Card): number {
