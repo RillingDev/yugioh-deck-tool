@@ -2,6 +2,7 @@ import { CardSet } from "../../model/ygo/CardSet";
 import { CardValues } from "../../model/ygo/CardValues";
 import { UnlinkedCard } from "../../model/ygo/intermediate/UnlinkedCard";
 import { FindCardBy } from "../CardDatabase";
+import { Card } from "../../model/ygo/Card";
 
 /**
  * Interface for a service loading card data, like available cards or sets.
@@ -39,7 +40,7 @@ interface CardDataLoaderService {
     /**
      * Sends a request to increase the view count of the card by one.
      */
-    updateViews(cardName: string): Promise<void>;
+    updateViews(card: Card): Promise<void>;
 }
 
 export { CardDataLoaderService };

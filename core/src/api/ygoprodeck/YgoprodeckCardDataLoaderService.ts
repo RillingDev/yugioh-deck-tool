@@ -16,6 +16,7 @@ import { mapArchetype, RawArchetype } from "./mapping/mapArchetype";
 import { DEVELOPMENT_MODE } from "../../mode";
 import { merge } from "lodash";
 import { FindCardBy } from "../../core/business/CardDatabase";
+import { Card } from "../../core/model/ygo/Card";
 
 /**
  * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
@@ -122,7 +123,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         return response.data.map(mapArchetype);
     }
 
-    public async updateViews(cardName: string): Promise<void> {
+    public async updateViews(card: Card): Promise<void> {
         if (!YgoprodeckCardDataLoaderService.USE_INTERNAL_API) {
             return;
         }
@@ -131,7 +132,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             timeout: 3000,
             responseType: "text",
             params: {
-                name: cardName,
+                name: card.name,
             },
         });
     }

@@ -50,13 +50,18 @@ class CardTooltip {
     }
 }
 
-const loadCard = async (cardName: string): Promise<Card> => {
-    await cardDatabase.prepareCard(cardName, FindCardBy.NAME);
-    const card = cardDatabase.getCard(cardName, FindCardBy.NAME);
-    if (card == null) {
-        throw new Error(`Could not find card '${cardName}'.`);
+const loadCard = async (cardKey: string): Promise<Card> => {
+    await cardDatabase.prepareCard(cardKey, FindCardBy.NAME);
+    let card = cardDatabase.getCard(cardKey, FindCardBy.NAME);
+    if (card != null) {
+        return card;
     }
-    return card;
+    await cardDatabase.prepareCard(cardKey, FindCardBy.ID);
+    card = cardDatabase.getCard(cardKey, FindCardBy.ID);
+    if (card != null) {
+        return card;
+    }
+    throw new Error(`Could not find card '${cardKey}'.`);
 };
 
 export const bindTooltipHandlers = (
@@ -65,10 +70,10 @@ export const bindTooltipHandlers = (
 ): void => {
     const tooltip = new CardTooltip(tooltipContainerElement);
 
-    const openTooltip = (target: HTMLElement, cardName: string): void => {
-        logger.trace(`Attempting to show tooltip for '${cardName}'.`);
+    const openTooltip = (target: HTMLElement, cardKey: string): void => {
+        logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
         tooltip.open(target, createLoadingTooltip());
-        loadCard(cardName)
+        loadCard(cardKey)
             .then((card) => {
                 logger.trace("Loaded card.", card);
                 tooltip.open(target, createCardTooltip(card));
@@ -80,7 +85,7 @@ export const bindTooltipHandlers = (
                 }
                 // Start request, but do not wait for it to finish.
                 cardDataLoaderService
-                    .updateViews(cardName)
+                    .updateViews(card)
                     .then(() => logger.trace("Updated view count."))
                     .catch((e) =>
                         logger.warn("Could not update view count.", e)
@@ -98,9 +103,9 @@ export const bindTooltipHandlers = (
     const mouseOverHandler = (event: MouseEvent): void => {
         const target = event.target;
         if (target instanceof HTMLElement) {
-            const cardName = target.dataset["name"];
-            if (cardName != null) {
-                openTooltip(target, cardName);
+            const cardKey = target.dataset["name"];
+            if (cardKey != null) {
+                openTooltip(target, cardKey);
             }
         }
     };
