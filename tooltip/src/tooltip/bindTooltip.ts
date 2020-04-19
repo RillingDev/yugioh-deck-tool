@@ -32,31 +32,6 @@ class CardTooltip {
         this.popperInstance = null;
     }
 
-    public async open(target: HTMLElement, cardName: string): Promise<Card> {
-        logger.trace(`Attempting to show tooltip for '${cardName}'.`);
-        this.attachTooltip(target, createLoadingTooltip());
-
-        let card: Card;
-        try {
-            card = await this.loadCard(cardName);
-        } catch (e) {
-            this.attachTooltip(
-                target,
-                createErrorTooltip("Error while loading card.")
-            );
-            throw e;
-        }
-
-        logger.trace("Loaded card.", card);
-        this.attachTooltip(target, createCardTooltip(card));
-        // Start request, but do not wait for it to finish.
-        cardDataLoaderService
-            .updateViews(cardName)
-            .then(() => logger.trace("Updated view count."))
-            .catch((e) => logger.warn("Could not update view count.", e));
-        return card;
-    }
-
     public close(): void {
         if (this.tooltipElement != null) {
             this.tooltipElement.remove();
@@ -64,16 +39,7 @@ class CardTooltip {
         }
     }
 
-    private async loadCard(cardName: string): Promise<Card> {
-        await cardDatabase.prepareCardByName(cardName);
-        let card = cardDatabase.getCardByName(cardName);
-        if (card == null) {
-            throw new Error(`Could not find card '${cardName}'.`);
-        }
-        return card;
-    }
-
-    private attachTooltip(target: HTMLElement, tooltip: HTMLElement): void {
+    public open(target: HTMLElement, tooltip: HTMLElement): void {
         this.close();
         this.tooltipElement = tooltip;
         this.popperInstance = createPopper(target, this.tooltipElement, {
@@ -83,25 +49,49 @@ class CardTooltip {
     }
 }
 
+const loadCard = async (cardName: string): Promise<Card> => {
+    await cardDatabase.prepareCardByName(cardName);
+    const card = cardDatabase.getCardByName(cardName);
+    if (card == null) {
+        throw new Error(`Could not find card '${cardName}'.`);
+    }
+    return card;
+};
+
 export const bindTooltipHandlers = (
     context: HTMLElement,
     tooltipContainerElement: HTMLElement
 ): void => {
     const tooltip = new CardTooltip(tooltipContainerElement);
+
     const openTooltip = (target: HTMLElement, cardName: string): void => {
-        tooltip
-            .open(target, cardName)
+        logger.trace(`Attempting to show tooltip for '${cardName}'.`);
+        tooltip.open(target, createLoadingTooltip());
+        loadCard(cardName)
             .then((card) => {
+                logger.trace("Loaded card.", card);
+                tooltip.open(target, createCardTooltip(card));
                 if (
                     target instanceof HTMLAnchorElement &&
                     target.href.length === 0
                 ) {
                     bindReferenceLink(target, card);
                 }
+                // Start request, but do not wait for it to finish.
+                cardDataLoaderService
+                    .updateViews(cardName)
+                    .then(() => logger.trace("Updated view count."))
+                    .catch((e) =>
+                        logger.warn("Could not update view count.", e)
+                    );
             })
-            .catch((e) =>
-                logger.error("An error occurred opening the tooltip.", e)
-            );
+            .catch((e) => {
+                tooltip.open(
+                    target,
+                    createErrorTooltip("Error while loading card.")
+                );
+                logger.error("Error while loading card.", e);
+            });
     };
 
     const mouseOverHandler = (event: MouseEvent): void => {
@@ -113,6 +103,7 @@ export const bindTooltipHandlers = (
             }
         }
     };
+
     context.addEventListener("mouseover", debounce(mouseOverHandler, 100));
     context.addEventListener("mouseout", (): void => tooltip.close());
 };
