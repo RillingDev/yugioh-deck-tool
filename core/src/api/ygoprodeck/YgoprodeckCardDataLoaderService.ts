@@ -13,7 +13,6 @@ import {
     HttpService,
 } from "../../core/business/service/HttpService";
 import { mapArchetype, RawArchetype } from "./mapping/mapArchetype";
-import { Format } from "../../core/model/ygo/Format";
 import { DEVELOPMENT_MODE } from "../../mode";
 import { merge } from "lodash";
 
@@ -26,6 +25,11 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private static readonly API_BASE_URL = DEVELOPMENT_MODE
         ? "https://db.ygoprodeck.com/api/v7/"
         : "https://ygoprodeck.com/api/deck-builder/";
+
+    private static readonly USE_INTERNAL_API = !DEVELOPMENT_MODE;
+    private static readonly INTERNAL_API_BASE_URL =
+        "https://ygoprodeck.com/api/";
+
     private readonly httpService: HttpService;
 
     constructor(
@@ -106,6 +110,20 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             this.createBaseRequestConfig()
         );
         return response.data.map(mapArchetype);
+    }
+
+    public async updateViews(cardName: string): Promise<void> {
+        if (!YgoprodeckCardDataLoaderService.USE_INTERNAL_API) {
+            return;
+        }
+        await this.httpService.get<void>("updateViews.php", {
+            baseURL: YgoprodeckCardDataLoaderService.INTERNAL_API_BASE_URL,
+            timeout: 3000,
+            responseType: "text",
+            data: {
+                name: cardName,
+            },
+        });
     }
 
     private createBaseRequestConfig(): HttpRequestConfig {

@@ -1,5 +1,3 @@
-import { DEFAULT_VENDOR_ARR } from "./core/model/price/Vendor";
-
 export { Card } from "./core/model/ygo/Card";
 export { BanState, DefaultBanState } from "./core/model/ygo/BanState";
 export { CardSet } from "./core/model/ygo/CardSet";
@@ -12,6 +10,7 @@ export {
 export { TYPES } from "./types";
 export { container } from "./inversify.config";
 export { CardDatabase } from "./core/business/CardDatabase";
+export { CardDataLoaderService } from "./core/business/service/CardDataLoaderService";
 export { CardService } from "./core/business/service/CardService";
 export { PriceService } from "./core/business/service/PriceService";
 export { DeckExportService } from "./core/business/service/DeckExportService";

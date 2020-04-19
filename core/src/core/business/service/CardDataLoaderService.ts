@@ -31,6 +31,11 @@ interface CardDataLoaderService {
      * Get archetypes which exist, which can be compared against a cards archetype.
      */
     getArchetypes(): Promise<string[]>;
+
+    /**
+     * Sends a request to increase the view count of the card by one.
+     */
+    updateViews(cardName: string): Promise<void>;
 }
 
 export { CardDataLoaderService };

@@ -1,5 +1,9 @@
 import { tooltipContainer } from "../inversify.config";
-import { Card, CardDatabase } from "../../../core/src/main";
+import {
+    Card,
+    CardDatabase,
+    CardDataLoaderService,
+} from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import logger from "loglevel";
 import { createCardTooltip, createLoadingTooltip } from "./createCardTooltip";
@@ -9,6 +13,10 @@ import { createPopper, Instance } from "@popperjs/core";
 
 const cardDatabase = tooltipContainer.get<CardDatabase>(
     TOOLTIP_TYPES.CardDatabase
+);
+
+const cardDataLoaderService = tooltipContainer.get<CardDataLoaderService>(
+    TOOLTIP_TYPES.CardDataLoaderService
 );
 
 class CardTooltip {
@@ -32,6 +40,11 @@ class CardTooltip {
 
         logger.trace("Loaded card.", card);
         this.attachTooltip(target, createCardTooltip(card));
+        // Start request, but do not wait for it to finish.
+        cardDataLoaderService
+            .updateViews(cardName)
+            .then(() => logger.trace("Updated view count."))
+            .catch((e) => logger.warn("Could not update view count.", e));
         return card;
     }
 
