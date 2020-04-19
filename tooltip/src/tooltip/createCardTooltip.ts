@@ -1,12 +1,17 @@
 import {
     Card,
     CardTypeGroup,
-    DEFAULT_CURRENCY,
     Format,
+    DEFAULT_VENDOR_ARR,
+    PriceService,
 } from "../../../core/src/main";
 import { createCurrencyFormatter } from "../../../ui/src/main";
+import { tooltipContainer } from "../inversify.config";
+import { TOOLTIP_TYPES } from "../types";
 
-const currencyFormat = createCurrencyFormatter(DEFAULT_CURRENCY);
+const priceService = tooltipContainer.get<PriceService>(
+    TOOLTIP_TYPES.PriceService
+);
 
 const createElement = (classes: string[], type: string): HTMLElement => {
     const element = document.createElement(type);
@@ -131,13 +136,18 @@ const createSubType = (card: Card, isMonster: boolean): HTMLElement => {
 
 const createPrice = (card: Card): HTMLElement => {
     const priceItems: HTMLElement[] = [];
-    for (const [vendor, price] of card.prices.entries()) {
+    for (const vendor of DEFAULT_VENDOR_ARR) {
+        const lookupResult = priceService.getPrice([card], vendor, null);
+        if (lookupResult.missing.length > 0) {
+            continue;
+        }
+        const currencyFormatter = createCurrencyFormatter(vendor.currency);
         const priceItem = createSpan(
             [
                 "card-tooltip__price__vendor",
                 `card-tooltip__price__vendor--${vendor.id}`,
             ],
-            `${vendor.name}: ${currencyFormat.format(price)}`
+            `${vendor.name}: ${currencyFormatter.format(lookupResult.price)}`
         );
         priceItems.push(priceItem);
     }

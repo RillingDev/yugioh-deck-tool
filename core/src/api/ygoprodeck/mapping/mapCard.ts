@@ -156,8 +156,8 @@ const mapPrices = (rawCard: RawCard): CardPrices => {
             }
         };
         const prices = rawCard.card_prices[0];
-        putPrice(DefaultVendor.CARDMARKET, prices.cardmarket_price);
-        putPrice(DefaultVendor.TCGPLAYER, prices.tcgplayer_price);
+        putPrice(DefaultVendor.CARD_MARKET, prices.cardmarket_price);
+        putPrice(DefaultVendor.TCG_PLAYER, prices.tcgplayer_price);
         putPrice(DefaultVendor.COOL_STUFF_INC, prices.coolstuffinc_price);
     }
     return result;

@@ -7,6 +7,7 @@ import {
     PriceService,
     TYPES,
     Vendor,
+    DEFAULT_VENDOR_ARR,
 } from "../../../../core/src/main";
 import { createCurrencyFormatter } from "../../../../ui/src/main";
 
@@ -19,11 +20,7 @@ class PriceController {
 
     constructor(@inject(TYPES.PriceService) priceService: PriceService) {
         this.priceService = priceService;
-        this.vendors = [
-            DefaultVendor.TCGPLAYER,
-            DefaultVendor.CARDMARKET,
-            DefaultVendor.COOL_STUFF_INC,
-        ];
+        this.vendors = DEFAULT_VENDOR_ARR;
         this.currencies = DEFAULT_CURRENCY_ARR;
         this.activeCurrency = this.guessDefaultCurrency();
     }

@@ -19,13 +19,13 @@ class PriceService {
      *
      * @param cards Cards to check.
      * @param vendor Vendor to get the price for.
-     * @param currency Currency to calculate for.
+     * @param currency Currency to calculate for. May be null to use the default vendor currency.
      * @return Object containing total sum for this currency, as well as a list of cards for which no price could be found.
      */
     public getPrice(
         cards: Card[],
         vendor: Vendor,
-        currency: Currency
+        currency: Currency | null
     ): PriceLookupResult {
         const missing: Card[] = cards.filter(
             (card) => !this.hasPrice(card, vendor)
@@ -43,14 +43,21 @@ class PriceService {
     private getCardPrice(
         card: Card,
         vendor: Vendor,
-        currency: Currency
+        currency: Currency | null
     ): number {
         if (!this.hasPrice(card, vendor)) {
             throw new TypeError(
                 `No price exists for this vendor: ${vendor.id}`
             );
         }
-        return card.prices.get(vendor)! * currency.val;
+        const price = card.prices.get(vendor)!;
+        // No conversion requested, return raw price as vendor provides
+        if (currency == null) {
+            return price;
+        }
+        // Currency calculations with floats is evil, but in this case a few cents more or less are OK.
+        const priceInUsd = price / vendor.currency.conversionRate;
+        return priceInUsd * currency.conversionRate;
     }
 }
 

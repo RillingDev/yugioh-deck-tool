@@ -1,81 +1,102 @@
 import { deepFreeze } from "lightdash";
 
 interface Currency {
-    readonly name: string;
-    readonly locale: string;
     readonly id: string;
-    readonly val: number;
+    readonly locale: string;
+    readonly name: string;
+    readonly conversionRate: number; // Value of 1 USD in this currency
     readonly fractionDigits: number;
 }
 
 // Values from https://api.exchangeratesapi.io/latest?base=USD
-const DEFAULT_CURRENCY_ARR: Currency[] = [
-    {
-        name: "US Dollar",
-        locale: "en-US",
+const DefaultCurrency: {
+    USD: Currency;
+    EUR: Currency;
+    GBP: Currency;
+    CAD: Currency;
+    AUD: Currency;
+    MXN: Currency;
+    BRL: Currency;
+    THB: Currency;
+    IDR: Currency;
+} = {
+    USD: {
         id: "USD",
-        val: 1.0,
+        locale: "en-US",
+        name: "US Dollar",
+        conversionRate: 1.0,
         fractionDigits: 2,
     },
-    {
-        name: "Euro",
-        locale: "de-DE",
+    EUR: {
         id: "EUR",
-        val: 0.9272137228,
+        locale: "de-DE",
+        name: "Euro",
+        conversionRate: 0.9272137228,
         fractionDigits: 2,
     },
-    {
-        name: "British Pound",
-        locale: "en-GB",
+    GBP: {
         id: "GBP",
-        val: 0.8145572554,
+        locale: "en-GB",
+        name: "British Pound",
+        conversionRate: 0.8145572554,
         fractionDigits: 2,
     },
-    {
-        name: "Canadian Dollar",
-        locale: "en-CA",
+    CAD: {
         id: "CAD",
-        val: 1.4185442745,
+        locale: "en-CA",
+        name: "Canadian Dollar",
+        conversionRate: 1.4185442745,
         fractionDigits: 2,
     },
-    {
-        name: "Australian Dollar",
-        locale: "en-AU",
+    AUD: {
         id: "AUD",
-        val: 1.6693555865,
+        locale: "en-AU",
+        name: "Australian Dollar",
+        conversionRate: 1.6693555865,
         fractionDigits: 2,
     },
-    {
-        name: "Mexican Peso",
-        locale: "es-MX",
+    MXN: {
         id: "MXN",
-        val: 24.6147426982,
+        locale: "es-MX",
+        name: "Mexican Peso",
+        conversionRate: 24.6147426982,
         fractionDigits: 1,
     },
-    {
-        name: "Brazilian Real",
-        locale: "pt-BR",
+    BRL: {
         id: "BRL",
-        val: 5.2751970329,
+        locale: "pt-BR",
+        name: "Brazilian Real",
+        conversionRate: 5.2751970329,
         fractionDigits: 1,
     },
-    {
-        name: "Thai Baht",
-        locale: "th-TH",
+    THB: {
         id: "THB",
-        val: 33.0097357441,
+        locale: "th-TH",
+        name: "Thai Baht",
+        conversionRate: 33.0097357441,
         fractionDigits: 0,
     },
-    {
-        name: "Indonesian Rupiah",
-        locale: "id-ID",
+    IDR: {
         id: "IDR",
-        val: 16614.4459898006,
+        locale: "id-ID",
+        name: "Indonesian Rupiah",
+        conversionRate: 16614.4459898006,
         fractionDigits: 0,
     },
+};
+deepFreeze(DefaultCurrency);
+
+const DEFAULT_CURRENCY_ARR: Currency[] = [
+    DefaultCurrency.USD,
+    DefaultCurrency.EUR,
+    DefaultCurrency.GBP,
+    DefaultCurrency.CAD,
+    DefaultCurrency.AUD,
+    DefaultCurrency.MXN,
+    DefaultCurrency.BRL,
+    DefaultCurrency.THB,
+    DefaultCurrency.IDR,
 ];
 deepFreeze(DEFAULT_CURRENCY_ARR);
 
-const DEFAULT_CURRENCY = DEFAULT_CURRENCY_ARR[0];
-
-export { Currency, DEFAULT_CURRENCY_ARR, DEFAULT_CURRENCY };
+export { Currency, DEFAULT_CURRENCY_ARR, DefaultCurrency };

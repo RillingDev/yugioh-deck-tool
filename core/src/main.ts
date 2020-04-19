@@ -1,3 +1,5 @@
+import { DEFAULT_VENDOR_ARR } from "./core/model/price/Vendor";
+
 export { Card } from "./core/model/ygo/Card";
 export { BanState, DefaultBanState } from "./core/model/ygo/BanState";
 export { CardSet } from "./core/model/ygo/CardSet";
@@ -24,10 +26,18 @@ export {
     CardFilter,
     FilterService,
 } from "./core/business/service/FilterService";
-export { Currency, DEFAULT_CURRENCY_ARR,DEFAULT_CURRENCY } from "./core/model/price/Currency";
+export {
+    Currency,
+    DEFAULT_CURRENCY_ARR,
+    DefaultCurrency,
+} from "./core/model/price/Currency";
 export { CardType } from "./core/model/ygo/CardType";
 export { CardTypeGroup } from "./core/model/ygo/CardTypeGroup";
-export { DefaultVendor, Vendor } from "./core/model/price/Vendor";
+export {
+    DefaultVendor,
+    Vendor,
+    DEFAULT_VENDOR_ARR,
+} from "./core/model/price/Vendor";
 export {
     DeckRandomizationService,
     RandomizationStrategy,
