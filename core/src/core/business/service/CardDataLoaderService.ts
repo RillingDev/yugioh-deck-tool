@@ -1,15 +1,19 @@
 import { CardSet } from "../../model/ygo/CardSet";
 import { CardValues } from "../../model/ygo/CardValues";
 import { UnlinkedCard } from "../../model/ygo/intermediate/UnlinkedCard";
+import { FindCardBy } from "../CardDatabase";
 
 /**
  * Interface for a service loading card data, like available cards or sets.
  */
 interface CardDataLoaderService {
     /**
-     * Gets a card by its exact name, or null if none is found.
+     * Gets a card by its exact name OR ID. Return null if none is found.
      */
-    getCardByName(name: string): Promise<UnlinkedCard | null>;
+    getCard(
+        cardKey: string,
+        findCardBy: FindCardBy
+    ): Promise<UnlinkedCard | null>;
 
     /**
      * Get all available cards. Note that this may be several thousands.

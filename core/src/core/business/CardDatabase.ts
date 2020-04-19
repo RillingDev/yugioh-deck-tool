@@ -3,10 +3,15 @@ import { CardSet } from "../model/ygo/CardSet";
 import { CardType } from "../model/ygo/CardType";
 import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 
+enum FindCardBy {
+    NAME,
+    ID,
+}
+
 /**
  * @public
  */
-export interface CardDatabase {
+interface CardDatabase {
     /**
      * Fully fills the database.
      */
@@ -15,15 +20,11 @@ export interface CardDatabase {
     /**
      * Partially fills the database, loading a single card and direct dependencies.
      */
-    prepareCardByName(cardName: string): Promise<void>;
+    prepareCard(cardKey: string, findCardBy: FindCardBy): Promise<void>;
 
-    hasCardByName(cardName: string): boolean;
+    hasCard(cardKey: string, findCardBy: FindCardBy): boolean;
 
-    getCardByName(cardName: string): Card | null;
-
-    hasCardById(cardId: string): boolean;
-
-    getCardById(cardId: string): Card | null;
+    getCard(cardKey: string, findCardBy: FindCardBy): Card | null;
 
     getCards(): Card[];
 
@@ -41,3 +42,4 @@ export interface CardDatabase {
 
     getMonsterLinkMarkers(): string[];
 }
+export { FindCardBy, CardDatabase };

@@ -3,7 +3,7 @@ import { TYPES } from "../../types";
 import { CardDataLoaderService } from "./service/CardDataLoaderService";
 import { Card } from "../model/ygo/Card";
 import { CardSet } from "../model/ygo/CardSet";
-import { CardDatabase } from "./CardDatabase";
+import { CardDatabase, FindCardBy } from "./CardDatabase";
 import { CardType } from "../model/ygo/CardType";
 import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 import * as logger from "loglevel";
@@ -79,25 +79,20 @@ class MemoryCardDatabase implements CardDatabase {
         await this.loadAllCards();
     }
 
-    public async prepareCardByName(cardName: string): Promise<void> {
+    public async prepareCard(
+        cardKey: string,
+        findCardBy: FindCardBy
+    ): Promise<void> {
         await Promise.all([this.loadSets(), this.loadCardValues()]);
-        await this.loadCardByName(cardName);
+        await this.loadCard(cardKey, findCardBy);
     }
 
-    public hasCardByName(cardName: string): boolean {
-        return this.cardsByName.has(cardName);
+    public hasCard(cardKey: string, findCardBy: FindCardBy): boolean {
+        return this.getCardMap(findCardBy).has(cardKey);
     }
 
-    public getCardByName(cardName: string): Card | null {
-        return this.cardsByName.get(cardName) ?? null;
-    }
-
-    public hasCardById(cardId: string): boolean {
-        return this.cardsById.has(cardId);
-    }
-
-    public getCardById(cardId: string): Card | null {
-        return this.cardsById.get(cardId) ?? null;
+    public getCard(cardKey: string, findCardBy: FindCardBy): Card | null {
+        return this.getCardMap(findCardBy).get(cardKey) ?? null;
     }
 
     public getCards(): Card[] {
@@ -132,11 +127,17 @@ class MemoryCardDatabase implements CardDatabase {
         return this.monsterLinkMarkers;
     }
 
-    private async loadCardByName(cardName: string): Promise<void> {
-        if (this.cardsByName.has(cardName)) {
+    private async loadCard(
+        cardKey: string,
+        findCardBy: FindCardBy
+    ): Promise<void> {
+        if (this.getCardMap(findCardBy).has(cardKey)) {
             return;
         }
-        const card = await this.cardDataLoaderService.getCardByName(cardName);
+        const card = await this.cardDataLoaderService.getCard(
+            cardKey,
+            findCardBy
+        );
         if (card != null) {
             this.registerCards([card]);
         }
@@ -242,6 +243,10 @@ class MemoryCardDatabase implements CardDatabase {
             this.cardsById,
             this.cardsByName
         );
+    }
+
+    private getCardMap(findCardBy: FindCardBy): Map<string, Card> {
+        return findCardBy == FindCardBy.ID ? this.cardsById : this.cardsByName;
     }
 }
 

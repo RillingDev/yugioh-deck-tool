@@ -15,6 +15,7 @@ import {
 import { mapArchetype, RawArchetype } from "./mapping/mapArchetype";
 import { DEVELOPMENT_MODE } from "../../mode";
 import { merge } from "lodash";
+import { FindCardBy } from "../../core/business/CardDatabase";
 
 /**
  * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
@@ -39,18 +40,27 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         this.httpService = httpService;
     }
 
-    public async getCardByName(name: string): Promise<UnlinkedCard | null> {
+    public async getCard(
+        cardKey: string,
+        findCardBy: FindCardBy
+    ): Promise<UnlinkedCard | null> {
+        const params: { [key: string]: string } = {
+            misc: "yes",
+            includeAliased: "yes",
+            format: "all",
+        };
+        if (findCardBy == FindCardBy.ID) {
+            params.id = cardKey;
+        } else {
+            params.name = cardKey;
+        }
+
         const response = await this.httpService.get<{ data: RawCard[] }>(
             "cardinfo.php",
             merge(this.createBaseRequestConfig(), {
-                params: {
-                    name: name,
-                    misc: "yes",
-                    includeAliased: "yes",
-                    format: "all",
-                },
+                params,
                 validateStatus: (status: number) =>
-                    status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found
+                    status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found })
             })
         );
         if (response.status === 400) {
@@ -120,7 +130,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             baseURL: YgoprodeckCardDataLoaderService.INTERNAL_API_BASE_URL,
             timeout: 3000,
             responseType: "text",
-            data: {
+            params: {
                 name: cardName,
             },
         });

@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
-import { CardDatabase } from "../CardDatabase";
+import { CardDatabase, FindCardBy } from "../CardDatabase";
 import { DeckService } from "./DeckService";
 import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { HttpService } from "./HttpService";
@@ -97,10 +97,13 @@ class DeckFileService {
             // Only start processing once a deckpart indicator was found. this allows for arbitrary file metadata as "head" of the file.
             if (currentDeckPart != null) {
                 const cardId = line.replace(/^0+/, ""); // Some applications pad the start with zeros, remove those.
-                if (!this.cardDatabase.hasCardById(cardId)) {
+                if (!this.cardDatabase.hasCard(cardId, FindCardBy.ID)) {
                     missing.push(cardId);
                 } else {
-                    const card = this.cardDatabase.getCardById(cardId)!;
+                    const card = this.cardDatabase.getCard(
+                        cardId,
+                        FindCardBy.ID
+                    )!;
                     deck.parts.get(currentDeckPart)!.push(card);
                 }
             }

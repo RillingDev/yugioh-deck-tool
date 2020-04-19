@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
-import { CardDatabase } from "../CardDatabase";
+import { CardDatabase, FindCardBy } from "../CardDatabase";
 import { Card } from "../../model/ygo/Card";
 import { isEqual } from "lodash";
 import { DeckService } from "./DeckService";
@@ -156,12 +156,15 @@ class DeckUriEncodingService {
                             cardId = entry.slice(2);
                         }
 
-                        if (!this.cardDatabase.hasCardById(cardId)) {
+                        if (!this.cardDatabase.hasCard(cardId, FindCardBy.ID)) {
                             throw new TypeError(
                                 `Unknown card ${cardId}, this hopefully should never happen.`
                             );
                         }
-                        const card = this.cardDatabase.getCardById(cardId)!;
+                        const card = this.cardDatabase.getCard(
+                            cardId,
+                            FindCardBy.ID
+                        )!;
 
                         for (let i = 0; i < count; i++) {
                             deckPartCards.push(card);
@@ -179,11 +182,11 @@ class DeckUriEncodingService {
 
     private decodeCardBlock(block: Uint8Array): Card {
         const id = String(this.decodeNumber(block));
-        if (!this.cardDatabase.hasCardById(id)) {
+        if (!this.cardDatabase.hasCard(id, FindCardBy.ID)) {
             throw new TypeError(`Could not find card for ID ${id}.`);
         }
 
-        return this.cardDatabase.getCardById(id)!;
+        return this.cardDatabase.getCard(id, FindCardBy.ID)!;
     }
 
     private encodeNumber(number: number): Uint8Array {

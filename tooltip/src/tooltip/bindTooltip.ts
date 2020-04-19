@@ -3,13 +3,14 @@ import {
     Card,
     CardDatabase,
     CardDataLoaderService,
+    FindCardBy,
 } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import logger from "loglevel";
 import {
     createCardTooltip,
-    createLoadingTooltip,
     createErrorTooltip,
+    createLoadingTooltip,
 } from "./createCardTooltip";
 import { bindReferenceLink } from "./bindReferenceLink";
 import { debounce } from "lodash";
@@ -50,8 +51,8 @@ class CardTooltip {
 }
 
 const loadCard = async (cardName: string): Promise<Card> => {
-    await cardDatabase.prepareCardByName(cardName);
-    const card = cardDatabase.getCardByName(cardName);
+    await cardDatabase.prepareCard(cardName, FindCardBy.NAME);
+    const card = cardDatabase.getCard(cardName, FindCardBy.NAME);
     if (card == null) {
         throw new Error(`Could not find card '${cardName}'.`);
     }

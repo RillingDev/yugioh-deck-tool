@@ -9,7 +9,7 @@ export {
 } from "./core/model/ygo/DeckPart";
 export { TYPES } from "./types";
 export { container } from "./inversify.config";
-export { CardDatabase } from "./core/business/CardDatabase";
+export { CardDatabase, FindCardBy } from "./core/business/CardDatabase";
 export { CardDataLoaderService } from "./core/business/service/CardDataLoaderService";
 export { CardService } from "./core/business/service/CardService";
 export { PriceService } from "./core/business/service/PriceService";
