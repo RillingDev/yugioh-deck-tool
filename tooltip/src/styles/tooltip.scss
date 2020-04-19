@@ -52,7 +52,8 @@
     &__subtype,
     &__level,
     &__link-markers,
-    &__loading {
+    &__loading,
+    &__error {
         display: flex;
         align-items: center;
         margin-bottom: 0.5rem;
@@ -72,8 +73,12 @@
         }
     }
 
-    &__loading {
+    &__loading,
+    &__error {
         margin-bottom: 0;
+    }
+    &__error {
+        color: $error;
     }
 
     &__name {

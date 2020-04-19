@@ -6,7 +6,11 @@ import {
 } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import logger from "loglevel";
-import { createCardTooltip, createLoadingTooltip } from "./createCardTooltip";
+import {
+    createCardTooltip,
+    createLoadingTooltip,
+    createErrorTooltip,
+} from "./createCardTooltip";
 import { bindReferenceLink } from "./bindReferenceLink";
 import { debounce } from "lodash";
 import { createPopper, Instance } from "@popperjs/core";
@@ -31,11 +35,16 @@ class CardTooltip {
     public async open(target: HTMLElement, cardName: string): Promise<Card> {
         logger.trace(`Attempting to show tooltip for '${cardName}'.`);
         this.attachTooltip(target, createLoadingTooltip());
-        await cardDatabase.prepareCardByName(cardName);
 
-        const card = cardDatabase.getCardByName(cardName);
-        if (card == null) {
-            throw new Error(`Could not find card '${cardName}'.`);
+        let card: Card;
+        try {
+            card = await this.loadCard(cardName);
+        } catch (e) {
+            this.attachTooltip(
+                target,
+                createErrorTooltip("Error while loading card.")
+            );
+            throw e;
         }
 
         logger.trace("Loaded card.", card);
@@ -53,6 +62,15 @@ class CardTooltip {
             this.tooltipElement.remove();
             this.popperInstance?.destroy();
         }
+    }
+
+    private async loadCard(cardName: string): Promise<Card> {
+        await cardDatabase.prepareCardByName(cardName);
+        let card = cardDatabase.getCardByName(cardName);
+        if (card == null) {
+            throw new Error(`Could not find card '${cardName}'.`);
+        }
+        return card;
     }
 
     private attachTooltip(target: HTMLElement, tooltip: HTMLElement): void {

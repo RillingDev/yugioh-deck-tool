@@ -66,6 +66,17 @@ export const createLoadingTooltip = (): HTMLElement =>
         ]
     );
 
+export const createErrorTooltip = (message: string): HTMLElement =>
+    createDiv(
+        ["card-tooltip__content", "card-tooltip__content--error"],
+        [
+            createDiv(
+                ["card-tooltip__error"],
+                [createSpan(["fas", "fa-times"], ""), createSpan([], message)]
+            ),
+        ]
+    );
+
 const createMonsterStats = (card: Card): HTMLElement => {
     const statsChildren: HTMLElement[] = [];
     const statImage = createImg(
