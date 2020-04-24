@@ -1,7 +1,5 @@
 import { injectable } from "inversify";
 
-import parseUrl from "url-parse";
-
 /**
  * @public
  */
@@ -15,7 +13,7 @@ class UrlService {
      * @return If they have the same URL.
      */
     public hasSameOrigin(urlA: string, urlB: string): boolean {
-        return parseUrl(urlA).origin === parseUrl(urlB).origin;
+        return new URL(urlA).origin === new URL(urlB).origin;
     }
 
     /**
@@ -25,13 +23,12 @@ class UrlService {
      * @return File name or empty string.
      */
     public getFileName(url: string): string {
-        const pathname = parseUrl(url).pathname;
+        const pathname = new URL(url).pathname;
         if (!pathname.includes("/")) {
             return "";
         }
         return pathname.substr(pathname.lastIndexOf("/") + 1);
     }
-
     /**
      * Returns the value of the single query parameter value of an URL.
      * DOES NOT WORK WITH MORE THAN ONE PARAMETER.
@@ -46,18 +43,16 @@ class UrlService {
         key: string,
         validate = true
     ): string | null {
-        const parsed = parseUrl(url, validate);
         if (validate) {
-            return parsed.query[key] ?? null;
+            return new URL(url).searchParams.get(key);
         }
 
-        // If `validate` is false, parseUrl sets a string here instead of the defined type.
-        const queryString = (parsed.query as unknown) as string;
+        // Very primitive fallback that does not actually convert URL characters
         const searchString = `?${key}=`;
-        if (!queryString.includes(searchString)) {
+        if (!url.includes(searchString)) {
             return null;
         }
-        return queryString.replace(searchString, "");
+        return url.substr(url.indexOf(searchString) + searchString.length);
     }
 }
 
