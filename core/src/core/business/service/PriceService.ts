@@ -15,6 +15,22 @@ interface PriceLookupResult {
 @injectable()
 class PriceService {
     /**
+     * Formats a price for its currency.
+     *
+     * @param value Value to format.
+     * @param currency Currency to format for.
+     * @return formatted price.
+     */
+    public formatPrice(value: number, currency: Currency): string {
+        return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: currency.id,
+            minimumFractionDigits: currency.fractionDigits,
+            maximumFractionDigits: currency.fractionDigits,
+        }).format(value);
+    }
+
+    /**
      * Gets the price of the card(s) for the given vendor and currency, using the sum of all existing prices.
      *
      * @param cards Cards to check.

@@ -5,7 +5,6 @@ import {
     DEFAULT_VENDOR_ARR,
     PriceService,
 } from "../../../core/src/main";
-import { createCurrencyFormatter } from "../../../ui/src/main";
 import { tooltipContainer } from "../inversify.config";
 import { TOOLTIP_TYPES } from "../types";
 
@@ -152,13 +151,15 @@ const createPrice = (card: Card): HTMLElement => {
         if (lookupResult.missing.length > 0) {
             continue;
         }
-        const currencyFormatter = createCurrencyFormatter(vendor.currency);
         const priceItem = createSpan(
             [
                 "card-tooltip__price__vendor",
                 `card-tooltip__price__vendor--${vendor.id}`,
             ],
-            `${vendor.name}: ${currencyFormatter.format(lookupResult.price)}`
+            `${vendor.name}: ${priceService.formatPrice(
+                lookupResult.price,
+                vendor.currency
+            )}`
         );
         priceItems.push(priceItem);
     }

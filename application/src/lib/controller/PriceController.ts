@@ -9,7 +9,6 @@ import {
     TYPES,
     Vendor,
 } from "../../../../core/src/main";
-import { createCurrencyFormatter } from "../../../../ui/src/main";
 
 @injectable()
 class PriceController {
@@ -39,7 +38,7 @@ class PriceController {
     }
 
     public format(val: number): string {
-        return createCurrencyFormatter(this.activeCurrency).format(val);
+        return this.priceService.formatPrice(val, this.activeCurrency);
     }
 }
 
