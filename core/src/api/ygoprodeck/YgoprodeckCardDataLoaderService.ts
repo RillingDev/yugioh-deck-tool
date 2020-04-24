@@ -26,11 +26,8 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private static readonly CARD_INFO_CHUNK_SIZE = 2000;
     private static readonly API_BASE_URL = DEVELOPMENT_MODE
         ? "https://db.ygoprodeck.com/api/v7/"
-        : "https://ygoprodeck.com/api/deck-builder/";
-
-    private static readonly USE_INTERNAL_API = !DEVELOPMENT_MODE;
-    private static readonly INTERNAL_API_BASE_URL =
-        "https://ygoprodeck.com/api/";
+        : "https://db.ygoprodeck.com/api_internal/v7/";
+    private static readonly USE_INTERNAL_ENDPOINTS = !DEVELOPMENT_MODE;
 
     private readonly httpService: HttpService;
 
@@ -124,11 +121,11 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     }
 
     public async updateViews(card: Card): Promise<void> {
-        if (!YgoprodeckCardDataLoaderService.USE_INTERNAL_API) {
+        if (!YgoprodeckCardDataLoaderService.USE_INTERNAL_ENDPOINTS) {
             return;
         }
         await this.httpService.get<void>("updateViews.php", {
-            baseURL: YgoprodeckCardDataLoaderService.INTERNAL_API_BASE_URL,
+            baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
             timeout: 3000,
             responseType: "text",
             params: {
