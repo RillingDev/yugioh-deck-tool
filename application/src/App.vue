@@ -106,7 +106,6 @@
 </template>
 
 <script lang="ts">
-import logger from "loglevel";
 import Vue from "vue";
 import { PriceController } from "./lib/controller/PriceController";
 
@@ -121,6 +120,7 @@ import {
     DeckUriEncodingService,
     Format,
     UrlService,
+    getLogger,
 } from "../../core/src/main";
 import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
@@ -134,6 +134,8 @@ import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
 import YgoRandomizer from "@/components/YgoRandomizer.vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
+
+const logger = getLogger("app");
 
 @Component({
     components: {
@@ -216,7 +218,7 @@ export default class App extends Vue {
                     });
                     this.deck = result.deck;
                 })
-                .catch((err) => logger.error(err));
+                .catch((err) => logger.error("Could not read file!", err));
         }
     }
 
@@ -241,7 +243,7 @@ export default class App extends Vue {
                 return this.loadUriDeck();
             })
             .then(() => logger.info("Ready."))
-            .catch((err) => logger.error(err));
+            .catch((err) => logger.error("Could not prepare database!", err));
     }
 
     private async loadUriDeck(): Promise<void> {

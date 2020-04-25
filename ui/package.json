@@ -10,8 +10,7 @@
         "clean:test": "rimraf ./spec/dist"
     },
     "dependencies": {
-        "inversify": "^5.0.1",
-        "loglevel": "^1.6.7"
+        "inversify": "^5.0.1"
     },
     "peerDependencies": {
         "reflect-metadata": "^0.1.13"

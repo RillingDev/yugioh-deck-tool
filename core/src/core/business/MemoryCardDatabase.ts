@@ -6,17 +6,19 @@ import { CardSet } from "../model/ygo/CardSet";
 import { CardDatabase, FindCardBy } from "./CardDatabase";
 import { CardType } from "../model/ygo/CardType";
 import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
-import * as logger from "loglevel";
 import { UnlinkedCard } from "../model/ygo/intermediate/UnlinkedCard";
 import { deepFreeze } from "lightdash";
 import { CardLinkingService } from "./service/CardLinkingService";
 import { flatten } from "lodash";
+import { getLogger } from "../../logger";
 
 /**
  * @private
  */
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
+    private static readonly logger = getLogger(MemoryCardDatabase);
+
     private readonly cardDataLoaderService: CardDataLoaderService;
     private readonly cardLinkingService: CardLinkingService;
 
@@ -159,7 +161,10 @@ class MemoryCardDatabase implements CardDatabase {
                 .then((archetypes) => {
                     this.archetypes.push(...archetypes);
                     deepFreeze(this.archetypes);
-                    logger.debug("Registered archetypes.", this.archetypes);
+                    MemoryCardDatabase.logger.debug(
+                        "Registered archetypes.",
+                        this.archetypes
+                    );
                 });
         }
         return this.loadingArchetypes;
@@ -172,7 +177,10 @@ class MemoryCardDatabase implements CardDatabase {
                 .then((cardSets) => {
                     this.sets.push(...cardSets);
                     deepFreeze(this.sets);
-                    logger.debug("Registered sets.", this.sets);
+                    MemoryCardDatabase.logger.debug(
+                        "Registered sets.",
+                        this.sets
+                    );
                 });
         }
         return this.loadingSets;
@@ -192,7 +200,7 @@ class MemoryCardDatabase implements CardDatabase {
                         cardRaces.push(...cardValues[cardTypeGroup].races);
                         deepFreeze(cardRaces);
                     }
-                    logger.debug(
+                    MemoryCardDatabase.logger.debug(
                         "Registered types and races.",
                         this.types,
                         this.races
@@ -212,7 +220,7 @@ class MemoryCardDatabase implements CardDatabase {
                         ...cardValues[CardTypeGroup.MONSTER].linkMarkers
                     );
                     deepFreeze(this.monsterLinkMarkers);
-                    logger.debug(
+                    MemoryCardDatabase.logger.debug(
                         "Registered monster values.",
                         this.monsterAttributes,
                         this.monsterLevels,
@@ -245,7 +253,7 @@ class MemoryCardDatabase implements CardDatabase {
             deepFreeze(card);
             this.cardsById.set(card.id, card);
             this.cardsByName.set(card.name, card);
-            logger.trace(`Registered card '${card.id}'.`);
+            MemoryCardDatabase.logger.trace(`Registered card '${card.id}'.`);
         }
     }
 

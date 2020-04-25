@@ -4,9 +4,9 @@ import {
     CardDatabase,
     CardDataLoaderService,
     FindCardBy,
+    getLogger,
 } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
-import logger from "loglevel";
 import {
     createCardTooltip,
     createErrorTooltip,
@@ -23,6 +23,8 @@ const cardDatabase = tooltipContainer.get<CardDatabase>(
 const cardDataLoaderService = tooltipContainer.get<CardDataLoaderService>(
     TOOLTIP_TYPES.CardDataLoaderService
 );
+
+const logger = getLogger("bindTooltip");
 
 class CardTooltip {
     private tooltipElement: HTMLElement | null;

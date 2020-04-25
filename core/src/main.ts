@@ -45,3 +45,4 @@ export { DeckUriEncodingService } from "./core/business/service/DeckUriEncodingS
 export { DeckFileService } from "./core/business/service/DeckFileService";
 export { UrlService } from "./core/business/service/UrlService";
 export { DEVELOPMENT_MODE } from "./mode";
+export { getLogger } from "./logger";

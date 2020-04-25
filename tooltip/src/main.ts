@@ -1,12 +1,11 @@
 import "reflect-metadata";
 import { bindTooltipHandlers } from "./tooltip/bindTooltip";
-import logger, { levels } from "loglevel";
-import { DEVELOPMENT_MODE } from "../../core/src/main";
 import "./styles/tooltip.scss";
+import { getLogger } from "../../core/src/logger";
 
 const TOOLTIP_CONTAINER_ID = "cardTooltipContainer";
 
-logger.setLevel(DEVELOPMENT_MODE ? levels.DEBUG : levels.WARN);
+const logger = getLogger("tooltip");
 
 document.addEventListener("readystatechange", () => {
     if (document.getElementById(TOOLTIP_CONTAINER_ID) == null) {

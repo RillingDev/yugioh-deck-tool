@@ -4,13 +4,15 @@ import { CardSet } from "../../model/ygo/CardSet";
 import { CardType } from "../../model/ygo/CardType";
 import { Card } from "../../model/ygo/Card";
 import { CardSetAppearance } from "../../model/ygo/intermediate/CardSetAppearance";
-import * as logger from "loglevel";
+import { getLogger } from "../../../logger";
 
 /**
  * @private
  */
 @injectable()
 class CardLinkingService {
+    private static readonly logger = getLogger(CardLinkingService);
+
     /**
      * Links an unlinked card.
      *
@@ -62,11 +64,13 @@ class CardLinkingService {
         return setAppearances
             .map((setAppearance) => {
                 if (!setCache.has(setAppearance.name)) {
-                    logger.warn(`Could not find set '${setAppearance.name}'.`);
+                    CardLinkingService.logger.warn(
+                        `Could not find set '${setAppearance.name}'.`
+                    );
                     return null;
                 }
                 const matchingSet = setCache.get(setAppearance.name)!;
-                logger.trace(
+                CardLinkingService.logger.trace(
                     `Matched set ${setAppearance.name} to ${matchingSet.name}.`
                 );
                 return matchingSet;
@@ -82,7 +86,9 @@ class CardLinkingService {
             throw new TypeError(`Could not find type '${typeName}'.`);
         }
         const matchingType = typeCache.get(typeName)!;
-        logger.trace(`Matched type ${typeName} to ${matchingType.name}.`);
+        CardLinkingService.logger.trace(
+            `Matched type ${typeName} to ${matchingType.name}.`
+        );
         return matchingType;
     }
 }
