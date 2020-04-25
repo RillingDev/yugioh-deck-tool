@@ -3,8 +3,10 @@
     "compilerOptions": {
         "baseUrl": "./",
         "strict": false,
+        "allowSyntheticDefaultImports": true,
+        "importHelpers": true,
+        "esModuleInterop": true,
         "sourceMap": true,
-        "jsx": "preserve",
         "paths": {
             "@/*": ["src/*"]
         }
