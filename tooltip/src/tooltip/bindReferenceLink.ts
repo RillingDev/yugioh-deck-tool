@@ -1,7 +1,6 @@
 import { tooltipContainer } from "../inversify.config";
-import { CardService } from "../../../core/src/core/business/service/CardService";
 import { TOOLTIP_TYPES } from "../types";
-import { Card } from "../../../core/src/main";
+import { Card, CardService } from "../../../core/src/main";
 
 const cardService = tooltipContainer.get<CardService>(
     TOOLTIP_TYPES.CardService

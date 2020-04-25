@@ -50,11 +50,11 @@ import {
     Deck,
     DeckRandomizationService,
     Format,
+    RandomizationStrategy,
 } from "../../../core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
-import { RandomizationStrategy } from "../../../core/src/core/business/service/DeckRandomizationService";
 import { BModal } from "bootstrap-vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 import YgoFilter from "@/components/YgoFilter.vue";
