@@ -43,12 +43,12 @@ class DeckService {
         format: Format | null,
         card: Card
     ): boolean {
-        // If the card is not allowed in this deckpart, return false
+        // If the card is not allowed in this deck part, return false
         if (!card.type.deckParts.has(deckPart)) {
             return false;
         }
 
-        // If adding would make the deckpart be larger than allowed, return false
+        // If adding would make the deck part be larger than allowed, return false
         const deckPartSize = deck.parts.get(deckPart)!.length;
         if (deckPartSize + 1 > deckPart.max) {
             return false;

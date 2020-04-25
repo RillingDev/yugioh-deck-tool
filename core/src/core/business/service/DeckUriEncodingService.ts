@@ -55,7 +55,7 @@ class DeckUriEncodingService {
      * Byte Array structure:
      * Blocks of {@link #BLOCK_BYTE_SIZE} represent a single card ID number,
      * with a special value {@link #DELIMITER_BLOCK} being used to separate deck-parts.
-     * After the last card of the last deckpart and the delimiter,
+     * After the last card of the last deck part and the delimiter,
      * the UTF-8 code-points of the deck name follow, if one is set.
      *
      * @param deck
@@ -102,7 +102,7 @@ class DeckUriEncodingService {
             const block = inflated.slice(blockStart, blockEnd);
 
             if (isEqual(block, DeckUriEncodingService.DELIMITER_BLOCK)) {
-                // After the last deckpart, meta data starts
+                // After the last deck part, meta data starts
                 if (deckPartIndex === DEFAULT_DECK_PART_ARR.length - 1) {
                     metaDataStart = blockEnd;
                     break;

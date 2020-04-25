@@ -189,7 +189,7 @@ class DeckRandomizationService {
         const initialLength = deckPartCards.length;
         const deckPartLimit = this.getDeckPartLimit(deckPart, strategy);
         for (const card of shuffle(pool)) {
-            // If we reached the deckpart limit: break, skipping all other cards in the pool
+            // If we reached the deck part limit: break, skipping all other cards in the pool
             if (deckPartCards.length >= deckPartLimit) {
                 break;
             }
