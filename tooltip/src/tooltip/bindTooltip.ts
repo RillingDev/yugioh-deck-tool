@@ -112,6 +112,16 @@ export const bindTooltipHandlers = (
         }
     };
 
+    const mouseOutHandler = (event: MouseEvent): void => {
+        const focusShiftedToTooltip =
+            event.relatedTarget instanceof Node &&
+            tooltipContainerElement.contains(event.relatedTarget);
+        // We do not wanna hide the tooltip of the focus shifted to the tooltip.
+        if (!focusShiftedToTooltip) {
+            tooltip.close();
+        }
+    };
+
     context.addEventListener("mouseover", debounce(mouseOverHandler, 100));
-    context.addEventListener("mouseout", (): void => tooltip.close());
+    context.addEventListener("mouseout", mouseOutHandler);
 };
