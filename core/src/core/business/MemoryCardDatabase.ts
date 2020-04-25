@@ -224,25 +224,29 @@ class MemoryCardDatabase implements CardDatabase {
     }
 
     private registerCards(unlinkedCards: UnlinkedCard[]): void {
-        const types = flatten(Array.from(this.types.values()));
-        const linkedCards = this.cardLinkingService.linkCards(
-            Array.from(this.sets),
-            types,
-            unlinkedCards.filter(
-                (unlinkedCard) => !this.cardsById.has(unlinkedCard.id)
-            )
+        const setMap = new Map<string, CardSet>(
+            this.sets.map((set) => [set.name, set])
         );
-        for (const card of linkedCards) {
+        const types = flatten(Array.from(this.types.values()));
+        const typeMap = new Map<string, CardType>(
+            types.map((type) => [type.name, type])
+        );
+
+        for (const unlinkedCard of unlinkedCards) {
+            if (this.cardsById.has(unlinkedCard.id)) {
+                continue;
+            }
+            const card = this.cardLinkingService.linkCard(
+                unlinkedCard,
+                setMap,
+                typeMap
+            );
+
             deepFreeze(card);
             this.cardsById.set(card.id, card);
             this.cardsByName.set(card.name, card);
             logger.trace(`Registered card '${card.id}'.`);
         }
-        logger.debug(
-            `Registered ${linkedCards.length} card(s).`,
-            this.cardsById,
-            this.cardsByName
-        );
     }
 
     private getCardMap(findCardBy: FindCardBy): Map<string, Card> {

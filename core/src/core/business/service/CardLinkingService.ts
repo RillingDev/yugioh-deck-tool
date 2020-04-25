@@ -12,56 +12,47 @@ import * as logger from "loglevel";
 @injectable()
 class CardLinkingService {
     /**
-     * Links a lit of unlinked cards.
+     * Links an unlinked card.
      *
-     * @param sets Set data to link against.
-     * @param types Type data to link against.
-     * @param unlinkedCards Unlinked cards.
-     * @return linked Cards.
+     * @param unlinkedCard Unlinked card.
+     * @param setMap Set data to link against.
+     * @param typeMap Type data to link against.
+     * @return linked card.
      */
-    public linkCards(
-        sets: CardSet[],
-        types: CardType[],
-        unlinkedCards: UnlinkedCard[]
-    ): Card[] {
-        const setCache = new Map<string, CardSet>(
-            sets.map((set) => [set.name, set])
-        );
-        const typeCache = new Map<string, CardType>(
-            types.map((type) => [type.name, type])
-        );
+    public linkCard(
+        unlinkedCard: UnlinkedCard,
+        setMap: Map<string, CardSet>,
+        typeMap: Map<string, CardType>
+    ): Card {
+        return {
+            id: unlinkedCard.id,
+            name: unlinkedCard.name,
+            desc: unlinkedCard.desc,
 
-        return unlinkedCards.map((unlinkedCard) => {
-            return {
-                id: unlinkedCard.id,
-                name: unlinkedCard.name,
-                desc: unlinkedCard.desc,
+            type: this.linkType(unlinkedCard.type, typeMap),
+            race: unlinkedCard.race,
+            attribute: unlinkedCard.attribute,
+            atk: unlinkedCard.atk,
+            def: unlinkedCard.def,
+            level: unlinkedCard.level,
+            scale: unlinkedCard.scale,
+            linkVal: unlinkedCard.linkVal,
+            linkMarkers: unlinkedCard.linkMarkers,
 
-                type: this.linkType(unlinkedCard.type, typeCache),
-                race: unlinkedCard.race,
-                attribute: unlinkedCard.attribute,
-                atk: unlinkedCard.atk,
-                def: unlinkedCard.def,
-                level: unlinkedCard.level,
-                scale: unlinkedCard.scale,
-                linkVal: unlinkedCard.linkVal,
-                linkMarkers: unlinkedCard.linkMarkers,
+            sets: this.linkSets(unlinkedCard.sets, setMap),
+            image: unlinkedCard.image,
+            prices: unlinkedCard.prices,
+            betaName: unlinkedCard.betaName,
+            treatedAs: unlinkedCard.treatedAs,
+            archetype: unlinkedCard.archetype,
 
-                sets: this.linkSets(unlinkedCard.sets, setCache),
-                image: unlinkedCard.image,
-                prices: unlinkedCard.prices,
-                betaName: unlinkedCard.betaName,
-                treatedAs: unlinkedCard.treatedAs,
-                archetype: unlinkedCard.archetype,
+            formats: unlinkedCard.formats,
+            release: unlinkedCard.release,
+            banlist: unlinkedCard.banlist,
 
-                formats: unlinkedCard.formats,
-                release: unlinkedCard.release,
-                banlist: unlinkedCard.banlist,
-
-                views: unlinkedCard.views,
-                votes: unlinkedCard.votes,
-            };
-        });
+            views: unlinkedCard.views,
+            votes: unlinkedCard.votes,
+        };
     }
 
     private linkSets(
