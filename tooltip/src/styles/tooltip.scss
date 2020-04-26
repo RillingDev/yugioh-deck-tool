@@ -3,7 +3,9 @@
 @import "../ui/src/styles/mixin/screen";
 
 .card-tooltip {
-    * {
+    *,
+    *::before,
+    *::after {
         box-sizing: border-box;
     }
 
@@ -69,7 +71,7 @@
 
         span:not(:last-child),
         img:not(:last-child) {
-            margin-right: 0.35rem;
+            margin-right: 0.4rem;
         }
     }
 
