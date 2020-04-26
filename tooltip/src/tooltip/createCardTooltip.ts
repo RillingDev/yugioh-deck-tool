@@ -1,8 +1,8 @@
 import {
     Card,
     CardTypeGroup,
-    Format,
     DEFAULT_VENDOR_ARR,
+    Format,
     PriceService,
 } from "../../../core/src/main";
 import { tooltipContainer } from "../inversify.config";
@@ -98,47 +98,35 @@ const createSubType = (card: Card, isMonster: boolean): HTMLElement => {
     const subTypeChildren: HTMLElement[] = [];
 
     if (isMonster) {
-        const attribute = createDiv(
-            [],
-            [
-                createImg(
-                    [],
-                    `https://ygoprodeck.com/pics/${encodeURIComponent(
-                        card.attribute!
-                    )}.jpg`
-                ),
-                createSpan([], `Attribute: ${card.attribute!}`),
-            ]
+        subTypeChildren.push(
+            createImg(
+                [],
+                `https://ygoprodeck.com/pics/${encodeURIComponent(
+                    card.attribute!
+                )}.jpg`
+            )
         );
-        subTypeChildren.push(attribute);
+        subTypeChildren.push(createSpan([], `Attribute: ${card.attribute!}`));
 
-        const race = createDiv(
-            [],
-            [
-                createImg(
-                    [],
-                    `https://ygoprodeck.com/pics/${encodeURIComponent(
-                        card.race
-                    )}.png`
-                ),
-                createSpan([], `Type: ${card.race}`),
-            ]
+        subTypeChildren.push(
+            createImg(
+                [],
+                `https://ygoprodeck.com/pics/${encodeURIComponent(
+                    card.race
+                )}.png`
+            )
         );
-        subTypeChildren.push(race);
+        subTypeChildren.push(createSpan([], `Type: ${card.race}`));
     } else {
-        const subtype = createDiv(
-            [],
-            [
-                createImg(
-                    [],
-                    `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-                        card.race
-                    )}.png`
-                ),
-                createSpan([], `Type: ${card.race}`),
-            ]
+        subTypeChildren.push(
+            createImg(
+                [],
+                `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
+                    card.race
+                )}.png`
+            )
         );
-        subTypeChildren.push(subtype);
+        subTypeChildren.push(createSpan([], `Type: ${card.race}`));
     }
 
     return createDiv(["card-tooltip__subtype"], subTypeChildren);
@@ -263,6 +251,11 @@ const createCardImageCol = (card: Card): HTMLElement => {
 
 export const createCardTooltip = (card: Card): HTMLElement =>
     createDiv(
-        ["card-tooltip__content"],
-        [createCardDetailsCol(card), createCardImageCol(card)]
+        ["card-tooltip"],
+        [
+            createDiv(
+                ["card-tooltip__content"],
+                [createCardDetailsCol(card), createCardImageCol(card)]
+            ),
+        ]
     );

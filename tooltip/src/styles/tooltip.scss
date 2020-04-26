@@ -11,7 +11,7 @@
 
     &__content {
         font-family: $font-family-base;
-        font-size: 0.7em;
+        font-size: 0.675em;
         color: $white;
         background-color: $gray-800;
         border: 1px solid $black;
@@ -22,29 +22,45 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-        padding: 0.5rem;
+        padding: 0.25rem;
 
         @include screen(min, sm) {
-            font-size: 0.9em;
+            font-size: 0.75em;
+            padding: 0.5rem;
+        }
+        @include screen(min, md) {
+            font-size: 0.825em;
         }
     }
 
     &__details__col {
-        width: 80%;
+        width: 85%;
         display: flex;
         flex-direction: column;
 
         @include screen(min, sm) {
+            width: 80%;
+        }
+        @include screen(min, md) {
+            width: 75%;
+        }
+        @include screen(min, lg) {
             width: 70%;
         }
     }
 
     &__image__col {
-        width: calc(20% - 0.75rem);
+        width: calc(15% - 0.25rem);
         display: flex;
         flex-direction: column;
 
         @include screen(min, sm) {
+            width: calc(20% - 0.5rem);
+        }
+        @include screen(min, md) {
+            width: calc(25% - 0.75rem);
+        }
+        @include screen(min, lg) {
             width: calc(30% - 0.75rem);
         }
     }
@@ -58,10 +74,16 @@
     &__error {
         display: flex;
         align-items: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.325rem;
+        @include screen(min, sm) {
+            margin-bottom: 0.5rem;
+        }
 
         img {
-            height: 20px;
+            height: 15px;
+            @include screen(min, sm) {
+                height: 20px;
+            }
         }
 
         span {
@@ -71,7 +93,11 @@
 
         span:not(:last-child),
         img:not(:last-child) {
-            margin-right: 0.4rem;
+            margin-right: 0.325rem;
+        }
+
+        img:not(:first-child) {
+            margin-left: 0.325rem;
         }
     }
 
@@ -79,6 +105,7 @@
     &__error {
         margin-bottom: 0;
     }
+
     &__error {
         color: $error;
     }
@@ -103,7 +130,11 @@
     &__price {
         margin-top: 0.75rem;
         font-size: 1.1em;
-        @include price();
+        display: none;
+        @include screen(min, sm) {
+            display: flex;
+            @include price();
+        }
     }
 
     &__image {
@@ -113,16 +144,19 @@
     }
 
     &__votes {
-        display: flex;
         justify-content: center;
         align-items: center;
         font-size: 1.1em;
+        display: none;
+        @include screen(min, sm) {
+            display: flex;
+        }
 
         @include screen(min, sm) {
             font-size: 1.25em;
         }
 
-        > span:not(:last-child) {
+        > :not(:last-child) {
             margin-right: 0.5rem;
 
             @include screen(min, sm) {
