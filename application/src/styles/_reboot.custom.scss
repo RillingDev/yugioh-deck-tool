@@ -1,10 +1,11 @@
 /**
-* We wrap this in order to avoid leaking styles into the main site
+* We wrap this in order to avoid leaking styles into the main site.
 * Manual changes:
 * - wrap in .decktool
 * - change html/body to .decktool
 */
-.decktool {
+.decktool,
+.decktool-modal {
     // stylelint-disable at-rule-no-vendor-prefix, declaration-no-important, selector-no-qualifying-type, property-no-vendor-prefix
 
     // Reboot
@@ -49,24 +50,6 @@
     nav,
     section {
         display: block;
-    }
-
-    // Body
-    //
-    // 1. Remove the margin in all browsers.
-    // 2. As a best practice, apply a default `background-color`.
-    // 3. Set an explicit initial text-align value so that we can later use
-    //    the `inherit` value on things like `<th>` elements.
-
-    & {
-        font-family: $font-family-base;
-        font-weight: $font-weight-base;
-        @include font-size($font-size-base);
-        line-height: $line-height-base;
-        margin: 0; // 1
-        text-align: left; // 3
-        color: $body-color;
-        background-color: $body-bg; // 2
     }
 
     // Future-proof rule: in browsers that support :focus-visible, suppress the focus outline
@@ -242,7 +225,7 @@
     samp {
         font-family: $font-family-monospace;
         @include font-size(
-            1em
+                1em
         ); // Correct the odd `em` font sizing in all browsers.
     }
 
@@ -497,5 +480,25 @@
     // Needed for proper display in IE 10-.
     [hidden] {
         display: none !important;
+    }
+}
+
+.decktool {
+    // Body
+    //
+    // 1. Remove the margin in all browsers.
+    // 2. As a best practice, apply a default `background-color`.
+    // 3. Set an explicit initial text-align value so that we can later use
+    //    the `inherit` value on things like `<th>` elements.
+
+    & {
+        font-family: $font-family-base;
+        font-weight: $font-weight-base;
+        @include font-size($font-size-base);
+        line-height: $line-height-base;
+        margin: 0; // 1
+        text-align: left; // 3
+        color: $body-color;
+        background-color: $body-bg; // 2
     }
 }

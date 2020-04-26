@@ -15,6 +15,7 @@
             <span class="fas fa-cog"></span>
         </button>
         <BModal
+            modal-class="decktool-modal"
             hide-footer
             id="modalRandomizerSettings"
             ref="modalRandomizerSettings"

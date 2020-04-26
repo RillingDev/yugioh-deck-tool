@@ -59,5 +59,3 @@ export default class AdvancedSelect<T> extends Vue {
     }
 }
 </script>
-
-<style lang="scss"></style>

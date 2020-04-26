@@ -10,6 +10,7 @@
         </button>
 
         <BModal
+            modal-class="decktool-modal"
             hide-footer
             id="modalDrawSim"
             ref="modalDrawSim"
@@ -93,10 +94,6 @@ export default class YgoDrawSim extends Vue {
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
-
-@import "~bootstrap/scss/button-group";
-@import "~bootstrap/scss/close";
-@import "~bootstrap/scss/modal";
 
 .drawsim-output {
     display: flex;

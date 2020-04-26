@@ -119,8 +119,8 @@ import {
     DeckService,
     DeckUriEncodingService,
     Format,
-    UrlService,
     getLogger,
+    UrlService,
 } from "../../core/src/main";
 import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
@@ -284,20 +284,28 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import "./styles/variables.custom";
+
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
+
+@import "~bootstrap-vue/src/variables";
+
 @import "styles/reboot.custom";
 
-@import "~bootstrap/scss/transitions";
-@import "~bootstrap/scss/type";
-@import "~bootstrap/scss/grid";
-@import "~bootstrap/scss/forms";
-@import "~bootstrap/scss/buttons";
+.decktool,
+.decktool-modal {
+    @import "~bootstrap/scss/transitions";
+    @import "~bootstrap/scss/type";
+    @import "~bootstrap/scss/grid";
+    @import "~bootstrap/scss/forms";
+    @import "~bootstrap/scss/buttons";
+    @import "~bootstrap/scss/button-group";
+    @import "~bootstrap/scss/close";
+}
+// Required outside due to how modal overlay works
 @import "~bootstrap/scss/modal";
-@import "~bootstrap/scss/utilities";
-
-@import "~bootstrap-vue/dist/bootstrap-vue.css";
+@import "~bootstrap-vue/src/components/modal/index";
 
 @import "styles/blocks/general";
 @import "styles/blocks/forms";
