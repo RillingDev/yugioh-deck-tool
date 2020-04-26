@@ -13,7 +13,10 @@ import {
     HttpService,
 } from "../../core/business/service/HttpService";
 import { mapArchetype, RawArchetype } from "./mapping/mapArchetype";
-import { DEVELOPMENT_MODE } from "../../mode";
+import {
+    DEVELOPMENT_MODE,
+    FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE,
+} from "../../mode";
 import { merge } from "lodash";
 import { FindCardBy } from "../../core/business/CardDatabase";
 import { Card } from "../../core/model/ygo/Card";
@@ -24,10 +27,11 @@ import { Card } from "../../core/model/ygo/Card";
 @injectable()
 class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private static readonly CARD_INFO_CHUNK_SIZE = 2000;
-    private static readonly API_BASE_URL = DEVELOPMENT_MODE
-        ? "https://db.ygoprodeck.com/api/v7/"
-        : "https://db.ygoprodeck.com/api_internal/v7/";
-    private static readonly USE_INTERNAL_ENDPOINTS = !DEVELOPMENT_MODE;
+    private static readonly USE_INTERNAL_ENDPOINTS =
+        FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE || !DEVELOPMENT_MODE;
+    private static readonly API_BASE_URL = YgoprodeckCardDataLoaderService.USE_INTERNAL_ENDPOINTS
+        ? "https://db.ygoprodeck.com/api_internal/v7/"
+        : "https://db.ygoprodeck.com/api/v7/";
 
     private readonly httpService: HttpService;
 
