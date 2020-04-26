@@ -301,5 +301,4 @@ export default class App extends Vue {
 
 @import "styles/blocks/general";
 @import "styles/blocks/forms";
-@import "styles/blocks/ygoprodeck";
 </style>
