@@ -22,7 +22,7 @@ const createDiv = (
     classes: string[],
     children: HTMLElement[]
 ): HTMLDivElement => {
-    const element = createElement(classes, "span") as HTMLDivElement;
+    const element = createElement(classes, "div") as HTMLDivElement;
     children.forEach((child) => element.appendChild(child));
     return element;
 };
