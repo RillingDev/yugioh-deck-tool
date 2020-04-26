@@ -122,6 +122,6 @@ export const bindTooltipHandlers = (
         }
     };
 
-    context.addEventListener("mouseover", debounce(mouseOverHandler, 100));
+    context.addEventListener("mouseover", debounce(mouseOverHandler, 200));
     context.addEventListener("mouseout", mouseOutHandler);
 };
