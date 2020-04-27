@@ -12,7 +12,10 @@ export const bindReferenceLink = (
     target: HTMLAnchorElement,
     card: Card
 ): void => {
-    if (!browserSupportsTouch()) {
+    if (
+        !browserSupportsTouch() && // On touch devices binding a link causes issues with tooltips.
+        target.href.length === 0 // If a link is set already, do not bind one.
+    ) {
         target.href = cardService.getReferenceLink(card);
         target.target = "_blank";
     }

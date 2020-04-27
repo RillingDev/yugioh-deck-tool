@@ -79,10 +79,7 @@ export const bindTooltipHandlers = (
             .then((card) => {
                 logger.trace("Loaded card.", card);
                 tooltip.open(target, createCardTooltip(card));
-                if (
-                    target instanceof HTMLAnchorElement &&
-                    target.href.length === 0
-                ) {
+                if (target instanceof HTMLAnchorElement) {
                     bindReferenceLink(target, card);
                 }
                 // Start request, but do not wait for it to finish.
