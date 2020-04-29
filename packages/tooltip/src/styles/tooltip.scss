@@ -140,40 +140,5 @@
     &__image {
         width: 100%;
         height: auto;
-        margin-bottom: 0.75rem;
-    }
-
-    &__votes {
-        justify-content: center;
-        align-items: center;
-        font-size: 1.1em;
-        display: none;
-        @include screen(min, sm) {
-            display: flex;
-        }
-
-        @include screen(min, sm) {
-            font-size: 1.25em;
-        }
-
-        > :not(:last-child) {
-            margin-right: 0.5rem;
-
-            @include screen(min, sm) {
-                margin-right: 1rem;
-            }
-        }
-
-        .fas {
-            margin-right: 0.25rem;
-
-            &.fa-arrow-up {
-                color: $color-vote-up;
-            }
-
-            &.fa-arrow-down {
-                color: $color-vote-down;
-            }
-        }
     }
 }

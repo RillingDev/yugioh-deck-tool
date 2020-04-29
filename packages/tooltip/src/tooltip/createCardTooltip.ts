@@ -229,25 +229,12 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
     return createDiv(["card-tooltip__details__col"], children);
 };
 
-const createVote = (val: number, icon: string): HTMLElement =>
-    createDiv(
-        [],
-        [
-            createSpan(["fas", `fa-arrow-${icon}`], ""),
-            createSpan([], String(val)),
-        ]
-    );
-
 const createCardImageCol = (card: Card): HTMLElement => {
-    const votes = createDiv(
-        ["card-tooltip__votes"],
-        [createVote(card.votes.up, "up"), createVote(card.votes.down, "down")]
-    );
     const cardImage = createImg(
         ["card-tooltip__image"],
         card.image?.url ?? "#"
     );
-    return createDiv(["card-tooltip__image__col"], [cardImage, votes]);
+    return createDiv(["card-tooltip__image__col"], [cardImage]);
 };
 
 export const createCardTooltip = (card: Card): HTMLElement =>
