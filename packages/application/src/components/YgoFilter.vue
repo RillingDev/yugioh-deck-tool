@@ -364,7 +364,7 @@ export default class YgoFilter extends Vue {
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
 
-@import "../../../ui/src/styles/mixin/screen";
+@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
 .form-group-builder {
     display: flex;
