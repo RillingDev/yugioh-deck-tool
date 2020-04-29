@@ -73,7 +73,7 @@ import {
     SortingOrder,
     SortingService,
     SortingStrategy,
-} from "../../../core/src/main";
+} from "yugioh-deck-tool-core/src/main";
 import YgoFilter from "@/components/YgoFilter.vue";
 
 @Component({

@@ -22,7 +22,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
-import { Deck, DeckService } from "../../../core/src/main";
+import { Deck, DeckService } from "yugioh-deck-tool-core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";

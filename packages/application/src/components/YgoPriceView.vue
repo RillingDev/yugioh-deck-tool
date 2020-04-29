@@ -17,7 +17,7 @@
 import { uiContainer } from "@/inversify.config";
 import { PriceController } from "@/lib/controller/PriceController";
 import { UI_TYPES } from "@/types";
-import { Card, Vendor } from "../../../core/src/main";
+import { Card, Vendor } from "yugioh-deck-tool-core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";

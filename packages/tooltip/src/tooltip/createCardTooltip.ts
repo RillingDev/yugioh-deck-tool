@@ -4,7 +4,7 @@ import {
     DEFAULT_VENDOR_ARR,
     Format,
     PriceService,
-} from "../../../core/src/main";
+} from "yugioh-deck-tool-core/src/main";
 import { tooltipContainer } from "../inversify.config";
 import { TOOLTIP_TYPES } from "../types";
 

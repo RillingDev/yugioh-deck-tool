@@ -187,7 +187,7 @@ import {
     Format,
     SortingOrder,
     SortingStrategy,
-} from "../../../core/src/main";
+} from "yugioh-deck-tool-core/src/main";
 import { uiContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";

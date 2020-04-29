@@ -56,7 +56,7 @@ import YgoCard from "./YgoCard.vue";
 
 import Component from "vue-class-component";
 import Vue from "vue";
-import { Card, Deck, DefaultDeckPart } from "../../../core/src/main";
+import { Card, Deck, DefaultDeckPart } from "yugioh-deck-tool-core/src/main";
 import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
 import { sampleSize } from "lodash";

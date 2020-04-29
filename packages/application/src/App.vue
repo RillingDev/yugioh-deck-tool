@@ -121,7 +121,7 @@ import {
     Format,
     getLogger,
     UrlService,
-} from "../../core/src/main";
+} from "yugioh-deck-tool-core/src/main";
 import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
 import YgoDeck from "./components/YgoDeck.vue";

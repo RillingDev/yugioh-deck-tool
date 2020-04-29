@@ -8,7 +8,7 @@ import {
     PriceService,
     TYPES,
     Vendor,
-} from "../../../../core/src/main";
+} from "yugioh-deck-tool-core/src/main";
 
 @injectable()
 class PriceController {
