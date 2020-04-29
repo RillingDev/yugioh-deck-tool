@@ -54,7 +54,8 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         if (findCardBy == FindCardBy.ID) {
             params.id = cardKey;
         } else {
-            params.name = cardKey;
+            // "fname" uses fuzzy name matching so we get the most similar match instead of an exact match.
+            params.fname = cardKey;
         }
 
         const response = await this.httpService.get<{ data: RawCard[] }>(
@@ -69,7 +70,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             return null;
         }
         const responseData = response.data;
-        // If a match is found, a single element array is returned.
+        // If a match is found, we take the very first item (best match).
         return mapCard(responseData.data[0]);
     }
 
