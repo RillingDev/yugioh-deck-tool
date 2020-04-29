@@ -94,10 +94,10 @@ const createMonsterStats = (card: Card): HTMLElement => {
     return createDiv(["card-tooltip__stats"], statsChildren);
 };
 
-const createSubType = (card: Card, isMonster: boolean): HTMLElement => {
+const createSubType = (card: Card): HTMLElement => {
     const subTypeChildren: HTMLElement[] = [];
 
-    if (isMonster) {
+    if (card.type.group === CardTypeGroup.MONSTER) {
         subTypeChildren.push(
             createImg(
                 [],
@@ -183,14 +183,15 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
     );
     children.push(primaryDetails);
 
-    const isMonster = card.type.group === CardTypeGroup.MONSTER;
-    if (isMonster) {
+    if (card.type.group === CardTypeGroup.MONSTER) {
         children.push(createMonsterStats(card));
     }
 
-    children.push(createSubType(card, isMonster));
+    if (card.type.group !== CardTypeGroup.SKILL) {
+        children.push(createSubType(card));
+    }
 
-    if (isMonster) {
+    if (card.type.group === CardTypeGroup.MONSTER) {
         if (card.level != null) {
             const level = createDiv(
                 ["card-tooltip__level"],
