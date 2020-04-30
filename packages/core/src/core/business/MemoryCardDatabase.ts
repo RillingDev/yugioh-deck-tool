@@ -84,9 +84,9 @@ class MemoryCardDatabase implements CardDatabase {
     public async prepareCard(
         cardKey: string,
         findCardBy: FindCardBy
-    ): Promise<void> {
+    ): Promise<string | null> {
         await Promise.all([this.loadSets(), this.loadCardValues()]);
-        await this.loadCard(cardKey, findCardBy);
+        return await this.loadCard(cardKey, findCardBy);
     }
 
     public hasCard(cardKey: string, findCardBy: FindCardBy): boolean {
@@ -129,20 +129,31 @@ class MemoryCardDatabase implements CardDatabase {
         return this.monsterLinkMarkers;
     }
 
+    /**
+     * Loads a single card.
+     *
+     * @return The resolved version of the card key to be used for further lookups.
+     */
     private async loadCard(
         cardKey: string,
         findCardBy: FindCardBy
-    ): Promise<void> {
-        if (this.getCardMap(findCardBy).has(cardKey)) {
-            return;
+    ): Promise<string | null> {
+        let card: UnlinkedCard | Card | null;
+        if (this.hasCard(cardKey, findCardBy)) {
+            card = this.getCard(cardKey, findCardBy)!;
+        } else {
+            card = await this.cardDataLoaderService.getCard(
+                cardKey,
+                findCardBy
+            );
+            if (card != null) {
+                this.registerCards([card]);
+            }
         }
-        const card = await this.cardDataLoaderService.getCard(
-            cardKey,
-            findCardBy
-        );
-        if (card != null) {
-            this.registerCards([card]);
+        if (card == null) {
+            return null;
         }
+        return findCardBy == FindCardBy.NAME ? card.name : card.id;
     }
 
     private async loadAllCards(): Promise<void> {

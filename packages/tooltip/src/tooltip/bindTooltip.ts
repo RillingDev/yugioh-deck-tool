@@ -53,15 +53,22 @@ class CardTooltip {
 }
 
 const loadCard = async (cardKey: string): Promise<Card> => {
-    await cardDatabase.prepareCard(cardKey, FindCardBy.NAME);
-    let card = cardDatabase.getCard(cardKey, FindCardBy.NAME);
-    if (card != null) {
-        return card;
+    let resolvedCardKey = await cardDatabase.prepareCard(
+        cardKey,
+        FindCardBy.NAME
+    );
+    if (
+        resolvedCardKey != null &&
+        cardDatabase.hasCard(resolvedCardKey, FindCardBy.NAME)
+    ) {
+        return cardDatabase.getCard(resolvedCardKey, FindCardBy.NAME)!;
     }
-    await cardDatabase.prepareCard(cardKey, FindCardBy.ID);
-    card = cardDatabase.getCard(cardKey, FindCardBy.ID);
-    if (card != null) {
-        return card;
+    resolvedCardKey = await cardDatabase.prepareCard(cardKey, FindCardBy.ID);
+    if (
+        resolvedCardKey != null &&
+        cardDatabase.hasCard(resolvedCardKey, FindCardBy.ID)
+    ) {
+        return cardDatabase.getCard(resolvedCardKey, FindCardBy.ID)!;
     }
     throw new Error(`Could not find card '${cardKey}'.`);
 };

@@ -19,8 +19,14 @@ interface CardDatabase {
 
     /**
      * Partially fills the database, loading a single card and direct dependencies.
+     * Note that some fuzzy matching can be done, in which case the closest match will be used.
+     *
+     * @return The resolved version of the card key to be used for further lookups.
      */
-    prepareCard(cardKey: string, findCardBy: FindCardBy): Promise<void>;
+    prepareCard(
+        cardKey: string,
+        findCardBy: FindCardBy
+    ): Promise<string | null>;
 
     hasCard(cardKey: string, findCardBy: FindCardBy): boolean;
 
