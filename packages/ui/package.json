@@ -1,6 +1,6 @@
 {
     "name": "yugioh-deck-tool-ui",
-    "version": "4.16.0",
+    "version": "4.16.1",
     "private": true,
     "scripts": {
         "lint": "eslint ./src/ ../packages/ui/spec/src/ --ext .ts",
