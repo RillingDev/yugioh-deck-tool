@@ -48,14 +48,16 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     ): Promise<UnlinkedCard | null> {
         const params: { [key: string]: string } = {
             misc: "yes",
-            includeAliased: "yes",
             format: "all",
         };
         if (findCardBy == FindCardBy.ID) {
             params.id = cardKey;
+            // Include alternate artworks IDs as well.
+            params.includeAliased = "yes";
         } else {
             // "fname" uses fuzzy name matching so we get the most similar match instead of an exact match.
             params.fname = cardKey;
+            params.sort = "relevance";
         }
 
         const response = await this.httpService.get<{ data: RawCard[] }>(
