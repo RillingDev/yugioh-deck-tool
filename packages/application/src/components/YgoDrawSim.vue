@@ -19,16 +19,16 @@
         >
             <div class="btn-group" role="group">
                 <button
-                    :class="{ active: drawMode === 5 }"
+                    :class="{ active: goingFirst }"
                     class="btn btn-primary"
-                    v-on:click="() => setDrawMode(5)"
+                    v-on:click="() => setGoingFirst(true)"
                 >
                     Going First
                 </button>
                 <button
-                    :class="{ active: drawMode === 6 }"
+                    :class="{ active: !goingFirst }"
                     class="btn btn-primary"
-                    v-on:click="() => setDrawMode(6)"
+                    v-on:click="() => setGoingFirst(false)"
                 >
                     Going Second
                 </button>
@@ -56,17 +56,25 @@ import YgoCard from "./YgoCard.vue";
 
 import Component from "vue-class-component";
 import Vue from "vue";
-import { Card, Deck, DefaultDeckPart } from "yugioh-deck-tool-core/src/main";
+import {
+    Card,
+    Deck,
+    DeckService,
+    DefaultDeckPart,
+} from "yugioh-deck-tool-core/src/main";
 import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
-import { sampleSize } from "lodash";
+import { uiContainer } from "@/inversify.config";
+import { UI_TYPES } from "@/types";
+
+const deckService = uiContainer.get<DeckService>(UI_TYPES.DeckService);
 
 @Component({ components: { YgoCard, BModal } })
 export default class YgoDrawSim extends Vue {
     @Prop({ required: true })
     deck: Deck;
 
-    drawMode = 5;
+    goingFirst = true;
     drawItems: Card[] = [];
 
     get mainDeckCards() {
@@ -78,13 +86,16 @@ export default class YgoDrawSim extends Vue {
         this.draw();
     }
 
-    setDrawMode(newMode) {
-        this.drawMode = newMode;
+    setGoingFirst(goingFirst) {
+        this.goingFirst = goingFirst;
         this.draw();
     }
 
     draw() {
-        this.drawItems = sampleSize(this.mainDeckCards, this.drawMode);
+        this.drawItems = deckService.getSimulatedStartingHand(
+            this.deck,
+            this.goingFirst
+        );
     }
 }
 </script>

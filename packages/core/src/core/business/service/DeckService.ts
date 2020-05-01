@@ -1,12 +1,16 @@
 import { inject, injectable } from "inversify";
-import { DeckPart, DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
+import {
+    DeckPart,
+    DEFAULT_DECK_PART_ARR,
+    DefaultDeckPart,
+} from "../../model/ygo/DeckPart";
 import { Card } from "../../model/ygo/Card";
 import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { CardService } from "./CardService";
 import { Format } from "../../model/ygo/Format";
 import { removeItem } from "lightdash";
-import { shuffle } from "lodash";
+import { shuffle, sampleSize } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
@@ -141,6 +145,20 @@ class DeckService {
             );
         }
         return deckClone;
+    }
+
+    /**
+     * Simulates a starting hand.
+     *
+     * @param deck Deck to simulate for.
+     * @param goingFirst If the simulation should be for a player going first (instead of going second).
+     * @return The simulated starting hand cards.
+     */
+    public getSimulatedStartingHand(deck: Deck, goingFirst: boolean): Card[] {
+        return sampleSize(
+            deck.parts.get(DefaultDeckPart.MAIN),
+            goingFirst ? 5 : 6
+        );
     }
 
     /**
