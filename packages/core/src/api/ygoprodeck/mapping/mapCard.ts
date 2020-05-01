@@ -214,7 +214,6 @@ const mapCard = (rawCard: RawCard): UnlinkedCard => {
         },
 
         views: miscInfo?.views ?? 0,
-        votes: { up: miscInfo?.upvotes ?? 0, down: miscInfo?.downvotes ?? 0 },
     };
 };
 

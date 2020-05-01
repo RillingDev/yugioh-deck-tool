@@ -53,7 +53,6 @@ class CardLinkingService {
             banlist: unlinkedCard.banlist,
 
             views: unlinkedCard.views,
-            votes: unlinkedCard.votes,
         };
     }
 

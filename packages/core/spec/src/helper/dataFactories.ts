@@ -83,7 +83,6 @@ const createCard = (data: {
     },
 
     views: 0,
-    votes: { up: 0, down: 0 },
 });
 
 export { createCard, createCardType };

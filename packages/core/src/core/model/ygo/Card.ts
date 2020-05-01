@@ -36,10 +36,6 @@ interface Card {
     readonly banlist: BanlistInfo;
 
     readonly views: number;
-    readonly votes: {
-        readonly up: number;
-        readonly down: number;
-    };
 }
 
 export { Card };
