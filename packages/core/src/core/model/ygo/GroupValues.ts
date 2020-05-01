@@ -1,7 +1,7 @@
 import { CardType } from "./CardType";
 
 interface GroupValues {
-    readonly races: string[];
+    readonly subTypes: string[];
     readonly types: CardType[];
 }
 

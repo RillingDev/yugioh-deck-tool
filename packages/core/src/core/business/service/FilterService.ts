@@ -14,13 +14,13 @@ interface CardFilter {
 
     typeGroup: CardTypeGroup | null;
     type: CardType | null;
+    subType: string | null;
 
-    race: string | null;
     attribute: string | null;
     level: number | null;
     linkMarker: string | null;
-    archetype: string | null;
 
+    archetype: string | null;
     format: Format | null;
     banState: BanState | null;
 
@@ -69,7 +69,7 @@ class FilterService {
                 return false;
             }
 
-            if (filter.race != null && card.race != filter.race) {
+            if (filter.subType != null && card.subType != filter.subType) {
                 return false;
             }
             if (filter.level != null && card.level != filter.level) {

@@ -92,10 +92,10 @@
                 <div class="form-group form-group-builder">
                     <label>{{ filter.typeGroup }} Type:</label>
                     <AdvancedSelect
-                        :initial-options="races"
+                        :initial-options="subTypes"
                         :no-selection-allowed="true"
                         class="form-control"
-                        v-model="filter.race"
+                        v-model="filter.subType"
                         v-on:input="onFilterChange"
                     />
                 </div>
@@ -284,12 +284,12 @@ export default class YgoFilter extends Vue {
         );
     }
 
-    get races() {
+    get subTypes() {
         if (this.filter.typeGroup == null) {
             return [];
         }
         return this.loadArrFromCardDatabase((cardDatabase) =>
-            cardDatabase.getRaces(this.filter.typeGroup)
+            cardDatabase.getSubTypes(this.filter.typeGroup)
         );
     }
 
@@ -327,7 +327,7 @@ export default class YgoFilter extends Vue {
     @Watch("filter.typeGroup")
     typeGroupWatcher() {
         this.filter.type = null;
-        this.filter.race = null;
+        this.filter.subType = null;
         this.filter.attribute = null;
         this.filter.linkMarker = null;
         this.filter.level = null;

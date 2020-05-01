@@ -96,13 +96,13 @@ class DeckFileService {
 
             // Only start processing once a deck part indicator was found. this allows for arbitrary file metadata as "head" of the file.
             if (currentDeckPart != null) {
-                const cardId = line.replace(/^0+/, ""); // Some applications pad the start with zeros, remove those.
-                if (!this.cardDatabase.hasCard(cardId, FindCardBy.ID)) {
-                    missing.push(cardId);
+                const passcode = line.replace(/^0+/, ""); // Some applications pad the start with zeros, remove those.
+                if (!this.cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
+                    missing.push(passcode);
                 } else {
                     const card = this.cardDatabase.getCard(
-                        cardId,
-                        FindCardBy.ID
+                        passcode,
+                        FindCardBy.PASSCODE
                     )!;
                     deck.parts.get(currentDeckPart)!.push(card);
                 }
@@ -127,7 +127,7 @@ class DeckFileService {
         for (const deckPart of DEFAULT_DECK_PART_ARR) {
             const deckPartCards = deck.parts.get(deckPart)!;
             fileLines.push(deckPart.indicator);
-            fileLines.push(...deckPartCards.map((card) => card.id));
+            fileLines.push(...deckPartCards.map((card) => card.passcode));
             fileLines.push("");
         }
 

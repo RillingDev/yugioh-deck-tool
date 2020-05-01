@@ -178,18 +178,18 @@ const mapCard = (rawCard: RawCard): UnlinkedCard => {
     const miscInfo: RawMiscInfo | null =
         rawCard.misc_info != null ? rawCard.misc_info[0] : null;
     return {
-        id: String(rawCard.id),
+        passcode: String(rawCard.id),
         name: rawCard.name,
-        desc: rawCard.desc,
+        description: rawCard.desc,
 
         type: rawCard.type,
-        race: rawCard.race,
+        subType: rawCard.race,
         attribute: rawCard.attribute ?? null,
         atk: rawCard.atk ?? null,
         def: rawCard.def ?? null,
         level: rawCard.level ?? null,
-        scale: rawCard.scale ?? null,
-        linkVal: rawCard.linkval ?? null,
+        pendulumScale: rawCard.scale ?? null,
+        linkRating: rawCard.linkval ?? null,
         linkMarkers: rawCard.linkmarkers ?? null,
 
         sets: mapCardSets(rawCard),

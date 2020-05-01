@@ -9,7 +9,7 @@ import { Card } from "../../model/ygo/Card";
  */
 interface CardDataLoaderService {
     /**
-     * Gets a card by its exact name OR ID. Return null if none is found.
+     * Gets a card by its exact name OR passcode. Return null if none is found.
      */
     getCard(
         cardKey: string,
@@ -28,7 +28,7 @@ interface CardDataLoaderService {
     getAllCardSets(): Promise<CardSet[]>;
 
     /**
-     * Get card values, containing possible card types, races or other generic values which apply to the game as a whole.
+     * Get card values, containing possible card types, sub-types or other generic values which apply to the game as a whole.
      */
     getCardValues(): Promise<CardValues>;
 

@@ -22,14 +22,17 @@ describe("CardService", () => {
     describe("getBanStateByFormat", () => {
         it("returns UNLIMITED if format is null", () => {
             expect(
-                cardService.getBanStateByFormat(createCard({ id: "123" }), null)
+                cardService.getBanStateByFormat(
+                    createCard({ passcode: "123" }),
+                    null
+                )
             ).toBe(DefaultBanState.UNLIMITED);
         });
 
         it("returns BANNED if the format is not listed for this card", () => {
             expect(
                 cardService.getBanStateByFormat(
-                    createCard({ id: "123", formats: [Format.GOAT] }),
+                    createCard({ passcode: "123", formats: [Format.GOAT] }),
                     Format.RUSH_DUEL
                 )
             ).toBe(DefaultBanState.BANNED);
@@ -39,7 +42,7 @@ describe("CardService", () => {
             expect(
                 cardService.getBanStateByFormat(
                     createCard({
-                        id: "123",
+                        passcode: "123",
                         formats: [Format.RUSH_DUEL],
                         banlist: {
                             [Format.TCG]: DefaultBanState.LIMITED,
@@ -56,7 +59,7 @@ describe("CardService", () => {
             expect(
                 cardService.getBanStateByFormat(
                     createCard({
-                        id: "123",
+                        passcode: "123",
                         formats: [Format.TCG],
                         banlist: {
                             [Format.TCG]: DefaultBanState.LIMITED,
@@ -73,15 +76,15 @@ describe("CardService", () => {
     describe("getUniqueByName", () => {
         it("gets unique by name", () => {
             const card1a = createCard({
-                id: "123",
+                passcode: "123",
                 name: "foo",
             });
             const card1b = createCard({
-                id: "456",
+                passcode: "456",
                 name: "foo",
             });
             const card2 = createCard({
-                id: "789",
+                passcode: "789",
                 name: "bar",
             });
 
@@ -92,11 +95,11 @@ describe("CardService", () => {
 
         it("goes just by name, not alternate names like treatedAs", () => {
             const card1 = createCard({
-                id: "123",
+                passcode: "123",
                 name: "foo",
             });
             const card2 = createCard({
-                id: "456",
+                passcode: "456",
                 name: "fizz",
                 treatedAs: "foo",
             });
@@ -152,9 +155,9 @@ describe("CardService", () => {
 
     describe("countCards", () => {
         it("counts", () => {
-            const card1 = createCard({ id: "123" });
-            const card2 = createCard({ id: "456" });
-            const card3 = createCard({ id: "678" });
+            const card1 = createCard({ passcode: "123" });
+            const card2 = createCard({ passcode: "456" });
+            const card3 = createCard({ passcode: "678" });
 
             expect(
                 cardService.countCards([

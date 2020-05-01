@@ -27,18 +27,18 @@ class CardLinkingService {
         typeMap: Map<string, CardType>
     ): Card {
         return {
-            id: unlinkedCard.id,
+            passcode: unlinkedCard.passcode,
             name: unlinkedCard.name,
-            desc: unlinkedCard.desc,
+            description: unlinkedCard.description,
 
             type: this.linkType(unlinkedCard.type, typeMap),
-            race: unlinkedCard.race,
+            subType: unlinkedCard.subType,
             attribute: unlinkedCard.attribute,
             atk: unlinkedCard.atk,
             def: unlinkedCard.def,
             level: unlinkedCard.level,
-            scale: unlinkedCard.scale,
-            linkVal: unlinkedCard.linkVal,
+            pendulumScale: unlinkedCard.pendulumScale,
+            linkRating: unlinkedCard.linkRating,
             linkMarkers: unlinkedCard.linkMarkers,
 
             sets: this.linkSets(unlinkedCard.sets, setMap),

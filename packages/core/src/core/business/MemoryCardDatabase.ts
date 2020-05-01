@@ -27,12 +27,12 @@ class MemoryCardDatabase implements CardDatabase {
     private loadingCardValues: Promise<void> | null;
     private loadingAllCards: Promise<void> | null;
 
-    private readonly cardsById: Map<string, Card>;
+    private readonly cardsByPasscode: Map<string, Card>;
     private readonly cardsByName: Map<string, Card>;
     private readonly sets: CardSet[];
     private readonly archetypes: string[];
     private readonly types: Map<CardTypeGroup, CardType[]>;
-    private readonly races: Map<CardTypeGroup, string[]>;
+    private readonly subTypes: Map<CardTypeGroup, string[]>;
     private readonly monsterAttributes: string[];
     private readonly monsterLinkMarkers: string[];
     private readonly monsterLevels: number[];
@@ -51,7 +51,7 @@ class MemoryCardDatabase implements CardDatabase {
         this.loadingCardValues = null;
         this.loadingAllCards = null;
 
-        this.cardsById = new Map<string, Card>();
+        this.cardsByPasscode = new Map<string, Card>();
         this.cardsByName = new Map<string, Card>();
         this.sets = [];
         this.archetypes = [];
@@ -61,7 +61,7 @@ class MemoryCardDatabase implements CardDatabase {
                 [],
             ])
         );
-        this.races = new Map<CardTypeGroup, string[]>(
+        this.subTypes = new Map<CardTypeGroup, string[]>(
             Object.values(CardTypeGroup).map((cardTypeGroup) => [
                 cardTypeGroup,
                 [],
@@ -98,7 +98,7 @@ class MemoryCardDatabase implements CardDatabase {
     }
 
     public getCards(): Card[] {
-        return Array.from(this.cardsById.values());
+        return Array.from(this.cardsByPasscode.values());
     }
 
     public getSets(): CardSet[] {
@@ -113,8 +113,8 @@ class MemoryCardDatabase implements CardDatabase {
         return this.types.get(cardTypeGroup)!;
     }
 
-    public getRaces(cardTypeGroup: CardTypeGroup): string[] {
-        return this.races.get(cardTypeGroup)!;
+    public getSubTypes(cardTypeGroup: CardTypeGroup): string[] {
+        return this.subTypes.get(cardTypeGroup)!;
     }
 
     public getMonsterAttributes(): string[] {
@@ -153,7 +153,7 @@ class MemoryCardDatabase implements CardDatabase {
         if (card == null) {
             return null;
         }
-        return findCardBy == FindCardBy.NAME ? card.name : card.id;
+        return findCardBy == FindCardBy.NAME ? card.name : card.passcode;
     }
 
     private async loadAllCards(): Promise<void> {
@@ -207,14 +207,16 @@ class MemoryCardDatabase implements CardDatabase {
                         cardTypes.push(...cardValues[cardTypeGroup].types);
                         deepFreeze(cardTypes);
 
-                        const cardRaces = this.races.get(cardTypeGroup)!;
-                        cardRaces.push(...cardValues[cardTypeGroup].races);
-                        deepFreeze(cardRaces);
+                        const cardSubTypes = this.subTypes.get(cardTypeGroup)!;
+                        cardSubTypes.push(
+                            ...cardValues[cardTypeGroup].subTypes
+                        );
+                        deepFreeze(cardSubTypes);
                     }
                     MemoryCardDatabase.logger.debug(
-                        "Registered types and races.",
+                        "Registered types and sub-types.",
                         this.types,
-                        this.races
+                        this.subTypes
                     );
 
                     this.monsterAttributes.push(
@@ -252,7 +254,7 @@ class MemoryCardDatabase implements CardDatabase {
         );
 
         for (const unlinkedCard of unlinkedCards) {
-            if (this.cardsById.has(unlinkedCard.id)) {
+            if (this.cardsByPasscode.has(unlinkedCard.passcode)) {
                 continue;
             }
             const card = this.cardLinkingService.linkCard(
@@ -262,14 +264,18 @@ class MemoryCardDatabase implements CardDatabase {
             );
 
             deepFreeze(card);
-            this.cardsById.set(card.id, card);
+            this.cardsByPasscode.set(card.passcode, card);
             this.cardsByName.set(card.name, card);
-            MemoryCardDatabase.logger.trace(`Registered card '${card.id}'.`);
+            MemoryCardDatabase.logger.trace(
+                `Registered card '${card.passcode}'.`
+            );
         }
     }
 
     private getCardMap(findCardBy: FindCardBy): Map<string, Card> {
-        return findCardBy == FindCardBy.ID ? this.cardsById : this.cardsByName;
+        return findCardBy == FindCardBy.PASSCODE
+            ? this.cardsByPasscode
+            : this.cardsByName;
     }
 }
 

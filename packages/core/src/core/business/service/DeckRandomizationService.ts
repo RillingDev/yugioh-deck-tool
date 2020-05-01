@@ -331,7 +331,7 @@ class DeckRandomizationService {
             typeGroup: null,
             type: null,
 
-            race: null,
+            subType: null,
             attribute: null,
             level: null,
             linkMarker: null,

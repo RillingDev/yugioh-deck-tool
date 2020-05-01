@@ -50,7 +50,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             misc: "yes",
             format: "all",
         };
-        if (findCardBy == FindCardBy.ID) {
+        if (findCardBy == FindCardBy.PASSCODE) {
             params.id = cardKey;
             // Include alternate artworks IDs as well.
             params.includeAliased = "yes";

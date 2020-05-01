@@ -86,22 +86,22 @@ const mapCardValues = (data: RawCardValues): CardValues => {
     return {
         [CardTypeGroup.MONSTER]: {
             types: mapTypes(data.MONSTER.type, types),
-            races: data.MONSTER.race,
+            subTypes: data.MONSTER.race,
             attributes: data.MONSTER.attributes,
             levels: data.MONSTER.level,
             linkMarkers: data.MONSTER.linkmarkers,
         },
         [CardTypeGroup.SPELL]: {
             types: mapTypes(data.SPELL.type, types),
-            races: data.SPELL.race,
+            subTypes: data.SPELL.race,
         },
         [CardTypeGroup.TRAP]: {
             types: mapTypes(data.TRAP.type, types),
-            races: data.TRAP.race,
+            subTypes: data.TRAP.race,
         },
         [CardTypeGroup.SKILL]: {
             types: mapTypes(data.SKILL.type, types),
-            races: data.SKILL.race,
+            subTypes: data.SKILL.race,
         },
     };
 };

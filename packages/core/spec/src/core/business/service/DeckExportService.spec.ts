@@ -28,17 +28,17 @@ describe("DeckExportService", () => {
     describe("toShareableText", () => {
         it("creates text", () => {
             const card1 = createCard({
-                id: "123",
+                passcode: "123",
                 name: "foo",
                 type: createCardType({ group: CardTypeGroup.SPELL }),
             });
             const card2 = createCard({
-                id: "321",
+                passcode: "321",
                 name: "foo ooo",
                 type: createCardType({ group: CardTypeGroup.MONSTER }),
             });
-            const card3 = createCard({ id: "456", name: "bar" });
-            const card4 = createCard({ id: "789", name: "fizz" });
+            const card3 = createCard({ passcode: "456", name: "bar" });
+            const card4 = createCard({ passcode: "789", name: "fizz" });
 
             const result = deckExportService.toShareableText({
                 name: null,
@@ -68,9 +68,9 @@ foo x1
 
     describe("toBuyLink", () => {
         it("creates text", () => {
-            const card1 = createCard({ id: "123", name: "foo" });
-            const card2 = createCard({ id: "456", name: "bar" });
-            const card3 = createCard({ id: "789", name: "fizz" });
+            const card1 = createCard({ passcode: "123", name: "foo" });
+            const card2 = createCard({ passcode: "456", name: "bar" });
+            const card3 = createCard({ passcode: "789", name: "fizz" });
 
             const result = deckExportService.toBuyLink({
                 name: null,

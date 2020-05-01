@@ -5,7 +5,7 @@ import { CardTypeGroup } from "../model/ygo/CardTypeGroup";
 
 enum FindCardBy {
     NAME,
-    ID,
+    PASSCODE,
 }
 
 /**
@@ -40,7 +40,7 @@ interface CardDatabase {
 
     getTypes(cardTypeGroup: CardTypeGroup): CardType[];
 
-    getRaces(cardTypeGroup: CardTypeGroup): string[];
+    getSubTypes(cardTypeGroup: CardTypeGroup): string[];
 
     getMonsterAttributes(): string[];
 

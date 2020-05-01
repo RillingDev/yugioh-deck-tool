@@ -91,7 +91,7 @@ export default class YgoBuilder extends Vue {
         typeGroup: null,
         type: null,
 
-        race: null,
+        subType: null,
         attribute: null,
         level: null,
         linkMarker: null,
@@ -145,7 +145,7 @@ export default class YgoBuilder extends Vue {
             typeGroup: null,
             type: null,
 
-            race: null,
+            subType: null,
             attribute: null,
             level: null,
             linkMarker: null,

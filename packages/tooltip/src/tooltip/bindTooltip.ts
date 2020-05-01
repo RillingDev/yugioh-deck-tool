@@ -63,12 +63,15 @@ const loadCard = async (cardKey: string): Promise<Card> => {
     ) {
         return cardDatabase.getCard(resolvedCardKey, FindCardBy.NAME)!;
     }
-    resolvedCardKey = await cardDatabase.prepareCard(cardKey, FindCardBy.ID);
+    resolvedCardKey = await cardDatabase.prepareCard(
+        cardKey,
+        FindCardBy.PASSCODE
+    );
     if (
         resolvedCardKey != null &&
-        cardDatabase.hasCard(resolvedCardKey, FindCardBy.ID)
+        cardDatabase.hasCard(resolvedCardKey, FindCardBy.PASSCODE)
     ) {
-        return cardDatabase.getCard(resolvedCardKey, FindCardBy.ID)!;
+        return cardDatabase.getCard(resolvedCardKey, FindCardBy.PASSCODE)!;
     }
     throw new Error(`Could not find card '${cardKey}'.`);
 };

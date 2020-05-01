@@ -14,10 +14,10 @@ import { deflateRaw, inflate, inflateRaw } from "pako";
  */
 @injectable()
 class DeckUriEncodingService {
-    // A 32 bit integer is able to store all 9 digit IDs
+    // A 32 bit integer is able to store all 8 digit passcodes
     // Note that currently we assume only little endian systems are used.
     private static readonly BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
-    private static readonly ID_LIMIT =
+    private static readonly LIMIT =
         2 ** (DeckUriEncodingService.BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.
 
     private static readonly URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK: Uint8Array = new Uint8Array(
@@ -132,7 +132,7 @@ class DeckUriEncodingService {
      * </ol>
      *
      * Byte Array structure:
-     * Blocks of {@link #BLOCK_BYTE_SIZE} represent a single card ID number,
+     * Blocks of {@link #BLOCK_BYTE_SIZE} represent a single card passcode number,
      * with a special value {@link #URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK} being used to separate deck-parts.
      * After the last card of the last deck part and the delimiter,
      * the UTF-8 code-points of the deck name follow, if one is set.
@@ -223,7 +223,7 @@ class DeckUriEncodingService {
 
         const DELIMITERS = {
             deckPart: "|",
-            cardId: ";",
+            passcode: ";",
             cardAmount: "*",
         };
 
@@ -234,22 +234,27 @@ class DeckUriEncodingService {
                 const deckPartCards = deck.parts.get(deckPart)!;
 
                 if (deckPartList.length > 0) {
-                    deckPartList.split(DELIMITERS.cardId).forEach((entry) => {
+                    deckPartList.split(DELIMITERS.passcode).forEach((entry) => {
                         let count = 1;
-                        let cardId = entry;
+                        let passcode = entry;
                         if (entry.startsWith(DELIMITERS.cardAmount)) {
                             count = Number(entry[1]);
-                            cardId = entry.slice(2);
+                            passcode = entry.slice(2);
                         }
 
-                        if (!this.cardDatabase.hasCard(cardId, FindCardBy.ID)) {
+                        if (
+                            !this.cardDatabase.hasCard(
+                                passcode,
+                                FindCardBy.PASSCODE
+                            )
+                        ) {
                             throw new TypeError(
-                                `Unknown card ${cardId}, this hopefully should never happen.`
+                                `Unknown card ${passcode}, this hopefully should never happen.`
                             );
                         }
                         const card = this.cardDatabase.getCard(
-                            cardId,
-                            FindCardBy.ID
+                            passcode,
+                            FindCardBy.PASSCODE
                         )!;
 
                         for (let i = 0; i < count; i++) {
@@ -263,22 +268,24 @@ class DeckUriEncodingService {
     }
 
     private encodeCardBlock(card: Card): Uint8Array {
-        return this.encodeNumber(Number(card.id));
+        return this.encodeNumber(Number(card.passcode));
     }
 
     private decodeCardBlock(block: Uint8Array): Card {
-        const id = String(this.decodeNumber(block));
-        if (!this.cardDatabase.hasCard(id, FindCardBy.ID)) {
-            throw new TypeError(`Could not find card for ID ${id}.`);
+        const passcode = String(this.decodeNumber(block));
+        if (!this.cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
+            throw new TypeError(
+                `Could not find card for passcode '${passcode}'.`
+            );
         }
 
-        return this.cardDatabase.getCard(id, FindCardBy.ID)!;
+        return this.cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!;
     }
 
     private encodeNumber(number: number): Uint8Array {
-        if (number <= 0 || number >= DeckUriEncodingService.ID_LIMIT) {
+        if (number <= 0 || number >= DeckUriEncodingService.LIMIT) {
             throw new TypeError(
-                `Number '${number} is of range (has to be > 0 and < ${DeckUriEncodingService.ID_LIMIT})'.`
+                `Number '${number} is of range (has to be > 0 and < ${DeckUriEncodingService.LIMIT})'.`
             );
         }
         // Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.

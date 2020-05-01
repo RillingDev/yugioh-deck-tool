@@ -110,9 +110,9 @@ class SortingService {
         return b.views - a.views;
     }
 
-    private compareRace(a: Card, b: Card): number {
-        const races = this.cardDatabase.getRaces(a.type.group);
-        return races.indexOf(a.race) - races.indexOf(b.race);
+    private compareSubType(a: Card, b: Card): number {
+        const subTypes = this.cardDatabase.getSubTypes(a.type.group);
+        return subTypes.indexOf(a.subType) - subTypes.indexOf(b.subType);
     }
 
     private compareReleaseDate(a: Card, b: Card): number {
@@ -145,9 +145,9 @@ class SortingService {
                 return this.compareDef(a, b);
             }
         } else {
-            // For non-monsters, sort just by race.
-            if (a.race != b.race) {
-                return this.compareRace(a, b);
+            // For non-monsters, sort just by sub-type.
+            if (a.subType != b.subType) {
+                return this.compareSubType(a, b);
             }
         }
 

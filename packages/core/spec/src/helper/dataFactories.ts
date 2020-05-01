@@ -28,18 +28,18 @@ const createCardType = (data: {
 });
 
 const createCard = (data: {
-    id?: string;
+    passcode?: string;
     name?: string;
-    desc?: string;
+    description?: string;
 
     type?: CardType;
-    race?: string;
+    subType?: string;
     attribute?: string | null;
     atk?: number | null;
     def?: number | null;
     level?: number | null;
-    scale?: number | null;
-    linkVal?: number | null;
+    pendulumScale?: number | null;
+    linkRating?: number | null;
     linkMarkers?: string[] | null;
 
     sets?: CardSet[];
@@ -52,19 +52,22 @@ const createCard = (data: {
     formats?: Format[];
     release?: ReleaseInfo;
     banlist?: BanlistInfo;
-}): Card => ({
-    id: data.id ?? "123",
-    name: data.name ?? "name",
-    desc: data.desc ?? "desc",
-    type: data.type ?? createCardType({}),
 
-    race: data.race ?? "race",
+    views?: number;
+}): Card => ({
+    passcode: data.passcode ?? "123",
+    name: data.name ?? "name",
+    description: data.description ?? "desc",
+
+    type: data.type ?? createCardType({}),
+    subType: data.subType ?? "sub type",
+
     attribute: data.attribute ?? null,
     atk: data.atk ?? null,
     def: data.def ?? null,
     level: data.level ?? null,
-    scale: data.scale ?? null,
-    linkVal: data.linkVal ?? null,
+    pendulumScale: data.pendulumScale ?? null,
+    linkRating: data.linkRating ?? null,
     linkMarkers: data.linkMarkers ?? null,
 
     sets: data.sets ?? [],
@@ -82,7 +85,7 @@ const createCard = (data: {
         [Format.GOAT]: data.banlist?.GOAT ?? DefaultBanState.UNLIMITED,
     },
 
-    views: 0,
+    views: data.views ?? 0,
 });
 
 export { createCard, createCardType };

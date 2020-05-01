@@ -40,9 +40,9 @@ describe("DeckService", () => {
 
     describe("getAllCards", () => {
         it("gets all cards", () => {
-            const card1 = createCard({ id: "123" });
-            const card2 = createCard({ id: "456" });
-            const card3 = createCard({ id: "789" });
+            const card1 = createCard({ passcode: "123" });
+            const card2 = createCard({ passcode: "456" });
+            const card3 = createCard({ passcode: "789" });
             expect(
                 deckService.getAllCards({
                     name: null,
@@ -71,7 +71,7 @@ describe("DeckService", () => {
                     DefaultDeckPart.MAIN,
                     Format.TCG,
                     createCard({
-                        id: "456",
+                        passcode: "456",
                         type: createCardType({
                             deckPart: new Set([DefaultDeckPart.EXTRA]),
                         }),
@@ -90,20 +90,22 @@ describe("DeckService", () => {
                             [DefaultDeckPart.EXTRA, []],
                             [
                                 DefaultDeckPart.SIDE,
-                                new Array(15).fill(createCard({ id: "123" })),
+                                new Array(15).fill(
+                                    createCard({ passcode: "123" })
+                                ),
                             ],
                         ]),
                     },
                     DefaultDeckPart.SIDE,
                     Format.TCG,
-                    createCard({ id: "456" })
+                    createCard({ passcode: "456" })
                 )
             ).toBeFalse();
         });
 
         it("checks total link card count", () => {
             const card = createCard({
-                id: "456",
+                passcode: "456",
                 type: createCardType({ group: CardTypeGroup.SKILL }),
             });
             expect(
@@ -125,7 +127,7 @@ describe("DeckService", () => {
 
         it("checks against ban list", () => {
             const card = createCard({
-                id: "456",
+                passcode: "456",
                 banlist: {
                     [Format.OCG]: DefaultBanState.LIMITED,
                     [Format.TCG]: DefaultBanState.UNLIMITED,
@@ -151,7 +153,7 @@ describe("DeckService", () => {
 
         it("returns true if a card can be added", () => {
             const card = createCard({
-                id: "456",
+                passcode: "456",
             });
             expect(
                 deckService.canAdd(
@@ -174,7 +176,7 @@ describe("DeckService", () => {
     describe("addCard", () => {
         it("adds card", () => {
             const card = createCard({
-                id: "456",
+                passcode: "456",
             });
             const deck = {
                 name: null,
@@ -204,7 +206,7 @@ describe("DeckService", () => {
     describe("removeCard", () => {
         it("removes card", () => {
             const card = createCard({
-                id: "456",
+                passcode: "456",
             });
             const deck = {
                 name: null,

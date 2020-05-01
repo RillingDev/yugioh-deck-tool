@@ -88,8 +88,8 @@ const createMonsterStats = (card: Card): HTMLElement => {
     }
     if (card.def != null) {
         statsChildren.push(createSpan([], `DEF/ ${card.def}`));
-    } else if (card.linkVal != null) {
-        statsChildren.push(createSpan([], `LINK-${card.linkVal}`));
+    } else if (card.linkRating != null) {
+        statsChildren.push(createSpan([], `LINK-${card.linkRating}`));
     }
     return createDiv(["card-tooltip__stats"], statsChildren);
 };
@@ -112,21 +112,21 @@ const createSubType = (card: Card): HTMLElement => {
             createImg(
                 [],
                 `https://ygoprodeck.com/pics/${encodeURIComponent(
-                    card.race
+                    card.subType
                 )}.png`
             )
         );
-        subTypeChildren.push(createSpan([], `Type: ${card.race}`));
+        subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
     } else {
         subTypeChildren.push(
             createImg(
                 [],
                 `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-                    card.race
+                    card.subType
                 )}.png`
             )
         );
-        subTypeChildren.push(createSpan([], `Type: ${card.race}`));
+        subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
     }
 
     return createDiv(["card-tooltip__subtype"], subTypeChildren);
@@ -157,7 +157,9 @@ const createPrice = (card: Card): HTMLElement => {
 const createDescription = (card: Card): HTMLElement =>
     createDiv(
         ["card-tooltip__description"],
-        card.desc.split("\n").map((paragraph) => createParagraph([], paragraph))
+        card.description
+            .split("\n")
+            .map((paragraph) => createParagraph([], paragraph))
     );
 
 const createCardDetailsCol = (card: Card): HTMLElement => {

@@ -71,13 +71,13 @@ describe("DeckFileService", () => {
             const fileContent = `
 #main
 123`;
-            const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("123", FindCardBy.ID)).thenReturn(
-                card
-            );
+            const card = createCard({ passcode: "123" });
+            when(
+                mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -94,13 +94,13 @@ describe("DeckFileService", () => {
 123
 123
 123`;
-            const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("123", FindCardBy.ID)).thenReturn(
-                card
-            );
+            const card = createCard({ passcode: "123" });
+            when(
+                mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -126,29 +126,29 @@ describe("DeckFileService", () => {
 !side
 789`;
 
-            const card1 = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("123", FindCardBy.ID)).thenReturn(
-                card1
-            );
+            const card1 = createCard({ passcode: "123" });
+            when(
+                mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(card1);
 
-            const card2 = createCard({ id: "456" });
-            when(mockCardDatabase.hasCard("456", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("456", FindCardBy.ID)).thenReturn(
-                card2
-            );
+            const card2 = createCard({ passcode: "456" });
+            when(
+                mockCardDatabase.hasCard("456", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("456", FindCardBy.PASSCODE)
+            ).thenReturn(card2);
 
-            const card3 = createCard({ id: "789" });
-            when(mockCardDatabase.hasCard("789", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("789", FindCardBy.ID)).thenReturn(
-                card3
-            );
+            const card3 = createCard({ passcode: "789" });
+            when(
+                mockCardDatabase.hasCard("789", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("789", FindCardBy.PASSCODE)
+            ).thenReturn(card3);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -176,13 +176,13 @@ describe("DeckFileService", () => {
 #created by ...
 #main
 123`;
-            const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("123", FindCardBy.ID)).thenReturn(
-                card
-            );
+            const card = createCard({ passcode: "123" });
+            when(
+                mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -197,13 +197,13 @@ describe("DeckFileService", () => {
 #created by ...
 #main
 0000123`;
-            const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("123", FindCardBy.ID)).thenReturn(
-                card
-            );
+            const card = createCard({ passcode: "123" });
+            when(
+                mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(card);
 
             const result = deckFileService.fromFile({
                 fileContent,
@@ -249,13 +249,13 @@ describe("DeckFileService", () => {
             const fileContent = `
 #main
 123`;
-            const card = createCard({ id: "123" });
-            when(mockCardDatabase.hasCard("123", FindCardBy.ID)).thenReturn(
-                true
-            );
-            when(mockCardDatabase.getCard("123", FindCardBy.ID)).thenReturn(
-                card
-            );
+            const card = createCard({ passcode: "123" });
+            when(
+                mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+            ).thenReturn(card);
             when(mockHttpService.get(anyString(), anything())).thenResolve({
                 data: fileContent,
                 status: 200,
@@ -291,7 +291,10 @@ describe("DeckFileService", () => {
                 deckFileService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
-                        [DefaultDeckPart.MAIN, [createCard({ id: "123" })]],
+                        [
+                            DefaultDeckPart.MAIN,
+                            [createCard({ passcode: "123" })],
+                        ],
                         [DefaultDeckPart.EXTRA, []],
                         [DefaultDeckPart.SIDE, []],
                     ]),
@@ -307,9 +310,18 @@ describe("DeckFileService", () => {
                 deckFileService.toFile({
                     name: "foo",
                     parts: new Map<DeckPart, Card[]>([
-                        [DefaultDeckPart.MAIN, [createCard({ id: "123" })]],
-                        [DefaultDeckPart.EXTRA, [createCard({ id: "456" })]],
-                        [DefaultDeckPart.SIDE, [createCard({ id: "789" })]],
+                        [
+                            DefaultDeckPart.MAIN,
+                            [createCard({ passcode: "123" })],
+                        ],
+                        [
+                            DefaultDeckPart.EXTRA,
+                            [createCard({ passcode: "456" })],
+                        ],
+                        [
+                            DefaultDeckPart.SIDE,
+                            [createCard({ passcode: "789" })],
+                        ],
                     ]),
                 }).fileContent
             ).toBe(
