@@ -17,13 +17,16 @@ class DeckUriEncodingService {
     // A 32 bit integer is able to store all 9 digit IDs
     // Note that currently we assume only little endian systems are used.
     private static readonly BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
-    private static readonly DELIMITER_BLOCK: Uint8Array = new Uint8Array(
-        DeckUriEncodingService.BLOCK_BYTE_SIZE
-    ).fill(0);
     private static readonly ID_LIMIT =
         2 ** (DeckUriEncodingService.BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.
 
-    private static readonly USE_LITTLE_ENDIAN = true;
+    private static readonly URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK: Uint8Array = new Uint8Array(
+        DeckUriEncodingService.BLOCK_BYTE_SIZE
+    ).fill(0);
+    private static readonly URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN = true;
+
+    private static readonly YDKE_URI_PROTOCOL = "ydke://";
+    private static readonly YDKE_DELIMITER = "!";
 
     private readonly cardDatabase: CardDatabase;
     private readonly deckService: DeckService;
@@ -43,6 +46,82 @@ class DeckUriEncodingService {
     }
 
     /**
+     * Encodes a deck to a `ydke` URI.
+     * Note that the deck name is not stored in the URI.
+     *
+     * @see #fromUri
+     *
+     * @param deck Deck to encode.
+     * @return `ydke` URI.
+     */
+    public toUri(deck: Deck): string {
+        const encodedDeckParts: string[] = [];
+        for (const deckPart of DEFAULT_DECK_PART_ARR) {
+            const encodedCards = [];
+            for (const card of deck.parts.get(deckPart)!) {
+                encodedCards.push(...this.encodeCardBlock(card));
+            }
+            encodedDeckParts.push(
+                this.encodeBase64String(Uint8Array.from(encodedCards), false)
+            );
+        }
+        return (
+            DeckUriEncodingService.YDKE_URI_PROTOCOL +
+            encodedDeckParts.join(DeckUriEncodingService.YDKE_DELIMITER) +
+            DeckUriEncodingService.YDKE_DELIMITER
+        );
+    }
+
+    /**
+     * Decodes a deck from a `ydke` URI.
+     *
+     * @see https://github.com/edo9300/edopro/issues/171
+     * @see https://github.com/AlphaKretin/bastion-bot/commit/0349cdced8ad2d2de5c4758ea7312197505e94ef
+     *
+     * @param uri `ydke` URI to decode
+     * @return Deck.
+     */
+    public fromUri(uri: string): Deck {
+        const uriParts = uri
+            .slice(DeckUriEncodingService.YDKE_URI_PROTOCOL.length)
+            .split(DeckUriEncodingService.YDKE_DELIMITER);
+        uriParts.pop(); // uriParts is always one longer than there are deck parts due to trailing delimiter.
+
+        if (uriParts.length !== DEFAULT_DECK_PART_ARR.length) {
+            throw new Error(
+                `Expected URI to have ${DEFAULT_DECK_PART_ARR.length} delimiters but found ${uriParts.length}.`
+            );
+        }
+
+        const deck = this.deckService.createEmptyDeck();
+        for (
+            let deckPartIndex = 0;
+            deckPartIndex < uriParts.length;
+            deckPartIndex++
+        ) {
+            const deckPartCards = deck.parts.get(
+                DEFAULT_DECK_PART_ARR[deckPartIndex]
+            )!;
+            const decodedDeckPartCards = this.decode64String(
+                uriParts[deckPartIndex],
+                false
+            );
+            for (
+                let blockStart = 0;
+                blockStart < decodedDeckPartCards.length;
+                blockStart += DeckUriEncodingService.BLOCK_BYTE_SIZE
+            ) {
+                const block = decodedDeckPartCards.slice(
+                    blockStart,
+                    blockStart + DeckUriEncodingService.BLOCK_BYTE_SIZE
+                );
+                deckPartCards.push(this.decodeCardBlock(block));
+            }
+        }
+        return deck;
+    }
+
+    /**
      * Encodes a deck to a URI query parameter value safe string.
      *
      * Encoding steps:
@@ -54,11 +133,11 @@ class DeckUriEncodingService {
      *
      * Byte Array structure:
      * Blocks of {@link #BLOCK_BYTE_SIZE} represent a single card ID number,
-     * with a special value {@link #DELIMITER_BLOCK} being used to separate deck-parts.
+     * with a special value {@link #URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK} being used to separate deck-parts.
      * After the last card of the last deck part and the delimiter,
      * the UTF-8 code-points of the deck name follow, if one is set.
      *
-     * @param deck
+     * @param deck Deck to encode.
      * @return Value that can be decoded to yield the same deck.
      */
     public toUrlQueryParamValue(deck: Deck): string {
@@ -68,14 +147,16 @@ class DeckUriEncodingService {
             for (const card of deck.parts.get(deckPart)!) {
                 result.push(...this.encodeCardBlock(card));
             }
-            result.push(...DeckUriEncodingService.DELIMITER_BLOCK);
+            result.push(
+                ...DeckUriEncodingService.URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
+            );
         }
         if (deck.name != null && deck.name !== "") {
             result.push(...this.textEncoder.encode(deck.name));
         }
 
-        const deflated = deflateRaw(result);
-        return this.encodeUriSafeBase64String(deflated);
+        const deflated = deflateRaw(Uint8Array.from(result));
+        return this.encodeBase64String(deflated, true);
     }
 
     /**
@@ -87,7 +168,7 @@ class DeckUriEncodingService {
     public fromUrlQueryParamValue(queryParamValue: string): Deck {
         const deck = this.deckService.createEmptyDeck();
 
-        const decoded = this.decodeUriSafeBase64String(queryParamValue);
+        const decoded = this.decode64String(queryParamValue, true);
         const inflated = inflateRaw(decoded);
 
         let deckPartIndex = 0;
@@ -101,7 +182,12 @@ class DeckUriEncodingService {
                 blockStart + DeckUriEncodingService.BLOCK_BYTE_SIZE;
             const block = inflated.slice(blockStart, blockEnd);
 
-            if (isEqual(block, DeckUriEncodingService.DELIMITER_BLOCK)) {
+            if (
+                isEqual(
+                    block,
+                    DeckUriEncodingService.URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
+                )
+            ) {
                 // After the last deck part, meta data starts
                 if (deckPartIndex === DEFAULT_DECK_PART_ARR.length - 1) {
                     metaDataStart = blockEnd;
@@ -109,10 +195,10 @@ class DeckUriEncodingService {
                 }
                 deckPartIndex++;
             } else {
-                const deckPart = deck.parts.get(
+                const deckPartCards = deck.parts.get(
                     DEFAULT_DECK_PART_ARR[deckPartIndex]
                 )!;
-                deckPart.push(this.decodeCardBlock(block));
+                deckPartCards.push(this.decodeCardBlock(block));
             }
         }
         if (metaDataStart != null && metaDataStart < inflated.length) {
@@ -200,7 +286,7 @@ class DeckUriEncodingService {
         new DataView(buffer).setUint32(
             0,
             number,
-            DeckUriEncodingService.USE_LITTLE_ENDIAN
+            DeckUriEncodingService.URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
         );
         return new Uint8Array(buffer);
     }
@@ -209,21 +295,36 @@ class DeckUriEncodingService {
         // See #encodeNumber for details
         return new DataView(block.buffer).getUint32(
             0,
-            DeckUriEncodingService.USE_LITTLE_ENDIAN
+            DeckUriEncodingService.URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
         );
     }
 
-    private encodeUriSafeBase64String(arr: Uint8Array): string {
-        return fromByteArray(arr)
-            .replace(/=/g, "~")
-            .replace(/\+/g, "_")
-            .replace(/\//g, "-");
+    private encodeBase64String(
+        arr: Uint8Array,
+        useUriParamSafeAlphabet: boolean
+    ): string {
+        let encoded = fromByteArray(arr);
+        if (useUriParamSafeAlphabet) {
+            encoded = encoded
+                .replace(/=/g, "~")
+                .replace(/\+/g, "_")
+                .replace(/\//g, "-");
+        }
+        return encoded;
     }
 
-    private decodeUriSafeBase64String(str: string): Uint8Array {
-        return toByteArray(
-            str.replace(/~/g, "=").replace(/_/g, "+").replace(/-/g, "/")
-        );
+    private decode64String(
+        str: string,
+        useUriParamSafeAlphabet: boolean
+    ): Uint8Array {
+        let encoded = str;
+        if (useUriParamSafeAlphabet) {
+            encoded = encoded
+                .replace(/~/g, "=")
+                .replace(/_/g, "+")
+                .replace(/-/g, "/");
+        }
+        return toByteArray(encoded);
     }
 }
 

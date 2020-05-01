@@ -215,4 +215,65 @@ describe("DeckUriEncodingService", () => {
             });
         });
     });
+
+    describe("toUri", () => {
+        it("creates value", () => {
+            const card1 = createCard({ id: "5050644" });
+            const card2 = createCard({ id: "29189613" });
+            const card3 = createCard({ id: "38148100" });
+
+            const result = deckUriEncodingService.toUri({
+                name: "foo",
+                parts: new Map<DeckPart, Card[]>([
+                    [DefaultDeckPart.MAIN, [card1, card2, card2]],
+                    [DefaultDeckPart.EXTRA, [card3]],
+                    [DefaultDeckPart.SIDE, [card1]],
+                ]),
+            });
+            expect(result).toEqual(
+                "ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!"
+            );
+        });
+    });
+
+    describe("fromUri", () => {
+        it("reads value", () => {
+            const card1 = createCard({ id: "5050644" });
+            when(mockCardDatabase.hasCard("5050644", FindCardBy.ID)).thenReturn(
+                true
+            );
+            when(mockCardDatabase.getCard("5050644", FindCardBy.ID)).thenReturn(
+                card1
+            );
+
+            const card2 = createCard({ id: "29189613" });
+            when(
+                mockCardDatabase.hasCard("29189613", FindCardBy.ID)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("29189613", FindCardBy.ID)
+            ).thenReturn(card2);
+
+            const card3 = createCard({ id: "38148100" });
+            when(
+                mockCardDatabase.hasCard("38148100", FindCardBy.ID)
+            ).thenReturn(true);
+            when(
+                mockCardDatabase.getCard("38148100", FindCardBy.ID)
+            ).thenReturn(card3);
+
+            const result = deckUriEncodingService.fromUri(
+                "ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!"
+            );
+
+            expect(result).toEqual({
+                name: null,
+                parts: new Map<DeckPart, Card[]>([
+                    [DefaultDeckPart.MAIN, [card1, card2, card2]],
+                    [DefaultDeckPart.EXTRA, [card3]],
+                    [DefaultDeckPart.SIDE, [card1]],
+                ]),
+            });
+        });
+    });
 });
