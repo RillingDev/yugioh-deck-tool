@@ -306,8 +306,6 @@ export default class YgoFilter extends Vue {
                 SortingStrategy.LEVEL,
                 SortingStrategy.VIEWS,
                 SortingStrategy.RELEASE_DATE,
-                SortingStrategy.UPVOTES,
-                SortingStrategy.DOWNVOTES,
             ],
             sortingOrders: [SortingOrder.ASC, SortingOrder.DESC],
             banStates: [
