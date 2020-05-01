@@ -1,3 +1,5 @@
+@import "../variables";
+
 @mixin screen($mode, $breakpoint) {
     @if map-has-key($grid-breakpoints, $breakpoint) {
         @media (#{$mode}-width: #{map-get($grid-breakpoints, $breakpoint)}) {
