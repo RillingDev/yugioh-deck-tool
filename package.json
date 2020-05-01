@@ -17,6 +17,10 @@
         "type": "git",
         "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
     },
+    "scripts": {
+        "test": "lerna run test",
+        "build": "lerna run build"
+    },
     "devDependencies": {
         "lerna": "^3.20.2"
     }
