@@ -27,6 +27,21 @@ const createDiv = (
     return element;
 };
 
+const createUl = (
+    classes: string[],
+    children: HTMLElement[]
+): HTMLUListElement => {
+    const element = createElement(classes, "ul") as HTMLUListElement;
+    children.forEach((child) => element.appendChild(child));
+    return element;
+};
+
+const createLi = (classes: string[], textContent: string): HTMLLIElement => {
+    const element = createElement(classes, "li") as HTMLLIElement;
+    element.textContent = textContent;
+    return element;
+};
+
 const createSpan = (
     classes: string[],
     textContent: string
@@ -139,7 +154,7 @@ const createPrice = (card: Card): HTMLElement => {
         if (lookupResult.missing.length > 0) {
             continue;
         }
-        const priceItem = createSpan(
+        const priceItem = createLi(
             [
                 "card-tooltip__price__vendor",
                 `card-tooltip__price__vendor--${vendor.id}`,
@@ -151,7 +166,7 @@ const createPrice = (card: Card): HTMLElement => {
         );
         priceItems.push(priceItem);
     }
-    return createDiv(["card-tooltip__price"], priceItems);
+    return createUl(["card-tooltip__price"], priceItems);
 };
 
 const createDescription = (card: Card): HTMLElement =>
