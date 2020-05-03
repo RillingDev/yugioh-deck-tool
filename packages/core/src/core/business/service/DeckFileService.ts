@@ -138,4 +138,4 @@ class DeckFileService {
     }
 }
 
-export { DeckFileService };
+export { DeckFileService, ImportResult };

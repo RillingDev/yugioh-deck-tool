@@ -12,7 +12,10 @@ export { container } from "./inversify.config";
 export { CardDatabase, FindCardBy } from "./core/business/CardDatabase";
 export { CardDataLoaderService } from "./core/business/service/CardDataLoaderService";
 export { CardService } from "./core/business/service/CardService";
-export { PriceService } from "./core/business/service/PriceService";
+export {
+    PriceService,
+    PriceLookupResult,
+} from "./core/business/service/PriceService";
 export { DeckExportService } from "./core/business/service/DeckExportService";
 export { DeckService } from "./core/business/service/DeckService";
 export { Format } from "./core/model/ygo/Format";
@@ -42,7 +45,10 @@ export {
     RandomizationStrategy,
 } from "./core/business/service/DeckRandomizationService";
 export { DeckUriEncodingService } from "./core/business/service/DeckUriEncodingService";
-export { DeckFileService } from "./core/business/service/DeckFileService";
+export {
+    DeckFileService,
+    ImportResult,
+} from "./core/business/service/DeckFileService";
 export { UrlService } from "./core/business/service/UrlService";
 export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";

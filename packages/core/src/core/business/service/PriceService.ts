@@ -77,4 +77,4 @@ class PriceService {
     }
 }
 
-export { PriceService };
+export { PriceService, PriceLookupResult };
