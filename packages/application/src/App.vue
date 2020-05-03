@@ -140,7 +140,7 @@ import {
 import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
 import YgoDeck from "./components/YgoDeck.vue";
-import { uiContainer } from "@/inversify.config";
+import { applicationContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
 import { readFile } from "@/lib/readFile";
@@ -167,22 +167,22 @@ export default class App extends Vue {
     readonly ajax = {
         currentlyLoading: true,
     };
-    private readonly deckService = uiContainer.get<DeckService>(
+    private readonly deckService = applicationContainer.get<DeckService>(
         UI_TYPES.DeckService
     );
     deck: Deck = this.deckService.createEmptyDeck();
-    private readonly deckExportService = uiContainer.get<DeckExportService>(
-        UI_TYPES.DeckExportService
-    );
-    private readonly deckUriEncodingService = uiContainer.get<
+    private readonly deckExportService = applicationContainer.get<
+        DeckExportService
+    >(UI_TYPES.DeckExportService);
+    private readonly deckUriEncodingService = applicationContainer.get<
         DeckUriEncodingService
     >(UI_TYPES.DeckUriEncodingService);
-    private readonly deckFileService = uiContainer.get<DeckFileService>(
-        UI_TYPES.DeckFileService
-    );
-    private readonly priceController = uiContainer.get<PriceController>(
-        UI_TYPES.PriceController
-    );
+    private readonly deckFileService = applicationContainer.get<
+        DeckFileService
+    >(UI_TYPES.DeckFileService);
+    private readonly priceController = applicationContainer.get<
+        PriceController
+    >(UI_TYPES.PriceController);
 
     get shareLink() {
         const currentUri = location.origin + location.pathname;
@@ -259,7 +259,7 @@ export default class App extends Vue {
 
     mounted() {
         this.ajax.currentlyLoading = true;
-        const cardDatabase = uiContainer.get<CardDatabase>(
+        const cardDatabase = applicationContainer.get<CardDatabase>(
             UI_TYPES.CardDatabase
         );
 
@@ -274,7 +274,9 @@ export default class App extends Vue {
     }
 
     private async loadUriDeck(): Promise<void> {
-        const urlService = uiContainer.get<UrlService>(UI_TYPES.UrlService);
+        const urlService = applicationContainer.get<UrlService>(
+            UI_TYPES.UrlService
+        );
         const url = location.toString();
         const remoteUrlValue = urlService.getSingleQueryParam(url, "u");
         const uriEncodedDeck = urlService.getSingleQueryParam(url, "e");

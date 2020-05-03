@@ -53,7 +53,7 @@ import {
     Format,
     RandomizationStrategy,
 } from "yugioh-deck-tool-core/src/main";
-import { uiContainer } from "@/inversify.config";
+import { applicationContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Component from "vue-class-component";
 import { BModal } from "bootstrap-vue";
@@ -70,7 +70,7 @@ export default class YgoRandomizer extends Vue {
 
     filter: CardFilter;
 
-    private readonly deckRandomizationService = uiContainer.get<
+    private readonly deckRandomizationService = applicationContainer.get<
         DeckRandomizationService
     >(UI_TYPES.DeckRandomizationService);
 

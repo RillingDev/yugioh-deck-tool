@@ -28,7 +28,7 @@ import {
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
-import { uiContainer } from "@/inversify.config";
+import { applicationContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 
 @Component({
@@ -41,7 +41,7 @@ export default class YgoDeck extends Vue {
     @Prop({ required: true })
     deck: Deck;
     deckParts = DEFAULT_DECK_PART_ARR;
-    private readonly deckService = uiContainer.get<DeckService>(
+    private readonly deckService = applicationContainer.get<DeckService>(
         UI_TYPES.DeckService
     );
 

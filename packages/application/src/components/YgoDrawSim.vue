@@ -64,10 +64,10 @@ import {
 } from "yugioh-deck-tool-core/src/main";
 import { BModal } from "bootstrap-vue";
 import { Prop } from "vue-property-decorator";
-import { uiContainer } from "@/inversify.config";
+import { applicationContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 
-const deckService = uiContainer.get<DeckService>(UI_TYPES.DeckService);
+const deckService = applicationContainer.get<DeckService>(UI_TYPES.DeckService);
 
 @Component({ components: { YgoCard, BModal } })
 export default class YgoDrawSim extends Vue {

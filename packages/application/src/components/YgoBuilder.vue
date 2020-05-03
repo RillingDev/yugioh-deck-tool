@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { uiContainer } from "@/inversify.config";
+import { applicationContainer } from "@/inversify.config";
 import { UI_TYPES } from "@/types";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
@@ -102,16 +102,16 @@ export default class YgoBuilder extends Vue {
 
         sets: [],
     };
-    private readonly cardDatabase = uiContainer.get<CardDatabase>(
+    private readonly cardDatabase = applicationContainer.get<CardDatabase>(
         UI_TYPES.CardDatabase
     );
-    private readonly sortingService = uiContainer.get<SortingService>(
+    private readonly sortingService = applicationContainer.get<SortingService>(
         UI_TYPES.SortingService
     );
-    private readonly filterService = uiContainer.get<FilterService>(
+    private readonly filterService = applicationContainer.get<FilterService>(
         UI_TYPES.FilterService
     );
-    private readonly cardService = uiContainer.get<CardService>(
+    private readonly cardService = applicationContainer.get<CardService>(
         UI_TYPES.CardService
     );
 
