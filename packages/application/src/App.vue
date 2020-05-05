@@ -75,21 +75,6 @@
                     <span class="fas fa-shopping-cart"><!-- icon--></span>
                 </a>
             </div>
-            <div class="form-group">
-                <input
-                    v-model="ydkeUriInput"
-                    @input="loadYdke"
-                    class="form-control"
-                    placeholder="YDKE URI Input"
-                    type="text"
-                />
-                <input
-                    :value="ydkeUri"
-                    class="form-control"
-                    type="text"
-                    readonly
-                />
-            </div>
         </div>
 
         <!-- app-deck -->
@@ -201,12 +186,6 @@ export default class App extends Vue {
         return this.deckService.getAllCards(this.deck).length === 0;
     }
 
-    ydkeUriInput = "";
-
-    get ydkeUri() {
-        return this.deckUriEncodingService.toUri(this.deck);
-    }
-
     deckToFile() {
         const { fileName, fileContent } = this.deckFileService.toFile(
             this.deck
@@ -249,12 +228,6 @@ export default class App extends Vue {
 
     copyShareText() {
         copyText(this.deckExportService.toShareableText(this.deck));
-    }
-
-    loadYdke() {
-        this.deck.parts = this.deckUriEncodingService.fromUri(
-            this.ydkeUriInput
-        ).parts;
     }
 
     mounted() {
@@ -332,7 +305,6 @@ export default class App extends Vue {
     @import "~bootstrap/scss/button-group";
     @import "~bootstrap/scss/close";
 }
-
 // Required outside due to how modal overlay works
 @import "~bootstrap/scss/modal";
 @import "~bootstrap-vue/src/components/modal/index";
