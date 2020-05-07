@@ -1,9 +1,6 @@
 module.exports = {
     root: true,
     env: {
-        "es6": true,
-        "es2017": true,
-        "es2020": true,
         "shared-node-browser": true,
     },
     rules: {
