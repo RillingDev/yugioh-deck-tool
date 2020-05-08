@@ -1,10 +1,10 @@
-const saveFile = (file: File): void => {
-    const el = document.createElement("a");
+const saveFile = (file: File, context: Document): void => {
+    const el = context.createElement("a");
 
     el.href = window.URL.createObjectURL(file);
     el.download = file.name;
 
-    document.body.appendChild(el);
+    context.body.appendChild(el);
     el.click();
     el.remove();
 };

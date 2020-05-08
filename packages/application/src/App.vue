@@ -122,13 +122,11 @@ import {
     getLogger,
     UrlService,
 } from "yugioh-deck-tool-core/src/main";
-import { saveFile } from "./lib/saveFile";
-import { copyText } from "./lib/copyText";
+import { copyText, readFile, saveFile } from "yugioh-deck-tool-ui/src/main";
 import YgoDeck from "./components/YgoDeck.vue";
 import { applicationContainer } from "@/inversify.config";
 import { APPLICATION_TYPES } from "@/types";
 import Component from "vue-class-component";
-import { readFile } from "@/lib/readFile";
 import YgoSorter from "@/components/YgoSorter.vue";
 import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
@@ -190,7 +188,7 @@ export default class App extends Vue {
         const { fileName, fileContent } = this.deckFileService.toFile(
             this.deck
         );
-        saveFile(new File([fileContent], fileName));
+        saveFile(new File([fileContent], fileName), document);
     }
 
     canAdd(deckPart: DeckPart, card: Card, format: Format) {
@@ -223,11 +221,11 @@ export default class App extends Vue {
     }
 
     copyShareLink() {
-        copyText(this.shareLink);
+        copyText(this.shareLink, document);
     }
 
     copyShareText() {
-        copyText(this.deckExportService.toShareableText(this.deck));
+        copyText(this.deckExportService.toShareableText(this.deck), document);
     }
 
     mounted() {
@@ -305,6 +303,7 @@ export default class App extends Vue {
     @import "~bootstrap/scss/button-group";
     @import "~bootstrap/scss/close";
 }
+
 // Required outside due to how modal overlay works
 @import "~bootstrap/scss/modal";
 @import "~bootstrap-vue/src/components/modal/index";
