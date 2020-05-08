@@ -23,5 +23,11 @@
     },
     "devDependencies": {
         "lerna": "^3.20.2"
+    },
+    "dependencies": {
+        "yugioh-deck-tool-core": "file:packages/core",
+        "yugioh-deck-tool-ui": "file:packages/ui",
+        "yugioh-deck-tool-application": "file:packages/application",
+        "yugioh-deck-tool-tooltip": "file:packages/tooltip"
     }
 }

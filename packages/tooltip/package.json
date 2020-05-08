@@ -12,9 +12,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.4.0",
-        "inversify": "^5.0.1"
-    },
-    "peerDependencies": {
+        "inversify": "^5.0.1",
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
