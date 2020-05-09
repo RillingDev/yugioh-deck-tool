@@ -126,7 +126,7 @@ import { saveFile } from "./lib/saveFile";
 import { copyText } from "./lib/copyText";
 import YgoDeck from "./components/YgoDeck.vue";
 import { applicationContainer } from "@/inversify.config";
-import { UI_TYPES } from "@/types";
+import { APPLICATION_TYPES } from "@/types";
 import Component from "vue-class-component";
 import { readFile } from "@/lib/readFile";
 import YgoSorter from "@/components/YgoSorter.vue";
@@ -153,21 +153,21 @@ export default class App extends Vue {
         currentlyLoading: true,
     };
     private readonly deckService = applicationContainer.get<DeckService>(
-        UI_TYPES.DeckService
+        APPLICATION_TYPES.DeckService
     );
     deck: Deck = this.deckService.createEmptyDeck();
     private readonly deckExportService = applicationContainer.get<
         DeckExportService
-    >(UI_TYPES.DeckExportService);
+    >(APPLICATION_TYPES.DeckExportService);
     private readonly deckUriEncodingService = applicationContainer.get<
         DeckUriEncodingService
-    >(UI_TYPES.DeckUriEncodingService);
+    >(APPLICATION_TYPES.DeckUriEncodingService);
     private readonly deckFileService = applicationContainer.get<
         DeckFileService
-    >(UI_TYPES.DeckFileService);
+    >(APPLICATION_TYPES.DeckFileService);
     private readonly priceController = applicationContainer.get<
         PriceController
-    >(UI_TYPES.PriceController);
+    >(APPLICATION_TYPES.PriceController);
 
     get shareLink() {
         const currentUri = location.origin + location.pathname;
@@ -233,7 +233,7 @@ export default class App extends Vue {
     mounted() {
         this.ajax.currentlyLoading = true;
         const cardDatabase = applicationContainer.get<CardDatabase>(
-            UI_TYPES.CardDatabase
+            APPLICATION_TYPES.CardDatabase
         );
 
         cardDatabase
@@ -248,7 +248,7 @@ export default class App extends Vue {
 
     private async loadUriDeck(): Promise<void> {
         const urlService = applicationContainer.get<UrlService>(
-            UI_TYPES.UrlService
+            APPLICATION_TYPES.UrlService
         );
         const url = location.toString();
         const remoteUrlValue = urlService.getSingleQueryParam(url, "u");

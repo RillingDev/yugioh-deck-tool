@@ -16,7 +16,7 @@
 <script lang="ts">
 import { applicationContainer } from "@/inversify.config";
 import { PriceController } from "@/lib/controller/PriceController";
-import { UI_TYPES } from "@/types";
+import { APPLICATION_TYPES } from "@/types";
 import { Card, Vendor } from "yugioh-deck-tool-core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
@@ -30,7 +30,7 @@ export default class YgoPriceView extends Vue {
     group: boolean;
 
     priceController = applicationContainer.get<PriceController>(
-        UI_TYPES.PriceController
+        APPLICATION_TYPES.PriceController
     );
 
     get priceByVendor(): Map<Vendor, number> {

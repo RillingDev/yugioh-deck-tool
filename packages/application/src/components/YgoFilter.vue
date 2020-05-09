@@ -189,7 +189,7 @@ import {
     SortingStrategy,
 } from "yugioh-deck-tool-core/src/main";
 import { applicationContainer } from "@/inversify.config";
-import { UI_TYPES } from "@/types";
+import { APPLICATION_TYPES } from "@/types";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 import { clone } from "lodash";
 
@@ -230,7 +230,7 @@ export default class YgoFilter extends Vue {
     sortingOrders: SortingOrder[];
 
     private readonly cardDatabase = applicationContainer.get<CardDatabase>(
-        UI_TYPES.CardDatabase
+        APPLICATION_TYPES.CardDatabase
     );
 
     get types() {

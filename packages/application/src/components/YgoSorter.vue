@@ -24,7 +24,7 @@ import Vue from "vue";
 import { Prop } from "vue-property-decorator";
 import { Deck, DeckService } from "yugioh-deck-tool-core/src/main";
 import { applicationContainer } from "@/inversify.config";
-import { UI_TYPES } from "@/types";
+import { APPLICATION_TYPES } from "@/types";
 import Component from "vue-class-component";
 
 @Component({})
@@ -33,7 +33,7 @@ export default class YgoSorter extends Vue {
     deck: Deck;
 
     private readonly deckService = applicationContainer.get<DeckService>(
-        UI_TYPES.DeckService
+        APPLICATION_TYPES.DeckService
     );
 
     sort() {
