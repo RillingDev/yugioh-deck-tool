@@ -10,9 +10,9 @@
         </button>
 
         <BModal
-            modal-class="decktool-modal"
             hide-footer
             id="modalDrawSim"
+            modal-class="decktool-modal"
             ref="modalDrawSim"
             size="lg"
             title="Start-Hand Simulation"
@@ -63,22 +63,24 @@ import {
     DefaultDeckPart,
 } from "yugioh-deck-tool-core/src/main";
 import { BModal } from "bootstrap-vue";
-import { Prop } from "vue-property-decorator";
 import { applicationContainer } from "@/inversify.config";
 import { APPLICATION_TYPES } from "@/types";
 
-const deckService = applicationContainer.get<DeckService>(APPLICATION_TYPES.DeckService);
+const deckService = applicationContainer.get<DeckService>(
+    APPLICATION_TYPES.DeckService
+);
 
 @Component({ components: { YgoCard, BModal } })
 export default class YgoDrawSim extends Vue {
-    @Prop({ required: true })
-    deck: Deck;
-
     goingFirst = true;
     drawItems: Card[] = [];
 
     get mainDeckCards() {
         return this.deck.parts.get(DefaultDeckPart.MAIN);
+    }
+
+    get deck(): Deck {
+        return this.$store.state.deck.active;
     }
 
     showModal() {

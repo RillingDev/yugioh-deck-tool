@@ -17,7 +17,7 @@
                     placeholder="Deck Title"
                     title="Deck Title"
                     type="text"
-                    v-model="deck.name"
+                    v-model="deckName"
                 />
                 <button
                     @click="deckToFile"
@@ -83,24 +83,18 @@
             <div class="text-center" v-if="ajax.currentlyLoading">
                 <span>Loading Card Database...</span>
             </div>
-            <ygo-deck :deck="deck" v-if="!ajax.currentlyLoading" />
+            <ygo-deck v-if="!ajax.currentlyLoading" />
         </div>
 
         <!-- app-builder -->
         <div class="app-section app-builder">
             <h2>Deckbuilder:</h2>
             <div class="app-builder-intro">
-                <ygo-sorter :deck="deck" />
-                <ygo-draw-sim :deck="deck" />
-                <ygo-randomizer :deck="deck" />
+                <ygo-sorter />
+                <ygo-draw-sim />
+                <ygo-randomizer />
             </div>
-            <ygo-builder
-                :can-add="canAdd"
-                v-if="!ajax.currentlyLoading"
-                v-on:deck-card-add="
-                    (e, { deckPart, card }) => addCard(deckPart, card)
-                "
-            />
+            <ygo-builder v-if="!ajax.currentlyLoading" />
         </div>
     </div>
 </template>
@@ -109,19 +103,16 @@
 import Vue from "vue";
 
 import {
-    Card,
     CardDatabase,
+    Currency,
     Deck,
     DeckExportService,
     DeckFileService,
-    DeckPart,
     DeckService,
     DeckUriEncodingService,
-    Format,
+    DEFAULT_CURRENCY_ARR,
     getLogger,
     UrlService,
-    Currency,
-    DEFAULT_CURRENCY_ARR,
 } from "yugioh-deck-tool-core/src/main";
 import { copyText, readFile, saveFile } from "yugioh-deck-tool-ui/src/main";
 import YgoDeck from "./components/YgoDeck.vue";
@@ -133,7 +124,8 @@ import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
 import YgoRandomizer from "@/components/YgoRandomizer.vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
-import { UPDATE_CURRENCY } from "@/store/modules/currency";
+import { CURRENCY_UPDATE } from "@/store/modules/currency";
+import { DECK_REPLACE, DECK_NAME_UPDATE } from "@/store/modules/deck";
 
 const logger = getLogger("app");
 
@@ -152,10 +144,10 @@ export default class App extends Vue {
     readonly ajax = {
         currentlyLoading: true,
     };
+    readonly currencies = DEFAULT_CURRENCY_ARR;
     private readonly deckService = applicationContainer.get<DeckService>(
         APPLICATION_TYPES.DeckService
     );
-    deck: Deck = this.deckService.createEmptyDeck();
     private readonly deckExportService = applicationContainer.get<
         DeckExportService
     >(APPLICATION_TYPES.DeckExportService);
@@ -166,12 +158,28 @@ export default class App extends Vue {
         DeckFileService
     >(APPLICATION_TYPES.DeckFileService);
 
-    readonly currencies = DEFAULT_CURRENCY_ARR;
     get activeCurrency(): Currency {
         return this.$store.state.currency.active;
     }
+
     set activeCurrency(newCurrency: Currency) {
-        this.$store.commit(UPDATE_CURRENCY, { currency: newCurrency });
+        this.$store.commit(CURRENCY_UPDATE, { currency: newCurrency });
+    }
+
+    get deck(): Deck {
+        return this.$store.state.deck.active;
+    }
+
+    set deck(newDeck: Deck) {
+        this.$store.commit(DECK_REPLACE, { deck: newDeck });
+    }
+
+    get deckName(): string {
+        return this.$store.state.deck.active.name;
+    }
+
+    set deckName(newName: string) {
+        this.$store.commit(DECK_NAME_UPDATE, { name: newName });
     }
 
     get shareLink() {
@@ -196,18 +204,6 @@ export default class App extends Vue {
             this.deck
         );
         saveFile(new File([fileContent], fileName), document);
-    }
-
-    canAdd(deckPart: DeckPart, card: Card, format: Format) {
-        return this.deckService.canAdd(this.deck, deckPart, format, card);
-    }
-
-    addCard(deckPart: DeckPart, card: Card) {
-        this.deck.parts = this.deckService.addCard(
-            this.deck,
-            deckPart,
-            card
-        ).parts;
     }
 
     fileOnUpload(e) {

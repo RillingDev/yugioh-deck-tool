@@ -60,13 +60,14 @@
 import { applicationContainer } from "@/inversify.config";
 import { APPLICATION_TYPES } from "@/types";
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import {
     Card,
     CardDatabase,
     CardFilter,
     CardService,
     DeckPart,
+    DeckService,
     DEFAULT_DECK_PART_ARR,
     FilterService,
     Format,
@@ -75,13 +76,12 @@ import {
     SortingStrategy,
 } from "yugioh-deck-tool-core/src/main";
 import YgoFilter from "@/components/YgoFilter.vue";
+import { DECK_CARD_ADD } from "@/store/modules/deck";
 
 @Component({
     components: { YgoFilter },
 })
 export default class YgoBuilder extends Vue {
-    @Prop({ required: true })
-    canAdd: (deckPart: DeckPart, card: Card, format: Format) => boolean;
     deckParts = DEFAULT_DECK_PART_ARR;
     sortingStrategy = SortingStrategy.NAME;
     sortingOrder = SortingOrder.DESC;
@@ -113,6 +113,9 @@ export default class YgoBuilder extends Vue {
     );
     private readonly cardService = applicationContainer.get<CardService>(
         APPLICATION_TYPES.CardService
+    );
+    private readonly deckService = applicationContainer.get<DeckService>(
+        APPLICATION_TYPES.DeckService
     );
 
     get cards() {
@@ -159,7 +162,16 @@ export default class YgoBuilder extends Vue {
     }
 
     onAddCard(e: any, deckPart: DeckPart, card: Card) {
-        this.$emit("deck-card-add", e, { deckPart, card });
+        this.$store.commit(DECK_CARD_ADD, { card, deckPart });
+    }
+
+    canAdd(deckPart: DeckPart, card: Card, format: Format) {
+        return this.deckService.canAdd(
+            this.$store.state.deck.active,
+            deckPart,
+            format,
+            card
+        );
     }
 }
 </script>
@@ -207,8 +219,8 @@ export default class YgoBuilder extends Vue {
         &:hover {
             width: 100%;
             padding: 10px 0;
-            color: $black;
             text-decoration: none;
+            color: $black;
         }
     }
 

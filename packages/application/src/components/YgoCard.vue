@@ -28,6 +28,7 @@ import YgoPriceView from "@/components/YgoPriceView.vue";
 export default class YgoCard extends Vue {
     @Prop({ required: true })
     public card: Card;
+
     onDeckCardRightClicked(e: Event) {
         e.preventDefault();
         this.$emit("deck-card-right-click", e);

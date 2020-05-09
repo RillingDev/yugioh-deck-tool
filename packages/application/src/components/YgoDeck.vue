@@ -6,7 +6,6 @@
         </div>
         <ygo-deck-part
             :class="`deck-part-${deckPart.id}`"
-            :deck="deck"
             :deck-part="deckPart"
             :key="deckPart.id"
             v-for="deckPart in deckParts"
@@ -27,9 +26,9 @@ import {
 } from "yugioh-deck-tool-core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
-import { Prop } from "vue-property-decorator";
 import { applicationContainer } from "@/inversify.config";
 import { APPLICATION_TYPES } from "@/types";
+import { DECK_CARD_REMOVE } from "@/store/modules/deck";
 
 @Component({
     components: {
@@ -38,8 +37,6 @@ import { APPLICATION_TYPES } from "@/types";
     },
 })
 export default class YgoDeck extends Vue {
-    @Prop({ required: true })
-    deck: Deck;
     deckParts = DEFAULT_DECK_PART_ARR;
     private readonly deckService = applicationContainer.get<DeckService>(
         APPLICATION_TYPES.DeckService
@@ -49,12 +46,15 @@ export default class YgoDeck extends Vue {
         return this.deckService.getAllCards(this.deck);
     }
 
-    onDeckCardRightClicked(e: any, data: { card: Card; deckPart }) {
-        this.deck.parts = this.deckService.removeCard(
-            this.deck,
-            data.deckPart,
-            data.card
-        ).parts;
+    get deck(): Deck {
+        return this.$store.state.deck.active;
+    }
+
+    onDeckCardRightClicked(
+        e: any,
+        { card, deckPart }: { card: Card; deckPart }
+    ) {
+        this.$store.commit(DECK_CARD_REMOVE, { card, deckPart });
     }
 }
 </script>

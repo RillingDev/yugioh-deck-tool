@@ -22,7 +22,7 @@
 <script lang="ts">
 import YgoCard from "./YgoCard.vue";
 import YgoPriceView from "./YgoPriceView.vue";
-import { Card, Deck, DeckPart } from "yugioh-deck-tool-core/src/main";
+import { Card, DeckPart } from "yugioh-deck-tool-core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
@@ -35,12 +35,10 @@ import { Prop } from "vue-property-decorator";
 })
 export default class YgoDeckPart extends Vue {
     @Prop({ required: true })
-    deck: Deck;
-    @Prop({ required: true })
     deckPart: DeckPart;
 
     get cards() {
-        return this.deck.parts.get(this.deckPart);
+        return this.$store.state.deck.active.parts.get(this.deckPart);
     }
 
     onDeckCardRightClicked(e: any, card: Card) {

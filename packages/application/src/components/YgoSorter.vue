@@ -1,7 +1,6 @@
 <template>
     <div class="btn-group">
         <button
-            :disabled="deckService.getAllCards(this.deck).length < 2"
             class="btn btn-primary btn-sm"
             title="Sort Deck"
             v-on:click="() => sort()"
@@ -9,7 +8,6 @@
             Sort
         </button>
         <button
-            :disabled="deckService.getAllCards(this.deck).length < 2"
             class="btn btn-primary btn-sm"
             title="Shuffle Deck"
             v-on:click="() => shuffle()"
@@ -21,27 +19,17 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Prop } from "vue-property-decorator";
-import { Deck, DeckService } from "yugioh-deck-tool-core/src/main";
-import { applicationContainer } from "@/inversify.config";
-import { APPLICATION_TYPES } from "@/types";
 import Component from "vue-class-component";
+import { DECK_SHUFFLE, DECK_SORT } from "@/store/modules/deck";
 
 @Component({})
 export default class YgoSorter extends Vue {
-    @Prop({ required: true })
-    deck: Deck;
-
-    private readonly deckService = applicationContainer.get<DeckService>(
-        APPLICATION_TYPES.DeckService
-    );
-
     sort() {
-        this.deck.parts = this.deckService.sort(this.deck).parts;
+        this.$store.commit(DECK_SORT);
     }
 
     shuffle() {
-        this.deck.parts = this.deckService.shuffle(this.deck).parts;
+        this.$store.commit(DECK_SHUFFLE);
     }
 }
 </script>

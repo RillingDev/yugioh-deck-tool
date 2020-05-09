@@ -15,9 +15,9 @@
             <span class="fas fa-cog"></span>
         </button>
         <BModal
-            modal-class="decktool-modal"
             hide-footer
             id="modalRandomizerSettings"
+            modal-class="decktool-modal"
             ref="modalRandomizerSettings"
             size="lg"
             title="Randomizer Settings"
@@ -45,10 +45,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Prop } from "vue-property-decorator";
 import {
     CardFilter,
-    Deck,
     DeckRandomizationService,
     Format,
     RandomizationStrategy,
@@ -59,12 +57,10 @@ import Component from "vue-class-component";
 import { BModal } from "bootstrap-vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 import YgoFilter from "@/components/YgoFilter.vue";
+import { DECK_REPLACE } from "@/store/modules/deck";
 
 @Component({ components: { AdvancedSelect, YgoFilter, BModal } })
 export default class YgoRandomizer extends Vue {
-    @Prop({ required: true })
-    deck: Deck;
-
     strategy: RandomizationStrategy;
     strategies: RandomizationStrategy[];
 
@@ -103,8 +99,7 @@ export default class YgoRandomizer extends Vue {
             this.strategy,
             this.filter
         );
-        this.deck.parts = randomizedDeck.parts;
-        this.deck.name = randomizedDeck.name;
+        this.$store.commit(DECK_REPLACE, { deck: randomizedDeck });
     }
 
     showModal() {
