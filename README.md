@@ -19,9 +19,8 @@ Prerequisites:
 Then perform the following steps:
 
 1. Clone the repository.
-2. Install [`lerna`](https://github.com/lerna/lerna) through npm.
-3. Execute `lerna bootstrap` inside the cloned directory.
-4. Execute `serve` in `./packages/application`.
+2. Execute `npm run setup` inside the cloned directory.
+3. Execute `serve` in `./packages/application`.
 
 ### NPM Scripts
 
