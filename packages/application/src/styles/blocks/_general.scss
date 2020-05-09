@@ -1,104 +1,10 @@
 @import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
-.decktool-header {
+.deck-tool__header {
     text-align: center;
 }
 
-.decktool,
-.decktool-modal {
-
-    label {
-        margin-right: 0.25rem;
-        margin-bottom: 0;
-    }
-
-    .close {
-        font-size: 1.4em;
-        margin: 0;
-        padding: 0;
-        cursor: pointer;
-    }
-
-    .container {
-        @include screen(max, xl) {
-            max-width: 100%;
-        }
-    }
-
-    a.btn {
-        /* fix for weird things */
-        background-color: $primary;
-    }
-
-    .btn {
-        line-height: 24px;
-        cursor: pointer;
-        border: 0;
-    }
-
-    .btn-primary {
-        &:focus {
-            color: $white;
-            background-color: $primary;
-        }
-    }
-}
-
-.app {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.app-section {
-    width: 100%;
+.deck-tool__application {
     margin-top: 0.5rem;
-}
-
-.app-forms {
-    order: 1;
-}
-
-.app-deck {
-    order: 3;
-    @include screen(min, md) {
-        order: 2;
-        width: calc(100% - 454px);
-    }
-}
-
-.app-builder {
-    order: 2;
-    @include screen(min, md) {
-        order: 3;
-        width: 434px;
-        margin-left: 20px;
-    }
-}
-
-.app-builder-intro {
-    display: flex;
-    margin-bottom: 1rem;
-
-    .btn {
-        margin-right: 10px;
-    }
-}
-
-/* modal is not inside app in DOM */
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.modal-title {
-    margin-bottom: 0;
-}
-
-.modal-body {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
+    margin-bottom: 0.5rem;
 }

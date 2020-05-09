@@ -177,11 +177,7 @@ export default class YgoBuilder extends Vue {
 </script>
 
 <style lang="scss">
-@import "../styles/variables.custom";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
-
+@import "~yugioh-deck-tool-ui/src/styles/variables";
 @import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
 .decktool {

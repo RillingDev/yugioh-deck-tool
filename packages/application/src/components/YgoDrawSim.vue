@@ -12,7 +12,7 @@
         <BModal
             hide-footer
             id="modalDrawSim"
-            modal-class="decktool-modal"
+            modal-class="deck-tool__modal"
             ref="modalDrawSim"
             size="lg"
             title="Start-Hand Simulation"
@@ -103,11 +103,6 @@ export default class YgoDrawSim extends Vue {
 </script>
 
 <style lang="scss">
-@import "../styles/variables.custom";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
-
 .drawsim-output {
     display: flex;
     flex-wrap: wrap;

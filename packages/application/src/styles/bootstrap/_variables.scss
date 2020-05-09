@@ -1,15 +1,15 @@
 @import "~yugioh-deck-tool-ui/src/styles/variables";
 
-$enable-caret: false;
+$enable-caret: true;
 $enable-rounded: false;
 $enable-shadows: false;
 $enable-gradients: false;
 $enable-transitions: true;
-$enable-prefers-reduced-motion-media-query: false;
+$enable-prefers-reduced-motion-media-query: true;
 $enable-grid-classes: true;
 $enable-pointer-cursor-for-buttons: true;
 $enable-print-styles: false;
-$enable-responsive-font-sizes: false;
+$enable-responsive-font-sizes: true;
 $enable-validation-icons: true;
 $enable-deprecation-messages: true;
 
@@ -17,4 +17,9 @@ $colors: ();
 
 $theme-colors: (
     "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
 );

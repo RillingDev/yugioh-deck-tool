@@ -1,0 +1,35 @@
+@import "./bootstrap/variables";
+@import "./bootstrap/reboot-mixin";
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@import "~bootstrap-vue/src/variables";
+
+.deck-tool,
+.deck-tool__modal {
+    @include reboot();
+    @import "~bootstrap/scss/type";
+    @import "~bootstrap/scss/grid";
+    @import "~bootstrap/scss/forms";
+    @import "~bootstrap/scss/buttons";
+    @import "~bootstrap/scss/transitions";
+
+    @import "~bootstrap/scss/button-group";
+    @import "~bootstrap/scss/input-group";
+    @import "~bootstrap/scss/close";
+}
+
+.deck-tool {
+    @import "blocks/general";
+}
+
+// Required outside of .deck-tool due to how modal overlay works
+// ID selector seems to be the only way to refer to the wrapper around the modal
+[id$=___BV_modal_outer_] {
+    @import "~bootstrap/scss/modal";
+    @import "~bootstrap-vue/src/components/modal/modal";
+}
+
+

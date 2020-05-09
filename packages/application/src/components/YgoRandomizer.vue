@@ -17,7 +17,7 @@
         <BModal
             hide-footer
             id="modalRandomizerSettings"
-            modal-class="decktool-modal"
+            modal-class="deck-tool__modal"
             ref="modalRandomizerSettings"
             size="lg"
             title="Randomizer Settings"
@@ -108,7 +108,7 @@ export default class YgoRandomizer extends Vue {
 }
 </script>
 <style lang="scss">
-.decktool .randomizer .btn {
+.randomizer .btn {
     margin-right: 0;
 }
 </style>

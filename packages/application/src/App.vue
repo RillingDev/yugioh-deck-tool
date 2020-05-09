@@ -285,32 +285,4 @@ export default class App extends Vue {
 }
 </script>
 
-<style lang="scss">
-@import "./styles/variables.custom";
-
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
-
-@import "~bootstrap-vue/src/variables";
-
-@import "styles/reboot.custom";
-
-.decktool,
-.decktool-modal {
-    @import "~bootstrap/scss/transitions";
-    @import "~bootstrap/scss/type";
-    @import "~bootstrap/scss/grid";
-    @import "~bootstrap/scss/forms";
-    @import "~bootstrap/scss/buttons";
-    @import "~bootstrap/scss/button-group";
-    @import "~bootstrap/scss/close";
-}
-
-// Required outside due to how modal overlay works
-@import "~bootstrap/scss/modal";
-@import "~bootstrap-vue/src/components/modal/index";
-
-@import "styles/blocks/general";
-@import "styles/blocks/forms";
-</style>
+<style lang="scss"></style>

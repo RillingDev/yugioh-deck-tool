@@ -13,16 +13,19 @@ $black: #000;
 $brown: #b97b51;
 $purple: #9683b8;
 $green: #799a60;
-$greenyellow: #b8d46c;
+$green-yellow: #b8d46c;
 $yellow: #ffd275;
 $orange: #f1a64a;
 $red: #d26c6c;
 
 $primary: $brown;
-$dark: desaturate(darken($primary, 5%), 10%);
-$error: $red;
+$secondary: desaturate(darken($primary, 5%), 10%);
+$success: $green;
+$info: $purple;
+$warning: $yellow;
+$danger: $red;
 
-$color-deckpart-main: $dark;
+$color-deckpart-main: $brown;
 $color-deckpart-extra: $purple;
 $color-deckpart-side: $green;
 
@@ -30,17 +33,20 @@ $color-vendor-tcgplayer: #0e5b93;
 $color-vendor-cardmarket: #012169;
 $color-vendor-coolstuffinc: #41bfc3;
 
-$color-vote-up: $orange;
-$color-vote-down: $purple;
-
-$font-family-sans-serif: "Open Sans", "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", sans-serif;
-$font-family-base: $font-family-sans-serif;
+$font-family-base:  "Open Sans", "Segoe UI", Roboto, "Helvetica Neue",
+Arial, "Noto Sans", sans-serif;
 
 $grid-breakpoints: (
     xs: 0,
     sm: 576px,
     md: 768px,
-    lg: 992px,
-    xl: 1200px,
+    lg: 1056px,
+    xl: 1120px
+);
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 1036px,
+    xl: 1100px
 );
