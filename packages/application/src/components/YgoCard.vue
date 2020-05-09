@@ -1,49 +1,45 @@
 <template>
-    <a
-        :data-name="card.name"
-        class="deck-card"
-        v-on:contextmenu="(e) => onDeckCardRightClicked(e)"
-    >
-        <img
-            :alt="card.name"
-            :src="card.image.urlSmall"
-            height="135"
-            width="100"
-        />
+    <a :data-name="name" @contextmenu="(e) => onCardRightClick(e)" class="card">
+        <img :alt="name" :src="imgSrc" class="card__img" />
     </a>
 </template>
 
 <script lang="ts">
-import Component from "vue-class-component";
-import Vue from "vue";
-import { Prop } from "vue-property-decorator";
 import { Card } from "yugioh-deck-tool-core/src/main";
-import YgoPriceView from "@/components/YgoPriceView.vue";
+import { PropType } from "vue";
+import { computed, defineComponent } from "@vue/composition-api";
 
-@Component({
-    components: {
-        YgoPriceView,
+export default defineComponent({
+    props: {
+        card: {
+            required: true,
+            type: Object as PropType<Card>,
+        },
     },
-})
-export default class YgoCard extends Vue {
-    @Prop({ required: true })
-    public card: Card;
+    setup(props, context) {
+        const name = computed(() => props.card.name);
+        const imgSrc = computed(() => props.card.image.urlSmall);
+        const onCardRightClick = (e: Event) => {
+            e.preventDefault();
+            context.emit("card-right-click");
+        };
 
-    onDeckCardRightClicked(e: Event) {
-        e.preventDefault();
-        this.$emit("deck-card-right-click", e);
-    }
-}
+        return { name, imgSrc, onCardRightClick };
+    },
+});
 </script>
 
-<style lang="scss">
-.deck-card {
-    position: relative;
-    margin: 4px;
+<style lang="scss" scoped>
+.card {
+    display: inline-block; // Make sure link covers full card
+    margin: 0.125rem;
+    min-width: 70px;
+    max-width: 100px;
 }
 
-.deck-card img {
-    margin-bottom: 0;
-    pointer-events: none;
+.card__img {
+    pointer-events: none; // Allow "clicking through" to parent link.
+    width: 100%;
+    height: auto;
 }
 </style>

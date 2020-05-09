@@ -10,9 +10,7 @@
                 :card="card"
                 :key="`${card.id}_${cardIndex}`"
                 v-for="(card, cardIndex) in cards"
-                v-on:deck-card-right-click="
-                    (e) => onDeckCardRightClicked(e, card)
-                "
+                v-on:card-right-click="(e) => onDeckCardRightClicked(e, card)"
             >
             </ygo-card>
         </div>
