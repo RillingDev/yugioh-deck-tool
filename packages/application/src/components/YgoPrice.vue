@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import { applicationContainer } from "@/inversify.config";
-import { APPLICATION_TYPES } from "@/types";
+import { applicationContainer } from "../inversify.config";
+import { APPLICATION_TYPES } from "../types";
 import {
     Card,
     Currency,
