@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 0;
+
     &--group {
         justify-content: flex-start;
         flex-direction: row;
@@ -30,6 +31,7 @@
             background-color: $color-vendor-coolstuffinc;
         }
     }
+
     &__warning {
         padding-left: 0.5rem;
         padding-right: 0.25rem;

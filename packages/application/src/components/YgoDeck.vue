@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import YgoDeckPart from "./YgoDeckPart.vue";
-import YgoPriceView from "./YgoPriceView.vue";
+import YgoPriceView from "./YgoPrice.vue";
 import {
     Card,
     Deck,

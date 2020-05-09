@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import YgoCard from "./YgoCard.vue";
-import YgoPriceView from "./YgoPriceView.vue";
+import YgoPriceView from "./YgoPrice.vue";
 import { Card, DeckPart } from "yugioh-deck-tool-core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
