@@ -8,20 +8,27 @@
             v-for="[vendor, price] in priceByVendor.entries()"
         >
             <span v-if="group">{{ vendor.name }}: </span>
-            {{ priceController.format(price) }}
+            {{ formatPrice(price) }}
         </span>
     </div>
 </template>
 
 <script lang="ts">
 import { applicationContainer } from "@/inversify.config";
-import { PriceController } from "@/lib/controller/PriceController";
 import { APPLICATION_TYPES } from "@/types";
-import { Card, Vendor } from "yugioh-deck-tool-core/src/main";
+import {
+    Card,
+    DEFAULT_VENDOR_ARR,
+    PriceService,
+    Vendor,
+} from "yugioh-deck-tool-core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
 import { Prop } from "vue-property-decorator";
 
+const priceService = applicationContainer.get<PriceService>(
+    APPLICATION_TYPES.PriceService
+);
 @Component({})
 export default class YgoPriceView extends Vue {
     @Prop({ required: true })
@@ -29,12 +36,25 @@ export default class YgoPriceView extends Vue {
     @Prop({ required: false, default: () => false })
     group: boolean;
 
-    priceController = applicationContainer.get<PriceController>(
-        APPLICATION_TYPES.PriceController
-    );
-
     get priceByVendor(): Map<Vendor, number> {
-        return this.priceController.getPriceByVendor(this.cards);
+        return new Map(
+            DEFAULT_VENDOR_ARR.map((vendor) => {
+                const lookupResult = priceService.getPrice(
+                    this.cards,
+                    vendor,
+                    this.getCurrency()
+                );
+                return [vendor, lookupResult.price];
+            })
+        );
+    }
+
+    formatPrice(price: number) {
+        return priceService.formatPrice(price, this.getCurrency());
+    }
+
+    private getCurrency() {
+        return this.$store.state.currency.active;
     }
 }
 </script>

@@ -58,11 +58,11 @@
             <div class="form-group">
                 <label>Price:</label>
                 <AdvancedSelect
-                    :initial-options="priceController.currencies"
+                    :initial-options="currencies"
                     :label="(currency) => currency.name"
                     :track-by="(currency) => currency.name"
                     class="form-control form-deck-currency"
-                    v-model="priceController.activeCurrency"
+                    v-model="activeCurrency"
                 ></AdvancedSelect>
                 <a
                     :class="{ disabled: isDeckEmpty }"
@@ -107,7 +107,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { PriceController } from "./lib/controller/PriceController";
 
 import {
     Card,
@@ -121,6 +120,8 @@ import {
     Format,
     getLogger,
     UrlService,
+    Currency,
+    DEFAULT_CURRENCY_ARR,
 } from "yugioh-deck-tool-core/src/main";
 import { copyText, readFile, saveFile } from "yugioh-deck-tool-ui/src/main";
 import YgoDeck from "./components/YgoDeck.vue";
@@ -132,6 +133,7 @@ import YgoDrawSim from "@/components/YgoDrawSim.vue";
 import YgoBuilder from "@/components/YgoBuilder.vue";
 import YgoRandomizer from "@/components/YgoRandomizer.vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
+import { UPDATE_CURRENCY } from "@/store/modules/currency";
 
 const logger = getLogger("app");
 
@@ -163,9 +165,14 @@ export default class App extends Vue {
     private readonly deckFileService = applicationContainer.get<
         DeckFileService
     >(APPLICATION_TYPES.DeckFileService);
-    private readonly priceController = applicationContainer.get<
-        PriceController
-    >(APPLICATION_TYPES.PriceController);
+
+    readonly currencies = DEFAULT_CURRENCY_ARR;
+    get activeCurrency(): Currency {
+        return this.$store.state.currency.active;
+    }
+    set activeCurrency(newCurrency: Currency) {
+        this.$store.commit(UPDATE_CURRENCY, { currency: newCurrency });
+    }
 
     get shareLink() {
         const currentUri = location.origin + location.pathname;
