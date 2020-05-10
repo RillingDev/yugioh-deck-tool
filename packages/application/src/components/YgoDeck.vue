@@ -9,9 +9,7 @@
             :deck-part="deckPart"
             :key="deckPart.id"
             v-for="deckPart in deckParts"
-            v-on:deck-card-right-click="
-                (e, card) => onDeckCardRightClicked(card, { card, deckPart })
-            "
+            @card-right-click="(e) => onDeckCardRightClicked(e, deckPart)"
         />
     </div>
 </template>
@@ -23,6 +21,7 @@ import {
     Deck,
     DeckService,
     DEFAULT_DECK_PART_ARR,
+    DeckPart,
 } from "yugioh-deck-tool-core/src/main";
 import Component from "vue-class-component";
 import Vue from "vue";
@@ -50,11 +49,13 @@ export default class YgoDeck extends Vue {
         return this.$store.state.deck.active;
     }
 
-    onDeckCardRightClicked(
-        e: any,
-        { card, deckPart }: { card: Card; deckPart }
-    ) {
-        this.$store.commit(DECK_CARD_REMOVE, { card, deckPart });
+    onDeckCardRightClicked(e: { card: Card }, deckPart: DeckPart) {
+        // eslint-disable-next-line prefer-rest-params
+        console.log(arguments);
+        this.$store.commit(DECK_CARD_REMOVE, {
+            card: e.card,
+            deckPart: deckPart,
+        });
     }
 }
 </script>

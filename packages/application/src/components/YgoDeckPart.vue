@@ -1,84 +1,105 @@
 <template>
-    <div :class="`deck-part-${deckPart.id}`" class="deck-part">
-        <h3>
-            {{ deckPart.name }} Deck ({{ cards.length }}
-            Cards):
-        </h3>
-        <ygo-price-view :cards="cards" :group="true" />
-        <div class="deck-content" v-if="cards.length > 0">
-            <ygo-card
+    <section :class="`deck-part--${deckPart.id}`" class="deck-part">
+        <header class="deck-part__header">
+            <div class="deck-part__details">
+                <h1 class="deck-part__name h4">{{ deckPart.name }} Deck</h1>
+                <span class="deck-part__stats">({{ cards.length }} Cards)</span>
+            </div>
+            <YgoPrice :cards="cards" />
+        </header>
+        <main class="deck-part__content" v-if="cards.length > 0">
+            <YgoCard
                 :card="card"
-                :key="`${card.id}_${cardIndex}`"
+                :key="cardIndex"
                 v-for="(card, cardIndex) in cards"
-                v-on:card-right-click="(e) => onDeckCardRightClicked(e, card)"
+                @right-click="(e) => onCardRightClick(e, card)"
             >
-            </ygo-card>
-        </div>
-    </div>
+            </YgoCard>
+        </main>
+    </section>
 </template>
 
 <script lang="ts">
-import YgoCard from "./YgoCard.vue";
-import YgoPriceView from "./YgoPrice.vue";
 import { Card, DeckPart } from "yugioh-deck-tool-core/src/main";
-import Component from "vue-class-component";
-import Vue from "vue";
-import { Prop } from "vue-property-decorator";
+import { PropType } from "vue";
+import { computed, defineComponent } from "@vue/composition-api";
+import YgoPrice from "./YgoPrice.vue";
+import YgoCard from "./YgoCard.vue";
 
-@Component({
+export default defineComponent({
     components: {
+        YgoPrice,
         YgoCard,
-        YgoPriceView,
     },
-})
-export default class YgoDeckPart extends Vue {
-    @Prop({ required: true })
-    deckPart: DeckPart;
+    props: {
+        deckPart: {
+            required: true,
+            type: Object as PropType<DeckPart>,
+        },
+    },
+    setup(props, context) {
+        const cards = computed<Card[]>(() =>
+            context.root.$store.state.deck.active.parts.get(props.deckPart)
+        );
+        const onCardRightClick = (e: unknown, card: Card) => {
+            context.emit("card-right-click", { card });
+        };
 
-    get cards() {
-        return this.$store.state.deck.active.parts.get(this.deckPart);
-    }
-
-    onDeckCardRightClicked(e: any, card: Card) {
-        this.$emit("deck-card-right-click", e, card);
-    }
-}
+        return { cards, onCardRightClick };
+    },
+});
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~yugioh-deck-tool-ui/src/styles/variables";
 
-.deck-content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 4px;
-}
-
 .deck-part {
-    margin-bottom: 1.25em;
+    margin-bottom: 1.5rem;
 
-    h3 {
-        font-size: 1rem;
-        display: initial;
-    }
-
-    &-main {
-        .deck-content {
-            background-color: $color-deckpart-main;
+    &--main {
+        .deck-part__content {
+            background-color: $color-deck-part-main;
+            border-color: darken($color-deck-part-main, 10%);
         }
     }
 
-    &-extra {
-        .deck-content {
-            background-color: $color-deckpart-extra;
+    &--extra {
+        .deck-part__content {
+            background-color: $color-deck-part-extra;
+            border-color: darken($color-deck-part-extra, 10%);
         }
     }
 
-    &-side {
-        .deck-content {
-            background-color: $color-deckpart-side;
+    &--side {
+        .deck-part__content {
+            background-color: $color-deck-part-side;
+            border-color: darken($color-deck-part-side, 10%);
         }
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__details {
+        display: flex;
+        align-items: center;
+    }
+
+    &__name.h4 {
+        margin: 0;
+    }
+
+    &__stats {
+        margin-left: 0.75rem;
+    }
+
+    &__content {
+        padding: 0.25rem;
+        border: 1px solid $black;
     }
 }
 </style>

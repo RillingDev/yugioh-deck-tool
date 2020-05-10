@@ -19,12 +19,12 @@ export default defineComponent({
     setup(props, context) {
         const name = computed(() => props.card.name);
         const imgSrc = computed(() => props.card.image.urlSmall);
-        const onCardRightClick = (e: Event) => {
+        const onRightClick = (e: Event) => {
             e.preventDefault();
-            context.emit("card-right-click");
+            context.emit("right-click", null);
         };
 
-        return { name, imgSrc, onCardRightClick };
+        return { name, imgSrc, onCardRightClick: onRightClick };
     },
 });
 </script>

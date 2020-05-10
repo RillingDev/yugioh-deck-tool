@@ -245,15 +245,15 @@ export default class YgoBuilder extends Vue {
         }
 
         &-main .fas {
-            color: $color-deckpart-main;
+            color: $color-deck-part-main;
         }
 
         &-extra .fas {
-            color: $color-deckpart-extra;
+            color: $color-deck-part-extra;
         }
 
         &-side .fas {
-            color: $color-deckpart-side;
+            color: $color-deck-part-side;
         }
     }
 
