@@ -1,61 +1,78 @@
 <template>
     <div class="deck">
-        <div class="deck-part deck-part-total">
-            <span>Total:</span>
-            <ygo-price-view :cards="allCards" :group="true" />
-        </div>
-        <ygo-deck-part
-            :class="`deck-part-${deckPart.id}`"
+        <header class="deck__header">
+            <h1 class="deck__total h3">Total</h1>
+            <YgoPrice :cards="allCards" />
+        </header>
+        <hr />
+        <YgoDeckPart
             :deck-part="deckPart"
             :key="deckPart.id"
+            @card-right-click="(e) => onCardRightClicked(e, deckPart)"
             v-for="deckPart in deckParts"
-            @card-right-click="(e) => onDeckCardRightClicked(e, deckPart)"
         />
     </div>
 </template>
 <script lang="ts">
-import YgoDeckPart from "./YgoDeckPart.vue";
-import YgoPriceView from "./YgoPrice.vue";
 import {
     Card,
-    Deck,
+    DeckPart,
     DeckService,
     DEFAULT_DECK_PART_ARR,
-    DeckPart,
 } from "yugioh-deck-tool-core/src/main";
-import Component from "vue-class-component";
-import Vue from "vue";
-import { applicationContainer } from "@/inversify.config";
-import { APPLICATION_TYPES } from "@/types";
-import { DECK_CARD_REMOVE } from "@/store/modules/deck";
+import { computed, defineComponent } from "@vue/composition-api";
+import YgoPrice from "./YgoPrice.vue";
+import { applicationContainer } from "../inversify.config";
+import { APPLICATION_TYPES } from "../types";
+import YgoDeckPart from "./YgoDeckPart.vue";
+import { DECK_CARD_REMOVE } from "../store/modules/deck";
 
-@Component({
+const deckService = applicationContainer.get<DeckService>(
+    APPLICATION_TYPES.DeckService
+);
+
+export default defineComponent({
     components: {
         YgoDeckPart,
-        YgoPriceView,
+        YgoPrice,
     },
-})
-export default class YgoDeck extends Vue {
-    deckParts = DEFAULT_DECK_PART_ARR;
-    private readonly deckService = applicationContainer.get<DeckService>(
-        APPLICATION_TYPES.DeckService
-    );
+    props: {},
+    setup(props, context) {
+        const deckParts = DEFAULT_DECK_PART_ARR;
+        const allCards = computed<Card[]>(() =>
+            deckService.getAllCards(context.root.$store.state.deck.active)
+        );
+        const onCardRightClicked = (e: { card: Card }, deckPart: DeckPart) => {
+            context.root.$store.commit(DECK_CARD_REMOVE, {
+                card: e.card,
+                deckPart: deckPart,
+            });
+        };
+        return { deckParts, allCards, onCardRightClicked };
+    },
+});
+</script>
 
-    get allCards() {
-        return this.deckService.getAllCards(this.deck);
+<style lang="scss" scoped>
+@import "~yugioh-deck-tool-ui/src/styles/variables";
+@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
+
+.deck {
+    margin-bottom: 1.5rem;
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @include screen(min, lg) {
+            align-items: center;
+            flex-direction: row;
+        }
     }
 
-    get deck(): Deck {
-        return this.$store.state.deck.active;
-    }
-
-    onDeckCardRightClicked(e: { card: Card }, deckPart: DeckPart) {
-        // eslint-disable-next-line prefer-rest-params
-        console.log(arguments);
-        this.$store.commit(DECK_CARD_REMOVE, {
-            card: e.card,
-            deckPart: deckPart,
-        });
+    &__total.h3 {
+        margin-bottom: 0.25rem;
     }
 }
-</script>
+</style>

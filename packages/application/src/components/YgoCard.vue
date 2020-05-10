@@ -37,8 +37,8 @@ export default defineComponent({
 }
 
 .card__img {
-    pointer-events: none; // Allow "clicking through" to parent link.
     width: 100%;
     height: auto;
+    pointer-events: none; // Allow "clicking through" to parent link.
 }
 </style>

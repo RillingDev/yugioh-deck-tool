@@ -11,8 +11,8 @@
             <template v-if="lookupResult.missing.length > 0">
                 <span
                     :title="`Missing ${lookupResult.missing.length} card(s)`"
-                    class="price__warning fas fa-exclamation"
                     aria-hidden="true"
+                    class="price__warning fas fa-exclamation"
                 ></span>
                 <span class="sr-only">
                     Missing {{ lookupResult.missing.length }} card(s)
@@ -29,9 +29,9 @@ import {
     Card,
     Currency,
     DEFAULT_VENDOR_ARR,
+    PriceLookupResult,
     PriceService,
     Vendor,
-    PriceLookupResult,
 } from "yugioh-deck-tool-core/src/main";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";

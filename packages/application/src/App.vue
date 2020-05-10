@@ -79,7 +79,6 @@
 
         <!-- app-deck -->
         <div class="app-section app-deck">
-            <h2>Decklist:</h2>
             <div class="text-center" v-if="ajax.currentlyLoading">
                 <span>Loading Card Database...</span>
             </div>

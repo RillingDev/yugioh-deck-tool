@@ -11,8 +11,8 @@
             <YgoCard
                 :card="card"
                 :key="cardIndex"
-                v-for="(card, cardIndex) in cards"
                 @right-click="(e) => onCardRightClick(e, card)"
+                v-for="(card, cardIndex) in cards"
             >
             </YgoCard>
         </main>
@@ -118,34 +118,34 @@ export default defineComponent({
 
     &--main {
         .deck-part__content {
-            background-color: $color-deck-part-main;
             border-color: darken($color-deck-part-main, 10%);
+            background-color: $color-deck-part-main;
         }
     }
 
     &--extra {
         .deck-part__content {
-            background-color: $color-deck-part-extra;
             border-color: darken($color-deck-part-extra, 10%);
+            background-color: $color-deck-part-extra;
         }
     }
 
     &--side {
         .deck-part__content {
-            background-color: $color-deck-part-side;
             border-color: darken($color-deck-part-side, 10%);
+            background-color: $color-deck-part-side;
         }
     }
 
     &__header {
         display: flex;
-        justify-content: space-between;
         flex-direction: column;
+        justify-content: space-between;
         margin-bottom: 0.5rem;
 
         @include screen(min, lg) {
-            flex-direction: row;
             align-items: center;
+            flex-direction: row;
         }
     }
 
@@ -154,8 +154,8 @@ export default defineComponent({
         flex-direction: column;
         margin-bottom: 0.25rem;
         @include screen(min, sm) {
-            flex-direction: row;
             align-items: center;
+            flex-direction: row;
         }
     }
 
@@ -166,15 +166,15 @@ export default defineComponent({
     &__stats {
         margin-top: 0.25rem;
         @include screen(min, sm) {
-            margin-left: 1rem;
             margin-top: 0;
+            margin-left: 1rem;
         }
     }
 
     &__content {
+        display: grid;
         padding: 0.35rem;
         border: 1px solid $black;
-        display: grid;
         gap: 0.35rem;
         grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
         @include screen(min, md) {
