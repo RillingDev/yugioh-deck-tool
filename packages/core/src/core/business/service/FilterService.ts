@@ -10,21 +10,21 @@ import { TYPES } from "../../../types";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
 interface CardFilter {
-    name: string | null;
+    name?: string;
 
-    typeGroup: CardTypeGroup | null;
-    type: CardType | null;
-    subType: string | null;
+    typeGroup?: CardTypeGroup;
+    type?: CardType;
+    subType?: string;
 
-    attribute: string | null;
-    level: number | null;
-    linkMarker: string | null;
+    attribute?: string;
+    level?: number;
+    linkMarker?: string;
 
-    archetype: string | null;
-    format: Format | null;
-    banState: BanState | null;
+    archetype?: string;
+    format?: Format;
+    banState?: BanState;
 
-    sets: CardSet[];
+    sets?: CardSet[];
 }
 
 /**
@@ -45,7 +45,10 @@ class FilterService {
      * @param filter Filter to apply. Generally null or empty array properties mean a check should be skipped.
      * @return Filtered cards.
      */
-    public filter(cards: Card[], filter: CardFilter): Card[] {
+    public filter(
+        cards: ReadonlyArray<Card>,
+        filter: Partial<CardFilter>
+    ): Card[] {
         return cards.filter((card) => {
             if (
                 filter.name != null &&
@@ -111,6 +114,7 @@ class FilterService {
             }
 
             if (
+                filter.sets != null &&
                 filter.sets.length > 0 &&
                 isEmpty(intersection(card.sets, filter.sets))
             ) {

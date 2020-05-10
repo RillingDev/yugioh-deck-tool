@@ -3,7 +3,7 @@
         <header class="deck-part__header">
             <div class="deck-part__details">
                 <h1 class="deck-part__name h4">{{ deckPart.name }} Deck</h1>
-                <span class="deck-part__stats">({{ cards.length }} Cards)</span>
+                <span class="deck-part__stats">{{ deckPartStats }}</span>
             </div>
             <YgoPrice :cards="cards" />
         </header>
@@ -20,11 +20,60 @@
 </template>
 
 <script lang="ts">
-import { Card, DeckPart } from "yugioh-deck-tool-core/src/main";
+import {
+    Card,
+    CardDatabase,
+    CardTypeGroup,
+    DeckPart,
+    DefaultDeckPart,
+    FilterService,
+} from "yugioh-deck-tool-core/src/main";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "./YgoPrice.vue";
 import YgoCard from "./YgoCard.vue";
+import { applicationContainer } from "../inversify.config";
+import { APPLICATION_TYPES } from "../types";
+
+const filterService = applicationContainer.get<FilterService>(
+    APPLICATION_TYPES.FilterService
+);
+const cardDatabase = applicationContainer.get<CardDatabase>(
+    APPLICATION_TYPES.CardDatabase
+);
+
+/**
+ * Calculates count of card types.
+ * For main and side deck, count will be split by monster, spell, etc., whereas it will be split by monster subtype for the extra deck.
+ *
+ * @private
+ * @param deckPart Deck-part that is being used.
+ * @param cards Cards to analyse.
+ * @return Array of type and count pairs.
+ */
+const calculateDetailedTypeStats = (
+    deckPart: DeckPart,
+    cards: ReadonlyArray<Card>
+): [string, number][] => {
+    if (deckPart === DefaultDeckPart.EXTRA) {
+        return cardDatabase
+            .getTypes(CardTypeGroup.MONSTER)
+            .filter((cardType) => cardType.deckParts.has(deckPart))
+            .map((cardType) => [
+                cardType.name,
+                filterService.filter(cards, {
+                    type: cardType,
+                }).length,
+            ]);
+    }
+
+    return Object.values(CardTypeGroup).map((cardTypeGroup) => [
+        String(cardTypeGroup),
+        filterService.filter(cards, {
+            typeGroup: cardTypeGroup,
+        }).length,
+    ]);
+};
 
 export default defineComponent({
     components: {
@@ -41,17 +90,28 @@ export default defineComponent({
         const cards = computed<Card[]>(() =>
             context.root.$store.state.deck.active.parts.get(props.deckPart)
         );
+        const deckPartStats = computed<string>(
+            () =>
+                `${cards.value.length} Cards (${calculateDetailedTypeStats(
+                    props.deckPart,
+                    cards.value
+                )
+                    .filter(([, count]) => count > 0)
+                    .map(([type, count]) => `${count} ${type}`)
+                    .join(" | ")})`
+        );
         const onCardRightClick = (e: unknown, card: Card) => {
             context.emit("card-right-click", { card });
         };
 
-        return { cards, onCardRightClick };
+        return { cards, deckPartStats, onCardRightClick };
     },
 });
 </script>
 
 <style lang="scss" scoped>
 @import "~yugioh-deck-tool-ui/src/styles/variables";
+@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
 .deck-part {
     margin-bottom: 1.5rem;
@@ -80,13 +140,22 @@ export default defineComponent({
     &__header {
         display: flex;
         justify-content: space-between;
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
+
+        @include screen(min, lg) {
+            flex-direction: row;
+            align-items: center;
+        }
     }
 
     &__details {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        @include screen(min, md) {
+            flex-direction: row;
+            align-items: center;
+        }
     }
 
     &__name.h4 {
@@ -94,7 +163,10 @@ export default defineComponent({
     }
 
     &__stats {
-        margin-left: 0.75rem;
+        font-size: 0.9em;
+        @include screen(min, md) {
+            margin-left: 1rem;
+        }
     }
 
     &__content {
