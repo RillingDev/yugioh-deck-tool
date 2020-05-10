@@ -2,8 +2,8 @@
     <section :class="`deck-part--${deckPart.id}`" class="deck-part">
         <header class="deck-part__header">
             <div class="deck-part__details">
-                <h1 class="deck-part__name h4">{{ deckPart.name }} Deck</h1>
-                <span class="deck-part__stats">{{ deckPartStats }}</span>
+                <h1 class="deck-part__name h5">{{ deckPart.name }} Deck</h1>
+                <span class="deck-part__stats small">{{ deckPartStats }}</span>
             </div>
             <YgoPrice :cards="cards" />
         </header>
@@ -152,26 +152,37 @@ export default defineComponent({
     &__details {
         display: flex;
         flex-direction: column;
-        @include screen(min, md) {
+        margin-bottom: 0.25rem;
+        @include screen(min, sm) {
             flex-direction: row;
             align-items: center;
         }
     }
 
-    &__name.h4 {
-        margin: 0;
+    &__name.h5 {
+        margin-bottom: 0;
     }
 
     &__stats {
-        font-size: 0.9em;
-        @include screen(min, md) {
+        margin-top: 0.25rem;
+        @include screen(min, sm) {
             margin-left: 1rem;
+            margin-top: 0;
         }
     }
 
     &__content {
-        padding: 0.25rem;
+        padding: 0.35rem;
         border: 1px solid $black;
+        display: grid;
+        gap: 0.35rem;
+        grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
+        @include screen(min, md) {
+            grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
+        }
+        @include screen(min, lg) {
+            grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));
+        }
     }
 }
 </style>

@@ -32,8 +32,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .card {
     display: inline-block; // Make sure link covers full card
-    margin: 0.125rem;
-    min-width: 70px;
+    min-width: 50px;
     max-width: 100px;
 }
 
