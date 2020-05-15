@@ -10,12 +10,12 @@
             <span>{{ vendor.name }}: {{ formatPrice(lookupResult) }}</span>
             <template v-if="lookupResult.missing.length > 0">
                 <span
-                    :title="`Missing ${lookupResult.missing.length} card(s)`"
+                    :title="listMissingCards(lookupResult)"
                     aria-hidden="true"
                     class="price__warning fas fa-exclamation"
                 ></span>
                 <span class="sr-only">
-                    Missing {{ lookupResult.missing.length }} card(s)
+                    {{ listMissingCards(lookupResult) }}
                 </span>
             </template>
         </li>
@@ -27,6 +27,7 @@ import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
 import {
     Card,
+    CardService,
     Currency,
     DEFAULT_VENDOR_ARR,
     PriceLookupResult,
@@ -39,7 +40,9 @@ import { computed, defineComponent } from "@vue/composition-api";
 const priceService = applicationContainer.get<PriceService>(
     APPLICATION_TYPES.PriceService
 );
-
+const cardService = applicationContainer.get<CardService>(
+    APPLICATION_TYPES.CardService
+);
 export default defineComponent({
     props: {
         cards: {
@@ -65,10 +68,16 @@ export default defineComponent({
                     })
                 )
         );
+        const listMissingCards = (lookupResult: PriceLookupResult) => {
+            const cardList = cardService
+                .createCountedCardList(lookupResult.missing)
+                .join("\n");
+            return `Missing prices for ${lookupResult.missing.length} card(s):\n\n${cardList}`;
+        };
         const formatPrice = (lookupResult: PriceLookupResult) =>
             priceService.formatPrice(lookupResult.price, activeCurrency.value);
 
-        return { priceByVendor, formatPrice };
+        return { priceByVendor, formatPrice, listMissingCards };
     },
 });
 </script>
