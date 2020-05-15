@@ -87,16 +87,20 @@ export default defineComponent({
         const cards = computed<Card[]>(() =>
             context.root.$store.state.deck.active.parts.get(props.deckPart)
         );
-        const deckPartStats = computed<string>(
-            () =>
-                `${cards.value.length} Cards (${calculateDetailedTypeStats(
-                    props.deckPart,
-                    cards.value
-                )
-                    .filter(([, count]) => count > 0)
-                    .map(([type, count]) => `${count} ${type}`)
-                    .join(" | ")})`
-        );
+        const deckPartStats = computed<string>(() => {
+            const currentCards = cards.value;
+            const base = `${currentCards.length} Cards`;
+            if (currentCards.length === 0) {
+                return base;
+            }
+            const details = calculateDetailedTypeStats(
+                props.deckPart,
+                currentCards
+            )
+                .filter(([, count]) => count > 0)
+                .map(([type, count]) => `${count} ${type}`);
+            return `${base} (${details.join(" | ")})`;
+        });
         const onCardRightClick = (e: unknown, card: Card) => {
             context.emit("card-right-click", { card });
         };
