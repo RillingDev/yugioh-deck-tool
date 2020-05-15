@@ -326,21 +326,7 @@ class DeckRandomizationService {
 
     private findArchetypeCards(cards: Card[], archetype: string): Card[] {
         return this.filterService.filter(cards, {
-            name: null,
-
-            typeGroup: null,
-            type: null,
-
-            subType: null,
-            attribute: null,
-            level: null,
-            linkMarker: null,
             archetype: archetype,
-
-            format: null,
-            banState: null,
-
-            sets: [],
         });
     }
 }

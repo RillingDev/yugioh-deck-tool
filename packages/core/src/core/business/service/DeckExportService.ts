@@ -9,6 +9,7 @@ import {
 } from "../../model/ygo/DeckPart";
 import { CardService } from "./CardService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
+import { FilterService } from "./FilterService";
 
 /**
  * @public
@@ -17,15 +18,19 @@ import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 class DeckExportService {
     private readonly deckService: DeckService;
     private readonly cardService: CardService;
+    private readonly filterService: FilterService;
 
     constructor(
         @inject(TYPES.DeckService)
         deckService: DeckService,
         @inject(TYPES.CardService)
-        cardService: CardService
+        cardService: CardService,
+        @inject(TYPES.FilterService)
+        filterService: FilterService
     ) {
         this.deckService = deckService;
         this.cardService = cardService;
+        this.filterService = filterService;
     }
 
     /**
@@ -41,6 +46,7 @@ class DeckExportService {
      * Side:
      * Foo x1
      * </pre>
+     *
      * @param deck Deck to create the text for.
      * @return Text form of the deck.
      */
@@ -54,9 +60,9 @@ class DeckExportService {
                     result.push(
                         ...this.createCardList(
                             cardTypeGroup,
-                            cards.filter(
-                                (card) => card.type.group === cardTypeGroup
-                            )
+                            this.filterService.filter(cards, {
+                                typeGroup: cardTypeGroup,
+                            })
                         )
                     );
                 }
