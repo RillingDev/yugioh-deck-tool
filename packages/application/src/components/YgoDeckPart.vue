@@ -56,15 +56,12 @@ const calculateDetailedTypeStats = (
     cards: ReadonlyArray<Card>
 ): [string, number][] => {
     if (deckPart === DefaultDeckPart.EXTRA) {
-        return cardDatabase
-            .getTypes(CardTypeGroup.MONSTER)
-            .filter((cardType) => cardType.deckParts.has(deckPart))
-            .map((cardType) => [
-                cardType.name,
-                filterService.filter(cards, {
-                    type: cardType,
-                }).length,
-            ]);
+        return cardDatabase.getTypes(CardTypeGroup.MONSTER).map((cardType) => [
+            cardType.name,
+            filterService.filter(cards, {
+                type: cardType,
+            }).length,
+        ]);
     }
 
     return Object.values(CardTypeGroup).map((cardTypeGroup) => [

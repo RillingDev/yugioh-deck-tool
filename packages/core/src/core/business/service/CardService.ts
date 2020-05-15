@@ -91,6 +91,18 @@ class CardService {
     }
 
     /**
+     * Creates a list of cards with their count in a text representation: {@code ["Foo Bar x3", "Fizz x1"]}
+     *
+     * @param cards Cards to count
+     * @return List of string representation of cards with their count.
+     */
+    public createCountedCardList(cards: Card[]): string[] {
+        return Array.from(this.countCards(cards).entries()).map(
+            ([card, count]) => `${card.name} x${count}`
+        );
+    }
+
+    /**
      * Gets a link to more details about a card.
      *
      * @param card Card to create link for.
