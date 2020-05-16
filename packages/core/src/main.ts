@@ -34,6 +34,7 @@ export type {
     PriceService,
     PriceLookupResult,
 } from "./core/business/service/PriceService";
+export type { BanlistService } from "./core/business/service/BanlistService";
 export type { DeckExportService } from "./core/business/service/DeckExportService";
 export type { DeckService } from "./core/business/service/DeckService";
 export type { SortingService } from "./core/business/service/SortingService";

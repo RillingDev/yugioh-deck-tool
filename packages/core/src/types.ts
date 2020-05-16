@@ -11,6 +11,7 @@ const TYPES = {
     DeckUriEncodingService: Symbol.for("DeckUriEncodingService"),
     DeckRandomizationService: Symbol.for("DeckRandomizationService"),
 
+    BanlistService: Symbol.for("BanlistService"),
     PriceService: Symbol.for("PriceService"),
     SortingService: Symbol.for("SortingService"),
     FilterService: Symbol.for("FilterService"),

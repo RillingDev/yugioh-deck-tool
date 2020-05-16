@@ -13,6 +13,7 @@ import { removeItem } from "lightdash";
 import { shuffle, sampleSize } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
+import { BanlistService } from "./BanlistService";
 
 /**
  * @public
@@ -21,13 +22,16 @@ import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 class DeckService {
     private readonly cardService: CardService;
     private readonly sortingService: SortingService;
+    private readonly banlistService: BanlistService;
 
     constructor(
         @inject(TYPES.CardService) cardService: CardService,
-        @inject(TYPES.SortingService) sortingService: SortingService
+        @inject(TYPES.SortingService) sortingService: SortingService,
+        @inject(TYPES.BanlistService) banlistService: BanlistService
     ) {
         this.cardService = cardService;
         this.sortingService = sortingService;
+        this.banlistService = banlistService;
     }
 
     /**
@@ -74,7 +78,7 @@ class DeckService {
         const count = this.getAllCards(deck).filter((existingCard) =>
             this.cardService.isTreatedAsSame(existingCard, card)
         ).length;
-        const banState = this.cardService.getBanStateByFormat(card, format);
+        const banState = this.banlistService.getBanStateByFormat(card, format);
         return count < banState.count;
     }
 

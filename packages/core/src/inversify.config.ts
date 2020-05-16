@@ -17,6 +17,7 @@ import { DeckUriEncodingService } from "./core/business/service/DeckUriEncodingS
 import { DeckFileService } from "./core/business/service/DeckFileService";
 import { UrlService } from "./core/business/service/UrlService";
 import { CardLinkingService } from "./core/business/service/CardLinkingService";
+import { BanlistService } from "./core/business/service/BanlistService";
 
 const container = new Container();
 
@@ -45,6 +46,7 @@ container
     .to(DeckRandomizationService);
 container.bind<DeckService>(TYPES.DeckService).to(DeckService);
 
+container.bind<BanlistService>(TYPES.BanlistService).to(BanlistService);
 container.bind<PriceService>(TYPES.PriceService).to(PriceService);
 container.bind<SortingService>(TYPES.SortingService).to(SortingService);
 container.bind<FilterService>(TYPES.FilterService).to(FilterService);
