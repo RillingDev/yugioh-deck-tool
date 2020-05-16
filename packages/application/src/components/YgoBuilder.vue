@@ -128,11 +128,10 @@ export default class YgoBuilder extends Vue {
             return [];
         }
         const filtered = this.filterService.filter(this.cards, this.filter);
-        const sorted = this.sortingService.sort(
-            filtered,
-            this.sortingStrategy,
-            this.sortingOrder
-        );
+        const sorted = this.sortingService.sort(filtered, {
+            strategy: this.sortingStrategy,
+            order: this.sortingOrder,
+        });
         return sorted.slice(0, 100);
     }
 

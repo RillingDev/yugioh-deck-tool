@@ -33,9 +33,9 @@ class MemoryCardDatabase implements CardDatabase {
     private readonly archetypes: string[];
     private readonly types: Map<CardTypeGroup, CardType[]>;
     private readonly subTypes: Map<CardTypeGroup, string[]>;
-    private readonly monsterAttributes: string[];
-    private readonly monsterLinkMarkers: string[];
-    private readonly monsterLevels: number[];
+    private readonly attributes: string[];
+    private readonly linkMarkers: string[];
+    private readonly levels: number[];
 
     constructor(
         @inject(TYPES.CardDataLoaderService)
@@ -67,9 +67,9 @@ class MemoryCardDatabase implements CardDatabase {
                 [],
             ])
         );
-        this.monsterAttributes = [];
-        this.monsterLinkMarkers = [];
-        this.monsterLevels = [];
+        this.attributes = [];
+        this.linkMarkers = [];
+        this.levels = [];
     }
 
     public async prepareAll(): Promise<void> {
@@ -117,16 +117,16 @@ class MemoryCardDatabase implements CardDatabase {
         return this.subTypes.get(cardTypeGroup)!;
     }
 
-    public getMonsterAttributes(): string[] {
-        return this.monsterAttributes;
+    public getAttributes(): string[] {
+        return this.attributes;
     }
 
-    public getMonsterLevels(): number[] {
-        return this.monsterLevels;
+    public getLevels(): number[] {
+        return this.levels;
     }
 
-    public getMonsterLinkMarkers(): string[] {
-        return this.monsterLinkMarkers;
+    public getLinkMarkers(): string[] {
+        return this.linkMarkers;
     }
 
     /**
@@ -219,25 +219,25 @@ class MemoryCardDatabase implements CardDatabase {
                         this.subTypes
                     );
 
-                    this.monsterAttributes.push(
+                    this.attributes.push(
                         ...cardValues[CardTypeGroup.MONSTER].attributes
                     );
-                    deepFreeze(this.monsterAttributes);
+                    deepFreeze(this.attributes);
 
-                    this.monsterLevels.push(
+                    this.levels.push(
                         ...cardValues[CardTypeGroup.MONSTER].levels
                     );
-                    deepFreeze(this.monsterLevels);
+                    deepFreeze(this.levels);
 
-                    this.monsterLinkMarkers.push(
+                    this.linkMarkers.push(
                         ...cardValues[CardTypeGroup.MONSTER].linkMarkers
                     );
-                    deepFreeze(this.monsterLinkMarkers);
+                    deepFreeze(this.linkMarkers);
                     MemoryCardDatabase.logger.debug(
                         "Registered monster values.",
-                        this.monsterAttributes,
-                        this.monsterLevels,
-                        this.monsterLinkMarkers
+                        this.attributes,
+                        this.levels,
+                        this.linkMarkers
                     );
                 });
         }

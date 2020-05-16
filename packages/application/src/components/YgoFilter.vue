@@ -106,7 +106,7 @@
             <div class="col-sm-10">
                 <VSelect
                     id="filterMonsterAttribute"
-                    :options="monsterAttributes"
+                    :options="attributes"
                     v-model="reactiveFilter.attribute"
                     @input="filterChanged"
                 />
@@ -120,7 +120,7 @@
             <div class="col-sm-10">
                 <VSelect
                     id="filterMonsterLevel"
-                    :options="monsterLevels"
+                    :options="levels"
                     v-model="reactiveFilter.level"
                     @input="filterChanged"
                 />
@@ -137,7 +137,7 @@
             <div class="col-sm-10">
                 <VSelect
                     id="filterMonsterLinkMarkers"
-                    :options="monsterLinkMarkers"
+                    :options="linkMarkers"
                     v-model="reactiveFilter.linkMarker"
                     @input="filterChanged"
                 />
@@ -378,14 +378,12 @@ export default defineComponent({
         const subTypes = computed<string[]>(() =>
             cardDatabase.getSubTypes(reactiveFilter.typeGroup)
         );
-        const monsterAttributes = computed<string[]>(() =>
-            cardDatabase.getMonsterAttributes()
+        const attributes = computed<string[]>(() =>
+            cardDatabase.getAttributes()
         );
-        const monsterLevels = computed<number[]>(() =>
-            cardDatabase.getMonsterLevels()
-        );
-        const monsterLinkMarkers = computed<string[]>(() =>
-            cardDatabase.getMonsterLinkMarkers()
+        const levels = computed<number[]>(() => cardDatabase.getLevels());
+        const linkMarkers = computed<string[]>(() =>
+            cardDatabase.getLinkMarkers()
         );
         const format = computed<Format>(
             () => context.root.$store.state.format.active
@@ -415,9 +413,9 @@ export default defineComponent({
             typeGroups,
             types,
             subTypes,
-            monsterAttributes,
-            monsterLevels,
-            monsterLinkMarkers,
+            attributes,
+            levels,
+            linkMarkers,
             isMonster,
             reactiveFilter,
             filterChanged,

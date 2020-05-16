@@ -26,6 +26,11 @@ enum SortingOrder {
     DESC = "Desc",
 }
 
+interface SortingOptions {
+    strategy: SortingStrategy;
+    order?: SortingOrder;
+}
+
 type Comparator<T> = (a: T, b: T) => number;
 
 /**
@@ -46,17 +51,13 @@ class SortingService {
      * Sorts a list of cards.
      *
      * @param cards Cards to filter.
-     * @param strategy Strategy to sort by.
-     * @param order If the result should be sorted ascending or descending.
+     * @param options Options describing how to sort.
      * @return Sorted cards.
      */
-    public sort(
-        cards: Card[],
-        strategy: SortingStrategy,
-        order: SortingOrder = SortingOrder.DESC
-    ): Card[] {
+    public sort(cards: Card[], options: SortingOptions): Card[] {
+        const order = options.order ?? SortingOrder.DESC;
         const modifier = order === SortingOrder.ASC ? -1 : 1;
-        const comparator = this.findComparator(strategy);
+        const comparator = this.findComparator(options.strategy);
         return cards.sort((a, b) => comparator(a, b) * modifier);
     }
 
@@ -156,4 +157,4 @@ class SortingService {
     }
 }
 
-export { SortingService, SortingStrategy, SortingOrder };
+export { SortingService, SortingOptions, SortingStrategy, SortingOrder };

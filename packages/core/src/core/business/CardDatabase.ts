@@ -42,10 +42,10 @@ interface CardDatabase {
 
     getSubTypes(cardTypeGroup: CardTypeGroup): string[];
 
-    getMonsterAttributes(): string[];
+    getAttributes(): string[];
 
-    getMonsterLevels(): number[];
+    getLevels(): number[];
 
-    getMonsterLinkMarkers(): string[];
+    getLinkMarkers(): string[];
 }
 export { FindCardBy, CardDatabase };

@@ -40,6 +40,7 @@ export type { SortingService } from "./core/business/service/SortingService";
 export {
     SortingStrategy,
     SortingOrder,
+    SortingOptions,
 } from "./core/business/service/SortingService";
 export type {
     CardFilter,
