@@ -22,8 +22,8 @@ enum SortingStrategy {
 }
 
 enum SortingOrder {
-    ASC = "Asc",
     DESC = "Desc",
+    ASC = "Asc",
 }
 
 interface SortingOptions {

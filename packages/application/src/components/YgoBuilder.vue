@@ -5,16 +5,8 @@
             {{ formatCards.length }} Cards</span
         >
 
-        <ygo-filter
-            v-model="filter"
-            :show-advanced="true"
-            v-on:sorting-change="
-                ({ strategy, order }) => {
-                    sortingStrategy = strategy;
-                    sortingOrder = order;
-                }
-            "
-        />
+        <ygo-filter :show-advanced="true" v-model="filter" />
+        <ygo-sorting-options v-model="sortingOptions" />
 
         <!-- builder-list -->
         <template v-if="filteredCards.length">
@@ -69,20 +61,24 @@ import {
     DEFAULT_DECK_PART_ARR,
     FilterService,
     Format,
+    SortingOptions,
     SortingOrder,
     SortingService,
     SortingStrategy,
 } from "yugioh-deck-tool-core/src/main";
 import YgoFilter from "@/components/YgoFilter.vue";
 import { DECK_CARD_ADD } from "@/store/modules/deck";
+import YgoSortingOptions from "@/components/YgoSortingOptions.vue";
 
 @Component({
-    components: { YgoFilter },
+    components: { YgoFilter, YgoSortingOptions },
 })
 export default class YgoBuilder extends Vue {
     deckParts = DEFAULT_DECK_PART_ARR;
-    sortingStrategy = SortingStrategy.NAME;
-    sortingOrder = SortingOrder.DESC;
+    sortingOptions: SortingOptions = {
+        strategy: SortingStrategy.NAME,
+        order: SortingOrder.DESC,
+    };
     filter: CardFilter = {
         name: null,
 
@@ -128,10 +124,7 @@ export default class YgoBuilder extends Vue {
             return [];
         }
         const filtered = this.filterService.filter(this.cards, this.filter);
-        const sorted = this.sortingService.sort(filtered, {
-            strategy: this.sortingStrategy,
-            order: this.sortingOrder,
-        });
+        const sorted = this.sortingService.sort(filtered, this.sortingOptions);
         return sorted.slice(0, 100);
     }
 
