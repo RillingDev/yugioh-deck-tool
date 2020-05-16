@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row" v-if="hasBanStates">
             <label for="filterLimit" class="col-sm-2 col-form-label">
                 Limit
             </label>
@@ -167,7 +167,7 @@ import {
     CardTypeGroup,
     DEFAULT_BAN_STATE_ARR,
     CardType,
-    Format,
+    BanlistService,
 } from "yugioh-deck-tool-core/src/main";
 import { cloneDeep } from "lodash";
 import {
@@ -183,6 +183,9 @@ import { APPLICATION_TYPES } from "../types";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
+);
+const banlistService = applicationContainer.get<BanlistService>(
+    APPLICATION_TYPES.BanlistService
 );
 
 export default defineComponent({
@@ -225,10 +228,12 @@ export default defineComponent({
         const linkMarkers = computed<string[]>(() =>
             cardDatabase.getLinkMarkers()
         );
-        const format = computed<Format>(
-            () => context.root.$store.state.format.active
-        );
 
+        const hasBanStates = computed<boolean>(() =>
+            banlistService.hasFormatBanlist(
+                context.root.$store.state.format.active
+            )
+        );
         const isMonster = computed<boolean>(
             () => reactiveFilter.typeGroup === CardTypeGroup.MONSTER
         );
@@ -245,6 +250,12 @@ export default defineComponent({
                 reactiveFilter.linkMarker = null;
             }
         );
+        watch(
+            () => hasBanStates.value,
+            () => {
+                reactiveFilter.banState = null;
+            }
+        );
 
         return {
             banStates,
@@ -256,6 +267,7 @@ export default defineComponent({
             attributes,
             levels,
             linkMarkers,
+            hasBanStates,
             isMonster,
             reactiveFilter,
             filterChanged,
@@ -263,8 +275,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<style lang="scss" scoped>
-@import "~yugioh-deck-tool-ui/src/styles/variables";
-@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
-</style>

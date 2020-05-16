@@ -10,6 +10,27 @@ import { BanlistInfo } from "../../model/ygo/BanlistInfo";
 @injectable()
 class BanlistService {
     /**
+     * Formats which have a banlist. See {@link BanlistInfo}.
+     */
+    private static readonly BANLIST_FORMATS: Set<Format> = new Set([
+        Format.OCG,
+        Format.TCG,
+        Format.GOAT,
+    ]);
+
+    /**
+     * Checks if a format has an explicit banlist.
+     *
+     * @param format Format to check.
+     * @return if the format has a banlist.
+     */
+    public hasFormatBanlist(format: Format | null): boolean {
+        if (format == null) {
+            return false;
+        }
+        return BanlistService.BANLIST_FORMATS.has(format);
+    }
+    /**
      * Gets the {@link BanState} of a card by format.
      *
      * @param card Card to check.
@@ -27,8 +48,8 @@ class BanlistService {
             return DefaultBanState.BANNED;
         }
 
-        // If the format is listed,but no explicit ban state is set -> unlimited
-        if (!(format in card.banlist)) {
+        // If the format is listed,but no explicit banlist -> unlimited
+        if (!this.hasFormatBanlist(format)) {
             return DefaultBanState.UNLIMITED;
         }
         // If a ban state is set -> use ban state
