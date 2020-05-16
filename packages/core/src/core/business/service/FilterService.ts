@@ -18,7 +18,7 @@ interface CardFilter {
 
     attribute?: string;
     level?: number;
-    linkMarker?: string;
+    linkMarker?: string[];
 
     archetype?: string;
     format?: Format;
@@ -87,7 +87,9 @@ class FilterService {
             if (
                 filter.linkMarker != null &&
                 (card.linkMarkers == null ||
-                    !card.linkMarkers.includes(filter.linkMarker))
+                    filter.linkMarker.some(
+                        (linkMarker) => !card.linkMarkers!.includes(linkMarker)
+                    ))
             ) {
                 return false;
             }
