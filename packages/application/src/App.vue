@@ -75,6 +75,11 @@
                     <span class="fas fa-shopping-cart"><!-- icon--></span>
                 </a>
             </div>
+            <AdvancedSelect
+                :initial-options="formats"
+                class="form-control form-deck-currency"
+                v-model="activeFormat"
+            ></AdvancedSelect>
             <div class="app-builder-intro">
                 <ygo-sorter />
                 <ygo-draw-sim />
@@ -92,7 +97,6 @@
 
         <!-- app-builder -->
         <div class="app-section app-builder">
-            <h2>Deckbuilder:</h2>
             <ygo-builder v-if="!ajax.currentlyLoading" />
         </div>
     </div>
@@ -112,6 +116,7 @@ import {
     DEFAULT_CURRENCY_ARR,
     getLogger,
     UrlService,
+    Format,
 } from "yugioh-deck-tool-core/src/main";
 import { copyText, readFile, saveFile } from "yugioh-deck-tool-ui/src/main";
 import YgoDeck from "./components/YgoDeck.vue";
@@ -125,6 +130,7 @@ import YgoRandomizer from "@/components/YgoRandomizer.vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 import { CURRENCY_UPDATE } from "@/store/modules/currency";
 import { DECK_REPLACE, DECK_NAME_UPDATE } from "@/store/modules/deck";
+import { FORMAT_UPDATE } from "@/store/modules/format";
 
 const logger = getLogger("app");
 
@@ -144,6 +150,7 @@ export default class App extends Vue {
         currentlyLoading: true,
     };
     readonly currencies = DEFAULT_CURRENCY_ARR;
+    readonly formats = Object.values(Format);
     private readonly deckService = applicationContainer.get<DeckService>(
         APPLICATION_TYPES.DeckService
     );
@@ -163,6 +170,14 @@ export default class App extends Vue {
 
     set activeCurrency(newCurrency: Currency) {
         this.$store.commit(CURRENCY_UPDATE, { currency: newCurrency });
+    }
+
+    get activeFormat(): Format {
+        return this.$store.state.format.active;
+    }
+
+    set activeFormat(newFormat: Format) {
+        this.$store.commit(FORMAT_UPDATE, { format: newFormat });
     }
 
     get deck(): Deck {

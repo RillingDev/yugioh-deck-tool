@@ -10,7 +10,7 @@
                     :options="sortingStrategies"
                     @input="optionsChanged"
                     id="sortingStrategy"
-                    v-model="reactiveOptions.strategy"
+                    v-model="reactiveSortingOptions.strategy"
                 />
             </div>
             <div class="col-sm-4">
@@ -18,7 +18,7 @@
                     :clearable="false"
                     :options="sortingOrders"
                     @input="optionsChanged"
-                    v-model="reactiveOptions.order"
+                    v-model="reactiveSortingOptions.order"
                 />
             </div>
         </div>
@@ -38,7 +38,7 @@ import VSelect from "vue-select";
 
 export default defineComponent({
     props: {
-        options: {
+        sortingOptions: {
             required: true,
             type: Object as PropType<SortingOptions>,
         },
@@ -47,12 +47,12 @@ export default defineComponent({
         VSelect,
     },
     model: {
-        prop: "options",
+        prop: "sortingOptions",
         event: "change",
     },
     setup(props, context) {
-        const reactiveOptions = reactive<SortingOptions>(
-            cloneDeep(props.options)
+        const reactiveSortingOptions = reactive<SortingOptions>(
+            cloneDeep(props.sortingOptions)
         );
 
         const sortingStrategies = [
@@ -64,13 +64,15 @@ export default defineComponent({
         ];
         const sortingOrders = [SortingOrder.DESC, SortingOrder.ASC];
 
-        const optionsChanged = () => context.emit("change", reactiveOptions);
+        const optionsChanged = () =>
+            context.emit("change", reactiveSortingOptions);
 
         return {
             sortingStrategies,
             sortingOrders,
 
-            reactiveOptions,
+            reactiveSortingOptions,
+
             optionsChanged,
         };
     },

@@ -1,102 +1,102 @@
 <template>
     <form>
         <div class="form-group row">
-            <label for="filterName" class="col-sm-2 col-form-label">
+            <label class="col-sm-2 col-form-label" for="filterName">
                 Search
             </label>
             <div class="col-sm-10">
                 <input
-                    id="filterName"
+                    @input="filterChanged"
                     class="form-control"
+                    id="filterName"
                     type="search"
                     v-model="reactiveFilter.name"
-                    @input="filterChanged"
                 />
             </div>
         </div>
 
         <div class="form-group row" v-if="hasBanStates">
-            <label for="filterLimit" class="col-sm-2 col-form-label">
+            <label class="col-sm-2 col-form-label" for="filterLimit">
                 Limit
             </label>
             <div class="col-sm-10">
                 <VSelect
-                    id="filterLimit"
-                    :options="banStates"
-                    v-model="reactiveFilter.banState"
-                    @input="filterChanged"
-                    :getOptionLabel="(banState) => banState.name"
                     :getOptionKey="(banState) => banState.name"
+                    :getOptionLabel="(banState) => banState.name"
+                    :options="banStates"
+                    @input="filterChanged"
+                    id="filterLimit"
+                    v-model="reactiveFilter.banState"
                 />
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="filterSet" class="col-sm-2 col-form-label">
+            <label class="col-sm-2 col-form-label" for="filterSet">
                 Set
             </label>
             <div class="col-sm-10">
                 <VSelect
-                    id="filterSet"
-                    :options="sets"
-                    v-model="reactiveFilter.sets"
-                    @input="filterChanged"
-                    :multiple="true"
-                    :getOptionLabel="(set) => set.name"
                     :getOptionKey="(set) => set.name"
+                    :getOptionLabel="(set) => set.name"
+                    :multiple="true"
+                    :options="sets"
+                    @input="filterChanged"
+                    id="filterSet"
+                    v-model="reactiveFilter.sets"
                 />
             </div>
         </div>
 
         <template v-if="showAdvanced">
             <div class="form-group row">
-                <label for="filterArchetype" class="col-sm-2 col-form-label">
+                <label class="col-sm-2 col-form-label" for="filterArchetype">
                     Archetype
                 </label>
                 <div class="col-sm-10">
                     <VSelect
-                        id="filterArchetype"
                         :options="archetypes"
-                        v-model="reactiveFilter.archetype"
                         @input="filterChanged"
+                        id="filterArchetype"
+                        v-model="reactiveFilter.archetype"
                     />
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="filterTypeGroup" class="col-sm-2 col-form-label">
+                <label class="col-sm-2 col-form-label" for="filterTypeGroup">
                     Type
                 </label>
                 <div class="col-sm-4">
                     <VSelect
-                        id="filterTypeGroup"
                         :options="typeGroups"
-                        v-model="reactiveFilter.typeGroup"
                         @input="filterChanged"
+                        id="filterTypeGroup"
+                        v-model="reactiveFilter.typeGroup"
                     />
                 </div>
                 <div class="col-sm-6">
                     <VSelect
                         :disabled="!isMonster"
-                        :options="types"
-                        v-model="reactiveFilter.type"
-                        @input="filterChanged"
-                        :getOptionLabel="(type) => type.name"
                         :getOptionKey="(type) => type.name"
+                        :getOptionLabel="(type) => type.name"
+                        :options="types"
+                        @input="filterChanged"
+                        v-model="reactiveFilter.type"
                     />
                 </div>
             </div>
 
             <div class="form-group row" v-if="reactiveFilter.typeGroup != null">
-                <label for="filterSubType" class="col-sm-2 col-form-label">
+                <label class="col-sm-2 col-form-label" for="filterSubType">
                     {{ reactiveFilter.typeGroup }} Type
                 </label>
                 <div class="col-sm-10">
                     <VSelect
-                        id="filterSubType"
                         :options="subTypes"
-                        v-model="reactiveFilter.subType"
                         @input="filterChanged"
+                        id="filterSubType"
+                        v-model="reactiveFilter.subType"
                     />
                 </div>
             </div>
@@ -104,52 +104,52 @@
             <template v-if="isMonster">
                 <div class="form-group row">
                     <label
-                        for="filterMonsterAttribute"
                         class="col-sm-2 col-form-label"
+                        for="filterMonsterAttribute"
                     >
                         Attribute
                     </label>
                     <div class="col-sm-10">
                         <VSelect
-                            id="filterMonsterAttribute"
                             :options="attributes"
-                            v-model="reactiveFilter.attribute"
                             @input="filterChanged"
+                            id="filterMonsterAttribute"
+                            v-model="reactiveFilter.attribute"
                         />
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label
-                        for="filterMonsterLevel"
                         class="col-sm-2 col-form-label"
+                        for="filterMonsterLevel"
                     >
                         Level/Rank
                     </label>
                     <div class="col-sm-10">
                         <VSelect
-                            id="filterMonsterLevel"
                             :options="levels"
-                            v-model="reactiveFilter.level"
                             @input="filterChanged"
+                            id="filterMonsterLevel"
+                            v-model="reactiveFilter.level"
                         />
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label
-                        for="filterMonsterLinkMarkers"
                         class="col-sm-2 col-form-label"
+                        for="filterMonsterLinkMarkers"
                     >
                         Link Markers
                     </label>
                     <div class="col-sm-10">
                         <VSelect
                             :multiple="true"
-                            id="filterMonsterLinkMarkers"
                             :options="linkMarkers"
-                            v-model="reactiveFilter.linkMarker"
                             @input="filterChanged"
+                            id="filterMonsterLinkMarkers"
+                            v-model="reactiveFilter.linkMarker"
                         />
                     </div>
                 </div>
@@ -161,13 +161,13 @@
 <script lang="ts">
 import { PropType } from "vue";
 import {
+    BanlistService,
     CardDatabase,
     CardFilter,
     CardSet,
+    CardType,
     CardTypeGroup,
     DEFAULT_BAN_STATE_ARR,
-    CardType,
-    BanlistService,
 } from "yugioh-deck-tool-core/src/main";
 import { cloneDeep } from "lodash";
 import {

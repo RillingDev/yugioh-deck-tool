@@ -82,10 +82,13 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~yugioh-deck-tool-ui/src/styles/component/price";
 
-.price {
-    @include price();
+.deck-tool,
+.deck-tool__modal {
+    .price {
+        @include price();
+    }
 }
 </style>

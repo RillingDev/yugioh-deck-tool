@@ -53,26 +53,29 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~yugioh-deck-tool-ui/src/styles/variables";
 @import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
-.deck {
-    margin-bottom: 1.5rem;
+.deck-tool,
+.deck-tool__modal {
+    .deck {
+        margin-bottom: 1.5rem;
 
-    &__header {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        &__header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
 
-        @include screen(min, lg) {
-            align-items: center;
-            flex-direction: row;
+            @include screen(min, lg) {
+                align-items: center;
+                flex-direction: row;
+            }
         }
-    }
 
-    &__total.h3 {
-        margin-bottom: 0.25rem;
+        &__total.h3 {
+            margin-bottom: 0.25rem;
+        }
     }
 }
 </style>

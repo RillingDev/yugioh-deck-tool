@@ -110,79 +110,82 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~yugioh-deck-tool-ui/src/styles/variables";
 @import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
-.deck-part {
-    margin-bottom: 1.5rem;
+.deck-tool,
+.deck-tool__modal {
+    .deck-part {
+        margin-bottom: 1.5rem;
 
-    &--main {
-        .deck-part__content {
-            border-color: darken($color-deck-part-main, 10%);
-            background-color: $color-deck-part-main;
+        &--main {
+            .deck-part__content {
+                border-color: darken($color-deck-part-main, 10%);
+                background-color: $color-deck-part-main;
+            }
         }
-    }
 
-    &--extra {
-        .deck-part__content {
-            border-color: darken($color-deck-part-extra, 10%);
-            background-color: $color-deck-part-extra;
+        &--extra {
+            .deck-part__content {
+                border-color: darken($color-deck-part-extra, 10%);
+                background-color: $color-deck-part-extra;
+            }
         }
-    }
 
-    &--side {
-        .deck-part__content {
-            border-color: darken($color-deck-part-side, 10%);
-            background-color: $color-deck-part-side;
+        &--side {
+            .deck-part__content {
+                border-color: darken($color-deck-part-side, 10%);
+                background-color: $color-deck-part-side;
+            }
         }
-    }
 
-    &__header {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
+        &__header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
 
-        @include screen(min, lg) {
-            align-items: center;
-            flex-direction: row;
+            @include screen(min, lg) {
+                align-items: center;
+                flex-direction: row;
+            }
         }
-    }
 
-    &__details {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 0.25rem;
-        @include screen(min, sm) {
-            align-items: center;
-            flex-direction: row;
+        &__details {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.25rem;
+            @include screen(min, sm) {
+                align-items: center;
+                flex-direction: row;
+            }
         }
-    }
 
-    &__name.h5 {
-        margin-bottom: 0;
-    }
-
-    &__stats {
-        margin-top: 0.25rem;
-        @include screen(min, sm) {
-            margin-top: 0;
-            margin-left: 1rem;
+        &__name.h5 {
+            margin-bottom: 0;
         }
-    }
 
-    &__content {
-        display: grid;
-        padding: 0.35rem;
-        border: 1px solid $black;
-        gap: 0.35rem;
-        grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
-        @include screen(min, md) {
-            grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
+        &__stats {
+            margin-top: 0.25rem;
+            @include screen(min, sm) {
+                margin-top: 0;
+                margin-left: 1rem;
+            }
         }
-        @include screen(min, lg) {
-            grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));
+
+        &__content {
+            display: grid;
+            padding: 0.35rem;
+            border: 1px solid $black;
+            gap: 0.35rem;
+            grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
+            @include screen(min, md) {
+                grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
+            }
+            @include screen(min, lg) {
+                grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));
+            }
         }
     }
 }

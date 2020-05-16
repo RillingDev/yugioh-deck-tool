@@ -1,6 +1,11 @@
 <template>
     <a :data-name="name" @contextmenu="(e) => onCardRightClick(e)" class="card">
-        <img :alt="name" :src="imgSrc" class="card__img" />
+        <img
+            :alt="name"
+            :class="scaleVertically ? 'card__img--vertically-scaling' : ''"
+            :src="imgSrc"
+            class="card__img"
+        />
     </a>
 </template>
 
@@ -14,6 +19,11 @@ export default defineComponent({
         card: {
             required: true,
             type: Object as PropType<Card>,
+        },
+        scaleVertically: {
+            required: false,
+            type: Boolean,
+            default: () => false,
         },
     },
     setup(props, context) {
@@ -29,16 +39,22 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.card {
-    display: inline-block; // Make sure link covers full card
-    min-width: 50px;
-    max-width: 100px;
-}
+<style lang="scss">
+.deck-tool,
+.deck-tool__modal {
+    .card {
+        display: block; // Make sure link covers full card
+    }
 
-.card__img {
-    width: 100%;
-    height: auto;
-    pointer-events: none; // Allow "clicking through" to parent link.
+    .card__img {
+        width: 100%;
+        height: auto;
+        pointer-events: none; // Allow "clicking through" to parent link.
+
+        &--vertically-scaling {
+            width: auto;
+            height: 100%;
+        }
+    }
 }
 </style>
