@@ -1,6 +1,9 @@
 export type { Card } from "./core/model/ygo/Card";
 export type { BanState } from "./core/model/ygo/BanState";
-export { DefaultBanState } from "./core/model/ygo/BanState";
+export {
+    DefaultBanState,
+    DEFAULT_BAN_STATE_ARR,
+} from "./core/model/ygo/BanState";
 export type { CardSet } from "./core/model/ygo/CardSet";
 export type { Deck } from "./core/model/ygo/Deck";
 export type { DeckPart } from "./core/model/ygo/DeckPart";

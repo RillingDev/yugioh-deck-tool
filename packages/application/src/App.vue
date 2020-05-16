@@ -75,6 +75,11 @@
                     <span class="fas fa-shopping-cart"><!-- icon--></span>
                 </a>
             </div>
+            <div class="app-builder-intro">
+                <ygo-sorter />
+                <ygo-draw-sim />
+                <ygo-randomizer />
+            </div>
         </div>
 
         <!-- app-deck -->
@@ -88,11 +93,6 @@
         <!-- app-builder -->
         <div class="app-section app-builder">
             <h2>Deckbuilder:</h2>
-            <div class="app-builder-intro">
-                <ygo-sorter />
-                <ygo-draw-sim />
-                <ygo-randomizer />
-            </div>
             <ygo-builder v-if="!ajax.currentlyLoading" />
         </div>
     </div>

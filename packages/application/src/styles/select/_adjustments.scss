@@ -1,0 +1,18 @@
+// Synchronize height with bootstrap inputs
+.vs__selected-options {
+    padding: 1px 2px;
+}
+
+// Fix icon offset
+.vs__clear > svg {
+    position: relative;
+    top: -1px;
+}
+
+// Fix icon offset and margin
+.vs__open-indicator {
+    position: relative;
+    top: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+}

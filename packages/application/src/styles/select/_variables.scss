@@ -1,0 +1,46 @@
+@import "~yugioh-deck-tool-ui/src/styles/variables";
+
+$vs-colors: (
+    lightest: $gray-400,
+    light: $gray-500,
+    dark: $gray-700,
+    darkest: $gray-800,
+);
+
+//  Global Component Variables
+$vs-component-line-height: inherit;
+$vs-component-placeholder-color: inherit;
+
+//  Active State
+$vs-state-active-bg: $primary;
+$vs-state-active-color: #fff;
+
+//  Disabled State
+$vs-state-disabled-bg: rgb(248, 248, 248);
+$vs-state-disabled-color: map_get($vs-colors, "light");
+$vs-state-disabled-controls-color: map_get($vs-colors, "light");
+$vs-state-disabled-cursor: not-allowed;
+
+//  Borders
+$vs-border-width: 1px;
+$vs-border-style: solid;
+$vs-border-radius: 0;
+$vs-border-color: map_get($vs-colors, "lightest");
+
+//  Component Controls: Clear, Open Indicator
+$vs-controls-color: map_get($vs-colors, "light");
+$vs-controls-size: 1;
+$vs-controls-deselect-text-shadow: 0 1px 0 #fff;
+
+//  Selected
+$vs-selected-bg: #f0f0f0;
+$vs-selected-border-color: $vs-border-color;
+$vs-selected-border-style: $vs-border-style;
+$vs-selected-border-width: $vs-border-width;
+
+//  Dropdown
+$vs-dropdown-z-index: 1000;
+$vs-dropdown-min-width: 160px;
+$vs-dropdown-max-height: 350px;
+$vs-dropdown-box-shadow: 0px 3px 6px 0px $gray-500;
+$vs-dropdown-bg: #fff;

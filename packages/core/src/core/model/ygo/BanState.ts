@@ -19,4 +19,12 @@ const DefaultBanState: {
 };
 deepFreeze(DefaultBanState);
 
-export { BanState, DefaultBanState };
+const DEFAULT_BAN_STATE_ARR = [
+    DefaultBanState.UNLIMITED,
+    DefaultBanState.SEMI_LIMITED,
+    DefaultBanState.LIMITED,
+    DefaultBanState.BANNED,
+];
+deepFreeze(DEFAULT_BAN_STATE_ARR);
+
+export { BanState, DefaultBanState, DEFAULT_BAN_STATE_ARR };

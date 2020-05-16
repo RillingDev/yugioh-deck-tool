@@ -7,6 +7,8 @@
 
 @import "~bootstrap-vue/src/variables";
 
+@import "./select/variables";
+
 .deck-tool,
 .deck-tool__modal {
     @include reboot();
@@ -19,6 +21,9 @@
     @import "~bootstrap/scss/button-group";
     @import "~bootstrap/scss/input-group";
     @import "~bootstrap/scss/close";
+
+    @import "~vue-select/src/scss/vue-select";
+    @import "./select/adjustments";
 }
 
 .deck-tool {
@@ -27,9 +32,7 @@
 
 // Required outside of .deck-tool due to how modal overlay works
 // ID selector seems to be the only way to refer to the wrapper around the modal
-[id$=___BV_modal_outer_] {
+[id$="___BV_modal_outer_"] {
     @import "~bootstrap/scss/modal";
     @import "~bootstrap-vue/src/components/modal/modal";
 }
-
-

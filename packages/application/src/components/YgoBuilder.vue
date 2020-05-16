@@ -6,10 +6,8 @@
         >
 
         <ygo-filter
-            :initial-filter="filter"
-            :initial-sorting-order="sortingOrder"
-            :initial-sorting-strategy="sortingStrategy"
-            v-on:filter-change="(newFilter) => (filter = newFilter)"
+            v-model="filter"
+            :show-advanced="true"
             v-on:sorting-change="
                 ({ strategy, order }) => {
                     sortingStrategy = strategy;

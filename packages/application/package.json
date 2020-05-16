@@ -20,10 +20,12 @@
         "vue": "^2.6.11",
         "vue-class-component": "^7.2.2",
         "vue-property-decorator": "^8.4.2",
+        "vue-select": "^3.10.3",
         "vuex": "^3.4.0"
     },
     "devDependencies": {
         "@types/lodash": "^4.14.151",
+        "@types/vue-select": "^2.5.0",
         "@typescript-eslint/eslint-plugin": "^2.33.0",
         "@typescript-eslint/parser": "^2.33.0",
         "@vue/cli-plugin-babel": "^4.3.1",
