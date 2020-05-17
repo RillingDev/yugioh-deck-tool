@@ -2,11 +2,20 @@ import {
     Card,
     CardTypeGroup,
     DEFAULT_VENDOR_ARR,
-    Format,
     PriceService,
+    Format,
 } from "yugioh-deck-tool-core/src/main";
 import { tooltipContainer } from "../inversify.config";
 import { TOOLTIP_TYPES } from "../types";
+import {
+    imageUrlAtk,
+    imageUrlType,
+    imageUrlSubType,
+    imageUrlLinkMarker,
+    imageUrlLevel,
+    imageUrlBanState,
+    imageUrlAttribute,
+} from "yugioh-deck-tool-ui/src/main";
 
 const priceService = tooltipContainer.get<PriceService>(
     TOOLTIP_TYPES.PriceService
@@ -93,10 +102,7 @@ export const createErrorTooltip = (message: string): HTMLElement =>
 
 const createMonsterStats = (card: Card): HTMLElement => {
     const statsChildren: HTMLElement[] = [];
-    const statImage = createImg(
-        [],
-        "https://ygoprodeck.com/wp-content/uploads/2017/01/atk.png"
-    );
+    const statImage = createImg([], imageUrlAtk());
     statsChildren.push(statImage);
     if (card.atk != null) {
         statsChildren.push(createSpan([], `ATK/ ${card.atk}`));
@@ -113,36 +119,11 @@ const createSubType = (card: Card): HTMLElement => {
     const subTypeChildren: HTMLElement[] = [];
 
     if (card.type.group === CardTypeGroup.MONSTER) {
-        subTypeChildren.push(
-            createImg(
-                [],
-                `https://ygoprodeck.com/pics/${encodeURIComponent(
-                    card.attribute!
-                )}.jpg`
-            )
-        );
+        subTypeChildren.push(createImg([], imageUrlAttribute(card)));
         subTypeChildren.push(createSpan([], `Attribute: ${card.attribute!}`));
-
-        subTypeChildren.push(
-            createImg(
-                [],
-                `https://ygoprodeck.com/pics/${encodeURIComponent(
-                    card.subType
-                )}.png`
-            )
-        );
-        subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
-    } else {
-        subTypeChildren.push(
-            createImg(
-                [],
-                `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-                    card.subType
-                )}.png`
-            )
-        );
-        subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
     }
+    subTypeChildren.push(createImg([], imageUrlSubType(card)));
+    subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
 
     return createDiv(["card-tooltip__subtype"], subTypeChildren);
 };
@@ -183,19 +164,9 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
     const primaryDetails = createDiv(
         ["card-tooltip__details"],
         [
-            createImg(
-                [],
-                `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-                    card.type.name
-                )}.jpg`
-            ),
+            createImg([], imageUrlType(card)),
             createSpan(["card-tooltip__name"], card.name),
-            createImg(
-                [],
-                `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-                    card.banlist[Format.TCG].name
-                )}.png`
-            ),
+            createImg([], imageUrlBanState(card, Format.TCG)),
         ]
     );
     children.push(primaryDetails);
@@ -213,10 +184,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
             const level = createDiv(
                 ["card-tooltip__level"],
                 [
-                    createImg(
-                        [],
-                        "https://ygoprodeck.com/wp-content/uploads/2017/01/level.png"
-                    ),
+                    createImg([], imageUrlLevel()),
                     createSpan([], `Level/Rank: ${card.level}`),
                 ]
             );
@@ -225,10 +193,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
             const linkMarkers = createDiv(
                 ["card-tooltip__link-markers"],
                 [
-                    createImg(
-                        [],
-                        "https://ygoprodeck.com/wp-content/uploads/2019/04/link-arrow-right.png"
-                    ),
+                    createImg([], imageUrlLinkMarker()),
                     createSpan(
                         [],
                         `Link Markers: ${card.linkMarkers.join(", ")}`

@@ -1,4 +1,5 @@
 export type { Card } from "./core/model/ygo/Card";
+export type { BanlistInfo } from "./core/model/ygo/BanlistInfo";
 export type { BanState } from "./core/model/ygo/BanState";
 export {
     DefaultBanState,
