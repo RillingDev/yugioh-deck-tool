@@ -33,20 +33,23 @@ $color-vendor-tcgplayer: #0e5b93;
 $color-vendor-cardmarket: #012169;
 $color-vendor-coolstuffinc: #41bfc3;
 
-$font-family-base:  "Open Sans", "Segoe UI", Roboto, "Helvetica Neue",
-Arial, "Noto Sans", sans-serif;
+$font-family-base: "Open Sans", sans-serif;
+
+$font-size-base: 0.9rem;
+$font-size-lg: $font-size-base * 1.25;
+$font-size-sm: $font-size-base * 0.875;
 
 $grid-breakpoints: (
     xs: 0,
     sm: 600px,
     md: 766px,
     lg: 1054px,
-    xl: 1220px
+    xl: 1220px,
 );
 
 $container-max-widths: (
     sm: 600px,
     md: 766px,
     lg: 1054px,
-    xl: 1220px
+    xl: 1220px,
 );

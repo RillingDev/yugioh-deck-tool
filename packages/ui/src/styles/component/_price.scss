@@ -13,9 +13,9 @@
     }
 
     &__vendor {
-        font-size: 0.9em;
+        font-size: $font-size-sm;
         display: inline-block;
-        padding: 4px 6px;
+        padding: 0.375rem;
         text-align: center;
         color: $white;
 
