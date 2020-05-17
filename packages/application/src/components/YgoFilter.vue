@@ -1,85 +1,71 @@
 <template>
     <form>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="filterName">
-                Search
-            </label>
-            <div class="col-sm-10">
-                <input
-                    @input="filterChanged"
-                    class="form-control"
-                    id="filterName"
-                    type="search"
-                    v-model="reactiveFilter.name"
-                />
-            </div>
+        <div class="form-group">
+            <input
+                @input="filterChanged"
+                class="form-control"
+                title="Search"
+                placeholder="Search"
+                type="search"
+                v-model="reactiveFilter.name"
+            />
         </div>
 
-        <div class="form-group row" v-if="hasBanStates">
-            <label class="col-sm-2 col-form-label" for="filterLimit">
-                Limit
-            </label>
-            <div class="col-sm-10">
-                <VSelect
-                    :getOptionKey="(banState) => banState.name"
-                    :getOptionLabel="(banState) => banState.name"
-                    :options="banStates"
-                    @input="filterChanged"
-                    id="filterLimit"
-                    v-model="reactiveFilter.banState"
-                />
-            </div>
+        <div class="form-group" v-if="hasBanStates">
+            <VSelect
+                :getOptionKey="(banState) => banState.name"
+                :getOptionLabel="(banState) => banState.name"
+                :options="banStates"
+                title="Limit"
+                placeholder="Limit"
+                @input="filterChanged"
+                v-model="reactiveFilter.banState"
+            />
         </div>
 
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="filterSet">
-                Set
-            </label>
-            <div class="col-sm-10">
-                <VSelect
-                    :getOptionKey="(set) => set.name"
-                    :getOptionLabel="(set) => set.name"
-                    :multiple="true"
-                    :options="sets"
-                    @input="filterChanged"
-                    id="filterSet"
-                    v-model="reactiveFilter.sets"
-                />
-            </div>
+        <div class="form-group">
+            <VSelect
+                :getOptionKey="(set) => set.name"
+                :getOptionLabel="(set) => set.name"
+                :multiple="true"
+                :options="sets"
+                title="Set"
+                placeholder="Set"
+                @input="filterChanged"
+                v-model="reactiveFilter.sets"
+            />
         </div>
 
         <template v-if="showAdvanced">
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="filterArchetype">
-                    Archetype
-                </label>
-                <div class="col-sm-10">
-                    <VSelect
-                        :options="archetypes"
-                        @input="filterChanged"
-                        id="filterArchetype"
-                        v-model="reactiveFilter.archetype"
-                    />
-                </div>
+            <div class="form-group">
+                <VSelect
+                    title="Archetype"
+                    placeholder="Archetype"
+                    :options="archetypes"
+                    @input="filterChanged"
+                    v-model="reactiveFilter.archetype"
+                />
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="filterTypeGroup">
-                    Type
-                </label>
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                     <VSelect
+                        title="Type Group"
+                        placeholder="Type Group"
                         :options="typeGroups"
                         @input="filterChanged"
-                        id="filterTypeGroup"
                         v-model="reactiveFilter.typeGroup"
                     />
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-7">
                     <VSelect
+                        title="Type"
+                        placeholder="Type"
                         :disabled="!isMonster"
                         :getOptionKey="(type) => type.name"
-                        :getOptionLabel="(type) => type.name"
+                        :getOptionLabel="
+                            (type) => type.name.replace(' Monster', '')
+                        "
                         :options="types"
                         @input="filterChanged"
                         v-model="reactiveFilter.type"
@@ -87,71 +73,46 @@
                 </div>
             </div>
 
-            <div class="form-group row" v-if="reactiveFilter.typeGroup != null">
-                <label class="col-sm-2 col-form-label" for="filterSubType">
-                    {{ reactiveFilter.typeGroup }} Type
-                </label>
-                <div class="col-sm-10">
-                    <VSelect
-                        :options="subTypes"
-                        @input="filterChanged"
-                        id="filterSubType"
-                        v-model="reactiveFilter.subType"
-                    />
-                </div>
+            <div class="form-group" v-if="reactiveFilter.typeGroup != null">
+                <VSelect
+                    :title="`${reactiveFilter.typeGroup} Type`"
+                    :placeholder="`${reactiveFilter.typeGroup} Type`"
+                    :options="subTypes"
+                    @input="filterChanged"
+                    v-model="reactiveFilter.subType"
+                />
             </div>
 
             <template v-if="isMonster">
-                <div class="form-group row">
-                    <label
-                        class="col-sm-2 col-form-label"
-                        for="filterMonsterAttribute"
-                    >
-                        Attribute
-                    </label>
-                    <div class="col-sm-10">
-                        <VSelect
-                            :options="attributes"
-                            @input="filterChanged"
-                            id="filterMonsterAttribute"
-                            v-model="reactiveFilter.attribute"
-                        />
-                    </div>
+                <div class="form-group">
+                    <VSelect
+                        title="Attribute"
+                        placeholder="Attribute"
+                        :options="attributes"
+                        @input="filterChanged"
+                        v-model="reactiveFilter.attribute"
+                    />
                 </div>
 
-                <div class="form-group row">
-                    <label
-                        class="col-sm-2 col-form-label"
-                        for="filterMonsterLevel"
-                    >
-                        Level/Rank
-                    </label>
-                    <div class="col-sm-10">
-                        <VSelect
-                            :options="levels"
-                            @input="filterChanged"
-                            id="filterMonsterLevel"
-                            v-model="reactiveFilter.level"
-                        />
-                    </div>
+                <div class="form-group">
+                    <VSelect
+                        title="Level/Rank"
+                        placeholder="Level/Rank"
+                        :options="levels"
+                        @input="filterChanged"
+                        v-model="reactiveFilter.level"
+                    />
                 </div>
 
-                <div class="form-group row">
-                    <label
-                        class="col-sm-2 col-form-label"
-                        for="filterMonsterLinkMarkers"
-                    >
-                        Link Markers
-                    </label>
-                    <div class="col-sm-10">
-                        <VSelect
-                            :multiple="true"
-                            :options="linkMarkers"
-                            @input="filterChanged"
-                            id="filterMonsterLinkMarkers"
-                            v-model="reactiveFilter.linkMarker"
-                        />
-                    </div>
+                <div class="form-group">
+                    <VSelect
+                        title="Link Markers"
+                        placeholder="Link Markers"
+                        :multiple="true"
+                        :options="linkMarkers"
+                        @input="filterChanged"
+                        v-model="reactiveFilter.linkMarker"
+                    />
                 </div>
             </template>
         </template>
