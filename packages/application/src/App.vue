@@ -119,13 +119,13 @@ import {
     Format,
 } from "yugioh-deck-tool-core/src/main";
 import { copyText, readFile, saveFile } from "yugioh-deck-tool-ui/src/main";
-import YgoDeck from "./components/YgoDeck.vue";
+import YgoDeck from "./components/deck/YgoDeck.vue";
 import { applicationContainer } from "@/inversify.config";
 import { APPLICATION_TYPES } from "@/types";
 import Component from "vue-class-component";
 import YgoSorter from "@/components/YgoSorter.vue";
 import YgoDrawSim from "@/components/YgoDrawSim.vue";
-import YgoBuilder from "@/components/YgoBuilder.vue";
+import YgoBuilder from "@/components/builder/YgoBuilder.vue";
 import YgoRandomizer from "@/components/YgoRandomizer.vue";
 import AdvancedSelect from "@/components/AdvancedSelect.vue";
 import { CURRENCY_UPDATE } from "@/store/modules/currency";

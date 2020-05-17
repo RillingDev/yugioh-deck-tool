@@ -10,7 +10,7 @@
         <main class="deck-part__content" v-if="cards.length > 0">
             <YgoCard
                 :card="card"
-                :key="cardIndex"
+                :key="`${cardIndex}_${card.passcode}`"
                 @right-click="(e) => onCardRightClick(e, card)"
                 v-for="(card, cardIndex) in cards"
             >
@@ -30,10 +30,10 @@ import {
 } from "yugioh-deck-tool-core/src/main";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
-import YgoPrice from "./YgoPrice.vue";
-import YgoCard from "./YgoCard.vue";
-import { applicationContainer } from "../inversify.config";
-import { APPLICATION_TYPES } from "../types";
+import YgoPrice from "../YgoPrice.vue";
+import YgoCard from "../YgoCard.vue";
+import { applicationContainer } from "../../inversify.config";
+import { APPLICATION_TYPES } from "../../types";
 
 const filterService = applicationContainer.get<FilterService>(
     APPLICATION_TYPES.FilterService
@@ -111,8 +111,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "~yugioh-deck-tool-ui/src/styles/variables";
-@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
+@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/variables";
+@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/mixin/screen";
 
 .deck-tool,
 .deck-tool__modal {

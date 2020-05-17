@@ -21,11 +21,11 @@ import {
     DEFAULT_DECK_PART_ARR,
 } from "yugioh-deck-tool-core/src/main";
 import { computed, defineComponent } from "@vue/composition-api";
-import YgoPrice from "./YgoPrice.vue";
-import { applicationContainer } from "../inversify.config";
-import { APPLICATION_TYPES } from "../types";
+import YgoPrice from "../YgoPrice.vue";
+import { applicationContainer } from "../../inversify.config";
+import { APPLICATION_TYPES } from "../../types";
 import YgoDeckPart from "./YgoDeckPart.vue";
-import { DECK_CARD_REMOVE } from "../store/modules/deck";
+import { DECK_CARD_REMOVE } from "../../store/modules/deck";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -54,8 +54,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "~yugioh-deck-tool-ui/src/styles/variables";
-@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
+@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/variables";
+@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/mixin/screen";
 
 .deck-tool,
 .deck-tool__modal {

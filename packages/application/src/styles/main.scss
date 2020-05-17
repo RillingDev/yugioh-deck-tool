@@ -27,7 +27,7 @@
 }
 
 .deck-tool {
-    @import "blocks/general";
+    @import "general";
 }
 
 // Required outside of .deck-tool due to how modal overlay works
