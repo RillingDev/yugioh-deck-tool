@@ -11,10 +11,11 @@ Live version: <https://ygoprodeck.com/card-database/deck-prices/>.
 ## Development
 
 ### Setup
+
 Prerequisites:
 
-- Git
-- Node.js & npm
+-   Git
+-   Node.js & npm
 
 Then perform the following steps:
 
@@ -44,7 +45,7 @@ The `.map` files are optional and only used for debugging.
 -   `application` Vue app source code.
 -   `tooltip` Card tooltip.
 
-### Dependency Tree
+#### Dependency Tree
 
 ```text
         core                // Shared code independent of platform.
@@ -58,3 +59,15 @@ The `.map` files are optional and only used for debugging.
      /        \
 application  tooltip        // Browser entry points.
 ```
+
+## Credits
+
+-   Thanks to Alan from <https://ygoprodeck.com/> for providing the API for all card data, as well as supporting the development.
+-   Thanks to The awesome people at <https://github.com/edo9300/edopro> for the great duel simulator that this application is inspired by.
+
+## License
+
+Please check the `LICENSE` file for details.
+
+Yu-Gi-Oh! is a trademark of Shueisha and Konami. This project is not affiliated with or endorsed by Shueisha or Konami.
+
