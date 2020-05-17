@@ -117,6 +117,7 @@ export default defineComponent({
 .deck-tool,
 .deck-tool__modal {
     .builder {
+        font-size: 0.85em;
         &__count {
             display: inline-block;
             margin-bottom: 0.5rem;

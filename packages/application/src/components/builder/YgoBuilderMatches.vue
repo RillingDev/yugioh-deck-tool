@@ -13,7 +13,12 @@
                 ></YgoCard>
                 <div class="builder-matches__match__details">
                     <p>{{ card.name }}</p>
-                    <p>{{ card.type.group }}</p>
+                    <p>
+                        <small>{{ createTypeText(card) }}</small>
+                    </p>
+                    <p>
+                        <small>{{ createSubTypeText(card) }}</small>
+                    </p>
                 </div>
             </li>
         </ol>
@@ -24,26 +29,10 @@
 </template>
 
 <script lang="ts">
-import { Card } from "yugioh-deck-tool-core/src/main";
+import { Card, CardTypeGroup } from "yugioh-deck-tool-core/src/main";
 import { defineComponent } from "@vue/composition-api";
 import YgoCard from "@/components/YgoCard.vue";
 import { PropType } from "vue";
-//
-// const cardDatabase = applicationContainer.get<CardDatabase>(
-//     APPLICATION_TYPES.CardDatabase
-// );
-// const sortingService = applicationContainer.get<SortingService>(
-//     APPLICATION_TYPES.SortingService
-// );
-// const filterService = applicationContainer.get<FilterService>(
-//     APPLICATION_TYPES.FilterService
-// );
-// const cardService = applicationContainer.get<CardService>(
-//     APPLICATION_TYPES.CardService
-// );
-// const deckService = applicationContainer.get<DeckService>(
-//     APPLICATION_TYPES.DeckService
-// );
 
 export default defineComponent({
     props: {
@@ -55,8 +44,17 @@ export default defineComponent({
     components: {
         YgoCard,
     },
-    setup(props, context) {
-        return {};
+    setup() {
+        const createTypeText = (card: Card) =>
+            card.type.group === CardTypeGroup.MONSTER
+                ? card.type.name
+                : card.type.group;
+        const createSubTypeText = (card: Card) =>
+            card.type.group === CardTypeGroup.MONSTER
+                ? `${card.attribute}/${card.subType}`
+                : card.subType;
+
+        return { createTypeText, createSubTypeText };
     },
 });
 </script>
@@ -93,7 +91,10 @@ export default defineComponent({
             }
 
             &__details {
-                padding-left: 0.35rem;
+                padding-left: 0.5rem;
+                > p {
+                    margin-bottom: 0;
+                }
             }
 
             &:not(:last-child) {
