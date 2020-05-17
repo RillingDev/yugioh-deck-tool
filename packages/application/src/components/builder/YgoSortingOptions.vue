@@ -1,10 +1,10 @@
 <template>
     <form>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">
+            <label class="col-lg-2 col-form-label">
                 Sort by
             </label>
-            <div class="col-sm-6">
+            <div class="col-lg-6">
                 <VSelect
                     title="Sorting Strategy"
                     placeholder="Sorting Strategy"
@@ -14,7 +14,7 @@
                     v-model="reactiveSortingOptions.strategy"
                 />
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-4">
                 <VSelect
                     title="Sorting Order"
                     placeholder="Sorting Order"

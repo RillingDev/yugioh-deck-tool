@@ -87,17 +87,17 @@
             </div>
         </div>
 
-        <!-- app-deck -->
-        <div class="app-section app-deck">
-            <div class="text-center" v-if="ajax.currentlyLoading">
-                <span>Loading Card Database...</span>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="text-center" v-if="ajax.currentlyLoading">
+                    <span>Loading Card Database...</span>
+                </div>
+                <ygo-deck v-if="!ajax.currentlyLoading" />
             </div>
-            <ygo-deck v-if="!ajax.currentlyLoading" />
-        </div>
 
-        <!-- app-builder -->
-        <div class="app-section app-builder">
-            <ygo-builder v-if="!ajax.currentlyLoading" />
+            <div class="col-md-4">
+                <ygo-builder v-if="!ajax.currentlyLoading" />
+            </div>
         </div>
     </div>
 </template>
