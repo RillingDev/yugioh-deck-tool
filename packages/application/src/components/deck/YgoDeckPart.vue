@@ -57,7 +57,7 @@ const calculateDetailedTypeStats = (
 ): [string, number][] => {
     if (deckPart === DefaultDeckPart.EXTRA) {
         return cardDatabase.getTypes(CardTypeGroup.MONSTER).map((cardType) => [
-            cardType.name,
+            cardType.name.replace(" Monster", ""),
             filterService.filter(cards, {
                 type: cardType,
             }).length,

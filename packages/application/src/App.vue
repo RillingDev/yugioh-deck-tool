@@ -88,14 +88,14 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6 col-lg-8">
                 <div class="text-center" v-if="ajax.currentlyLoading">
                     <span>Loading Card Database...</span>
                 </div>
                 <ygo-deck v-if="!ajax.currentlyLoading" />
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
                 <ygo-builder v-if="!ajax.currentlyLoading" />
             </div>
         </div>
