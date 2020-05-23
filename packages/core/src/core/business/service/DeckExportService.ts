@@ -80,10 +80,13 @@ class DeckExportService {
         const cardList = Array.from(counted.entries()).map(
             ([card, count]) => `${count} ${card.name}`
         );
-        return (
-            "https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh&c=" +
-            encodeURIComponent(["", ...cardList, ""].join("||"))
-        );
+        const buyLink = new URL("massentry", "https://store.tcgplayer.com");
+        buyLink.searchParams.append("utm_campaign", "affiliate");
+        buyLink.searchParams.append("utm_medium", "deck-builder");
+        buyLink.searchParams.append("utm_source", "YGOPRODeck");
+        buyLink.searchParams.append("productline", "Yugioh");
+        buyLink.searchParams.append("c", ["", ...cardList, ""].join("||"));
+        return buyLink.toString();
     }
 
     private createCardList(sectionName: string, cards: Card[]): string[] {
