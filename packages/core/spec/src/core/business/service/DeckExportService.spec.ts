@@ -89,7 +89,7 @@ foo x1
             expected.searchParams.append("utm_medium", "deck-builder");
             expected.searchParams.append("utm_source", "YGOPRODeck");
             expected.searchParams.append("productline", "Yugioh");
-            expected.searchParams.append("c", "||2 foo||2 bar||3 fizz||");
+            expected.searchParams.append("c", "2 foo||2 bar||3 fizz||");
 
             expect(result).toEqual(expected.toString());
         });
