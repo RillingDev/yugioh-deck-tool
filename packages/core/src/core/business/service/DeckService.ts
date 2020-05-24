@@ -9,8 +9,8 @@ import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { CardService } from "./CardService";
 import { Format } from "../../model/ygo/Format";
-import { removeItem } from "lightdash";
-import { shuffle, sampleSize } from "lodash";
+import { pullFirst } from "lightdash";
+import { sampleSize, shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 
@@ -89,7 +89,8 @@ class DeckService {
      */
     public addCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
         const deckClone = this.cloneDeck(deck);
-        deckClone.parts.get(deckPart)!.push(card);
+        const deckPartCards = deckClone.parts.get(deckPart)!;
+        deckPartCards.push(card);
         return deckClone;
     }
 
@@ -103,10 +104,8 @@ class DeckService {
      */
     public removeCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
         const deckClone = this.cloneDeck(deck);
-        deckClone.parts.set(
-            deckPart,
-            Array.from(removeItem<Card>(deck.parts.get(deckPart)!, card, false))
-        );
+        const deckPartCards = deckClone.parts.get(deckPart)!;
+        pullFirst(deckPartCards, card);
         return deckClone;
     }
 
