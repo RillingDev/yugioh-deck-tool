@@ -1,5 +1,5 @@
 <template>
-    <a :data-name="name" @contextmenu="(e) => onCardRightClick(e)" class="card">
+    <a :data-name="name" class="card">
         <img
             :alt="name"
             :class="scaleVertically ? 'card__img--vertically-scaling' : ''"
@@ -29,11 +29,8 @@ export default defineComponent({
     setup(props, context) {
         const name = computed(() => props.card.name);
         const imgSrc = computed(() => props.card.image.urlSmall);
-        const onRightClick = (e: Event) => {
-            context.emit("right-click", null);
-        };
 
-        return { name, imgSrc, onCardRightClick: onRightClick };
+        return { name, imgSrc };
     },
 });
 </script>

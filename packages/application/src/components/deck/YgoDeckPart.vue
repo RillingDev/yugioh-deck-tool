@@ -7,15 +7,22 @@
             </div>
             <YgoPrice :cards="cards" />
         </header>
-        <main class="deck-part__content" v-if="cards.length > 0">
+        <Draggable
+            v-if="cards.length > 0"
+            tag="main"
+            class="deck-part__content"
+            :list="cards"
+            group="cards"
+            :move="handleMove"
+            @change="onChange"
+        >
             <YgoCard
                 :card="card"
                 :key="`${cardIndex}_${card.passcode}`"
-                @right-click="(e) => onCardRightClick(e, card)"
                 v-for="(card, cardIndex) in cards"
             >
             </YgoCard>
-        </main>
+        </Draggable>
     </section>
 </template>
 
@@ -25,6 +32,7 @@ import {
     CardDatabase,
     CardTypeGroup,
     DeckPart,
+    DeckService,
     DefaultDeckPart,
     FilterService,
 } from "yugioh-deck-tool-core/src/main";
@@ -34,6 +42,12 @@ import YgoPrice from "../YgoPrice.vue";
 import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
+import Draggable from "vuedraggable";
+import {
+    DECK_CARD_ADD,
+    DECK_CARD_REMOVE,
+    DECK_CARD_REORDER,
+} from "@/store/modules/deck";
 
 const filterService = applicationContainer.get<FilterService>(
     APPLICATION_TYPES.FilterService
@@ -41,7 +55,9 @@ const filterService = applicationContainer.get<FilterService>(
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
 );
-
+const deckService = applicationContainer.get<DeckService>(
+    APPLICATION_TYPES.DeckService
+);
 /**
  * Calculates count of card types.
  * For main and side deck, count will be split by monster, spell, etc., whereas it will be split by monster subtype for the extra deck.
@@ -76,6 +92,7 @@ export default defineComponent({
     components: {
         YgoPrice,
         YgoCard,
+        Draggable,
     },
     props: {
         deckPart: {
@@ -83,7 +100,7 @@ export default defineComponent({
             type: Object as PropType<DeckPart>,
         },
     },
-    setup(props, context) {
+    setup: function (props, context) {
         const cards = computed<Card[]>(() =>
             context.root.$store.state.deck.active.parts.get(props.deckPart)
         );
@@ -101,11 +118,49 @@ export default defineComponent({
                 .map(([type, count]) => `${count} ${type}`);
             return `${base} (${details.join(" | ")})`;
         });
-        const onCardRightClick = (e: unknown, card: Card) => {
-            context.emit("card-right-click", { card });
+        const $store = context.root.$store;
+        const handleMove = (e) => {
+            console.log("handleMove", e);
+            const deck = $store.state.deck.active;
+            const format = $store.state.format.active;
+            const card = e.draggedContext.element;
+
+            return deckService.canMove(
+                deck,
+                props.deckPart,
+                props.deckPart,
+                format,
+                card
+            );
+        };
+        const onChange = (e) => {
+            console.log("onChange", e);
+            if (e.added != null) {
+                console.log("onAdd");
+                $store.commit(DECK_CARD_ADD, {
+                    deckPart: props.deckPart,
+                    card: e.added.element,
+                    newIndex: e.added.newIndex,
+                });
+            } else if (e.removed != null) {
+                console.log("onRemove");
+                $store.commit(DECK_CARD_REMOVE, {
+                    deckPart: props.deckPart,
+                    card: e.removed.element,
+                    oldIndex: e.removed.oldIndex,
+                });
+            } else {
+                console.log("onMove");
+                $store.commit(DECK_CARD_REORDER, {
+                    deckPart: props.deckPart,
+                    card: e.moved.element,
+                    oldIndex: e.moved.oldIndex,
+                    newIndex: e.moved.newIndex,
+                });
+            }
         };
 
-        return { cards, deckPartStats, onCardRightClick };
+        return { cards, deckPartStats, handleMove, onChange };
     },
 });
 </script>

@@ -9,8 +9,8 @@ import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { CardService } from "./CardService";
 import { Format } from "../../model/ygo/Format";
-import { removeItem } from "lightdash";
-import { shuffle, sampleSize } from "lodash";
+import { insert, pullFirst } from "lightdash";
+import { pullAt, sampleSize, shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 import { BanlistService } from "./BanlistService";
@@ -32,6 +32,31 @@ class DeckService {
         this.cardService = cardService;
         this.sortingService = sortingService;
         this.banlistService = banlistService;
+    }
+
+    /**
+     * Checks if a given card can be moved in the deck.
+     * Similar to {@link #canAdd}, with the difference that in this case
+     * the check is done against a copy of the deck with the card removed in order to correctly test the card count.
+     *
+     * @param deck Deck to check.
+     * @param oldDeckPart Deck part to card is moved from.
+     * @param newDeckPart Deck part to card is moved to.
+     * @param format Format to check for, may be null for none.
+     * @param card Card to check.
+     * @return if the card can be moved for these parameters.
+     */
+    public canMove(
+        deck: Deck,
+        oldDeckPart: DeckPart,
+        newDeckPart: DeckPart,
+        format: Format | null,
+        card: Card
+    ): boolean {
+        const deckWithoutCard = this.cloneDeck(deck);
+        this.removeCard(deckWithoutCard, oldDeckPart, card);
+
+        return this.canAdd(deckWithoutCard, newDeckPart, format, card);
     }
 
     /**
@@ -89,11 +114,23 @@ class DeckService {
      * @param deck Deck to add to.
      * @param deckPart Deck part to add to.
      * @param card Card to add.
+     * @param newIndex Optional index to add the card at.
      * @return Copy of the deck with the card added.
      */
-    public addCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
+    public addCard(
+        deck: Deck,
+        deckPart: DeckPart,
+        card: Card,
+        newIndex?: number
+    ): Deck {
         const deckClone = this.cloneDeck(deck);
-        deckClone.parts.get(deckPart)!.push(card);
+        const current = deckClone.parts.get(deckPart)!;
+        if (newIndex != null) {
+            insert(current, newIndex, card);
+        } else {
+            current.push(card);
+        }
+
         return deckClone;
     }
 
@@ -103,14 +140,50 @@ class DeckService {
      * @param deck Deck to remove from.
      * @param deckPart Deck part to remove from.
      * @param card Card to remove.
+     * @param oldIndex Optional index to remove the card at.
      * @return Copy of the deck with the card removed.
      */
-    public removeCard(deck: Deck, deckPart: DeckPart, card: Card): Deck {
+    public removeCard(
+        deck: Deck,
+        deckPart: DeckPart,
+        card: Card,
+        oldIndex?: number
+    ): Deck {
         const deckClone = this.cloneDeck(deck);
-        deckClone.parts.set(
-            deckPart,
-            Array.from(removeItem<Card>(deck.parts.get(deckPart)!, card, false))
-        );
+        const cards = deck.parts.get(deckPart)!;
+        if (oldIndex != null) {
+            if (cards[oldIndex] === card) {
+                pullAt(cards, oldIndex);
+            }
+        } else {
+            pullFirst(cards, card);
+        }
+        return deckClone;
+    }
+
+    /**
+     * Returns a copy of the deck with the card re-ordered in its deck-part.
+     *
+     * @param deck Deck to use.
+     * @param deckPart Deck part to move in.
+     * @param card Card to move.
+     * @param oldIndex Index to move card from.
+     * @param newIndex Index to move card to.
+     * @return Copy of the deck with the card moved.
+     */
+    public reorderCard(
+        deck: Deck,
+        deckPart: DeckPart,
+        card: Card,
+        oldIndex: number,
+        newIndex: number
+    ): Deck {
+        const deckClone = this.cloneDeck(deck);
+        const cards = deck.parts.get(deckPart)!;
+        if (cards[oldIndex] === card) {
+            pullAt(cards, oldIndex);
+            insert(cards, newIndex, card);
+        }
         return deckClone;
     }
 
