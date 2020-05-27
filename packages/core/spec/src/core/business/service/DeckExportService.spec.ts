@@ -80,10 +80,18 @@ foo x1
                     [DefaultDeckPart.SIDE, [card3, card3, card1, card3]],
                 ]),
             });
-            expect(result).toEqual(
-                "https://store.tcgplayer.com/massentry?partner=YGOPRODeck&productline=Yugioh" +
-                    `&c=${encodeURIComponent("||2 foo||2 bar||3 fizz||")}`
+
+            const expected = new URL(
+                "massentry",
+                "https://store.tcgplayer.com"
             );
+            expected.searchParams.append("utm_campaign", "affiliate");
+            expected.searchParams.append("utm_medium", "deck-builder");
+            expected.searchParams.append("utm_source", "YGOPRODeck");
+            expected.searchParams.append("productline", "Yugioh");
+            expected.searchParams.append("c", "2 foo||2 bar||3 fizz||");
+
+            expect(result).toEqual(expected.toString());
         });
     });
 });
