@@ -9,12 +9,12 @@
         </header>
         <Draggable
             v-if="cards.length > 0"
-            tag="main"
             class="deck-part__content"
+            tag="main"
+            :group="{ name: 'cards', pull: true, put: true }"
             :list="cards"
-            group="cards"
-            :move="handleMove"
-            @change="onChange"
+            :move="(e) => canMove(e)"
+            @change="(e) => onChange(e)"
         >
             <YgoCard
                 :card="card"
@@ -32,7 +32,6 @@ import {
     CardDatabase,
     CardTypeGroup,
     DeckPart,
-    DeckService,
     DefaultDeckPart,
     FilterService,
 } from "yugioh-deck-tool-core/src/main";
@@ -43,20 +42,12 @@ import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
-import {
-    DECK_CARD_ADD,
-    DECK_CARD_REMOVE,
-    DECK_CARD_REORDER,
-} from "@/store/modules/deck";
 
 const filterService = applicationContainer.get<FilterService>(
     APPLICATION_TYPES.FilterService
 );
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
-);
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
 );
 /**
  * Calculates count of card types.
@@ -99,6 +90,10 @@ export default defineComponent({
             required: true,
             type: Object as PropType<DeckPart>,
         },
+        canMove: {
+            required: true,
+            type: Function as PropType<() => boolean>,
+        },
     },
     setup: function (props, context) {
         const cards = computed<Card[]>(() =>
@@ -118,49 +113,9 @@ export default defineComponent({
                 .map(([type, count]) => `${count} ${type}`);
             return `${base} (${details.join(" | ")})`;
         });
-        const $store = context.root.$store;
-        const handleMove = (e) => {
-            console.log("handleMove", e);
-            const deck = $store.state.deck.active;
-            const format = $store.state.format.active;
-            const card = e.draggedContext.element;
+        const onChange = (e) => context.emit("change", e);
 
-            return deckService.canMove(
-                deck,
-                props.deckPart,
-                props.deckPart,
-                format,
-                card
-            );
-        };
-        const onChange = (e) => {
-            console.log("onChange", e);
-            if (e.added != null) {
-                console.log("onAdd");
-                $store.commit(DECK_CARD_ADD, {
-                    deckPart: props.deckPart,
-                    card: e.added.element,
-                    newIndex: e.added.newIndex,
-                });
-            } else if (e.removed != null) {
-                console.log("onRemove");
-                $store.commit(DECK_CARD_REMOVE, {
-                    deckPart: props.deckPart,
-                    card: e.removed.element,
-                    oldIndex: e.removed.oldIndex,
-                });
-            } else {
-                console.log("onMove");
-                $store.commit(DECK_CARD_REORDER, {
-                    deckPart: props.deckPart,
-                    card: e.moved.element,
-                    oldIndex: e.moved.oldIndex,
-                    newIndex: e.moved.newIndex,
-                });
-            }
-        };
-
-        return { cards, deckPartStats, handleMove, onChange };
+        return { cards, deckPartStats, onChange };
     },
 });
 </script>

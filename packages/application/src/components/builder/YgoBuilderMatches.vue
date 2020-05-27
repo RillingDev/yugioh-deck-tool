@@ -1,10 +1,17 @@
 <template>
     <div class="builder-matches">
-        <ol class="builder-matches__list" v-if="cards.length > 0">
+        <Draggable
+            tag="ol"
+            class="builder-matches__list"
+            :group="{ name: 'cards', pull: 'clone', put: false }"
+            :list="cards"
+            :sort="false"
+            v-if="cards.length > 0"
+        >
             <li
-                :key="card.passcode"
                 class="builder-matches__match"
                 v-for="card in cards"
+                :key="card.passcode"
             >
                 <YgoCard
                     :card="card"
@@ -21,7 +28,7 @@
                     </p>
                 </div>
             </li>
-        </ol>
+        </Draggable>
         <div class="builder-matches__no-matches" v-if="cards.length === 0">
             No matches found.
         </div>
@@ -33,6 +40,7 @@ import { Card, CardTypeGroup } from "yugioh-deck-tool-core/src/main";
 import { defineComponent } from "@vue/composition-api";
 import YgoCard from "@/components/YgoCard.vue";
 import { PropType } from "vue";
+import Draggable from "vuedraggable";
 
 export default defineComponent({
     props: {
@@ -43,6 +51,7 @@ export default defineComponent({
     },
     components: {
         YgoCard,
+        Draggable,
     },
     setup() {
         const createTypeText = (card: Card) =>
