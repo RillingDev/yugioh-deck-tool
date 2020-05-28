@@ -2,16 +2,12 @@ import "reflect-metadata";
 import { container } from "../../../../../src/inversify.config";
 import { TYPES } from "../../../../../src/types";
 import { DeckService } from "../../../../../src/core/business/service/DeckService";
-import {
-    DeckPartConfig,
-    DefaultDeckPartConfig,
-} from "../../../../../src/core/model/ygo/DeckPartConfig";
-import { Card } from "../../../../../src/core/model/ygo/Card";
 import { createCard, createCardType } from "../../../helper/dataFactories";
 import { Format } from "../../../../../src/core/model/ygo/Format";
 import { DefaultBanState } from "../../../../../src/core/model/ygo/BanState";
 import { CardTypeGroup } from "../../../../../src/core/model/ygo/CardTypeGroup";
 import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
+import { Deck } from "src/core/model/ygo/Deck";
 
 describe("DeckService", () => {
     let deckService: DeckService;
@@ -176,7 +172,7 @@ describe("DeckService", () => {
             const card = createCard({
                 passcode: "456",
             });
-            const deck = {
+            const deck: Deck = {
                 name: null,
                 parts: {
                     [DeckPart.MAIN]: [],
@@ -185,8 +181,8 @@ describe("DeckService", () => {
                 },
             };
 
-            const result = deckService.addCard(deck, DeckPart.SIDE, card);
-            expect(result).toEqual({
+            deckService.addCard(deck, DeckPart.SIDE, card);
+            expect(deck).toEqual({
                 name: null,
                 parts: {
                     [DeckPart.MAIN]: [],
@@ -211,8 +207,8 @@ describe("DeckService", () => {
                 },
             };
 
-            const result = deckService.removeCard(deck, DeckPart.SIDE, card);
-            expect(result).toEqual({
+            deckService.removeCard(deck, DeckPart.SIDE, card);
+            expect(deck).toEqual({
                 name: null,
                 parts: {
                     [DeckPart.MAIN]: [],

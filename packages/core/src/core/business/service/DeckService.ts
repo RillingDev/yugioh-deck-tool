@@ -105,49 +105,43 @@ class DeckService {
     }
 
     /**
-     * Returns a copy of the deck with the card added.
+     * Adds a card.
      * Make sure to use {@link #canAdd} before.
      *
      * @param deck Deck to add to.
      * @param deckPart Deck part to add to.
      * @param card Card to add.
      * @param newIndex Optional index to add the card at.
-     * @return Copy of the deck with the card added.
      */
     public addCard(
         deck: Deck,
         deckPart: DeckPart,
         card: Card,
         newIndex?: number
-    ): Deck {
-        const deckClone = this.cloneDeck(deck);
-        const current = deckClone.parts[deckPart];
+    ): void {
+        const current = deck.parts[deckPart];
         if (newIndex != null) {
             insert(current, newIndex, card);
         } else {
             current.push(card);
         }
-
-        return deckClone;
     }
 
     /**
-     * Returns a copy of the deck with the card removed. if the card cannot be found, nothing will be done.
+     * Removes a card. if the card cannot be found, nothing will be done.
      *
      * @param deck Deck to remove from.
      * @param deckPart Deck part to remove from.
      * @param card Card to remove.
      * @param oldIndex Optional index to remove the card at.
-     * @return Copy of the deck with the card removed.
      */
     public removeCard(
         deck: Deck,
         deckPart: DeckPart,
         card: Card,
         oldIndex?: number
-    ): Deck {
-        const deckClone = this.cloneDeck(deck);
-        const cards = deckClone.parts[deckPart];
+    ): void {
+        const cards = deck.parts[deckPart];
         if (oldIndex != null) {
             if (cards[oldIndex] === card) {
                 pullAt(cards, oldIndex);
@@ -155,18 +149,16 @@ class DeckService {
         } else {
             pullFirst(cards, card);
         }
-        return deckClone;
     }
 
     /**
-     * Returns a copy of the deck with the card re-ordered in its deck-part.
+     * Move a card in its deck-part.
      *
      * @param deck Deck to use.
      * @param deckPart Deck part to move in.
      * @param card Card to move.
      * @param oldIndex Index to move card from.
      * @param newIndex Index to move card to.
-     * @return Copy of the deck with the card moved.
      */
     public reorderCard(
         deck: Deck,
@@ -174,14 +166,12 @@ class DeckService {
         card: Card,
         oldIndex: number,
         newIndex: number
-    ): Deck {
-        const deckClone = this.cloneDeck(deck);
+    ): void {
         const cards = deck.parts[deckPart];
         if (cards[oldIndex] === card) {
             pullAt(cards, oldIndex);
             insert(cards, newIndex, card);
         }
-        return deckClone;
     }
 
     /**

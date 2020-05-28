@@ -34,9 +34,9 @@ import {
     CardDatabase,
     CardTypeGroup,
     DeckPart,
-    FilterService,
     DeckPartConfig,
     DefaultDeckPartConfig,
+    FilterService,
 } from "yugioh-deck-tool-core/src/main";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
@@ -102,8 +102,14 @@ export default defineComponent({
         const deckPartConfig = computed<DeckPartConfig>(
             () => DefaultDeckPartConfig[props.deckPart]
         );
-        const cards = computed<Card[]>(
-            () => context.root.$store.state.deck.active.parts[props.deckPart]
+
+        // We HAVE to return a copy as otherwise draggable will mutate our store directly.
+        const cards = computed<Card[]>(() =>
+            Array.from(
+                context.root.$store.state.deck.active.parts[
+                    props.deckPart
+                ] as Card[]
+            )
         );
         const deckPartStats = computed<string>(() => {
             const currentCards = cards.value;

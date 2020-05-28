@@ -51,28 +51,27 @@ export const deckModule: Module<DeckState, DeckState> = {
         [DECK_SHUFFLE](state) {
             state.active.parts = deckService.shuffle(state.active).parts;
         },
-
         [DECK_CARD_ADD](
             state,
             payload: { deckPart: DeckPart; card: Card; newIndex?: number }
         ) {
-            state.active.parts = deckService.addCard(
+            deckService.addCard(
                 state.active,
                 payload.deckPart,
                 payload.card,
                 payload.newIndex
-            ).parts;
+            );
         },
         [DECK_CARD_REMOVE](
             state,
             payload: { deckPart: DeckPart; card: Card; oldIndex?: number }
         ) {
-            state.active.parts = deckService.removeCard(
+            deckService.removeCard(
                 state.active,
                 payload.deckPart,
                 payload.card,
                 payload.oldIndex
-            ).parts;
+            );
         },
         [DECK_CARD_REORDER](
             state,
@@ -83,13 +82,13 @@ export const deckModule: Module<DeckState, DeckState> = {
                 newIndex: number;
             }
         ) {
-            state.active.parts = deckService.reorderCard(
+            deckService.reorderCard(
                 state.active,
                 payload.deckPart,
                 payload.card,
                 payload.oldIndex,
                 payload.newIndex
-            ).parts;
+            );
         },
     },
 };
