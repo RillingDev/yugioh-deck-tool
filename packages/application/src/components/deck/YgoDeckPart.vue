@@ -1,8 +1,10 @@
 <template>
-    <section :class="`deck-part--${deckPart.id}`" class="deck-part">
+    <section :class="`deck-part--${deckPart}`" class="deck-part">
         <header class="deck-part__header">
             <div class="deck-part__details">
-                <h1 class="deck-part__name h5">{{ deckPart.name }} Deck</h1>
+                <h1 class="deck-part__name h5">
+                    {{ deckPartConfig.name }} Deck
+                </h1>
                 <span class="deck-part__stats small">{{ deckPartStats }}</span>
             </div>
             <YgoPrice :cards="cards" />
@@ -32,8 +34,9 @@ import {
     CardDatabase,
     CardTypeGroup,
     DeckPart,
-    DefaultDeckPart,
     FilterService,
+    DeckPartConfig,
+    DefaultDeckPartConfig,
 } from "yugioh-deck-tool-core/src/main";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
@@ -62,7 +65,7 @@ const calculateDetailedTypeStats = (
     deckPart: DeckPart,
     cards: ReadonlyArray<Card>
 ): [string, number][] => {
-    if (deckPart === DefaultDeckPart.EXTRA) {
+    if (deckPart === DeckPart.EXTRA) {
         return cardDatabase.getTypes(CardTypeGroup.MONSTER).map((cardType) => [
             cardType.name.replace(" Monster", ""),
             filterService.filter(cards, {
@@ -88,7 +91,7 @@ export default defineComponent({
     props: {
         deckPart: {
             required: true,
-            type: Object as PropType<DeckPart>,
+            type: String as PropType<DeckPart>,
         },
         canMove: {
             required: true,
@@ -96,8 +99,11 @@ export default defineComponent({
         },
     },
     setup: function (props, context) {
-        const cards = computed<Card[]>(() =>
-            context.root.$store.state.deck.active.parts.get(props.deckPart)
+        const deckPartConfig = computed<DeckPartConfig>(
+            () => DefaultDeckPartConfig[props.deckPart]
+        );
+        const cards = computed<Card[]>(
+            () => context.root.$store.state.deck.active.parts[props.deckPart]
         );
         const deckPartStats = computed<string>(() => {
             const currentCards = cards.value;
@@ -115,7 +121,7 @@ export default defineComponent({
         });
         const onChange = (e) => context.emit("change", e);
 
-        return { cards, deckPartStats, onChange };
+        return { deckPartConfig, cards, deckPartStats, onChange };
     },
 });
 </script>

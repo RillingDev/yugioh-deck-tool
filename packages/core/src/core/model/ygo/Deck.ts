@@ -1,9 +1,14 @@
-import { DeckPart } from "./DeckPart";
+import { DeckPartConfig } from "./DeckPartConfig";
 import { Card } from "./Card";
+import { DeckPart } from "./DeckPart";
 
 interface Deck {
     name: string | null;
-    parts: Map<DeckPart, Card[]>;
+    parts: {
+        [DeckPart.MAIN]: Card[];
+        [DeckPart.EXTRA]: Card[];
+        [DeckPart.SIDE]: Card[];
+    };
 }
 
 export { Deck };

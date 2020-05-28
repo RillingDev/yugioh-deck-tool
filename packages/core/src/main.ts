@@ -7,11 +7,9 @@ export {
 } from "./core/model/ygo/BanState";
 export type { CardSet } from "./core/model/ygo/CardSet";
 export type { Deck } from "./core/model/ygo/Deck";
-export type { DeckPart } from "./core/model/ygo/DeckPart";
-export {
-    DEFAULT_DECK_PART_ARR,
-    DefaultDeckPart,
-} from "./core/model/ygo/DeckPart";
+export { DeckPart, DECK_PART_ARR } from "./core/model/ygo/DeckPart";
+export type { DeckPartConfig } from "./core/model/ygo/DeckPartConfig";
+export { DefaultDeckPartConfig } from "./core/model/ygo/DeckPartConfig";
 export { Format } from "./core/model/ygo/Format";
 export type { Currency } from "./core/model/price/Currency";
 export {

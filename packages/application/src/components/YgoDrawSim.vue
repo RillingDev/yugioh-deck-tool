@@ -60,7 +60,7 @@ import {
     Card,
     Deck,
     DeckService,
-    DefaultDeckPart,
+    DeckPart,
 } from "yugioh-deck-tool-core/src/main";
 import { BModal } from "bootstrap-vue";
 import { applicationContainer } from "@/inversify.config";
@@ -76,7 +76,7 @@ export default class YgoDrawSim extends Vue {
     drawItems: Card[] = [];
 
     get mainDeckCards() {
-        return this.deck.parts.get(DefaultDeckPart.MAIN);
+        return this.deck.parts[DeckPart.MAIN];
     }
 
     get deck(): Deck {

@@ -7,12 +7,9 @@ import { BanlistInfo } from "../../../src/core/model/ygo/BanlistInfo";
 import { CardType } from "../../../src/core/model/ygo/CardType";
 import { CardSet } from "../../../src/core/model/ygo/CardSet";
 import { CardTypeGroup } from "../../../src/core/model/ygo/CardTypeGroup";
-import {
-    DeckPart,
-    DefaultDeckPart,
-} from "../../../src/core/model/ygo/DeckPart";
 import { DefaultBanState } from "../../../src/core/model/ygo/BanState";
 import { Vendor } from "../../../src/core/model/price/Vendor";
+import { DeckPart } from "../../../src/core/model/ygo/DeckPart";
 
 const createCardType = (data: {
     name?: string;
@@ -23,8 +20,7 @@ const createCardType = (data: {
     name: data.name ?? "Spell Card",
     group: data.group ?? CardTypeGroup.SPELL,
     sortGroup: data.sortGroup ?? 0,
-    deckParts:
-        data.deckPart ?? new Set([DefaultDeckPart.MAIN, DefaultDeckPart.SIDE]),
+    deckParts: data.deckPart ?? new Set([DeckPart.MAIN, DeckPart.SIDE]),
 });
 
 const createCard = (data: {

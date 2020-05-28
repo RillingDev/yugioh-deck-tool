@@ -3,13 +3,11 @@ import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { Card } from "../../model/ygo/Card";
 import { DeckService } from "./DeckService";
-import {
-    DEFAULT_DECK_PART_ARR,
-    DefaultDeckPart,
-} from "../../model/ygo/DeckPart";
+import { DefaultDeckPartConfig } from "../../model/ygo/DeckPartConfig";
 import { CardService } from "./CardService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 import { FilterService } from "./FilterService";
+import { DECK_PART_ARR, DeckPart } from "../../model/ygo/DeckPart";
 
 /**
  * @public
@@ -52,10 +50,10 @@ class DeckExportService {
      */
     public toShareableText(deck: Deck): string {
         const result: string[] = [];
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            const cards = deck.parts.get(deckPart)!;
+        for (const deckPart of DECK_PART_ARR) {
+            const cards = deck.parts[deckPart];
             // Main deck cards also get split up by type group
-            if (deckPart === DefaultDeckPart.MAIN) {
+            if (deckPart === DeckPart.MAIN) {
                 for (const cardTypeGroup of Object.values(CardTypeGroup)) {
                     result.push(
                         ...this.createCardList(
@@ -67,7 +65,12 @@ class DeckExportService {
                     );
                 }
             } else {
-                result.push(...this.createCardList(deckPart.name, cards));
+                result.push(
+                    ...this.createCardList(
+                        DefaultDeckPartConfig[deckPart].name,
+                        cards
+                    )
+                );
             }
         }
         return result.join("\n");

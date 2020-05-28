@@ -3,9 +3,10 @@ import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { CardDatabase, FindCardBy } from "../CardDatabase";
 import { DeckService } from "./DeckService";
-import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
+import { DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { HttpService } from "./HttpService";
 import { UrlService } from "./UrlService";
+import { DefaultDeckPartConfig } from "../../model/ygo/DeckPartConfig";
 
 interface ImportResult {
     readonly deck: Deck;
@@ -86,8 +87,8 @@ class DeckFileService {
             .filter((line) => line.length > 0);
         let currentDeckPart = null;
         for (const line of lines) {
-            const foundDeckPart = DEFAULT_DECK_PART_ARR.find(
-                (part) => part.indicator === line
+            const foundDeckPart = DECK_PART_ARR.find(
+                (part) => DefaultDeckPartConfig[part].indicator === line
             );
             if (foundDeckPart != null) {
                 currentDeckPart = foundDeckPart;
@@ -104,7 +105,7 @@ class DeckFileService {
                         passcode,
                         FindCardBy.PASSCODE
                     )!;
-                    deck.parts.get(currentDeckPart)!.push(card);
+                    deck.parts[currentDeckPart].push(card);
                 }
             }
         }
@@ -124,9 +125,9 @@ class DeckFileService {
     public toFile(deck: Deck): DeckFile {
         const fileLines: string[] = [];
 
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            const deckPartCards = deck.parts.get(deckPart)!;
-            fileLines.push(deckPart.indicator);
+        for (const deckPart of DECK_PART_ARR) {
+            const deckPartCards = deck.parts[deckPart];
+            fileLines.push(DefaultDeckPartConfig[deckPart].indicator);
             fileLines.push(...deckPartCards.map((card) => card.passcode));
             fileLines.push("");
         }

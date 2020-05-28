@@ -3,14 +3,15 @@ import { container } from "../../../../../src/inversify.config";
 import { TYPES } from "../../../../../src/types";
 import { DeckService } from "../../../../../src/core/business/service/DeckService";
 import {
-    DeckPart,
-    DefaultDeckPart,
-} from "../../../../../src/core/model/ygo/DeckPart";
+    DeckPartConfig,
+    DefaultDeckPartConfig,
+} from "../../../../../src/core/model/ygo/DeckPartConfig";
 import { Card } from "../../../../../src/core/model/ygo/Card";
 import { createCard, createCardType } from "../../../helper/dataFactories";
 import { Format } from "../../../../../src/core/model/ygo/Format";
 import { DefaultBanState } from "../../../../../src/core/model/ygo/BanState";
 import { CardTypeGroup } from "../../../../../src/core/model/ygo/CardTypeGroup";
+import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
 
 describe("DeckService", () => {
     let deckService: DeckService;
@@ -29,11 +30,11 @@ describe("DeckService", () => {
         it("creates empty deck", () => {
             expect(deckService.createEmptyDeck()).toEqual({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, []],
-                    [DefaultDeckPart.EXTRA, []],
-                    [DefaultDeckPart.SIDE, []],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [],
+                    [DeckPart.EXTRA]: [],
+                    [DeckPart.SIDE]: [],
+                },
             });
         });
     });
@@ -46,11 +47,11 @@ describe("DeckService", () => {
             expect(
                 deckService.getAllCards({
                     name: null,
-                    parts: new Map<DeckPart, Card[]>([
-                        [DefaultDeckPart.MAIN, [card1]],
-                        [DefaultDeckPart.EXTRA, [card2, card2]],
-                        [DefaultDeckPart.SIDE, [card3]],
-                    ]),
+                    parts: {
+                        [DeckPart.MAIN]: [card1],
+                        [DeckPart.EXTRA]: [card2, card2],
+                        [DeckPart.SIDE]: [card3],
+                    },
                 })
             ).toEqual([card1, card2, card2, card3]);
         });
@@ -62,18 +63,18 @@ describe("DeckService", () => {
                 deckService.canAdd(
                     {
                         name: null,
-                        parts: new Map<DeckPart, Card[]>([
-                            [DefaultDeckPart.MAIN, []],
-                            [DefaultDeckPart.EXTRA, []],
-                            [DefaultDeckPart.SIDE, []],
-                        ]),
+                        parts: {
+                            [DeckPart.MAIN]: [],
+                            [DeckPart.EXTRA]: [],
+                            [DeckPart.SIDE]: [],
+                        },
                     },
-                    DefaultDeckPart.MAIN,
+                    DeckPart.MAIN,
                     Format.TCG,
                     createCard({
                         passcode: "456",
                         type: createCardType({
-                            deckPart: new Set([DefaultDeckPart.EXTRA]),
+                            deckPart: new Set([DeckPart.EXTRA]),
                         }),
                     })
                 )
@@ -85,18 +86,15 @@ describe("DeckService", () => {
                 deckService.canAdd(
                     {
                         name: null,
-                        parts: new Map<DeckPart, Card[]>([
-                            [DefaultDeckPart.MAIN, []],
-                            [DefaultDeckPart.EXTRA, []],
-                            [
-                                DefaultDeckPart.SIDE,
-                                new Array(15).fill(
-                                    createCard({ passcode: "123" })
-                                ),
-                            ],
-                        ]),
+                        parts: {
+                            [DeckPart.MAIN]: [],
+                            [DeckPart.EXTRA]: [],
+                            [DeckPart.SIDE]: new Array(15).fill(
+                                createCard({ passcode: "123" })
+                            ),
+                        },
                     },
-                    DefaultDeckPart.SIDE,
+                    DeckPart.SIDE,
                     Format.TCG,
                     createCard({ passcode: "456" })
                 )
@@ -112,13 +110,13 @@ describe("DeckService", () => {
                 deckService.canAdd(
                     {
                         name: null,
-                        parts: new Map<DeckPart, Card[]>([
-                            [DefaultDeckPart.MAIN, []],
-                            [DefaultDeckPart.EXTRA, []],
-                            [DefaultDeckPart.SIDE, [card]],
-                        ]),
+                        parts: {
+                            [DeckPart.MAIN]: [],
+                            [DeckPart.EXTRA]: [],
+                            [DeckPart.SIDE]: [card],
+                        },
                     },
-                    DefaultDeckPart.SIDE,
+                    DeckPart.SIDE,
                     Format.OCG,
                     card
                 )
@@ -138,13 +136,13 @@ describe("DeckService", () => {
                 deckService.canAdd(
                     {
                         name: null,
-                        parts: new Map<DeckPart, Card[]>([
-                            [DefaultDeckPart.MAIN, []],
-                            [DefaultDeckPart.EXTRA, []],
-                            [DefaultDeckPart.SIDE, [card]],
-                        ]),
+                        parts: {
+                            [DeckPart.MAIN]: [],
+                            [DeckPart.EXTRA]: [],
+                            [DeckPart.SIDE]: [card],
+                        },
                     },
-                    DefaultDeckPart.SIDE,
+                    DeckPart.SIDE,
                     Format.OCG,
                     card
                 )
@@ -159,13 +157,13 @@ describe("DeckService", () => {
                 deckService.canAdd(
                     {
                         name: null,
-                        parts: new Map<DeckPart, Card[]>([
-                            [DefaultDeckPart.MAIN, []],
-                            [DefaultDeckPart.EXTRA, []],
-                            [DefaultDeckPart.SIDE, []],
-                        ]),
+                        parts: {
+                            [DeckPart.MAIN]: [],
+                            [DeckPart.EXTRA]: [],
+                            [DeckPart.SIDE]: [],
+                        },
                     },
-                    DefaultDeckPart.SIDE,
+                    DeckPart.SIDE,
                     Format.OCG,
                     card
                 )
@@ -180,25 +178,21 @@ describe("DeckService", () => {
             });
             const deck = {
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, []],
-                    [DefaultDeckPart.EXTRA, []],
-                    [DefaultDeckPart.SIDE, []],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [],
+                    [DeckPart.EXTRA]: [],
+                    [DeckPart.SIDE]: [],
+                },
             };
 
-            const result = deckService.addCard(
-                deck,
-                DefaultDeckPart.SIDE,
-                card
-            );
+            const result = deckService.addCard(deck, DeckPart.SIDE, card);
             expect(result).toEqual({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, []],
-                    [DefaultDeckPart.EXTRA, []],
-                    [DefaultDeckPart.SIDE, [card]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [],
+                    [DeckPart.EXTRA]: [],
+                    [DeckPart.SIDE]: [card],
+                },
             });
         });
     });
@@ -210,25 +204,21 @@ describe("DeckService", () => {
             });
             const deck = {
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, []],
-                    [DefaultDeckPart.EXTRA, []],
-                    [DefaultDeckPart.SIDE, [card]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [],
+                    [DeckPart.EXTRA]: [],
+                    [DeckPart.SIDE]: [card],
+                },
             };
 
-            const result = deckService.removeCard(
-                deck,
-                DefaultDeckPart.SIDE,
-                card
-            );
+            const result = deckService.removeCard(deck, DeckPart.SIDE, card);
             expect(result).toEqual({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, []],
-                    [DefaultDeckPart.EXTRA, []],
-                    [DefaultDeckPart.SIDE, []],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [],
+                    [DeckPart.EXTRA]: [],
+                    [DeckPart.SIDE]: [],
+                },
             });
         });
     });

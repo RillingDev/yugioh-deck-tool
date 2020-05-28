@@ -5,16 +5,16 @@ import { CardDatabase } from "../CardDatabase";
 import { DeckService } from "./DeckService";
 import { TYPES } from "../../../types";
 import {
-    DeckPart,
-    DEFAULT_DECK_PART_ARR,
-    DefaultDeckPart,
-} from "../../model/ygo/DeckPart";
+    DeckPartConfig,
+    DefaultDeckPartConfig,
+} from "../../model/ygo/DeckPartConfig";
 import { SortingService } from "./SortingService";
 import { CardService } from "./CardService";
 import { flatten, random, sampleSize, shuffle, uniq, words } from "lodash";
 import { Card } from "../../model/ygo/Card";
 import { Format } from "../../model/ygo/Format";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
+import { DECK_PART_ARR, DeckPart } from "../../model/ygo/DeckPart";
 
 enum RandomizationStrategy {
     NORMAL = "Normal",
@@ -114,7 +114,7 @@ class DeckRandomizationService {
         }
 
         const format = filter?.format ?? null;
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
+        for (const deckPart of DECK_PART_ARR) {
             for (const primaryPool of primaryPools) {
                 let cardsPerPool = 0;
                 if (isArchetypeStrategy) {
@@ -127,7 +127,7 @@ class DeckRandomizationService {
                     format,
                     strategy,
                     primaryPool,
-                    deckPart === DefaultDeckPart.MAIN,
+                    deckPart === DeckPart.MAIN,
                     cardsPerPool
                 );
             }
@@ -185,7 +185,7 @@ class DeckRandomizationService {
         preferPlaySet: boolean,
         limit: number | null
     ): void {
-        const deckPartCards = deck.parts.get(deckPart)!;
+        const deckPartCards = deck.parts[deckPart];
         const initialLength = deckPartCards.length;
         const deckPartLimit = this.getDeckPartLimit(deckPart, strategy);
         for (const card of shuffle(pool)) {
@@ -205,7 +205,7 @@ class DeckRandomizationService {
             // Once half of the main deck part is full, check against ratios
             // If a card ratio is exceeded: continue with the next card
             if (
-                deckPart === DefaultDeckPart.MAIN &&
+                deckPart === DeckPart.MAIN &&
                 deckPartCards.length >= deckPartLimit / 2
             ) {
                 const cardTypeGroupRatio:
@@ -261,13 +261,13 @@ class DeckRandomizationService {
         strategy: RandomizationStrategy
     ): number {
         if (strategy === RandomizationStrategy.HIGHLANDER) {
-            if (deckPart === DefaultDeckPart.SIDE) {
+            if (deckPart === DeckPart.SIDE) {
                 return 0;
             }
-            return deckPart.max;
+            return DefaultDeckPartConfig[deckPart].max;
         }
 
-        return deckPart.recommended;
+        return DefaultDeckPartConfig[deckPart].recommended;
     }
 
     private getRandomCardCount(
@@ -301,8 +301,8 @@ class DeckRandomizationService {
         const cardsWithPlaySets = Array.from(
             this.cardService
                 .countCards([
-                    ...deck.parts.get(DefaultDeckPart.MAIN)!,
-                    ...deck.parts.get(DefaultDeckPart.EXTRA)!,
+                    ...deck.parts[DeckPart.MAIN],
+                    ...deck.parts[DeckPart.EXTRA],
                 ])
                 .entries()
         )

@@ -3,12 +3,13 @@ import { DeckExportService } from "../../../../../src/core/business/service/Deck
 import { TYPES } from "../../../../../src/types";
 import { createCard, createCardType } from "../../../helper/dataFactories";
 import {
-    DeckPart,
-    DefaultDeckPart,
-} from "../../../../../src/core/model/ygo/DeckPart";
+    DeckPartConfig,
+    DefaultDeckPartConfig,
+} from "../../../../../src/core/model/ygo/DeckPartConfig";
 import { Card } from "../../../../../src/core/model/ygo/Card";
 import { container } from "../../../../../src/inversify.config";
 import { CardTypeGroup } from "../../../../../src/core/model/ygo/CardTypeGroup";
+import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
 
 describe("DeckExportService", () => {
     let deckExportService: DeckExportService;
@@ -42,11 +43,11 @@ describe("DeckExportService", () => {
 
             const result = deckExportService.toShareableText({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1, card2, card2]],
-                    [DefaultDeckPart.EXTRA, [card3, card3]],
-                    [DefaultDeckPart.SIDE, [card4, card4, card1, card4]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1, card2, card2],
+                    [DeckPart.EXTRA]: [card3, card3],
+                    [DeckPart.SIDE]: [card4, card4, card1, card4],
+                },
             });
             expect(result).toEqual(
                 `Monster:
@@ -74,11 +75,11 @@ foo x1
 
             const result = deckExportService.toBuyLink({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card3, card1, card3]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1],
+                    [DeckPart.EXTRA]: [card2, card2],
+                    [DeckPart.SIDE]: [card3, card3, card1, card3],
+                },
             });
 
             const expected = new URL(

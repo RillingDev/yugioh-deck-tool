@@ -5,9 +5,9 @@ import { CardDatabase, FindCardBy } from "../CardDatabase";
 import { Card } from "../../model/ygo/Card";
 import { isEqual } from "lodash";
 import { DeckService } from "./DeckService";
-import { DEFAULT_DECK_PART_ARR } from "../../model/ygo/DeckPart";
 import { fromByteArray, toByteArray } from "base64-js";
 import { deflateRaw, inflate, inflateRaw } from "pako";
+import { DECK_PART_ARR } from "../../model/ygo/DeckPart";
 
 /**
  * @public
@@ -56,9 +56,9 @@ class DeckUriEncodingService {
      */
     public toUri(deck: Deck): string {
         const encodedDeckParts: string[] = [];
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
+        for (const deckPart of DECK_PART_ARR) {
             const encodedCards = [];
-            for (const card of deck.parts.get(deckPart)!) {
+            for (const card of deck.parts[deckPart]) {
                 encodedCards.push(...this.encodeCardBlock(card));
             }
             encodedDeckParts.push(
@@ -87,9 +87,9 @@ class DeckUriEncodingService {
             .split(DeckUriEncodingService.YDKE_DELIMITER);
         uriParts.pop(); // uriParts is always one longer than there are deck parts due to trailing delimiter.
 
-        if (uriParts.length !== DEFAULT_DECK_PART_ARR.length) {
+        if (uriParts.length !== DECK_PART_ARR.length) {
             throw new Error(
-                `Expected URI to have ${DEFAULT_DECK_PART_ARR.length} delimiters but found ${uriParts.length}.`
+                `Expected URI to have ${DECK_PART_ARR.length} delimiters but found ${uriParts.length}.`
             );
         }
 
@@ -99,9 +99,7 @@ class DeckUriEncodingService {
             deckPartIndex < uriParts.length;
             deckPartIndex++
         ) {
-            const deckPartCards = deck.parts.get(
-                DEFAULT_DECK_PART_ARR[deckPartIndex]
-            )!;
+            const deckPartCards = deck.parts[DECK_PART_ARR[deckPartIndex]];
             const decodedDeckPartCards = this.decode64String(
                 uriParts[deckPartIndex],
                 false
@@ -143,8 +141,8 @@ class DeckUriEncodingService {
     public toUrlQueryParamValue(deck: Deck): string {
         const result: number[] = []; // Array of unsigned 8 bit numbers, using this over Uint8Array for convenience.
 
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            for (const card of deck.parts.get(deckPart)!) {
+        for (const deckPart of DECK_PART_ARR) {
+            for (const card of deck.parts[deckPart]) {
                 result.push(...this.encodeCardBlock(card));
             }
             result.push(
@@ -189,15 +187,13 @@ class DeckUriEncodingService {
                 )
             ) {
                 // After the last deck part, meta data starts
-                if (deckPartIndex === DEFAULT_DECK_PART_ARR.length - 1) {
+                if (deckPartIndex === DECK_PART_ARR.length - 1) {
                     metaDataStart = blockEnd;
                     break;
                 }
                 deckPartIndex++;
             } else {
-                const deckPartCards = deck.parts.get(
-                    DEFAULT_DECK_PART_ARR[deckPartIndex]
-                )!;
+                const deckPartCards = deck.parts[DECK_PART_ARR[deckPartIndex]];
                 deckPartCards.push(this.decodeCardBlock(block));
             }
         }
@@ -230,8 +226,8 @@ class DeckUriEncodingService {
         uncompressedValue
             .split(DELIMITERS.deckPart)
             .forEach((deckPartList: string, index) => {
-                const deckPart = DEFAULT_DECK_PART_ARR[index];
-                const deckPartCards = deck.parts.get(deckPart)!;
+                const deckPart = DECK_PART_ARR[index];
+                const deckPartCards = deck.parts[deckPart];
 
                 if (deckPartList.length > 0) {
                     deckPartList.split(DELIMITERS.passcode).forEach((entry) => {

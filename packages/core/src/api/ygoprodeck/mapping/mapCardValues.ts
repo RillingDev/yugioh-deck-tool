@@ -1,7 +1,11 @@
 import { CardValues } from "../../../core/model/ygo/CardValues";
 import { CardTypeGroup } from "../../../core/model/ygo/CardTypeGroup";
-import { DeckPart, DefaultDeckPart } from "../../../core/model/ygo/DeckPart";
+import {
+    DeckPartConfig,
+    DefaultDeckPartConfig,
+} from "../../../core/model/ygo/DeckPartConfig";
 import { CardType } from "../../../core/model/ygo/CardType";
+import { DeckPart } from "../../../core/model/ygo/DeckPart";
 
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {
@@ -52,13 +56,13 @@ const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
     new Set(
         type.area.map((area) => {
             if (area === "SIDE") {
-                return DefaultDeckPart.SIDE;
+                return DeckPart.SIDE;
             }
             if (area === "EXTRA") {
-                return DefaultDeckPart.EXTRA;
+                return DeckPart.EXTRA;
             }
             if (area === "MAIN") {
-                return DefaultDeckPart.MAIN;
+                return DeckPart.MAIN;
             }
             throw new TypeError(`Unexpected deck part type '${area}'.`);
         })

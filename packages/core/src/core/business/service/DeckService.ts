@@ -1,9 +1,5 @@
 import { inject, injectable } from "inversify";
-import {
-    DeckPart,
-    DEFAULT_DECK_PART_ARR,
-    DefaultDeckPart,
-} from "../../model/ygo/DeckPart";
+import { DefaultDeckPartConfig } from "../../model/ygo/DeckPartConfig";
 import { Card } from "../../model/ygo/Card";
 import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
@@ -14,6 +10,7 @@ import { pullAt, sampleSize, shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 import { BanlistService } from "./BanlistService";
+import { DECK_PART_ARR, DeckPart } from "../../model/ygo/DeckPart";
 
 /**
  * @public
@@ -82,8 +79,8 @@ class DeckService {
         }
 
         // If adding would make the deck part be larger than allowed, return false
-        const deckPartSize = deck.parts.get(deckPart)!.length;
-        if (deckPartSize + 1 > deckPart.max) {
+        const deckPartSize = deck.parts[deckPart].length;
+        if (deckPartSize + 1 > DefaultDeckPartConfig[deckPart].max) {
             return false;
         }
 
@@ -124,7 +121,7 @@ class DeckService {
         newIndex?: number
     ): Deck {
         const deckClone = this.cloneDeck(deck);
-        const current = deckClone.parts.get(deckPart)!;
+        const current = deckClone.parts[deckPart];
         if (newIndex != null) {
             insert(current, newIndex, card);
         } else {
@@ -150,7 +147,7 @@ class DeckService {
         oldIndex?: number
     ): Deck {
         const deckClone = this.cloneDeck(deck);
-        const cards = deck.parts.get(deckPart)!;
+        const cards = deckClone.parts[deckPart];
         if (oldIndex != null) {
             if (cards[oldIndex] === card) {
                 pullAt(cards, oldIndex);
@@ -179,7 +176,7 @@ class DeckService {
         newIndex: number
     ): Deck {
         const deckClone = this.cloneDeck(deck);
-        const cards = deck.parts.get(deckPart)!;
+        const cards = deck.parts[deckPart];
         if (cards[oldIndex] === card) {
             pullAt(cards, oldIndex);
             insert(cards, newIndex, card);
@@ -195,12 +192,12 @@ class DeckService {
      */
     public sort(deck: Deck): Deck {
         const deckClone = this.cloneDeck(deck);
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            deckClone.parts.set(
-                deckPart,
-                this.sortingService.sort(deckClone.parts.get(deckPart)!, {
+        for (const deckPart of DECK_PART_ARR) {
+            deckClone.parts[deckPart] = this.sortingService.sort(
+                deckClone.parts[deckPart],
+                {
                     strategy: SortingStrategy.DECK,
-                })
+                }
             );
         }
         return deckClone;
@@ -214,11 +211,8 @@ class DeckService {
      */
     public shuffle(deck: Deck): Deck {
         const deckClone = this.cloneDeck(deck);
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            deckClone.parts.set(
-                deckPart,
-                shuffle(deckClone.parts.get(deckPart))
-            );
+        for (const deckPart of DECK_PART_ARR) {
+            deckClone.parts[deckPart] = shuffle(deckClone.parts[deckPart]);
         }
         return deckClone;
     }
@@ -231,10 +225,7 @@ class DeckService {
      * @return The simulated starting hand cards.
      */
     public getSimulatedStartingHand(deck: Deck, goingFirst: boolean): Card[] {
-        return sampleSize(
-            deck.parts.get(DefaultDeckPart.MAIN),
-            goingFirst ? 5 : 6
-        );
+        return sampleSize(deck.parts[DeckPart.MAIN], goingFirst ? 5 : 6);
     }
 
     /**
@@ -245,8 +236,8 @@ class DeckService {
      */
     public getAllCards(deck: Deck): Card[] {
         const result = [];
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            result.push(...deck.parts.get(deckPart)!);
+        for (const deckPart of DECK_PART_ARR) {
+            result.push(...deck.parts[deckPart]);
         }
         return result;
     }
@@ -257,25 +248,26 @@ class DeckService {
      * @return Created deck.
      */
     public createEmptyDeck(): Deck {
-        const parts = new Map<DeckPart, Card[]>();
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            parts.set(deckPart, []);
-        }
-        return { name: null, parts };
+        return {
+            name: null,
+            parts: {
+                [DeckPart.MAIN]: [],
+                [DeckPart.EXTRA]: [],
+                [DeckPart.SIDE]: [],
+            },
+        };
     }
 
     private cloneDeck(deck: Deck): Deck {
-        const deckClone = {
+        // Manual copy to avoid accidentally creating new cards.
+        return {
             name: deck.name,
-            parts: new Map<DeckPart, Card[]>(deck.parts),
+            parts: {
+                [DeckPart.MAIN]: Array.from(deck.parts[DeckPart.MAIN]),
+                [DeckPart.EXTRA]: Array.from(deck.parts[DeckPart.EXTRA]),
+                [DeckPart.SIDE]: Array.from(deck.parts[DeckPart.SIDE]),
+            },
         };
-        for (const deckPart of DEFAULT_DECK_PART_ARR) {
-            deckClone.parts.set(
-                deckPart,
-                Array.from(deckClone.parts.get(deckPart)!)
-            );
-        }
-        return deckClone;
     }
 }
 

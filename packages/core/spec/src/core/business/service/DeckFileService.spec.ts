@@ -6,9 +6,9 @@ import {
 } from "../../../../../src/core/business/CardDatabase";
 import { createCard } from "../../../helper/dataFactories";
 import {
-    DeckPart,
-    DefaultDeckPart,
-} from "../../../../../src/core/model/ygo/DeckPart";
+    DeckPartConfig,
+    DefaultDeckPartConfig,
+} from "../../../../../src/core/model/ygo/DeckPartConfig";
 import { Card } from "../../../../../src/core/model/ygo/Card";
 import { HttpService } from "../../../../../src/core/business/service/HttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
@@ -17,6 +17,7 @@ import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardD
 import { container } from "../../../../../src/inversify.config";
 import { bindMock } from "../../../helper/bindMock";
 import { DeckFileService } from "../../../../../src/core/business/service/DeckFileService";
+import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
 
 describe("DeckFileService", () => {
     let deckFileService: DeckFileService;
@@ -83,8 +84,8 @@ describe("DeckFileService", () => {
                 fileContent,
                 fileName: "foo.ydk",
             });
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
+            expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
+            expect(result.deck.parts[DeckPart.MAIN]).toContain(card);
             expect(result.missing.length).toBe(0);
         });
 
@@ -106,8 +107,8 @@ describe("DeckFileService", () => {
                 fileContent,
                 fileName: "foo.ydk",
             });
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(3);
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toEqual([
+            expect(result.deck.parts[DeckPart.MAIN].length).toBe(3);
+            expect(result.deck.parts[DeckPart.MAIN]).toEqual([
                 card,
                 card,
                 card,
@@ -154,20 +155,12 @@ describe("DeckFileService", () => {
                 fileContent,
                 fileName: "foo.ydk",
             });
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(
-                card1
-            );
-            expect(result.deck.parts.get(DefaultDeckPart.EXTRA)!.length).toBe(
-                1
-            );
-            expect(result.deck.parts.get(DefaultDeckPart.EXTRA)).toContain(
-                card2
-            );
-            expect(result.deck.parts.get(DefaultDeckPart.SIDE)!.length).toBe(1);
-            expect(result.deck.parts.get(DefaultDeckPart.SIDE)).toContain(
-                card3
-            );
+            expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
+            expect(result.deck.parts[DeckPart.MAIN]).toContain(card1);
+            expect(result.deck.parts[DeckPart.EXTRA]!.length).toBe(1);
+            expect(result.deck.parts[DeckPart.EXTRA]).toContain(card2);
+            expect(result.deck.parts[DeckPart.SIDE]!.length).toBe(1);
+            expect(result.deck.parts[DeckPart.SIDE]).toContain(card3);
             expect(result.missing.length).toBe(0);
         });
 
@@ -188,8 +181,8 @@ describe("DeckFileService", () => {
                 fileContent,
                 fileName: "foo.ydk",
             });
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
+            expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
+            expect(result.deck.parts[DeckPart.MAIN]).toContain(card);
         });
 
         it("supports zero-padded", () => {
@@ -209,8 +202,8 @@ describe("DeckFileService", () => {
                 fileContent,
                 fileName: "foo.ydk",
             });
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
+            expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
+            expect(result.deck.parts[DeckPart.MAIN]).toContain(card);
         });
     });
 
@@ -266,8 +259,8 @@ describe("DeckFileService", () => {
                 "https://example.com",
                 "https://example.com/foo/bar.ydk"
             );
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)!.length).toBe(1);
-            expect(result.deck.parts.get(DefaultDeckPart.MAIN)).toContain(card);
+            expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
+            expect(result.deck.parts[DeckPart.MAIN]).toContain(card);
             expect(result.missing.length).toBe(0);
         });
     });
@@ -277,11 +270,11 @@ describe("DeckFileService", () => {
             expect(
                 deckFileService.toFile({
                     name: "foo",
-                    parts: new Map<DeckPart, Card[]>([
-                        [DefaultDeckPart.MAIN, []],
-                        [DefaultDeckPart.EXTRA, []],
-                        [DefaultDeckPart.SIDE, []],
-                    ]),
+                    parts: {
+                        [DeckPart.MAIN]: [],
+                        [DeckPart.EXTRA]: [],
+                        [DeckPart.SIDE]: [],
+                    },
                 }).fileName
             ).toBe("foo.ydk");
         });
@@ -290,14 +283,11 @@ describe("DeckFileService", () => {
             expect(
                 deckFileService.toFile({
                     name: "foo",
-                    parts: new Map<DeckPart, Card[]>([
-                        [
-                            DefaultDeckPart.MAIN,
-                            [createCard({ passcode: "123" })],
-                        ],
-                        [DefaultDeckPart.EXTRA, []],
-                        [DefaultDeckPart.SIDE, []],
-                    ]),
+                    parts: {
+                        [DeckPart.MAIN]: [createCard({ passcode: "123" })],
+                        [DeckPart.EXTRA]: [],
+                        [DeckPart.SIDE]: [],
+                    },
                 }).fileContent
             ).toContain(
                 `#main
@@ -309,20 +299,11 @@ describe("DeckFileService", () => {
             expect(
                 deckFileService.toFile({
                     name: "foo",
-                    parts: new Map<DeckPart, Card[]>([
-                        [
-                            DefaultDeckPart.MAIN,
-                            [createCard({ passcode: "123" })],
-                        ],
-                        [
-                            DefaultDeckPart.EXTRA,
-                            [createCard({ passcode: "456" })],
-                        ],
-                        [
-                            DefaultDeckPart.SIDE,
-                            [createCard({ passcode: "789" })],
-                        ],
-                    ]),
+                    parts: {
+                        [DeckPart.MAIN]: [createCard({ passcode: "123" })],
+                        [DeckPart.EXTRA]: [createCard({ passcode: "456" })],
+                        [DeckPart.SIDE]: [createCard({ passcode: "789" })],
+                    },
                 }).fileContent
             ).toBe(
                 `#main

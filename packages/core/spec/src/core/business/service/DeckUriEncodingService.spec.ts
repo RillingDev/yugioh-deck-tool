@@ -6,9 +6,9 @@ import {
 } from "../../../../../src/core/business/CardDatabase";
 import { createCard } from "../../../helper/dataFactories";
 import {
-    DeckPart,
-    DefaultDeckPart,
-} from "../../../../../src/core/model/ygo/DeckPart";
+    DeckPartConfig,
+    DefaultDeckPartConfig,
+} from "../../../../../src/core/model/ygo/DeckPartConfig";
 import { Card } from "../../../../../src/core/model/ygo/Card";
 import { deflate } from "pako";
 import { when } from "ts-mockito";
@@ -16,6 +16,7 @@ import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardD
 import { container } from "../../../../../src/inversify.config";
 import { bindMock } from "../../../helper/bindMock";
 import { DeckUriEncodingService } from "../../../../../src/core/business/service/DeckUriEncodingService";
+import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
 
 describe("DeckUriEncodingService", () => {
     let deckUriEncodingService: DeckUriEncodingService;
@@ -84,11 +85,11 @@ describe("DeckUriEncodingService", () => {
                 )
             ).toEqual({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1],
+                    [DeckPart.EXTRA]: [card2, card2],
+                    [DeckPart.SIDE]: [card3, card4, card1, card1, card1],
+                },
             });
         });
     });
@@ -102,11 +103,11 @@ describe("DeckUriEncodingService", () => {
 
             const result = deckUriEncodingService.toUrlQueryParamValue({
                 name: "foo",
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1],
+                    [DeckPart.EXTRA]: [card2, card2],
+                    [DeckPart.SIDE]: [card3, card4, card1, card1, card1],
+                },
             });
             expect(result).toEqual("q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB");
         });
@@ -118,11 +119,11 @@ describe("DeckUriEncodingService", () => {
 
             const result = deckUriEncodingService.toUrlQueryParamValue({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2]],
-                    [DefaultDeckPart.SIDE, [card3]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1],
+                    [DeckPart.EXTRA]: [card2],
+                    [DeckPart.SIDE]: [card3],
+                },
             });
             expect(result).toEqual("q2aAgBOMEFqUGUIDAA~~");
         });
@@ -168,11 +169,11 @@ describe("DeckUriEncodingService", () => {
 
             expect(result).toEqual({
                 name: "foo",
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2, card2]],
-                    [DefaultDeckPart.SIDE, [card3, card4, card1, card1, card1]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1],
+                    [DeckPart.EXTRA]: [card2, card2],
+                    [DeckPart.SIDE]: [card3, card4, card1, card1, card1],
+                },
             });
         });
 
@@ -207,11 +208,11 @@ describe("DeckUriEncodingService", () => {
 
             expect(result).toEqual({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1]],
-                    [DefaultDeckPart.EXTRA, [card2]],
-                    [DefaultDeckPart.SIDE, [card3]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1],
+                    [DeckPart.EXTRA]: [card2],
+                    [DeckPart.SIDE]: [card3],
+                },
             });
         });
     });
@@ -224,11 +225,11 @@ describe("DeckUriEncodingService", () => {
 
             const result = deckUriEncodingService.toUri({
                 name: "foo",
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1, card2, card2]],
-                    [DefaultDeckPart.EXTRA, [card3]],
-                    [DefaultDeckPart.SIDE, [card1]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1, card2, card2],
+                    [DeckPart.EXTRA]: [card3],
+                    [DeckPart.SIDE]: [card1],
+                },
             });
             expect(result).toEqual(
                 "ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!"
@@ -268,11 +269,11 @@ describe("DeckUriEncodingService", () => {
 
             expect(result).toEqual({
                 name: null,
-                parts: new Map<DeckPart, Card[]>([
-                    [DefaultDeckPart.MAIN, [card1, card2, card2]],
-                    [DefaultDeckPart.EXTRA, [card3]],
-                    [DefaultDeckPart.SIDE, [card1]],
-                ]),
+                parts: {
+                    [DeckPart.MAIN]: [card1, card2, card2],
+                    [DeckPart.EXTRA]: [card3],
+                    [DeckPart.SIDE]: [card1],
+                },
             });
         });
     });

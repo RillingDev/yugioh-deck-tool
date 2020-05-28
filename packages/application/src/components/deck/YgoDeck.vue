@@ -19,7 +19,7 @@
 import {
     Card,
     DeckService,
-    DEFAULT_DECK_PART_ARR,
+    DECK_PART_ARR,
 } from "yugioh-deck-tool-core/src/main";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
@@ -44,7 +44,7 @@ export default defineComponent({
     },
     props: {},
     setup(props, context) {
-        const deckParts = DEFAULT_DECK_PART_ARR;
+        const deckParts = DECK_PART_ARR;
         const allCards = computed<Card[]>(() =>
             deckService.getAllCards(context.root.$store.state.deck.active)
         );
@@ -52,7 +52,7 @@ export default defineComponent({
         const deckPartRefs = ref<Vue[]>(null);
 
         const findDeckPartForComponent = (component: Vue) =>
-            DEFAULT_DECK_PART_ARR[
+            DECK_PART_ARR[
                 deckPartRefs.value.findIndex((deckPartRef) =>
                     deckPartRef.$el.contains(component.$el)
                 )
