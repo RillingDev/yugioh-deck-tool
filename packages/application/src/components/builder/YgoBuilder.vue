@@ -6,7 +6,32 @@
             Showing {{ filteredCards.length }} of {{ formatCards.length }} Cards
         </small>
         <YgoSortingOptions v-model="reactiveSortingOptions" />
-        <YgoBuilderMatches :cards="filteredCards" />
+
+        <div class="builder__matches">
+            <Draggable
+                tag="ol"
+                class="builder__matches__list"
+                :group="{ name: 'cards', pull: 'clone', put: false }"
+                :list="filteredCards"
+                :sort="false"
+                :move="canMove"
+                v-show="filteredCards.length > 0"
+            >
+                <li
+                    class="builder__matches__match"
+                    v-for="card in filteredCards"
+                    :key="card.passcode"
+                >
+                    <YgoBuilderMatch :card="card" />
+                </li>
+            </Draggable>
+            <div
+                class="builder__matches__no-matches"
+                v-show="filteredCards.length === 0"
+            >
+                No matches found.
+            </div>
+        </div>
     </div>
 </template>
 
@@ -27,9 +52,11 @@ import {
 } from "yugioh-deck-tool-core/src/main";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
-import YgoBuilderMatches from "./YgoBuilderMatches.vue";
+import YgoBuilderMatch from "./YgoBuilderMatch.vue";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { merge } from "lodash";
+import { PropType } from "vue";
+import Draggable from "vuedraggable";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -45,11 +72,17 @@ const cardService = applicationContainer.get<CardService>(
 );
 
 export default defineComponent({
-    props: {},
+    props: {
+        canMove: {
+            required: true,
+            type: Function as PropType<(e: object) => boolean>,
+        },
+    },
     components: {
         YgoFilter,
         YgoSortingOptions,
-        YgoBuilderMatches,
+        YgoBuilderMatch,
+        Draggable,
     },
     setup(props, context) {
         const CARD_DISPLAY_LIMIT = 100;
@@ -120,6 +153,24 @@ export default defineComponent({
         &__count {
             display: inline-block;
             margin-bottom: 0.5rem;
+        }
+
+        &__matches {
+            &__no-matches {
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                text-align: center;
+                color: $gray-600;
+            }
+
+            &__list {
+                overflow-y: scroll;
+                max-height: 50rem;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                border: 1px solid $gray-400;
+            }
         }
     }
 }

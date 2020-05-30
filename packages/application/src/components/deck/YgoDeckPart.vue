@@ -10,13 +10,11 @@
             <YgoPrice :cards="cards" />
         </header>
         <Draggable
-            v-if="cards.length > 0"
             class="deck-part__content"
             tag="main"
             :group="{ name: 'cards', pull: true, put: true }"
-            :list="cards"
+            v-model="cards"
             :move="(e) => canMove(e)"
-            @change="(e) => onChange(e)"
         >
             <YgoCard
                 :card="card"
@@ -45,6 +43,7 @@ import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
+import { DECK_CARDS_REPLACE } from "@/store/modules/deck";
 
 const filterService = applicationContainer.get<FilterService>(
     APPLICATION_TYPES.FilterService
@@ -95,7 +94,7 @@ export default defineComponent({
         },
         canMove: {
             required: true,
-            type: Function as PropType<() => boolean>,
+            type: Function as PropType<(e: object) => boolean>,
         },
     },
     setup: function (props, context) {
@@ -103,14 +102,18 @@ export default defineComponent({
             () => DefaultDeckPartConfig[props.deckPart]
         );
 
-        // We HAVE to return a copy as otherwise draggable will mutate our store directly.
-        const cards = computed<Card[]>(() =>
-            Array.from(
+        const cards = computed<Card[]>({
+            get: () =>
                 context.root.$store.state.deck.active.parts[
                     props.deckPart
-                ] as Card[]
-            )
-        );
+                ] as Card[],
+
+            set: (newCards) =>
+                context.root.$store.commit(DECK_CARDS_REPLACE, {
+                    deckPart: props.deckPart,
+                    cards: newCards,
+                }),
+        });
         const deckPartStats = computed<string>(() => {
             const currentCards = cards.value;
             const base = `${currentCards.length} Cards`;
@@ -125,9 +128,8 @@ export default defineComponent({
                 .map(([type, count]) => `${count} ${type}`);
             return `${base} (${details.join(" | ")})`;
         });
-        const onChange = (e) => context.emit("change", e);
 
-        return { deckPartConfig, cards, deckPartStats, onChange };
+        return { deckPartConfig, cards, deckPartStats };
     },
 });
 </script>

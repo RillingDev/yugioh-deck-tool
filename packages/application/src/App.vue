@@ -87,17 +87,9 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col-lg-8">
-                <div class="text-center" v-if="ajax.currentlyLoading">
-                    <span>Loading Card Database...</span>
-                </div>
-                <ygo-deck v-if="!ajax.currentlyLoading" />
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <ygo-builder v-if="!ajax.currentlyLoading" />
-            </div>
+        <AppMain v-if="!ajax.currentlyLoading" />
+        <div v-else class="text-center">
+            <span>Loading Card Database...</span>
         </div>
     </div>
 </template>
@@ -131,15 +123,15 @@ import AdvancedSelect from "@/components/AdvancedSelect.vue";
 import { CURRENCY_UPDATE } from "@/store/modules/currency";
 import { DECK_REPLACE, DECK_NAME_UPDATE } from "@/store/modules/deck";
 import { FORMAT_UPDATE } from "@/store/modules/format";
+import AppMain from "@/components/AppMain.vue";
 
 const logger = getLogger("app");
 
 @Component({
     components: {
-        YgoDeck,
+        AppMain,
         YgoSorter,
         YgoDrawSim,
-        YgoBuilder,
         YgoRandomizer,
         AdvancedSelect,
     },
