@@ -1,92 +1,63 @@
 <template>
     <div class="app">
         <!-- app-forms -->
-        <div class="app-section app-forms">
-            <!-- app-forms-upload -->
-            <div class="form-group">
-                <label>Deck:</label>
-                <input
-                    @change="fileOnUpload"
-                    accept=".ydk"
-                    class="form-control"
-                    title="Upload Deck"
-                    type="file"
-                />
-                <input
-                    class="form-control form-deck-name"
-                    placeholder="Deck Title"
-                    title="Deck Title"
-                    type="text"
-                    v-model="deckName"
-                />
-                <button
-                    @click="deckToFile"
-                    class="btn btn-primary form-control"
-                    download="Unnamed.ydk"
-                    title="Download Deck"
-                >
-                    Download
-                </button>
-            </div>
-            <!-- app-forms-share -->
-            <div class="form-group">
-                <label>Share:</label>
-                <input
-                    :value="shareLink"
-                    class="form-control"
-                    title="Shareable Link"
-                    type="url"
-                />
-                <button
-                    :disabled="isDeckEmpty"
-                    @click="copyShareLink"
-                    class="btn btn-primary btn-tiny form-control"
-                    title="Copy Sharelink to Clipboard"
-                >
-                    <span class="fas fa-share-square"><!-- icon--></span>
-                </button>
-                <button
-                    :disabled="isDeckEmpty"
-                    @click="copyShareText"
-                    class="btn btn-primary form-control"
-                    title="Copy Decklist to Clipboard"
-                >
-                    Copy Decklist to Clipboard
-                </button>
-            </div>
-            <!-- app-forms-price -->
-            <div class="form-group">
-                <label>Price:</label>
-                <AdvancedSelect
-                    :initial-options="currencies"
-                    :label="(currency) => currency.name"
-                    :track-by="(currency) => currency.name"
-                    class="form-control form-deck-currency"
-                    v-model="activeCurrency"
-                ></AdvancedSelect>
-                <a
-                    :class="{ disabled: isDeckEmpty }"
-                    :disabled="isDeckEmpty"
-                    :href="buyLink"
-                    class="btn btn-primary btn-tiny form-control"
-                    target="_blank"
-                    title="Open Buy Page"
-                >
-                    <span class="fas fa-shopping-cart"><!-- icon--></span>
-                </a>
-            </div>
-            <AdvancedSelect
-                :initial-options="formats"
-                class="form-control form-deck-currency"
-                v-model="activeFormat"
-            ></AdvancedSelect>
-            <div class="app-builder-intro">
-                <ygo-sorter />
-                <ygo-draw-sim />
-                <ygo-randomizer />
-            </div>
-        </div>
+        <!--        <div class="app-section app-forms">-->
+        <!--            &lt;!&ndash; app-forms-upload &ndash;&gt;-->
+        <!--            <div class="form-group">-->
+        <!--                <label>Deck:</label>-->
+        <!--                <input-->
+        <!--                    @change="fileOnUpload"-->
+        <!--                    accept=".ydk"-->
+        <!--                    class="form-control"-->
+        <!--                    title="Upload Deck"-->
+        <!--                    type="file"-->
+        <!--                />-->
+        <!--                <input-->
+        <!--                    class="form-control form-deck-name"-->
+        <!--                    placeholder="Deck Title"-->
+        <!--                    title="Deck Title"-->
+        <!--                    type="text"-->
+        <!--                    v-model="deckName"-->
+        <!--                />-->
+        <!--                <button-->
+        <!--                    @click="deckToFile"-->
+        <!--                    class="btn btn-primary form-control"-->
+        <!--                    download="Unnamed.ydk"-->
+        <!--                    title="Download Deck"-->
+        <!--                >-->
+        <!--                    Download-->
+        <!--                </button>-->
+        <!--            </div>-->
+        <!--            &lt;!&ndash; app-forms-share &ndash;&gt;-->
+        <!--            <div class="form-group">-->
+        <!--                <label>Share:</label>-->
+        <!--                <input-->
+        <!--                    :value="shareLink"-->
+        <!--                    class="form-control"-->
+        <!--                    title="Shareable Link"-->
+        <!--                    type="url"-->
+        <!--                />-->
+        <!--                <button-->
+        <!--                    :disabled="isDeckEmpty"-->
+        <!--                    @click="copyShareLink"-->
+        <!--                    class="btn btn-primary btn-tiny form-control"-->
+        <!--                    title="Copy Sharelink to Clipboard"-->
+        <!--                >-->
+        <!--                    <span class="fas fa-share-square">&lt;!&ndash; icon&ndash;&gt;</span>-->
+        <!--                </button>-->
+        <!--                <button-->
+        <!--                    :disabled="isDeckEmpty"-->
+        <!--                    @click="copyShareText"-->
+        <!--                    class="btn btn-primary form-control"-->
+        <!--                    title="Copy Decklist to Clipboard"-->
+        <!--                >-->
+        <!--                    Copy Decklist to Clipboard-->
+        <!--                </button>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
+        <AppHeader />
+        <hr />
         <AppMain v-if="!ajax.currentlyLoading" />
         <div v-else class="text-center">
             <span>Loading Card Database...</span>
@@ -106,22 +77,17 @@ import {
     DeckService,
     DeckUriEncodingService,
     DEFAULT_CURRENCY_ARR,
+    Format,
     getLogger,
     UrlService,
-    Format,
 } from "yugioh-deck-tool-core/src/main";
 import { copyText, readFile, saveFile } from "yugioh-deck-tool-ui/src/main";
-import YgoDeck from "./components/deck/YgoDeck.vue";
 import { applicationContainer } from "@/inversify.config";
 import { APPLICATION_TYPES } from "@/types";
 import Component from "vue-class-component";
-import YgoSorter from "@/components/YgoSorter.vue";
-import YgoDrawSim from "@/components/YgoDrawSim.vue";
-import YgoBuilder from "@/components/builder/YgoBuilder.vue";
-import YgoRandomizer from "@/components/YgoRandomizer.vue";
-import AdvancedSelect from "@/components/AdvancedSelect.vue";
+import AppHeader from "@/components/AppHeader.vue";
 import { CURRENCY_UPDATE } from "@/store/modules/currency";
-import { DECK_REPLACE, DECK_NAME_UPDATE } from "@/store/modules/deck";
+import { DECK_REPLACE } from "@/store/modules/deck";
 import { FORMAT_UPDATE } from "@/store/modules/format";
 import AppMain from "@/components/AppMain.vue";
 
@@ -130,10 +96,7 @@ const logger = getLogger("app");
 @Component({
     components: {
         AppMain,
-        YgoSorter,
-        YgoDrawSim,
-        YgoRandomizer,
-        AdvancedSelect,
+        AppHeader,
     },
     name: "Index",
 })
@@ -178,14 +141,6 @@ export default class App extends Vue {
 
     set deck(newDeck: Deck) {
         this.$store.commit(DECK_REPLACE, { deck: newDeck });
-    }
-
-    get deckName(): string {
-        return this.$store.state.deck.active.name;
-    }
-
-    set deckName(newName: string) {
-        this.$store.commit(DECK_NAME_UPDATE, { name: newName });
     }
 
     get shareLink() {

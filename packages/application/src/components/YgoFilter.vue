@@ -1,6 +1,6 @@
 <template>
     <form>
-        <div class="form-group">
+        <div class="form-group" v-if="isFieldVisible('search')">
             <input
                 @input="filterChanged"
                 class="form-control"
@@ -11,10 +11,13 @@
             />
         </div>
 
-        <div class="form-group" v-if="hasBanStates">
+        <div
+            class="form-group"
+            v-if="isFieldVisible('banState') && hasBanStates"
+        >
             <VSelect
-                :getOptionKey="(banState) => banState.name"
-                :getOptionLabel="(banState) => banState.name"
+                :get-option-key="(banState) => banState.name"
+                :get-option-label="(banState) => banState.name"
                 :options="banStates"
                 title="Limit"
                 placeholder="Limit"
@@ -23,10 +26,10 @@
             />
         </div>
 
-        <div class="form-group">
+        <div class="form-group" v-if="isFieldVisible('sets')">
             <VSelect
-                :getOptionKey="(set) => set.name"
-                :getOptionLabel="(set) => set.name"
+                :get-option-key="(set) => set.name"
+                :get-option-label="(set) => set.name"
                 :multiple="true"
                 :options="sets"
                 title="Set"
@@ -36,85 +39,89 @@
             />
         </div>
 
-        <template v-if="showAdvanced">
-            <div class="form-group">
+        <div class="form-group" v-if="isFieldVisible('archetype')">
+            <VSelect
+                title="Archetype"
+                placeholder="Archetype"
+                :options="archetypes"
+                @input="filterChanged"
+                v-model="reactiveFilter.archetype"
+            />
+        </div>
+
+        <div
+            class="form-group row"
+            v-if="isFieldVisible('typeGroup') || isFieldVisible('type')"
+        >
+            <div class="col-sm-5" v-if="isFieldVisible('typeGroup')">
                 <VSelect
-                    title="Archetype"
-                    placeholder="Archetype"
-                    :options="archetypes"
+                    title="Type Group"
+                    placeholder="Type Group"
+                    :options="typeGroups"
                     @input="filterChanged"
-                    v-model="reactiveFilter.archetype"
+                    v-model="reactiveFilter.typeGroup"
+                />
+            </div>
+            <div class="col-sm-7" v-if="isFieldVisible('type')">
+                <VSelect
+                    title="Type"
+                    placeholder="Type"
+                    :disabled="!isMonster"
+                    :get-option-key="(type) => type.name"
+                    :get-option-label="
+                        (type) => type.name.replace(' Monster', '')
+                    "
+                    :options="types"
+                    @input="filterChanged"
+                    v-model="reactiveFilter.type"
+                />
+            </div>
+        </div>
+
+        <div
+            class="form-group"
+            v-if="isFieldVisible('subType') && reactiveFilter.typeGroup != null"
+        >
+            <VSelect
+                :title="`${reactiveFilter.typeGroup} Type`"
+                :placeholder="`${reactiveFilter.typeGroup} Type`"
+                :options="subTypes"
+                @input="filterChanged"
+                v-model="reactiveFilter.subType"
+            />
+        </div>
+
+        <template v-if="isMonster">
+            <div class="form-group" v-if="isFieldVisible('attribute')">
+                <VSelect
+                    title="Attribute"
+                    placeholder="Attribute"
+                    :options="attributes"
+                    @input="filterChanged"
+                    v-model="reactiveFilter.attribute"
                 />
             </div>
 
-            <div class="form-group row">
-                <div class="col-sm-5">
-                    <VSelect
-                        title="Type Group"
-                        placeholder="Type Group"
-                        :options="typeGroups"
-                        @input="filterChanged"
-                        v-model="reactiveFilter.typeGroup"
-                    />
-                </div>
-                <div class="col-sm-7">
-                    <VSelect
-                        title="Type"
-                        placeholder="Type"
-                        :disabled="!isMonster"
-                        :getOptionKey="(type) => type.name"
-                        :getOptionLabel="
-                            (type) => type.name.replace(' Monster', '')
-                        "
-                        :options="types"
-                        @input="filterChanged"
-                        v-model="reactiveFilter.type"
-                    />
-                </div>
-            </div>
-
-            <div class="form-group" v-if="reactiveFilter.typeGroup != null">
+            <div class="form-group" v-if="isFieldVisible('level')">
                 <VSelect
-                    :title="`${reactiveFilter.typeGroup} Type`"
-                    :placeholder="`${reactiveFilter.typeGroup} Type`"
-                    :options="subTypes"
+                    title="Level/Rank"
+                    placeholder="Level/Rank"
+                    :options="levels"
                     @input="filterChanged"
-                    v-model="reactiveFilter.subType"
+                    v-model="reactiveFilter.level"
                 />
             </div>
 
-            <template v-if="isMonster">
-                <div class="form-group">
-                    <VSelect
-                        title="Attribute"
-                        placeholder="Attribute"
-                        :options="attributes"
-                        @input="filterChanged"
-                        v-model="reactiveFilter.attribute"
-                    />
-                </div>
-
-                <div class="form-group">
-                    <VSelect
-                        title="Level/Rank"
-                        placeholder="Level/Rank"
-                        :options="levels"
-                        @input="filterChanged"
-                        v-model="reactiveFilter.level"
-                    />
-                </div>
-
-                <div class="form-group">
-                    <VSelect
-                        title="Link Markers"
-                        placeholder="Link Markers"
-                        :multiple="true"
-                        :options="linkMarkers"
-                        @input="filterChanged"
-                        v-model="reactiveFilter.linkMarker"
-                    />
-                </div>
-            </template>
+            <div class="form-group" v-if="isFieldVisible('linkMarker')">
+                <VSelect
+                    title="Link Markers"
+                    placeholder="Link Markers"
+                    :multiple="true"
+                    :options="linkMarkers"
+                    @input="filterChanged"
+                    v-model="reactiveFilter.linkMarker"
+                />
+            </div>
         </template>
     </form>
 </template>
@@ -138,7 +145,7 @@ import {
     watch,
 } from "@vue/composition-api";
 
-import vSelect from "vue-select";
+import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
 
@@ -155,23 +162,25 @@ export default defineComponent({
             required: true,
             type: Object as PropType<CardFilter>,
         },
-        showAdvanced: {
-            required: true,
-            type: Boolean,
+        showOnly: {
+            required: false,
+            type: Array as PropType<string[] | null>,
+            default: null,
         },
     },
     components: {
-        VSelect: vSelect,
+        VSelect,
     },
     model: {
         prop: "filter",
         event: "change",
     },
     setup(props, context) {
-        const reactiveFilter = reactive<CardFilter>(cloneDeep(props.filter));
-
         const banStates = DEFAULT_BAN_STATE_ARR;
         const typeGroups = Object.values(CardTypeGroup);
+
+        const reactiveFilter = reactive<CardFilter>(cloneDeep(props.filter));
+
         const sets = computed<CardSet[]>(() => cardDatabase.getSets());
         const archetypes = computed<string[]>(() =>
             cardDatabase.getArchetypes()
@@ -189,7 +198,6 @@ export default defineComponent({
         const linkMarkers = computed<string[]>(() =>
             cardDatabase.getLinkMarkers()
         );
-
         const hasBanStates = computed<boolean>(() =>
             banlistService.hasFormatBanlist(
                 context.root.$store.state.format.active
@@ -198,6 +206,9 @@ export default defineComponent({
         const isMonster = computed<boolean>(
             () => reactiveFilter.typeGroup === CardTypeGroup.MONSTER
         );
+
+        const isFieldVisible = (fieldName: string) =>
+            props.showOnly == null || props.showOnly.includes(fieldName);
 
         const filterChanged = () => context.emit("change", reactiveFilter);
 
@@ -232,6 +243,7 @@ export default defineComponent({
             isMonster,
             reactiveFilter,
             filterChanged,
+            isFieldVisible,
         };
     },
 });

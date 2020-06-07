@@ -43,7 +43,7 @@ import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
-import { DECK_CARDS_REPLACE } from "@/store/modules/deck";
+import { DECK_CARDS_REPLACE } from "../../store/modules/deck";
 
 const filterService = applicationContainer.get<FilterService>(
     APPLICATION_TYPES.FilterService

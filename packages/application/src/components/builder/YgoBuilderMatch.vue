@@ -51,8 +51,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/variables";
-@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/mixin/screen";
+@import "~yugioh-deck-tool-ui/src/styles/variables";
+@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
 .deck-tool,
 .deck-tool__modal {

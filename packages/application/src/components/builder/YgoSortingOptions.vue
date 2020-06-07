@@ -7,7 +7,6 @@
             <div class="col-lg-6">
                 <VSelect
                     title="Sorting Strategy"
-                    placeholder="Sorting Strategy"
                     :clearable="false"
                     :options="sortingStrategies"
                     @input="optionsChanged"
@@ -17,7 +16,6 @@
             <div class="col-lg-4">
                 <VSelect
                     title="Sorting Order"
-                    placeholder="Sorting Order"
                     :clearable="false"
                     :options="sortingOrders"
                     @input="optionsChanged"

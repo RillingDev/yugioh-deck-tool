@@ -1,6 +1,6 @@
 <template>
     <div class="builder">
-        <YgoFilter :show-advanced="true" v-model="reactiveFilter" />
+        <YgoFilter v-model="reactiveFilter" />
         <hr />
         <small class="builder__count">
             Showing {{ filteredCards.length }} of {{ formatCards.length }} Cards
@@ -144,8 +144,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/variables";
-@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/mixin/screen";
+@import "~yugioh-deck-tool-ui/src/styles/variables";
+@import "~yugioh-deck-tool-ui/src/styles/mixin/screen";
 
 .deck-tool,
 .deck-tool__modal {
