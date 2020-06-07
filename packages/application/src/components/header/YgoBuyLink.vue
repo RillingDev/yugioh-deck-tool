@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import { DeckExportService, DeckService } from "yugioh-deck-tool-core/src/main";
+import { DeckExportService, DeckService } from "yugioh-deck-tool-core";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 

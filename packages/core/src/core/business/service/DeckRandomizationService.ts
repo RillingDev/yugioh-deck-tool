@@ -4,10 +4,7 @@ import { Deck } from "../../model/ygo/Deck";
 import { CardDatabase } from "../CardDatabase";
 import { DeckService } from "./DeckService";
 import { TYPES } from "../../../types";
-import {
-    DeckPartConfig,
-    DefaultDeckPartConfig,
-} from "../../model/ygo/DeckPartConfig";
+import { DefaultDeckPartConfig } from "../../model/ygo/DeckPartConfig";
 import { SortingService } from "./SortingService";
 import { CardService } from "./CardService";
 import { flatten, random, sampleSize, shuffle, uniq, words } from "lodash";

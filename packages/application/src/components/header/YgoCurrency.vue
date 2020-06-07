@@ -13,7 +13,7 @@
 import { computed, defineComponent } from "@vue/composition-api";
 
 import VSelect from "vue-select";
-import { Currency, DEFAULT_CURRENCY_ARR } from "yugioh-deck-tool-core/src/main";
+import { Currency, DEFAULT_CURRENCY_ARR } from "yugioh-deck-tool-core";
 import { CURRENCY_UPDATE } from "../../store/modules/currency";
 
 export default defineComponent({

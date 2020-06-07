@@ -48,4 +48,5 @@ interface CardDatabase {
 
     getLinkMarkers(): string[];
 }
+
 export { FindCardBy, CardDatabase };

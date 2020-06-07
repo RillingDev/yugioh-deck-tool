@@ -5,7 +5,7 @@ import {
     CardDataLoaderService,
     FindCardBy,
     getLogger,
-} from "yugioh-deck-tool-core/src/main";
+} from "yugioh-deck-tool-core";
 import { TOOLTIP_TYPES } from "../types";
 import {
     createCardTooltip,

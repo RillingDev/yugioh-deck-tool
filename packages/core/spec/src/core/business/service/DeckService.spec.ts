@@ -1,13 +1,15 @@
 import "reflect-metadata";
-import { container } from "../../../../../src/inversify.config";
-import { TYPES } from "../../../../../src/types";
-import { DeckService } from "../../../../../src/core/business/service/DeckService";
+import {
+    CardTypeGroup,
+    container,
+    Deck,
+    DeckPart,
+    DeckService,
+    DefaultBanState,
+    Format,
+    TYPES,
+} from "yugioh-deck-tool-core";
 import { createCard, createCardType } from "../../../helper/dataFactories";
-import { Format } from "../../../../../src/core/model/ygo/Format";
-import { DefaultBanState } from "../../../../../src/core/model/ygo/BanState";
-import { CardTypeGroup } from "../../../../../src/core/model/ygo/CardTypeGroup";
-import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
-import { Deck } from "src/core/model/ygo/Deck";
 
 describe("DeckService", () => {
     let deckService: DeckService;

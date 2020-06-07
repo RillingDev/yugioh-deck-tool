@@ -1,7 +1,7 @@
 import * as logger from "loglevel";
+import { Logger } from "loglevel";
 import { DEVELOPMENT_MODE } from "./mode";
 import { name as getName } from "lightdash";
-import { Logger } from "loglevel";
 
 logger.setLevel(DEVELOPMENT_MODE ? logger.levels.DEBUG : logger.levels.WARN);
 

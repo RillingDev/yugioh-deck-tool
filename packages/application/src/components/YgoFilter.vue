@@ -136,7 +136,7 @@ import {
     CardType,
     CardTypeGroup,
     DEFAULT_BAN_STATE_ARR,
-} from "yugioh-deck-tool-core/src/main";
+} from "yugioh-deck-tool-core";
 import { cloneDeep } from "lodash";
 import {
     computed,

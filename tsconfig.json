@@ -1,13 +1,26 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
+        "target": "ES2019",
+        "module": "ESNext",
         "moduleResolution": "node",
         "newLine": "LF",
         "strict": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
-    },
-    "include": [],
-    "exclude": []
+        "emitDecoratorMetadata": true,
+        "baseUrl": "./packages/",
+        "paths": {
+            "yugioh-deck-tool-core": [
+                "./core/src/main.ts"
+            ],
+            "yugioh-deck-tool-ui": [
+                "./ui/src/main.ts"
+            ],
+            "yugioh-deck-tool-application": [
+                "./application/src/main.ts"
+            ],
+            "yugioh-deck-tool-tooltip": [
+                "./tooltip/src/main.ts"
+            ]
+        }
+    }
 }

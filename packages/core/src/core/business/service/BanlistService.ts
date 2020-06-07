@@ -30,6 +30,7 @@ class BanlistService {
         }
         return BanlistService.BANLIST_FORMATS.has(format);
     }
+
     /**
      * Gets the {@link BanState} of a card by format.
      *

@@ -1,15 +1,12 @@
 import "reflect-metadata";
-import { DeckExportService } from "../../../../../src/core/business/service/DeckExportService";
-import { TYPES } from "../../../../../src/types";
-import { createCard, createCardType } from "../../../helper/dataFactories";
 import {
-    DeckPartConfig,
-    DefaultDeckPartConfig,
-} from "../../../../../src/core/model/ygo/DeckPartConfig";
-import { Card } from "../../../../../src/core/model/ygo/Card";
-import { container } from "../../../../../src/inversify.config";
-import { CardTypeGroup } from "../../../../../src/core/model/ygo/CardTypeGroup";
-import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
+    CardTypeGroup,
+    container,
+    DeckExportService,
+    DeckPart,
+    TYPES,
+} from "yugioh-deck-tool-core";
+import { createCard, createCardType } from "../../../helper/dataFactories";
 
 describe("DeckExportService", () => {
     let deckExportService: DeckExportService;

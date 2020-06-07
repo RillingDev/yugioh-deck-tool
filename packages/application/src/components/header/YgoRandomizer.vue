@@ -41,7 +41,7 @@ import {
     CardFilter,
     DeckRandomizationService,
     RandomizationStrategy,
-} from "yugioh-deck-tool-core/src/main";
+} from "yugioh-deck-tool-core";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { BModal } from "bootstrap-vue";

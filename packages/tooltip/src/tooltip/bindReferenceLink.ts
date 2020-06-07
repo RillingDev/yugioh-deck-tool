@@ -1,6 +1,6 @@
 import { tooltipContainer } from "../inversify.config";
 import { TOOLTIP_TYPES } from "../types";
-import { Card, CardService } from "yugioh-deck-tool-core/src/main";
+import { Card, CardService } from "yugioh-deck-tool-core";
 
 const cardService = tooltipContainer.get<CardService>(
     TOOLTIP_TYPES.CardService

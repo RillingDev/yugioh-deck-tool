@@ -33,7 +33,7 @@ import {
     PriceLookupResult,
     PriceService,
     Vendor,
-} from "yugioh-deck-tool-core/src/main";
+} from "yugioh-deck-tool-core";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
 
@@ -83,7 +83,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "~yugioh-deck-tool-ui/src/styles/component/price";
+@import "../../../ui/src/styles/component/price";
 
 .deck-tool,
 .deck-tool__modal {

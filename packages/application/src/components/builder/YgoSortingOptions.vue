@@ -32,7 +32,7 @@ import {
     SortingOptions,
     SortingOrder,
     SortingStrategy,
-} from "yugioh-deck-tool-core/src/main";
+} from "yugioh-deck-tool-core";
 import { cloneDeep } from "lodash";
 import { defineComponent, reactive } from "@vue/composition-api";
 import VSelect from "vue-select";

@@ -5,7 +5,7 @@ import { Deck } from "../../model/ygo/Deck";
 import { TYPES } from "../../../types";
 import { CardService } from "./CardService";
 import { Format } from "../../model/ygo/Format";
-import { insert, pullFirst } from "lightdash";
+import { insertAt, pullFirst } from "lightdash";
 import { pullAt, sampleSize, shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "./SortingService";
 import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
@@ -121,7 +121,7 @@ class DeckService {
     ): void {
         const current = deck.parts[deckPart];
         if (newIndex != null) {
-            insert(current, newIndex, card);
+            insertAt(current, newIndex, card);
         } else {
             current.push(card);
         }
@@ -170,7 +170,7 @@ class DeckService {
         const cards = deck.parts[deckPart];
         if (cards[oldIndex] === card) {
             pullAt(cards, oldIndex);
-            insert(cards, newIndex, card);
+            insertAt(cards, newIndex, card);
         }
     }
 

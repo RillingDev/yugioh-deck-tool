@@ -1,5 +1,4 @@
 import { Module } from "vuex";
-import { Format } from "yugioh-deck-tool-core/src/core/model/ygo/Format";
 
 export const DATA_LOADED = "DATA_LOADED";
 

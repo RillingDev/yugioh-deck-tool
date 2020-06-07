@@ -69,7 +69,7 @@ import {
     DeckUriEncodingService,
     getLogger,
     UrlService,
-} from "yugioh-deck-tool-core/src/main";
+} from "yugioh-deck-tool-core";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import AppHeader from "./components/AppHeader.vue";
@@ -305,5 +305,3 @@ export default defineComponent({
 //     }
 // }
 </script>
-
-<style lang="scss"></style>

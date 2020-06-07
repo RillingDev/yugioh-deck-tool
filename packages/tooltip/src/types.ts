@@ -1,4 +1,4 @@
-import { TYPES } from "yugioh-deck-tool-core/src/main";
+import { TYPES } from "yugioh-deck-tool-core";
 
 const TOOLTIP_TYPES = Object.assign({}, TYPES);
 

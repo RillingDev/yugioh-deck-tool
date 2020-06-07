@@ -1,4 +1,4 @@
-import { container } from "yugioh-deck-tool-core/src/main";
+import { container } from "yugioh-deck-tool-core";
 
 const tooltipContainer = container.createChild();
 

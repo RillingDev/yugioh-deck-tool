@@ -1,9 +1,5 @@
 import { CardValues } from "../../../core/model/ygo/CardValues";
 import { CardTypeGroup } from "../../../core/model/ygo/CardTypeGroup";
-import {
-    DeckPartConfig,
-    DefaultDeckPartConfig,
-} from "../../../core/model/ygo/DeckPartConfig";
 import { CardType } from "../../../core/model/ygo/CardType";
 import { DeckPart } from "../../../core/model/ygo/DeckPart";
 

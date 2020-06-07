@@ -1,4 +1,3 @@
-import { DeckPartConfig } from "./DeckPartConfig";
 import { Card } from "./Card";
 import { DeckPart } from "./DeckPart";
 

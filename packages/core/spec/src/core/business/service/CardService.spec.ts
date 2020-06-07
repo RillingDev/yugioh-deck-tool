@@ -1,8 +1,6 @@
 import "reflect-metadata";
-import { TYPES } from "../../../../../src/types";
+import { CardService, container, TYPES } from "yugioh-deck-tool-core";
 import { createCard } from "../../../helper/dataFactories";
-import { container } from "../../../../../src/inversify.config";
-import { CardService } from "../../../../../src/core/business/service/CardService";
 
 describe("CardService", () => {
     let cardService: CardService;

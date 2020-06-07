@@ -35,7 +35,7 @@ import {
     DeckPartConfig,
     DefaultDeckPartConfig,
     FilterService,
-} from "yugioh-deck-tool-core/src/main";
+} from "yugioh-deck-tool-core";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
@@ -135,8 +135,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/variables";
-@import "../../../../../node_modules/yugioh-deck-tool-ui/src/styles/mixin/screen";
+@import "../../../../ui/src/styles/variables";
+@import "../../../../ui/src/styles/mixin/screen";
 
 .deck-tool,
 .deck-tool__modal {

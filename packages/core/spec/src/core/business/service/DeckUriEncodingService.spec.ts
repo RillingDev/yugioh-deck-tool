@@ -1,22 +1,17 @@
 import "reflect-metadata";
-import { TYPES } from "../../../../../src/types";
 import {
     CardDatabase,
+    container,
+    DeckPart,
+    DeckUriEncodingService,
     FindCardBy,
-} from "../../../../../src/core/business/CardDatabase";
-import { createCard } from "../../../helper/dataFactories";
-import {
-    DeckPartConfig,
-    DefaultDeckPartConfig,
-} from "../../../../../src/core/model/ygo/DeckPartConfig";
-import { Card } from "../../../../../src/core/model/ygo/Card";
-import { deflate } from "pako";
-import { when } from "ts-mockito";
+    TYPES,
+} from "yugioh-deck-tool-core";
 import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardDatabase";
-import { container } from "../../../../../src/inversify.config";
+import { deflate } from "pako";
+import { createCard } from "../../../helper/dataFactories";
 import { bindMock } from "../../../helper/bindMock";
-import { DeckUriEncodingService } from "../../../../../src/core/business/service/DeckUriEncodingService";
-import { DeckPart } from "../../../../../src/core/model/ygo/DeckPart";
+import { when } from "ts-mockito";
 
 describe("DeckUriEncodingService", () => {
     let deckUriEncodingService: DeckUriEncodingService;

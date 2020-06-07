@@ -2,20 +2,20 @@ import {
     Card,
     CardTypeGroup,
     DEFAULT_VENDOR_ARR,
-    PriceService,
     Format,
-} from "yugioh-deck-tool-core/src/main";
+    PriceService,
+} from "yugioh-deck-tool-core";
 import { tooltipContainer } from "../inversify.config";
 import { TOOLTIP_TYPES } from "../types";
 import {
     imageUrlAtk,
-    imageUrlType,
-    imageUrlSubType,
-    imageUrlLinkMarker,
-    imageUrlLevel,
-    imageUrlBanState,
     imageUrlAttribute,
-} from "yugioh-deck-tool-ui/src/main";
+    imageUrlBanState,
+    imageUrlLevel,
+    imageUrlLinkMarker,
+    imageUrlSubType,
+    imageUrlType,
+} from "yugioh-deck-tool-ui";
 
 const priceService = tooltipContainer.get<PriceService>(
     TOOLTIP_TYPES.PriceService

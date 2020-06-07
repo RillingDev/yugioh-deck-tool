@@ -29,6 +29,7 @@ class UrlService {
         }
         return pathname.substr(pathname.lastIndexOf("/") + 1);
     }
+
     /**
      * Returns the value of the single query parameter value of an URL.
      * DOES NOT WORK WITH MORE THAN ONE PARAMETER.

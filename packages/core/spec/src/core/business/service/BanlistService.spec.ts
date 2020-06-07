@@ -1,10 +1,12 @@
 import "reflect-metadata";
-import { TYPES } from "../../../../../src/types";
+import {
+    BanlistService,
+    container,
+    DefaultBanState,
+    Format,
+    TYPES,
+} from "yugioh-deck-tool-core";
 import { createCard } from "../../../helper/dataFactories";
-import { container } from "../../../../../src/inversify.config";
-import { DefaultBanState } from "../../../../../src/core/model/ygo/BanState";
-import { Format } from "../../../../../src/core/model/ygo/Format";
-import { BanlistService } from "../../../../../src/core/business/service/BanlistService";
 
 describe("BanlistService", () => {
     let banlistService: BanlistService;
