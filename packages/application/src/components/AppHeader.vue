@@ -9,8 +9,8 @@
             </div>
             <hr />
             <BDropdown text="Import Deck" id="deckImport">
-                <BDropdownItem>From .ydk Deck File</BDropdownItem>
-                <BDropdownItem>From YDKe URL in Clipboard</BDropdownItem>
+                <YgoImportFile />
+                <BDropdownItem>From YDKe URL</BDropdownItem>
             </BDropdown>
 
             <BDropdown text="Export Deck" id="deckExport">
@@ -58,9 +58,11 @@ import YgoFormat from "./header/YgoFormat.vue";
 import YgoDeckName from "./header/YgoDeckName.vue";
 import YgoCurrency from "./header/YgoCurrency.vue";
 import YgoBuyLink from "./header/YgoBuyLink.vue";
+import YgoImportFile from "./header/import/YgoImportDeckFile.vue";
 
 export default defineComponent({
     components: {
+        YgoImportFile,
         YgoFormat,
         YgoDeckName,
         YgoCurrency,
