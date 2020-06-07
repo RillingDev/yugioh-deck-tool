@@ -3,10 +3,11 @@ module.exports = {
     parserOptions: {
         tsconfigRootDir: __dirname,
         project: ["./tsconfig.json"],
+        ecmaVersion: 2020,
+        sourceType: "module",
     },
     plugins: ["import", "@typescript-eslint", "prettier", "vue"],
     extends: [
-        "eslint:recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript",
@@ -26,5 +27,13 @@ module.exports = {
     },
     rules: {
         "import/no-default-export": "off", // Causes Issues with Vue
+        "@typescript-eslint/naming-convention": [
+            "warn",
+
+            {
+                selector: "variable",
+                format: ["strictCamelCase", "PascalCase", "UPPER_CASE"], // Many 3rd party components have a non-strict pascal case name
+            },
+        ],
     },
 };

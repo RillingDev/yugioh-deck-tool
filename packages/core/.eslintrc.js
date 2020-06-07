@@ -3,11 +3,10 @@ module.exports = {
     parserOptions: {
         tsconfigRootDir: __dirname,
         project: ["./src/tsconfig.json", "./spec/src/tsconfig.json"],
-        ecmaVersion: 2020
+        ecmaVersion: 2020,
     },
     plugins: ["import", "@typescript-eslint", "prettier"],
     extends: [
-        "eslint:recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript",
@@ -19,6 +18,6 @@ module.exports = {
         "../../.eslintrc.js",
     ],
     env: {
-        "jasmine": true,
-    }
+        jasmine: true,
+    },
 };
