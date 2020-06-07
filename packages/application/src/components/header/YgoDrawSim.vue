@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import YgoCard from "../YgoCard.vue";
-import { Card, Deck, DeckPart, DeckService } from "yugioh-deck-tool-core";
+import { Card, Deck, DeckPart, DeckService } from "../../../../core/src/main";
 import { BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";

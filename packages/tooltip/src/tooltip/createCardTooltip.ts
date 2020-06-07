@@ -4,7 +4,7 @@ import {
     DEFAULT_VENDOR_ARR,
     Format,
     PriceService,
-} from "yugioh-deck-tool-core";
+} from "../../../core/src/main";
 import { tooltipContainer } from "../inversify.config";
 import { TOOLTIP_TYPES } from "../types";
 import {
@@ -15,7 +15,7 @@ import {
     imageUrlLinkMarker,
     imageUrlSubType,
     imageUrlType,
-} from "yugioh-deck-tool-ui";
+} from "../../../ui/src/main";
 
 const priceService = tooltipContainer.get<PriceService>(
     TOOLTIP_TYPES.PriceService

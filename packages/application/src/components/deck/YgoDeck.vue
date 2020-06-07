@@ -19,7 +19,7 @@ import {
     DECK_PART_ARR,
     DeckPart,
     DeckService,
-} from "yugioh-deck-tool-core";
+} from "../../../../core/src/main";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";

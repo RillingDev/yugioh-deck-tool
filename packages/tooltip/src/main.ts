@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import "./styles/tooltip.scss";
-import { getLogger } from "yugioh-deck-tool-core";
+import { getLogger } from "../../core/src/main";
 
 const TOOLTIP_CONTAINER_ID = "cardTooltipContainer";
 

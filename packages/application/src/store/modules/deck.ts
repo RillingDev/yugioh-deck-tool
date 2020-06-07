@@ -1,5 +1,5 @@
 import { Module } from "vuex";
-import { Card, Deck, DeckPart, DeckService } from "yugioh-deck-tool-core";
+import { Card, Deck, DeckPart, DeckService } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 

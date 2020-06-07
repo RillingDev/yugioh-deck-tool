@@ -49,7 +49,7 @@ import {
     SortingOrder,
     SortingService,
     SortingStrategy,
-} from "yugioh-deck-tool-core";
+} from "../../../../core/src/main";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatch from "./YgoBuilderMatch.vue";

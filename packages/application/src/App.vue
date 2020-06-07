@@ -71,7 +71,7 @@ import {
     DeckUriEncodingService,
     getLogger,
     UrlService,
-} from "yugioh-deck-tool-core";
+} from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import AppHeader from "./components/AppHeader.vue";

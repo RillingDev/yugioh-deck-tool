@@ -33,7 +33,7 @@ import {
     PriceLookupResult,
     PriceService,
     Vendor,
-} from "yugioh-deck-tool-core";
+} from "../../../core/src/main";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
 

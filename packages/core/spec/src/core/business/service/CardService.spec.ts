@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import { CardService, container, TYPES } from "yugioh-deck-tool-core";
 import { createCard } from "../../../helper/dataFactories";
+import { CardService, container, TYPES } from "../../../../../src/main";
 
 describe("CardService", () => {
     let cardService: CardService;

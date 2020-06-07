@@ -12,7 +12,7 @@ import { computed, defineComponent } from "@vue/composition-api";
 
 import VSelect from "vue-select";
 import { FORMAT_UPDATE } from "../../store/modules/format";
-import { Format } from "yugioh-deck-tool-core";
+import { Format } from "../../../../core/src/main";
 
 export default defineComponent({
     components: { VSelect },

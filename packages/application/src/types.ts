@@ -1,4 +1,4 @@
-import { TYPES } from "yugioh-deck-tool-core";
+import { TYPES } from "../../core/src/main";
 
 const APPLICATION_TYPES = Object.assign({}, TYPES);
 

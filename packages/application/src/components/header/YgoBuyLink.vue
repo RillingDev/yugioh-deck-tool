@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import { DeckExportService, DeckService } from "yugioh-deck-tool-core";
+import { DeckExportService, DeckService } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 
@@ -32,7 +32,9 @@ export default defineComponent({
         );
 
         const buyLink = computed<string>(() =>
-            deckExportService.toBuyLink(context.root.$store.state.deck.active)
+            deckExportService
+                .toBuyLink(context.root.$store.state.deck.active)
+                .toString()
         );
 
         return { isDeckEmpty, buyLink };

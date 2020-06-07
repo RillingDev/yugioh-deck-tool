@@ -6,7 +6,7 @@ import {
     DeckUriEncodingService,
     FindCardBy,
     TYPES,
-} from "yugioh-deck-tool-core";
+} from "../../../../../src/main";
 import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardDatabase";
 import { deflate } from "pako";
 import { createCard } from "../../../helper/dataFactories";

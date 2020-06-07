@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import { Card } from "yugioh-deck-tool-core";
 import { PropType } from "vue";
 import { computed, defineComponent } from "@vue/composition-api";
+import { Card } from "../../../core/src/main";
 
 export default defineComponent({
     props: {

@@ -6,7 +6,7 @@ import {
     DeckPart,
     FindCardBy,
     TYPES,
-} from "yugioh-deck-tool-core";
+} from "../../../../../src/main";
 import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardDatabase";
 import { AxiosHttpService } from "../../../../../src/core/business/service/AxiosHttpService";
 import { anyString, anything, verify, when } from "ts-mockito";

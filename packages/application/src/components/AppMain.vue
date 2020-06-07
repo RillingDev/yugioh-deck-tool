@@ -15,7 +15,7 @@ import YgoBuilder from "./builder/YgoBuilder.vue";
 import YgoDeck from "./deck/YgoDeck.vue";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
-import { DeckPart, DeckService } from "yugioh-deck-tool-core";
+import { DeckPart, DeckService } from "../../../core/src/main";
 import { Vue } from "vue/types/vue";
 
 const deckService = applicationContainer.get<DeckService>(

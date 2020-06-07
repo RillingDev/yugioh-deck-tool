@@ -44,7 +44,6 @@
         "node-sass": "^4.14.1",
         "prettier": "^2.0.5",
         "sass-loader": "^8.0.2",
-        "tsconfig-paths-webpack-plugin": "^3.2.0",
         "typescript": "^3.9.5",
         "vue-cli-plugin-bootstrap-vue": "~0.6.0",
         "vue-template-compiler": "^2.6.11"

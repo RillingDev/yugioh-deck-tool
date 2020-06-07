@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Card, CardTypeGroup } from "yugioh-deck-tool-core";
+import { Card, CardTypeGroup } from "../../../../core/src/main";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import { PropType } from "vue";

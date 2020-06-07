@@ -1,4 +1,4 @@
-import { BanlistInfo, Card, CardTypeGroup } from "yugioh-deck-tool-core";
+import { BanlistInfo, Card, CardTypeGroup } from "../../core/src/main";
 
 export const imageUrlType = (card: Card): string =>
     `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
