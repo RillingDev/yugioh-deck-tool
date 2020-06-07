@@ -56,9 +56,11 @@
         <!--            </div>-->
         <!--        </div>-->
 
-        <AppHeader />
-        <hr />
-        <AppMain />
+        <BOverlay :show="!loaded">
+            <AppHeader />
+            <hr />
+            <AppMain />
+        </BOverlay>
     </div>
 </template>
 
@@ -75,8 +77,9 @@ import { APPLICATION_TYPES } from "./types";
 import AppHeader from "./components/AppHeader.vue";
 import { DECK_REPLACE } from "./store/modules/deck";
 import AppMain from "./components/AppMain.vue";
-import { defineComponent, onMounted } from "@vue/composition-api";
+import { computed, defineComponent, onMounted } from "@vue/composition-api";
 import { DATA_LOADED } from "./store/modules/data";
+import { BOverlay } from "bootstrap-vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -94,6 +97,7 @@ export default defineComponent({
     components: {
         AppMain,
         AppHeader,
+        BOverlay,
     },
     props: {},
     setup: function (props, context) {
@@ -150,7 +154,11 @@ export default defineComponent({
                 );
         });
 
-        return {};
+        const loaded = computed<boolean>(
+            () => context.root.$store.state.data.loaded
+        );
+
+        return { loaded };
     },
 });
 // @Component({
