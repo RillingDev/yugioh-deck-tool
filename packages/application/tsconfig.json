@@ -6,14 +6,8 @@
         "allowSyntheticDefaultImports": true,
         "importHelpers": true,
         "esModuleInterop": true,
-        "sourceMap": true,
-        "paths": {
-            "@/*": ["src/*"]
-        }
+        "sourceMap": true
     },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.vue"
-    ],
+    "include": ["src/**/*.ts", "src/**/*.vue"],
     "exclude": ["node_modules"]
 }

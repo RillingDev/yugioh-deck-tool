@@ -54,10 +54,10 @@ import { DECK_SHUFFLE, DECK_SORT } from "../store/modules/deck";
 import YgoDrawSim from "./header/YgoDrawSim.vue";
 import YgoRandomizer from "./header/YgoRandomizer.vue";
 import { BDropdown, BDropdownItem } from "bootstrap-vue";
-import YgoFormat from "@/components/header/YgoFormat.vue";
-import YgoDeckName from "@/components/header/YgoDeckName.vue";
-import YgoCurrency from "@/components/header/YgoCurrency.vue";
-import YgoBuyLink from "@/components/header/YgoBuyLink.vue";
+import YgoFormat from "./header/YgoFormat.vue";
+import YgoDeckName from "./header/YgoDeckName.vue";
+import YgoCurrency from "./header/YgoCurrency.vue";
+import YgoBuyLink from "./header/YgoBuyLink.vue";
 
 export default defineComponent({
     components: {

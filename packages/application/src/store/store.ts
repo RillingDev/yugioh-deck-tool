@@ -4,14 +4,16 @@ import { DEVELOPMENT_MODE } from "yugioh-deck-tool-core/src/main";
 import { currencyModule } from "./modules/currency";
 import { deckModule } from "./modules/deck";
 import { formatModule } from "./modules/format";
+import { dataModule } from "./modules/data";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store<{}>({
     modules: {
+        data: dataModule,
         currency: currencyModule,
-        deck: deckModule,
         format: formatModule,
+        deck: deckModule,
     },
     strict: DEVELOPMENT_MODE,
 });

@@ -21,6 +21,9 @@ module.exports = {
         // Always use ESM version as the normal version clutters `window` and causes issues when other JS code brings their own version.
         config.resolve.alias.set("lodash$", "lodash-es");
 
+        // Remove opinionated root alias
+        config.resolve.alias.delete("@");
+
         // Unbind unused plugins/rules
         config.plugins.delete("preload");
         config.plugins.delete("prefetch");

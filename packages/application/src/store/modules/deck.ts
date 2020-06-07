@@ -5,8 +5,8 @@ import {
     DeckPart,
     DeckService,
 } from "yugioh-deck-tool-core/src/main";
-import { applicationContainer } from "@/inversify.config";
-import { APPLICATION_TYPES } from "@/types";
+import { applicationContainer } from "../../inversify.config";
+import { APPLICATION_TYPES } from "../../types";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
