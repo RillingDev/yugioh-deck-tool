@@ -54,7 +54,7 @@ class DeckUriEncodingService {
      * @param deck Deck to encode.
      * @return `ydke` URI.
      */
-    public toUri(deck: Deck): string {
+    public toUri(deck: Deck): URL {
         const encodedDeckParts: string[] = [];
         for (const deckPart of DECK_PART_ARR) {
             const encodedCards = [];
@@ -65,10 +65,10 @@ class DeckUriEncodingService {
                 this.encodeBase64String(Uint8Array.from(encodedCards), false)
             );
         }
-        return (
+        return new URL(
             DeckUriEncodingService.YDKE_URI_PROTOCOL +
-            encodedDeckParts.join(DeckUriEncodingService.YDKE_DELIMITER) +
-            DeckUriEncodingService.YDKE_DELIMITER
+                encodedDeckParts.join(DeckUriEncodingService.YDKE_DELIMITER) +
+                DeckUriEncodingService.YDKE_DELIMITER
         );
     }
 

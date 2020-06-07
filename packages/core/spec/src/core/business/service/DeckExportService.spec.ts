@@ -89,7 +89,7 @@ foo x1
             expected.searchParams.append("productline", "Yugioh");
             expected.searchParams.append("c", "2 foo||2 bar||3 fizz||");
 
-            expect(result).toEqual(expected.toString());
+            expect(result).toEqual(expected);
         });
     });
 });

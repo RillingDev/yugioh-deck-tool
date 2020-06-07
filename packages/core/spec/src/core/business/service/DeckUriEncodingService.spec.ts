@@ -227,7 +227,7 @@ describe("DeckUriEncodingService", () => {
                 },
             });
             expect(result).toEqual(
-                "ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!"
+                new URL("ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!")
             );
         });
     });

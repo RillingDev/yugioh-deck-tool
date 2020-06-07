@@ -94,7 +94,7 @@ class DeckExportService {
      * @param deck Deck to create a link for.
      * @return Buy link.
      */
-    public toBuyLink(deck: Deck): string {
+    public toBuyLink(deck: Deck): URL {
         const countedCards: Map<Card, number> = this.cardService.countCards(
             this.deckService.getAllCards(deck)
         );
@@ -109,7 +109,7 @@ class DeckExportService {
         buyLink.searchParams.append("utm_source", "YGOPRODeck");
         buyLink.searchParams.append("productline", "Yugioh");
         buyLink.searchParams.append("c", cardListUriParam);
-        return buyLink.toString();
+        return buyLink;
     }
 }
 

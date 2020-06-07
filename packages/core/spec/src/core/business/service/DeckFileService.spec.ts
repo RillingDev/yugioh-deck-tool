@@ -9,7 +9,7 @@ import {
 } from "yugioh-deck-tool-core";
 import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardDatabase";
 import { AxiosHttpService } from "../../../../../src/core/business/service/AxiosHttpService";
-import { anyString, verify, when } from "ts-mockito";
+import { anyString, anything, verify, when } from "ts-mockito";
 import { HttpService } from "../../../../../src/core/business/service/HttpService";
 import { createCard } from "../../../helper/dataFactories";
 import { bindMock } from "../../../helper/bindMock";

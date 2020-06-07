@@ -29,6 +29,7 @@ class DeckRandomizationService {
     private static readonly IGNORED_WORDS = new Set([
         "a",
         "an",
+        "and",
         "as",
         "at",
         "by",
