@@ -5,7 +5,7 @@ import {
     DefaultBanState,
     Format,
     TYPES,
-} from "../../../../../src/main";
+} from "../../../../src/main";
 import { createCard } from "../../../helper/dataFactories";
 
 describe("BanlistService", () => {

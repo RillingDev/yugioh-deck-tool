@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { createCard } from "../../../helper/dataFactories";
-import { CardService, container, TYPES } from "../../../../../src/main";
+import { CardService, container, TYPES } from "../../../../src/main";
 
 describe("CardService", () => {
     let cardService: CardService;

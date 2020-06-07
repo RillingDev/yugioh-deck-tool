@@ -5,7 +5,7 @@ import {
     DeckExportService,
     DeckPart,
     TYPES,
-} from "../../../../../src/main";
+} from "../../../../src/main";
 import { createCard, createCardType } from "../../../helper/dataFactories";
 
 describe("DeckExportService", () => {

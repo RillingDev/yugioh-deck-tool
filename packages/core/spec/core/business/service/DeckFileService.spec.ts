@@ -6,11 +6,11 @@ import {
     DeckPart,
     FindCardBy,
     TYPES,
-} from "../../../../../src/main";
-import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardDatabase";
-import { AxiosHttpService } from "../../../../../src/core/business/service/AxiosHttpService";
+} from "../../../../src/main";
+import { MemoryCardDatabase } from "../../../../src/core/business/MemoryCardDatabase";
+import { AxiosHttpService } from "../../../../src/core/business/service/AxiosHttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
-import { HttpService } from "../../../../../src/core/business/service/HttpService";
+import { HttpService } from "../../../../src/core/business/service/HttpService";
 import { createCard } from "../../../helper/dataFactories";
 import { bindMock } from "../../../helper/bindMock";
 

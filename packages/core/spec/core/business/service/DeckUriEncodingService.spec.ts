@@ -6,8 +6,8 @@ import {
     DeckUriEncodingService,
     FindCardBy,
     TYPES,
-} from "../../../../../src/main";
-import { MemoryCardDatabase } from "../../../../../src/core/business/MemoryCardDatabase";
+} from "../../../../src/main";
+import { MemoryCardDatabase } from "../../../../src/core/business/MemoryCardDatabase";
 import { deflate } from "pako";
 import { createCard } from "../../../helper/dataFactories";
 import { bindMock } from "../../../helper/bindMock";

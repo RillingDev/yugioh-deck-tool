@@ -5,10 +5,7 @@
     "scripts": {
         "lint": "eslint ./src/ ./spec/src/ --ext .ts",
         "fix": "eslint ./src/ ./spec/src/ --ext .ts --fix",
-        "build:tsc": "tsc --build tsconfig.json",
-        "test": "npm-run-all clean:test build:tsc test:jasmine",
-        "test:jasmine": "jasmine --require=source-map-support/register",
-        "clean:test": "rimraf spec/dist"
+        "test": "ts-node --project spec/tsconfig.json node_modules/jasmine/bin/jasmine --config=jasmine.json"
     },
     "dependencies": {
         "inversify": "^5.0.1"
@@ -29,9 +26,8 @@
         "npm-run-all": "^4.1.5",
         "prettier": "^2.0.5",
         "reflect-metadata": "^0.1.13",
-        "rimraf": "^3.0.2",
-        "source-map-support": "^0.5.19",
         "ts-mockito": "^2.5.0",
+        "ts-node": "^8.10.2",
         "typescript": "^3.9.5"
     }
 }
