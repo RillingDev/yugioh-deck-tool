@@ -70,4 +70,3 @@ application  tooltip        // Browser entry points.
 Please check the `LICENSE` file for details.
 
 Yu-Gi-Oh! is a trademark of Shueisha and Konami. This project is not affiliated with or endorsed by Shueisha or Konami.
-

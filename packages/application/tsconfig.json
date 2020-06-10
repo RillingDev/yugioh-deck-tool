@@ -4,8 +4,7 @@
         "strict": false,
         "allowSyntheticDefaultImports": true,
         "importHelpers": true,
-        "esModuleInterop": true,
-        "sourceMap": true
+        "lib": ["esnext", "dom"]
     },
     "include": ["./src/**/*.ts", "./src/**/*.vue"],
     "exclude": ["node_modules"]

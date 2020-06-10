@@ -3,6 +3,7 @@
         "target": "ES2019",
         "module": "ESNext",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "noEmit": true,
         "newLine": "LF",
         "strict": true,

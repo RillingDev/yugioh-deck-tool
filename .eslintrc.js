@@ -1,8 +1,5 @@
 module.exports = {
     root: true,
-    env: {
-        "shared-node-browser": true,
-    },
     rules: {
         "no-shadow": "error",
         "no-undef-init": "error",
