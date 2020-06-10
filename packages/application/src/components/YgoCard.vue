@@ -26,7 +26,7 @@ export default defineComponent({
             default: () => false,
         },
     },
-    setup(props, context) {
+    setup(props) {
         const name = computed(() => props.card.name);
         const imgSrc = computed(() => props.card.image.urlSmall);
 

@@ -8,9 +8,15 @@ import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
 import { CardValues } from "../../core/model/ygo/CardValues";
 import { UnlinkedCard } from "../../core/model/ygo/intermediate/UnlinkedCard";
 import { TYPES } from "../../types";
-import { HttpRequestConfig, HttpService, } from "../../core/business/service/HttpService";
+import {
+    HttpRequestConfig,
+    HttpService,
+} from "../../core/business/service/HttpService";
 import { mapArchetype, RawArchetype } from "./mapping/mapArchetype";
-import { DEVELOPMENT_MODE, FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE, } from "../../mode";
+import {
+    DEVELOPMENT_MODE,
+    FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE,
+} from "../../mode";
 import { merge } from "lodash";
 import { FindCardBy } from "../../core/business/CardDatabase";
 import { Card } from "../../core/model/ygo/Card";
@@ -126,7 +132,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             return;
         }
         await this.httpService.get<void>("updateViews.php", {
-            baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
+            baseUrl: YgoprodeckCardDataLoaderService.API_BASE_URL,
             timeout: 3000,
             responseType: "text",
             params: {
@@ -137,7 +143,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
 
     private createBaseRequestConfig(): HttpRequestConfig {
         return {
-            baseURL: YgoprodeckCardDataLoaderService.API_BASE_URL,
+            baseUrl: YgoprodeckCardDataLoaderService.API_BASE_URL,
             timeout: 10000,
             responseType: "json",
         };

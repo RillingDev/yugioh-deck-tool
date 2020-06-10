@@ -7,9 +7,9 @@ interface HttpResponse<TData> {
 interface HttpRequestConfig {
     timeout: number;
     responseType: "json" | "text";
-    baseURL?: string;
-    params?: any;
-    data?: any;
+    baseUrl?: string;
+    params?: Record<string, string | number | boolean | null>;
+    data?: Record<string, string | number | boolean | null>;
     validateStatus?: (status: number) => boolean;
 }
 

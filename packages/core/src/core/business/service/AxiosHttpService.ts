@@ -19,7 +19,11 @@ class AxiosHttpService implements HttpService {
         url: string,
         requestConfig: HttpRequestConfig
     ): Promise<HttpResponse<TData>> {
-        return axios.get<TData>(url, requestConfig);
+        return axios.get<TData>(url, {
+            ...requestConfig,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            baseURL: requestConfig.baseUrl,
+        });
     }
 }
 

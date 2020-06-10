@@ -2,7 +2,7 @@ import { Container } from "inversify";
 import { instance, mock } from "ts-mockito";
 
 interface Class<T> {
-    new (...args: any[]): T;
+    new (...args: never[]): T;
 }
 
 export const bindMock = <T>(
@@ -10,7 +10,7 @@ export const bindMock = <T>(
     identifier: symbol,
     clazz: Class<T>
 ): T => {
-    const clazzMock = mock(clazz);
+    const clazzMock = mock<T>(clazz);
     container.unbind(identifier);
     container.bind(identifier).toConstantValue(instance(clazzMock));
     return clazzMock;

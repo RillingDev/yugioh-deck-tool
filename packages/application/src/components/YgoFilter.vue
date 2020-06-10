@@ -2,7 +2,7 @@
     <form>
         <div class="form-group" v-if="isFieldVisible('search')">
             <input
-                @input="filterChanged"
+                @input="onFilterChanged"
                 class="form-control"
                 title="Search"
                 placeholder="Search"
@@ -21,7 +21,7 @@
                 :options="banStates"
                 title="Limit"
                 placeholder="Limit"
-                @input="filterChanged"
+                @input="onFilterChanged"
                 v-model="reactiveFilter.banState"
             />
         </div>
@@ -34,7 +34,7 @@
                 :options="sets"
                 title="Set"
                 placeholder="Set"
-                @input="filterChanged"
+                @input="onFilterChanged"
                 v-model="reactiveFilter.sets"
             />
         </div>
@@ -44,7 +44,7 @@
                 title="Archetype"
                 placeholder="Archetype"
                 :options="archetypes"
-                @input="filterChanged"
+                @input="onFilterChanged"
                 v-model="reactiveFilter.archetype"
             />
         </div>
@@ -58,7 +58,7 @@
                     title="Type Group"
                     placeholder="Type Group"
                     :options="typeGroups"
-                    @input="filterChanged"
+                    @input="onFilterChanged"
                     v-model="reactiveFilter.typeGroup"
                 />
             </div>
@@ -72,7 +72,7 @@
                         (type) => type.name.replace(' Monster', '')
                     "
                     :options="types"
-                    @input="filterChanged"
+                    @input="onFilterChanged"
                     v-model="reactiveFilter.type"
                 />
             </div>
@@ -86,7 +86,7 @@
                 :title="`${reactiveFilter.typeGroup} Type`"
                 :placeholder="`${reactiveFilter.typeGroup} Type`"
                 :options="subTypes"
-                @input="filterChanged"
+                @input="onFilterChanged"
                 v-model="reactiveFilter.subType"
             />
         </div>
@@ -97,7 +97,7 @@
                     title="Attribute"
                     placeholder="Attribute"
                     :options="attributes"
-                    @input="filterChanged"
+                    @input="onFilterChanged"
                     v-model="reactiveFilter.attribute"
                 />
             </div>
@@ -107,7 +107,7 @@
                     title="Level/Rank"
                     placeholder="Level/Rank"
                     :options="levels"
-                    @input="filterChanged"
+                    @input="onFilterChanged"
                     v-model="reactiveFilter.level"
                 />
             </div>
@@ -118,7 +118,7 @@
                     placeholder="Link Markers"
                     :multiple="true"
                     :options="linkMarkers"
-                    @input="filterChanged"
+                    @input="onFilterChanged"
                     v-model="reactiveFilter.linkMarker"
                 />
             </div>
@@ -207,10 +207,12 @@ export default defineComponent({
             () => reactiveFilter.typeGroup === CardTypeGroup.MONSTER
         );
 
-        const isFieldVisible = (fieldName: string) =>
-            props.showOnly == null || props.showOnly.includes(fieldName);
+        const isFieldVisible = (fieldName: string): boolean =>
+            props.showOnly == null ||
+            (props.showOnly as string[]).includes(fieldName);
 
-        const filterChanged = () => context.emit("change", reactiveFilter);
+        const onFilterChanged = (): void =>
+            context.emit("change", reactiveFilter);
 
         watch(
             () => reactiveFilter.typeGroup,
@@ -242,7 +244,7 @@ export default defineComponent({
             hasBanStates,
             isMonster,
             reactiveFilter,
-            filterChanged,
+            onFilterChanged,
             isFieldVisible,
         };
     },

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 interface PaginatedResponse<T> {
     data: T;
     meta: {

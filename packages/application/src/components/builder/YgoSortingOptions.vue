@@ -9,7 +9,7 @@
                     title="Sorting Strategy"
                     :clearable="false"
                     :options="sortingStrategies"
-                    @input="optionsChanged"
+                    @input="onOptionsChanged"
                     v-model="reactiveSortingOptions.strategy"
                 />
             </div>
@@ -18,7 +18,7 @@
                     title="Sorting Order"
                     :clearable="false"
                     :options="sortingOrders"
-                    @input="optionsChanged"
+                    @input="onOptionsChanged"
                     v-model="reactiveSortingOptions.order"
                 />
             </div>
@@ -65,7 +65,7 @@ export default defineComponent({
         ];
         const sortingOrders = [SortingOrder.DESC, SortingOrder.ASC];
 
-        const optionsChanged = () =>
+        const onOptionsChanged = (): void =>
             context.emit("change", reactiveSortingOptions);
 
         return {
@@ -74,7 +74,7 @@ export default defineComponent({
 
             reactiveSortingOptions,
 
-            optionsChanged,
+            onOptionsChanged,
         };
     },
 });

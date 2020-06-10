@@ -22,6 +22,14 @@ module.exports = {
     ],
     rules: {
         "import/no-default-export": "off", // Causes Issues with Vue
+
+        // Not all 3rd party libs provide typings.
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+
         "@typescript-eslint/naming-convention": [
             "warn",
 

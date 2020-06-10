@@ -8,7 +8,7 @@ import { dataModule } from "./modules/data";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store<{}>({
+export default new Vuex.Store<unknown>({
     modules: {
         data: dataModule,
         currency: currencyModule,

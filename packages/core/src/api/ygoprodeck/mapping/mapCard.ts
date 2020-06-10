@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { BanState, DefaultBanState } from "../../../core/model/ygo/BanState";
 import { CardImage } from "../../../core/model/ygo/CardImage";
 import { CardPrices } from "../../../core/model/ygo/CardPrices";

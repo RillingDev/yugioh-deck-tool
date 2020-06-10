@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { CardValues } from "../../../core/model/ygo/CardValues";
 import { CardTypeGroup } from "../../../core/model/ygo/CardTypeGroup";
 import { CardType } from "../../../core/model/ygo/CardType";

@@ -206,11 +206,10 @@ class DeckRandomizationService {
                 deckPart === DeckPart.MAIN &&
                 deckPartCards.length >= deckPartLimit / 2
             ) {
-                const cardTypeGroupRatio:
-                    | number
-                    | null = DeckRandomizationService.CARD_TYPE_GROUP_RATIO.get(
-                    card.type.group
-                )!;
+                const cardTypeGroupRatio: number | null =
+                    DeckRandomizationService.CARD_TYPE_GROUP_RATIO.get(
+                        card.type.group
+                    ) ?? null;
                 const cardsOfTypeGroupCount = deckPartCards.filter(
                     (deckPartCard) =>
                         deckPartCard.type.group === card.type.group

@@ -5,7 +5,7 @@ import { name as getName } from "lightdash";
 
 logger.setLevel(DEVELOPMENT_MODE ? logger.levels.DEBUG : logger.levels.WARN);
 
-const getLogger = (consumer: any): Logger => {
+const getLogger = (consumer: unknown): Logger => {
     const name = getName(consumer);
     if (name == null) {
         throw new TypeError(

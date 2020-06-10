@@ -211,7 +211,7 @@ describe("DeckFileService", () => {
                 );
                 fail("Promise did not reject.");
             } catch (e) {
-                expect(e.message).toBe(
+                expect((e as Error).message).toBe(
                     "Decks can only be loaded from the same origin."
                 );
             }

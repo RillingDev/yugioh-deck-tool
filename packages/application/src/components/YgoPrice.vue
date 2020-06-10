@@ -68,13 +68,13 @@ export default defineComponent({
                     })
                 )
         );
-        const listMissingCards = (lookupResult: PriceLookupResult) => {
+        const listMissingCards = (lookupResult: PriceLookupResult): string => {
             const cardList = cardService
                 .createCountedCardList(lookupResult.missing)
                 .join("\n");
             return `Missing prices for ${lookupResult.missing.length} card(s):\n\n${cardList}`;
         };
-        const formatPrice = (lookupResult: PriceLookupResult) =>
+        const formatPrice = (lookupResult: PriceLookupResult): string =>
             priceService.formatPrice(lookupResult.price, activeCurrency.value);
 
         return { priceByVendor, formatPrice, listMissingCards };

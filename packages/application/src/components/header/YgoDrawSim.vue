@@ -75,17 +75,18 @@ export default defineComponent({
         const hasMainDeckCards = computed<boolean>(
             () => deck.value.parts[DeckPart.MAIN].length > 0
         );
-        const draw = () => {
+
+        const draw = (): void => {
             drawnCards.value = deckService.getSimulatedStartingHand(
                 deck.value,
                 goingFirst.value
             );
         };
-        const showModal = () => {
+        const showModal = (): void => {
             modal.value.show();
             draw();
         };
-        const setGoingFirst = (val) => {
+        const setGoingFirst = (val): void => {
             goingFirst.value = val;
             draw();
         };

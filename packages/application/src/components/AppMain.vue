@@ -26,7 +26,7 @@ const deckService = applicationContainer.get<DeckService>(
 const findDeckPartForComponent = (el: Vue): DeckPart | null => {
     let current = el;
     while (current.$parent != null) {
-        const deckPart = current.$props["deckPart"];
+        const deckPart = current.$props["deckPart"] as DeckPart;
         if (deckPart != null) {
             return deckPart;
         }

@@ -86,7 +86,7 @@ export default defineComponent({
         });
         const modal = ref<BModal>(null);
 
-        const randomize = () => {
+        const randomize = (): void => {
             const randomizedDeck = deckRandomizationService.randomize(
                 strategy.value,
                 filter.value
@@ -94,7 +94,7 @@ export default defineComponent({
             context.root.$store.commit(DECK_REPLACE, { deck: randomizedDeck });
         };
 
-        const showModal = () => {
+        const showModal = (): void => {
             modal.value.show();
         };
 
