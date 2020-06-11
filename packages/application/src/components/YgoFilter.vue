@@ -7,7 +7,7 @@
                 title="Search"
                 placeholder="Search"
                 type="search"
-                v-model="reactiveFilter.name"
+                v-model="internalFilter.name"
             />
         </div>
 
@@ -22,7 +22,7 @@
                 title="Limit"
                 placeholder="Limit"
                 @input="onFilterChanged"
-                v-model="reactiveFilter.banState"
+                v-model="internalFilter.banState"
             />
         </div>
 
@@ -35,7 +35,7 @@
                 title="Set"
                 placeholder="Set"
                 @input="onFilterChanged"
-                v-model="reactiveFilter.sets"
+                v-model="internalFilter.sets"
             />
         </div>
 
@@ -45,7 +45,7 @@
                 placeholder="Archetype"
                 :options="archetypes"
                 @input="onFilterChanged"
-                v-model="reactiveFilter.archetype"
+                v-model="internalFilter.archetype"
             />
         </div>
 
@@ -59,7 +59,7 @@
                     placeholder="Type Group"
                     :options="typeGroups"
                     @input="onFilterChanged"
-                    v-model="reactiveFilter.typeGroup"
+                    v-model="internalFilter.typeGroup"
                 />
             </div>
             <div class="col-sm-7" v-if="isFieldVisible('type')">
@@ -73,21 +73,21 @@
                     "
                     :options="types"
                     @input="onFilterChanged"
-                    v-model="reactiveFilter.type"
+                    v-model="internalFilter.type"
                 />
             </div>
         </div>
 
         <div
             class="form-group"
-            v-if="isFieldVisible('subType') && reactiveFilter.typeGroup != null"
+            v-if="isFieldVisible('subType') && internalFilter.typeGroup != null"
         >
             <VSelect
-                :title="`${reactiveFilter.typeGroup} Type`"
-                :placeholder="`${reactiveFilter.typeGroup} Type`"
+                :title="`${internalFilter.typeGroup} Type`"
+                :placeholder="`${internalFilter.typeGroup} Type`"
                 :options="subTypes"
                 @input="onFilterChanged"
-                v-model="reactiveFilter.subType"
+                v-model="internalFilter.subType"
             />
         </div>
 
@@ -98,7 +98,7 @@
                     placeholder="Attribute"
                     :options="attributes"
                     @input="onFilterChanged"
-                    v-model="reactiveFilter.attribute"
+                    v-model="internalFilter.attribute"
                 />
             </div>
 
@@ -108,7 +108,7 @@
                     placeholder="Level/Rank"
                     :options="levels"
                     @input="onFilterChanged"
-                    v-model="reactiveFilter.level"
+                    v-model="internalFilter.level"
                 />
             </div>
 
@@ -119,7 +119,7 @@
                     :multiple="true"
                     :options="linkMarkers"
                     @input="onFilterChanged"
-                    v-model="reactiveFilter.linkMarker"
+                    v-model="internalFilter.linkMarker"
                 />
             </div>
         </template>
@@ -136,7 +136,6 @@ import {
     CardTypeGroup,
     DEFAULT_BAN_STATE_ARR,
 } from "../../../core/src/main";
-import { cloneDeep } from "lodash";
 import {
     computed,
     defineComponent,
@@ -180,20 +179,20 @@ export default defineComponent({
         const banStates = DEFAULT_BAN_STATE_ARR;
         const typeGroups = Object.values(CardTypeGroup);
 
-        const reactiveFilter = reactive<CardFilter>(cloneDeep(props.filter));
+        const internalFilter = reactive<CardFilter>(props.filter);
 
         const sets = computed<CardSet[]>(() => cardDatabase.getSets());
         const archetypes = computed<string[]>(() =>
             cardDatabase.getArchetypes()
         );
         const types = computed<CardType[]>(() =>
-            reactiveFilter.typeGroup != null
-                ? cardDatabase.getTypes(reactiveFilter.typeGroup)
+            internalFilter.typeGroup != null
+                ? cardDatabase.getTypes(internalFilter.typeGroup)
                 : []
         );
         const subTypes = computed<string[]>(() =>
-            reactiveFilter.typeGroup != null
-                ? cardDatabase.getSubTypes(reactiveFilter.typeGroup)
+            internalFilter.typeGroup != null
+                ? cardDatabase.getSubTypes(internalFilter.typeGroup)
                 : []
         );
         const attributes = computed<string[]>(() =>
@@ -209,29 +208,29 @@ export default defineComponent({
             )
         );
         const isMonster = computed<boolean>(
-            () => reactiveFilter.typeGroup === CardTypeGroup.MONSTER
+            () => internalFilter.typeGroup === CardTypeGroup.MONSTER
         );
 
         const isFieldVisible = (fieldName: string): boolean =>
             props.showOnly == null || props.showOnly.includes(fieldName);
 
         const onFilterChanged = (): void =>
-            context.emit("change", reactiveFilter);
+            context.emit("change", internalFilter);
 
         watch(
-            () => reactiveFilter.typeGroup,
+            () => internalFilter.typeGroup,
             () => {
-                reactiveFilter.type = undefined;
-                reactiveFilter.subType = undefined;
-                reactiveFilter.attribute = undefined;
-                reactiveFilter.level = undefined;
-                reactiveFilter.linkMarker = undefined;
+                internalFilter.type = undefined;
+                internalFilter.subType = undefined;
+                internalFilter.attribute = undefined;
+                internalFilter.level = undefined;
+                internalFilter.linkMarker = undefined;
             }
         );
         watch(
             () => hasBanStates.value,
             () => {
-                reactiveFilter.banState = undefined;
+                internalFilter.banState = undefined;
             }
         );
 
@@ -246,7 +245,7 @@ export default defineComponent({
             levels,
             linkMarkers,
 
-            reactiveFilter,
+            internalFilter,
 
             hasBanStates,
             isMonster,

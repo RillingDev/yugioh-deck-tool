@@ -10,7 +10,7 @@
                     :clearable="false"
                     :options="sortingStrategies"
                     @input="onOptionsChanged"
-                    v-model="reactiveSortingOptions.strategy"
+                    v-model="internalSortingOptions.strategy"
                 />
             </div>
             <div class="col-lg-4">
@@ -19,7 +19,7 @@
                     :clearable="false"
                     :options="sortingOrders"
                     @input="onOptionsChanged"
-                    v-model="reactiveSortingOptions.order"
+                    v-model="internalSortingOptions.order"
                 />
             </div>
         </div>
@@ -32,7 +32,6 @@ import {
     SortingOrder,
     SortingStrategy,
 } from "../../../../core/src/main";
-import { cloneDeep } from "lodash";
 import { defineComponent, PropType, reactive } from "@vue/composition-api";
 import VSelect from "vue-select";
 
@@ -51,8 +50,8 @@ export default defineComponent({
         event: "change",
     },
     setup(props, context) {
-        const reactiveSortingOptions = reactive<SortingOptions>(
-            cloneDeep(props.sortingOptions)
+        const internalSortingOptions = reactive<SortingOptions>(
+            props.sortingOptions
         );
 
         const sortingStrategies = [
@@ -65,13 +64,13 @@ export default defineComponent({
         const sortingOrders = [SortingOrder.DESC, SortingOrder.ASC];
 
         const onOptionsChanged = (): void =>
-            context.emit("change", reactiveSortingOptions);
+            context.emit("change", internalSortingOptions);
 
         return {
             sortingStrategies,
             sortingOrders,
 
-            reactiveSortingOptions,
+            internalSortingOptions,
 
             onOptionsChanged,
         };

@@ -1,11 +1,11 @@
 <template>
     <div class="builder">
-        <YgoFilter v-model="reactiveFilter" v-if="loaded" />
+        <YgoFilter v-model="filter" v-if="loaded" />
         <hr />
         <small class="builder__count">
             Showing {{ filteredCards.length }} of {{ formatCards.length }} Cards
         </small>
-        <YgoSortingOptions v-model="reactiveSortingOptions" />
+        <YgoSortingOptions v-model="sortingOptions" />
 
         <div class="builder__matches">
             <Draggable
@@ -54,7 +54,6 @@ import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatch from "./YgoBuilderMatch.vue";
 import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
-import { merge } from "lodash";
 import Draggable from "vuedraggable";
 import { appStore } from "../../composition/appStore";
 import { dataLoaded } from "../../composition/dataLoaded";
@@ -88,7 +87,7 @@ export default defineComponent({
     setup(props, context) {
         const CARD_DISPLAY_LIMIT = 100;
 
-        const reactiveFilter = ref<CardFilter>({
+        const filter = ref<CardFilter>({
             name: null,
 
             typeGroup: null,
@@ -105,7 +104,7 @@ export default defineComponent({
 
             sets: [],
         });
-        const reactiveSortingOptions = ref<SortingOptions>({
+        const sortingOptions = ref<SortingOptions>({
             strategy: SortingStrategy.NAME,
             order: SortingOrder.DESC,
         });
@@ -123,23 +122,18 @@ export default defineComponent({
             );
         });
         const filteredCards = computed<Card[]>(() => {
-            const filtered = filterService.filter(
-                formatCards.value,
-                merge(reactiveFilter.value, {
-                    format: format.value,
-                })
-            );
-            const sorted = sortingService.sort(
-                filtered,
-                reactiveSortingOptions.value
-            );
+            const filtered = filterService.filter(formatCards.value, {
+                ...filter.value,
+                format: format.value,
+            });
+            const sorted = sortingService.sort(filtered, sortingOptions.value);
             return sorted.slice(0, CARD_DISPLAY_LIMIT);
         });
         const loaded = dataLoaded(context);
 
         return {
-            reactiveFilter,
-            reactiveSortingOptions,
+            filter,
+            sortingOptions,
 
             loaded,
             formatCards,
