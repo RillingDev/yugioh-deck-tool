@@ -1,7 +1,6 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "strict": false,
         "allowSyntheticDefaultImports": true,
         "importHelpers": true,
         "lib": ["esnext", "dom"]

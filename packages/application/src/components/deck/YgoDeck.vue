@@ -20,12 +20,11 @@ import {
     DeckPart,
     DeckService,
 } from "../../../../core/src/main";
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import YgoDeckPart from "./YgoDeckPart.vue";
-import { PropType } from "vue";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService

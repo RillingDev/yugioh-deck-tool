@@ -67,7 +67,7 @@ export default defineComponent({
     setup(props, context) {
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);
-        const modal = ref<BModal>(null);
+        const modal = ref<BModal>();
 
         const deck = computed<Deck>(
             () => context.root.$store.state.deck.active
@@ -83,10 +83,10 @@ export default defineComponent({
             );
         };
         const showModal = (): void => {
-            modal.value.show();
+            modal.value?.show();
             draw();
         };
-        const setGoingFirst = (val): void => {
+        const setGoingFirst = (val: boolean): void => {
             goingFirst.value = val;
             draw();
         };

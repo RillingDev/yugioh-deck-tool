@@ -34,8 +34,7 @@ import {
     PriceService,
     Vendor,
 } from "../../../core/src/main";
-import { PropType } from "vue";
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 
 const priceService = applicationContainer.get<PriceService>(
     APPLICATION_TYPES.PriceService

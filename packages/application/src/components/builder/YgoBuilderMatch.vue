@@ -19,9 +19,8 @@
 
 <script lang="ts">
 import { Card, CardTypeGroup } from "../../../../core/src/main";
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
-import { PropType } from "vue";
 
 export default defineComponent({
     props: {
@@ -41,7 +40,7 @@ export default defineComponent({
         );
         const subTypeText = computed<string>(() =>
             props.card.type.group === CardTypeGroup.MONSTER
-                ? `${props.card.attribute}/${props.card.subType}`
+                ? `${props.card.attribute!}/${props.card.subType}`
                 : props.card.subType
         );
 

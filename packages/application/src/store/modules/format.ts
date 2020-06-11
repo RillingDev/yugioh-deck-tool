@@ -3,11 +3,11 @@ import { Format } from "../../../../core/src/main";
 
 export const FORMAT_UPDATE = "FORMAT_UPDATE";
 
-export interface CurrencyState {
+export interface FormatState {
     active: Format;
 }
 
-export const formatModule: Module<CurrencyState, CurrencyState> = {
+export const formatModule: Module<FormatState, FormatState> = {
     state: () => {
         return {
             active: Format.TCG,

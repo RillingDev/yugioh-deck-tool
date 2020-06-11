@@ -53,9 +53,8 @@ import {
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatch from "./YgoBuilderMatch.vue";
-import { computed, defineComponent, ref } from "@vue/composition-api";
+import { computed, defineComponent, ref, PropType } from "@vue/composition-api";
 import { merge } from "lodash";
-import { PropType } from "vue";
 import Draggable from "vuedraggable";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(

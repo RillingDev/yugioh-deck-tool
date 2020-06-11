@@ -11,21 +11,21 @@ import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
 import { BanlistService } from "./BanlistService";
 
 interface CardFilter {
-    name?: string;
+    name?: string | null;
 
-    typeGroup?: CardTypeGroup;
-    type?: CardType;
-    subType?: string;
+    typeGroup?: CardTypeGroup | null;
+    type?: CardType | null;
+    subType?: string | null;
 
-    attribute?: string;
-    level?: number;
-    linkMarker?: string[];
+    attribute?: string | null;
+    level?: number | null;
+    linkMarker?: string[] | null;
 
-    archetype?: string;
-    format?: Format;
-    banState?: BanState;
+    archetype?: string | null;
+    format?: Format | null;
+    banState?: BanState | null;
 
-    sets?: CardSet[];
+    sets?: CardSet[] | null;
 }
 
 /**

@@ -9,4 +9,5 @@ export {
     imageUrlLinkMarker,
     imageUrlSubType,
     imageUrlType,
+    imageUrlCardPlaceholder,
 } from "./resources";

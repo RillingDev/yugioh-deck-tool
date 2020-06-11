@@ -84,7 +84,7 @@ export default defineComponent({
 
             sets: [],
         });
-        const modal = ref<BModal>(null);
+        const modal = ref<BModal>();
 
         const randomize = (): void => {
             const randomizedDeck = deckRandomizationService.randomize(
@@ -95,7 +95,7 @@ export default defineComponent({
         };
 
         const showModal = (): void => {
-            modal.value.show();
+            modal.value?.show();
         };
 
         return { strategy, strategies, filter, modal, showModal, randomize };

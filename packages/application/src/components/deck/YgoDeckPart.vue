@@ -36,8 +36,7 @@ import {
     DefaultDeckPartConfig,
     FilterService,
 } from "../../../../core/src/main";
-import { PropType } from "vue";
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";

@@ -27,14 +27,13 @@
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
 import {
     SortingOptions,
     SortingOrder,
     SortingStrategy,
 } from "../../../../core/src/main";
 import { cloneDeep } from "lodash";
-import { defineComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive, PropType } from "@vue/composition-api";
 import VSelect from "vue-select";
 
 export default defineComponent({

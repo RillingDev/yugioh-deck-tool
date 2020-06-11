@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
-import { computed, defineComponent } from "@vue/composition-api";
+import { PropType, computed, defineComponent } from "@vue/composition-api";
 import { Card } from "../../../core/src/main";
+import { imageUrlCardPlaceholder } from "../../../ui/src/main";
 
 export default defineComponent({
     props: {
@@ -22,13 +22,15 @@ export default defineComponent({
         },
         scaleVertically: {
             required: false,
-            type: Boolean,
+            type: Boolean as PropType<boolean>,
             default: () => false,
         },
     },
     setup(props) {
-        const name = computed(() => props.card.name);
-        const imgSrc = computed(() => props.card.image.urlSmall);
+        const imgSrc = computed<string>(
+            () => props.card.image?.urlSmall ?? imageUrlCardPlaceholder()
+        );
+        const name = computed<string>(() => props.card.name);
 
         return { name, imgSrc };
     },

@@ -25,8 +25,8 @@ const deckService = applicationContainer.get<DeckService>(
 // Workaround-ish solution to allow fetching the target deckpart of a a drag event.
 const findDeckPartForComponent = (el: Vue): DeckPart | null => {
     let current = el;
-    while (current.$parent != null) {
-        const deckPart = current.$props["deckPart"] as DeckPart;
+    while (current.$parent != current.$root) {
+        const deckPart = current.$props["deckPart"];
         if (deckPart != null) {
             return deckPart;
         }

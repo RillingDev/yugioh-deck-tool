@@ -27,3 +27,6 @@ export const imageUrlBanState = (
     `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
         card.banlist[format].name
     )}.png`;
+
+export const imageUrlCardPlaceholder = (): string =>
+    "https://ygoprodeck.com/pics/4035199.jpg";

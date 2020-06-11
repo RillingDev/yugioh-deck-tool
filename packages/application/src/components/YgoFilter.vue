@@ -127,7 +127,6 @@
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
 import {
     BanlistService,
     CardDatabase,
@@ -143,6 +142,7 @@ import {
     defineComponent,
     reactive,
     watch,
+    PropType,
 } from "@vue/composition-api";
 
 import VSelect from "vue-select";
@@ -186,10 +186,14 @@ export default defineComponent({
             cardDatabase.getArchetypes()
         );
         const types = computed<CardType[]>(() =>
-            cardDatabase.getTypes(reactiveFilter.typeGroup)
+            reactiveFilter.typeGroup != null
+                ? cardDatabase.getTypes(reactiveFilter.typeGroup)
+                : []
         );
         const subTypes = computed<string[]>(() =>
-            cardDatabase.getSubTypes(reactiveFilter.typeGroup)
+            reactiveFilter.typeGroup != null
+                ? cardDatabase.getSubTypes(reactiveFilter.typeGroup)
+                : []
         );
         const attributes = computed<string[]>(() =>
             cardDatabase.getAttributes()
@@ -208,8 +212,7 @@ export default defineComponent({
         );
 
         const isFieldVisible = (fieldName: string): boolean =>
-            props.showOnly == null ||
-            (props.showOnly as string[]).includes(fieldName);
+            props.showOnly == null || props.showOnly.includes(fieldName);
 
         const onFilterChanged = (): void =>
             context.emit("change", reactiveFilter);
@@ -217,17 +220,17 @@ export default defineComponent({
         watch(
             () => reactiveFilter.typeGroup,
             () => {
-                reactiveFilter.type = null;
-                reactiveFilter.subType = null;
-                reactiveFilter.attribute = null;
-                reactiveFilter.level = null;
-                reactiveFilter.linkMarker = null;
+                reactiveFilter.type = undefined;
+                reactiveFilter.subType = undefined;
+                reactiveFilter.attribute = undefined;
+                reactiveFilter.level = undefined;
+                reactiveFilter.linkMarker = undefined;
             }
         );
         watch(
             () => hasBanStates.value,
             () => {
-                reactiveFilter.banState = null;
+                reactiveFilter.banState = undefined;
             }
         );
 

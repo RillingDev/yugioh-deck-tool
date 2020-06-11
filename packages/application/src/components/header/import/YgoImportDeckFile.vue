@@ -43,11 +43,11 @@ export default defineComponent({
     setup: function (props, context) {
         const modal = ref<BModal>();
 
-        const openModal = () => modal.value.show();
+        const openModal = (): void => modal.value?.show();
 
-        const onFileUpload = (e: Event) => {
+        const onFileUpload = (e: Event): void => {
             const files = (e.target as HTMLInputElement).files;
-            if (files.length > 0) {
+            if (files != null && files.length > 0) {
                 const file = files[0];
 
                 readFile(file)
@@ -59,7 +59,7 @@ export default defineComponent({
                         context.root.$store.commit(DECK_REPLACE, {
                             deck: result.deck,
                         });
-                        modal.value.hide();
+                        modal.value?.hide();
                     })
                     .catch((err) => logger.error("Could not read file!", err));
             }
