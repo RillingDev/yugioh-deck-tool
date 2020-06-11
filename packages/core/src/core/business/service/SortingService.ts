@@ -18,7 +18,7 @@ enum SortingStrategy {
     LEVEL = "Level",
 
     VIEWS = "Views",
-    RELEASE_DATE = "Release Date",
+    RELEASE_DATE = "Release",
 }
 
 enum SortingOrder {

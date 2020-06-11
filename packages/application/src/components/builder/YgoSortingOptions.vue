@@ -1,10 +1,12 @@
 <template>
     <form>
         <div class="form-group row">
-            <label class="col-lg-2 col-form-label">
-                Sort by
-            </label>
-            <div class="col-lg-6">
+            <div class="col-lg-3">
+                <label class="col-form-label">
+                    Sort by
+                </label>
+            </div>
+            <div class="col-lg-5">
                 <VSelect
                     title="Sorting Strategy"
                     :clearable="false"
