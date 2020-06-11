@@ -1,7 +1,4 @@
-import {
-    Currency,
-    DEFAULT_CURRENCY_ARR,
-} from "../../../../core/src/core/model/price/Currency";
+import { Currency, DEFAULT_CURRENCY_ARR } from "../../../../core/src/main";
 import { Module } from "vuex";
 import { AppState } from "../AppState";
 
