@@ -43,6 +43,7 @@ import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
 import { DECK_CARDS_REPLACE } from "../../store/modules/deck";
+import { appStore } from "../../composition/appStore";
 
 const filterService = applicationContainer.get<FilterService>(
     APPLICATION_TYPES.FilterService
@@ -103,12 +104,10 @@ export default defineComponent({
 
         const cards = computed<Card[]>({
             get: () =>
-                context.root.$store.state.deck.active.parts[
-                    props.deckPart
-                ] as Card[],
+                appStore(context).state.deck.active.parts[props.deckPart],
 
             set: (newCards) =>
-                context.root.$store.commit(DECK_CARDS_REPLACE, {
+                appStore(context).commit(DECK_CARDS_REPLACE, {
                     deckPart: props.deckPart,
                     cards: newCards,
                 }),

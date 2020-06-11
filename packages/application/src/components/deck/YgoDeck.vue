@@ -25,6 +25,7 @@ import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import YgoDeckPart from "./YgoDeckPart.vue";
+import { appStore } from "../../composition/appStore";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -46,7 +47,7 @@ export default defineComponent({
     setup(props, context) {
         const deckParts = DECK_PART_ARR;
         const allCards = computed<Card[]>(() =>
-            deckService.getAllCards(context.root.$store.state.deck.active)
+            deckService.getAllCards(appStore(context).state.deck.active)
         );
 
         return {

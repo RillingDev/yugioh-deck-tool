@@ -49,6 +49,7 @@ import { DECK_REPLACE } from "../../store/modules/deck";
 import { defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../YgoFilter.vue";
 import VSelect from "vue-select";
+import { appStore } from "../../composition/appStore";
 
 const deckRandomizationService = applicationContainer.get<
     DeckRandomizationService
@@ -91,7 +92,7 @@ export default defineComponent({
                 strategy.value,
                 filter.value
             );
-            context.root.$store.commit(DECK_REPLACE, { deck: randomizedDeck });
+            appStore(context).commit(DECK_REPLACE, { deck: randomizedDeck });
         };
 
         const showModal = (): void => {

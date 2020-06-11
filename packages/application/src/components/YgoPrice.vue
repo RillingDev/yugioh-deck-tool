@@ -35,6 +35,7 @@ import {
     Vendor,
 } from "../../../core/src/main";
 import { computed, defineComponent, PropType } from "@vue/composition-api";
+import { appStore } from "../composition/appStore";
 
 const priceService = applicationContainer.get<PriceService>(
     APPLICATION_TYPES.PriceService
@@ -51,7 +52,7 @@ export default defineComponent({
     },
     setup(props, context) {
         const activeCurrency = computed<Currency>(
-            () => context.root.$store.state.currency.active
+            () => appStore(context).state.currency.active
         );
 
         const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(

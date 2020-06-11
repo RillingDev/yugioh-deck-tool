@@ -2,6 +2,7 @@ import { Module } from "vuex";
 import { Card, Deck, DeckPart, DeckService } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
+import { AppState } from "../AppState";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -19,12 +20,7 @@ export interface DeckState {
     active: Deck;
 }
 
-/**
- * Deck state.
- *
- * NOTE: Vuex doesnt pick up on map modification, manual assignment is required.
- */
-export const deckModule: Module<DeckState, DeckState> = {
+export const deckModule: Module<DeckState, AppState> = {
     state: () => {
         return {
             active: deckService.createEmptyDeck(),

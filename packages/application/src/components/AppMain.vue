@@ -17,6 +17,7 @@ import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
 import { DeckPart, DeckService } from "../../../core/src/main";
 import { Vue } from "vue/types/vue";
+import { appStore } from "../composition/appStore";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -49,8 +50,8 @@ export default defineComponent({
             if (newDeckPart == null) {
                 return false;
             }
-            const deck = context.root.$store.state.deck.active;
-            const format = context.root.$store.state.format.active;
+            const deck = appStore(context).state.deck.active;
+            const format = appStore(context).state.format.active;
             const card = e.draggedContext.element;
 
             return deckService.canMove(
@@ -69,8 +70,8 @@ export default defineComponent({
             if (newDeckPart == null) {
                 return false;
             }
-            const deck = context.root.$store.state.deck.active;
-            const format = context.root.$store.state.format.active;
+            const deck = appStore(context).state.deck.active;
+            const format = appStore(context).state.format.active;
             const card = e.draggedContext.element;
 
             return deckService.canAdd(deck, newDeckPart, format, card);

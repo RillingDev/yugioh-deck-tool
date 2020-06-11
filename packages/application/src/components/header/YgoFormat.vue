@@ -13,6 +13,7 @@ import { computed, defineComponent } from "@vue/composition-api";
 import VSelect from "vue-select";
 import { FORMAT_UPDATE } from "../../store/modules/format";
 import { Format } from "../../../../core/src/main";
+import { appStore } from "../../composition/appStore";
 
 export default defineComponent({
     components: { VSelect },
@@ -21,10 +22,10 @@ export default defineComponent({
         const formats = Object.values(Format);
         const format = computed<Format>({
             get() {
-                return context.root.$store.state.format.active;
+                return appStore(context).state.format.active;
             },
             set(newFormat) {
-                context.root.$store.commit(FORMAT_UPDATE, {
+                appStore(context).commit(FORMAT_UPDATE, {
                     format: newFormat,
                 });
             },

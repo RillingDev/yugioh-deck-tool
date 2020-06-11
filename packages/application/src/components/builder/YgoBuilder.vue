@@ -53,9 +53,10 @@ import {
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatch from "./YgoBuilderMatch.vue";
-import { computed, defineComponent, ref, PropType } from "@vue/composition-api";
+import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
 import { merge } from "lodash";
 import Draggable from "vuedraggable";
+import { appStore } from "../../composition/appStore";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -109,7 +110,7 @@ export default defineComponent({
         });
 
         const format = computed<Format>(
-            () => context.root.$store.state.format.active
+            () => appStore(context).state.format.active
         );
         const formatCards = computed<Card[]>(() =>
             filterService.filter(

@@ -1,16 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { DEVELOPMENT_MODE } from "../../../core/src/main";
-import { currencyModule, CurrencyState } from "./modules/currency";
-import { deckModule, DeckState } from "./modules/deck";
-import { formatModule, FormatState } from "./modules/format";
-import { dataModule, DataState } from "./modules/data";
+import { currencyModule } from "./modules/currency";
+import { deckModule } from "./modules/deck";
+import { formatModule } from "./modules/format";
+import { dataModule } from "./modules/data";
+import { AppState } from "./AppState";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store<
-    DataState & CurrencyState & FormatState & DeckState
->({
+export default new Vuex.Store<AppState>({
     modules: {
         data: dataModule,
         currency: currencyModule,

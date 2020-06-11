@@ -33,7 +33,7 @@ import {
     SortingStrategy,
 } from "../../../../core/src/main";
 import { cloneDeep } from "lodash";
-import { defineComponent, reactive, PropType } from "@vue/composition-api";
+import { defineComponent, PropType, reactive } from "@vue/composition-api";
 import VSelect from "vue-select";
 
 export default defineComponent({

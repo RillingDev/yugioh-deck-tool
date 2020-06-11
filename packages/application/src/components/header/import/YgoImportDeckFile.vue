@@ -30,6 +30,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem, BModal } from "bootstrap-vue";
 import { readFile } from "../../../../../ui/src/main";
 import { DECK_REPLACE } from "../../../store/modules/deck";
+import { appStore } from "../../../composition/appStore";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
     APPLICATION_TYPES.DeckFileService
@@ -56,7 +57,7 @@ export default defineComponent({
                             fileContent,
                             fileName: file.name,
                         });
-                        context.root.$store.commit(DECK_REPLACE, {
+                        appStore(context).commit(DECK_REPLACE, {
                             deck: result.deck,
                         });
                         modal.value?.hide();

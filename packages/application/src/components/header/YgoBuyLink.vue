@@ -14,6 +14,7 @@ import { computed, defineComponent } from "@vue/composition-api";
 import { DeckExportService, DeckService } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
+import { appStore } from "../../composition/appStore";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
     APPLICATION_TYPES.DeckExportService
@@ -27,13 +28,13 @@ export default defineComponent({
     setup: function (props, context) {
         const isDeckEmpty = computed<boolean>(
             () =>
-                deckService.getAllCards(context.root.$store.state.deck.active)
+                deckService.getAllCards(appStore(context).state.deck.active)
                     .length === 0
         );
 
         const buyLink = computed<string>(() =>
             deckExportService
-                .toBuyLink(context.root.$store.state.deck.active)
+                .toBuyLink(appStore(context).state.deck.active)
                 .toString()
         );
 

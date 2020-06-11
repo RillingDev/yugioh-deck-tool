@@ -80,6 +80,7 @@ import AppMain from "./components/AppMain.vue";
 import { computed, defineComponent, onMounted } from "@vue/composition-api";
 import { DATA_LOADED } from "./store/modules/data";
 import { BOverlay } from "bootstrap-vue";
+import { appStore } from "./composition/appStore";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -119,7 +120,7 @@ export default defineComponent({
                 return deckFileService
                     .fromRemoteFile(location.origin, remoteUrlValue)
                     .then((result) => {
-                        context.root.$store.commit(DECK_REPLACE, {
+                        appStore(context).commit(DECK_REPLACE, {
                             deck: result.deck,
                         });
                     });
@@ -128,7 +129,7 @@ export default defineComponent({
                 const deck = deckUriEncodingService.fromUrlQueryParamValue(
                     uriEncodedDeck
                 );
-                context.root.$store.commit(DECK_REPLACE, { deck });
+                appStore(context).commit(DECK_REPLACE, { deck });
             } else if (legacyUriEncodedDeck != null) {
                 // Check for legacy share link
                 // Due to the old link containing illegal characters parseUrl causes issues
@@ -136,7 +137,7 @@ export default defineComponent({
                     legacyUriEncodedDeck,
                     atob
                 );
-                context.root.$store.commit(DECK_REPLACE, { deck });
+                appStore(context).commit(DECK_REPLACE, { deck });
             }
             return Promise.resolve();
         };
@@ -145,7 +146,7 @@ export default defineComponent({
             cardDatabase
                 .prepareAll()
                 .then(() => {
-                    context.root.$store.commit(DATA_LOADED);
+                    appStore(context).commit(DATA_LOADED);
                     return loadUriDeck();
                 })
                 .then(() => logger.info("Ready."))
@@ -155,7 +156,7 @@ export default defineComponent({
         });
 
         const loaded = computed<boolean>(
-            () => context.root.$store.state.data.loaded
+            () => appStore(context).state.data.loaded
         );
 
         return { loaded };

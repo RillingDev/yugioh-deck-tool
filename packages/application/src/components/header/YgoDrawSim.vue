@@ -53,6 +53,7 @@ import { BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { computed, defineComponent, ref } from "@vue/composition-api";
+import { appStore } from "../../composition/appStore";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -69,9 +70,7 @@ export default defineComponent({
         const drawnCards = ref<Card[]>([]);
         const modal = ref<BModal>();
 
-        const deck = computed<Deck>(
-            () => context.root.$store.state.deck.active
-        );
+        const deck = computed<Deck>(() => appStore(context).state.deck.active);
         const hasMainDeckCards = computed<boolean>(
             () => deck.value.parts[DeckPart.MAIN].length > 0
         );

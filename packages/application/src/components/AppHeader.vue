@@ -59,6 +59,7 @@ import YgoDeckName from "./header/YgoDeckName.vue";
 import YgoCurrency from "./header/YgoCurrency.vue";
 import YgoBuyLink from "./header/YgoBuyLink.vue";
 import YgoImportFile from "./header/import/YgoImportDeckFile.vue";
+import { appStore } from "../composition/appStore";
 
 export default defineComponent({
     components: {
@@ -74,8 +75,8 @@ export default defineComponent({
     },
     props: {},
     setup: function (props, context) {
-        const sort = () => context.root.$store.commit(DECK_SORT);
-        const shuffle = () => context.root.$store.commit(DECK_SHUFFLE);
+        const sort = () => appStore(context).commit(DECK_SORT);
+        const shuffle = () => appStore(context).commit(DECK_SHUFFLE);
 
         return {
             sort,

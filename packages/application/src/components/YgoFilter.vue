@@ -140,14 +140,15 @@ import { cloneDeep } from "lodash";
 import {
     computed,
     defineComponent,
+    PropType,
     reactive,
     watch,
-    PropType,
 } from "@vue/composition-api";
 
 import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
+import { appStore } from "../composition/appStore";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -204,7 +205,7 @@ export default defineComponent({
         );
         const hasBanStates = computed<boolean>(() =>
             banlistService.hasFormatBanlist(
-                context.root.$store.state.format.active
+                appStore(context).state.format.active
             )
         );
         const isMonster = computed<boolean>(
