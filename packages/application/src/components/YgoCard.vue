@@ -2,7 +2,7 @@
     <a :data-name="name" class="card">
         <img
             :alt="name"
-            :class="scaleVertically ? 'card__img--vertically-scaling' : ''"
+            :class="{ 'card__img--vertically-scaling': scaleVertically }"
             :src="imgSrc"
             class="card__img"
         />

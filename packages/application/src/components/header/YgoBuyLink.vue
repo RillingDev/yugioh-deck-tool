@@ -1,6 +1,7 @@
 <template>
     <a
         :disabled="isDeckEmpty"
+        :class="{ disabled: isDeckEmpty }"
         :href="buyLink"
         class="btn btn-primary btn-sm"
         target="_blank"
