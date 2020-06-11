@@ -39,20 +39,18 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { DECK_SHUFFLE, DECK_SORT } from "../store/modules/deck";
-import YgoDrawSim from "./header/YgoDrawSim.vue";
-import YgoRandomizer from "./header/YgoRandomizer.vue";
+import YgoDrawSim from "../components/header/YgoDrawSim.vue";
+import YgoRandomizer from "../components/header/YgoRandomizer.vue";
 import { BDropdown, BDropdownItem } from "bootstrap-vue";
-import YgoFormat from "./header/YgoFormat.vue";
-import YgoDeckName from "./header/YgoDeckName.vue";
-import YgoCurrency from "./header/YgoCurrency.vue";
-import YgoBuyLink from "./header/YgoBuyLink.vue";
-import YgoImportFile from "./header/import/YgoImportDeckFile.vue";
-import { appStore } from "../composition/appStore";
+import YgoFormat from "../components/header/YgoFormat.vue";
+import YgoDeckName from "../components/header/YgoDeckName.vue";
+import YgoCurrency from "../components/header/YgoCurrency.vue";
+import YgoBuyLink from "../components/header/YgoBuyLink.vue";
+import YgoImportFile from "../components/header/import/YgoImportDeckFile.vue";
 import { dataLoaded } from "../composition/dataLoaded";
-import YgoDeckSortButton from "./header/YgoDeckSortButton.vue";
-import YgoDeckShuffleButton from "./header/YgoDeckShuffleButton.vue";
-import YgoDeckClearButton from "./header/YgoDeckClearButton.vue";
+import YgoDeckSortButton from "../components/header/YgoDeckSortButton.vue";
+import YgoDeckShuffleButton from "../components/header/YgoDeckShuffleButton.vue";
+import YgoDeckClearButton from "../components/header/YgoDeckClearButton.vue";
 
 export default defineComponent({
     components: {

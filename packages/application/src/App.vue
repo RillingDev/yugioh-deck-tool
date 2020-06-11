@@ -74,9 +74,9 @@ import {
 } from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
-import AppHeader from "./components/AppHeader.vue";
+import AppHeader from "./views/AppHeader.vue";
 import { DECK_REPLACE } from "./store/modules/deck";
-import AppMain from "./components/AppMain.vue";
+import AppMain from "./views/AppMain.vue";
 import { computed, defineComponent, onMounted } from "@vue/composition-api";
 import { DATA_LOADED } from "./store/modules/data";
 import { BOverlay } from "bootstrap-vue";

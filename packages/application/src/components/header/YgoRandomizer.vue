@@ -2,7 +2,6 @@
     <div class="randomizer btn-group" role="group">
         <button
             class="btn btn-primary btn-sm"
-            title="Randomize Deck"
             @click="() => randomize()"
             :disabled="!loaded"
         >

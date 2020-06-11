@@ -11,8 +11,8 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import YgoBuilder from "./builder/YgoBuilder.vue";
-import YgoDeck from "./deck/YgoDeck.vue";
+import YgoBuilder from "../components/builder/YgoBuilder.vue";
+import YgoDeck from "../components/deck/YgoDeck.vue";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
 import { DeckPart, DeckService } from "../../../core/src/main";
@@ -23,7 +23,7 @@ const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
 );
 
-// Workaround-ish solution to allow fetching the target deckpart of a a drag event.
+// Workaround-ish solution to allow fetching the target deck part of a a drag event.
 const findDeckPartForComponent = (el: Vue): DeckPart | null => {
     let current = el;
     while (current.$parent != current.$root) {
