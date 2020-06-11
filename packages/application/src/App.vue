@@ -81,6 +81,7 @@ import { computed, defineComponent, onMounted } from "@vue/composition-api";
 import { DATA_LOADED } from "./store/modules/data";
 import { BOverlay } from "bootstrap-vue";
 import { appStore } from "./composition/appStore";
+import { dataLoaded } from "./composition/dataLoaded";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -155,9 +156,7 @@ export default defineComponent({
                 );
         });
 
-        const loaded = computed<boolean>(
-            () => appStore(context).state.data.loaded
-        );
+        const loaded = dataLoaded(context);
 
         return { loaded };
     },

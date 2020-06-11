@@ -1,6 +1,6 @@
 <template>
     <div class="builder">
-        <YgoFilter v-model="reactiveFilter" />
+        <YgoFilter v-model="reactiveFilter" v-if="loaded" />
         <hr />
         <small class="builder__count">
             Showing {{ filteredCards.length }} of {{ formatCards.length }} Cards
@@ -57,6 +57,7 @@ import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
 import { merge } from "lodash";
 import Draggable from "vuedraggable";
 import { appStore } from "../../composition/appStore";
+import { dataLoaded } from "../../composition/dataLoaded";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -112,12 +113,15 @@ export default defineComponent({
         const format = computed<Format>(
             () => appStore(context).state.format.active
         );
-        const formatCards = computed<Card[]>(() =>
-            filterService.filter(
+        const formatCards = computed<Card[]>(() => {
+            if (!loaded.value) {
+                return [];
+            }
+            return filterService.filter(
                 cardService.getUniqueByName(cardDatabase.getCards()),
                 { format: format.value }
-            )
-        );
+            );
+        });
         const filteredCards = computed<Card[]>(() => {
             const filtered = filterService.filter(
                 formatCards.value,
@@ -131,11 +135,13 @@ export default defineComponent({
             );
             return sorted.slice(0, CARD_DISPLAY_LIMIT);
         });
+        const loaded = dataLoaded(context);
 
         return {
             reactiveFilter,
             reactiveSortingOptions,
 
+            loaded,
             formatCards,
             filteredCards,
         };

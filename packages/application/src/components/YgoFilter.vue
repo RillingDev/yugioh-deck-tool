@@ -245,9 +245,12 @@ export default defineComponent({
             attributes,
             levels,
             linkMarkers,
+
+            reactiveFilter,
+
             hasBanStates,
             isMonster,
-            reactiveFilter,
+
             onFilterChanged,
             isFieldVisible,
         };

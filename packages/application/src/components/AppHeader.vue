@@ -8,12 +8,12 @@
                 <YgoFormat />
             </div>
             <hr />
-            <BDropdown text="Import Deck" id="deckImport">
+            <BDropdown text="Import Deck" id="deckImport" :disabled="!loaded">
                 <YgoImportFile />
                 <BDropdownItem>From YDKe URL</BDropdownItem>
             </BDropdown>
 
-            <BDropdown text="Export Deck" id="deckExport">
+            <BDropdown text="Export Deck" id="deckExport" :disabled="!loaded">
                 <BDropdownItem>To .ydk Deck File</BDropdownItem>
                 <BDropdownItem>To YDKe URL in Clipboard</BDropdownItem>
                 <BDropdownItem>To Deck List in Clipboard</BDropdownItem>
@@ -60,6 +60,7 @@ import YgoCurrency from "./header/YgoCurrency.vue";
 import YgoBuyLink from "./header/YgoBuyLink.vue";
 import YgoImportFile from "./header/import/YgoImportDeckFile.vue";
 import { appStore } from "../composition/appStore";
+import { dataLoaded } from "../composition/dataLoaded";
 
 export default defineComponent({
     components: {
@@ -74,11 +75,15 @@ export default defineComponent({
         BDropdownItem,
     },
     props: {},
-    setup: function (props, context) {
-        const sort = () => appStore(context).commit(DECK_SORT);
-        const shuffle = () => appStore(context).commit(DECK_SHUFFLE);
+    setup: (props, context) => {
+        const sort = (): void => appStore(context).commit(DECK_SORT);
+        const shuffle = (): void => appStore(context).commit(DECK_SHUFFLE);
+
+        const loaded = dataLoaded(context);
 
         return {
+            loaded,
+
             sort,
             shuffle,
         };

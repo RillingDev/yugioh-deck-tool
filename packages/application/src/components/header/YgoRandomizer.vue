@@ -4,6 +4,7 @@
             class="btn btn-primary btn-sm"
             title="Randomize Deck"
             @click="() => randomize()"
+            :disabled="!loaded"
         >
             Randomize
         </button>
@@ -11,6 +12,7 @@
             class="btn btn-primary btn-sm"
             title="Configure Randomizer"
             @click="() => showModal()"
+            :disabled="!loaded"
         >
             <span class="fas fa-cog" aria-hidden="true"></span>
         </button>
@@ -50,6 +52,7 @@ import { defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../YgoFilter.vue";
 import VSelect from "vue-select";
 import { appStore } from "../../composition/appStore";
+import { dataLoaded } from "../../composition/dataLoaded";
 
 const deckRandomizationService = applicationContainer.get<
     DeckRandomizationService
@@ -99,7 +102,19 @@ export default defineComponent({
             modal.value?.show();
         };
 
-        return { strategy, strategies, filter, modal, showModal, randomize };
+        const loaded = dataLoaded(context);
+
+        return {
+            strategy,
+            strategies,
+            filter,
+            modal,
+
+            loaded,
+
+            showModal,
+            randomize,
+        };
     },
 });
 </script>
