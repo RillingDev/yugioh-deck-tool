@@ -42,7 +42,7 @@ import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
-import { DECK_CARDS_REPLACE } from "../../store/modules/deck";
+import { DECK_PART_CARDS_REPLACE } from "../../store/modules/deck";
 import { appStore } from "../../composition/appStore";
 
 const filterService = applicationContainer.get<FilterService>(
@@ -107,7 +107,7 @@ export default defineComponent({
                 appStore(context).state.deck.active.parts[props.deckPart],
 
             set: (newCards) =>
-                appStore(context).commit(DECK_CARDS_REPLACE, {
+                appStore(context).commit(DECK_PART_CARDS_REPLACE, {
                     deckPart: props.deckPart,
                     cards: newCards,
                 }),

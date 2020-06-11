@@ -23,20 +23,9 @@
             </BDropdown>
         </div>
         <div class="col-md-6 col-lg-4">
-            <button
-                class="btn btn-primary btn-sm"
-                title="Sort Deck"
-                @click="() => sort()"
-            >
-                Sort
-            </button>
-            <button
-                class="btn btn-primary btn-sm"
-                title="Shuffle Deck"
-                @click="() => shuffle()"
-            >
-                Shuffle
-            </button>
+            <YgoDeckSortButton />
+            <YgoDeckShuffleButton />
+            <YgoDeckClearButton />
         </div>
         <div class="col-md-6 col-lg-4">
             <YgoDrawSim />
@@ -61,6 +50,9 @@ import YgoBuyLink from "./header/YgoBuyLink.vue";
 import YgoImportFile from "./header/import/YgoImportDeckFile.vue";
 import { appStore } from "../composition/appStore";
 import { dataLoaded } from "../composition/dataLoaded";
+import YgoDeckSortButton from "./header/YgoDeckSortButton.vue";
+import YgoDeckShuffleButton from "./header/YgoDeckShuffleButton.vue";
+import YgoDeckClearButton from "./header/YgoDeckClearButton.vue";
 
 export default defineComponent({
     components: {
@@ -73,19 +65,16 @@ export default defineComponent({
         YgoDrawSim,
         BDropdown,
         BDropdownItem,
+        YgoDeckSortButton,
+        YgoDeckShuffleButton,
+        YgoDeckClearButton,
     },
     props: {},
     setup: (props, context) => {
-        const sort = (): void => appStore(context).commit(DECK_SORT);
-        const shuffle = (): void => appStore(context).commit(DECK_SHUFFLE);
-
         const loaded = dataLoaded(context);
 
         return {
             loaded,
-
-            sort,
-            shuffle,
         };
     },
 });

@@ -13,8 +13,9 @@ export const DECK_NAME_UPDATE = "DECK_NAME_UPDATE";
 export const DECK_REPLACE = "DECK_REPLACE";
 export const DECK_SORT = "DECK_SORT";
 export const DECK_SHUFFLE = "DECK_SHUFFLE";
+export const DECK_CLEAR = "DECK_CLEAR";
 
-export const DECK_CARDS_REPLACE = "DECK_CARDS_REPLACE";
+export const DECK_PART_CARDS_REPLACE = "DECK_PART_CARDS_REPLACE";
 
 export interface DeckState {
     active: Deck;
@@ -40,7 +41,11 @@ export const deckModule: Module<DeckState, AppState> = {
         [DECK_SHUFFLE](state) {
             state.active.parts = deckService.shuffle(state.active).parts;
         },
-        [DECK_CARDS_REPLACE](
+        [DECK_CLEAR](state) {
+            state.active.parts = deckService.createEmptyDeck().parts;
+        },
+
+        [DECK_PART_CARDS_REPLACE](
             state,
             payload: { deckPart: DeckPart; cards: Card[] }
         ) {

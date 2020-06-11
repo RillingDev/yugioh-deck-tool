@@ -43,12 +43,13 @@ import {
     CardFilter,
     DeckRandomizationService,
     RandomizationStrategy,
+    Format,
 } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../store/modules/deck";
-import { defineComponent, ref } from "@vue/composition-api";
+import { computed, defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../YgoFilter.vue";
 import VSelect from "vue-select";
 import { appStore } from "../../composition/appStore";
@@ -90,10 +91,17 @@ export default defineComponent({
         });
         const modal = ref<BModal>();
 
+        const format = computed<Format>(
+            () => appStore(context).state.format.active
+        );
+
         const randomize = (): void => {
             const randomizedDeck = deckRandomizationService.randomize(
                 strategy.value,
-                filter.value
+                {
+                    ...filter.value,
+                    format: format.value,
+                }
             );
             appStore(context).commit(DECK_REPLACE, { deck: randomizedDeck });
         };
