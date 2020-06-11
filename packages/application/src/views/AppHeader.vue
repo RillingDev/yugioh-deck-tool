@@ -14,8 +14,8 @@
             </BDropdown>
 
             <BDropdown text="Export Deck" id="deckExport" :disabled="!loaded">
-                <BDropdownItem>To .ydk Deck File</BDropdownItem>
-                <BDropdownItem>To YDKe URL in Clipboard</BDropdownItem>
+                <YgoExportDeckFile />
+                <YgoExportDeckYdkeUrl />
                 <BDropdownItem>To Deck List in Clipboard</BDropdownItem>
                 <BDropdownItem
                     >To Deck Tool Shareable Link in Clipboard
@@ -51,6 +51,8 @@ import { dataLoaded } from "../composition/dataLoaded";
 import YgoDeckSortButton from "../components/header/YgoDeckSortButton.vue";
 import YgoDeckShuffleButton from "../components/header/YgoDeckShuffleButton.vue";
 import YgoDeckClearButton from "../components/header/YgoDeckClearButton.vue";
+import YgoExportDeckFile from "../components/header/export/YgoExportDeckFile.vue";
+import YgoExportDeckYdkeUrl from "../components/header/export/YgoExportDeckYdkeUrl.vue";
 
 export default defineComponent({
     components: {
@@ -66,6 +68,8 @@ export default defineComponent({
         YgoDeckSortButton,
         YgoDeckShuffleButton,
         YgoDeckClearButton,
+        YgoExportDeckFile,
+        YgoExportDeckYdkeUrl,
     },
     props: {},
     setup: (props, context) => {

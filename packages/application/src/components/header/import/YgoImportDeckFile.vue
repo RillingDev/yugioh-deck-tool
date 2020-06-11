@@ -46,22 +46,21 @@ export default defineComponent({
 
         const openModal = (): void => modal.value?.show();
 
+        const readDeckFile = async (file: File) => {
+            const fileContent = await readFile(file);
+            const result = deckFileService.fromFile({
+                fileContent,
+                fileName: file.name,
+            });
+            appStore(context).commit(DECK_REPLACE, {
+                deck: result.deck,
+            });
+        };
         const onFileUpload = (e: Event): void => {
             const files = (e.target as HTMLInputElement).files;
             if (files != null && files.length > 0) {
-                const file = files[0];
-
-                readFile(file)
-                    .then((fileContent) => {
-                        const result = deckFileService.fromFile({
-                            fileContent,
-                            fileName: file.name,
-                        });
-                        appStore(context).commit(DECK_REPLACE, {
-                            deck: result.deck,
-                        });
-                        modal.value?.hide();
-                    })
+                readDeckFile(files[0])
+                    .then(() => modal.value?.hide())
                     .catch((err) => logger.error("Could not read file!", err));
             }
         };
