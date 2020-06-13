@@ -10,7 +10,7 @@
 
         <BModal
             hide-footer
-            modal-class="deck-tool__modal"
+            modal-class="deck-tool__portal"
             body-class="draw-sim__modal"
             ref="modal"
             size="lg"
@@ -108,7 +108,7 @@ export default defineComponent({
 @import "../../../../ui/src/styles/mixin/screen";
 
 .deck-tool,
-.deck-tool__modal {
+.deck-tool__portal {
     /*.draw-sim__modal {*/
     /*}*/
 

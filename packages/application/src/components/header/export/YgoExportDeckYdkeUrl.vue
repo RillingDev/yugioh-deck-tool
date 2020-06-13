@@ -7,17 +7,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
-import {
-    DeckFileService,
-    getLogger,
-    DeckUriEncodingService,
-} from "../../../../../core/src/main";
+import { defineComponent } from "@vue/composition-api";
+import { DeckUriEncodingService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem, BModal } from "bootstrap-vue";
-import { readFile, saveFile, copyText } from "../../../../../ui/src/main";
-import { DECK_REPLACE } from "../../../store/modules/deck";
+import { BDropdownItem } from "bootstrap-vue";
+import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
@@ -32,6 +27,14 @@ export default defineComponent({
             const deck = appStore(context).state.deck.active;
             const ydke = deckUriEncodingService.toUri(deck);
             copyText(ydke.toString(), document);
+            context.root.$bvToast.toast(
+                "Successfully copied YDKe to Clipboard!",
+                {
+                    variant: "success",
+                    noCloseButton: true,
+                    toastClass: "deck-tool__portal",
+                }
+            );
         };
 
         return { copyYdke };

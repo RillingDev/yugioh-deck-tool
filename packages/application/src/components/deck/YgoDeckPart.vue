@@ -141,7 +141,7 @@ export default defineComponent({
 @import "../../../../ui/src/styles/mixin/screen";
 
 .deck-tool,
-.deck-tool__modal {
+.deck-tool__portal {
     .deck-part {
         margin-bottom: 1.5rem;
 

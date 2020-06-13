@@ -26,7 +26,7 @@
 // Main Styles
 //
 .deck-tool,
-.deck-tool__modal {
+.deck-tool__portal {
     //
     // Bootstrap
     //
@@ -51,7 +51,7 @@
     // @import "~bootstrap/scss/pagination";
     @import "~bootstrap/scss/badge";
     // @import "~bootstrap/scss/jumbotron";
-    @import "~bootstrap/scss/alert";
+    // @import "~bootstrap/scss/alert";
     // @import "~bootstrap/scss/progress";
     // @import "~bootstrap/scss/media";
     // @import "~bootstrap/scss/list-group";
@@ -90,7 +90,7 @@
     // @import "~bootstrap-vue/src/components/time/index";
     // @import "~bootstrap-vue/src/components/toast/index";
     // @import "~bootstrap-vue/src/components/tooltip/index";
-    //@import "~bootstrap-vue/src/icons/index";
+    // @import "~bootstrap-vue/src/icons/index";
 
     // Vue Select
     @import "~vue-select/src/scss/global/component";
@@ -110,9 +110,11 @@
     @import "general";
 }
 
-// Required outside of .deck-tool due to how modal overlay works
-// ID selector seems to be the only way to refer to the wrapper around the modal
-[id$="___BV_modal_outer_"] {
-    @import "~bootstrap/scss/modal";
-    @import "~bootstrap-vue/src/components/modal/modal";
-}
+// Some elements have to be placed outside the .deck-tool, these are global
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/toasts";
+@import "~bootstrap/scss/tooltip";
+
+@import "~bootstrap-vue/src/components/modal/modal";
+@import "~bootstrap-vue/src/components/toast/index";
+@import "~bootstrap-vue/src/components/tooltip/index";

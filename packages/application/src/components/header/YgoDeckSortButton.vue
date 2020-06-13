@@ -1,7 +1,9 @@
 <template>
-    <button class="btn btn-primary btn-sm" @click="() => sort()">
-        Sort
-    </button>
+    <div>
+        <button class="btn btn-primary btn-sm" @click="() => sort()">
+            Sort
+        </button>
+    </div>
 </template>
 
 <script lang="ts">

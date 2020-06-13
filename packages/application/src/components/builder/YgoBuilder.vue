@@ -148,7 +148,7 @@ export default defineComponent({
 @import "../../../../ui/src/styles/mixin/screen";
 
 .deck-tool,
-.deck-tool__modal {
+.deck-tool__portal {
     .builder {
         &__count {
             display: inline-block;

@@ -39,7 +39,7 @@ export default defineComponent({
 
 <style lang="scss">
 .deck-tool,
-.deck-tool__modal {
+.deck-tool__portal {
     .card {
         display: block; // Make sure link covers full card
     }

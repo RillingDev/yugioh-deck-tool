@@ -5,7 +5,7 @@
         </button>
 
         <BModal
-            modal-class="deck-tool__modal"
+            modal-class="deck-tool__portal"
             ref="modal"
             title="Clear Deck"
             @ok="() => clear()"

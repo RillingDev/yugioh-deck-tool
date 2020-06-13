@@ -7,13 +7,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
-import { DeckFileService, getLogger } from "../../../../../core/src/main";
+import { defineComponent } from "@vue/composition-api";
+import { DeckFileService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BAlert, BDropdownItem, BModal } from "bootstrap-vue";
-import { readFile, saveFile } from "../../../../../ui/src/main";
-import { DECK_REPLACE } from "../../../store/modules/deck";
+import { BDropdownItem } from "bootstrap-vue";
+import { saveFile } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 
 const deckFileService = applicationContainer.get<DeckFileService>(

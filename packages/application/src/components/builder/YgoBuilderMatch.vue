@@ -54,7 +54,7 @@ export default defineComponent({
 @import "../../../../ui/src/styles/mixin/screen";
 
 .deck-tool,
-.deck-tool__modal {
+.deck-tool__portal {
     .builder-match {
         display: flex;
         padding: 0.35rem;

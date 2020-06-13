@@ -5,7 +5,7 @@
         </BDropdownItem>
         <BModal
             ref="modal"
-            modal-class="deck-tool__modal"
+            modal-class="deck-tool__portal"
             title="Import Deck From .ydk Deck File"
             hide-footer
         >

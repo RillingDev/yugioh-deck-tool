@@ -1,7 +1,9 @@
 <template>
-    <button class="btn btn-primary btn-sm" @click="() => shuffle()">
-        Shuffle
-    </button>
+    <div>
+        <button class="btn btn-primary btn-sm" @click="() => shuffle()">
+            Shuffle
+        </button>
+    </div>
 </template>
 
 <script lang="ts">

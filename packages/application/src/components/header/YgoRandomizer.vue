@@ -17,7 +17,7 @@
         </button>
         <BModal
             hide-footer
-            modal-class="deck-tool__modal"
+            modal-class="deck-tool__portal"
             ref="modal"
             title="Randomizer Settings"
         >
