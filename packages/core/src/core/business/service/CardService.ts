@@ -2,6 +2,10 @@ import { injectable } from "inversify";
 import { Card } from "../../model/ygo/Card";
 import { intersection, uniqBy } from "lodash";
 import { countMapBy } from "lightdash";
+import { CardTypeGroup } from "../../model/ygo/CardTypeGroup";
+import { CardType } from "../../model/ygo/CardType";
+
+export type Counted<T> = Map<T, number>;
 
 /**
  * @public
@@ -57,20 +61,52 @@ class CardService {
      * @param cards Cards to count.
      * @return Map mapping the card to its count.
      */
-    public countCards(cards: Card[]): Map<Card, number> {
+    public countByCard(cards: ReadonlyArray<Card>): Counted<Card> {
         return countMapBy(cards, (card: Card) => card);
+    }
+
+    /**
+     * Counts cards by type. Types with no occurrence are omitted.
+     *
+     * @param cards Cards to count.
+     * @return Map mapping the card type to its count.
+     */
+    public countByType(cards: ReadonlyArray<Card>): Counted<CardType> {
+        return countMapBy(cards, (card: Card) => card.type);
+    }
+
+    /**
+     * Counts cards by type group. Type groups with no occurrence are omitted.
+     *
+     * @param cards Cards to count.
+     * @return Map mapping the card type group to its count.
+     */
+    public countByTypeGroup(
+        cards: ReadonlyArray<Card>
+    ): Counted<CardTypeGroup> {
+        return countMapBy(cards, (card: Card) => card.type.group);
     }
 
     /**
      * Creates a list of cards with their count in a text representation: {@code ["Foo Bar x3", "Fizz x1"]}
      *
-     * @param cards Cards to count
+     * @param counted Counted card map.
      * @return List of string representation of cards with their count.
      */
-    public createCountedCardList(cards: Card[]): string[] {
-        return Array.from(this.countCards(cards).entries()).map(
-            ([card, count]) => `${card.name} x${count}`
+    public createFormattedCardCountList(counted: Counted<Card>): string[] {
+        return this.createCountedList(
+            counted,
+            (card, count) => `${card.name} x${count}`
         );
+    }
+
+    private createCountedList<T>(
+        counted: Counted<T>,
+        formatter: (key: T, count: number) => string
+    ): string[] {
+        return Array.from(counted.entries())
+            .filter(([, count]) => count > 0)
+            .map(([key, count]) => formatter(key, count));
     }
 
     /**

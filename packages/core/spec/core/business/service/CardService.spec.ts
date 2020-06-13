@@ -102,7 +102,7 @@ describe("CardService", () => {
             const card3 = createCard({ passcode: "678" });
 
             expect(
-                cardService.countCards([
+                cardService.countByCard([
                     card1,
                     card2,
                     card1,

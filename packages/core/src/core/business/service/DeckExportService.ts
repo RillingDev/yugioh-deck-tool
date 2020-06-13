@@ -82,7 +82,11 @@ class DeckExportService {
         }
         const result: string[] = [];
         result.push(`${sectionName}:`);
-        result.push(...this.cardService.createCountedCardList(cards));
+        result.push(
+            ...this.cardService.createFormattedCardCountList(
+                this.cardService.countByCard(cards)
+            )
+        );
         result.push("");
         return result;
     }
@@ -95,7 +99,7 @@ class DeckExportService {
      * @return Buy link.
      */
     public toBuyLink(deck: Deck): URL {
-        const countedCards: Map<Card, number> = this.cardService.countCards(
+        const countedCards: Map<Card, number> = this.cardService.countByCard(
             this.deckService.getAllCards(deck)
         );
         const cardListUriParam =

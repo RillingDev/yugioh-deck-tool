@@ -297,7 +297,7 @@ class DeckRandomizationService {
     private createName(deck: Deck): string {
         const cardsWithPlaySets = Array.from(
             this.cardService
-                .countCards([
+                .countByCard([
                     ...deck.parts[DeckPart.MAIN],
                     ...deck.parts[DeckPart.EXTRA],
                 ])

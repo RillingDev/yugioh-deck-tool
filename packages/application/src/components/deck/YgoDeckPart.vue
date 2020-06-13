@@ -30,11 +30,11 @@
 import {
     Card,
     CardDatabase,
+    CardService,
     CardTypeGroup,
     DeckPart,
     DeckPartConfig,
     DefaultDeckPartConfig,
-    FilterService,
 } from "../../../../core/src/main";
 import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
@@ -44,13 +44,15 @@ import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
 import { DECK_PART_CARDS_REPLACE } from "../../store/modules/deck";
 import { appStore } from "../../composition/appStore";
+import { removeEnd } from "lightdash";
 
-const filterService = applicationContainer.get<FilterService>(
-    APPLICATION_TYPES.FilterService
+const cardService = applicationContainer.get<CardService>(
+    APPLICATION_TYPES.CardService
 );
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
 );
+
 /**
  * Calculates count of card types.
  * For main and side deck, count will be split by monster, spell, etc., whereas it will be split by monster subtype for the extra deck.
@@ -65,19 +67,21 @@ const calculateDetailedTypeStats = (
     cards: ReadonlyArray<Card>
 ): [string, number][] => {
     if (deckPart === DeckPart.EXTRA) {
-        return cardDatabase.getTypes(CardTypeGroup.MONSTER).map((cardType) => [
-            cardType.name.replace(" Monster", ""),
-            filterService.filter(cards, {
-                type: cardType,
-            }).length,
-        ]);
+        const countedByType = cardService.countByType(cards);
+        return cardDatabase
+            .getTypes(CardTypeGroup.MONSTER)
+            .map((cardType) => [
+                removeEnd(cardType.name, " Monster"),
+                countedByType.has(cardType) ? countedByType.get(cardType)! : 0,
+            ]);
     }
 
+    const countedByTypeGroup = cardService.countByTypeGroup(cards);
     return Object.values(CardTypeGroup).map((cardTypeGroup) => [
-        String(cardTypeGroup),
-        filterService.filter(cards, {
-            typeGroup: cardTypeGroup,
-        }).length,
+        cardTypeGroup,
+        countedByTypeGroup.has(cardTypeGroup)
+            ? countedByTypeGroup.get(cardTypeGroup)!
+            : 0,
     ]);
 };
 

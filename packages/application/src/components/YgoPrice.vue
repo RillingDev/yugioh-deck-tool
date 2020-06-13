@@ -70,7 +70,9 @@ export default defineComponent({
         );
         const listMissingCards = (lookupResult: PriceLookupResult): string => {
             const cardList = cardService
-                .createCountedCardList(lookupResult.missing)
+                .createFormattedCardCountList(
+                    cardService.countByCard(lookupResult.missing)
+                )
                 .join("\n");
             return `Missing prices for ${lookupResult.missing.length} card(s):\n\n${cardList}`;
         };
