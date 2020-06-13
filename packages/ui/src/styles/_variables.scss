@@ -13,16 +13,15 @@ $black: #000;
 $brown: #b97b51;
 $purple: #9683b8;
 $green: #799a60;
-$green-yellow: #b8d46c;
-$yellow: #ffd275;
-$orange: #f1a64a;
+$yellow: #fad85c;
+$orange: #de7500;
 $red: #d26c6c;
 
 $primary: $brown;
 $secondary: desaturate(darken($primary, 5%), 10%);
 $success: $green;
 $info: $purple;
-$warning: $yellow;
+$warning: $orange;
 $danger: $red;
 
 $color-deck-part-main: $brown;

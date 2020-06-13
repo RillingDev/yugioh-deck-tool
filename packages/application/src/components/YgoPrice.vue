@@ -8,16 +8,32 @@
             v-for="[vendor, lookupResult] in priceByVendor.entries()"
         >
             <span>{{ vendor.name }}: {{ formatPrice(lookupResult) }}</span>
-            <template v-if="lookupResult.missing.length > 0">
-                <span
-                    :title="listMissingCards(lookupResult)"
-                    aria-hidden="true"
-                    class="price__warning fas fa-exclamation"
-                ></span>
-                <span class="sr-only">
-                    {{ listMissingCards(lookupResult) }}
+            <button
+                :id="createTooltipButtonId(vendor)"
+                v-show="lookupResult.missing.length > 0"
+                title="Some cards have no price data."
+                class="btn btn-sm btn-warning price__warning"
+            >
+                <span class="fas fa-exclamation" aria-hidden="true"></span>
+            </button>
+            <BTooltip
+                custom-class="deck-tool__portal"
+                :target="createTooltipButtonId(vendor)"
+                triggers="hover"
+            >
+                <span>
+                    Missing prices for
+                    {{ lookupResult.missing.length }} card(s):
                 </span>
-            </template>
+                <ul class="price__warning__missing">
+                    <li
+                        v-for="line in listMissingCards(lookupResult)"
+                        :key="line"
+                    >
+                        {{ line }}
+                    </li>
+                </ul>
+            </BTooltip>
         </li>
     </ul>
 </template>
@@ -34,8 +50,17 @@ import {
     PriceService,
     Vendor,
 } from "../../../core/src/main";
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import {
+    computed,
+    defineComponent,
+    PropType,
+    onMounted,
+    onBeforeMount,
+    ref,
+} from "@vue/composition-api";
 import { appStore } from "../composition/appStore";
+import { BTooltip } from "bootstrap-vue";
+import { uniqueId } from "lodash";
 
 const priceService = applicationContainer.get<PriceService>(
     APPLICATION_TYPES.PriceService
@@ -44,6 +69,7 @@ const cardService = applicationContainer.get<CardService>(
     APPLICATION_TYPES.CardService
 );
 export default defineComponent({
+    components: { BTooltip },
     props: {
         cards: {
             required: true,
@@ -68,29 +94,48 @@ export default defineComponent({
                     })
                 )
         );
-        const listMissingCards = (lookupResult: PriceLookupResult): string => {
-            const cardList = cardService
-                .createFormattedCardCountList(
-                    cardService.countByCard(lookupResult.missing)
-                )
-                .join("\n");
-            return `Missing prices for ${lookupResult.missing.length} card(s):\n\n${cardList}`;
-        };
+        const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
+            cardService.createFormattedCardCountList(
+                cardService.countByCard(lookupResult.missing)
+            );
         const formatPrice = (lookupResult: PriceLookupResult): string =>
             priceService.formatPrice(lookupResult.price, activeCurrency.value);
 
-        return { priceByVendor, formatPrice, listMissingCards };
+        const id = uniqueId("priceTooltip_");
+        const createTooltipButtonId = (vendor: Vendor): string =>
+            `${id}_${vendor.id}`;
+
+        return {
+            priceByVendor,
+            formatPrice,
+            listMissingCards,
+            createTooltipButtonId,
+        };
     },
 });
 </script>
 
 <style lang="scss">
 @import "../../../ui/src/styles/component/price";
+@import "../../../ui/src/styles/variables";
 
 .deck-tool,
-.deck-tool__modal {
+.deck-tool__portal {
     .price {
         @include price();
+
+        &__warning.btn.btn-warning {
+            padding: 0;
+            font-size: 0.85em;
+            height: 18px;
+            width: 18px;
+            margin-left: 0.35rem;
+        }
+
+        &__warning__missing {
+            padding-left: 0.75rem;
+            margin: 0;
+        }
     }
 }
 </style>
