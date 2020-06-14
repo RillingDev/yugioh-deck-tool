@@ -1,4 +1,4 @@
-const saveFile = (file: File, context: Document): void => {
+const downloadFile = (file: File, context: Document): void => {
     const el = context.createElement("a");
 
     el.href = window.URL.createObjectURL(file);
@@ -9,4 +9,4 @@ const saveFile = (file: File, context: Document): void => {
     el.remove();
 };
 
-export { saveFile };
+export { downloadFile };

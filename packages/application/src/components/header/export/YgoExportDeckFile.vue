@@ -12,7 +12,7 @@ import { DeckFileService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem } from "bootstrap-vue";
-import { saveFile } from "../../../../../ui/src/main";
+import { downloadFile } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
@@ -27,7 +27,12 @@ export default defineComponent({
             const deck = appStore(context).state.deck.active;
             const { fileContent, fileName } = deckFileService.toFile(deck);
             const file = new File([fileContent], fileName);
-            saveFile(file, document);
+            downloadFile(file, document);
+            context.root.$bvToast.toast("Successfully exported deck file!", {
+                variant: "success",
+                noCloseButton: true,
+                toastClass: "deck-tool__portal",
+            });
         };
 
         return { downloadDeck };

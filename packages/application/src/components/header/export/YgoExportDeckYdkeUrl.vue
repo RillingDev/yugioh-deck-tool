@@ -28,7 +28,7 @@ export default defineComponent({
             const ydke = deckUriEncodingService.toUri(deck);
             copyText(ydke.toString(), document);
             context.root.$bvToast.toast(
-                "Successfully copied YDKe to Clipboard!",
+                "Successfully copied YDKe to clipboard!",
                 {
                     variant: "success",
                     noCloseButton: true,

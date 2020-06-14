@@ -19,7 +19,7 @@
             <BTooltip
                 custom-class="deck-tool__portal"
                 :target="createTooltipButtonId(vendor)"
-                triggers="hover"
+                triggers="click"
             >
                 <span>
                     Missing prices for
@@ -50,14 +50,7 @@ import {
     PriceService,
     Vendor,
 } from "../../../core/src/main";
-import {
-    computed,
-    defineComponent,
-    PropType,
-    onMounted,
-    onBeforeMount,
-    ref,
-} from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 import { appStore } from "../composition/appStore";
 import { BTooltip } from "bootstrap-vue";
 import { uniqueId } from "lodash";

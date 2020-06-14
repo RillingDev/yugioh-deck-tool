@@ -41,8 +41,8 @@
 import {
     CardFilter,
     DeckRandomizationService,
-    RandomizationStrategy,
     Format,
+    RandomizationStrategy,
 } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";

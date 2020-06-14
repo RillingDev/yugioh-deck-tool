@@ -1,6 +1,7 @@
 export { copyText } from "./io/copyText";
 export { readFile } from "./io/readFile";
-export { saveFile } from "./io/saveFile";
+export { downloadFile } from "./io/downloadFile";
+export { uploadFile } from "./io/uploadFile";
 export {
     imageUrlAtk,
     imageUrlAttribute,

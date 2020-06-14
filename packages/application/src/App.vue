@@ -77,7 +77,7 @@ import { APPLICATION_TYPES } from "./types";
 import AppHeader from "./views/AppHeader.vue";
 import { DECK_REPLACE } from "./store/modules/deck";
 import AppMain from "./views/AppMain.vue";
-import { computed, defineComponent, onMounted } from "@vue/composition-api";
+import { defineComponent, onMounted } from "@vue/composition-api";
 import { DATA_LOADED } from "./store/modules/data";
 import { BOverlay } from "bootstrap-vue";
 import { appStore } from "./composition/appStore";
@@ -232,7 +232,7 @@ export default defineComponent({
 //         const { fileName, fileContent } = this.deckFileService.toFile(
 //             this.deck
 //         );
-//         saveFile(new File([fileContent], fileName), document);
+//         downloadFile(new File([fileContent], fileName), document);
 //     }
 //
 //     fileOnUpload(e) {
