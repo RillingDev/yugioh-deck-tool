@@ -36,7 +36,7 @@
     @import "~bootstrap/scss/images";
     // @import "~bootstrap/scss/code";
     @import "~bootstrap/scss/grid";
-    @import "~bootstrap/scss/tables";
+    // @import "~bootstrap/scss/tables";
     @import "~bootstrap/scss/forms";
     @import "~bootstrap/scss/buttons";
     @import "~bootstrap/scss/transitions";
@@ -56,9 +56,9 @@
     // @import "~bootstrap/scss/media";
     // @import "~bootstrap/scss/list-group";
     @import "~bootstrap/scss/close";
-    // @import "~bootstrap/scss/toasts";
-    // @import "~bootstrap/scss/modal";
-    // @import "~bootstrap/scss/tooltip";
+    @import "~bootstrap/scss/toasts";
+    @import "~bootstrap/scss/modal";
+    @import "~bootstrap/scss/tooltip";
     // @import "~bootstrap/scss/popover";
     // @import "~bootstrap/scss/carousel";
     @import "~bootstrap/scss/spinners";
@@ -79,7 +79,7 @@
     // @import "~bootstrap-vue/src/components/form-spinbutton/index";
     // @import "~bootstrap-vue/src/components/form-tags/index";
     // @import "~bootstrap-vue/src/components/input-group/index";
-    // @import "~bootstrap-vue/src/components/modal/index";
+    @import "~bootstrap-vue/src/components/modal/index";
     // @import "~bootstrap-vue/src/components/nav/index";
     // @import "~bootstrap-vue/src/components/navbar/index";
     // @import "~bootstrap-vue/src/components/pagination/index";
@@ -88,8 +88,8 @@
     // @import "~bootstrap-vue/src/components/sidebar/index";
     // @import "~bootstrap-vue/src/components/table/index";
     // @import "~bootstrap-vue/src/components/time/index";
-    // @import "~bootstrap-vue/src/components/toast/index";
-    // @import "~bootstrap-vue/src/components/tooltip/index";
+    @import "~bootstrap-vue/src/components/toast/index";
+    @import "~bootstrap-vue/src/components/tooltip/index";
     // @import "~bootstrap-vue/src/icons/index";
 
     // Vue Select
@@ -111,6 +111,7 @@
 }
 
 // Some elements have to be placed outside the .deck-tool, these are global
+// Note that these styles are included both in the above section and here, to decrease the odds of specificity issues
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/toasts";
 @import "~bootstrap/scss/tooltip";
