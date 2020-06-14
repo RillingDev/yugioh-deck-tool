@@ -102,7 +102,7 @@ export default defineComponent({
         BOverlay,
     },
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const loadUriDeck = async (): Promise<void> => {
             const urlService = applicationContainer.get<UrlService>(
                 APPLICATION_TYPES.UrlService

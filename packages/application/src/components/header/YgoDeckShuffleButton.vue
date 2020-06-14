@@ -14,7 +14,7 @@ import { DECK_SHUFFLE } from "../../store/modules/deck";
 export default defineComponent({
     components: {},
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const shuffle = (): void => appStore(context).commit(DECK_SHUFFLE);
 
         return { shuffle };

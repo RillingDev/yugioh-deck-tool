@@ -101,7 +101,7 @@ export default defineComponent({
             type: Function as PropType<(e: object) => boolean>,
         },
     },
-    setup: function (props, context) {
+    setup: (props, context) => {
         const deckPartConfig = computed<DeckPartConfig>(
             () => DefaultDeckPartConfig[props.deckPart]
         );

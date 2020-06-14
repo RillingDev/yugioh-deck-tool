@@ -1,7 +1,7 @@
 <template>
     <div>
-        <BDropdownItem @click="() => copyYdke()">
-            To YDKe URL in Clipboard
+        <BDropdownItem @click="() => copyLink()">
+            To Deck Tool Shareable Link in Clipboard
         </BDropdownItem>
     </div>
 </template>
@@ -14,6 +14,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
+import { deckEmpty } from "../../../composition/deckEmpty";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     APPLICATION_TYPES.DeckUriEncodingService
@@ -23,12 +24,22 @@ export default defineComponent({
     components: { BDropdownItem },
     props: {},
     setup: (props, context) => {
-        const copyYdke = (): void => {
+        const isDeckEmpty = deckEmpty(context);
+
+        const copyLink = (): void => {
             const deck = appStore(context).state.deck.active;
-            const ydke = deckUriEncodingService.toUri(deck);
-            copyText(ydke.toString(), document);
+            const queryParamValue = deckUriEncodingService.toUrlQueryParamValue(
+                deck
+            );
+            const url = new URL(location.href);
+            url.search = "";
+            if (!isDeckEmpty.value) {
+                url.searchParams.append("e", queryParamValue);
+            }
+
+            copyText(url.toString(), document);
             context.root.$bvToast.toast(
-                "Successfully copied YDKe to clipboard!",
+                "Successfully copied share link to clipboard!",
                 {
                     variant: "success",
                     noCloseButton: true,
@@ -37,7 +48,7 @@ export default defineComponent({
             );
         };
 
-        return { copyYdke };
+        return { copyLink };
     },
 });
 </script>

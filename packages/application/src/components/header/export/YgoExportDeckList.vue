@@ -1,34 +1,34 @@
 <template>
     <div>
-        <BDropdownItem @click="() => copyYdke()">
-            To YDKe URL in Clipboard
+        <BDropdownItem @click="() => copyList()">
+            To Deck List in Clipboard
         </BDropdownItem>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { DeckUriEncodingService } from "../../../../../core/src/main";
+import { DeckExportService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 
-const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
-    APPLICATION_TYPES.DeckUriEncodingService
+const deckExportService = applicationContainer.get<DeckExportService>(
+    APPLICATION_TYPES.DeckExportService
 );
 
 export default defineComponent({
     components: { BDropdownItem },
     props: {},
     setup: (props, context) => {
-        const copyYdke = (): void => {
+        const copyList = (): void => {
             const deck = appStore(context).state.deck.active;
-            const ydke = deckUriEncodingService.toUri(deck);
-            copyText(ydke.toString(), document);
+            const deckList = deckExportService.toShareableText(deck);
+            copyText(deckList, document);
             context.root.$bvToast.toast(
-                "Successfully copied YDKe to clipboard!",
+                "Successfully copied deck list to clipboard!",
                 {
                     variant: "success",
                     noCloseButton: true,
@@ -37,7 +37,7 @@ export default defineComponent({
             );
         };
 
-        return { copyYdke };
+        return { copyList };
     },
 });
 </script>

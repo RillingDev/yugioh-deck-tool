@@ -26,7 +26,7 @@ export default defineComponent({
         BModal,
     },
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const modal = ref<BModal>();
 
         const openModal = (): void => modal.value?.show();

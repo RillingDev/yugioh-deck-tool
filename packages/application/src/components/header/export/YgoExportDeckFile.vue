@@ -22,7 +22,7 @@ const deckFileService = applicationContainer.get<DeckFileService>(
 export default defineComponent({
     components: { BDropdownItem },
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const downloadDeck = (): void => {
             const deck = appStore(context).state.deck.active;
             const { fileContent, fileName } = deckFileService.toFile(deck);

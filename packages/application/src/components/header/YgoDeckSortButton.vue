@@ -14,7 +14,7 @@ import { DECK_SORT } from "../../store/modules/deck";
 export default defineComponent({
     components: {},
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const sort = (): void => appStore(context).commit(DECK_SORT);
 
         return { sort };

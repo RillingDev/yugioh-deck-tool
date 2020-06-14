@@ -16,6 +16,7 @@ import { DeckExportService, DeckService } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { appStore } from "../../composition/appStore";
+import { deckEmpty } from "../../composition/deckEmpty";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
     APPLICATION_TYPES.DeckExportService
@@ -26,12 +27,8 @@ const deckService = applicationContainer.get<DeckService>(
 export default defineComponent({
     components: {},
     props: {},
-    setup: function (props, context) {
-        const isDeckEmpty = computed<boolean>(
-            () =>
-                deckService.getAllCards(appStore(context).state.deck.active)
-                    .length === 0
-        );
+    setup: (props, context) => {
+        const isDeckEmpty = deckEmpty(context);
 
         const buyLink = computed<string>(() =>
             deckExportService

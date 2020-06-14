@@ -10,16 +10,14 @@
             <hr />
             <BDropdown text="Import Deck" id="deckImport" :disabled="!loaded">
                 <YgoImportFile />
-                <BDropdownItem>From YDKe URL</BDropdownItem>
+                <YgoImportYdkeUrl />
             </BDropdown>
 
             <BDropdown text="Export Deck" id="deckExport" :disabled="!loaded">
                 <YgoExportDeckFile />
                 <YgoExportDeckYdkeUrl />
-                <BDropdownItem>To Deck List in Clipboard</BDropdownItem>
-                <BDropdownItem
-                    >To Deck Tool Shareable Link in Clipboard
-                </BDropdownItem>
+                <YgoExportDeckList />
+                <YgoExportShareLink />
             </BDropdown>
         </div>
         <div class="col-md-6 col-lg-4">
@@ -53,10 +51,12 @@ import YgoDeckShuffleButton from "../components/header/YgoDeckShuffleButton.vue"
 import YgoDeckClearButton from "../components/header/YgoDeckClearButton.vue";
 import YgoExportDeckFile from "../components/header/export/YgoExportDeckFile.vue";
 import YgoExportDeckYdkeUrl from "../components/header/export/YgoExportDeckYdkeUrl.vue";
+import YgoExportDeckList from "../components/header/export/YgoExportDeckList.vue";
+import YgoExportShareLink from "../components/header/export/YgoExportShareLink.vue";
+import YgoImportYdkeUrl from "../components/header/import/YgoImportYdkeUrl.vue";
 
 export default defineComponent({
     components: {
-        YgoImportFile,
         YgoFormat,
         YgoDeckName,
         YgoCurrency,
@@ -68,8 +68,12 @@ export default defineComponent({
         YgoDeckSortButton,
         YgoDeckShuffleButton,
         YgoDeckClearButton,
+        YgoImportFile,
+        YgoImportYdkeUrl,
         YgoExportDeckFile,
         YgoExportDeckYdkeUrl,
+        YgoExportDeckList,
+        YgoExportShareLink,
     },
     props: {},
     setup: (props, context) => {

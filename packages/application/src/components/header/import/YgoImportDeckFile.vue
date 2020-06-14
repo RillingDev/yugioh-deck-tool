@@ -29,7 +29,7 @@ const logger = getLogger("YgoImportDeckFile");
 export default defineComponent({
     components: { BDropdownItem },
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const importDeckFile = async (file: File): Promise<ImportResult> => {
             const fileContent = await readFile(file);
             const result = deckFileService.fromFile({
@@ -66,7 +66,14 @@ export default defineComponent({
                         );
                     }
                 })
-                .catch((err) => logger.error("Could not read file!", err));
+                .catch((e) => {
+                    logger.error("Could not read deck file.", e);
+                    context.root.$bvToast.toast("Could not read deck file.", {
+                        variant: "error",
+                        noCloseButton: true,
+                        toastClass: "deck-tool__portal",
+                    });
+                });
         };
 
         const onUploadClick = (): void => {

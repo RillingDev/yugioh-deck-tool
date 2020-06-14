@@ -18,7 +18,7 @@ import { appStore } from "../../composition/appStore";
 export default defineComponent({
     components: { VSelect },
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const formats = Object.values(Format);
         const format = computed<Format>({
             get() {

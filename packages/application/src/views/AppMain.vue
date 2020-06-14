@@ -42,7 +42,7 @@ export default defineComponent({
         YgoBuilder,
     },
     props: {},
-    setup: function (props, context) {
+    setup: (props, context) => {
         const canMoveInDeckParts = (e: any, oldDeckPart: DeckPart): boolean => {
             const newDeckPart = findDeckPartForComponent(
                 e.relatedContext.component
