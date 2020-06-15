@@ -21,9 +21,7 @@ import { deckEmpty } from "../../composition/deckEmpty";
 const deckExportService = applicationContainer.get<DeckExportService>(
     APPLICATION_TYPES.DeckExportService
 );
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
+
 export default defineComponent({
     components: {},
     props: {},

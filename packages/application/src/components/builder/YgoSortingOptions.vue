@@ -11,7 +11,7 @@
                     title="Sorting Strategy"
                     :clearable="false"
                     :options="sortingStrategies"
-                    @input="onOptionsChanged"
+                    @input="() => onOptionsChanged()"
                     v-model="internalSortingOptions.strategy"
                 />
             </div>
@@ -20,7 +20,7 @@
                     title="Sorting Order"
                     :clearable="false"
                     :options="sortingOrders"
-                    @input="onOptionsChanged"
+                    @input="() => onOptionsChanged()"
                     v-model="internalSortingOptions.order"
                 />
             </div>

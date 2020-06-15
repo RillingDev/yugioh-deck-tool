@@ -7,7 +7,7 @@
         <hr />
         <YgoDeckPart
             v-for="deckPart in deckParts"
-            :key="deckPart.id"
+            :key="deckPart"
             :deck-part="deckPart"
             :can-move="(e) => canMove(e, deckPart)"
         />

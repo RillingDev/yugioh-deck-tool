@@ -2,10 +2,10 @@
     <form>
         <div class="form-group" v-if="isFieldVisible('search')">
             <input
-                @input="onFilterChanged"
+                @input="() => onFilterChanged()"
                 class="form-control"
-                title="Search"
                 placeholder="Search"
+                title="Search"
                 type="search"
                 v-model="internalFilter.name"
             />
@@ -13,7 +13,8 @@
 
         <div
             class="form-group"
-            v-if="isFieldVisible('banState') && hasBanStates"
+            v-if="isFieldVisible('banState')"
+            v-show="hasBanStates"
         >
             <VSelect
                 :get-option-key="(banState) => banState.name"
@@ -21,7 +22,7 @@
                 :options="banStates"
                 title="Limit"
                 placeholder="Limit"
-                @input="onFilterChanged"
+                @input="() => onFilterChanged()"
                 v-model="internalFilter.banState"
             />
         </div>
@@ -34,7 +35,7 @@
                 :options="sets"
                 title="Set"
                 placeholder="Set"
-                @input="onFilterChanged"
+                @input="() => onFilterChanged()"
                 v-model="internalFilter.sets"
             />
         </div>
@@ -44,7 +45,7 @@
                 title="Archetype"
                 placeholder="Archetype"
                 :options="archetypes"
-                @input="onFilterChanged"
+                @input="() => onFilterChanged()"
                 v-model="internalFilter.archetype"
             />
         </div>
@@ -58,7 +59,7 @@
                     title="Type Group"
                     placeholder="Type Group"
                     :options="typeGroups"
-                    @input="onFilterChanged"
+                    @input="() => onFilterChanged()"
                     v-model="internalFilter.typeGroup"
                 />
             </div>
@@ -72,7 +73,7 @@
                         (type) => type.name.replace(' Monster', '')
                     "
                     :options="types"
-                    @input="onFilterChanged"
+                    @input="() => onFilterChanged()"
                     v-model="internalFilter.type"
                 />
             </div>
@@ -80,24 +81,25 @@
 
         <div
             class="form-group"
-            v-if="isFieldVisible('subType') && internalFilter.typeGroup != null"
+            v-if="isFieldVisible('subType')"
+            v-show="internalFilter.typeGroup != null"
         >
             <VSelect
                 :title="`${internalFilter.typeGroup} Type`"
                 :placeholder="`${internalFilter.typeGroup} Type`"
                 :options="subTypes"
-                @input="onFilterChanged"
+                @input="() => onFilterChanged()"
                 v-model="internalFilter.subType"
             />
         </div>
 
-        <template v-if="isMonster">
+        <template v-show="isMonster">
             <div class="form-group" v-if="isFieldVisible('attribute')">
                 <VSelect
                     title="Attribute"
                     placeholder="Attribute"
                     :options="attributes"
-                    @input="onFilterChanged"
+                    @input="() => onFilterChanged()"
                     v-model="internalFilter.attribute"
                 />
             </div>
@@ -107,7 +109,7 @@
                     title="Level/Rank"
                     placeholder="Level/Rank"
                     :options="levels"
-                    @input="onFilterChanged"
+                    @input="() => onFilterChanged()"
                     v-model="internalFilter.level"
                 />
             </div>
@@ -118,7 +120,7 @@
                     placeholder="Link Markers"
                     :multiple="true"
                     :options="linkMarkers"
-                    @input="onFilterChanged"
+                    @input="() => onFilterChanged()"
                     v-model="internalFilter.linkMarker"
                 />
             </div>
@@ -220,17 +222,17 @@ export default defineComponent({
         watch(
             () => internalFilter.typeGroup,
             () => {
-                internalFilter.type = undefined;
-                internalFilter.subType = undefined;
-                internalFilter.attribute = undefined;
-                internalFilter.level = undefined;
-                internalFilter.linkMarker = undefined;
+                internalFilter.type = null;
+                internalFilter.subType = null;
+                internalFilter.attribute = null;
+                internalFilter.level = null;
+                internalFilter.linkMarker = null;
             }
         );
         watch(
             () => hasBanStates.value,
             () => {
-                internalFilter.banState = undefined;
+                internalFilter.banState = null;
             }
         );
 

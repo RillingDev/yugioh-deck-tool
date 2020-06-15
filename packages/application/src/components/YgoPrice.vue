@@ -19,7 +19,7 @@
             <BTooltip
                 custom-class="deck-tool__portal"
                 :target="createTooltipButtonId(vendor)"
-                triggers="click"
+                triggers="hover"
             >
                 <span>
                     Missing prices for
