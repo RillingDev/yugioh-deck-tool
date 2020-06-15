@@ -58,6 +58,7 @@ export default defineComponent({
     .builder-match {
         display: flex;
         padding: 0.35rem;
+        border-bottom: 1px solid $gray-400;
 
         &__card {
             height: 5rem;
@@ -69,10 +70,6 @@ export default defineComponent({
             > p {
                 margin-bottom: 0;
             }
-        }
-
-        &:not(:last-child) {
-            border-bottom: 1px solid $gray-400;
         }
     }
 }

@@ -10,12 +10,13 @@ $gray-800: #343a40;
 $gray-900: #212529;
 $black: #000;
 
-$brown: #b97b51;
-$purple: #9683b8;
 $green: #799a60;
 $yellow: #fad85c;
-$orange: #de7500;
+$brown: #b97b51;
+$orange: #e58b28;
 $red: #d26c6c;
+$purple: #9683b8;
+$blue: #82aef8;
 
 $primary: $brown;
 $secondary: desaturate(darken($primary, 5%), 10%);

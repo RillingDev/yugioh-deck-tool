@@ -1,5 +1,5 @@
 <template>
-    <a :data-name="name" class="card">
+    <a :data-name="name" class="card" tabindex="0">
         <img
             :alt="name"
             :class="{ 'card__img--vertically-scaling': scaleVertically }"
@@ -38,10 +38,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../../ui/src/styles/variables";
+
 .deck-tool,
 .deck-tool__portal {
     .card {
         display: block; // Make sure link covers full card
+        &:focus {
+            outline: 3px solid $blue;
+        }
     }
 
     .card__img {
