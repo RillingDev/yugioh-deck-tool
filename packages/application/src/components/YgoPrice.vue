@@ -5,11 +5,11 @@
             :key="vendor.id"
             :title="`${vendor.name} Price`"
             class="price__vendor"
-            v-for="[vendor, lookupResult] in priceByVendor.entries()"
+            v-for="([vendor, lookupResult], index) in priceByVendor.entries()"
         >
             <span>{{ vendor.name }}: {{ formatPrice(lookupResult) }}</span>
             <button
-                :id="createTooltipButtonId(vendor)"
+                ref="missingCardButtons"
                 v-show="lookupResult.missing.length > 0"
                 title="Some cards have no price data."
                 class="btn btn-sm btn-warning price__warning"
@@ -18,7 +18,7 @@
             </button>
             <BTooltip
                 custom-class="deck-tool__portal"
-                :target="createTooltipButtonId(vendor)"
+                :target="() => missingCardButtons[index]"
                 triggers="hover"
             >
                 <span>
@@ -50,10 +50,9 @@ import {
     PriceService,
     Vendor,
 } from "../../../core/src/main";
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
 import { appStore } from "../composition/appStore";
 import { BTooltip } from "bootstrap-vue";
-import { uniqueId } from "lodash";
 
 const priceService = applicationContainer.get<PriceService>(
     APPLICATION_TYPES.PriceService
@@ -94,15 +93,13 @@ export default defineComponent({
         const formatPrice = (lookupResult: PriceLookupResult): string =>
             priceService.formatPrice(lookupResult.price, activeCurrency.value);
 
-        const id = uniqueId("priceTooltip_");
-        const createTooltipButtonId = (vendor: Vendor): string =>
-            `${id}_${vendor.id}`;
+        const missingCardButtons = ref<HTMLElement[]>([]);
 
         return {
+            missingCardButtons,
             priceByVendor,
             formatPrice,
             listMissingCards,
-            createTooltipButtonId,
         };
     },
 });
