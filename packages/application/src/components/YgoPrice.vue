@@ -19,7 +19,6 @@
             <BTooltip
                 custom-class="deck-tool__portal"
                 :target="() => missingCardButtons[index]"
-                triggers="hover"
             >
                 <span>
                     Missing prices for
