@@ -89,12 +89,27 @@ export default defineComponent({
 
         cardDatabase
             .prepareAll()
+            .catch((err) => {
+                logger.error("Could not load data!", err);
+                context.root.$bvToast.toast("Could not load data!", {
+                    variant: "warning",
+                    noCloseButton: true,
+                    toastClass: "deck-tool__portal",
+                });
+            })
             .then(() => {
                 appStore(context).commit(DATA_LOADED);
                 return loadUriDeck();
             })
             .then(() => logger.info("Ready."))
-            .catch((err) => logger.error("Could not prepare database!", err));
+            .catch((err) => {
+                logger.error("Could not load deck!", err);
+                context.root.$bvToast.toast("Could not load deck!", {
+                    variant: "warning",
+                    noCloseButton: true,
+                    toastClass: "deck-tool__portal",
+                });
+            });
 
         return { loaded };
     },
