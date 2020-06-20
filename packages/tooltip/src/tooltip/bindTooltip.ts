@@ -16,6 +16,9 @@ import { bindReferenceLink } from "./bindReferenceLink";
 import { debounce } from "lodash";
 import { createPopper, Instance } from "@popperjs/core";
 
+const DATA_CARD_NAME = "name";
+const DATA_TOOLTIP_HIDDEN = "tooltipHidden";
+
 const cardDatabase = tooltipContainer.get<CardDatabase>(
     TOOLTIP_TYPES.CardDatabase
 );
@@ -83,10 +86,16 @@ export const bindTooltipHandlers = (
     const tooltip = new CardTooltip(tooltipContainerElement);
 
     const openTooltip = (target: HTMLElement, cardKey: string): void => {
+        if (target.dataset[DATA_TOOLTIP_HIDDEN]) {
+            return;
+        }
         logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
         tooltip.open(target, createLoadingTooltip());
         loadCard(cardKey)
             .then((card) => {
+                if (target.dataset[DATA_TOOLTIP_HIDDEN]) {
+                    return;
+                }
                 logger.trace("Loaded card.", card);
                 tooltip.open(target, createCardTooltip(card));
                 if (target instanceof HTMLAnchorElement) {
@@ -112,7 +121,7 @@ export const bindTooltipHandlers = (
     const tooltipShowHandler = (event: MouseEvent): void => {
         const target = event.target;
         if (target instanceof HTMLElement) {
-            const cardKey = target.dataset["name"];
+            const cardKey = target.dataset[DATA_CARD_NAME];
             if (cardKey != null) {
                 openTooltip(target, cardKey);
             }

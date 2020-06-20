@@ -1,5 +1,12 @@
 <template>
-    <a :data-name="name" class="card" tabindex="0">
+    <a
+        :data-name="name"
+        :data-tooltip-hidden="dragging"
+        class="card"
+        tabindex="0"
+        @dragstart="() => onDragStart()"
+        @dragend="() => onDragEnd()"
+    >
         <img
             :alt="name"
             :class="{ 'card__img--vertically-scaling': scaleVertically }"
@@ -10,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
 import { Card } from "../../../core/src/main";
 import { imageUrlCardPlaceholder } from "../../../ui/src/main";
 
@@ -32,7 +39,15 @@ export default defineComponent({
         );
         const name = computed<string>(() => props.card.name);
 
-        return { name, imgSrc };
+        const dragging = ref<boolean>(false);
+        const onDragStart = (): void => {
+            dragging.value = true;
+        };
+        const onDragEnd = (): void => {
+            dragging.value = false;
+        };
+
+        return { name, imgSrc, onDragEnd, onDragStart, dragging };
     },
 });
 </script>
