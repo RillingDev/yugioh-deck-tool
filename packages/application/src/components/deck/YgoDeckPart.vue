@@ -11,7 +11,7 @@
         </header>
         <Draggable
             class="deck-part__content"
-            tag="main"
+            tag="div"
             :group="{ name: 'cards', pull: true, put: true }"
             v-model="cards"
             :move="(e) => canMove(e)"
