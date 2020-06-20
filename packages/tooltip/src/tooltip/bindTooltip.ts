@@ -109,7 +109,7 @@ export const bindTooltipHandlers = (
             });
     };
 
-    const mouseOverHandler = (event: MouseEvent): void => {
+    const tooltipShowHandler = (event: MouseEvent): void => {
         const target = event.target;
         if (target instanceof HTMLElement) {
             const cardKey = target.dataset["name"];
@@ -119,8 +119,9 @@ export const bindTooltipHandlers = (
         }
     };
 
-    const mouseOutHandler = (): void => tooltip.close();
+    const tooltipHideHandler = (): void => tooltip.close();
 
-    context.addEventListener("mouseover", debounce(mouseOverHandler, 200));
-    context.addEventListener("mouseout", mouseOutHandler);
+    context.addEventListener("mouseover", debounce(tooltipShowHandler, 400));
+    context.addEventListener("mouseout", tooltipHideHandler);
+    context.addEventListener("dragstart", tooltipHideHandler);
 };

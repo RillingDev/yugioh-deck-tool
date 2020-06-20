@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import "./styles/tooltip.scss";
 import { getLogger } from "../../core/src/main";
+import { bindTooltipHandlers } from "./tooltip/bindTooltip";
 
 const TOOLTIP_CONTAINER_ID = "cardTooltipContainer";
 
@@ -13,6 +14,6 @@ document.addEventListener("readystatechange", () => {
         const tooltipContainerElement = document.createElement("div");
         tooltipContainerElement.id = TOOLTIP_CONTAINER_ID;
         context.appendChild(tooltipContainerElement);
-        //bindTooltipHandlers(context, tooltipContainerElement);
+        bindTooltipHandlers(context, tooltipContainerElement);
     }
 });
