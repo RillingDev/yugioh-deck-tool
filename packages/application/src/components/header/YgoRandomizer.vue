@@ -10,15 +10,15 @@
         <button
             class="btn btn-primary btn-sm"
             title="Configure Randomizer"
-            @click="() => showModal()"
+            v-b-modal.randomizerSettings
             :disabled="!loaded"
         >
             <span class="fas fa-cog" aria-hidden="true"></span>
         </button>
         <BModal
+            id="randomizerSettings"
             hide-footer
             modal-class="deck-tool__portal"
-            ref="modal"
             title="Randomizer Settings"
         >
             <div class="form-group">
@@ -88,7 +88,6 @@ export default defineComponent({
 
             sets: [],
         });
-        const modal = ref<BModal>();
 
         const format = computed<Format>(
             () => appStore(context).state.format.active
@@ -105,28 +104,17 @@ export default defineComponent({
             appStore(context).commit(DECK_REPLACE, { deck: randomizedDeck });
         };
 
-        const showModal = (): void => {
-            modal.value?.show();
-        };
-
         const loaded = dataLoaded(context);
 
         return {
             strategy,
             strategies,
             filter,
-            modal,
 
             loaded,
 
-            showModal,
             randomize,
         };
     },
 });
 </script>
-<style lang="scss">
-/*.randomizer .btn {*/
-/*    margin-right: 0;*/
-/*}*/
-</style>

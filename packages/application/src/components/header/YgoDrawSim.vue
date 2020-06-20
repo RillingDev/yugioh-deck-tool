@@ -2,19 +2,20 @@
     <div class="draw-sim">
         <button
             class="btn btn-primary btn-sm"
-            @click="() => showModal()"
+            v-b-modal.drawSim
             :disabled="!hasMainDeckCards"
         >
             Simulate Start-Hand
         </button>
 
         <BModal
+            id="drawSim"
             hide-footer
             modal-class="deck-tool__portal"
             body-class="draw-sim__modal"
-            ref="modal"
             size="lg"
             title="Start-Hand Simulation"
+            @show="() => draw()"
         >
             <div class="btn-group" role="group">
                 <button
@@ -69,7 +70,6 @@ export default defineComponent({
     setup(props, context) {
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);
-        const modal = ref<BModal>();
 
         const deck = computed<Deck>(() => appStore(context).state.deck.active);
         const hasMainDeckCards = computed<boolean>(
@@ -82,22 +82,16 @@ export default defineComponent({
                 goingFirst.value
             );
         };
-        const showModal = (): void => {
-            modal.value?.show();
-            draw();
-        };
         const setGoingFirst = (val: boolean): void => {
             goingFirst.value = val;
             draw();
         };
 
         return {
-            modal,
             goingFirst,
             hasMainDeckCards,
             drawnCards,
             setGoingFirst,
-            showModal,
             draw,
         };
     },

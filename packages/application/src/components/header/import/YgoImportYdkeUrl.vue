@@ -1,10 +1,11 @@
 <template>
     <div>
-        <BDropdownItem @click="() => openModal()">
+        <BDropdownItem v-b-modal.ydkeImport>
             From YDKe URL
         </BDropdownItem>
         <BModal
             ref="modal"
+            id="ydkeImport"
             modal-class="deck-tool__portal"
             title="Import Deck From YDKe URL"
             hide-footer
@@ -49,8 +50,6 @@ export default defineComponent({
         const modal = ref<BModal>();
         const ydkeUrl = ref<string>("");
 
-        const openModal = (): void => modal.value?.show();
-
         const onInput = (): void => {
             let deck: Deck;
             try {
@@ -75,7 +74,7 @@ export default defineComponent({
             modal.value!.close();
         };
 
-        return { modal, openModal, onInput, ydkeUrl };
+        return { modal, onInput, ydkeUrl };
     },
 });
 </script>

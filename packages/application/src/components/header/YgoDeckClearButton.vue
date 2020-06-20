@@ -1,10 +1,11 @@
 <template>
     <div>
-        <button class="btn btn-primary btn-sm" @click="() => openModal()">
+        <button class="btn btn-primary btn-sm" v-b-modal.clearDeck>
             Clear
         </button>
 
         <BModal
+            id="clearDeck"
             modal-class="deck-tool__portal"
             ref="modal"
             title="Clear Deck"
@@ -16,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import { appStore } from "../../composition/appStore";
 import { DECK_CLEAR } from "../../store/modules/deck";
 import { BModal } from "bootstrap-vue";
@@ -27,12 +28,9 @@ export default defineComponent({
     },
     props: {},
     setup: (props, context) => {
-        const modal = ref<BModal>();
-
-        const openModal = (): void => modal.value?.show();
         const clear = (): void => appStore(context).commit(DECK_CLEAR);
 
-        return { modal, openModal, clear };
+        return { clear };
     },
 });
 </script>
