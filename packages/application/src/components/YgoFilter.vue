@@ -31,7 +31,7 @@
             <VSelect
                 :get-option-key="(set) => set.name"
                 :get-option-label="(set) => set.name"
-                :multiple="true"
+                multiple
                 :options="sets"
                 title="Set"
                 placeholder="Set"
@@ -118,7 +118,7 @@
                 <VSelect
                     title="Link Markers"
                     placeholder="Link Markers"
-                    :multiple="true"
+                    multiple
                     :options="linkMarkers"
                     @input="() => onFilterChanged()"
                     v-model="internalFilter.linkMarker"

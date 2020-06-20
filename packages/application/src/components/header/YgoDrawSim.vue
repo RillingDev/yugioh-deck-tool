@@ -34,6 +34,7 @@
             </div>
             <div class="draw-sim__output">
                 <YgoCard
+                    class="draw-sim__output__card"
                     :card="card"
                     v-for="(card, index) of drawnCards"
                     :key="`${index}_${card.passcode}`"
@@ -109,14 +110,29 @@ export default defineComponent({
 
 .deck-tool,
 .deck-tool__portal {
-    /*.draw-sim__modal {*/
-    /*}*/
+    .draw-sim__modal {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-    /*.draw-sim__output {*/
-    /*    display: grid;*/
-    /*    padding: 0.35rem;*/
-    /*    gap: 0.35rem;*/
-    /*    grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));*/
-    /*}*/
+    .draw-sim__output {
+        display: flex;
+        padding: 0.35rem;
+        margin: 0.35rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        &__card {
+            max-width: 33.333%;
+            @include screen(min, md) {
+                max-width: 20%;
+            }
+            @include screen(min, lg) {
+                max-width: 15%;
+            }
+            padding: 0.35rem;
+        }
+    }
 }
 </style>

@@ -23,7 +23,7 @@ export default defineComponent({
         scaleVertically: {
             required: false,
             type: Boolean as PropType<boolean>,
-            default: () => false,
+            default: false,
         },
     },
     setup(props) {
