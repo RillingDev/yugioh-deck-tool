@@ -19,6 +19,11 @@ import { BDropdownItem } from "bootstrap-vue";
 import { readFile, uploadFile } from "../../../../../ui/src/main";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { appStore } from "../../../composition/appStore";
+import {
+    showError,
+    showSuccess,
+    showWarning,
+} from "../../../composition/feedback";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
     APPLICATION_TYPES.DeckFileService
@@ -47,32 +52,26 @@ export default defineComponent({
             importDeckFile(file)
                 .then((result: ImportResult) => {
                     if (result.missing.length > 0) {
-                        context.root.$bvToast.toast(
+                        showWarning(
+                            context,
                             `${result.missing.length} cards could not be imported!`,
-                            {
-                                variant: "warning",
-                                noCloseButton: true,
-                                toastClass: "deck-tool__portal",
-                            }
+                            "deck-tool__portal"
                         );
                     } else {
-                        context.root.$bvToast.toast(
+                        showSuccess(
+                            context,
                             "Successfully imported deck file!",
-                            {
-                                variant: "success",
-                                noCloseButton: true,
-                                toastClass: "deck-tool__portal",
-                            }
+                            "deck-tool__portal"
                         );
                     }
                 })
                 .catch((e) => {
                     logger.error("Could not read deck file.", e);
-                    context.root.$bvToast.toast("Could not read deck file.", {
-                        variant: "error",
-                        noCloseButton: true,
-                        toastClass: "deck-tool__portal",
-                    });
+                    showError(
+                        context,
+                        "Could not read deck file.",
+                        "deck-tool__portal"
+                    );
                 });
         };
 

@@ -15,6 +15,7 @@ import { BDropdownItem } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 import { deckEmpty } from "../../../composition/deckEmpty";
+import { showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     APPLICATION_TYPES.DeckUriEncodingService
@@ -38,13 +39,10 @@ export default defineComponent({
             }
 
             copyText(url.toString(), document);
-            context.root.$bvToast.toast(
+            showSuccess(
+                context,
                 "Successfully copied share link to clipboard!",
-                {
-                    variant: "success",
-                    noCloseButton: true,
-                    toastClass: "deck-tool__portal",
-                }
+                "deck-tool__portal"
             );
         };
 

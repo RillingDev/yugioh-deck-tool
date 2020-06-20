@@ -14,6 +14,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem } from "bootstrap-vue";
 import { downloadFile } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
+import { showSuccess } from "../../../composition/feedback";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
     APPLICATION_TYPES.DeckFileService
@@ -28,11 +29,11 @@ export default defineComponent({
             const { fileContent, fileName } = deckFileService.toFile(deck);
             const file = new File([fileContent], fileName);
             downloadFile(file, document);
-            context.root.$bvToast.toast("Successfully exported deck file!", {
-                variant: "success",
-                noCloseButton: true,
-                toastClass: "deck-tool__portal",
-            });
+            showSuccess(
+                context,
+                "Successfully exported deck file!",
+                "deck-tool__portal"
+            );
         };
 
         return { downloadDeck };

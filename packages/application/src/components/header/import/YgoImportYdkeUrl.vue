@@ -36,6 +36,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { appStore } from "../../../composition/appStore";
+import { showError, showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     APPLICATION_TYPES.DeckUriEncodingService
@@ -56,21 +57,21 @@ export default defineComponent({
                 deck = deckUriEncodingService.fromUri(ydkeUrl.value);
             } catch (e) {
                 logger.error("Could not read YDKe URL.", e);
-                context.root.$bvToast.toast("Could not read YDKe URL.", {
-                    variant: "error",
-                    noCloseButton: true,
-                    toastClass: "deck-tool__portal",
-                });
+                showError(
+                    context,
+                    "Could not read YDKe URL.",
+                    "deck-tool__portal"
+                );
                 return;
             }
             appStore(context).commit(DECK_REPLACE, {
                 deck,
             });
-            context.root.$bvToast.toast("Successfully imported YDKe URL!", {
-                variant: "success",
-                noCloseButton: true,
-                toastClass: "deck-tool__portal",
-            });
+            showSuccess(
+                context,
+                "Successfully imported YDKe URL!",
+                "deck-tool__portal"
+            );
             modal.value!.close();
         };
 

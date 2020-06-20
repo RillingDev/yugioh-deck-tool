@@ -14,6 +14,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
+import { showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     APPLICATION_TYPES.DeckUriEncodingService
@@ -27,13 +28,10 @@ export default defineComponent({
             const deck = appStore(context).state.deck.active;
             const ydke = deckUriEncodingService.toUri(deck);
             copyText(ydke.toString(), document);
-            context.root.$bvToast.toast(
+            showSuccess(
+                context,
                 "Successfully copied YDKe to clipboard!",
-                {
-                    variant: "success",
-                    noCloseButton: true,
-                    toastClass: "deck-tool__portal",
-                }
+                "deck-tool__portal"
             );
         };
 

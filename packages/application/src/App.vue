@@ -24,6 +24,7 @@ import { DATA_LOADED } from "./store/modules/data";
 import { BOverlay } from "bootstrap-vue";
 import { appStore } from "./composition/appStore";
 import { dataLoaded } from "./composition/dataLoaded";
+import { showError, showWarning } from "./composition/feedback";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -91,11 +92,7 @@ export default defineComponent({
             .prepareAll()
             .catch((err) => {
                 logger.error("Could not load data!", err);
-                context.root.$bvToast.toast("Could not load data!", {
-                    variant: "warning",
-                    noCloseButton: true,
-                    toastClass: "deck-tool__portal",
-                });
+                showError(context, "Could not load data!", "deck-tool__portal");
             })
             .then(() => {
                 appStore(context).commit(DATA_LOADED);
@@ -104,11 +101,7 @@ export default defineComponent({
             .then(() => logger.info("Ready."))
             .catch((err) => {
                 logger.error("Could not load deck!", err);
-                context.root.$bvToast.toast("Could not load deck!", {
-                    variant: "warning",
-                    noCloseButton: true,
-                    toastClass: "deck-tool__portal",
-                });
+                showError(context, "Could not load deck!", "deck-tool__portal");
             });
 
         return { loaded };

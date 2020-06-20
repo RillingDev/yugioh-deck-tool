@@ -14,6 +14,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItem } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
+import { showSuccess } from "../../../composition/feedback";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
     APPLICATION_TYPES.DeckExportService
@@ -27,13 +28,10 @@ export default defineComponent({
             const deck = appStore(context).state.deck.active;
             const deckList = deckExportService.toShareableText(deck);
             copyText(deckList, document);
-            context.root.$bvToast.toast(
+            showSuccess(
+                context,
                 "Successfully copied deck list to clipboard!",
-                {
-                    variant: "success",
-                    noCloseButton: true,
-                    toastClass: "deck-tool__portal",
-                }
+                "deck-tool__portal"
             );
         };
 
