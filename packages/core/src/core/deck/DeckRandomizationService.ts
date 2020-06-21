@@ -7,7 +7,7 @@ import { TYPES } from "../../types";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 import { SortingService } from "../card/SortingService";
 import { CardService } from "../card/CardService";
-import { flatten, random, sampleSize, shuffle, uniq, words } from "lodash";
+import { random, sampleSize, shuffle, uniq, words } from "lodash";
 import { Card } from "../card/Card";
 import { Format } from "../card/format/Format";
 import { CardTypeGroup } from "../card/type/CardTypeGroup";
@@ -305,8 +305,8 @@ class DeckRandomizationService {
         )
             .filter(([, count]) => count === 3)
             .map(([card]) => card);
-        const cardsWithPlaySetsWords = flatten(
-            cardsWithPlaySets.map((card) =>
+        const cardsWithPlaySetsWords = cardsWithPlaySets
+            .map((card) =>
                 words(card.name).filter(
                     (word) =>
                         !DeckRandomizationService.IGNORED_WORDS.has(
@@ -314,7 +314,7 @@ class DeckRandomizationService {
                         )
                 )
             )
-        );
+            .flat();
         return sampleSize(
             uniq(cardsWithPlaySetsWords),
             random(2, 3, false)

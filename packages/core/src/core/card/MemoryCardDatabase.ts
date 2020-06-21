@@ -9,7 +9,6 @@ import { CardTypeGroup } from "./type/CardTypeGroup";
 import { UnlinkedCard } from "./UnlinkedCard";
 import { deepFreeze } from "lightdash";
 import { CardLinkingService } from "./CardLinkingService";
-import { flatten } from "lodash";
 import { getLogger } from "../../logger";
 
 /**
@@ -248,7 +247,7 @@ class MemoryCardDatabase implements CardDatabase {
         const setMap = new Map<string, CardSet>(
             this.sets.map((set) => [set.name, set])
         );
-        const types = flatten(Array.from(this.types.values()));
+        const types = Array.from(this.types.values()).flat();
         const typeMap = new Map<string, CardType>(
             types.map((type) => [type.name, type])
         );
