@@ -14,7 +14,6 @@ import {
     DEVELOPMENT_MODE,
     FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE,
 } from "../../mode";
-import { merge } from "lodash";
 import { FindCardBy } from "../../core/card/CardDatabase";
 import { Card } from "../../core/card/Card";
 
@@ -59,11 +58,12 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
 
         const response = await this.httpService.get<{ data: RawCard[] }>(
             "cardinfo.php",
-            merge(this.createBaseRequestConfig(), {
+            {
+                ...this.createBaseRequestConfig(),
                 params,
                 validateStatus: (status: number) =>
                     status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found })
-            })
+            }
         );
         if (response.status === 400) {
             return null;
@@ -79,19 +79,17 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
             async (offset) => {
                 const response = await this.httpService.get<
                     PaginatedResponse<RawCard[]>
-                >(
-                    "cardinfo.php",
-                    merge(this.createBaseRequestConfig(), {
-                        params: {
-                            misc: "yes",
-                            format: "all",
-                            includeAliased: "yes",
-                            num:
-                                YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,
-                            offset,
-                        },
-                    })
-                );
+                >("cardinfo.php", {
+                    ...this.createBaseRequestConfig(),
+                    params: {
+                        misc: "yes",
+                        format: "all",
+                        includeAliased: "yes",
+                        num:
+                            YgoprodeckCardDataLoaderService.CARD_INFO_CHUNK_SIZE,
+                        offset,
+                    },
+                });
                 return response.data;
             }
         );
