@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { CardValues } from "../../../core/model/ygo/CardValues";
-import { CardTypeGroup } from "../../../core/model/ygo/CardTypeGroup";
-import { CardType } from "../../../core/model/ygo/CardType";
-import { DeckPart } from "../../../core/model/ygo/DeckPart";
+import { CardValues } from "../../../core/card/type/CardValues";
+import { CardTypeGroup } from "../../../core/card/type/CardTypeGroup";
+import { CardType } from "../../../core/card/type/CardType";
+import { DeckPart } from "../../../core/deck/DeckPart";
 
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {

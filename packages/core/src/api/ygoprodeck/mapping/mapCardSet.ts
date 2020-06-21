@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 // https://jvilk.com/MakeTypes/
-import { CardSet } from "../../../core/model/ygo/CardSet";
+import { CardSet } from "../../../core/card/set/CardSet";
 
 interface RawCardSet {
     set_name: string;

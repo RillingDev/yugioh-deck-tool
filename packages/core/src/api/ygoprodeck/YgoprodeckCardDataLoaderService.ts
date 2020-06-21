@@ -1,25 +1,22 @@
 import { mapCard, RawCard } from "./mapping/mapCard";
 import { mapCardSet, RawCardSet } from "./mapping/mapCardSet";
-import { CardSet } from "../../core/model/ygo/CardSet";
-import { CardDataLoaderService } from "../../core/business/service/CardDataLoaderService";
+import { CardSet } from "../../core/card/set/CardSet";
+import { CardDataLoaderService } from "../../core/card/CardDataLoaderService";
 import { PaginatedResponse } from "./PaginatedResponse";
 import { inject, injectable } from "inversify";
 import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
-import { CardValues } from "../../core/model/ygo/CardValues";
-import { UnlinkedCard } from "../../core/model/ygo/intermediate/UnlinkedCard";
+import { CardValues } from "../../core/card/type/CardValues";
+import { UnlinkedCard } from "../../core/card/UnlinkedCard";
 import { TYPES } from "../../types";
-import {
-    HttpRequestConfig,
-    HttpService,
-} from "../../core/business/service/HttpService";
+import { HttpRequestConfig, HttpService } from "../../core/http/HttpService";
 import { mapArchetype, RawArchetype } from "./mapping/mapArchetype";
 import {
     DEVELOPMENT_MODE,
     FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE,
 } from "../../mode";
 import { merge } from "lodash";
-import { FindCardBy } from "../../core/business/CardDatabase";
-import { Card } from "../../core/model/ygo/Card";
+import { FindCardBy } from "../../core/card/CardDatabase";
+import { Card } from "../../core/card/Card";
 
 /**
  * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
