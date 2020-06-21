@@ -1,24 +1,24 @@
 <template>
-    <form>
-        <div class="form-group row">
-            <div class="col-lg-3">
-                <label class="col-form-label">
+    <form class="form-group">
+        <div class="form-row">
+            <div class="col-12 col-md-2">
+                <label class="col-form-label" for="sortingStrategy">
                     Sort by
                 </label>
             </div>
-            <div class="col-lg-5">
-                <VSelect
-                    title="Sorting Strategy"
-                    :clearable="false"
+            <div class="col-6 col-md-5">
+                <BFormSelect
+                    class="form-control"
+                    id="sortingStrategy"
                     :options="sortingStrategies"
                     @input="() => onOptionsChanged()"
                     v-model="internalSortingOptions.strategy"
                 />
             </div>
-            <div class="col-lg-4">
-                <VSelect
-                    title="Sorting Order"
-                    :clearable="false"
+            <div class="col-6 col-md-5">
+                <BFormSelect
+                    class="form-control"
+                    aria-label="Sorting Order"
                     :options="sortingOrders"
                     @input="() => onOptionsChanged()"
                     v-model="internalSortingOptions.order"
@@ -36,6 +36,7 @@ import {
 } from "../../../../core/src/main";
 import { defineComponent, PropType, reactive } from "@vue/composition-api";
 import VSelect from "vue-select";
+import { BFormSelect } from "bootstrap-vue";
 
 export default defineComponent({
     props: {
@@ -46,6 +47,7 @@ export default defineComponent({
     },
     components: {
         VSelect,
+        BFormSelect,
     },
     model: {
         prop: "sortingOptions",

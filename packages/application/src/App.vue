@@ -1,7 +1,7 @@
 <template>
     <BOverlay :show="!loaded">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-12 col-sm-7 col-lg-8">
                 <div class="row">
                     <div class="col-md-12 col-lg-5">
                         <div class="form-group">
@@ -46,7 +46,7 @@
                 <hr />
                 <YgoDeck :can-move="canMoveInDeckParts" />
             </div>
-            <div class="col-md-4">
+            <div class="col-12 col-sm-5 col-lg-4">
                 <YgoBuilder :can-move="canMoveFromBuilder" />
             </div>
         </div>

@@ -51,7 +51,7 @@
         </div>
 
         <div
-            class="form-group row"
+            class="form-group form-row"
             v-if="isFieldVisible('typeGroup') || isFieldVisible('type')"
         >
             <div class="col-sm-5" v-if="isFieldVisible('typeGroup')">
