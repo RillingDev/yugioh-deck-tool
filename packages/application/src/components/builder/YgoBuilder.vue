@@ -6,32 +6,10 @@
             Showing {{ filteredCards.length }} of {{ formatCards.length }} Cards
         </small>
         <YgoSortingOptions v-model="sortingOptions" />
-
-        <div class="builder__matches">
-            <Draggable
-                tag="ol"
-                class="builder__matches__list"
-                :group="{ name: 'cards', pull: 'clone', put: false }"
-                :list="filteredCards"
-                :sort="false"
-                :move="canMove"
-                v-show="filteredCards.length > 0"
-            >
-                <li
-                    class="builder__matches__match"
-                    v-for="card in filteredCards"
-                    :key="card.passcode"
-                >
-                    <YgoBuilderMatch :card="card" />
-                </li>
-            </Draggable>
-            <div
-                class="builder__matches__no-matches"
-                v-show="filteredCards.length === 0"
-            >
-                No matches found.
-            </div>
-        </div>
+        <YgoBuilderMatches
+            :matches="filteredCards"
+            :can-move="(e) => canMove(e)"
+        />
     </div>
 </template>
 
@@ -52,11 +30,12 @@ import {
 } from "../../../../core/src/main";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
-import YgoBuilderMatch from "./YgoBuilderMatch.vue";
+import YgoBuilderMatch from "./YgoBuilderMatches.vue";
 import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
 import Draggable from "vuedraggable";
 import { appStore } from "../../composition/appStore";
 import { dataLoaded } from "../../composition/dataLoaded";
+import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -81,8 +60,7 @@ export default defineComponent({
     components: {
         YgoFilter,
         YgoSortingOptions,
-        YgoBuilderMatch,
-        Draggable,
+        YgoBuilderMatches,
     },
     setup(props, context) {
         const CARD_DISPLAY_LIMIT = 100;
@@ -153,24 +131,6 @@ export default defineComponent({
         &__count {
             display: inline-block;
             margin-bottom: 0.5rem;
-        }
-
-        &__matches {
-            &__no-matches {
-                margin-top: 0.5rem;
-                margin-bottom: 0.5rem;
-                text-align: center;
-                color: $gray-600;
-            }
-
-            &__list {
-                overflow-y: scroll;
-                max-height: 50rem;
-                margin: 0;
-                padding: 0;
-                list-style: none;
-                border: 1px solid $gray-400;
-            }
         }
     }
 }
