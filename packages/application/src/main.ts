@@ -4,12 +4,13 @@ import VueCompositionApi from "@vue/composition-api";
 import App from "./App.vue";
 import store from "./store/store";
 import "./styles/main.scss";
-import { ModalPlugin, ToastPlugin, VBModalPlugin } from "bootstrap-vue";
+import { ToastPlugin, VBModalPlugin, VBTogglePlugin } from "bootstrap-vue";
 
 Vue.use(VueCompositionApi);
 
 Vue.use(ToastPlugin);
 Vue.use(VBModalPlugin);
+Vue.use(VBTogglePlugin);
 
 new Vue({
     store,

@@ -1,10 +1,19 @@
 <template>
     <div class="builder">
-        <YgoFilter v-model="filter" v-if="loaded" />
-        <hr />
-        <small class="builder__count">
-            Showing {{ filteredCards.length }} of {{ formatCards.length }} Cards
-        </small>
+        <BSidebar id="filterSidebar" width="400px" title="Filter Cards">
+            <div class="container">
+                <YgoFilter v-model="filter" v-if="loaded" />
+            </div>
+        </BSidebar>
+        <div class="builder__details">
+            <small class="builder__count">
+                Showing {{ filteredCards.length }} of
+                {{ formatCards.length }} Cards
+            </small>
+            <button class="btn btn-primary btn-sm" v-b-toggle.filterSidebar>
+                Filter Cards
+            </button>
+        </div>
         <YgoSortingOptions v-model="sortingOptions" />
         <YgoBuilderMatches
             :matches="filteredCards"
@@ -36,6 +45,7 @@ import Draggable from "vuedraggable";
 import { appStore } from "../../composition/appStore";
 import { dataLoaded } from "../../composition/dataLoaded";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
+import { BSidebar } from "bootstrap-vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -61,6 +71,7 @@ export default defineComponent({
         YgoFilter,
         YgoSortingOptions,
         YgoBuilderMatches,
+        BSidebar,
     },
     setup(props, context) {
         const CARD_DISPLAY_LIMIT = 100;
@@ -128,8 +139,10 @@ export default defineComponent({
 .deck-tool,
 .deck-tool__portal {
     .builder {
-        &__count {
-            display: inline-block;
+        &__details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 0.5rem;
         }
     }
