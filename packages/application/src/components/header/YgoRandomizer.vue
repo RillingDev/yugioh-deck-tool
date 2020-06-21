@@ -72,20 +72,6 @@ export default defineComponent({
             RandomizationStrategy.ARCHETYPE_2
         );
         const filter = ref<CardFilter>({
-            name: null,
-
-            typeGroup: null,
-            type: null,
-
-            subType: null,
-            attribute: null,
-            level: null,
-            linkMarker: null,
-            archetype: null,
-
-            format: null,
-            banState: null,
-
             sets: [],
         });
 
