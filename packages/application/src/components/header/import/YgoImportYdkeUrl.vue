@@ -9,9 +9,11 @@
             modal-class="deck-tool__portal"
             title="Import Deck From YDKe URL"
             hide-footer
+            @hide="() => onHide()"
         >
             <div class="form-group">
                 <input
+                    autofocus
                     type="text"
                     class="form-control"
                     title="YDKe URL"
@@ -72,10 +74,13 @@ export default defineComponent({
                 "Successfully imported YDKe URL!",
                 "deck-tool__portal"
             );
-            modal.value!.close();
+            modal.value!.hide();
+        };
+        const onHide = () => {
+            ydkeUrl.value = "";
         };
 
-        return { modal, onInput, ydkeUrl };
+        return { ydkeUrl, modal, onInput, onHide };
     },
 });
 </script>
