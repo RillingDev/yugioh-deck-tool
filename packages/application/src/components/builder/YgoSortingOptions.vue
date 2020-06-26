@@ -2,24 +2,24 @@
     <form class="form-group">
         <div class="form-row">
             <div class="col-12 col-md-2">
-                <label class="col-form-label" for="sortingStrategy">
+                <label class="col-form-label">
                     Sort by
                 </label>
             </div>
             <div class="col-6 col-md-5">
-                <BFormSelect
-                    class="form-control"
-                    id="sortingStrategy"
+                <VSelect
+                    title="Sorting Strategy"
                     :options="sortingStrategies"
+                    :clearable="false"
                     @input="() => onOptionsChanged()"
                     v-model="internalSortingOptions.strategy"
                 />
             </div>
             <div class="col-6 col-md-5">
-                <BFormSelect
-                    class="form-control"
-                    aria-label="Sorting Order"
+                <VSelect
+                    title="Sorting Order"
                     :options="sortingOrders"
+                    :clearable="false"
                     @input="() => onOptionsChanged()"
                     v-model="internalSortingOptions.order"
                 />
