@@ -39,12 +39,10 @@ import {
 } from "../../../../core/src/main";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
-import YgoBuilderMatch from "./YgoBuilderMatches.vue";
+import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
-import Draggable from "vuedraggable";
 import { appStore } from "../../composition/appStore";
 import { dataLoaded } from "../../composition/dataLoaded";
-import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import { BSidebar } from "bootstrap-vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(

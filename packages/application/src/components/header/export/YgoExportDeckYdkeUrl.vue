@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <BDropdownItem @click="() => copyYdke()">
-            To YDKe URL in Clipboard
-        </BDropdownItem>
-    </div>
+    <BDropdownItem @click="() => copyYdke()">
+        To YDKe URL in Clipboard
+    </BDropdownItem>
 </template>
 
 <script lang="ts">

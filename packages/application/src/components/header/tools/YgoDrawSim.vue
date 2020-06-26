@@ -1,13 +1,6 @@
 <template>
-    <div class="draw-sim">
-        <button
-            class="btn btn-primary btn-sm"
-            v-b-modal.drawSim
-            :disabled="!hasMainDeckCards"
-        >
-            Simulate Start-Hand
-        </button>
-
+    <BDropdownItem v-b-modal.drawSim :disabled="!hasMainDeckCards">
+        Simulate Start-Hand
         <BModal
             id="drawSim"
             hide-footer
@@ -45,17 +38,22 @@
                 Draw
             </button>
         </BModal>
-    </div>
+    </BDropdownItem>
 </template>
 
 <script lang="ts">
-import YgoCard from "../YgoCard.vue";
-import { Card, Deck, DeckPart, DeckService } from "../../../../core/src/main";
-import { BModal } from "bootstrap-vue";
-import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
+import YgoCard from "../../YgoCard.vue";
+import {
+    Card,
+    Deck,
+    DeckPart,
+    DeckService,
+} from "../../../../../core/src/main";
+import { BDropdownItem, BModal } from "bootstrap-vue";
+import { applicationContainer } from "../../../inversify.config";
+import { APPLICATION_TYPES } from "../../../types";
 import { computed, defineComponent, ref } from "@vue/composition-api";
-import { appStore } from "../../composition/appStore";
+import { appStore } from "../../../composition/appStore";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -65,6 +63,7 @@ export default defineComponent({
     components: {
         YgoCard,
         BModal,
+        BDropdownItem,
     },
     props: {},
     setup(props, context) {
@@ -99,8 +98,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../ui/src/styles/variables";
-@import "../../../../ui/src/styles/mixin/screen";
+@import "../../../../../ui/src/styles/variables";
+@import "../../../../../ui/src/styles/mixin/screen";
 
 .deck-tool,
 .deck-tool__portal {

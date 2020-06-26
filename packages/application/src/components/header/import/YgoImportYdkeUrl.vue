@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <BDropdownItem v-b-modal.ydkeImport>
-            From YDKe URL
-        </BDropdownItem>
+    <BDropdownItem v-b-modal.ydkeImport>
+        From YDKe URL
         <BModal
             ref="modal"
             id="ydkeImport"
@@ -23,15 +21,15 @@
                 />
             </div>
         </BModal>
-    </div>
+    </BDropdownItem>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import {
+    Deck,
     DeckUriEncodingService,
     getLogger,
-    Deck,
 } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";

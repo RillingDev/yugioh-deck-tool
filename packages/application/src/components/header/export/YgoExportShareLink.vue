@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <BDropdownItem @click="() => copyLink()">
-            To Deck Tool Shareable Link in Clipboard
-        </BDropdownItem>
-    </div>
+    <BDropdownItem @click="() => copyLink()">
+        To Deck Tool Shareable Link in Clipboard
+    </BDropdownItem>
 </template>
 
 <script lang="ts">

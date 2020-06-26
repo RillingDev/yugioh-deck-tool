@@ -182,7 +182,7 @@ export default defineComponent({
             display: flex;
             flex-direction: column;
             margin-bottom: 0.25rem;
-            @include screen(min, sm) {
+            @include screen(min, md) {
                 align-items: center;
                 flex-direction: row;
             }

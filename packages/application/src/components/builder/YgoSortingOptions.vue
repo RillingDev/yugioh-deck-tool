@@ -1,12 +1,12 @@
 <template>
     <form class="form-group">
         <div class="form-row">
-            <div class="col-12 col-md-2">
+            <div class="col-12 col-lg-2">
                 <label class="col-form-label">
                     Sort by
                 </label>
             </div>
-            <div class="col-6 col-md-5">
+            <div class="col-6 col-lg-5">
                 <VSelect
                     title="Sorting Strategy"
                     :options="sortingStrategies"
@@ -15,7 +15,7 @@
                     v-model="internalSortingOptions.strategy"
                 />
             </div>
-            <div class="col-6 col-md-5">
+            <div class="col-6 col-lg-5">
                 <VSelect
                     title="Sorting Order"
                     :options="sortingOrders"

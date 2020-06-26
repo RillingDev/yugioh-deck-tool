@@ -3,7 +3,7 @@
         :disabled="isDeckEmpty"
         :class="{ disabled: isDeckEmpty }"
         :href="buyLink"
-        class="btn btn-primary btn-sm"
+        class="btn btn-primary"
         target="_blank"
     >
         Open Buy Page
@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import { DeckExportService, DeckService } from "../../../../core/src/main";
+import { DeckExportService } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { appStore } from "../../composition/appStore";

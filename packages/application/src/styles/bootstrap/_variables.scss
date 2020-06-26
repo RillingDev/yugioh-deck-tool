@@ -2,7 +2,7 @@
 
 $enable-caret: true;
 $enable-rounded: false;
-$enable-shadows: false;
+$enable-shadows: true;
 $enable-gradients: false;
 $enable-transitions: true;
 $enable-prefers-reduced-motion-media-query: true;
@@ -10,7 +10,7 @@ $enable-grid-classes: true;
 $enable-pointer-cursor-for-buttons: true;
 $enable-print-styles: false;
 $enable-responsive-font-sizes: true;
-$enable-validation-icons: true;
+$enable-validation-icons: false;
 $enable-deprecation-messages: true;
 
 $colors: ();
@@ -23,3 +23,5 @@ $theme-colors: (
     "warning": $warning,
     "danger": $danger,
 );
+
+$dropdown-spacer: 0;

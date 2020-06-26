@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <BDropdownItem @click="() => copyList()">
-            To Deck List in Clipboard
-        </BDropdownItem>
-    </div>
+    <BDropdownItem @click="() => copyList()">
+        To Deck List in Clipboard
+    </BDropdownItem>
 </template>
 
 <script lang="ts">

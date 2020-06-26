@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <BDropdownItem @click="() => onUploadClick()">
-            From .ydk Deck File
-        </BDropdownItem>
-    </div>
+    <BDropdownItem @click="() => onUploadClick()">
+        From .ydk Deck File
+    </BDropdownItem>
 </template>
 
 <script lang="ts">

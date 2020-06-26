@@ -1,18 +1,17 @@
 <template>
-    <div>
-        <button class="btn btn-primary btn-sm" @click="() => sort()">
-            Sort
-        </button>
-    </div>
+    <BDropdownItem @click="() => sort()">
+        Sort
+    </BDropdownItem>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { appStore } from "../../composition/appStore";
-import { DECK_SORT } from "../../store/modules/deck";
+import { appStore } from "../../../composition/appStore";
+import { DECK_SORT } from "../../../store/modules/deck";
+import { BDropdownItem } from "bootstrap-vue";
 
 export default defineComponent({
-    components: {},
+    components: { BDropdownItem },
     props: {},
     setup: (props, context) => {
         const sort = (): void => appStore(context).commit(DECK_SORT);

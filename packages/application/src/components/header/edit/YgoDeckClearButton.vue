@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <button class="btn btn-primary btn-sm" v-b-modal.clearDeck>
-            Clear
-        </button>
+    <BDropdownItem v-b-modal.clearDeck>
+        Clear
 
         <BModal
             id="clearDeck"
@@ -13,18 +11,19 @@
         >
             <p>Are you sure you want to clear the deck?</p>
         </BModal>
-    </div>
+    </BDropdownItem>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { appStore } from "../../composition/appStore";
-import { DECK_CLEAR } from "../../store/modules/deck";
-import { BModal } from "bootstrap-vue";
+import { appStore } from "../../../composition/appStore";
+import { DECK_CLEAR } from "../../../store/modules/deck";
+import { BDropdownItem, BModal } from "bootstrap-vue";
 
 export default defineComponent({
     components: {
         BModal,
+        BDropdownItem,
     },
     props: {},
     setup: (props, context) => {

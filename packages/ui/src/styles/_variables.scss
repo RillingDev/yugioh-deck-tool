@@ -19,11 +19,12 @@ $purple: #9683b8;
 $blue: #82aef8;
 
 $primary: $brown;
-$secondary: desaturate(darken($primary, 5%), 10%);
+$secondary: darken($primary, 13.25%);
 $success: $green;
 $info: $purple;
 $warning: $orange;
 $danger: $red;
+
 
 $color-deck-part-main: $brown;
 $color-deck-part-extra: $purple;
@@ -36,8 +37,8 @@ $color-vendor-coolstuffinc: #41bfc3;
 $font-family-base: "Open Sans", sans-serif;
 
 $font-size-base: 0.9rem;
-$font-size-lg: $font-size-base * 1.25;
-$font-size-sm: $font-size-base * 0.875;
+$font-size-lg: $font-size-base * 1.1;
+$font-size-sm: $font-size-base * 0.95;
 
 $grid-breakpoints: (
     xs: 0,

@@ -1,48 +1,8 @@
 <template>
     <BOverlay :show="!loaded">
         <div class="row">
-            <div class="col-12 col-sm-7 col-lg-8">
-                <div class="row">
-                    <div class="col-md-12 col-lg-5">
-                        <div class="form-group">
-                            <YgoDeckName />
-                        </div>
-                        <div class="form-group">
-                            <YgoFormat />
-                        </div>
-                        <BDropdown
-                            text="Import Deck"
-                            id="deckImport"
-                            :disabled="!loaded"
-                        >
-                            <YgoImportFile />
-                            <YgoImportYdkeUrl />
-                        </BDropdown>
-
-                        <BDropdown
-                            text="Export Deck"
-                            id="deckExport"
-                            :disabled="!loaded"
-                        >
-                            <YgoExportDeckFile />
-                            <YgoExportDeckYdkeUrl />
-                            <YgoExportDeckList />
-                            <YgoExportShareLink />
-                        </BDropdown>
-                    </div>
-                    <div class="col-md-6 col-lg-2">
-                        <YgoDeckSortButton />
-                        <YgoDeckShuffleButton />
-                        <YgoDeckClearButton />
-                    </div>
-                    <div class="col-md-6 col-lg-5">
-                        <YgoDrawSim />
-                        <YgoRandomizer />
-                        <hr />
-                        <YgoCurrency />
-                        <YgoBuyLink />
-                    </div>
-                </div>
+            <div class="col">
+                <YgoToolbar />
                 <hr />
                 <YgoDeck :can-move="canMoveInDeckParts" />
             </div>
@@ -69,28 +29,14 @@ import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
 import { defineComponent } from "@vue/composition-api";
 import { DATA_LOADED } from "./store/modules/data";
-import { BDropdown, BDropdownItem, BOverlay } from "bootstrap-vue";
+import { BOverlay } from "bootstrap-vue";
 import { appStore } from "./composition/appStore";
 import { dataLoaded } from "./composition/dataLoaded";
 import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import { Vue } from "vue/types/vue";
-import YgoFormat from "./components/header/YgoFormat.vue";
-import YgoDeckName from "./components/header/YgoDeckName.vue";
-import YgoCurrency from "./components/header/YgoCurrency.vue";
-import YgoBuyLink from "./components/header/YgoBuyLink.vue";
-import YgoRandomizer from "./components/header/YgoRandomizer.vue";
-import YgoDrawSim from "./components/header/YgoDrawSim.vue";
-import YgoDeckSortButton from "./components/header/YgoDeckSortButton.vue";
-import YgoDeckShuffleButton from "./components/header/YgoDeckShuffleButton.vue";
-import YgoDeckClearButton from "./components/header/YgoDeckClearButton.vue";
-import YgoImportFile from "./components/header/import/YgoImportDeckFile.vue";
-import YgoImportYdkeUrl from "./components/header/import/YgoImportYdkeUrl.vue";
-import YgoExportDeckFile from "./components/header/export/YgoExportDeckFile.vue";
-import YgoExportDeckYdkeUrl from "./components/header/export/YgoExportDeckYdkeUrl.vue";
-import YgoExportDeckList from "./components/header/export/YgoExportDeckList.vue";
-import YgoExportShareLink from "./components/header/export/YgoExportShareLink.vue";
+import YgoToolbar from "./components/header/YgoToolbar.vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -164,23 +110,7 @@ export default defineComponent({
         BOverlay,
         YgoDeck,
         YgoBuilder,
-        YgoFormat,
-        YgoDeckName,
-        YgoCurrency,
-        YgoBuyLink,
-        YgoRandomizer,
-        YgoDrawSim,
-        BDropdown,
-        BDropdownItem,
-        YgoDeckSortButton,
-        YgoDeckShuffleButton,
-        YgoDeckClearButton,
-        YgoImportFile,
-        YgoImportYdkeUrl,
-        YgoExportDeckFile,
-        YgoExportDeckYdkeUrl,
-        YgoExportDeckList,
-        YgoExportShareLink,
+        YgoToolbar,
     },
     props: {},
     setup: (props, context) => {
