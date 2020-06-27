@@ -92,7 +92,7 @@ export default defineComponent({
             sets: [],
         });
         const sortingOptions = ref<SortingOptions>({
-            strategy: SortingStrategy.NAME,
+            strategy: SortingStrategy.DEFAULT,
             order: SortingOrder.DESC,
         });
 
@@ -103,10 +103,11 @@ export default defineComponent({
             if (!loaded.value) {
                 return [];
             }
-            return filterService.filter(
-                cardService.getUniqueByName(cardDatabase.getCards()),
-                { format: format.value }
-            );
+            return filterService
+                .filter(cardService.getUniqueByName(cardDatabase.getCards()), {
+                    format: format.value,
+                })
+                .filter((card) => !card.type.name.includes("Token"));
         });
         const filteredCards = computed<Card[]>(() => {
             const filtered = filterService.filter(formatCards.value, {

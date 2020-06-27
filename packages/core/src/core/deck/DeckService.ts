@@ -186,7 +186,7 @@ class DeckService {
             deckClone.parts[deckPart] = this.sortingService.sort(
                 deckClone.parts[deckPart],
                 {
-                    strategy: SortingStrategy.DECK,
+                    strategy: SortingStrategy.DEFAULT,
                 }
             );
         }

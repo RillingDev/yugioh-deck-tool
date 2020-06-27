@@ -169,11 +169,11 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => ({
     [Format.TCG]:
         miscInfo?.tcg_date != null
             ? new Date(miscInfo.tcg_date).getTime()
-            : Infinity,
+            : null,
     [Format.OCG]:
         miscInfo?.ocg_date != null
             ? new Date(miscInfo.ocg_date).getTime()
-            : Infinity,
+            : null,
 });
 
 const mapCard = (rawCard: RawCard): UnlinkedCard => {

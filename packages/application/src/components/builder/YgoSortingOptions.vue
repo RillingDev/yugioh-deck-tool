@@ -58,14 +58,8 @@ export default defineComponent({
             props.sortingOptions
         );
 
-        const sortingStrategies = [
-            SortingStrategy.LEVEL,
-            SortingStrategy.ATK,
-            SortingStrategy.DEF,
-            SortingStrategy.NAME,
-            SortingStrategy.RELEASE_DATE,
-        ];
-        const sortingOrders = [SortingOrder.DESC, SortingOrder.ASC];
+        const sortingStrategies = Object.values(SortingStrategy);
+        const sortingOrders = Object.values(SortingOrder);
 
         const onOptionsChanged = (): void =>
             context.emit("change", internalSortingOptions);
