@@ -4,7 +4,7 @@
             <div class="col">
                 <YgoToolbar />
                 <hr />
-                <YgoDeck :can-move="canMoveInDeckParts" />
+                <YgoDeck :can-move="canMoveInDeckParts" v-show="loaded" />
             </div>
             <div class="col-12 col-sm-5 col-lg-4">
                 <YgoBuilder :can-move="canMoveFromBuilder" />
