@@ -1,6 +1,5 @@
 <template>
     <div>
-        <BDropdownDivider />
         <BDropdownItem @click="() => randomize()" :disabled="!loaded">
             Randomize
         </BDropdownItem>
@@ -56,7 +55,6 @@ export default defineComponent({
         VSelect,
         BModal,
         BDropdownItem,
-        BDropdownDivider,
     },
     props: {},
     setup(props, context) {

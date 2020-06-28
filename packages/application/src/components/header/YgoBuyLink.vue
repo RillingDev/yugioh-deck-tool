@@ -6,6 +6,10 @@
         class="btn btn-primary"
         target="_blank"
     >
+        <span
+            class="fas fas-in-button fa-shopping-cart"
+            aria-hidden="true"
+        ></span>
         Open Buy Page
     </a>
 </template>

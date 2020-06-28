@@ -1,61 +1,104 @@
 <template>
     <div class="toolbar form-group">
-        <div role="group" class="toolbar__items">
-            <BDropdown
-                variant="primary"
-                text="Import"
-                id="deckImport"
-                :disabled="!loaded"
-            >
-                <YgoImportFile />
-                <YgoImportYdkeUrl />
-            </BDropdown>
+        <ul role="group" class="toolbar__items">
+            <li>
+                <BDropdown
+                    variant="primary"
+                    id="deckImport"
+                    :disabled="!loaded"
+                    block
+                >
+                    <template v-slot:button-content>
+                        <span
+                            class="fas fas-in-button fa-file-import"
+                            aria-hidden="true"
+                        ></span>
+                        Import
+                    </template>
+                    <YgoImportFile />
+                    <YgoImportYdkeUrl />
+                </BDropdown>
+            </li>
+            <li>
+                <BDropdown
+                    variant="primary"
+                    id="deckExport"
+                    :disabled="!loaded"
+                    block
+                >
+                    <template v-slot:button-content>
+                        <span
+                            class="fas fas-in-button fa-file-export"
+                            aria-hidden="true"
+                        ></span>
+                        Export
+                    </template>
+                    <YgoExportDeckFile />
+                    <YgoExportDeckYdkeUrl />
+                    <YgoExportDeckList />
+                    <YgoExportShareLink />
+                </BDropdown>
+            </li>
+            <li>
+                <BDropdown
+                    variant="primary"
+                    id="deckEdit"
+                    :disabled="!loaded"
+                    block
+                >
+                    <template v-slot:button-content>
+                        <span
+                            class="fas fas-in-button fa-edit"
+                            aria-hidden="true"
+                        ></span>
+                        Edit
+                    </template>
+                    <YgoDeckSortButton />
+                    <YgoDeckShuffleButton />
+                    <YgoDeckClearButton />
+                </BDropdown>
+            </li>
+            <li>
+                <BDropdown
+                    variant="primary"
+                    id="deckTools"
+                    :disabled="!loaded"
+                    block
+                >
+                    <template v-slot:button-content>
+                        <span
+                            class="fas fas-in-button fa-magic"
+                            aria-hidden="true"
+                        ></span>
+                        Tools
+                    </template>
+                    <YgoDrawSim />
+                    <BDropdownDivider />
+                    <YgoRandomizer />
+                </BDropdown>
+            </li>
+            <li>
+                <YgoBuyLink class="btn-block" />
+            </li>
+        </ul>
 
-            <BDropdown
-                variant="primary"
-                text="Export"
-                id="deckExport"
-                :disabled="!loaded"
-            >
-                <YgoExportDeckFile />
-                <YgoExportDeckYdkeUrl />
-                <YgoExportDeckList />
-                <YgoExportShareLink />
-            </BDropdown>
-
-            <BDropdown
-                variant="primary"
-                text="Edit"
-                id="deckEdit"
-                :disabled="!loaded"
-            >
-                <YgoDeckSortButton />
-                <YgoDeckShuffleButton />
-                <YgoDeckClearButton />
-            </BDropdown>
-            <BDropdown
-                variant="primary"
-                text="Tools"
-                id="deckTools"
-                :disabled="!loaded"
-            >
-                <YgoDrawSim />
-                <YgoRandomizer />
-            </BDropdown>
-            <YgoBuyLink />
-        </div>
-
-        <div class="toolbar__items">
-            <YgoDeckName />
-            <YgoFormat />
-            <YgoCurrency />
-        </div>
+        <ul class="toolbar__items toolbar__items--lg" role="group">
+            <li>
+                <YgoDeckName />
+            </li>
+            <li>
+                <YgoFormat />
+            </li>
+            <li>
+                <YgoCurrency />
+            </li>
+        </ul>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { BDropdown, BDropdownItem } from "bootstrap-vue";
+import { BDropdown, BDropdownDivider, BDropdownItem } from "bootstrap-vue";
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
 import YgoCurrency from "./YgoCurrency.vue";
@@ -83,6 +126,7 @@ export default defineComponent({
         YgoDrawSim,
         BDropdown,
         BDropdownItem,
+        BDropdownDivider,
         YgoDeckSortButton,
         YgoDeckShuffleButton,
         YgoDeckClearButton,
@@ -104,6 +148,7 @@ export default defineComponent({
 
 <style lang="scss">
 @import "../../../../ui/src/styles/variables";
+@import "../../styles/bootstrap/variables";
 @import "../../../../ui/src/styles/mixin/screen";
 
 .deck-tool,
@@ -111,23 +156,31 @@ export default defineComponent({
     .toolbar__items {
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        list-style: none;
+        padding: 0;
+        margin: 0;
 
         @include screen(min, lg) {
             flex-direction: row;
         }
 
         > * {
-            width: 100% !important;
-            margin-bottom: 0.5rem;
-
+            width: 100%;
+            margin-bottom: $form-group-margin-bottom/2;
             @include screen(min, lg) {
-                width: auto;
                 &:not(:first-child) {
-                    margin-left: 0.25rem;
+                    margin-left: $form-grid-gutter-width/2;
                 }
                 &:not(:last-child) {
-                    margin-right: 0.25rem;
+                    margin-right: $form-grid-gutter-width/2;
                 }
+            }
+        }
+
+        &:not(.toolbar__items--lg) > * {
+            @include screen(min, lg) {
+                width: auto;
             }
         }
     }

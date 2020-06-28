@@ -11,6 +11,10 @@
                 {{ formatCards.length }} Cards
             </small>
             <button class="btn btn-primary btn-sm" v-b-toggle.filterSidebar>
+                <span
+                    class="fas fas-in-button fa-search"
+                    aria-hidden="true"
+                ></span>
                 Filter Cards
             </button>
         </div>
