@@ -1,7 +1,7 @@
 <template>
     <BDropdownItem v-b-modal.clearDeck>
+        <span class="fas fa-trash fas-in-button" aria-hidden="true"></span>
         Clear
-
         <BModal
             id="clearDeck"
             modal-class="deck-tool__portal"

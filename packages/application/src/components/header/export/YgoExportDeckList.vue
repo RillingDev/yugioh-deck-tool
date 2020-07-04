@@ -1,5 +1,6 @@
 <template>
     <BDropdownItem @click="() => copyList()">
+        <span class="fas fa-paragraph fas-in-button" aria-hidden="true"></span>
         To Deck List in Clipboard
     </BDropdownItem>
 </template>

@@ -1,5 +1,6 @@
 <template>
     <BDropdownItem @click="() => sort()">
+        <span class="fas fa-sort fas-in-button" aria-hidden="true"></span>
         Sort
     </BDropdownItem>
 </template>

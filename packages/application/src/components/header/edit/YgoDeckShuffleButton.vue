@@ -1,5 +1,6 @@
 <template>
     <BDropdownItem @click="() => shuffle()">
+        <span class="fas fa-random fas-in-button" aria-hidden="true"></span>
         Shuffle
     </BDropdownItem>
 </template>

@@ -1,5 +1,9 @@
 <template>
     <BDropdownItem v-b-modal.ydkeImport>
+        <span
+            class="fas fa-external-link-alt fas-in-button"
+            aria-hidden="true"
+        ></span>
         From YDKe URL
         <BModal
             ref="modal"

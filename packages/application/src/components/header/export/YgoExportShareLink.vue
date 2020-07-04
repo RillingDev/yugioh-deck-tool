@@ -1,6 +1,10 @@
 <template>
     <BDropdownItem @click="() => copyLink()">
-        To Deck Tool Shareable Link in Clipboard
+        <span
+            class="fas fa-share-square fas-in-button"
+            aria-hidden="true"
+        ></span>
+        To Shareable Link in Clipboard
     </BDropdownItem>
 </template>
 

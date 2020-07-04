@@ -1,5 +1,9 @@
 <template>
     <BDropdownItem v-b-modal.drawSim :disabled="!hasMainDeckCards">
+        <span
+            class="fas fa-hand-sparkles fas-in-button"
+            aria-hidden="true"
+        ></span>
         Simulate Start-Hand
         <BModal
             id="drawSim"

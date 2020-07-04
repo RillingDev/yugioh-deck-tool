@@ -1,9 +1,11 @@
 <template>
     <div>
         <BDropdownItem @click="() => randomize()" :disabled="!loaded">
+            <span class="fas fa-magic fas-in-button" aria-hidden="true"></span>
             Randomize
         </BDropdownItem>
         <BDropdownItem v-b-modal.randomizerSettings :disabled="!loaded">
+            <span class="fas fa-cogs fas-in-button" aria-hidden="true"></span>
             Randomizer Settings
             <BModal
                 id="randomizerSettings"

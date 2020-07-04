@@ -1,5 +1,6 @@
 <template>
     <BDropdownItem @click="() => downloadDeck()">
+        <span class="fas fa-file fas-in-button" aria-hidden="true"></span>
         To .ydk Deck File
     </BDropdownItem>
 </template>

@@ -1,5 +1,9 @@
 <template>
     <BDropdownItem @click="() => copyYdke()">
+        <span
+            class="fas fa-external-link-alt fas-in-button"
+            aria-hidden="true"
+        ></span>
         To YDKe URL in Clipboard
     </BDropdownItem>
 </template>
