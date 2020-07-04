@@ -8,12 +8,14 @@
         "test": "ts-node --project ./spec/tsconfig.json node_modules/jasmine/bin/jasmine --config=jasmine.json"
     },
     "dependencies": {
+        "html2canvas": "^1.0.0-rc.5",
         "inversify": "^5.0.1"
     },
     "peerDependencies": {
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
+        "@types/html2canvas": "0.0.35",
         "@types/jasmine": "^3.5.11",
         "@types/webpack-env": "^1.15.2",
         "@typescript-eslint/eslint-plugin": "^3.5.0",

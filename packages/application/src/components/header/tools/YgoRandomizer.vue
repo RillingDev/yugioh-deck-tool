@@ -37,7 +37,7 @@ import {
 } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownDivider, BDropdownItem, BModal } from "bootstrap-vue";
+import { BDropdownItem, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";

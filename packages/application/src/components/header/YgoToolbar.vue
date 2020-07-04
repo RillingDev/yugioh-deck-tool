@@ -37,6 +37,7 @@
                     <YgoExportDeckYdkeUrl />
                     <YgoExportDeckList />
                     <YgoExportShareLink />
+                    <YgoExportScreenshot />
                 </BDropdown>
             </li>
             <li>
@@ -115,6 +116,7 @@ import YgoExportDeckYdkeUrl from "./export/YgoExportDeckYdkeUrl.vue";
 import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
 import { dataLoaded } from "../../composition/dataLoaded";
+import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
 
 export default defineComponent({
     components: {
@@ -136,6 +138,7 @@ export default defineComponent({
         YgoExportDeckYdkeUrl,
         YgoExportDeckList,
         YgoExportShareLink,
+        YgoExportScreenshot,
     },
     props: {},
     setup(props, context) {

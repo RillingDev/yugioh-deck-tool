@@ -1,5 +1,5 @@
 <template>
-    <div class="deck">
+    <div class="deck" id="deckToolDeck">
         <header class="deck__header">
             <h1 class="deck__total h3">Total</h1>
             <YgoPrice :cards="allCards" />
