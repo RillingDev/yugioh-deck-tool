@@ -226,7 +226,7 @@ export default defineComponent({
                 internalFilter.subType = null;
                 internalFilter.attribute = null;
                 internalFilter.level = null;
-                internalFilter.linkMarker = null;
+                internalFilter.linkMarker = [];
             }
         );
         watch(

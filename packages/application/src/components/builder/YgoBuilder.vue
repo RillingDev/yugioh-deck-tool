@@ -87,7 +87,7 @@ export default defineComponent({
             subType: null,
             attribute: null,
             level: null,
-            linkMarker: null,
+            linkMarker: [],
             archetype: null,
 
             format: null,

@@ -19,13 +19,13 @@ interface CardFilter {
 
     attribute?: string | null;
     level?: number | null;
-    linkMarker?: string[] | null;
+    linkMarker?: string[];
 
     archetype?: string | null;
     format?: Format | null;
     banState?: BanState | null;
 
-    sets?: CardSet[] | null;
+    sets?: CardSet[];
 }
 
 /**
@@ -92,6 +92,7 @@ class FilterService {
             }
             if (
                 filter.linkMarker != null &&
+                filter.linkMarker.length > 0 &&
                 (card.linkMarkers == null ||
                     filter.linkMarker.some(
                         (linkMarker) => !card.linkMarkers!.includes(linkMarker)
