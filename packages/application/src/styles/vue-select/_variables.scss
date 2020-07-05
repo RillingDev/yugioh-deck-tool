@@ -30,7 +30,7 @@ $vs-border-color: map_get($vs-colors, "lightest");
 //  Component Controls: Clear, Open Indicator
 $vs-controls-color: map_get($vs-colors, "light");
 $vs-controls-size: 1;
-$vs-controls-deselect-text-shadow: 0 1px 0 #fff;
+$vs-controls-deselect-text-shadow: none;
 
 //  Selected
 $vs-selected-bg: #f0f0f0;
@@ -42,5 +42,5 @@ $vs-selected-border-width: $vs-border-width;
 $vs-dropdown-z-index: 1000;
 $vs-dropdown-min-width: 160px;
 $vs-dropdown-max-height: 350px;
-$vs-dropdown-box-shadow: 0px 3px 6px 0px $gray-500;
+$vs-dropdown-box-shadow: none;
 $vs-dropdown-bg: #fff;

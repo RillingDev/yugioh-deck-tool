@@ -5,7 +5,7 @@
                 <h1 class="deck-part__name h5">
                     {{ deckPartConfig.name }} Deck
                 </h1>
-                <span class="deck-part__stats small">{{ deckPartStats }}</span>
+                <small class="deck-part__stats">{{ deckPartStats }}</small>
             </div>
             <YgoPrice :cards="cards" />
         </header>
@@ -194,9 +194,9 @@ export default defineComponent({
 
         &__stats {
             margin-top: 0.25rem;
-            @include screen(min, sm) {
+            @include screen(min, md) {
                 margin-top: 0;
-                margin-left: 1rem;
+                margin-left: 0.75rem;
             }
         }
 

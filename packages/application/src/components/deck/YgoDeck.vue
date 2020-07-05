@@ -1,7 +1,7 @@
 <template>
     <div class="deck" id="deckToolDeck">
         <header class="deck__header">
-            <h1 class="deck__total h3">Total</h1>
+            <h1 class="deck__total h4">Total</h1>
             <YgoPrice :cards="allCards" />
         </header>
         <hr />
@@ -78,8 +78,11 @@ export default defineComponent({
             }
         }
 
-        &__total.h3 {
+        &__total.h4 {
             margin-bottom: 0.25rem;
+            @include screen(min, lg) {
+                margin-bottom: 0;
+            }
         }
     }
 }
