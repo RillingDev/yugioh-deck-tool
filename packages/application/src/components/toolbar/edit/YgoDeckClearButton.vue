@@ -1,11 +1,10 @@
 <template>
-    <BDropdownItem v-b-modal.clearDeck>
+    <BDropdownItem v-b-modal.clearDeck :disabled="isDeckEmpty">
         <span class="fas fa-trash fas-in-button" aria-hidden="true"></span>
         Clear
         <BModal
             id="clearDeck"
             modal-class="deck-tool__portal"
-            ref="modal"
             title="Clear Deck"
             @ok="() => clear()"
         >
@@ -19,6 +18,7 @@ import { defineComponent } from "@vue/composition-api";
 import { appStore } from "../../../composition/appStore";
 import { DECK_CLEAR } from "../../../store/modules/deck";
 import { BDropdownItem, BModal } from "bootstrap-vue";
+import { deckEmpty } from "../../../composition/deckEmpty";
 
 export default defineComponent({
     components: {
@@ -28,8 +28,9 @@ export default defineComponent({
     props: {},
     setup: (props, context) => {
         const clear = (): void => appStore(context).commit(DECK_CLEAR);
+        const isDeckEmpty = deckEmpty(context);
 
-        return { clear };
+        return { isDeckEmpty, clear };
     },
 });
 </script>

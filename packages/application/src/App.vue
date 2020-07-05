@@ -36,7 +36,7 @@ import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import { Vue } from "vue/types/vue";
-import YgoToolbar from "./components/header/YgoToolbar.vue";
+import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
