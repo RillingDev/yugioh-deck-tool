@@ -15,6 +15,7 @@
             :group="{ name: 'cards', pull: true, put: true }"
             v-model="cards"
             :move="(e) => canMove(e)"
+            :scroll="true"
         >
             <YgoCard
                 :card="card"

@@ -1,6 +1,6 @@
 <template>
     <div class="builder">
-        <BSidebar id="filterSidebar" width="400px" title="Filter Cards">
+        <BSidebar id="filterSidebar" title="Filter Cards">
             <div class="container">
                 <YgoFilter v-model="filter" v-if="loaded" />
             </div>
@@ -76,7 +76,7 @@ export default defineComponent({
         BSidebar,
     },
     setup(props, context) {
-        const CARD_DISPLAY_LIMIT = 100;
+        const CARD_DISPLAY_LIMIT = 50;
 
         const filter = ref<CardFilter>({
             name: null,

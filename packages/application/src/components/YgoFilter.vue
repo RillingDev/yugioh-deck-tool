@@ -50,33 +50,30 @@
             />
         </div>
 
+        <div class="form-group" v-if="isFieldVisible('typeGroup')">
+            <VSelect
+                title="Type Group"
+                placeholder="Type Group"
+                :options="typeGroups"
+                @input="() => onFilterChanged()"
+                v-model="internalFilter.typeGroup"
+            />
+        </div>
+
         <div
-            class="form-group form-row"
-            v-if="isFieldVisible('typeGroup') || isFieldVisible('type')"
+            class="form-group"
+            v-if="isFieldVisible('type')"
+            v-show="isMonster"
         >
-            <div class="col-sm-5" v-if="isFieldVisible('typeGroup')">
-                <VSelect
-                    title="Type Group"
-                    placeholder="Type Group"
-                    :options="typeGroups"
-                    @input="() => onFilterChanged()"
-                    v-model="internalFilter.typeGroup"
-                />
-            </div>
-            <div class="col-sm-7" v-if="isFieldVisible('type')">
-                <VSelect
-                    title="Type"
-                    placeholder="Type"
-                    :disabled="!isMonster"
-                    :get-option-key="(type) => type.name"
-                    :get-option-label="
-                        (type) => type.name.replace(' Monster', '')
-                    "
-                    :options="types"
-                    @input="() => onFilterChanged()"
-                    v-model="internalFilter.type"
-                />
-            </div>
+            <VSelect
+                title="Type"
+                placeholder="Type"
+                :get-option-key="(type) => type.name"
+                :get-option-label="(type) => type.name.replace(' Monster', '')"
+                :options="types"
+                @input="() => onFilterChanged()"
+                v-model="internalFilter.type"
+            />
         </div>
 
         <div

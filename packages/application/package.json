@@ -19,13 +19,12 @@
         "reflect-metadata": "^0.1.13",
         "vue": "^2.6.11",
         "vue-select": "^3.10.5",
-        "vuedraggable": "^2.23.2",
+        "vuedraggable": "^2.24.0",
         "vuex": "^3.5.1"
     },
     "devDependencies": {
         "@types/lodash": "^4.14.157",
         "@types/vue-select": "^2.5.0",
-        "@types/vuedraggable": "^2.23.1",
         "@types/webpack-env": "^1.15.2",
         "@typescript-eslint/eslint-plugin": "^3.5.0",
         "@typescript-eslint/parser": "^3.5.0",

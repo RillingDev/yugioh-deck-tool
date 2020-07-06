@@ -1,24 +1,24 @@
 <template>
     <div class="builder_matches">
-        <Draggable
-            tag="ol"
-            class="builder-matches__list"
-            :group="{ name: 'cards', pull: 'clone', put: false }"
-            :list="matches"
-            :sort="false"
-            :move="canMove"
-            v-show="matches.length > 0"
-        >
+        <ol class="builder-matches__list" v-show="matches.length > 0">
             <li
                 class="builder-matches__match"
                 v-for="card in matches"
                 :key="card.passcode"
             >
-                <YgoCard
-                    :card="card"
-                    :scale-vertically="true"
-                    class="builder-matches__match__card"
-                ></YgoCard>
+                <Draggable
+                    :group="{ name: 'cards', pull: 'clone', put: false }"
+                    :list="[card]"
+                    :move="canMove"
+                    :scroll="true"
+                    :sort="false"
+                >
+                    <YgoCard
+                        :card="card"
+                        :scale-vertically="true"
+                        class="builder-matches__match__card"
+                    ></YgoCard>
+                </Draggable>
                 <div class="builder-matches__match__details">
                     <p>{{ card.name }}</p>
                     <p>
@@ -29,7 +29,7 @@
                     </p>
                 </div>
             </li>
-        </Draggable>
+        </ol>
         <div class="builder-matches__no-matches" v-show="matches.length === 0">
             No matches found.
         </div>
@@ -57,12 +57,12 @@ export default defineComponent({
         YgoCard,
         Draggable,
     },
-    setup(props) {
-        const typeText = (card: Card) =>
+    setup() {
+        const typeText = (card: Card): string =>
             card.type.group === CardTypeGroup.MONSTER
                 ? card.type.name
                 : card.type.group;
-        const subTypeText = (card: Card) =>
+        const subTypeText = (card: Card): string =>
             card.type.group === CardTypeGroup.MONSTER
                 ? `${card.attribute!}/${card.subType}`
                 : card.subType;
@@ -108,14 +108,6 @@ export default defineComponent({
 
                 > p {
                     margin-bottom: 0;
-                }
-            }
-
-            &.sortable-drag,
-            &.sortable-chosen {
-                border-bottom: 0;
-                .builder-matches__match__details {
-                    display: none;
                 }
             }
         }
