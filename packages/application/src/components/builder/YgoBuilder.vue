@@ -3,6 +3,13 @@
         <BSidebar id="filterSidebar" title="Filter Cards">
             <div class="container">
                 <YgoFilter v-model="filter" v-if="loaded" />
+                <button class="btn btn-danger" @click="() => resetFilter()">
+                    <span
+                        class="fas fas-in-button fa-trash"
+                        aria-hidden="true"
+                    ></span>
+                    Reset Filter
+                </button>
             </div>
         </BSidebar>
         <div class="builder__details">
@@ -44,7 +51,13 @@ import {
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
-import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
+import {
+    computed,
+    defineComponent,
+    PropType,
+    reactive,
+    ref,
+} from "@vue/composition-api";
 import { appStore } from "../../composition/appStore";
 import { dataLoaded } from "../../composition/dataLoaded";
 import { BSidebar } from "bootstrap-vue";
@@ -78,23 +91,45 @@ export default defineComponent({
     setup(props, context) {
         const CARD_DISPLAY_LIMIT = 50;
 
-        const filter = ref<CardFilter>({
-            name: null,
+        const createDefaultFilter = (): CardFilter => {
+            return {
+                name: null,
 
-            typeGroup: null,
-            type: null,
+                typeGroup: null,
+                type: null,
 
-            subType: null,
-            attribute: null,
-            level: null,
-            linkMarker: [],
-            archetype: null,
+                subType: null,
+                attribute: null,
+                level: null,
+                linkMarker: [],
 
-            format: null,
-            banState: null,
+                archetype: null,
+                format: null,
+                banState: null,
 
-            sets: [],
-        });
+                sets: [],
+            };
+        };
+        const filter = reactive<CardFilter>(createDefaultFilter());
+        const resetFilter = (): void => {
+            const defaultFilter = createDefaultFilter();
+            filter.name = defaultFilter.name;
+
+            filter.typeGroup = defaultFilter.typeGroup;
+            filter.type = defaultFilter.type;
+
+            filter.subType = defaultFilter.subType;
+            filter.attribute = defaultFilter.attribute;
+            filter.level = defaultFilter.level;
+            filter.linkMarker = defaultFilter.linkMarker;
+            filter.archetype = defaultFilter.archetype;
+
+            filter.format = defaultFilter.format;
+            filter.banState = defaultFilter.banState;
+
+            filter.sets = defaultFilter.sets;
+        };
+
         const sortingOptions = ref<SortingOptions>({
             strategy: SortingStrategy.DEFAULT,
             order: SortingOrder.DESC,
@@ -115,7 +150,7 @@ export default defineComponent({
         });
         const filteredCards = computed<Card[]>(() => {
             const filtered = filterService.filter(formatCards.value, {
-                ...filter.value,
+                ...filter,
                 format: format.value,
             });
             const sorted = sortingService.sort(filtered, sortingOptions.value);
@@ -130,6 +165,8 @@ export default defineComponent({
             loaded,
             formatCards,
             filteredCards,
+
+            resetFilter,
         };
     },
 });
