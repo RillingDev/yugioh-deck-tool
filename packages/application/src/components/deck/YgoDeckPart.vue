@@ -144,25 +144,25 @@ export default defineComponent({
 .deck-tool,
 .deck-tool__portal {
     .deck-part {
-        margin-bottom: 1.5rem;
+        margin-bottom: $margin-lg;
 
         &--main {
             .deck-part__content {
-                border-color: darken($color-deck-part-main, 10%);
+                border-color: darken($color-deck-part-main, 8%);
                 background-color: $color-deck-part-main;
             }
         }
 
         &--extra {
             .deck-part__content {
-                border-color: darken($color-deck-part-extra, 10%);
+                border-color: darken($color-deck-part-extra, 8%);
                 background-color: $color-deck-part-extra;
             }
         }
 
         &--side {
             .deck-part__content {
-                border-color: darken($color-deck-part-side, 10%);
+                border-color: darken($color-deck-part-side, 8%);
                 background-color: $color-deck-part-side;
             }
         }
@@ -183,10 +183,6 @@ export default defineComponent({
             display: flex;
             flex-direction: column;
             margin-bottom: $margin-sm;
-            @include screen(min, md) {
-                align-items: center;
-                flex-direction: row;
-            }
             @include screen(min, lg) {
                 margin-bottom: 0;
             }
@@ -199,23 +195,15 @@ export default defineComponent({
             }
         }
 
-        &__stats {
-            @include screen(min, md) {
-                margin-left: $margin-md;
-            }
-        }
-
         &__content {
+            min-height: 6rem; // Add a little space for cards to be dragged to
             display: grid;
-            padding: 0.35rem;
-            border: 1px solid $black;
-            gap: 0.35rem;
-            grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
+            padding: 0.25rem;
+            border: 3px solid $black;
+            gap: 0.25rem;
+            grid-template-columns: repeat(auto-fill, minmax(7.5ch, 1fr));
             @include screen(min, md) {
                 grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
-            }
-            @include screen(min, lg) {
-                grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));
             }
         }
     }

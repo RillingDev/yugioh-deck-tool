@@ -111,7 +111,7 @@ export default defineComponent({
                 .filter(cardService.getUniqueByName(cardDatabase.getCards()), {
                     format: format.value,
                 })
-                .filter((card) => !card.type.name.includes("Token"));
+                .filter((card) => card.type.deckParts.size > 0); // Only show cards that can be added to at least one deck-part
         });
         const filteredCards = computed<Card[]>(() => {
             const filtered = filterService.filter(formatCards.value, {

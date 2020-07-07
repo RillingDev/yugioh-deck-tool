@@ -5,7 +5,7 @@ const showFeedback = (
     message: string,
     cssClass: string,
     level: string
-) =>
+): void =>
     context.root.$bvToast.toast(message, {
         variant: level,
         noCloseButton: true,

@@ -78,7 +78,7 @@ export default defineComponent({
             );
             modal.value!.hide();
         };
-        const onHide = () => {
+        const onHide = (): void => {
             ydkeUrl.value = "";
         };
 

@@ -1,4 +1,4 @@
-import { computed, SetupContext } from "@vue/composition-api";
+import { computed, ComputedRef, SetupContext } from "@vue/composition-api";
 import { appStore } from "./appStore";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
@@ -8,7 +8,7 @@ const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
 );
 
-export const deckEmpty = (context: SetupContext) =>
+export const deckEmpty = (context: SetupContext): ComputedRef<boolean> =>
     computed<boolean>(
         () =>
             deckService.getAllCards(appStore(context).state.deck.active)
