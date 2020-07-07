@@ -80,8 +80,8 @@ export default defineComponent({
 .deck-tool__portal {
     .builder-matches {
         &__no-matches {
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
+            margin-top: $margin-md;
+            margin-bottom: $margin-md;
             text-align: center;
             color: $gray-600;
         }
@@ -104,7 +104,7 @@ export default defineComponent({
             }
 
             &__details {
-                padding-left: 0.5rem;
+                padding-left: $margin-md;
 
                 > p {
                     margin-bottom: 0;

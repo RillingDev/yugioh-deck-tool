@@ -1,12 +1,27 @@
 @import "../ui/src/styles/mixin/screen";
+@import "../ui/src/styles/variables";
 
+//
+// Core layout
+//
 .deck-tool__header {
     text-align: center;
 }
 
 .deck-tool__application {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: $margin-md;
+    margin-bottom: $margin-md;
+}
+
+//
+// General utility classes
+//
+.container {
+    max-width: map_get($container-max-widths, "lg");
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $margin-lg;
+    padding-right: $margin-lg;
 }
 
 .fas-in-button {

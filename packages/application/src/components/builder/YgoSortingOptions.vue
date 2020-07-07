@@ -1,30 +1,24 @@
 <template>
-    <form class="form-group">
-        <div class="form-row">
-            <div class="col-12 col-lg-2">
-                <label class="col-form-label">
-                    Sort by
-                </label>
-            </div>
-            <div class="col-6 col-lg-5">
-                <VSelect
-                    title="Sorting Strategy"
-                    :options="sortingStrategies"
-                    :clearable="false"
-                    @input="() => onOptionsChanged()"
-                    v-model="internalSortingOptions.strategy"
-                />
-            </div>
-            <div class="col-6 col-lg-5">
-                <VSelect
-                    title="Sorting Order"
-                    :options="sortingOrders"
-                    :clearable="false"
-                    @input="() => onOptionsChanged()"
-                    v-model="internalSortingOptions.order"
-                />
-            </div>
-        </div>
+    <form class="form-group sorting-options">
+        <label class="sorting-options__label w-50">
+            Sort by
+        </label>
+        <VSelect
+            class="sorting-options__input w-100"
+            title="Sorting Strategy"
+            :options="sortingStrategies"
+            :clearable="false"
+            @input="() => onOptionsChanged()"
+            v-model="internalSortingOptions.strategy"
+        />
+        <VSelect
+            class="sorting-options__input w-100"
+            title="Sorting Order"
+            :options="sortingOrders"
+            :clearable="false"
+            @input="() => onOptionsChanged()"
+            v-model="internalSortingOptions.order"
+        />
     </form>
 </template>
 
@@ -75,3 +69,29 @@ export default defineComponent({
     },
 });
 </script>
+<style lang="scss">
+@import "../../../../ui/src/styles/variables";
+@import "../../../../ui/src/styles/mixin/screen";
+
+.deck-tool,
+.deck-tool__portal {
+    .sorting-options {
+        display: flex;
+        flex-direction: column;
+
+        column-gap: $margin-md;
+        row-gap: $margin-md;
+
+        margin-bottom: $margin-md;
+
+        @include screen(min, md) {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &__label {
+            margin: 0;
+        }
+    }
+}
+</style>

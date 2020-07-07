@@ -146,7 +146,7 @@ export default defineComponent({
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: $margin-md;
         }
     }
 }

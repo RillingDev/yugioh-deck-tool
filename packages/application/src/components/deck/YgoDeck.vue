@@ -65,8 +65,6 @@ export default defineComponent({
 .deck-tool,
 .deck-tool__portal {
     .deck {
-        margin-bottom: 1.5rem;
-
         &__header {
             display: flex;
             flex-direction: column;
@@ -79,7 +77,7 @@ export default defineComponent({
         }
 
         &__total.h4 {
-            margin-bottom: 0.25rem;
+            margin-bottom: $margin-sm;
             @include screen(min, lg) {
                 margin-bottom: 0;
             }

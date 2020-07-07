@@ -171,7 +171,7 @@ export default defineComponent({
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            margin-bottom: $margin-md;
 
             @include screen(min, lg) {
                 align-items: center;
@@ -182,22 +182,26 @@ export default defineComponent({
         &__details {
             display: flex;
             flex-direction: column;
-            margin-bottom: 0.25rem;
+            margin-bottom: $margin-sm;
             @include screen(min, md) {
                 align-items: center;
                 flex-direction: row;
             }
+            @include screen(min, lg) {
+                margin-bottom: 0;
+            }
         }
 
         &__name.h5 {
-            margin-bottom: 0;
+            margin-bottom: $margin-sm;
+            @include screen(min, md) {
+                margin-bottom: 0;
+            }
         }
 
         &__stats {
-            margin-top: 0.25rem;
             @include screen(min, md) {
-                margin-top: 0;
-                margin-left: 0.75rem;
+                margin-left: $margin-md;
             }
         }
 

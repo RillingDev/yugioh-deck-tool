@@ -10,7 +10,7 @@
             class="fas fas-in-button fa-shopping-cart"
             aria-hidden="true"
         ></span>
-        Open Buy Page
+        Buy Deck
     </a>
 </template>
 

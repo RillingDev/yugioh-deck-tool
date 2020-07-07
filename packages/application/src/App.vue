@@ -1,12 +1,12 @@
 <template>
     <BOverlay :show="!loaded">
-        <div class="row">
-            <div class="col">
+        <div class="deck-tool__body">
+            <div class="deck-tool__body__primary">
                 <YgoToolbar />
                 <hr />
                 <YgoDeck :can-move="canMoveInDeckParts" v-show="loaded" />
             </div>
-            <div class="col-12 col-sm-5 col-lg-4">
+            <div class="deck-tool__body__secondary">
                 <YgoBuilder :can-move="canMoveFromBuilder" />
             </div>
         </div>
@@ -180,3 +180,31 @@ export default defineComponent({
     },
 });
 </script>
+<style lang="scss">
+@import "../ui/src/styles/mixin/screen";
+@import "../ui/src/styles/variables";
+
+.deck-tool {
+    .deck-tool__body {
+        display: flex;
+        flex-direction: column;
+        column-gap: $margin-lg;
+
+        &__primary {
+            width: 100%;
+        }
+
+        &__secondary {
+            width: 100%;
+        }
+
+        @include screen(min, md) {
+            flex-direction: row;
+
+            &__secondary {
+                max-width: 340px;
+            }
+        }
+    }
+}
+</style>
