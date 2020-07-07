@@ -2,6 +2,7 @@
     <VSelect
         :options="formats"
         :clearable="false"
+        :searchable="false"
         title="Format"
         v-model="format"
     />

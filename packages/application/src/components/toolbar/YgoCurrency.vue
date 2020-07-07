@@ -5,6 +5,7 @@
         :get-option-label="(currency) => currency.name"
         v-model="currency"
         :clearable="false"
+        :searchable="false"
         title="Active Currency"
     ></VSelect>
 </template>

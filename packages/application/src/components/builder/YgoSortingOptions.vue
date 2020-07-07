@@ -8,6 +8,7 @@
             title="Sorting Strategy"
             :options="sortingStrategies"
             :clearable="false"
+            :searchable="false"
             @input="() => onOptionsChanged()"
             v-model="internalSortingOptions.strategy"
         />
@@ -16,6 +17,7 @@
             title="Sorting Order"
             :options="sortingOrders"
             :clearable="false"
+            :searchable="false"
             @input="() => onOptionsChanged()"
             v-model="internalSortingOptions.order"
         />

@@ -20,6 +20,7 @@
                 :get-option-key="(banState) => banState.name"
                 :get-option-label="(banState) => banState.name"
                 :options="banStates"
+                :searchable="false"
                 title="Limit"
                 placeholder="Limit"
                 @input="() => onFilterChanged()"
@@ -55,6 +56,7 @@
                 title="Type Group"
                 placeholder="Type Group"
                 :options="typeGroups"
+                :searchable="false"
                 @input="() => onFilterChanged()"
                 v-model="internalFilter.typeGroup"
             />
