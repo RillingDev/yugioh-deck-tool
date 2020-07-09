@@ -1,4 +1,4 @@
-# YuGiOh Deck Tool
+# YuGiOh Deck-Tool
 
 > A tool to view deck prices, share and edit decks, create random decks and much more
 
@@ -63,7 +63,7 @@ application  tooltip        // Browser entry points.
 ## Credits
 
 -   Thanks to Alan from <https://ygoprodeck.com/> for providing the API for all card data, as well as supporting the development.
--   Thanks to The awesome people at <https://github.com/edo9300/edopro> for the great duel simulator that this application is inspired by.
+-   Thanks to the awesome people at <https://github.com/edo9300/edopro> for the great duel simulator that this application is inspired by.
 
 ## License
 
