@@ -5,6 +5,7 @@
         :href="buyLink"
         class="btn btn-primary"
         target="_blank"
+        rel="noopener noreferrer"
     >
         <span
             class="fas fas-in-button fa-shopping-cart"

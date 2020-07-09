@@ -124,8 +124,7 @@ export default defineComponent({
         flex-direction: column;
         justify-content: flex-start;
 
-        row-gap: $margin-md;
-        column-gap: $margin-md;
+        gap: $margin-md;
 
         margin-bottom: $margin-md;
 

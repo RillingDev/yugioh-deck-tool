@@ -188,7 +188,6 @@ export default defineComponent({
     .deck-tool__body {
         display: flex;
         flex-direction: column;
-        column-gap: $margin-lg;
 
         &__primary {
             width: 100%;
@@ -203,6 +202,7 @@ export default defineComponent({
 
             &__secondary {
                 max-width: 340px;
+                margin-left: $margin-lg;
             }
         }
     }

@@ -81,8 +81,7 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
 
-        column-gap: $margin-md;
-        row-gap: $margin-md;
+        gap: $margin-md;
 
         margin-bottom: $margin-md;
 

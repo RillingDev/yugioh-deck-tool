@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <BDropdownGroup>
         <BDropdownItem @click="() => randomize()" :disabled="!loaded">
             <span class="fas fa-magic fas-in-button" aria-hidden="true"></span>
             Randomize
@@ -27,7 +27,7 @@
                 </div>
             </BModal>
         </BDropdownItem>
-    </div>
+    </BDropdownGroup>
 </template>
 
 <script lang="ts">
@@ -39,7 +39,7 @@ import {
 } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem, BModal } from "bootstrap-vue";
+import { BDropdownGroup, BDropdownItem, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";
@@ -57,6 +57,7 @@ export default defineComponent({
         VSelect,
         BModal,
         BDropdownItem,
+        BDropdownGroup,
     },
     props: {},
     setup(props, context) {

@@ -2,9 +2,9 @@
     <section :class="`deck-part--${deckPart}`" class="deck-part">
         <header class="deck-part__header">
             <div class="deck-part__details">
-                <h1 class="deck-part__name h5">
+                <h2 class="deck-part__name h5">
                     {{ deckPartConfig.name }} Deck
-                </h1>
+                </h2>
                 <small class="deck-part__stats">{{ deckPartStats }}</small>
             </div>
             <YgoPrice :cards="cards" />
@@ -200,8 +200,8 @@ export default defineComponent({
             display: grid;
             padding: 0.25rem;
             border: 3px solid $black;
-            gap: 0.25rem;
-            grid-template-columns: repeat(auto-fill, minmax(7.5ch, 1fr));
+            gap: $margin-sm;
+            grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
             @include screen(min, md) {
                 grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
             }
