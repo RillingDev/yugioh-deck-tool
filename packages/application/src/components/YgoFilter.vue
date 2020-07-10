@@ -108,6 +108,7 @@
                     title="Level/Rank"
                     placeholder="Level/Rank"
                     :options="levels"
+                    :searchable="false"
                     @input="() => onFilterChanged()"
                     v-model="internalFilter.level"
                 />

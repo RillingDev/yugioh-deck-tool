@@ -32,7 +32,6 @@ import {
 } from "../../../../core/src/main";
 import { defineComponent, PropType, reactive } from "@vue/composition-api";
 import VSelect from "vue-select";
-import { BFormSelect } from "bootstrap-vue";
 
 export default defineComponent({
     props: {
@@ -43,7 +42,6 @@ export default defineComponent({
     },
     components: {
         VSelect,
-        BFormSelect,
     },
     model: {
         prop: "sortingOptions",

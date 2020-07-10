@@ -1,8 +1,8 @@
 <template>
-    <BDropdownItem @click="() => copyList()">
+    <BDropdownItemButton @click="() => copyList()">
         <span class="fas fa-paragraph fas-in-button" aria-hidden="true"></span>
         To Deck List in Clipboard
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
@@ -10,7 +10,7 @@ import { defineComponent } from "@vue/composition-api";
 import { DeckExportService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem } from "bootstrap-vue";
+import { BDropdownItemButton } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 import { showSuccess } from "../../../composition/feedback";
@@ -20,7 +20,7 @@ const deckExportService = applicationContainer.get<DeckExportService>(
 );
 
 export default defineComponent({
-    components: { BDropdownItem },
+    components: { BDropdownItemButton },
     props: {},
     setup: (props, context) => {
         const copyList = (): void => {
@@ -29,7 +29,7 @@ export default defineComponent({
             copyText(deckList, document);
             showSuccess(
                 context,
-                "Successfully copied deck list to clipboard!",
+                "Successfully copied deck list to clipboard.",
                 "deck-tool__portal"
             );
         };

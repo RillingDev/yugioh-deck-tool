@@ -1,5 +1,5 @@
 <template>
-    <BDropdownItem v-b-modal.ydkeImport>
+    <BDropdownItemButton v-b-modal.ydkeImport>
         <span
             class="fas fa-external-link-alt fas-in-button"
             aria-hidden="true"
@@ -25,7 +25,7 @@
                 />
             </div>
         </BModal>
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
@@ -37,7 +37,7 @@ import {
 } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem, BModal } from "bootstrap-vue";
+import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { appStore } from "../../../composition/appStore";
 import { showError, showSuccess } from "../../../composition/feedback";
@@ -49,7 +49,7 @@ const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 const logger = getLogger("YgoImportYdkeUrl");
 
 export default defineComponent({
-    components: { BDropdownItem, BModal },
+    components: { BDropdownItemButton, BModal },
     props: {},
     setup: function (props, context) {
         const modal = ref<BModal>();
@@ -60,7 +60,7 @@ export default defineComponent({
             try {
                 deck = deckUriEncodingService.fromUri(ydkeUrl.value);
             } catch (e) {
-                logger.error("Could not read YDKe URL.", e);
+                logger.error("Could not read YDKe URL!", e);
                 showError(
                     context,
                     "Could not read YDKe URL.",
@@ -73,7 +73,7 @@ export default defineComponent({
             });
             showSuccess(
                 context,
-                "Successfully imported YDKe URL!",
+                "Successfully imported YDKe URL.",
                 "deck-tool__portal"
             );
             modal.value!.hide();

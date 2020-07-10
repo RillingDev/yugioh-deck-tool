@@ -1,5 +1,5 @@
 <template>
-    <BDropdownItem v-b-modal.drawSim :disabled="!hasMainDeckCards">
+    <BDropdownItemButton v-b-modal.drawSim :disabled="!hasMainDeckCards">
         <span
             class="fas fa-hand-sparkles fas-in-button"
             aria-hidden="true"
@@ -42,7 +42,7 @@
                 Draw
             </button>
         </BModal>
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
@@ -53,7 +53,7 @@ import {
     DeckPart,
     DeckService,
 } from "../../../../../core/src/main";
-import { BDropdownItem, BModal } from "bootstrap-vue";
+import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { computed, defineComponent, ref } from "@vue/composition-api";
@@ -67,7 +67,7 @@ export default defineComponent({
     components: {
         YgoCard,
         BModal,
-        BDropdownItem,
+        BDropdownItemButton,
     },
     props: {},
     setup(props, context) {

@@ -13,10 +13,10 @@ $vs-component-placeholder-color: inherit;
 
 //  Active State
 $vs-state-active-bg: $primary;
-$vs-state-active-color: #fff;
+$vs-state-active-color: $white;
 
 //  Disabled State
-$vs-state-disabled-bg: rgb(248, 248, 248);
+$vs-state-disabled-bg: $gray-100;
 $vs-state-disabled-color: map_get($vs-colors, "light");
 $vs-state-disabled-controls-color: map_get($vs-colors, "light");
 $vs-state-disabled-cursor: not-allowed;
@@ -33,7 +33,7 @@ $vs-controls-size: 1;
 $vs-controls-deselect-text-shadow: none;
 
 //  Selected
-$vs-selected-bg: #f0f0f0;
+$vs-selected-bg: $gray-100;
 $vs-selected-border-color: $vs-border-color;
 $vs-selected-border-style: $vs-border-style;
 $vs-selected-border-width: $vs-border-width;
@@ -43,4 +43,4 @@ $vs-dropdown-z-index: 1000;
 $vs-dropdown-min-width: 160px;
 $vs-dropdown-max-height: 350px;
 $vs-dropdown-box-shadow: none;
-$vs-dropdown-bg: #fff;
+$vs-dropdown-bg: $white;

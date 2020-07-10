@@ -14,7 +14,7 @@
         </BSidebar>
         <div class="builder__details">
             <small class="builder__count">
-                Showing {{ filteredCards.length }} of
+                Result: {{ filteredCards.length }} of
                 {{ formatCards.length }} Cards
             </small>
             <button class="btn btn-primary" v-b-toggle.filterSidebar>
@@ -89,8 +89,6 @@ export default defineComponent({
         BSidebar,
     },
     setup(props, context) {
-        const CARD_DISPLAY_LIMIT = 50;
-
         const createDefaultFilter = (): CardFilter => {
             return {
                 name: null,
@@ -142,20 +140,21 @@ export default defineComponent({
             if (!loaded.value) {
                 return [];
             }
-            return filterService
-                .filter(cardService.getUniqueByName(cardDatabase.getCards()), {
-                    format: format.value,
-                })
+            const uniqueCards = cardService
+                .getUniqueByName(cardDatabase.getCards())
                 .filter((card) => card.type.deckParts.size > 0); // Only show cards that can be added to at least one deck-part
+            return filterService.filter(uniqueCards, {
+                format: format.value,
+            });
         });
         const filteredCards = computed<Card[]>(() => {
             const filtered = filterService.filter(formatCards.value, {
                 ...filter,
                 format: format.value,
             });
-            const sorted = sortingService.sort(filtered, sortingOptions.value);
-            return sorted.slice(0, CARD_DISPLAY_LIMIT);
+            return sortingService.sort(filtered, sortingOptions.value);
         });
+
         const loaded = dataLoaded(context);
 
         return {

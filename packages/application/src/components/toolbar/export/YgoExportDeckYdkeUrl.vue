@@ -1,11 +1,11 @@
 <template>
-    <BDropdownItem @click="() => copyYdke()">
+    <BDropdownItemButton @click="() => copyYdke()">
         <span
             class="fas fa-external-link-alt fas-in-button"
             aria-hidden="true"
         ></span>
         To YDKe URL in Clipboard
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
@@ -13,7 +13,7 @@ import { defineComponent } from "@vue/composition-api";
 import { DeckUriEncodingService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem } from "bootstrap-vue";
+import { BDropdownItemButton } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 import { showSuccess } from "../../../composition/feedback";
@@ -23,7 +23,7 @@ const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 );
 
 export default defineComponent({
-    components: { BDropdownItem },
+    components: { BDropdownItemButton },
     props: {},
     setup: (props, context) => {
         const copyYdke = (): void => {
@@ -32,7 +32,7 @@ export default defineComponent({
             copyText(ydke.toString(), document);
             showSuccess(
                 context,
-                "Successfully copied YDKe to clipboard!",
+                "Successfully copied YDKe to clipboard.",
                 "deck-tool__portal"
             );
         };

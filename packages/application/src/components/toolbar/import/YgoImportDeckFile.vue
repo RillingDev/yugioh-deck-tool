@@ -1,8 +1,8 @@
 <template>
-    <BDropdownItem @click="() => onUploadClick()">
+    <BDropdownItemButton @click="() => openFileDialog()">
         <span class="fas fa-file fas-in-button" aria-hidden="true"></span>
         From .ydk Deck File
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
@@ -14,7 +14,7 @@ import {
 } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem } from "bootstrap-vue";
+import { BDropdownItemButton } from "bootstrap-vue";
 import { readFile, uploadFile } from "../../../../../ui/src/main";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { appStore } from "../../../composition/appStore";
@@ -31,7 +31,7 @@ const deckFileService = applicationContainer.get<DeckFileService>(
 const logger = getLogger("YgoImportDeckFile");
 
 export default defineComponent({
-    components: { BDropdownItem },
+    components: { BDropdownItemButton },
     props: {},
     setup: (props, context) => {
         const importDeckFile = async (file: File): Promise<ImportResult> => {
@@ -59,13 +59,13 @@ export default defineComponent({
                     } else {
                         showSuccess(
                             context,
-                            "Successfully imported deck file!",
+                            "Successfully imported deck file.",
                             "deck-tool__portal"
                         );
                     }
                 })
                 .catch((e) => {
-                    logger.error("Could not read deck file.", e);
+                    logger.error("Could not read deck file!", e);
                     showError(
                         context,
                         "Could not read deck file.",
@@ -74,7 +74,7 @@ export default defineComponent({
                 });
         };
 
-        const onUploadClick = (): void => {
+        const openFileDialog = (): void => {
             uploadFile(
                 ".ydk",
                 (files) => {
@@ -86,7 +86,7 @@ export default defineComponent({
             );
         };
 
-        return { onUploadClick };
+        return { openFileDialog };
     },
 });
 </script>

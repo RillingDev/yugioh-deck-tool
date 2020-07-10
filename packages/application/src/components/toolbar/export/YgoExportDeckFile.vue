@@ -1,8 +1,8 @@
 <template>
-    <BDropdownItem @click="() => downloadDeck()">
+    <BDropdownItemButton @click="() => downloadDeck()">
         <span class="fas fa-file fas-in-button" aria-hidden="true"></span>
         To .ydk Deck File
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
@@ -10,7 +10,7 @@ import { defineComponent } from "@vue/composition-api";
 import { DeckFileService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem } from "bootstrap-vue";
+import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 import { showSuccess } from "../../../composition/feedback";
@@ -20,7 +20,7 @@ const deckFileService = applicationContainer.get<DeckFileService>(
 );
 
 export default defineComponent({
-    components: { BDropdownItem },
+    components: { BDropdownItemButton },
     props: {},
     setup: (props, context) => {
         const downloadDeck = (): void => {
@@ -30,7 +30,7 @@ export default defineComponent({
             downloadFile(file, document);
             showSuccess(
                 context,
-                "Successfully exported deck file!",
+                "Successfully exported deck file.",
                 "deck-tool__portal"
             );
         };

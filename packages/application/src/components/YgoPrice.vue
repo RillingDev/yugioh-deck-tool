@@ -11,10 +11,12 @@
             <button
                 ref="missingCardButtons"
                 v-show="lookupResult.missing.length > 0"
-                title="Some cards have no price data."
                 class="btn btn-sm btn-warning price__warning"
             >
                 <span class="fas fa-exclamation" aria-hidden="true"></span>
+                <span class="sr-only" aria-hidden="true"
+                    >Some cards have no price data.</span
+                >
             </button>
             <BTooltip
                 custom-class="deck-tool__portal"

@@ -1,10 +1,10 @@
 <template>
     <BDropdownGroup>
-        <BDropdownItem @click="() => randomize()" :disabled="!loaded">
+        <BDropdownItemButton @click="() => randomize()" :disabled="!loaded">
             <span class="fas fa-magic fas-in-button" aria-hidden="true"></span>
             Randomize
-        </BDropdownItem>
-        <BDropdownItem v-b-modal.randomizerSettings :disabled="!loaded">
+        </BDropdownItemButton>
+        <BDropdownItemButton v-b-modal.randomizerSettings :disabled="!loaded">
             <span class="fas fa-cogs fas-in-button" aria-hidden="true"></span>
             Randomizer Settings
             <BModal
@@ -21,12 +21,11 @@
                         title="Randomization Strategy"
                     />
                 </div>
-                <hr />
                 <div class="form-group">
                     <YgoFilter v-model="filter" :show-only="['sets']" />
                 </div>
             </BModal>
-        </BDropdownItem>
+        </BDropdownItemButton>
     </BDropdownGroup>
 </template>
 
@@ -39,7 +38,7 @@ import {
 } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownGroup, BDropdownItem, BModal } from "bootstrap-vue";
+import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";
@@ -56,7 +55,7 @@ export default defineComponent({
         YgoFilter,
         VSelect,
         BModal,
-        BDropdownItem,
+        BDropdownItemButton,
         BDropdownGroup,
     },
     props: {},

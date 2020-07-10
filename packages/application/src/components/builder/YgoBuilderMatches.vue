@@ -3,7 +3,7 @@
         <ol class="builder-matches__list" v-show="matches.length > 0">
             <li
                 class="builder-matches__match"
-                v-for="card in matches"
+                v-for="card in limitedMatches"
                 :key="card.passcode"
             >
                 <Draggable
@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { Card, CardTypeGroup } from "../../../../core/src/main";
-import { defineComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 
@@ -57,7 +57,13 @@ export default defineComponent({
         YgoCard,
         Draggable,
     },
-    setup() {
+    setup(props) {
+        const CARD_DISPLAY_LIMIT = 50;
+
+        const limitedMatches = computed<Card[]>(() =>
+            props.matches.slice(0, CARD_DISPLAY_LIMIT)
+        );
+
         const typeText = (card: Card): string =>
             card.type.group === CardTypeGroup.MONSTER
                 ? card.type.name
@@ -67,7 +73,7 @@ export default defineComponent({
                 ? `${card.attribute!}/${card.subType}`
                 : card.subType;
 
-        return { typeText, subTypeText };
+        return { limitedMatches, typeText, subTypeText };
     },
 });
 </script>
@@ -94,6 +100,7 @@ export default defineComponent({
             list-style: none;
             border: 1px solid $gray-400;
         }
+
         &__match {
             display: flex;
             padding: 0.35rem;

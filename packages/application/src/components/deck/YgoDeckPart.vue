@@ -56,7 +56,8 @@ const cardDatabase = applicationContainer.get<CardDatabase>(
 
 /**
  * Calculates count of card types.
- * For main and side deck, count will be split by monster, spell, etc., whereas it will be split by monster subtype for the extra deck.
+ * For main and side deck, count will be split by monster, spell, etc.,
+ * whereas it will be split by monster subtype for the extra deck.
  *
  * @private
  * @param deckPart Deck-part that is being used.
@@ -71,19 +72,28 @@ const calculateDetailedTypeStats = (
         const countedByType = cardService.countByType(cards);
         return cardDatabase
             .getTypes(CardTypeGroup.MONSTER)
+            .filter(
+                (cardType) =>
+                    countedByType.has(cardType) &&
+                    countedByType.get(cardType)! > 0
+            )
             .map((cardType) => [
                 removeEnd(cardType.name, " Monster"),
-                countedByType.has(cardType) ? countedByType.get(cardType)! : 0,
+                countedByType.get(cardType)!,
             ]);
     }
 
     const countedByTypeGroup = cardService.countByTypeGroup(cards);
-    return Object.values(CardTypeGroup).map((cardTypeGroup) => [
-        cardTypeGroup,
-        countedByTypeGroup.has(cardTypeGroup)
-            ? countedByTypeGroup.get(cardTypeGroup)!
-            : 0,
-    ]);
+    return Object.values(CardTypeGroup)
+        .filter(
+            (cardTypeGroup) =>
+                countedByTypeGroup.has(cardTypeGroup) &&
+                countedByTypeGroup.get(cardTypeGroup)! > 0
+        )
+        .map((cardTypeGroup) => [
+            cardTypeGroup,
+            countedByTypeGroup.get(cardTypeGroup)!,
+        ]);
 };
 
 export default defineComponent({
@@ -126,9 +136,7 @@ export default defineComponent({
             const details = calculateDetailedTypeStats(
                 props.deckPart,
                 currentCards
-            )
-                .filter(([, count]) => count > 0)
-                .map(([type, count]) => `${count} ${type}`);
+            ).map(([type, count]) => `${count} ${type}`);
             return `${base} (${details.join(" | ")})`;
         });
 

@@ -1,5 +1,5 @@
 <template>
-    <BDropdownItem @click="() => screenshot()" v-b-modal.deckScreenshot>
+    <BDropdownItemButton @click="() => screenshot()" v-b-modal.deckScreenshot>
         <span class="fas fa-image fas-in-button" aria-hidden="true"></span>
         To Screenshot
         <BModal
@@ -19,13 +19,13 @@
                 </div>
             </BOverlay>
         </BModal>
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import { getLogger } from "../../../../../core/src/main";
-import { BDropdownItem, BModal, BOverlay } from "bootstrap-vue";
+import { BDropdownItemButton, BModal, BOverlay } from "bootstrap-vue";
 import { createScreenshot } from "../../../../../ui/src/main";
 import { deckEmpty } from "../../../composition/deckEmpty";
 import { showError } from "../../../composition/feedback";
@@ -33,7 +33,7 @@ import { showError } from "../../../composition/feedback";
 const logger = getLogger("YgoExportScreenshot");
 
 export default defineComponent({
-    components: { BDropdownItem, BModal, BOverlay },
+    components: { BDropdownItemButton, BModal, BOverlay },
     props: {},
     setup: (props, context) => {
         const isDeckEmpty = deckEmpty(context);
@@ -51,7 +51,7 @@ export default defineComponent({
                     deckUri.value = dataUrl;
                 })
                 .catch((err) => {
-                    logger.error("Could not create screenshot.", err);
+                    logger.error("Could not create screenshot!", err);
                     showError(
                         context,
                         "Could not create screenshot.",
@@ -66,6 +66,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 @import "../../../../../ui/src/styles/variables";
+
 .deck-tool,
 .deck-tool__portal {
     .deck-screenshot {
@@ -74,6 +75,7 @@ export default defineComponent({
         background-color: $gray-200;
         justify-content: center;
     }
+
     .deck-screenshot__image {
         max-width: 660px;
         max-height: 820px;

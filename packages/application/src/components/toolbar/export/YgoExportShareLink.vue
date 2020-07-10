@@ -1,11 +1,11 @@
 <template>
-    <BDropdownItem @click="() => copyLink()">
+    <BDropdownItemButton @click="() => copyLink()">
         <span
             class="fas fa-share-square fas-in-button"
             aria-hidden="true"
         ></span>
         To Shareable Link in Clipboard
-    </BDropdownItem>
+    </BDropdownItemButton>
 </template>
 
 <script lang="ts">
@@ -13,7 +13,7 @@ import { defineComponent } from "@vue/composition-api";
 import { DeckUriEncodingService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
-import { BDropdownItem } from "bootstrap-vue";
+import { BDropdownItemButton } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/appStore";
 import { deckEmpty } from "../../../composition/deckEmpty";
@@ -24,7 +24,7 @@ const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 );
 
 export default defineComponent({
-    components: { BDropdownItem },
+    components: { BDropdownItemButton },
     props: {},
     setup: (props, context) => {
         const isDeckEmpty = deckEmpty(context);
@@ -43,7 +43,7 @@ export default defineComponent({
             copyText(url.toString(), document);
             showSuccess(
                 context,
-                "Successfully copied share link to clipboard!",
+                "Successfully copied share link to clipboard.",
                 "deck-tool__portal"
             );
         };

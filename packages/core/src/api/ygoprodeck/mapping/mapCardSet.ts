@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-// https://jvilk.com/MakeTypes/
 import { CardSet } from "../../../core/card/set/CardSet";
 
+// https://jvilk.com/MakeTypes/
 interface RawCardSet {
     set_name: string;
     set_code: string;

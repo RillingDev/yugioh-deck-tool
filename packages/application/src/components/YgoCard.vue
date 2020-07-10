@@ -4,8 +4,8 @@
         :data-tooltip-hidden="dragging"
         class="card"
         tabindex="0"
-        @dragstart="() => onDragStart()"
-        @dragend="() => onDragEnd()"
+        @dragstart="() => (dragging = true)"
+        @dragend="() => (dragging = false)"
     >
         <img
             :alt="name"
@@ -40,14 +40,8 @@ export default defineComponent({
         const name = computed<string>(() => props.card.name);
 
         const dragging = ref<boolean>(false);
-        const onDragStart = (): void => {
-            dragging.value = true;
-        };
-        const onDragEnd = (): void => {
-            dragging.value = false;
-        };
 
-        return { name, imgSrc, onDragEnd, onDragStart, dragging };
+        return { name, imgSrc, dragging };
     },
 });
 </script>
