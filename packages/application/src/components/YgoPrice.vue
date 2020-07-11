@@ -128,5 +128,9 @@ export default defineComponent({
             margin: 0;
         }
     }
+
+    [data-screenshot-in-progress="true"] .price__warning {
+        display: none;
+    }
 }
 </style>

@@ -46,6 +46,7 @@ export default defineComponent({
             if (deckEl == null) {
                 throw new TypeError("Could not get deck element!");
             }
+            deckEl.dataset["screenshotInProgress"] = "true";
             createScreenshot(deckEl)
                 .then((dataUrl) => {
                     deckUri.value = dataUrl;
@@ -57,6 +58,9 @@ export default defineComponent({
                         "Could not create screenshot.",
                         "deck-tool__portal"
                     );
+                })
+                .finally(() => {
+                    deckEl.dataset["screenshotInProgress"] = "false";
                 });
         };
 

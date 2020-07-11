@@ -1,5 +1,11 @@
 <template>
-    <section :class="`deck-part--${deckPart}`" class="deck-part">
+    <section
+        :class="[
+            `deck-part--${deckPart}`,
+            { 'deck-part--empty': deckPartEmpty },
+        ]"
+        class="deck-part"
+    >
         <header class="deck-part__header">
             <div class="deck-part__details">
                 <h2 class="deck-part__name h5">
@@ -127,6 +133,7 @@ export default defineComponent({
                     cards: newCards,
                 }),
         });
+        const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
         const deckPartStats = computed<string>(() => {
             const currentCards = cards.value;
             const base = `${currentCards.length} Cards`;
@@ -140,7 +147,7 @@ export default defineComponent({
             return `${base} (${details.join(" | ")})`;
         });
 
-        return { deckPartConfig, cards, deckPartStats };
+        return { deckPartConfig, cards, deckPartStats, deckPartEmpty };
     },
 });
 </script>
@@ -214,6 +221,9 @@ export default defineComponent({
                 grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
             }
         }
+    }
+    [data-screenshot-in-progress="true"] .deck-part--empty {
+        display: none;
     }
 }
 </style>
