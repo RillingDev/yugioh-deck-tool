@@ -16,12 +16,6 @@
         <meta name="author" content="Felix Rilling" />
 
         <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
-            integrity="sha256-WAgYcAck1C1/zEl5sBl5cfyhxtLgKGdpI3oKyJffVRI="
-            crossorigin="anonymous"
-        />
-        <link
             href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
             rel="stylesheet"
         />
@@ -31,10 +25,23 @@
             integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ="
             crossorigin="anonymous"
         />
+        <style>
+            /* Styles here are only required when running the application standalone, not when embedding it */
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            /* Mirror ygoprodeck.com */
+            .standalone-wrapper {
+                width: 94%;
+                margin: 0 auto;
+                max-width: 1220px;
+            }
+        </style>
     </head>
     <body>
-        <div class="deck-tool">
-            <div class="container">
+        <div class="standalone-wrapper">
+            <div class="deck-tool">
                 <header class="deck-tool__header">
                     <h1>YuGiOh Deck-Tool</h1>
                     <p>

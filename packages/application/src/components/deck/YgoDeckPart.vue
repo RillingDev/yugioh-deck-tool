@@ -213,12 +213,15 @@ export default defineComponent({
         &__content {
             min-height: 6rem; // Add a little space for cards to be dragged to
             display: grid;
-            padding: 0.25rem;
+            padding: $margin-sm;
             border: 3px solid $black;
             gap: $margin-sm;
             grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
             @include screen(min, md) {
                 grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
+            }
+            @include screen(min, lg) {
+                grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));
             }
         }
     }

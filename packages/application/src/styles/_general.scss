@@ -17,7 +17,6 @@
 // General utility classes
 //
 .container {
-    max-width: map_get($container-max-widths, "lg");
     margin-left: auto;
     margin-right: auto;
     padding-left: $margin-lg;
