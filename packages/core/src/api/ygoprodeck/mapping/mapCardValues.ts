@@ -4,6 +4,7 @@ import { CardValues } from "../../../core/card/type/CardValues";
 import { CardTypeGroup } from "../../../core/card/type/CardTypeGroup";
 import { CardType } from "../../../core/card/type/CardType";
 import { DeckPart } from "../../../core/deck/DeckPart";
+import { findByKey, requireNonNilElseThrow } from "lightdash";
 
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {
@@ -34,47 +35,29 @@ interface GroupValues {
     race: string[];
 }
 
-const mapGroup = (type: RawCardType): CardTypeGroup => {
-    if (type.group === "SKILL") {
-        return CardTypeGroup.SKILL;
-    }
-    if (type.group === "SPELL") {
-        return CardTypeGroup.SPELL;
-    }
-    if (type.group === "TRAP") {
-        return CardTypeGroup.TRAP;
-    }
-    if (type.group === "MONSTER") {
-        return CardTypeGroup.MONSTER;
-    }
-    throw new TypeError(`Unexpected group '${type.group}'.`);
-};
+const mapGroup = (type: RawCardType): CardTypeGroup =>
+    requireNonNilElseThrow(
+        findByKey<CardTypeGroup>(CardTypeGroup, type.group),
+        () => new TypeError(`Unexpected type group '${type.group}'.`)
+    );
 
 const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
     new Set(
-        type.area.map((area) => {
-            if (area === "SIDE") {
-                return DeckPart.SIDE;
-            }
-            if (area === "EXTRA") {
-                return DeckPart.EXTRA;
-            }
-            if (area === "MAIN") {
-                return DeckPart.MAIN;
-            }
-            throw new TypeError(`Unexpected deck part type '${area}'.`);
-        })
+        type.area.map((area) =>
+            requireNonNilElseThrow(
+                findByKey<DeckPart>(DeckPart, area),
+                () => new TypeError(`Unexpected deck part '${area}'.`)
+            )
+        )
     );
 
 const mapTypes = (typeNames: string[], types: CardType[]): CardType[] =>
-    typeNames.map((typeName) => {
-        const matchingType = types.find((type) => type.name === typeName);
-
-        if (matchingType == null) {
-            throw new TypeError(`Could not find type '${typeName}'.`);
-        }
-        return matchingType;
-    });
+    typeNames.map((typeName) =>
+        requireNonNilElseThrow(
+            types.find((type) => type.name === typeName),
+            () => new TypeError(`Could not find type '${typeName}'.`)
+        )
+    );
 
 const mapCardValues = (data: RawCardValues): CardValues => {
     const types: CardType[] = data.types.map((type) => {

@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { BanState, DefaultBanState } from "../../../core/card/banlist/BanState";
+import {
+    BanState,
+    DEFAULT_BAN_STATE_ARR,
+    DefaultBanState,
+} from "../../../core/card/banlist/BanState";
 import { CardImage } from "../../../core/card/CardImage";
 import { CardPrices } from "../../../core/card/CardPrices";
 import { CardSetAppearance } from "../../../core/card/set/CardSetAppearance";
@@ -8,6 +12,7 @@ import { Format } from "../../../core/card/format/Format";
 import { DefaultVendor, Vendor } from "../../../core/price/Vendor";
 import { UnlinkedCard } from "../../../core/card/UnlinkedCard";
 import { ReleaseInfo } from "../../../core/card/ReleaseInfo";
+import { findByValue, requireNonNilElseThrow } from "lightdash";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -74,14 +79,10 @@ interface RawBanlistInfo {
 }
 
 const mapBanListState = (name: string | null): BanState => {
-    if (name === "Banned") {
-        return DefaultBanState.BANNED;
-    }
-    if (name === "Limited") {
-        return DefaultBanState.LIMITED;
-    }
-    if (name === "Semi-Limited") {
-        return DefaultBanState.SEMI_LIMITED;
+    for (const banState of DEFAULT_BAN_STATE_ARR) {
+        if (name === banState.name) {
+            return banState;
+        }
     }
     return DefaultBanState.UNLIMITED;
 };
@@ -90,30 +91,12 @@ const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
     if (rawMiscInfo == null || rawMiscInfo.formats == null) {
         return [];
     }
-    return rawMiscInfo.formats.map((format) => {
-        if (format === "TCG") {
-            return Format.TCG;
-        }
-        if (format === "OCG") {
-            return Format.OCG;
-        }
-        if (format === "GOAT") {
-            return Format.GOAT;
-        }
-        if (format === "OCG GOAT") {
-            return Format.OCG_GOAT;
-        }
-        if (format === "Speed Duel") {
-            return Format.SPEED_DUEL;
-        }
-        if (format === "Rush Duel") {
-            return Format.RUSH_DUEL;
-        }
-        if (format === "Duel Links") {
-            return Format.DUEL_LINKS;
-        }
-        throw new TypeError(`Unexpected format '${format}'.`);
-    });
+    return rawMiscInfo.formats.map((format) =>
+        requireNonNilElseThrow(
+            findByValue<Format>(Format, format),
+            () => new TypeError(`Unexpected format '${format}'.`)
+        )
+    );
 };
 
 const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
