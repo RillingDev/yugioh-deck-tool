@@ -92,39 +92,49 @@
             />
         </div>
 
-        <template v-show="isMonster">
-            <div class="form-group" v-if="isFieldVisible('attribute')">
-                <VSelect
-                    title="Attribute"
-                    placeholder="Attribute"
-                    :options="attributes"
-                    @input="() => onFilterChanged()"
-                    v-model="internalFilter.attribute"
-                />
-            </div>
+        <div
+            class="form-group"
+            v-show="isMonster"
+            v-if="isFieldVisible('attribute')"
+        >
+            <VSelect
+                title="Attribute"
+                placeholder="Attribute"
+                :options="attributes"
+                @input="() => onFilterChanged()"
+                v-model="internalFilter.attribute"
+            />
+        </div>
 
-            <div class="form-group" v-if="isFieldVisible('level')">
-                <VSelect
-                    title="Level/Rank"
-                    placeholder="Level/Rank"
-                    :options="levels"
-                    :searchable="false"
-                    @input="() => onFilterChanged()"
-                    v-model="internalFilter.level"
-                />
-            </div>
+        <div
+            class="form-group"
+            v-if="isFieldVisible('level')"
+            v-show="isMonster"
+        >
+            <VSelect
+                title="Level/Rank"
+                placeholder="Level/Rank"
+                :options="levels"
+                :searchable="false"
+                @input="() => onFilterChanged()"
+                v-model="internalFilter.level"
+            />
+        </div>
 
-            <div class="form-group" v-if="isFieldVisible('linkMarker')">
-                <VSelect
-                    title="Link Markers"
-                    placeholder="Link Markers"
-                    multiple
-                    :options="linkMarkers"
-                    @input="() => onFilterChanged()"
-                    v-model="internalFilter.linkMarker"
-                />
-            </div>
-        </template>
+        <div
+            class="form-group"
+            v-if="isFieldVisible('linkMarker')"
+            v-show="isMonster"
+        >
+            <VSelect
+                title="Link Markers"
+                placeholder="Link Markers"
+                multiple
+                :options="linkMarkers"
+                @input="() => onFilterChanged()"
+                v-model="internalFilter.linkMarker"
+            />
+        </div>
     </form>
 </template>
 
