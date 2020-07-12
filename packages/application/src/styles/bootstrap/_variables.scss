@@ -13,17 +13,6 @@ $enable-responsive-font-sizes: true;
 $enable-validation-icons: false;
 $enable-deprecation-messages: true;
 
-$colors: ();
-
-$theme-colors: (
-    "primary": $primary,
-    "secondary": $secondary,
-    "success": $success,
-    "info": $info,
-    "warning": $warning,
-    "danger": $danger,
-);
-
 $form-grid-gutter-width: 0.5rem;
 $form-group-margin-bottom: 1rem;
 

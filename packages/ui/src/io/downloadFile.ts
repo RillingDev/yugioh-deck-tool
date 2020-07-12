@@ -1,8 +1,17 @@
-const downloadFile = (file: File, context: Document): void => {
+/**
+ * Note: Execution has to be started by a user interaction event.
+ *
+ * @public
+ */
+const downloadFile = (
+    fileObjectUrl: string,
+    fileName: string,
+    context: Document
+): void => {
     const el = context.createElement("a");
 
-    el.href = window.URL.createObjectURL(file);
-    el.download = file.name;
+    el.href = fileObjectUrl;
+    el.download = fileName;
 
     context.body.appendChild(el);
     el.click();

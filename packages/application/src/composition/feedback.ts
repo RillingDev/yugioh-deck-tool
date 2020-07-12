@@ -4,14 +4,26 @@ const showFeedback = (
     context: SetupContext,
     message: string,
     cssClass: string,
-    level: string
+    variant: string
 ): void =>
     context.root.$bvToast.toast(message, {
-        variant: level,
+        variant: variant,
         noCloseButton: true,
         solid: true,
         toastClass: cssClass,
     });
+
+export const showInfo = (
+    context: SetupContext,
+    message: string,
+    cssClass: string
+): void => showFeedback(context, message, cssClass, "info");
+
+export const showSuccess = (
+    context: SetupContext,
+    message: string,
+    cssClass: string
+): void => showFeedback(context, message, cssClass, "success");
 
 export const showWarning = (
     context: SetupContext,
@@ -24,9 +36,3 @@ export const showError = (
     message: string,
     cssClass: string
 ): void => showFeedback(context, message, cssClass, "danger");
-
-export const showSuccess = (
-    context: SetupContext,
-    message: string,
-    cssClass: string
-): void => showFeedback(context, message, cssClass, "success");

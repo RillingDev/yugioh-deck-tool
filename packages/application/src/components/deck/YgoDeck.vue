@@ -1,5 +1,5 @@
 <template>
-    <div class="deck" id="deckToolDeck" data-screenshot-in-progress="false">
+    <div class="deck" id="deckToolDeck">
         <header class="deck__header">
             <h1 class="deck__total h4">Total</h1>
             <YgoPrice :cards="allCards" />
@@ -83,8 +83,8 @@ export default defineComponent({
             }
         }
     }
-    [data-screenshot-in-progress="true"].deck {
-        padding: $margin-sm;
-    }
+}
+.deck-tool__screenshot-context .deck {
+    padding: $margin-sm;
 }
 </style>

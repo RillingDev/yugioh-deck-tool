@@ -1,25 +1,23 @@
 //
 // Variables
 ///
-
-// Custom variables to override defaults of 3rd Party Styles
+// Bootstrap
 @import "./bootstrap/variables";
 @import "./bootstrap/reboot-mixin";
 
-@import "./bootstrap-vue/variables";
-
-@import "./vue-select/variables";
-
-// Bootstrap
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
 // Bootstrap Vue
+@import "./bootstrap-vue/variables";
+
 @import "~bootstrap-vue/src/variables";
 @import "~bootstrap-vue/src/utilities";
 
 // Vue Select
+@import "./vue-select/variables";
+
 @import "~vue-select/src/scss/global/variables";
 
 //

@@ -128,9 +128,13 @@ export default defineComponent({
             margin: 0;
         }
     }
+}
 
-    [data-screenshot-in-progress="true"] .price__warning {
-        display: none;
+.deck-tool__screenshot-context {
+    .price {
+        &__warning.btn.btn-warning {
+            display: none;
+        }
     }
 }
 </style>

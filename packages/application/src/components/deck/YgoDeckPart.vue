@@ -225,8 +225,12 @@ export default defineComponent({
             }
         }
     }
-    [data-screenshot-in-progress="true"] .deck-part--empty {
-        display: none;
+}
+.deck-tool__screenshot-context {
+    .deck-part {
+        &--empty {
+            display: none;
+        }
     }
 }
 </style>
