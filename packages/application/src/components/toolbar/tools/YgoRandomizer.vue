@@ -43,8 +43,8 @@ import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
-import { appStore } from "../../../composition/appStore";
-import { dataLoaded } from "../../../composition/dataLoaded";
+import { appStore } from "../../../composition/state/appStore";
+import { dataLoaded } from "../../../composition/state/dataLoaded";
 
 const deckRandomizationService = applicationContainer.get<
     DeckRandomizationService

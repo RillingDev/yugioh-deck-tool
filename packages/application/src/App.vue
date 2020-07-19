@@ -25,8 +25,6 @@ import {
     CardDatabase,
     Deck,
     DeckFileService,
-    DeckPart,
-    DeckService,
     DeckUriEncodingService,
     getLogger,
     UrlService,
@@ -37,13 +35,16 @@ import { DECK_REPLACE } from "./store/modules/deck";
 import { defineComponent } from "@vue/composition-api";
 import { DATA_LOADED } from "./store/modules/data";
 import { BOverlay } from "bootstrap-vue";
-import { appStore } from "./composition/appStore";
-import { dataLoaded } from "./composition/dataLoaded";
+import { appStore } from "./composition/state/appStore";
+import { dataLoaded } from "./composition/state/dataLoaded";
 import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
-import { Vue } from "vue/types/vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
+import {
+    createMoveFromBuilderValidator,
+    createMoveInDeckPartValidator,
+} from "./composition/controller/dragging";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -54,62 +55,41 @@ const deckFileService = applicationContainer.get<DeckFileService>(
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     APPLICATION_TYPES.DeckUriEncodingService
 );
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
 const urlService = applicationContainer.get<UrlService>(
     APPLICATION_TYPES.UrlService
 );
 
 const logger = getLogger("App");
 
-const findParent = (
-    el: Vue,
-    predicate: (current: Vue) => boolean
-): Vue | null => {
-    let current = el;
-    while (current.$parent != current.$root) {
-        if (predicate(current)) {
-            return current;
-        }
-        current = current.$parent;
-    }
-    return null;
-};
-
-// Workaround-ish solution to allow fetching the target deck part of a a drag event.
-const findDeckPartForComponent = (el: Vue): DeckPart | null =>
-    findParent(el, (current) => current.$props["deckPart"] != null)?.$props[
-        "deckPart"
-    ];
-
 const loadUriDeck = async (urlString: string): Promise<Deck | null> => {
+    // Load deck file from a remote URL
     const remoteUrlValue = urlService.getSingleQueryParam(urlString, "u");
     if (remoteUrlValue != null) {
-        // Load deck file from a remote URL
         const importResult = await deckFileService.fromRemoteFile(
             location.origin,
             remoteUrlValue
         );
-        logger.warn(
-            `Could not read ${importResult.missing.length} cards in remote deck.`
-        );
+        if (importResult.missing.length > 0) {
+            logger.warn(
+                `Could not read ${importResult.missing.length} cards in remote deck.`
+            );
+        }
         return importResult.deck;
     }
 
+    // Load encoded uri deck
     const uriEncodedDeck = urlService.getSingleQueryParam(urlString, "e");
     if (uriEncodedDeck != null) {
-        // Load encoded uri deck
         return deckUriEncodingService.fromUrlQueryParamValue(uriEncodedDeck);
     }
 
+    // Check for legacy share link
     const legacyUriEncodedDeck = urlService.getSingleQueryParam(
         urlString,
         "d",
         false
     );
     if (legacyUriEncodedDeck != null) {
-        // Check for legacy share link
         // Due to the old link containing illegal characters parseUrl causes issues
         return deckUriEncodingService.fromLegacyUrlQueryParamValue(
             legacyUriEncodedDeck,
@@ -132,37 +112,8 @@ export default defineComponent({
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
-        const canMoveInDeckParts = (e: any, oldDeckPart: DeckPart): boolean => {
-            const target = e.relatedContext.component;
-            const newDeckPart = findDeckPartForComponent(target);
-            if (newDeckPart == null) {
-                return false;
-            }
-            const deck = appStore(context).state.deck.active;
-            const format = appStore(context).state.format.active;
-            const card = e.draggedContext.element;
-
-            return deckService.canMove(
-                deck,
-                oldDeckPart,
-                newDeckPart,
-                format,
-                card
-            );
-        };
-
-        const canMoveFromBuilder = (e: any): boolean => {
-            const target = e.relatedContext.component;
-            const newDeckPart = findDeckPartForComponent(target);
-            if (newDeckPart == null) {
-                return false;
-            }
-            const deck = appStore(context).state.deck.active;
-            const format = appStore(context).state.format.active;
-            const card = e.draggedContext.element;
-
-            return deckService.canAdd(deck, newDeckPart, format, card);
-        };
+        const canMoveInDeckParts = createMoveInDeckPartValidator(context);
+        const canMoveFromBuilder = createMoveFromBuilderValidator(context);
 
         cardDatabase
             .prepareAll()

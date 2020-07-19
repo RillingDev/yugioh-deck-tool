@@ -14,13 +14,13 @@ import {
     downloadFile,
     SCREENSHOT_IMAGE_TYPE_EXTENSION,
 } from "../../../../../ui/src/main";
-import { deckEmpty } from "../../../composition/deckEmpty";
+import { deckEmpty } from "../../../composition/state/deckEmpty";
 import {
     showError,
     showInfo,
     showSuccess,
 } from "../../../composition/feedback";
-import { appStore } from "../../../composition/appStore";
+import { appStore } from "../../../composition/state/appStore";
 
 const logger = getLogger("YgoExportScreenshot");
 

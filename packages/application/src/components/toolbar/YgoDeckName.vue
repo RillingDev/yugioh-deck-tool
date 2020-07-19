@@ -11,7 +11,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
 import { DECK_NAME_UPDATE } from "../../store/modules/deck";
-import { appStore } from "../../composition/appStore";
+import { appStore } from "../../composition/state/appStore";
 
 export default defineComponent({
     components: {},

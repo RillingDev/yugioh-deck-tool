@@ -159,7 +159,7 @@ import {
 import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
-import { appStore } from "../composition/appStore";
+import { appStore } from "../composition/state/appStore";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase

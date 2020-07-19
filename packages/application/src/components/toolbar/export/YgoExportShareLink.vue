@@ -15,8 +15,8 @@ import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
-import { appStore } from "../../../composition/appStore";
-import { deckEmpty } from "../../../composition/deckEmpty";
+import { appStore } from "../../../composition/state/appStore";
+import { deckEmpty } from "../../../composition/state/deckEmpty";
 import { showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(

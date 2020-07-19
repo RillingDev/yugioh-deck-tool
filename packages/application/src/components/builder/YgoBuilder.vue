@@ -64,8 +64,8 @@ import {
     reactive,
     ref,
 } from "@vue/composition-api";
-import { appStore } from "../../composition/appStore";
-import { dataLoaded } from "../../composition/dataLoaded";
+import { appStore } from "../../composition/state/appStore";
+import { dataLoaded } from "../../composition/state/dataLoaded";
 import { BSidebar } from "bootstrap-vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(

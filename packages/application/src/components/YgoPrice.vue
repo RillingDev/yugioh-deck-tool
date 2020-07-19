@@ -52,7 +52,7 @@ import {
     Vendor,
 } from "../../../core/src/main";
 import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
-import { appStore } from "../composition/appStore";
+import { appStore } from "../composition/state/appStore";
 import { BTooltip } from "bootstrap-vue";
 
 const priceService = applicationContainer.get<PriceService>(

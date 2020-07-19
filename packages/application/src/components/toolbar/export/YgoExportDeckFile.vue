@@ -12,7 +12,7 @@ import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../../../ui/src/main";
-import { appStore } from "../../../composition/appStore";
+import { appStore } from "../../../composition/state/appStore";
 import { showSuccess } from "../../../composition/feedback";
 
 const deckFileService = applicationContainer.get<DeckFileService>(

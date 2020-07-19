@@ -7,10 +7,10 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { appStore } from "../../../composition/appStore";
+import { appStore } from "../../../composition/state/appStore";
 import { DECK_SORT } from "../../../store/modules/deck";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { deckEmpty } from "../../../composition/deckEmpty";
+import { deckEmpty } from "../../../composition/state/deckEmpty";
 
 export default defineComponent({
     components: { BDropdownItemButton },

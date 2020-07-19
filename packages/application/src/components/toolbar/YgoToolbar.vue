@@ -83,7 +83,7 @@ import YgoExportDeckFile from "./export/YgoExportDeckFile.vue";
 import YgoExportDeckYdkeUrl from "./export/YgoExportDeckYdkeUrl.vue";
 import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
-import { dataLoaded } from "../../composition/dataLoaded";
+import { dataLoaded } from "../../composition/state/dataLoaded";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
 
 export default defineComponent({

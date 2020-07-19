@@ -57,7 +57,7 @@ import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { computed, defineComponent, ref } from "@vue/composition-api";
-import { appStore } from "../../../composition/appStore";
+import { appStore } from "../../../composition/state/appStore";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService

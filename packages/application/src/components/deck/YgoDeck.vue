@@ -26,7 +26,7 @@ import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import YgoDeckPart from "./YgoDeckPart.vue";
-import { appStore } from "../../composition/appStore";
+import { appStore } from "../../composition/state/appStore";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -89,6 +89,7 @@ export default defineComponent({
         }
     }
 }
+
 .deck-tool__screenshot-context .deck {
     padding: $margin-sm;
 }

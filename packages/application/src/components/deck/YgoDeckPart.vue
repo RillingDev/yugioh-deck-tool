@@ -51,12 +51,13 @@ import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
 import { DECK_PART_CARDS_REPLACE } from "../../store/modules/deck";
-import { appStore } from "../../composition/appStore";
+import { appStore } from "../../composition/state/appStore";
 import { removeEnd } from "lightdash";
 import {
     INTERACTION_DRAGGING_START,
     INTERACTION_DRAGGING_STOP,
 } from "../../store/modules/interaction";
+import { DECK_PART_PROP } from "../../composition/controller/dragging";
 
 const cardService = applicationContainer.get<CardService>(
     APPLICATION_TYPES.CardService
@@ -114,7 +115,7 @@ export default defineComponent({
         Draggable,
     },
     props: {
-        deckPart: {
+        [DECK_PART_PROP]: {
             required: true,
             type: String as PropType<DeckPart>,
         },
@@ -247,6 +248,7 @@ export default defineComponent({
         }
     }
 }
+
 .deck-tool__screenshot-context {
     .deck-part {
         &--empty {

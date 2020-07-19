@@ -17,7 +17,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { readFile, uploadFile } from "../../../../../ui/src/main";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { appStore } from "../../../composition/appStore";
+import { appStore } from "../../../composition/state/appStore";
 import {
     showError,
     showSuccess,
