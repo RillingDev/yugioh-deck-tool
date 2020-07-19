@@ -1,15 +1,15 @@
 // Color system
 
 $white: #fff;
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #6c757d;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
+$gray-100: #f8f8f8;
+$gray-200: #e9e9e9;
+$gray-300: #dedede;
+$gray-400: #cecece;
+$gray-500: #adadad;
+$gray-600: #6c6c6c;
+$gray-700: #494949;
+$gray-800: #343434;
+$gray-900: #212121;
 $black: #000;
 
 $grays: (
@@ -24,18 +24,16 @@ $grays: (
     "900": $gray-900,
 );
 
-$indigo: #6610f2;
-$pink: #e83e8c;
-$red: #dc3545;
-$teal: #20c997;
-$cyan: #17a2b8;
-$green: #799a60;
-$yellow: #fad85c;
-$orange: #dc8525;
-$red: #d26c6c;
-$purple: #9683b8;
-$blue: #82aef8;
-$brown: #b97b51;
+$blue: #3F88C5;
+$indigo: #8e7ed9;
+$purple: #c291ec;
+$pink: #e843a1;
+$red: #e74b68;
+$orange: #e28503;
+$yellow: #f3c221;
+$green: #9ad557;
+$teal: #58e2a4;
+$cyan: #388697;
 
 $colors: (
     "blue": $blue,
@@ -53,10 +51,18 @@ $colors: (
     "gray-dark": $gray-800,
 );
 
-$primary: $brown;
-$secondary: darken($primary, 13.25%);
+$color-deck-part-main: #b97b51;
+$color-deck-part-extra: #8078a8;
+$color-deck-part-side: #728e56;
+
+$color-vendor-tcgplayer: #0e5b93;
+$color-vendor-cardmarket: #012169;
+$color-vendor-coolstuffinc: #41bfc3;
+
+$primary: $color-deck-part-main;
+$secondary: darken($color-deck-part-main, 13.25%);
 $success: $green;
-$info: $purple;
+$info: $blue;
 $warning: $orange;
 $danger: $red;
 $light: $gray-100;
@@ -72,14 +78,6 @@ $theme-colors: (
     "light": $light,
     "dark": $dark,
 );
-
-$color-deck-part-main: $brown;
-$color-deck-part-extra: $purple;
-$color-deck-part-side: $green;
-
-$color-vendor-tcgplayer: #0e5b93;
-$color-vendor-cardmarket: #012169;
-$color-vendor-coolstuffinc: #41bfc3;
 
 // Font system
 
