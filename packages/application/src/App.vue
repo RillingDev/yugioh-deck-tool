@@ -4,10 +4,17 @@
             <div class="deck-tool__body__primary">
                 <YgoToolbar />
                 <hr />
-                <YgoDeck :can-move="canMoveInDeckParts" v-show="loaded" />
+                <YgoDeck
+                    :can-move="canMoveInDeckParts"
+                    :drag-group="dragGroup"
+                    v-show="loaded"
+                />
             </div>
             <div class="deck-tool__body__secondary">
-                <YgoBuilder :can-move="canMoveFromBuilder" />
+                <YgoBuilder
+                    :can-move="canMoveFromBuilder"
+                    :drag-group="dragGroup"
+                />
             </div>
         </div>
     </BOverlay>
@@ -56,18 +63,25 @@ const urlService = applicationContainer.get<UrlService>(
 
 const logger = getLogger("App");
 
-// Workaround-ish solution to allow fetching the target deck part of a a drag event.
-const findDeckPartForComponent = (el: Vue): DeckPart | null => {
+const findParent = (
+    el: Vue,
+    predicate: (current: Vue) => boolean
+): Vue | null => {
     let current = el;
     while (current.$parent != current.$root) {
-        const deckPart = current.$props["deckPart"];
-        if (deckPart != null) {
-            return deckPart;
+        if (predicate(current)) {
+            return current;
         }
         current = current.$parent;
     }
     return null;
 };
+
+// Workaround-ish solution to allow fetching the target deck part of a a drag event.
+const findDeckPartForComponent = (el: Vue): DeckPart | null =>
+    findParent(el, (current) => current.$props["deckPart"] != null)?.$props[
+        "deckPart"
+    ];
 
 const loadUriDeck = async (urlString: string): Promise<Deck | null> => {
     const remoteUrlValue = urlService.getSingleQueryParam(urlString, "u");
@@ -116,10 +130,11 @@ export default defineComponent({
     setup: (props, context) => {
         const loaded = dataLoaded(context);
 
+        const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
+
         const canMoveInDeckParts = (e: any, oldDeckPart: DeckPart): boolean => {
-            const newDeckPart = findDeckPartForComponent(
-                e.relatedContext.component
-            );
+            const target = e.relatedContext.component;
+            const newDeckPart = findDeckPartForComponent(target);
             if (newDeckPart == null) {
                 return false;
             }
@@ -137,9 +152,8 @@ export default defineComponent({
         };
 
         const canMoveFromBuilder = (e: any): boolean => {
-            const newDeckPart = findDeckPartForComponent(
-                e.relatedContext.component
-            );
+            const target = e.relatedContext.component;
+            const newDeckPart = findDeckPartForComponent(target);
             if (newDeckPart == null) {
                 return false;
             }
@@ -176,7 +190,12 @@ export default defineComponent({
                 showError(context, "Could not load deck!", "deck-tool__portal");
             });
 
-        return { loaded, canMoveInDeckParts, canMoveFromBuilder };
+        return {
+            loaded,
+            dragGroup,
+            canMoveInDeckParts,
+            canMoveFromBuilder,
+        };
     },
 });
 </script>

@@ -34,6 +34,7 @@
         <YgoBuilderMatches
             :matches="filteredCards"
             :can-move="(e) => canMove(e)"
+            :drag-group="dragGroup"
         />
     </div>
 </template>
@@ -85,6 +86,10 @@ export default defineComponent({
         canMove: {
             required: true,
             type: Function as PropType<(e: object) => boolean>,
+        },
+        dragGroup: {
+            required: true,
+            type: String as PropType<string>,
         },
     },
     components: {

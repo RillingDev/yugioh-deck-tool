@@ -18,10 +18,11 @@
         <Draggable
             class="deck-part__content"
             tag="div"
-            :group="{ name: 'cards', pull: true, put: true }"
+            :group="{ name: dragGroup, pull: true, put: true }"
             v-model="cards"
             :move="(e) => canMove(e)"
-            :scroll="true"
+            @start="() => dragStart()"
+            @end="() => dragStop()"
         >
             <YgoCard
                 :card="card"
@@ -52,6 +53,10 @@ import Draggable from "vuedraggable";
 import { DECK_PART_CARDS_REPLACE } from "../../store/modules/deck";
 import { appStore } from "../../composition/appStore";
 import { removeEnd } from "lightdash";
+import {
+    INTERACTION_DRAGGING_START,
+    INTERACTION_DRAGGING_STOP,
+} from "../../store/modules/interaction";
 
 const cardService = applicationContainer.get<CardService>(
     APPLICATION_TYPES.CardService
@@ -117,6 +122,10 @@ export default defineComponent({
             required: true,
             type: Function as PropType<(e: object) => boolean>,
         },
+        dragGroup: {
+            required: true,
+            type: String as PropType<string>,
+        },
     },
     setup: (props, context) => {
         const deckPartConfig = computed<DeckPartConfig>(
@@ -147,7 +156,19 @@ export default defineComponent({
             return `${base} (${details.join(" | ")})`;
         });
 
-        return { deckPartConfig, cards, deckPartStats, deckPartEmpty };
+        const dragStart = (): void =>
+            appStore(context).commit(INTERACTION_DRAGGING_START);
+        const dragStop = (): void =>
+            appStore(context).commit(INTERACTION_DRAGGING_STOP);
+
+        return {
+            deckPartConfig,
+            cards,
+            deckPartStats,
+            deckPartEmpty,
+            dragStart,
+            dragStop,
+        };
     },
 });
 </script>

@@ -10,6 +10,7 @@
             :key="deckPart"
             :deck-part="deckPart"
             :can-move="(e) => canMove(e, deckPart)"
+            :drag-group="dragGroup"
         />
     </div>
 </template>
@@ -42,6 +43,10 @@ export default defineComponent({
             type: Function as PropType<
                 (e: object, deckPart: DeckPart) => boolean
             >,
+        },
+        dragGroup: {
+            required: true,
+            type: String as PropType<string>,
         },
     },
     setup(props, context) {

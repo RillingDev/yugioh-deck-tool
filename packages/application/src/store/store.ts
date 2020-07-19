@@ -6,12 +6,15 @@ import { deckModule } from "./modules/deck";
 import { formatModule } from "./modules/format";
 import { dataModule } from "./modules/data";
 import { AppState } from "./AppState";
+import { interactionModule } from "./modules/interaction";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store<AppState>({
     modules: {
         data: dataModule,
+        interaction: interactionModule,
+
         currency: currencyModule,
         format: formatModule,
         deck: deckModule,

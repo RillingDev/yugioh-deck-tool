@@ -7,11 +7,9 @@
                 :key="card.passcode"
             >
                 <Draggable
-                    :group="{ name: 'cards', pull: 'clone', put: false }"
+                    :group="{ name: dragGroup, pull: 'clone', put: false }"
                     :list="[card]"
                     :move="canMove"
-                    :scroll="true"
-                    :sort="false"
                 >
                     <YgoCard
                         :card="card"
@@ -51,6 +49,10 @@ export default defineComponent({
         canMove: {
             required: true,
             type: Function as PropType<(e: object) => boolean>,
+        },
+        dragGroup: {
+            required: true,
+            type: String as PropType<string>,
         },
     },
     components: {
