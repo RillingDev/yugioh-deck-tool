@@ -8,10 +8,10 @@
         "test": "ts-node --project ./spec/tsconfig.json node_modules/jasmine/bin/jasmine --config=jasmine.json"
     },
     "dependencies": {
-        "@popperjs/core": "^2.4.4",
         "inversify": "^5.0.1",
         "lodash": "^4.17.19",
-        "reflect-metadata": "^0.1.13"
+        "reflect-metadata": "^0.1.13",
+        "tippy.js": "^6.2.5"
     },
     "devDependencies": {
         "@types/jasmine": "^3.5.11",

@@ -13,11 +13,7 @@ import {
     createLoadingTooltip,
 } from "./createCardTooltip";
 import { bindReferenceLink } from "./bindReferenceLink";
-import { debounce } from "lodash";
-import { createPopper, Instance } from "@popperjs/core";
-
-const DATA_CARD_NAME = "name";
-const DATA_TOOLTIP_HIDDEN = "tooltipHidden";
+import { delegate, Instance } from "tippy.js";
 
 const cardDatabase = tooltipContainer.get<CardDatabase>(
     TOOLTIP_TYPES.CardDatabase
@@ -28,32 +24,6 @@ const cardDataLoaderService = tooltipContainer.get<CardDataLoaderService>(
 );
 
 const logger = getLogger("bindTooltip");
-
-class CardTooltip {
-    private tooltipElement: HTMLElement | null;
-    private popperInstance: Instance | null;
-
-    constructor(private readonly tooltipContainerElement: HTMLElement) {
-        this.tooltipElement = null;
-        this.popperInstance = null;
-    }
-
-    public close(): void {
-        if (this.tooltipElement != null) {
-            this.tooltipElement.remove();
-            this.popperInstance?.destroy();
-        }
-    }
-
-    public open(target: HTMLElement, tooltip: HTMLElement): void {
-        this.close();
-        this.tooltipElement = tooltip;
-        this.popperInstance = createPopper(target, this.tooltipElement, {
-            placement: "auto",
-        });
-        this.tooltipContainerElement.appendChild(this.tooltipElement);
-    }
-}
 
 const loadCard = async (cardKey: string): Promise<Card> => {
     let resolvedCardKey = await cardDatabase.prepareCard(
@@ -83,54 +53,50 @@ export const bindTooltipHandlers = (
     context: HTMLElement,
     tooltipContainerElement: HTMLElement
 ): void => {
-    const tooltip = new CardTooltip(tooltipContainerElement);
-
-    const openTooltip = (target: HTMLElement, cardKey: string): void => {
-        if (target.dataset[DATA_TOOLTIP_HIDDEN]) {
-            return;
-        }
+    const showTooltip = (
+        instance: Instance,
+        target: HTMLElement | HTMLAnchorElement,
+        cardKey: string
+    ): void => {
         logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
-        tooltip.open(target, createLoadingTooltip());
         loadCard(cardKey)
             .then((card) => {
-                if (target.dataset[DATA_TOOLTIP_HIDDEN]) {
-                    return;
-                }
                 logger.trace("Loaded card.", card);
-                tooltip.open(target, createCardTooltip(card));
+                instance.setContent(createCardTooltip(card));
+
                 if (target instanceof HTMLAnchorElement) {
                     bindReferenceLink(target, card);
                 }
+
                 // Start request, but do not wait for it to finish.
                 cardDataLoaderService
                     .updateViews(card)
                     .then(() => logger.trace("Updated view count."))
-                    .catch((e) =>
-                        logger.warn("Could not update view count.", e)
+                    .catch((err) =>
+                        logger.warn("Could not update view count.", err)
                     );
             })
-            .catch((e) => {
-                tooltip.open(
-                    target,
+            .catch((err) => {
+                instance.setContent(
                     createErrorTooltip("Error while loading card.")
                 );
-                logger.error("Error while loading card.", e);
+                logger.error("Error while loading card.", err);
             });
     };
 
-    const tooltipShowHandler = (event: MouseEvent): void => {
-        const target = event.target;
-        if (target instanceof HTMLElement) {
-            const cardKey = target.dataset[DATA_CARD_NAME];
-            if (cardKey != null) {
-                openTooltip(target, cardKey);
-            }
-        }
-    };
-
-    const tooltipHideHandler = (): void => tooltip.close();
-
-    context.addEventListener("mouseover", debounce(tooltipShowHandler, 400));
-    context.addEventListener("mouseout", tooltipHideHandler);
-    context.addEventListener("dragstart", tooltipHideHandler);
+    delegate(context, {
+        target: "[data-name]",
+        appendTo: tooltipContainerElement,
+        delay: [200, 0],
+        placement: "auto",
+        maxWidth: "none",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        allowHTML: true,
+        content: () => createLoadingTooltip(),
+        onShow: (instance) => {
+            const target = instance.reference as HTMLElement;
+            const cardKey = target.dataset["name"]!;
+            showTooltip(instance, target, cardKey);
+        },
+    });
 };
