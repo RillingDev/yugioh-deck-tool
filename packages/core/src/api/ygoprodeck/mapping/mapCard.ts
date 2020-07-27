@@ -7,10 +7,12 @@ import {
 } from "../../../core/card/banlist/BanState";
 import { CardImage } from "../../../core/card/CardImage";
 import { CardPrices } from "../../../core/card/CardPrices";
-import { CardSetAppearance } from "../../../core/card/set/CardSetAppearance";
 import { Format } from "../../../core/card/format/Format";
 import { DefaultVendor, Vendor } from "../../../core/price/Vendor";
-import { UnlinkedCard } from "../../../core/card/UnlinkedCard";
+import {
+    CardSetAppearance,
+    UnlinkedCard,
+} from "../../../core/card/UnlinkedCard";
 import { ReleaseInfo } from "../../../core/card/ReleaseInfo";
 import { findByValue, requireNonNilElseThrow } from "lightdash";
 

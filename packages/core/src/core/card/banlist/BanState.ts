@@ -5,18 +5,12 @@ interface BanState {
     readonly count: number;
 }
 
-// Pseudo-enum of ban states
-const DefaultBanState: {
-    readonly UNLIMITED: BanState;
-    readonly SEMI_LIMITED: BanState;
-    readonly LIMITED: BanState;
-    readonly BANNED: BanState;
-} = {
+const DefaultBanState = {
     UNLIMITED: { name: "Unlimited", count: 3 },
     SEMI_LIMITED: { name: "Semi-Limited", count: 2 },
     LIMITED: { name: "Limited", count: 1 },
     BANNED: { name: "Banned", count: 0 },
-};
+} as const;
 deepFreeze(DefaultBanState);
 
 const DEFAULT_BAN_STATE_ARR = [

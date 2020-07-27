@@ -9,12 +9,7 @@ interface DeckPartConfig {
     readonly recommended: number;
 }
 
-// Pseudo-enum of deck parts
-const DefaultDeckPartConfig: {
-    readonly [DeckPart.MAIN]: DeckPartConfig;
-    readonly [DeckPart.EXTRA]: DeckPartConfig;
-    readonly [DeckPart.SIDE]: DeckPartConfig;
-} = {
+const DefaultDeckPartConfig = {
     [DeckPart.MAIN]: {
         name: "Main",
         indicator: "#main",
@@ -36,7 +31,7 @@ const DefaultDeckPartConfig: {
         max: 15,
         recommended: 15,
     },
-};
+} as const;
 deepFreeze(DefaultDeckPartConfig);
 
 export { DeckPartConfig, DefaultDeckPartConfig };

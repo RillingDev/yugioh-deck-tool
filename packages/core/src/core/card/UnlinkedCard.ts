@@ -1,9 +1,16 @@
-import { CardSetAppearance } from "./set/CardSetAppearance";
 import { CardImage } from "./CardImage";
 import { CardPrices } from "./CardPrices";
 import { Format } from "./format/Format";
 import { ReleaseInfo } from "./ReleaseInfo";
 import { BanlistInfo } from "./banlist/BanlistInfo";
+
+/**
+ * @see CardLinkingService
+ */
+interface CardSetAppearance {
+    readonly name: string;
+    readonly code: string;
+}
 
 /**
  * Version of Card without references to CardType
@@ -40,4 +47,4 @@ interface UnlinkedCard {
     readonly views: number;
 }
 
-export { UnlinkedCard };
+export { UnlinkedCard, CardSetAppearance };

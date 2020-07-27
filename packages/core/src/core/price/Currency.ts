@@ -8,17 +8,7 @@ interface Currency {
 }
 
 // Values from https://api.exchangeratesapi.io/latest?base=USD
-const DefaultCurrency: {
-    USD: Currency;
-    EUR: Currency;
-    GBP: Currency;
-    CAD: Currency;
-    AUD: Currency;
-    MXN: Currency;
-    BRL: Currency;
-    THB: Currency;
-    IDR: Currency;
-} = {
+const DefaultCurrency = {
     USD: {
         id: "USD",
         name: "US Dollar",
@@ -73,7 +63,7 @@ const DefaultCurrency: {
         conversionRate: 16614.4459898006,
         fractionDigits: 0,
     },
-};
+} as const;
 deepFreeze(DefaultCurrency);
 
 const DEFAULT_CURRENCY_ARR: Currency[] = [

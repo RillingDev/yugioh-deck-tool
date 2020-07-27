@@ -7,11 +7,7 @@ interface Vendor {
     readonly currency: Currency;
 }
 
-const DefaultVendor: {
-    readonly CARD_MARKET: Vendor;
-    readonly TCG_PLAYER: Vendor;
-    readonly COOL_STUFF_INC: Vendor;
-} = {
+const DefaultVendor = {
     CARD_MARKET: {
         name: "Cardmarket",
         id: "cardmarket",
@@ -27,7 +23,7 @@ const DefaultVendor: {
         id: "coolstuffinc",
         currency: DefaultCurrency.USD,
     },
-};
+} as const;
 deepFreeze(DefaultVendor);
 
 const DEFAULT_VENDOR_ARR = [
