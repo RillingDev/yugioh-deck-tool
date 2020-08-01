@@ -4,7 +4,7 @@ import { CardValues } from "../../../core/card/type/CardValues";
 import { CardTypeGroup } from "../../../core/card/type/CardTypeGroup";
 import { CardType } from "../../../core/card/type/CardType";
 import { DeckPart } from "../../../core/deck/DeckPart";
-import { findByKey, requireNonNilElseThrow } from "lightdash";
+import { getExistingElseThrow, requireNonNilElseThrow } from "lightdash";
 
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {
@@ -35,21 +35,22 @@ interface GroupValues {
     race: string[];
 }
 
+const typeGroupMap = new Map<string, CardTypeGroup>([
+    ["MONSTER", CardTypeGroup.MONSTER],
+    ["SPELL", CardTypeGroup.SPELL],
+    ["TRAP", CardTypeGroup.TRAP],
+    ["SKILL", CardTypeGroup.SKILL],
+]);
 const mapGroup = (type: RawCardType): CardTypeGroup =>
-    requireNonNilElseThrow(
-        findByKey<CardTypeGroup>(CardTypeGroup, type.group),
-        () => new TypeError(`Unexpected type group '${type.group}'.`)
-    );
+    getExistingElseThrow(typeGroupMap, type.group);
 
+const deckPartMap = new Map<string, DeckPart>([
+    ["MAIN", DeckPart.MAIN],
+    ["EXTRA", DeckPart.EXTRA],
+    ["SIDE", DeckPart.SIDE],
+]);
 const mapDeckPart = (type: RawCardType): Set<DeckPart> =>
-    new Set(
-        type.area.map((area) =>
-            requireNonNilElseThrow(
-                findByKey<DeckPart>(DeckPart, area),
-                () => new TypeError(`Unexpected deck part '${area}'.`)
-            )
-        )
-    );
+    new Set(type.area.map((area) => getExistingElseThrow(deckPartMap, area)));
 
 const mapTypes = (typeNames: string[], types: CardType[]): CardType[] =>
     typeNames.map((typeName) =>

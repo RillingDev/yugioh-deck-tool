@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import {
-    BanState,
-    DEFAULT_BAN_STATE_ARR,
-    DefaultBanState,
-} from "../../../core/card/banlist/BanState";
+import { BanState, DefaultBanState } from "../../../core/card/banlist/BanState";
 import { CardImage } from "../../../core/card/CardImage";
 import { CardPrices } from "../../../core/card/CardPrices";
 import { Format } from "../../../core/card/format/Format";
@@ -14,7 +10,7 @@ import {
     UnlinkedCard,
 } from "../../../core/card/UnlinkedCard";
 import { ReleaseInfo } from "../../../core/card/ReleaseInfo";
-import { findByValue, requireNonNilElseThrow } from "lightdash";
+import { getExistingElseThrow } from "lightdash";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {
@@ -80,24 +76,34 @@ interface RawBanlistInfo {
     ban_goat?: string;
 }
 
-const mapBanListState = (name: string | null): BanState => {
-    for (const banState of DEFAULT_BAN_STATE_ARR) {
-        if (name === banState.name) {
-            return banState;
-        }
+const banStateMap = new Map<string, BanState>([
+    ["Unlimited", DefaultBanState.UNLIMITED],
+    ["Semi-Limited", DefaultBanState.SEMI_LIMITED],
+    ["Limited", DefaultBanState.LIMITED],
+    ["Banned", DefaultBanState.BANNED],
+]);
+const mapBanState = (name: string | null): BanState => {
+    if (name != null && banStateMap.has(name)) {
+        return banStateMap.get(name)!;
     }
     return DefaultBanState.UNLIMITED;
 };
 
+const formatMap = new Map<string, Format>([
+    ["OCG", Format.OCG],
+    ["TCG", Format.TCG],
+    ["GOAT", Format.GOAT],
+    ["OCG GOAT", Format.OCG_GOAT],
+    ["Speed Duel", Format.SPEED_DUEL],
+    ["Rush Duel", Format.RUSH_DUEL],
+    ["Duel Links", Format.DUEL_LINKS],
+]);
 const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
     if (rawMiscInfo == null || rawMiscInfo.formats == null) {
         return [];
     }
     return rawMiscInfo.formats.map((format) =>
-        requireNonNilElseThrow(
-            findByValue<Format>(Format, format),
-            () => new TypeError(`Unexpected format '${format}'.`)
-        )
+        getExistingElseThrow(formatMap, format)
     );
 };
 
@@ -119,7 +125,6 @@ const mapCardImage = (imageUrl: string): string =>
         "https://storage.googleapis.com/ygoprodeck.com/",
         "https://ygoprodeck.com/"
     );
-
 const mapImage = (rawCard: RawCard): CardImage | null => {
     if (rawCard.card_images == null) {
         return null;
@@ -150,16 +155,18 @@ const mapPrices = (rawCard: RawCard): CardPrices => {
     return result;
 };
 
-const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => ({
-    [Format.TCG]:
-        miscInfo?.tcg_date != null
-            ? new Date(miscInfo.tcg_date).getTime()
-            : null,
-    [Format.OCG]:
-        miscInfo?.ocg_date != null
-            ? new Date(miscInfo.ocg_date).getTime()
-            : null,
-});
+const mapDateStringToTimestamp = (date: string | null): number | null => {
+    if (date == null) {
+        return null;
+    }
+    return new Date(date).getTime();
+};
+const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => {
+    return {
+        [Format.TCG]: mapDateStringToTimestamp(miscInfo?.tcg_date ?? null),
+        [Format.OCG]: mapDateStringToTimestamp(miscInfo?.ocg_date ?? null),
+    };
+};
 
 const mapCard = (rawCard: RawCard): UnlinkedCard => {
     const miscInfo: RawMiscInfo | null =
@@ -189,15 +196,9 @@ const mapCard = (rawCard: RawCard): UnlinkedCard => {
         formats: mapFormats(miscInfo),
         release: mapRelease(miscInfo),
         banlist: {
-            [Format.TCG]: mapBanListState(
-                rawCard.banlist_info?.ban_tcg ?? null
-            ),
-            [Format.OCG]: mapBanListState(
-                rawCard.banlist_info?.ban_ocg ?? null
-            ),
-            [Format.GOAT]: mapBanListState(
-                rawCard.banlist_info?.ban_goat ?? null
-            ),
+            [Format.TCG]: mapBanState(rawCard.banlist_info?.ban_tcg ?? null),
+            [Format.OCG]: mapBanState(rawCard.banlist_info?.ban_ocg ?? null),
+            [Format.GOAT]: mapBanState(rawCard.banlist_info?.ban_goat ?? null),
         },
 
         views: miscInfo?.views ?? 0,
