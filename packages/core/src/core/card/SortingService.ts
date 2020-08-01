@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { Card } from "./Card";
-import { CardTypeGroup } from "./type/CardTypeGroup";
+import { CardTypeCategory } from "./type/CardTypeCategory";
 import { CardDatabase } from "./CardDatabase";
 import { TYPES } from "../../types";
 import { Format } from "./format/Format";
@@ -111,7 +111,7 @@ class SortingService {
             }
 
             // For monsters, sort by monster related attributes.
-            if (a.type.group === CardTypeGroup.MONSTER) {
+            if (a.type.category === CardTypeCategory.MONSTER) {
                 if (a.level !== b.level) {
                     return levelComparator(a, b);
                 }
@@ -174,7 +174,7 @@ class SortingService {
 
     private createSubTypeComparator(order: SortingOrder): Comparator<Card> {
         return (a: Card, b: Card) => {
-            const subTypes = this.cardDatabase.getSubTypes(a.type.group);
+            const subTypes = this.cardDatabase.getSubTypes(a.type.category);
             return (
                 (subTypes.indexOf(a.subType) - subTypes.indexOf(b.subType)) *
                 this.getOrderModifier(order)

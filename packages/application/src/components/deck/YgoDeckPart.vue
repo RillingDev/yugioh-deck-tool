@@ -39,7 +39,7 @@ import {
     Card,
     CardDatabase,
     CardService,
-    CardTypeGroup,
+    CardTypeCategory,
     DeckPart,
     DeckPartConfig,
     DefaultDeckPartConfig,
@@ -83,7 +83,7 @@ const calculateDetailedTypeStats = (
     if (deckPart === DeckPart.EXTRA) {
         const countedByType = cardService.countByType(cards);
         return cardDatabase
-            .getTypes(CardTypeGroup.MONSTER)
+            .getTypes(CardTypeCategory.MONSTER)
             .filter(
                 (cardType) =>
                     countedByType.has(cardType) &&
@@ -95,16 +95,16 @@ const calculateDetailedTypeStats = (
             ]);
     }
 
-    const countedByTypeGroup = cardService.countByTypeGroup(cards);
-    return Object.values(CardTypeGroup)
+    const countedByTypeCategory = cardService.countByTypeCategory(cards);
+    return Object.values(CardTypeCategory)
         .filter(
-            (cardTypeGroup) =>
-                countedByTypeGroup.has(cardTypeGroup) &&
-                countedByTypeGroup.get(cardTypeGroup)! > 0
+            (typeCategory) =>
+                countedByTypeCategory.has(typeCategory) &&
+                countedByTypeCategory.get(typeCategory)! > 0
         )
-        .map((cardTypeGroup) => [
-            cardTypeGroup,
-            countedByTypeGroup.get(cardTypeGroup)!,
+        .map((typeCategory) => [
+            typeCategory,
+            countedByTypeCategory.get(typeCategory)!,
         ]);
 };
 

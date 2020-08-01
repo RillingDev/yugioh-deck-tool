@@ -1,6 +1,6 @@
 import {
     Card,
-    CardTypeGroup,
+    CardTypeCategory,
     DEFAULT_VENDOR_ARR,
     Format,
     PriceService,
@@ -118,7 +118,7 @@ const createMonsterStats = (card: Card): HTMLElement => {
 const createSubType = (card: Card): HTMLElement => {
     const subTypeChildren: HTMLElement[] = [];
 
-    if (card.type.group === CardTypeGroup.MONSTER) {
+    if (card.type.category === CardTypeCategory.MONSTER) {
         subTypeChildren.push(createImg([], imageUrlAttribute(card)));
         subTypeChildren.push(createSpan([], `Attribute: ${card.attribute!}`));
     }
@@ -171,15 +171,15 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
     );
     children.push(primaryDetails);
 
-    if (card.type.group === CardTypeGroup.MONSTER) {
+    if (card.type.category === CardTypeCategory.MONSTER) {
         children.push(createMonsterStats(card));
     }
 
-    if (card.type.group !== CardTypeGroup.SKILL) {
+    if (card.type.category !== CardTypeCategory.SKILL) {
         children.push(createSubType(card));
     }
 
-    if (card.type.group === CardTypeGroup.MONSTER) {
+    if (card.type.category === CardTypeCategory.MONSTER) {
         if (card.level != null) {
             const level = createDiv(
                 ["card-tooltip__level"],

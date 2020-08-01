@@ -7,14 +7,14 @@ import { intersection, isEmpty } from "lodash";
 import { BanState } from "./banlist/BanState";
 import { CardService } from "./CardService";
 import { TYPES } from "../../types";
-import { CardTypeGroup } from "./type/CardTypeGroup";
+import { CardTypeCategory } from "./type/CardTypeCategory";
 import { BanlistService } from "./banlist/BanlistService";
 
 interface CardFilter {
     name?: string | null;
 
-    typeGroup?: CardTypeGroup | null;
-    type?: CardType | null;
+    typeCategory?: CardTypeCategory | null; // This can be used when wanting only type-category accuracy. For exact type matching see #type
+    type?: CardType | null; // This can be used when wanting exact type accuracy. For type category matching see #typeCategory
     subType?: string | null;
 
     attribute?: string | null;
@@ -69,8 +69,8 @@ class FilterService {
             }
 
             if (
-                filter.typeGroup != null &&
-                card.type.group != filter.typeGroup
+                filter.typeCategory != null &&
+                card.type.category != filter.typeCategory
             ) {
                 return false;
             }

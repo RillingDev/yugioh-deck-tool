@@ -8,7 +8,7 @@ import { Format } from "../card/format/Format";
 import { insertAt, pullFirst } from "lightdash";
 import { pullAt, sampleSize, shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "../card/SortingService";
-import { CardTypeGroup } from "../card/type/CardTypeGroup";
+import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import { BanlistService } from "../card/banlist/BanlistService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
@@ -86,10 +86,10 @@ class DeckService {
 
         // If a skill card would be added with one already existing, return false
         if (
-            card.type.group === CardTypeGroup.SKILL &&
+            card.type.category === CardTypeCategory.SKILL &&
             this.getAllCards(deck).some(
                 (existingCard) =>
-                    existingCard.type.group === CardTypeGroup.SKILL
+                    existingCard.type.category === CardTypeCategory.SKILL
             )
         ) {
             return false;

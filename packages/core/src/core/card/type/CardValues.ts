@@ -1,12 +1,12 @@
-import { CardTypeGroup } from "./CardTypeGroup";
-import { MonsterGroupValues } from "./MonsterGroupValues";
-import { GroupValues } from "./GroupValues";
+import { CardTypeCategory } from "./CardTypeCategory";
+import { MonsterTypeCategoryValues } from "./MonsterTypeCategoryValues";
+import { TypeCategoryValues } from "./TypeCategoryValues";
 
 interface CardValues {
-    readonly [CardTypeGroup.MONSTER]: MonsterGroupValues;
-    readonly [CardTypeGroup.SPELL]: GroupValues;
-    readonly [CardTypeGroup.TRAP]: GroupValues;
-    readonly [CardTypeGroup.SKILL]: GroupValues;
+    readonly [CardTypeCategory.MONSTER]: MonsterTypeCategoryValues;
+    readonly [CardTypeCategory.SPELL]: TypeCategoryValues;
+    readonly [CardTypeCategory.TRAP]: TypeCategoryValues;
+    readonly [CardTypeCategory.SKILL]: TypeCategoryValues;
 }
 
 export { CardValues };

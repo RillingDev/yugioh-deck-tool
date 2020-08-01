@@ -6,19 +6,19 @@ import { ReleaseInfo } from "../../src/core/card/ReleaseInfo";
 import { BanlistInfo } from "../../src/core/card/banlist/BanlistInfo";
 import { CardType } from "../../src/core/card/type/CardType";
 import { CardSet } from "../../src/core/card/set/CardSet";
-import { CardTypeGroup } from "../../src/core/card/type/CardTypeGroup";
+import { CardTypeCategory } from "../../src/core/card/type/CardTypeCategory";
 import { DefaultBanState } from "../../src/core/card/banlist/BanState";
 import { Vendor } from "../../src/core/price/Vendor";
 import { DeckPart } from "../../src/core/deck/DeckPart";
 
 const createCardType = (data: {
     name?: string;
-    group?: CardTypeGroup;
+    group?: CardTypeCategory;
     sortGroup?: number;
     deckPart?: Set<DeckPart>;
 }): CardType => ({
     name: data.name ?? "Spell Card",
-    group: data.group ?? CardTypeGroup.SPELL,
+    category: data.group ?? CardTypeCategory.SPELL,
     sortGroup: data.sortGroup ?? 0,
     deckParts: data.deckPart ?? new Set([DeckPart.MAIN, DeckPart.SIDE]),
 });

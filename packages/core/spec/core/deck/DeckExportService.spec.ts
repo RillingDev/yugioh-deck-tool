@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import {
-    CardTypeGroup,
+    CardTypeCategory,
     container,
     DeckExportService,
     DeckPart,
@@ -28,12 +28,12 @@ describe("DeckExportService", () => {
             const card1 = createCard({
                 passcode: "123",
                 name: "foo",
-                type: createCardType({ group: CardTypeGroup.SPELL }),
+                type: createCardType({ group: CardTypeCategory.SPELL }),
             });
             const card2 = createCard({
                 passcode: "321",
                 name: "foo ooo",
-                type: createCardType({ group: CardTypeGroup.MONSTER }),
+                type: createCardType({ group: CardTypeCategory.MONSTER }),
             });
             const card3 = createCard({ passcode: "456", name: "bar" });
             const card4 = createCard({ passcode: "789", name: "fizz" });

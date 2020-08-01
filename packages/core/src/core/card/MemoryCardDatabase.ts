@@ -5,7 +5,7 @@ import { Card } from "./Card";
 import { CardSet } from "./set/CardSet";
 import { CardDatabase, FindCardBy } from "./CardDatabase";
 import { CardType } from "./type/CardType";
-import { CardTypeGroup } from "./type/CardTypeGroup";
+import { CardTypeCategory } from "./type/CardTypeCategory";
 import { UnlinkedCard } from "./UnlinkedCard";
 import { deepFreeze } from "lightdash";
 import { CardLinkingService } from "./CardLinkingService";
@@ -30,8 +30,8 @@ class MemoryCardDatabase implements CardDatabase {
     private readonly cardsByName: Map<string, Card>;
     private readonly sets: CardSet[];
     private readonly archetypes: string[];
-    private readonly types: Map<CardTypeGroup, CardType[]>;
-    private readonly subTypes: Map<CardTypeGroup, string[]>;
+    private readonly types: Map<CardTypeCategory, CardType[]>;
+    private readonly subTypes: Map<CardTypeCategory, string[]>;
     private readonly attributes: string[];
     private readonly linkMarkers: string[];
     private readonly levels: number[];
@@ -54,15 +54,15 @@ class MemoryCardDatabase implements CardDatabase {
         this.cardsByName = new Map<string, Card>();
         this.sets = [];
         this.archetypes = [];
-        this.types = new Map<CardTypeGroup, CardType[]>(
-            Object.values(CardTypeGroup).map((cardTypeGroup) => [
-                cardTypeGroup,
+        this.types = new Map<CardTypeCategory, CardType[]>(
+            Object.values(CardTypeCategory).map((typeCategory) => [
+                typeCategory,
                 [],
             ])
         );
-        this.subTypes = new Map<CardTypeGroup, string[]>(
-            Object.values(CardTypeGroup).map((cardTypeGroup) => [
-                cardTypeGroup,
+        this.subTypes = new Map<CardTypeCategory, string[]>(
+            Object.values(CardTypeCategory).map((typeCategory) => [
+                typeCategory,
                 [],
             ])
         );
@@ -108,12 +108,12 @@ class MemoryCardDatabase implements CardDatabase {
         return this.archetypes;
     }
 
-    public getTypes(cardTypeGroup: CardTypeGroup): CardType[] {
-        return this.types.get(cardTypeGroup)!;
+    public getTypes(typeCategory: CardTypeCategory): CardType[] {
+        return this.types.get(typeCategory)!;
     }
 
-    public getSubTypes(cardTypeGroup: CardTypeGroup): string[] {
-        return this.subTypes.get(cardTypeGroup)!;
+    public getSubTypes(typeCategory: CardTypeCategory): string[] {
+        return this.subTypes.get(typeCategory)!;
     }
 
     public getAttributes(): string[] {
@@ -201,15 +201,15 @@ class MemoryCardDatabase implements CardDatabase {
             this.loadingCardValues = this.cardDataLoaderService
                 .getCardValues()
                 .then((cardValues) => {
-                    for (const cardTypeGroup of Object.values(CardTypeGroup)) {
-                        const cardTypes = this.types.get(cardTypeGroup)!;
-                        cardTypes.push(...cardValues[cardTypeGroup].types);
+                    for (const typeCategory of Object.values(
+                        CardTypeCategory
+                    )) {
+                        const cardTypes = this.types.get(typeCategory)!;
+                        cardTypes.push(...cardValues[typeCategory].types);
                         deepFreeze(cardTypes);
 
-                        const cardSubTypes = this.subTypes.get(cardTypeGroup)!;
-                        cardSubTypes.push(
-                            ...cardValues[cardTypeGroup].subTypes
-                        );
+                        const cardSubTypes = this.subTypes.get(typeCategory)!;
+                        cardSubTypes.push(...cardValues[typeCategory].subTypes);
                         deepFreeze(cardSubTypes);
                     }
                     MemoryCardDatabase.logger.debug(
@@ -219,17 +219,17 @@ class MemoryCardDatabase implements CardDatabase {
                     );
 
                     this.attributes.push(
-                        ...cardValues[CardTypeGroup.MONSTER].attributes
+                        ...cardValues[CardTypeCategory.MONSTER].attributes
                     );
                     deepFreeze(this.attributes);
 
                     this.levels.push(
-                        ...cardValues[CardTypeGroup.MONSTER].levels
+                        ...cardValues[CardTypeCategory.MONSTER].levels
                     );
                     deepFreeze(this.levels);
 
                     this.linkMarkers.push(
-                        ...cardValues[CardTypeGroup.MONSTER].linkMarkers
+                        ...cardValues[CardTypeCategory.MONSTER].linkMarkers
                     );
                     deepFreeze(this.linkMarkers);
                     MemoryCardDatabase.logger.debug(

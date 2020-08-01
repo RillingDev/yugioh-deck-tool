@@ -2,7 +2,7 @@ import { injectable } from "inversify";
 import { Card } from "./Card";
 import { intersection, uniqBy } from "lodash";
 import { countMapBy } from "lightdash";
-import { CardTypeGroup } from "./type/CardTypeGroup";
+import { CardTypeCategory } from "./type/CardTypeCategory";
 import { CardType } from "./type/CardType";
 
 export type Counted<T> = Map<T, number>;
@@ -76,15 +76,15 @@ class CardService {
     }
 
     /**
-     * Counts cards by type group. Type groups with no occurrence are omitted.
+     * Counts cards by type category. Type categories with no occurrence are omitted.
      *
      * @param cards Cards to count.
-     * @return Map mapping the card type group to its count.
+     * @return Map mapping the card type category to its count.
      */
-    public countByTypeGroup(
+    public countByTypeCategory(
         cards: ReadonlyArray<Card>
-    ): Counted<CardTypeGroup> {
-        return countMapBy(cards, (card: Card) => card.type.group);
+    ): Counted<CardTypeCategory> {
+        return countMapBy(cards, (card: Card) => card.type.category);
     }
 
     /**

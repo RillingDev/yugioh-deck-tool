@@ -14,7 +14,7 @@ export { Format } from "./core/card/format/Format";
 export type { Currency } from "./core/price/Currency";
 export { DEFAULT_CURRENCY_ARR, DefaultCurrency } from "./core/price/Currency";
 export type { CardType } from "./core/card/type/CardType";
-export { CardTypeGroup } from "./core/card/type/CardTypeGroup";
+export { CardTypeCategory } from "./core/card/type/CardTypeCategory";
 export type { Vendor } from "./core/price/Vendor";
 export { DefaultVendor, DEFAULT_VENDOR_ARR } from "./core/price/Vendor";
 

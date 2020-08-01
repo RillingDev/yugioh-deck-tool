@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import {
-    CardTypeGroup,
+    CardTypeCategory,
     container,
     Deck,
     DeckPart,
@@ -102,7 +102,7 @@ describe("DeckService", () => {
         it("checks total link card count", () => {
             const card = createCard({
                 passcode: "456",
-                type: createCardType({ group: CardTypeGroup.SKILL }),
+                type: createCardType({ group: CardTypeCategory.SKILL }),
             });
             expect(
                 deckService.canAdd(

@@ -1,11 +1,11 @@
-import { BanlistInfo, Card, CardTypeGroup } from "../../core/src/main";
+import { BanlistInfo, Card, CardTypeCategory } from "../../core/src/main";
 
 export const imageUrlType = (card: Card): string =>
     `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
         card.type.name
     )}.jpg`;
 export const imageUrlSubType = (card: Card): string =>
-    card.type.group === CardTypeGroup.MONSTER
+    card.type.category === CardTypeCategory.MONSTER
         ? `https://ygoprodeck.com/pics/${encodeURIComponent(card.subType)}.png`
         : `https://ygoprodeck.com/pics/icons/${encodeURIComponent(
               card.subType

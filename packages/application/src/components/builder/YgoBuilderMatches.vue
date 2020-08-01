@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { Card, CardTypeGroup } from "../../../../core/src/main";
+import { Card, CardTypeCategory } from "../../../../core/src/main";
 import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
@@ -67,11 +67,11 @@ export default defineComponent({
         );
 
         const typeText = (card: Card): string =>
-            card.type.group === CardTypeGroup.MONSTER
+            card.type.category === CardTypeCategory.MONSTER
                 ? card.type.name
-                : card.type.group;
+                : card.type.category;
         const subTypeText = (card: Card): string =>
-            card.type.group === CardTypeGroup.MONSTER
+            card.type.category === CardTypeCategory.MONSTER
                 ? `${card.attribute!}/${card.subType}`
                 : card.subType;
 

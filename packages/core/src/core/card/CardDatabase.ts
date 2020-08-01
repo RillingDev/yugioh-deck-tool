@@ -1,7 +1,7 @@
 import { Card } from "./Card";
 import { CardSet } from "./set/CardSet";
 import { CardType } from "./type/CardType";
-import { CardTypeGroup } from "./type/CardTypeGroup";
+import { CardTypeCategory } from "./type/CardTypeCategory";
 
 enum FindCardBy {
     NAME,
@@ -38,9 +38,9 @@ interface CardDatabase {
 
     getArchetypes(): string[];
 
-    getTypes(cardTypeGroup: CardTypeGroup): CardType[];
+    getTypes(typeCategory: CardTypeCategory): CardType[];
 
-    getSubTypes(cardTypeGroup: CardTypeGroup): string[];
+    getSubTypes(typeCategory: CardTypeCategory): string[];
 
     getAttributes(): string[];
 

@@ -51,14 +51,14 @@
             />
         </div>
 
-        <div class="form-group" v-if="isFieldVisible('typeGroup')">
+        <div class="form-group" v-if="isFieldVisible('typeCategory')">
             <VSelect
-                title="Type Group"
-                placeholder="Type Group"
-                :options="typeGroups"
+                title="Type"
+                placeholder="Type"
+                :options="cardTypeCategories"
                 :searchable="false"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.typeGroup"
+                v-model="internalFilter.typeCategory"
             />
         </div>
 
@@ -68,8 +68,8 @@
             v-show="isMonster"
         >
             <VSelect
-                title="Type"
-                placeholder="Type"
+                title="Monster Type"
+                placeholder="Monster Type"
                 :get-option-key="(type) => type.name"
                 :get-option-label="(type) => type.name.replace(' Monster', '')"
                 :options="types"
@@ -81,11 +81,11 @@
         <div
             class="form-group"
             v-if="isFieldVisible('subType')"
-            v-show="internalFilter.typeGroup != null"
+            v-show="internalFilter.typeCategory != null"
         >
             <VSelect
-                :title="`${internalFilter.typeGroup} Type`"
-                :placeholder="`${internalFilter.typeGroup} Type`"
+                :title="`${internalFilter.typeCategory} Subtype`"
+                :placeholder="`${internalFilter.typeCategory} Subtype`"
                 :options="subTypes"
                 @input="() => onFilterChanged()"
                 v-model="internalFilter.subType"
@@ -145,7 +145,7 @@ import {
     CardFilter,
     CardSet,
     CardType,
-    CardTypeGroup,
+    CardTypeCategory,
     DEFAULT_BAN_STATE_ARR,
 } from "../../../core/src/main";
 import {
@@ -189,7 +189,7 @@ export default defineComponent({
     },
     setup(props, context) {
         const banStates = DEFAULT_BAN_STATE_ARR;
-        const typeGroups = Object.values(CardTypeGroup);
+        const cardTypeCategories = Object.values(CardTypeCategory);
 
         const internalFilter = reactive<CardFilter>(props.filter);
 
@@ -198,13 +198,13 @@ export default defineComponent({
             cardDatabase.getArchetypes()
         );
         const types = computed<CardType[]>(() =>
-            internalFilter.typeGroup != null
-                ? cardDatabase.getTypes(internalFilter.typeGroup)
+            internalFilter.typeCategory != null
+                ? cardDatabase.getTypes(internalFilter.typeCategory)
                 : []
         );
         const subTypes = computed<string[]>(() =>
-            internalFilter.typeGroup != null
-                ? cardDatabase.getSubTypes(internalFilter.typeGroup)
+            internalFilter.typeCategory != null
+                ? cardDatabase.getSubTypes(internalFilter.typeCategory)
                 : []
         );
         const attributes = computed<string[]>(() =>
@@ -220,7 +220,7 @@ export default defineComponent({
             )
         );
         const isMonster = computed<boolean>(
-            () => internalFilter.typeGroup === CardTypeGroup.MONSTER
+            () => internalFilter.typeCategory === CardTypeCategory.MONSTER
         );
 
         const isFieldVisible = (fieldName: string): boolean =>
@@ -230,7 +230,7 @@ export default defineComponent({
             context.emit("change", internalFilter);
 
         watch(
-            () => internalFilter.typeGroup,
+            () => internalFilter.typeCategory,
             () => {
                 internalFilter.type = null;
                 internalFilter.subType = null;
@@ -250,7 +250,7 @@ export default defineComponent({
             banStates,
             sets,
             archetypes,
-            typeGroups,
+            cardTypeCategories,
             types,
             subTypes,
             attributes,

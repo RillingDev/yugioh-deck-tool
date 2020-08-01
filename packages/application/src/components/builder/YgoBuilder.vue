@@ -103,10 +103,10 @@ export default defineComponent({
             return {
                 name: null,
 
-                typeGroup: null,
+                typeCategory: null,
                 type: null,
-
                 subType: null,
+
                 attribute: null,
                 level: null,
                 linkMarker: [],
@@ -123,7 +123,7 @@ export default defineComponent({
             const defaultFilter = createDefaultFilter();
             filter.name = defaultFilter.name;
 
-            filter.typeGroup = defaultFilter.typeGroup;
+            filter.typeCategory = defaultFilter.typeCategory;
             filter.type = defaultFilter.type;
 
             filter.subType = defaultFilter.subType;

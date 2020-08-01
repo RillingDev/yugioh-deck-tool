@@ -13,8 +13,9 @@ interface CardSetAppearance {
 }
 
 /**
- * Version of Card without references to CardType
+ * Version of Card without references to {@link CardType} or {@link CardSet}.
  *
+ * @see Card
  * @see CardLinkingService
  */
 interface UnlinkedCard {

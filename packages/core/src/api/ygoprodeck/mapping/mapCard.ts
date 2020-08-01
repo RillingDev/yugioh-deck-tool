@@ -34,7 +34,7 @@ interface RawCard {
 
     archetype?: string;
     misc_info?: RawMiscInfo[];
-    banlist_info?: RawBanlistInfo;
+    banlist_info?: RawBanListInfo;
 }
 
 interface RawCardSetAppearance {
@@ -70,7 +70,7 @@ interface RawMiscInfo {
     ocg_date?: string;
 }
 
-interface RawBanlistInfo {
+interface RawBanListInfo {
     ban_tcg?: string;
     ban_ocg?: string;
     ban_goat?: string;

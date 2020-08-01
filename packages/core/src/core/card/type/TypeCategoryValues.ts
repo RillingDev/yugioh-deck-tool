@@ -1,8 +1,8 @@
 import { CardType } from "./CardType";
 
-interface GroupValues {
+interface TypeCategoryValues {
     readonly subTypes: string[];
     readonly types: CardType[];
 }
 
-export { GroupValues };
+export { TypeCategoryValues };

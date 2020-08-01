@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { CardValues } from "../../../core/card/type/CardValues";
-import { CardTypeGroup } from "../../../core/card/type/CardTypeGroup";
+import { CardTypeCategory } from "../../../core/card/type/CardTypeCategory";
 import { CardType } from "../../../core/card/type/CardType";
 import { DeckPart } from "../../../core/deck/DeckPart";
 import { getExistingElseThrow, requireNonNilElseThrow } from "lightdash";
@@ -9,10 +9,10 @@ import { getExistingElseThrow, requireNonNilElseThrow } from "lightdash";
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {
     types: RawCardType[];
-    MONSTER: RawMonsterGroupValues;
-    SPELL: GroupValues;
-    TRAP: GroupValues;
-    SKILL: GroupValues;
+    MONSTER: RawMonsterTypeCategoryValues;
+    SPELL: RawTypeCategoryValues;
+    TRAP: RawTypeCategoryValues;
+    SKILL: RawTypeCategoryValues;
 }
 
 interface RawCardType {
@@ -22,7 +22,7 @@ interface RawCardType {
     area: string[];
 }
 
-interface RawMonsterGroupValues {
+interface RawMonsterTypeCategoryValues {
     type: string[];
     race: string[];
     attributes: string[];
@@ -30,19 +30,19 @@ interface RawMonsterGroupValues {
     linkmarkers: string[];
 }
 
-interface GroupValues {
+interface RawTypeCategoryValues {
     type: string[];
     race: string[];
 }
 
-const typeGroupMap = new Map<string, CardTypeGroup>([
-    ["MONSTER", CardTypeGroup.MONSTER],
-    ["SPELL", CardTypeGroup.SPELL],
-    ["TRAP", CardTypeGroup.TRAP],
-    ["SKILL", CardTypeGroup.SKILL],
+const typeCategoryMap = new Map<string, CardTypeCategory>([
+    ["MONSTER", CardTypeCategory.MONSTER],
+    ["SPELL", CardTypeCategory.SPELL],
+    ["TRAP", CardTypeCategory.TRAP],
+    ["SKILL", CardTypeCategory.SKILL],
 ]);
-const mapGroup = (type: RawCardType): CardTypeGroup =>
-    getExistingElseThrow(typeGroupMap, type.group);
+const mapCategory = (type: RawCardType): CardTypeCategory =>
+    getExistingElseThrow(typeCategoryMap, type.group);
 
 const deckPartMap = new Map<string, DeckPart>([
     ["MAIN", DeckPart.MAIN],
@@ -64,28 +64,28 @@ const mapCardValues = (data: RawCardValues): CardValues => {
     const types: CardType[] = data.types.map((type) => {
         return {
             name: type.name,
-            group: mapGroup(type),
+            category: mapCategory(type),
             sortGroup: type.sortGroup,
             deckParts: mapDeckPart(type),
         };
     });
     return {
-        [CardTypeGroup.MONSTER]: {
+        [CardTypeCategory.MONSTER]: {
             types: mapTypes(data.MONSTER.type, types),
             subTypes: data.MONSTER.race,
             attributes: data.MONSTER.attributes,
             levels: data.MONSTER.level,
             linkMarkers: data.MONSTER.linkmarkers,
         },
-        [CardTypeGroup.SPELL]: {
+        [CardTypeCategory.SPELL]: {
             types: mapTypes(data.SPELL.type, types),
             subTypes: data.SPELL.race,
         },
-        [CardTypeGroup.TRAP]: {
+        [CardTypeCategory.TRAP]: {
             types: mapTypes(data.TRAP.type, types),
             subTypes: data.TRAP.race,
         },
-        [CardTypeGroup.SKILL]: {
+        [CardTypeCategory.SKILL]: {
             types: mapTypes(data.SKILL.type, types),
             subTypes: data.SKILL.race,
         },

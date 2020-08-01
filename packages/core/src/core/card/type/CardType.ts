@@ -1,11 +1,14 @@
-import { CardTypeGroup } from "./CardTypeGroup";
+import { CardTypeCategory } from "./CardTypeCategory";
 import { DeckPart } from "../../deck/DeckPart";
 
+/**
+ * Card type, e.g. "Spell" or "Xyz Monster"
+ */
 interface CardType {
     readonly name: string;
-    readonly group: CardTypeGroup;
-    readonly sortGroup: number;
-    readonly deckParts: Set<DeckPart>;
+    readonly category: CardTypeCategory; // The general kind of type, e.g. "Spell" or "Monster"
+    readonly sortGroup: number; // Which position to put this kind of card type when sorting by type.
+    readonly deckParts: Set<DeckPart>; // Deck-parts which this type is allowed in.
 }
 
 export { CardType };

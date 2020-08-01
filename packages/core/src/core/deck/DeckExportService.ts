@@ -5,7 +5,7 @@ import { Card } from "../card/Card";
 import { DeckService } from "./DeckService";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 import { CardService } from "../card/CardService";
-import { CardTypeGroup } from "../card/type/CardTypeGroup";
+import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import { FilterService } from "../card/FilterService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
@@ -52,14 +52,14 @@ class DeckExportService {
         const result: string[] = [];
         for (const deckPart of DECK_PART_ARR) {
             const cards = deck.parts[deckPart];
-            // Main deck cards also get split up by type group
+            // Main deck cards also get split up by type category.
             if (deckPart === DeckPart.MAIN) {
-                for (const cardTypeGroup of Object.values(CardTypeGroup)) {
+                for (const typeCategory of Object.values(CardTypeCategory)) {
                     result.push(
                         ...this.createCardList(
-                            cardTypeGroup,
+                            typeCategory,
                             this.filterService.filter(cards, {
-                                typeGroup: cardTypeGroup,
+                                typeCategory: typeCategory,
                             })
                         )
                     );

@@ -10,7 +10,7 @@ import { CardService } from "../card/CardService";
 import { random, sampleSize, shuffle, uniq, words } from "lodash";
 import { Card } from "../card/Card";
 import { Format } from "../card/format/Format";
-import { CardTypeGroup } from "../card/type/CardTypeGroup";
+import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 enum RandomizationStrategy {
@@ -44,18 +44,18 @@ class DeckRandomizationService {
     ]);
 
     /**
-     * Percentage of cards a deck should have by card type group.
+     * Percentage of cards a deck should have by card type category.
      * E.g. MONSTER with 0.65 would mean the deck should have around 65% monster cards.
      * null means the ratio check will be skipped.
      */
     private static readonly CARD_TYPE_GROUP_RATIO = new Map<
-        CardTypeGroup,
+        CardTypeCategory,
         number | null
     >([
-        [CardTypeGroup.MONSTER, 0.625],
-        [CardTypeGroup.SPELL, 0.275],
-        [CardTypeGroup.TRAP, 0.1],
-        [CardTypeGroup.SKILL, null],
+        [CardTypeCategory.MONSTER, 0.625],
+        [CardTypeCategory.SPELL, 0.275],
+        [CardTypeCategory.TRAP, 0.1],
+        [CardTypeCategory.SKILL, null],
     ]);
 
     private readonly cardDatabase: CardDatabase;
@@ -206,17 +206,18 @@ class DeckRandomizationService {
                 deckPart === DeckPart.MAIN &&
                 deckPartCards.length >= deckPartLimit / 2
             ) {
-                const cardTypeGroupRatio: number | null =
+                const cardTypeCategoryRatio: number | null =
                     DeckRandomizationService.CARD_TYPE_GROUP_RATIO.get(
-                        card.type.group
+                        card.type.category
                     ) ?? null;
-                const cardsOfTypeGroupCount = deckPartCards.filter(
+                const cardsOfTypeCategoryCount = deckPartCards.filter(
                     (deckPartCard) =>
-                        deckPartCard.type.group === card.type.group
+                        deckPartCard.type.category === card.type.category
                 ).length;
                 if (
-                    cardTypeGroupRatio != null &&
-                    cardsOfTypeGroupCount >= deckPartLimit * cardTypeGroupRatio
+                    cardTypeCategoryRatio != null &&
+                    cardsOfTypeCategoryCount >=
+                        deckPartLimit * cardTypeCategoryRatio
                 ) {
                     continue;
                 }

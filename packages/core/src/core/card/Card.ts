@@ -10,12 +10,12 @@ import { CardType } from "./type/CardType";
  * Regular card. Also see {@link UnlinkedCard}.
  */
 interface Card {
-    readonly passcode: string;
+    readonly passcode: string; // Passcode/ID is a 8-digit unique code for each card
     readonly name: string;
     readonly description: string;
 
-    readonly type: CardType;
-    readonly subType: string;
+    readonly type: CardType; // See CardType
+    readonly subType: string; // E.g. "Warrior" or "Equip Spell"
 
     readonly attribute: string | null;
     readonly atk: number | null;
