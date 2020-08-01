@@ -4,17 +4,10 @@
             <div class="deck-tool__body__primary">
                 <YgoToolbar />
                 <hr />
-                <YgoDeck
-                    :can-move="canMoveInDeckParts"
-                    :drag-group="dragGroup"
-                    v-show="loaded"
-                />
+                <YgoDeck :drag-group="dragGroup" v-show="loaded" />
             </div>
             <div class="deck-tool__body__secondary">
-                <YgoBuilder
-                    :can-move="canMoveFromBuilder"
-                    :drag-group="dragGroup"
-                />
+                <YgoBuilder :drag-group="dragGroup" />
             </div>
         </div>
     </BOverlay>
@@ -41,10 +34,6 @@ import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
-import {
-    createMoveFromBuilderValidator,
-    createMoveInDeckPartValidator,
-} from "./composition/controller/dragging";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -112,9 +101,6 @@ export default defineComponent({
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
-        const canMoveInDeckParts = createMoveInDeckPartValidator(context);
-        const canMoveFromBuilder = createMoveFromBuilderValidator(context);
-
         cardDatabase
             .prepareAll()
             .catch((err) => {
@@ -144,8 +130,6 @@ export default defineComponent({
         return {
             loaded,
             dragGroup,
-            canMoveInDeckParts,
-            canMoveFromBuilder,
         };
     },
 });

@@ -15,7 +15,9 @@ export const DECK_SORT = "DECK_SORT";
 export const DECK_SHUFFLE = "DECK_SHUFFLE";
 export const DECK_CLEAR = "DECK_CLEAR";
 
-export const DECK_PART_CARDS_REPLACE = "DECK_PART_CARDS_REPLACE";
+export const DECK_PART_CARDS_ADD = "DECK_PART_CARDS_ADD";
+export const DECK_PART_CARDS_REMOVE = "DECK_PART_CARDS_REMOVE";
+export const DECK_PART_CARDS_REORDER = "DECK_PART_CARDS_REORDER";
 
 export interface DeckState {
     active: Deck;
@@ -46,11 +48,44 @@ export const deckModule: Module<DeckState, AppState> = {
             state.active.parts = deckService.createEmptyDeck().parts;
         },
 
-        [DECK_PART_CARDS_REPLACE](
+        [DECK_PART_CARDS_ADD](
             state,
-            payload: { deckPart: DeckPart; cards: Card[] }
+            payload: { deckPart: DeckPart; card: Card; newIndex?: number }
         ) {
-            state.active.parts[payload.deckPart] = payload.cards;
+            deckService.addCard(
+                state.active,
+                payload.deckPart,
+                payload.card,
+                payload.newIndex
+            );
+        },
+        [DECK_PART_CARDS_REMOVE](
+            state,
+            payload: { deckPart: DeckPart; card: Card; oldIndex?: number }
+        ) {
+            deckService.removeCard(
+                state.active,
+                payload.deckPart,
+                payload.card,
+                payload.oldIndex
+            );
+        },
+        [DECK_PART_CARDS_REORDER](
+            state,
+            payload: {
+                deckPart: DeckPart;
+                card: Card;
+                oldIndex: number;
+                newIndex: number;
+            }
+        ) {
+            deckService.reorderCard(
+                state.active,
+                payload.deckPart,
+                payload.card,
+                payload.oldIndex,
+                payload.newIndex
+            );
         },
     },
 };

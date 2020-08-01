@@ -6,7 +6,7 @@ import { TYPES } from "../../types";
 import { CardService } from "../card/CardService";
 import { Format } from "../card/format/Format";
 import { insertAt, pullFirst } from "lightdash";
-import { pullAt, sampleSize, shuffle } from "lodash";
+import { sampleSize, shuffle } from "lodash";
 import { SortingService, SortingStrategy } from "../card/SortingService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import { BanlistService } from "../card/banlist/BanlistService";
@@ -143,9 +143,12 @@ class DeckService {
     ): void {
         const cards = deck.parts[deckPart];
         if (oldIndex != null) {
-            if (cards[oldIndex] === card) {
-                pullAt(cards, oldIndex);
+            if (cards[oldIndex] !== card) {
+                throw new TypeError(
+                    "The given card does not exist at this index."
+                );
             }
+            cards.splice(oldIndex, 1);
         } else {
             pullFirst(cards, card);
         }
@@ -168,10 +171,11 @@ class DeckService {
         newIndex: number
     ): void {
         const cards = deck.parts[deckPart];
-        if (cards[oldIndex] === card) {
-            pullAt(cards, oldIndex);
-            insertAt(cards, newIndex, card);
+        if (cards[oldIndex] !== card) {
+            throw new TypeError("The given card does not exist at this index.");
         }
+        cards.splice(oldIndex, 1);
+        insertAt(cards, newIndex, card);
     }
 
     /**

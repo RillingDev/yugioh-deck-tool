@@ -4,6 +4,12 @@ import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { SetupContext } from "@vue/composition-api";
 
+// TODO: Replace with real types
+export type DraggableChangeEventData = any;
+export type DraggableSpillEventData = any;
+export type DraggableMoveValidatorData = any;
+
+// This component prop is used to find the deck part of a component tree.
 export const DECK_PART_PROP = "deckPart";
 
 const deckService = applicationContainer.get<DeckService>(
@@ -31,10 +37,10 @@ const findDeckPartForComponent = (el: Vue): DeckPart | null =>
         (current) => current.$props[DECK_PART_PROP] != null
     )?.$props[DECK_PART_PROP];
 
-export const createMoveInDeckPartValidator = (context: SetupContext) => (
-    e: any,
+export const createMoveInDeckPartValidator = (
+    context: SetupContext,
     oldDeckPart: DeckPart
-): boolean => {
+) => (e: DraggableMoveValidatorData): boolean => {
     const target = e.relatedContext.component;
     const newDeckPart = findDeckPartForComponent(target);
     if (newDeckPart == null) {
@@ -48,7 +54,7 @@ export const createMoveInDeckPartValidator = (context: SetupContext) => (
 };
 
 export const createMoveFromBuilderValidator = (context: SetupContext) => (
-    e: any
+    e: DraggableMoveValidatorData
 ): boolean => {
     const target = e.relatedContext.component;
     const newDeckPart = findDeckPartForComponent(target);

@@ -8,8 +8,8 @@
             >
                 <Draggable
                     :group="{ name: dragGroup, pull: 'clone', put: false }"
-                    :list="[card]"
-                    :move="canMove"
+                    :value="[card]"
+                    :move="(e) => canMove(e)"
                 >
                     <YgoCard
                         :card="card"
@@ -39,16 +39,13 @@ import { Card, CardTypeCategory } from "../../../../core/src/main";
 import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
+import { createMoveFromBuilderValidator } from "../../composition/controller/dragging";
 
 export default defineComponent({
     props: {
         matches: {
             required: true,
             type: Array as PropType<Card[]>,
-        },
-        canMove: {
-            required: true,
-            type: Function as PropType<(e: object) => boolean>,
         },
         dragGroup: {
             required: true,
@@ -59,7 +56,7 @@ export default defineComponent({
         YgoCard,
         Draggable,
     },
-    setup(props) {
+    setup(props, context) {
         const CARD_DISPLAY_LIMIT = 50;
 
         const limitedMatches = computed<Card[]>(() =>
@@ -75,7 +72,9 @@ export default defineComponent({
                 ? `${card.attribute!}/${card.subType}`
                 : card.subType;
 
-        return { limitedMatches, typeText, subTypeText };
+        const canMove = createMoveFromBuilderValidator(context);
+
+        return { limitedMatches, typeText, subTypeText, canMove };
     },
 });
 </script>

@@ -19,10 +19,9 @@
             class="deck-part__content"
             tag="div"
             :group="{ name: dragGroup, pull: true, put: true }"
-            v-model="cards"
+            :value="cards"
             :move="(e) => canMove(e)"
-            @start="() => dragStart()"
-            @end="() => dragStop()"
+            @change="(e) => onChange(e)"
         >
             <YgoCard
                 :card="card"
@@ -43,6 +42,7 @@ import {
     DeckPart,
     DeckPartConfig,
     DefaultDeckPartConfig,
+    getLogger,
 } from "../../../../core/src/main";
 import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
@@ -50,14 +50,18 @@ import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
-import { DECK_PART_CARDS_REPLACE } from "../../store/modules/deck";
+import {
+    DECK_PART_CARDS_ADD,
+    DECK_PART_CARDS_REMOVE,
+    DECK_PART_CARDS_REORDER,
+} from "../../store/modules/deck";
 import { appStore } from "../../composition/state/appStore";
 import { removeEnd } from "lightdash";
 import {
-    INTERACTION_DRAGGING_START,
-    INTERACTION_DRAGGING_STOP,
-} from "../../store/modules/interaction";
-import { DECK_PART_PROP } from "../../composition/controller/dragging";
+    createMoveInDeckPartValidator,
+    DECK_PART_PROP,
+    DraggableChangeEventData,
+} from "../../composition/controller/dragging";
 
 const cardService = applicationContainer.get<CardService>(
     APPLICATION_TYPES.CardService
@@ -108,6 +112,8 @@ const calculateDetailedTypeStats = (
         ]);
 };
 
+const logger = getLogger("YgoDeckPart");
+
 export default defineComponent({
     components: {
         YgoPrice,
@@ -119,10 +125,6 @@ export default defineComponent({
             required: true,
             type: String as PropType<DeckPart>,
         },
-        canMove: {
-            required: true,
-            type: Function as PropType<(e: object) => boolean>,
-        },
         dragGroup: {
             required: true,
             type: String as PropType<string>,
@@ -133,16 +135,9 @@ export default defineComponent({
             () => DefaultDeckPartConfig[props.deckPart]
         );
 
-        const cards = computed<Card[]>({
-            get: () =>
-                appStore(context).state.deck.active.parts[props.deckPart],
-
-            set: (newCards) =>
-                appStore(context).commit(DECK_PART_CARDS_REPLACE, {
-                    deckPart: props.deckPart,
-                    cards: newCards,
-                }),
-        });
+        const cards = computed<Card[]>(
+            () => appStore(context).state.deck.active.parts[props.deckPart]
+        );
         const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
         const deckPartStats = computed<string>(() => {
             const currentCards = cards.value;
@@ -157,18 +152,54 @@ export default defineComponent({
             return `${base} (${details.join(" | ")})`;
         });
 
-        const dragStart = (): void =>
-            appStore(context).commit(INTERACTION_DRAGGING_START);
-        const dragStop = (): void =>
-            appStore(context).commit(INTERACTION_DRAGGING_STOP);
+        const addCard = (card: Card, newIndex: number): void =>
+            appStore(context).commit(DECK_PART_CARDS_ADD, {
+                deckPart: props.deckPart,
+                card,
+                newIndex,
+            });
+        const removeCard = (card: Card, oldIndex: number): void =>
+            appStore(context).commit(DECK_PART_CARDS_REMOVE, {
+                deckPart: props.deckPart,
+                card,
+                oldIndex,
+            });
+        const reorderCard = (
+            card: Card,
+            oldIndex: number,
+            newIndex: number
+        ): void =>
+            appStore(context).commit(DECK_PART_CARDS_REORDER, {
+                deckPart: props.deckPart,
+                card,
+                oldIndex,
+                newIndex,
+            });
+        const onChange = (e: DraggableChangeEventData): void => {
+            if (e.removed != null) {
+                removeCard(e.removed.element, e.removed.oldIndex);
+            } else if (e.added != null) {
+                addCard(e.added.element, e.added.newIndex);
+            } else if (e.moved != null) {
+                reorderCard(
+                    e.moved.element,
+                    e.moved.oldIndex,
+                    e.moved.newIndex
+                );
+            } else {
+                logger.warn("Unexpected drag event type.", e);
+            }
+        };
+
+        const canMove = createMoveInDeckPartValidator(context, props.deckPart);
 
         return {
             deckPartConfig,
             cards,
             deckPartStats,
             deckPartEmpty,
-            dragStart,
-            dragStop,
+            onChange,
+            canMove,
         };
     },
 });

@@ -31,11 +31,7 @@
             </button>
         </div>
         <YgoSortingOptions v-model="sortingOptions" />
-        <YgoBuilderMatches
-            :matches="filteredCards"
-            :can-move="(e) => canMove(e)"
-            :drag-group="dragGroup"
-        />
+        <YgoBuilderMatches :matches="filteredCards" :drag-group="dragGroup" />
     </div>
 </template>
 
@@ -83,10 +79,6 @@ const cardService = applicationContainer.get<CardService>(
 
 export default defineComponent({
     props: {
-        canMove: {
-            required: true,
-            type: Function as PropType<(e: object) => boolean>,
-        },
         dragGroup: {
             required: true,
             type: String as PropType<string>,

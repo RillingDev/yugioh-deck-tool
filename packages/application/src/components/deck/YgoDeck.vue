@@ -9,18 +9,12 @@
             v-for="deckPart in deckParts"
             :key="deckPart"
             :deck-part="deckPart"
-            :can-move="(e) => canMove(e, deckPart)"
             :drag-group="dragGroup"
         />
     </div>
 </template>
 <script lang="ts">
-import {
-    Card,
-    DECK_PART_ARR,
-    DeckPart,
-    DeckService,
-} from "../../../../core/src/main";
+import { Card, DECK_PART_ARR, DeckService } from "../../../../core/src/main";
 import { computed, defineComponent, PropType } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
@@ -38,12 +32,6 @@ export default defineComponent({
         YgoPrice,
     },
     props: {
-        canMove: {
-            required: true,
-            type: Function as PropType<
-                (e: object, deckPart: DeckPart) => boolean
-            >,
-        },
         dragGroup: {
             required: true,
             type: String as PropType<string>,
