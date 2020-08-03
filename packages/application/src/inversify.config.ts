@@ -1,5 +1,7 @@
-import { container } from "../../core/src/main";
+import { baseModule, deckModule } from "../../core/src/main";
+import { Container } from "inversify";
 
-const applicationContainer = container.createChild();
+const applicationContainer = new Container();
+applicationContainer.load(baseModule, deckModule);
 
 export { applicationContainer };

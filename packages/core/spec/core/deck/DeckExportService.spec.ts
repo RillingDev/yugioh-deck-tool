@@ -1,26 +1,27 @@
 import "reflect-metadata";
 import {
+    baseModule,
     CardTypeCategory,
-    container,
     DeckExportService,
+    deckModule,
     DeckPart,
     TYPES,
 } from "../../../src/main";
 import { createCard, createCardType } from "../../helper/dataFactories";
+import { Container } from "inversify";
 
 describe("DeckExportService", () => {
+    let container: Container;
+
     let deckExportService: DeckExportService;
 
     beforeEach(() => {
-        container.snapshot();
+        container = new Container();
+        container.load(baseModule, deckModule);
 
         deckExportService = container.get<DeckExportService>(
             TYPES.DeckExportService
         );
-    });
-
-    afterEach(() => {
-        container.restore();
     });
 
     describe("toShareableText", () => {

@@ -1,7 +1,8 @@
 import "reflect-metadata";
 import {
+    baseModule,
     CardDatabase,
-    container,
+    deckModule,
     DeckPart,
     DeckUriEncodingService,
     FindCardBy,
@@ -12,14 +13,18 @@ import { deflate } from "pako";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { when } from "ts-mockito";
+import { Container } from "inversify";
 
 describe("DeckUriEncodingService", () => {
+    let container: Container;
+
     let deckUriEncodingService: DeckUriEncodingService;
 
     let mockCardDatabase: CardDatabase;
 
     beforeEach(() => {
-        container.snapshot();
+        container = new Container();
+        container.load(baseModule, deckModule);
 
         mockCardDatabase = bindMock<CardDatabase>(
             container,
@@ -30,10 +35,6 @@ describe("DeckUriEncodingService", () => {
         deckUriEncodingService = container.get<DeckUriEncodingService>(
             TYPES.DeckUriEncodingService
         );
-    });
-
-    afterEach(() => {
-        container.restore();
     });
 
     describe("fromLegacyUrlQueryParamValue", () => {

@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../types";
+import { INTERNAL_TYPES, TYPES } from "../../types";
 import { CardDataLoaderService } from "./CardDataLoaderService";
 import { Card } from "./Card";
 import { CardSet } from "./set/CardSet";
@@ -39,7 +39,7 @@ class MemoryCardDatabase implements CardDatabase {
     constructor(
         @inject(TYPES.CardDataLoaderService)
         cardDataLoaderService: CardDataLoaderService,
-        @inject(TYPES.CardLinkingService)
+        @inject(INTERNAL_TYPES.CardLinkingService)
         cardLinkingService: CardLinkingService
     ) {
         this.cardDataLoaderService = cardDataLoaderService;

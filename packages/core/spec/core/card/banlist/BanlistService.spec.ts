@@ -1,24 +1,24 @@
 import "reflect-metadata";
 import {
     BanlistService,
-    container,
+    baseModule,
     DefaultBanState,
     Format,
     TYPES,
 } from "../../../../src/main";
 import { createCard } from "../../../helper/dataFactories";
+import { Container } from "inversify";
 
 describe("BanlistService", () => {
+    let container: Container;
+
     let banlistService: BanlistService;
 
     beforeEach(() => {
-        container.snapshot();
+        container = new Container();
+        container.load(baseModule);
 
         banlistService = container.get<BanlistService>(TYPES.BanlistService);
-    });
-
-    afterEach(() => {
-        container.restore();
     });
 
     describe("getBanStateByFormat", () => {

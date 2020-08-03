@@ -1,18 +1,18 @@
 import "reflect-metadata";
 import { createCard } from "../../helper/dataFactories";
-import { CardService, container, TYPES } from "../../../src/main";
+import { baseModule, CardService, TYPES } from "../../../src/main";
+import { Container } from "inversify";
 
 describe("CardService", () => {
+    let container: Container;
+
     let cardService: CardService;
 
     beforeEach(() => {
-        container.snapshot();
+        container = new Container();
+        container.load(baseModule);
 
         cardService = container.get<CardService>(TYPES.CardService);
-    });
-
-    afterEach(() => {
-        container.restore();
     });
 
     describe("getUniqueByName", () => {

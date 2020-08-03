@@ -1,8 +1,9 @@
 import "reflect-metadata";
 import {
+    baseModule,
     CardTypeCategory,
-    container,
     Deck,
+    deckModule,
     DeckPart,
     DeckService,
     DefaultBanState,
@@ -10,18 +11,18 @@ import {
     TYPES,
 } from "../../../src/main";
 import { createCard, createCardType } from "../../helper/dataFactories";
+import { Container } from "inversify";
 
 describe("DeckService", () => {
+    let container: Container;
+
     let deckService: DeckService;
 
     beforeEach(() => {
-        container.snapshot();
+        container = new Container();
+        container.load(baseModule, deckModule);
 
         deckService = container.get<DeckService>(TYPES.DeckService);
-    });
-
-    afterEach(() => {
-        container.restore();
     });
 
     describe("createEmptyDeck", () => {

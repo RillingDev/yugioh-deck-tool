@@ -21,10 +21,11 @@ export { DefaultVendor, DEFAULT_VENDOR_ARR } from "./core/price/Vendor";
 export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";
 export { TYPES } from "./types";
-export { container } from "./inversify.config";
+export { baseModule, deckModule } from "./inversify.config";
+
 export type { CardDatabase } from "./core/card/CardDatabase";
-export { FindCardBy } from "./core/card/CardDatabase";
 export type { CardDataLoaderService } from "./core/card/CardDataLoaderService";
+export { FindCardBy } from "./core/card/CardDatabase";
 export type { CardService } from "./core/card/CardService";
 export type {
     PriceService,

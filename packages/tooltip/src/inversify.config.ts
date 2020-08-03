@@ -1,5 +1,7 @@
-import { container } from "../../core/src/main";
+import { baseModule } from "../../core/src/main";
+import { Container } from "inversify";
 
-const tooltipContainer = container.createChild();
+const tooltipContainer = new Container();
+tooltipContainer.load(baseModule);
 
 export { tooltipContainer };

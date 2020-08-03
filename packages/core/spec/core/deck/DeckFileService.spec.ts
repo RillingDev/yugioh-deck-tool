@@ -1,8 +1,9 @@
 import "reflect-metadata";
 import {
+    baseModule,
     CardDatabase,
-    container,
     DeckFileService,
+    deckModule,
     DeckPart,
     FindCardBy,
     TYPES,
@@ -13,15 +14,19 @@ import { anyString, anything, verify, when } from "ts-mockito";
 import { HttpService } from "../../../src/core/http/HttpService";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
+import { Container } from "inversify";
 
 describe("DeckFileService", () => {
+    let container: Container;
+
     let deckFileService: DeckFileService;
 
     let mockCardDatabase: CardDatabase;
     let mockHttpService: HttpService;
 
     beforeEach(() => {
-        container.snapshot();
+        container = new Container();
+        container.load(baseModule, deckModule);
 
         mockCardDatabase = bindMock<CardDatabase>(
             container,
@@ -35,10 +40,6 @@ describe("DeckFileService", () => {
         );
 
         deckFileService = container.get<DeckFileService>(TYPES.DeckFileService);
-    });
-
-    afterEach(() => {
-        container.restore();
     });
 
     describe("fromFile", () => {

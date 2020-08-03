@@ -1,23 +1,24 @@
-const TYPES = {
-    CardDatabase: Symbol.for("CardDatabase"),
+export const INTERNAL_TYPES = {
+    CardLinkingService: Symbol.for("CardLinkingService"),
+} as const;
+
+export const TYPES = {
+    HttpService: Symbol.for("HttpService"),
+    UrlService: Symbol.for("UrlService"),
 
     CardDataLoaderService: Symbol.for("CardDataLoaderService"),
-    CardService: Symbol.for("CardService"),
-    CardLinkingService: Symbol.for("CardLinkingService"),
+    CardDatabase: Symbol.for("CardDatabase"),
 
-    DeckService: Symbol.for("DeckService"),
-    DeckExportService: Symbol.for("DeckExportService"),
-    DeckFileService: Symbol.for("DeckFileService"),
-    DeckUriEncodingService: Symbol.for("DeckUriEncodingService"),
-    DeckRandomizationService: Symbol.for("DeckRandomizationService"),
+    CardService: Symbol.for("CardService"),
 
     BanlistService: Symbol.for("BanlistService"),
     PriceService: Symbol.for("PriceService"),
     SortingService: Symbol.for("SortingService"),
     FilterService: Symbol.for("FilterService"),
 
-    HttpService: Symbol.for("HttpService"),
-    UrlService: Symbol.for("UrlService"),
-};
-
-export { TYPES };
+    DeckService: Symbol.for("DeckService"),
+    DeckExportService: Symbol.for("DeckExportService"),
+    DeckFileService: Symbol.for("DeckFileService"),
+    DeckUriEncodingService: Symbol.for("DeckUriEncodingService"),
+    DeckRandomizationService: Symbol.for("DeckRandomizationService"),
+} as const;
