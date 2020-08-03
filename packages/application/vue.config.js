@@ -1,4 +1,6 @@
 module.exports = {
+    lintOnSave: false,
+
     publicPath: "./",
     filenameHashing: false, // Cannot be used due to external embedding of dist output.
     chainWebpack: (config) => {
@@ -27,7 +29,6 @@ module.exports = {
         // Unbind unused plugins/rules
         config.plugins.delete("preload");
         config.plugins.delete("prefetch");
-        config.module.rules.delete("eslint");
         config.module.rules.delete("tsx");
         config.module.rules.delete("pug");
         config.module.rules.delete("sass");
