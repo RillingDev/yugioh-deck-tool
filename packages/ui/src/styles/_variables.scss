@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Color system
 
 $white: #fff;
@@ -24,28 +26,18 @@ $grays: (
     "900": $gray-900,
 );
 
-$blue: #3F88C5;
-$indigo: #8e7ed9;
-$purple: #c291ec;
-$pink: #e843a1;
+$blue: #3f88c5;
 $red: #e74b68;
 $orange: #e28503;
 $yellow: #f3c221;
 $green: #9ad557;
-$teal: #58e2a4;
-$cyan: #388697;
 
 $colors: (
     "blue": $blue,
-    "indigo": $indigo,
-    "purple": $purple,
-    "pink": $pink,
     "red": $red,
     "orange": $orange,
     "yellow": $yellow,
     "green": $green,
-    "teal": $teal,
-    "cyan": $cyan,
     "white": $white,
     "gray": $gray-600,
     "gray-dark": $gray-800,
@@ -60,7 +52,7 @@ $color-vendor-cardmarket: #012169;
 $color-vendor-coolstuffinc: #41bfc3;
 
 $primary: $color-deck-part-main;
-$secondary: darken($color-deck-part-main, 13.25%);
+$secondary: color.adjust($color-deck-part-main, $lightness: -13.25%);
 $success: $green;
 $info: $blue;
 $warning: $orange;

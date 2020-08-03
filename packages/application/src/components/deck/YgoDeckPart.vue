@@ -206,6 +206,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@use "sass:color";
 @import "../../../../ui/src/styles/variables";
 @import "../../../../ui/src/styles/mixin/screen";
 
@@ -216,21 +217,30 @@ export default defineComponent({
 
         &--main {
             .deck-part__content {
-                border-color: darken($color-deck-part-main, 8%);
+                border-color: color.adjust(
+                    $color-deck-part-main,
+                    $lightness: -8%
+                );
                 background-color: $color-deck-part-main;
             }
         }
 
         &--extra {
             .deck-part__content {
-                border-color: darken($color-deck-part-extra, 8%);
+                border-color: color.adjust(
+                    $color-deck-part-extra,
+                    $lightness: -8%
+                );
                 background-color: $color-deck-part-extra;
             }
         }
 
         &--side {
             .deck-part__content {
-                border-color: darken($color-deck-part-side, 8%);
+                border-color: color.adjust(
+                    $color-deck-part-side,
+                    $lightness: -8%
+                );
                 background-color: $color-deck-part-side;
             }
         }
