@@ -1,9 +1,7 @@
 import { Container } from "inversify";
 import { instance, mock } from "ts-mockito";
 
-interface Class<T> {
-    new (...args: never[]): T;
-}
+type Class<T> = new (...args: never[]) => T;
 
 export const bindMock = <T>(
     container: Container,

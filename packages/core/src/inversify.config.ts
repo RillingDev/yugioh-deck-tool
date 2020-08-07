@@ -22,52 +22,38 @@ import { BanlistService } from "./core/card/banlist/BanlistService";
 /**
  * Module containing card database access and basic domain services.
  */
-export const baseModule = new ContainerModule(
-    (
-        bind: interfaces.Bind,
-        unbind: interfaces.Unbind,
-        isBound: interfaces.IsBound,
-        rebind: interfaces.Rebind
-    ) => {
-        bind<HttpService>(TYPES.HttpService).to(AxiosHttpService);
-        bind<UrlService>(TYPES.UrlService).to(UrlService);
+export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
+    bind<HttpService>(TYPES.HttpService).to(AxiosHttpService);
+    bind<UrlService>(TYPES.UrlService).to(UrlService);
 
-        bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
-            YgoprodeckCardDataLoaderService
-        );
-        bind<CardLinkingService>(INTERNAL_TYPES.CardLinkingService).to(
-            CardLinkingService
-        );
-        bind<CardDatabase>(TYPES.CardDatabase)
-            .to(MemoryCardDatabase)
-            .inSingletonScope();
+    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
+        YgoprodeckCardDataLoaderService
+    );
+    bind<CardLinkingService>(INTERNAL_TYPES.CardLinkingService).to(
+        CardLinkingService
+    );
+    bind<CardDatabase>(TYPES.CardDatabase)
+        .to(MemoryCardDatabase)
+        .inSingletonScope();
 
-        bind<CardService>(TYPES.CardService).to(CardService);
-        bind<BanlistService>(TYPES.BanlistService).to(BanlistService);
-        bind<PriceService>(TYPES.PriceService).to(PriceService);
-        bind<SortingService>(TYPES.SortingService).to(SortingService);
-        bind<FilterService>(TYPES.FilterService).to(FilterService);
-    }
-);
+    bind<CardService>(TYPES.CardService).to(CardService);
+    bind<BanlistService>(TYPES.BanlistService).to(BanlistService);
+    bind<PriceService>(TYPES.PriceService).to(PriceService);
+    bind<SortingService>(TYPES.SortingService).to(SortingService);
+    bind<FilterService>(TYPES.FilterService).to(FilterService);
+});
 
 /**
  * Module containing deck import/export/modification functionality. Requires {@link baseModule}.
  */
-export const deckModule = new ContainerModule(
-    (
-        bind: interfaces.Bind,
-        unbind: interfaces.Unbind,
-        isBound: interfaces.IsBound,
-        rebind: interfaces.Rebind
-    ) => {
-        bind<DeckExportService>(TYPES.DeckExportService).to(DeckExportService);
-        bind<DeckUriEncodingService>(TYPES.DeckUriEncodingService).to(
-            DeckUriEncodingService
-        );
-        bind<DeckFileService>(TYPES.DeckFileService).to(DeckFileService);
-        bind<DeckRandomizationService>(TYPES.DeckRandomizationService).to(
-            DeckRandomizationService
-        );
-        bind<DeckService>(TYPES.DeckService).to(DeckService);
-    }
-);
+export const deckModule = new ContainerModule((bind: interfaces.Bind) => {
+    bind<DeckExportService>(TYPES.DeckExportService).to(DeckExportService);
+    bind<DeckUriEncodingService>(TYPES.DeckUriEncodingService).to(
+        DeckUriEncodingService
+    );
+    bind<DeckFileService>(TYPES.DeckFileService).to(DeckFileService);
+    bind<DeckRandomizationService>(TYPES.DeckRandomizationService).to(
+        DeckRandomizationService
+    );
+    bind<DeckService>(TYPES.DeckService).to(DeckService);
+});

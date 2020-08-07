@@ -15,7 +15,7 @@ interface CardDatabase {
     /**
      * Fully fills the database.
      */
-    prepareAll(): Promise<void>;
+    prepareAll: () => Promise<void>;
 
     /**
      * Partially fills the database, loading a single card and direct dependencies.
@@ -23,30 +23,30 @@ interface CardDatabase {
      *
      * @return The resolved version of the card key to be used for further lookups.
      */
-    prepareCard(
+    prepareCard: (
         cardKey: string,
         findCardBy: FindCardBy
-    ): Promise<string | null>;
+    ) => Promise<string | null>;
 
-    hasCard(cardKey: string, findCardBy: FindCardBy): boolean;
+    hasCard: (cardKey: string, findCardBy: FindCardBy) => boolean;
 
-    getCard(cardKey: string, findCardBy: FindCardBy): Card | null;
+    getCard: (cardKey: string, findCardBy: FindCardBy) => Card | null;
 
-    getCards(): Card[];
+    getCards: () => Card[];
 
-    getSets(): CardSet[];
+    getSets: () => CardSet[];
 
-    getArchetypes(): string[];
+    getArchetypes: () => string[];
 
-    getTypes(typeCategory: CardTypeCategory): CardType[];
+    getTypes: (typeCategory: CardTypeCategory) => CardType[];
 
-    getSubTypes(typeCategory: CardTypeCategory): string[];
+    getSubTypes: (typeCategory: CardTypeCategory) => string[];
 
-    getAttributes(): string[];
+    getAttributes: () => string[];
 
-    getLevels(): number[];
+    getLevels: () => number[];
 
-    getLinkMarkers(): string[];
+    getLinkMarkers: () => string[];
 }
 
 export { FindCardBy, CardDatabase };

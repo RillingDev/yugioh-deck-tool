@@ -19,10 +19,10 @@ interface HttpRequestConfig {
  * @public
  */
 interface HttpService {
-    get<TData>(
+    get: <TData>(
         url: string,
         requestConfig: HttpRequestConfig
-    ): Promise<HttpResponse<TData>>;
+    ) => Promise<HttpResponse<TData>>;
 }
 
 export { HttpService, HttpRequestConfig, HttpResponse };
