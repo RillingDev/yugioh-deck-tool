@@ -105,7 +105,6 @@ export default defineComponent({
 @import "../../../../../ui/src/styles/variables";
 @import "../../../../../ui/src/styles/mixins";
 
-.deck-tool,
 .deck-tool__portal {
     .draw-sim__modal {
         display: flex;

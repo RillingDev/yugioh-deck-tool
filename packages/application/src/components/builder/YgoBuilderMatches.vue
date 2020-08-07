@@ -83,8 +83,7 @@ export default defineComponent({
 @import "../../../../ui/src/styles/variables";
 @import "../../../../ui/src/styles/mixins";
 
-.deck-tool,
-.deck-tool__portal {
+.deck-tool {
     .builder-matches {
         &__no-matches {
             margin-top: $margin-md;
