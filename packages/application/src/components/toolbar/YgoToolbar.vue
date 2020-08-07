@@ -119,7 +119,7 @@ export default defineComponent({
 
 <style lang="scss">
 @import "../../../../ui/src/styles/variables";
-@import "../../../../ui/src/styles/mixin/screen";
+@import "../../../../ui/src/styles/mixins";
 
 .deck-tool,
 .deck-tool__portal {
@@ -132,7 +132,7 @@ export default defineComponent({
 
         margin-bottom: $margin-md;
 
-        @include screen(min, lg) {
+        @include screen-min-width(lg) {
             flex-direction: row;
         }
     }

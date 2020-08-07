@@ -103,7 +103,7 @@ export default defineComponent({
 
 <style lang="scss">
 @import "../../../../../ui/src/styles/variables";
-@import "../../../../../ui/src/styles/mixin/screen";
+@import "../../../../../ui/src/styles/mixins";
 
 .deck-tool,
 .deck-tool__portal {
@@ -122,10 +122,10 @@ export default defineComponent({
 
         &__card {
             max-width: 33.333%;
-            @include screen(min, md) {
+            @include screen-min-width(md) {
                 max-width: 20%;
             }
-            @include screen(min, lg) {
+            @include screen-min-width(lg) {
                 max-width: 15%;
             }
             padding: 0.35rem;

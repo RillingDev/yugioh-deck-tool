@@ -135,7 +135,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import "../ui/src/styles/mixin/screen";
+@import "../ui/src/styles/mixins";
 @import "../ui/src/styles/variables";
 
 .deck-tool {
@@ -151,7 +151,7 @@ export default defineComponent({
             width: 100%;
         }
 
-        @include screen(min, md) {
+        @include screen-min-width(md) {
             flex-direction: row;
 
             &__secondary {

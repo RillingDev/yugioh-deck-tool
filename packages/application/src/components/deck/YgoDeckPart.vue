@@ -208,7 +208,7 @@ export default defineComponent({
 <style lang="scss">
 @use "sass:color";
 @import "../../../../ui/src/styles/variables";
-@import "../../../../ui/src/styles/mixin/screen";
+@import "../../../../ui/src/styles/mixins";
 
 .deck-tool,
 .deck-tool__portal {
@@ -251,7 +251,7 @@ export default defineComponent({
             justify-content: space-between;
             margin-bottom: $margin-md;
 
-            @include screen(min, lg) {
+            @include screen-min-width(lg) {
                 align-items: center;
                 flex-direction: row;
             }
@@ -261,14 +261,14 @@ export default defineComponent({
             display: flex;
             flex-direction: column;
             margin-bottom: $margin-sm;
-            @include screen(min, lg) {
+            @include screen-min-width(lg) {
                 margin-bottom: 0;
             }
         }
 
         &__name.h5 {
             margin-bottom: $margin-sm;
-            @include screen(min, md) {
+            @include screen-min-width(md) {
                 margin-bottom: 0;
             }
         }
@@ -280,10 +280,10 @@ export default defineComponent({
             border: 3px solid $black;
             gap: $margin-sm;
             grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
-            @include screen(min, md) {
+            @include screen-min-width(md) {
                 grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
             }
-            @include screen(min, lg) {
+            @include screen-min-width(lg) {
                 grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));
             }
         }
