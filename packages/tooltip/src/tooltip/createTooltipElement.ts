@@ -219,7 +219,7 @@ const createCardImageCol = (card: Card): HTMLElement => {
     return createDiv(["card-tooltip__image__col"], [cardImage]);
 };
 
-export const createCardTooltip = (card: Card): HTMLElement =>
+export const createTooltipElement = (card: Card): HTMLElement =>
     createDiv(
         ["card-tooltip"],
         [

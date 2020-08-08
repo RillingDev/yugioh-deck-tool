@@ -8,10 +8,10 @@ import {
 } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import {
-    createCardTooltip,
     createErrorTooltip,
     createLoadingTooltip,
-} from "./createCardTooltip";
+    createTooltipElement,
+} from "./createTooltipElement";
 import { bindReferenceLink } from "./bindReferenceLink";
 import { delegate, Instance } from "tippy.js";
 
@@ -49,41 +49,41 @@ const loadCard = async (cardKey: string): Promise<Card> => {
     throw new Error(`Could not find card '${cardKey}'.`);
 };
 
+const showTooltip = (
+    instance: Instance,
+    target: HTMLElement | HTMLAnchorElement,
+    cardKey: string
+): void => {
+    logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
+    loadCard(cardKey)
+        .then((card) => {
+            logger.trace("Loaded card.", card);
+            instance.setContent(createTooltipElement(card));
+
+            if (target instanceof HTMLAnchorElement) {
+                bindReferenceLink(target, card);
+            }
+
+            // Start request, but do not wait for it to finish.
+            cardDataLoaderService
+                .updateViews(card)
+                .then(() => logger.trace("Updated view count."))
+                .catch((err) =>
+                    logger.warn("Could not update view count.", err)
+                );
+        })
+        .catch((err) => {
+            instance.setContent(
+                createErrorTooltip("Error while loading card.")
+            );
+            logger.error("Error while loading card.", err);
+        });
+};
+
 export const bindTooltipHandlers = (
     context: HTMLElement,
     tooltipContainerElement: HTMLElement
-): void => {
-    const showTooltip = (
-        instance: Instance,
-        target: HTMLElement | HTMLAnchorElement,
-        cardKey: string
-    ): void => {
-        logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
-        loadCard(cardKey)
-            .then((card) => {
-                logger.trace("Loaded card.", card);
-                instance.setContent(createCardTooltip(card));
-
-                if (target instanceof HTMLAnchorElement) {
-                    bindReferenceLink(target, card);
-                }
-
-                // Start request, but do not wait for it to finish.
-                cardDataLoaderService
-                    .updateViews(card)
-                    .then(() => logger.trace("Updated view count."))
-                    .catch((err) =>
-                        logger.warn("Could not update view count.", err)
-                    );
-            })
-            .catch((err) => {
-                instance.setContent(
-                    createErrorTooltip("Error while loading card.")
-                );
-                logger.error("Error while loading card.", err);
-            });
-    };
-
+): Instance =>
     delegate(context, {
         target: "[data-name]",
         appendTo: tooltipContainerElement,
@@ -99,4 +99,3 @@ export const bindTooltipHandlers = (
             showTooltip(instance, target, cardKey);
         },
     });
-};

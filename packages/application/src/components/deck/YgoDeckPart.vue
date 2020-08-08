@@ -24,6 +24,7 @@
             :move="(e) => canMove(e)"
             @change="(e) => onChange(e)"
             :revert-on-spill="true"
+            :animation="0"
         >
             <YgoCard
                 :card="card"
@@ -57,6 +58,7 @@ import {
     DECK_PART_CARDS_REMOVE,
     DECK_PART_CARDS_REORDER,
 } from "../../store/modules/deck";
+import { hideTooltip } from "../../../../tooltip/src/main";
 import { appStore } from "../../composition/state/appStore";
 import { removeEnd } from "lightdash";
 import {
@@ -160,23 +162,31 @@ export default defineComponent({
                 card,
                 newIndex,
             });
-        const removeCard = (card: Card, oldIndex: number): void =>
-            appStore(context).commit(DECK_PART_CARDS_REMOVE, {
-                deckPart: props.deckPart,
-                card,
-                oldIndex,
-            });
+        const removeCard = (card: Card, oldIndex: number): void => {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            hideTooltip().then(() =>
+                appStore(context).commit(DECK_PART_CARDS_REMOVE, {
+                    deckPart: props.deckPart,
+                    card,
+                    oldIndex,
+                })
+            );
+        };
         const reorderCard = (
             card: Card,
             oldIndex: number,
             newIndex: number
-        ): void =>
-            appStore(context).commit(DECK_PART_CARDS_REORDER, {
-                deckPart: props.deckPart,
-                card,
-                oldIndex,
-                newIndex,
-            });
+        ): void => {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            hideTooltip().then(() =>
+                appStore(context).commit(DECK_PART_CARDS_REORDER, {
+                    deckPart: props.deckPart,
+                    card,
+                    oldIndex,
+                    newIndex,
+                })
+            );
+        };
         const onChange = (e: DraggableChangeEventData): void => {
             document.body.blur();
             if (e.removed != null) {

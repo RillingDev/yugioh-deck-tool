@@ -10,6 +10,7 @@
                     :group="{ name: dragGroup, pull: 'clone', put: false }"
                     :value="[card]"
                     :move="(e) => canMove(e)"
+                    :animation="0"
                 >
                     <YgoCard
                         :card="card"

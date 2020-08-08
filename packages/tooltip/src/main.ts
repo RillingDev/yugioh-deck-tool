@@ -2,10 +2,13 @@ import "reflect-metadata";
 import "./styles/tooltip.scss";
 import { getLogger } from "../../core/src/main";
 import { bindTooltipHandlers } from "./tooltip/bindTooltip";
+import { Instance } from "tippy.js";
 
 const TOOLTIP_CONTAINER_ID = "cardTooltipContainer";
 
 const logger = getLogger("tooltip");
+
+let instance: Instance;
 
 document.addEventListener("readystatechange", () => {
     if (document.getElementById(TOOLTIP_CONTAINER_ID) == null) {
@@ -14,6 +17,12 @@ document.addEventListener("readystatechange", () => {
         const tooltipContainerElement = document.createElement("div");
         tooltipContainerElement.id = TOOLTIP_CONTAINER_ID;
         context.appendChild(tooltipContainerElement);
-        bindTooltipHandlers(context, tooltipContainerElement);
+        instance = bindTooltipHandlers(context, tooltipContainerElement);
     }
 });
+
+export const hideTooltip = (): Promise<void> =>
+    new Promise((resolve) => {
+        instance?.hide();
+        requestAnimationFrame(() => resolve());
+    });

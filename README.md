@@ -48,16 +48,16 @@ The `.map` files are optional and only used for debugging.
 #### Dependency Tree
 
 ```text
-        core                // Shared code independent of platform.
-         ^
-         |
-         |
-         ui                 // Shared code requiring Browser/DOM.
-        ^  ^
-       /    \
-      /      \
-     /        \
-application  tooltip        // Browser entry points.
+         core                // Shared code independent of platform.
+          ^
+          |
+          |
+          ui                 // Shared code requiring Browser/DOM.
+         ^  ^
+        /    \
+       /      \
+      /        \
+application--->tooltip        // Browser entry points.
 ```
 
 ## Credits
