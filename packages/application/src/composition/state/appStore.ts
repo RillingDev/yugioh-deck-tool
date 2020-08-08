@@ -1,5 +1,5 @@
 import { SetupContext } from "@vue/composition-api";
-import store from "../../store/store";
+import { store } from "../../store/store";
 
 type AppStore = typeof store;
 

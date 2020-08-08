@@ -9,7 +9,7 @@ import { AppState } from "./AppState";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store<AppState>({
+export const store = new Vuex.Store<AppState>({
     modules: {
         data: dataModule,
 

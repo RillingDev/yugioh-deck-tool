@@ -1,8 +1,6 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "importHelpers": true,
         "lib": ["esnext", "dom"]
     },
     "include": ["./src/**/*.ts", "./src/**/*.vue"],
