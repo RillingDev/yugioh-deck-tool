@@ -15,6 +15,7 @@
             </div>
             <YgoPrice :cards="cards" />
         </header>
+        <!-- Spill is set to 'revert', actual removal is done in custom draggable variant -->
         <Draggable
             class="deck-part__content"
             tag="div"
@@ -22,6 +23,7 @@
             :value="cards"
             :move="(e) => canMove(e)"
             @change="(e) => onChange(e)"
+            :revert-on-spill="true"
         >
             <YgoCard
                 :card="card"
@@ -176,6 +178,7 @@ export default defineComponent({
                 newIndex,
             });
         const onChange = (e: DraggableChangeEventData): void => {
+            document.body.blur();
             if (e.removed != null) {
                 removeCard(e.removed.element, e.removed.oldIndex);
             } else if (e.added != null) {
@@ -190,7 +193,6 @@ export default defineComponent({
                 logger.warn("Unexpected drag event type.", e);
             }
         };
-
         const canMove = createMoveInDeckPartValidator(context, props.deckPart);
 
         return {

@@ -19,7 +19,7 @@
         "reflect-metadata": "^0.1.13",
         "vue": "^2.6.11",
         "vue-select": "^3.10.7",
-        "vuedraggable": "^2.24.0",
+        "vuedraggable": "github:FelixRilling/Vue.Draggable#02e5191fc2aa07bbe6828b2f0bfb9c91f0bfa1bb",
         "vuex": "^3.5.1"
     },
     "devDependencies": {
