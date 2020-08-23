@@ -44,7 +44,7 @@ export default defineComponent({
     .card {
         display: block; // Make sure link covers full card
         &:focus {
-            outline: 3px solid $blue;
+            outline: 4px solid $black;
         }
     }
 

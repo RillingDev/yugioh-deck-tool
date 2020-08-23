@@ -19,8 +19,8 @@ enum SortingStrategy {
 
     VIEWS = "Views",
 
-    RELEASE_TCG = "Release TCG",
-    RELEASE_OCG = "Release OCG",
+    RELEASE_TCG = "Date: TCG",
+    RELEASE_OCG = "Date: OCG",
 }
 
 enum SortingOrder {

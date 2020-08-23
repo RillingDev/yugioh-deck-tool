@@ -1,11 +1,6 @@
 <template>
     <div class="builder">
         <BSidebar id="filterSidebar" title="Filter Cards">
-            <template v-slot:header-close>
-                <button type="button" aria-label="Close" class="close">
-                    ×
-                </button>
-            </template>
             <div class="container">
                 <YgoFilter v-model="filter" v-if="loaded" />
                 <button class="btn btn-danger" @click="() => resetFilter()">
