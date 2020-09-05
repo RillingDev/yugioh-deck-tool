@@ -1,8 +1,8 @@
 import { injectable } from "inversify";
-import { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
-import { CardSet } from "./set/CardSet";
-import { CardType } from "./type/CardType";
-import { Card } from "./Card";
+import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
+import type { CardSet } from "./set/CardSet";
+import type { CardType } from "./type/CardType";
+import type { Card } from "./Card";
 import { getLogger } from "../../logger";
 
 /**

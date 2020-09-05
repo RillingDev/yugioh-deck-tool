@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { BanState, DefaultBanState } from "../../../core/card/banlist/BanState";
-import { CardImage } from "../../../core/card/CardImage";
-import { CardPrices } from "../../../core/card/CardPrices";
+import type { BanState } from "../../../core/card/banlist/BanState";
+import { DefaultBanState } from "../../../core/card/banlist/BanState";
+import type { CardImage } from "../../../core/card/CardImage";
+import type { CardPrices } from "../../../core/card/CardPrices";
 import { Format } from "../../../core/card/format/Format";
-import { DefaultVendor, Vendor } from "../../../core/price/Vendor";
-import {
+import type { Vendor } from "../../../core/price/Vendor";
+import { DefaultVendor } from "../../../core/price/Vendor";
+import type {
     CardSetAppearance,
     UnlinkedCard,
 } from "../../../core/card/UnlinkedCard";
-import { ReleaseInfo } from "../../../core/card/ReleaseInfo";
+import type { ReleaseInfo } from "../../../core/card/ReleaseInfo";
 import { getExistingElseThrow } from "lightdash";
 
 // https://jvilk.com/MakeTypes/

@@ -1,9 +1,8 @@
+import type { Card, PriceService } from "../../../core/src/main";
 import {
-    Card,
     CardTypeCategory,
     DEFAULT_VENDOR_ARR,
     Format,
-    PriceService,
 } from "../../../core/src/main";
 import { tooltipContainer } from "../inversify.config";
 import { TOOLTIP_TYPES } from "../types";

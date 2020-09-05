@@ -42,16 +42,17 @@
 <script lang="ts">
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
-import {
+import type {
     Card,
     CardService,
     Currency,
-    DEFAULT_VENDOR_ARR,
     PriceLookupResult,
     PriceService,
     Vendor,
 } from "../../../core/src/main";
-import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
+import { DEFAULT_VENDOR_ARR } from "../../../core/src/main";
+import type { PropType } from "@vue/composition-api";
+import { computed, defineComponent, ref } from "@vue/composition-api";
 import { appStore } from "../composition/state/appStore";
 import { BTooltip } from "bootstrap-vue";
 

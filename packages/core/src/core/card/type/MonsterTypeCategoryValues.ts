@@ -1,4 +1,4 @@
-import { TypeCategoryValues } from "./TypeCategoryValues";
+import type { TypeCategoryValues } from "./TypeCategoryValues";
 
 interface MonsterTypeCategoryValues extends TypeCategoryValues {
     readonly attributes: string[];

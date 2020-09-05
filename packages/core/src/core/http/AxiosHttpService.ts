@@ -1,5 +1,10 @@
-import { HttpRequestConfig, HttpResponse, HttpService } from "./HttpService";
-import axios, { AxiosInstance } from "axios";
+import type {
+    HttpRequestConfig,
+    HttpResponse,
+    HttpService,
+} from "./HttpService";
+import type { AxiosInstance } from "axios";
+import axios from "axios";
 import { injectable } from "inversify";
 
 /**

@@ -1,9 +1,9 @@
 import { injectable } from "inversify";
-import { Card } from "./Card";
+import type { Card } from "./Card";
 import { intersection, uniqBy } from "lodash";
 import { countMapBy } from "lightdash";
-import { CardTypeCategory } from "./type/CardTypeCategory";
-import { CardType } from "./type/CardType";
+import type { CardTypeCategory } from "./type/CardTypeCategory";
+import type { CardType } from "./type/CardType";
 
 export type Counted<T> = Map<T, number>;
 

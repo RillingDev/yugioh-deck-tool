@@ -36,8 +36,10 @@
 </template>
 
 <script lang="ts">
-import { Card, CardTypeCategory } from "../../../../core/src/main";
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import type { Card } from "../../../../core/src/main";
+import { CardTypeCategory } from "../../../../core/src/main";
+import type { PropType } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 import { createMoveFromBuilderValidator } from "../../composition/controller/dragging";

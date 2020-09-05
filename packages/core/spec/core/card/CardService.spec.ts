@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { createCard } from "../../helper/dataFactories";
-import { baseModule, CardService, TYPES } from "../../../src/main";
+import type { CardService } from "../../../src/main";
+import { baseModule, TYPES } from "../../../src/main";
 import { Container } from "inversify";
 
 describe("CardService", () => {

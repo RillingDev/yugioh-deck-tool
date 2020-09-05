@@ -1,5 +1,6 @@
 import { deepFreeze } from "lightdash";
-import { Currency, DefaultCurrency } from "./Currency";
+import type { Currency } from "./Currency";
+import { DefaultCurrency } from "./Currency";
 
 interface Vendor {
     readonly id: string;

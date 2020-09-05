@@ -1,8 +1,8 @@
 import "reflect-metadata";
+import type { DeckExportService } from "../../../src/main";
 import {
     baseModule,
     CardTypeCategory,
-    DeckExportService,
     deckModule,
     DeckPart,
     TYPES,

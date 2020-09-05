@@ -1,15 +1,15 @@
 import { inject, injectable } from "inversify";
-import { CardFilter, FilterService } from "../card/FilterService";
-import { Deck } from "./Deck";
-import { CardDatabase } from "../card/CardDatabase";
-import { DeckService } from "./DeckService";
+import type { CardFilter, FilterService } from "../card/FilterService";
+import type { Deck } from "./Deck";
+import type { CardDatabase } from "../card/CardDatabase";
+import type { DeckService } from "./DeckService";
 import { TYPES } from "../../types";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import { SortingService } from "../card/SortingService";
-import { CardService } from "../card/CardService";
+import type { SortingService } from "../card/SortingService";
+import type { CardService } from "../card/CardService";
 import { random, sampleSize, shuffle, uniq, words } from "lodash";
-import { Card } from "../card/Card";
-import { Format } from "../card/format/Format";
+import type { Card } from "../card/Card";
+import type { Format } from "../card/format/Format";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 

@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
-import { Card } from "../card/Card";
-import { Vendor } from "./Vendor";
-import { Currency } from "./Currency";
+import type { Card } from "../card/Card";
+import type { Vendor } from "./Vendor";
+import type { Currency } from "./Currency";
 import { sum } from "lodash";
 
 interface PriceLookupResult {

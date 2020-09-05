@@ -14,8 +14,10 @@
     </div>
 </template>
 <script lang="ts">
-import { Card, DECK_PART_ARR, DeckService } from "../../../../core/src/main";
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import type { Card, DeckService } from "../../../../core/src/main";
+import { DECK_PART_ARR } from "../../../../core/src/main";
+import type { PropType } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";

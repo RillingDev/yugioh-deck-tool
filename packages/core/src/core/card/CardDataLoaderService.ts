@@ -1,8 +1,8 @@
-import { CardSet } from "./set/CardSet";
-import { CardValues } from "./type/CardValues";
-import { UnlinkedCard } from "./UnlinkedCard";
-import { FindCardBy } from "./CardDatabase";
-import { Card } from "./Card";
+import type { CardSet } from "./set/CardSet";
+import type { CardValues } from "./type/CardValues";
+import type { UnlinkedCard } from "./UnlinkedCard";
+import type { FindCardBy } from "./CardDatabase";
+import type { Card } from "./Card";
 
 /**
  * Interface for a service loading card data, like available cards or sets.

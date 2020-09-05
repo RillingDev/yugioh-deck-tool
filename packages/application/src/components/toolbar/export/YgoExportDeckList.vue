@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { DeckExportService } from "../../../../../core/src/main";
+import type { DeckExportService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";

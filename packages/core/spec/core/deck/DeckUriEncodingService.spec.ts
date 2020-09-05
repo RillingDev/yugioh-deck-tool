@@ -1,10 +1,9 @@
 import "reflect-metadata";
+import type { CardDatabase, DeckUriEncodingService } from "../../../src/main";
 import {
     baseModule,
-    CardDatabase,
     deckModule,
     DeckPart,
-    DeckUriEncodingService,
     FindCardBy,
     TYPES,
 } from "../../../src/main";

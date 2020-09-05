@@ -1,8 +1,6 @@
 <template>
     <form class="form-group sorting-options">
-        <label class="sorting-options__label w-50">
-            Sort by
-        </label>
+        <label class="sorting-options__label w-50"> Sort by </label>
         <VSelect
             class="sorting-options__input w-100"
             title="Sorting Strategy"
@@ -25,12 +23,10 @@
 </template>
 
 <script lang="ts">
-import {
-    SortingOptions,
-    SortingOrder,
-    SortingStrategy,
-} from "../../../../core/src/main";
-import { defineComponent, PropType, reactive } from "@vue/composition-api";
+import type { SortingOptions } from "../../../../core/src/main";
+import { SortingOrder, SortingStrategy } from "../../../../core/src/main";
+import type { PropType } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 import VSelect from "vue-select";
 
 export default defineComponent({

@@ -1,4 +1,4 @@
-import { Vendor } from "../price/Vendor";
+import type { Vendor } from "../price/Vendor";
 
 type CardPrices = Map<Vendor, number>;
 

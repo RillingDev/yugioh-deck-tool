@@ -1,14 +1,14 @@
 import { inject, injectable } from "inversify";
-import { Card } from "./Card";
-import { CardSet } from "./set/CardSet";
-import { Format } from "./format/Format";
-import { CardType } from "./type/CardType";
+import type { Card } from "./Card";
+import type { CardSet } from "./set/CardSet";
+import type { Format } from "./format/Format";
+import type { CardType } from "./type/CardType";
 import { intersection, isEmpty } from "lodash";
-import { BanState } from "./banlist/BanState";
-import { CardService } from "./CardService";
+import type { BanState } from "./banlist/BanState";
+import type { CardService } from "./CardService";
 import { TYPES } from "../../types";
-import { CardTypeCategory } from "./type/CardTypeCategory";
-import { BanlistService } from "./banlist/BanlistService";
+import type { CardTypeCategory } from "./type/CardTypeCategory";
+import type { BanlistService } from "./banlist/BanlistService";
 
 interface CardFilter {
     name?: string | null;

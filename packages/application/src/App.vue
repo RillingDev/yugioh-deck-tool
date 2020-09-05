@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts">
-import {
+import type {
     CardDatabase,
     Deck,
     DeckFileService,
     DeckUriEncodingService,
-    getLogger,
     UrlService,
 } from "../../core/src/main";
+import { getLogger } from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";

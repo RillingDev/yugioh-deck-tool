@@ -1,4 +1,4 @@
-import { CardType } from "./CardType";
+import type { CardType } from "./CardType";
 
 interface TypeCategoryValues {
     readonly subTypes: string[];

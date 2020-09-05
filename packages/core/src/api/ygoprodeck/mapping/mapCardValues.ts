@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { CardValues } from "../../../core/card/type/CardValues";
+import type { CardValues } from "../../../core/card/type/CardValues";
 import { CardTypeCategory } from "../../../core/card/type/CardTypeCategory";
-import { CardType } from "../../../core/card/type/CardType";
+import type { CardType } from "../../../core/card/type/CardType";
 import { DeckPart } from "../../../core/deck/DeckPart";
 import { getExistingElseThrow, requireNonNilElseThrow } from "lightdash";
 

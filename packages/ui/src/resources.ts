@@ -1,4 +1,5 @@
-import { BanlistInfo, Card, CardTypeCategory } from "../../core/src/main";
+import type { BanlistInfo, Card } from "../../core/src/main";
+import { CardTypeCategory } from "../../core/src/main";
 
 export const imageUrlType = (card: Card): string =>
     `https://ygoprodeck.com/pics/icons/${encodeURIComponent(

@@ -1,11 +1,10 @@
 import "reflect-metadata";
+import type { Deck, DeckService } from "../../../src/main";
 import {
     baseModule,
     CardTypeCategory,
-    Deck,
     deckModule,
     DeckPart,
-    DeckService,
     DefaultBanState,
     Format,
     TYPES,

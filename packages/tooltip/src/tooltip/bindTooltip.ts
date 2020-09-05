@@ -1,11 +1,10 @@
 import { tooltipContainer } from "../inversify.config";
-import {
+import type {
     Card,
     CardDatabase,
     CardDataLoaderService,
-    FindCardBy,
-    getLogger,
 } from "../../../core/src/main";
+import { FindCardBy, getLogger } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import {
     createErrorTooltip,
@@ -13,7 +12,8 @@ import {
     createTooltipElement,
 } from "./createTooltipElement";
 import { bindReferenceLink } from "./bindReferenceLink";
-import { delegate, Instance } from "tippy.js";
+import type { Instance } from "tippy.js";
+import { delegate } from "tippy.js";
 
 const cardDatabase = tooltipContainer.get<CardDatabase>(
     TOOLTIP_TYPES.CardDatabase

@@ -1,14 +1,15 @@
 import { inject, injectable } from "inversify";
 import { INTERNAL_TYPES, TYPES } from "../../types";
-import { CardDataLoaderService } from "./CardDataLoaderService";
-import { Card } from "./Card";
-import { CardSet } from "./set/CardSet";
-import { CardDatabase, FindCardBy } from "./CardDatabase";
-import { CardType } from "./type/CardType";
+import type { CardDataLoaderService } from "./CardDataLoaderService";
+import type { Card } from "./Card";
+import type { CardSet } from "./set/CardSet";
+import type { CardDatabase } from "./CardDatabase";
+import { FindCardBy } from "./CardDatabase";
+import type { CardType } from "./type/CardType";
 import { CardTypeCategory } from "./type/CardTypeCategory";
-import { UnlinkedCard } from "./UnlinkedCard";
+import type { UnlinkedCard } from "./UnlinkedCard";
 import { deepFreeze } from "lightdash";
-import { CardLinkingService } from "./CardLinkingService";
+import type { CardLinkingService } from "./CardLinkingService";
 import { getLogger } from "../../logger";
 
 /**

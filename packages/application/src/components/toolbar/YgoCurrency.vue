@@ -14,7 +14,8 @@
 import { computed, defineComponent } from "@vue/composition-api";
 
 import VSelect from "vue-select";
-import { Currency, DEFAULT_CURRENCY_ARR } from "../../../../core/src/main";
+import type { Currency } from "../../../../core/src/main";
+import { DEFAULT_CURRENCY_ARR } from "../../../../core/src/main";
 import { CURRENCY_UPDATE } from "../../store/modules/currency";
 import { appStore } from "../../composition/state/appStore";
 

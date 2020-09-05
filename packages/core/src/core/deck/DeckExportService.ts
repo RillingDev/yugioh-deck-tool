@@ -1,12 +1,12 @@
 import { inject, injectable } from "inversify";
-import { Deck } from "./Deck";
+import type { Deck } from "./Deck";
 import { TYPES } from "../../types";
-import { Card } from "../card/Card";
-import { DeckService } from "./DeckService";
+import type { Card } from "../card/Card";
+import type { DeckService } from "./DeckService";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import { CardService } from "../card/CardService";
+import type { CardService } from "../card/CardService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import { FilterService } from "../card/FilterService";
+import type { FilterService } from "../card/FilterService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 /**

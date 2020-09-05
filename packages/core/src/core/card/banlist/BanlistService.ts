@@ -1,8 +1,9 @@
 import { injectable } from "inversify";
-import { Card } from "../Card";
+import type { Card } from "../Card";
 import { Format } from "../format/Format";
-import { BanState, DefaultBanState } from "./BanState";
-import { BanlistInfo } from "./BanlistInfo";
+import type { BanState } from "./BanState";
+import { DefaultBanState } from "./BanState";
+import type { BanlistInfo } from "./BanlistInfo";
 
 /**
  * @public

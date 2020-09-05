@@ -1,10 +1,11 @@
 import { inject, injectable } from "inversify";
-import { Deck } from "./Deck";
+import type { Deck } from "./Deck";
 import { TYPES } from "../../types";
-import { CardDatabase, FindCardBy } from "../card/CardDatabase";
-import { Card } from "../card/Card";
+import type { CardDatabase } from "../card/CardDatabase";
+import { FindCardBy } from "../card/CardDatabase";
+import type { Card } from "../card/Card";
 import { isEqual } from "lodash";
-import { DeckService } from "./DeckService";
+import type { DeckService } from "./DeckService";
 import { fromByteArray, toByteArray } from "base64-js";
 import { deflateRaw, inflate, inflateRaw } from "pako";
 import { DECK_PART_ARR } from "./DeckPart";
@@ -210,7 +211,7 @@ class DeckUriEncodingService {
      */
     public fromLegacyUrlQueryParamValue(
         val: string,
-        base64Decoder: (val: string) => string
+        base64Decoder: (data: string) => string
     ): Deck {
         const deck = this.deckService.createEmptyDeck();
         const uncompressedValue = inflate(base64Decoder(val), {

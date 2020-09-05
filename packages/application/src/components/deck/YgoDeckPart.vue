@@ -37,17 +37,20 @@
 </template>
 
 <script lang="ts">
-import {
+import type {
     Card,
     CardDatabase,
     CardService,
+    DeckPartConfig,
+} from "../../../../core/src/main";
+import {
     CardTypeCategory,
     DeckPart,
-    DeckPartConfig,
     DefaultDeckPartConfig,
     getLogger,
 } from "../../../../core/src/main";
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import type { PropType } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import YgoCard from "../YgoCard.vue";
 import { applicationContainer } from "../../inversify.config";
@@ -61,10 +64,10 @@ import {
 import { hideTooltip } from "../../../../tooltip/src/main";
 import { appStore } from "../../composition/state/appStore";
 import { removeEnd } from "lightdash";
+import type { DraggableChangeEventData } from "../../composition/controller/dragging";
 import {
     createMoveInDeckPartValidator,
     DECK_PART_PROP,
-    DraggableChangeEventData,
 } from "../../composition/controller/dragging";
 
 const cardService = applicationContainer.get<CardService>(

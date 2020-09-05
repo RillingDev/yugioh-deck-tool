@@ -1,14 +1,14 @@
-import { Card } from "../../src/core/card/Card";
+import type { Card } from "../../src/core/card/Card";
 import { Format } from "../../src/core/card/format/Format";
-import { CardImage } from "../../src/core/card/CardImage";
-import { CardPrices } from "../../src/core/card/CardPrices";
-import { ReleaseInfo } from "../../src/core/card/ReleaseInfo";
-import { BanlistInfo } from "../../src/core/card/banlist/BanlistInfo";
-import { CardType } from "../../src/core/card/type/CardType";
-import { CardSet } from "../../src/core/card/set/CardSet";
+import type { CardImage } from "../../src/core/card/CardImage";
+import type { CardPrices } from "../../src/core/card/CardPrices";
+import type { ReleaseInfo } from "../../src/core/card/ReleaseInfo";
+import type { BanlistInfo } from "../../src/core/card/banlist/BanlistInfo";
+import type { CardType } from "../../src/core/card/type/CardType";
+import type { CardSet } from "../../src/core/card/set/CardSet";
 import { CardTypeCategory } from "../../src/core/card/type/CardTypeCategory";
 import { DefaultBanState } from "../../src/core/card/banlist/BanState";
-import { Vendor } from "../../src/core/price/Vendor";
+import type { Vendor } from "../../src/core/price/Vendor";
 import { DeckPart } from "../../src/core/deck/DeckPart";
 
 const createCardType = (data: {

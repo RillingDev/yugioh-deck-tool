@@ -1,15 +1,16 @@
 import { inject, injectable } from "inversify";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import { Card } from "../card/Card";
-import { Deck } from "./Deck";
+import type { Card } from "../card/Card";
+import type { Deck } from "./Deck";
 import { TYPES } from "../../types";
-import { CardService } from "../card/CardService";
-import { Format } from "../card/format/Format";
+import type { CardService } from "../card/CardService";
+import type { Format } from "../card/format/Format";
 import { insertAt, pullFirst } from "lightdash";
 import { sampleSize, shuffle } from "lodash";
-import { SortingService, SortingStrategy } from "../card/SortingService";
+import type { SortingService } from "../card/SortingService";
+import { SortingStrategy } from "../card/SortingService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import { BanlistService } from "../card/banlist/BanlistService";
+import type { BanlistService } from "../card/banlist/BanlistService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 /**

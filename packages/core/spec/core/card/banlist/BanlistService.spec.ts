@@ -1,6 +1,6 @@
 import "reflect-metadata";
+import type { BanlistService } from "../../../../src/main";
 import {
-    BanlistService,
     baseModule,
     DefaultBanState,
     Format,

@@ -30,12 +30,12 @@
 </template>
 
 <script lang="ts">
-import {
+import type {
     CardFilter,
     DeckRandomizationService,
     Format,
-    RandomizationStrategy,
 } from "../../../../../core/src/main";
+import { RandomizationStrategy } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";

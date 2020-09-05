@@ -33,7 +33,7 @@
 <script lang="ts">
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
-import {
+import type {
     Card,
     CardDatabase,
     CardFilter,
@@ -41,20 +41,14 @@ import {
     FilterService,
     Format,
     SortingOptions,
-    SortingOrder,
     SortingService,
-    SortingStrategy,
 } from "../../../../core/src/main";
+import { SortingOrder, SortingStrategy } from "../../../../core/src/main";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
-import {
-    computed,
-    defineComponent,
-    PropType,
-    reactive,
-    ref,
-} from "@vue/composition-api";
+import type { PropType } from "@vue/composition-api";
+import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
 import { appStore } from "../../composition/state/appStore";
 import { dataLoaded } from "../../composition/state/dataLoaded";
 import { BSidebar } from "bootstrap-vue";

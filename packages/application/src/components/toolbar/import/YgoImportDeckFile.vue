@@ -7,11 +7,11 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import {
+import type {
     DeckFileService,
-    getLogger,
     ImportResult,
 } from "../../../../../core/src/main";
+import { getLogger } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";

@@ -10,8 +10,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@vue/composition-api";
-import { Card } from "../../../core/src/main";
+import type { PropType } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
+import type { Card } from "../../../core/src/main";
 import { imageUrlCardPlaceholder } from "../../../ui/src/main";
 
 export default defineComponent({

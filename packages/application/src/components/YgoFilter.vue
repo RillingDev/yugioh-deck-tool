@@ -139,19 +139,21 @@
 </template>
 
 <script lang="ts">
-import {
+import type {
     BanlistService,
     CardDatabase,
     CardFilter,
     CardSet,
     CardType,
+} from "../../../core/src/main";
+import {
     CardTypeCategory,
     DEFAULT_BAN_STATE_ARR,
 } from "../../../core/src/main";
+import type { PropType } from "@vue/composition-api";
 import {
     computed,
     defineComponent,
-    PropType,
     reactive,
     watch,
 } from "@vue/composition-api";

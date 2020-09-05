@@ -1,10 +1,10 @@
-import { ReleaseInfo } from "./ReleaseInfo";
-import { BanlistInfo } from "./banlist/BanlistInfo";
-import { CardImage } from "./CardImage";
-import { CardPrices } from "./CardPrices";
-import { Format } from "./format/Format";
-import { CardSet } from "./set/CardSet";
-import { CardType } from "./type/CardType";
+import type { ReleaseInfo } from "./ReleaseInfo";
+import type { BanlistInfo } from "./banlist/BanlistInfo";
+import type { CardImage } from "./CardImage";
+import type { CardPrices } from "./CardPrices";
+import type { Format } from "./format/Format";
+import type { CardSet } from "./set/CardSet";
+import type { CardType } from "./type/CardType";
 
 /**
  * Regular card. Also see {@link UnlinkedCard}.

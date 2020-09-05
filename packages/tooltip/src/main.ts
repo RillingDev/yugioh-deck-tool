@@ -2,7 +2,7 @@ import "reflect-metadata";
 import "./styles/tooltip.scss";
 import { getLogger } from "../../core/src/main";
 import { bindTooltipHandlers } from "./tooltip/bindTooltip";
-import { Instance } from "tippy.js";
+import type { Instance } from "tippy.js";
 
 const TOOLTIP_CONTAINER_ID = "cardTooltipContainer";
 
@@ -23,6 +23,6 @@ document.addEventListener("readystatechange", () => {
 
 export const hideTooltip = (): Promise<void> =>
     new Promise((resolve) => {
-        instance?.hide();
+        instance.hide();
         requestAnimationFrame(() => resolve());
     });

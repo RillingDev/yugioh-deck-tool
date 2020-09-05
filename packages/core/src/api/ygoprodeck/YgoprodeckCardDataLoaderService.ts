@@ -1,21 +1,28 @@
-import { mapCard, RawCard } from "./mapping/mapCard";
-import { mapCardSet, RawCardSet } from "./mapping/mapCardSet";
-import { CardSet } from "../../core/card/set/CardSet";
-import { CardDataLoaderService } from "../../core/card/CardDataLoaderService";
-import { PaginatedResponse } from "./PaginatedResponse";
+import type { RawCard } from "./mapping/mapCard";
+import { mapCard } from "./mapping/mapCard";
+import type { RawCardSet } from "./mapping/mapCardSet";
+import { mapCardSet } from "./mapping/mapCardSet";
+import type { CardSet } from "../../core/card/set/CardSet";
+import type { CardDataLoaderService } from "../../core/card/CardDataLoaderService";
+import type { PaginatedResponse } from "./PaginatedResponse";
 import { inject, injectable } from "inversify";
-import { mapCardValues, RawCardValues } from "./mapping/mapCardValues";
-import { CardValues } from "../../core/card/type/CardValues";
-import { UnlinkedCard } from "../../core/card/UnlinkedCard";
+import type { RawCardValues } from "./mapping/mapCardValues";
+import { mapCardValues } from "./mapping/mapCardValues";
+import type { CardValues } from "../../core/card/type/CardValues";
+import type { UnlinkedCard } from "../../core/card/UnlinkedCard";
 import { TYPES } from "../../types";
-import { HttpRequestConfig, HttpService } from "../../core/http/HttpService";
-import { mapArchetype, RawArchetype } from "./mapping/mapArchetype";
+import type {
+    HttpRequestConfig,
+    HttpService,
+} from "../../core/http/HttpService";
+import type { RawArchetype } from "./mapping/mapArchetype";
+import { mapArchetype } from "./mapping/mapArchetype";
 import {
     DEVELOPMENT_MODE,
     FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE,
 } from "../../mode";
 import { FindCardBy } from "../../core/card/CardDatabase";
-import { Card } from "../../core/card/Card";
+import type { Card } from "../../core/card/Card";
 
 /**
  * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).

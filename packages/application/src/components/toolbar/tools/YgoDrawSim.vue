@@ -38,21 +38,15 @@
                     :key="`${index}_${card.passcode}`"
                 />
             </div>
-            <button class="btn btn-primary" @click="() => draw()">
-                Draw
-            </button>
+            <button class="btn btn-primary" @click="() => draw()">Draw</button>
         </BModal>
     </BDropdownItemButton>
 </template>
 
 <script lang="ts">
 import YgoCard from "../../YgoCard.vue";
-import {
-    Card,
-    Deck,
-    DeckPart,
-    DeckService,
-} from "../../../../../core/src/main";
+import type { Card, Deck, DeckService } from "../../../../../core/src/main";
+import { DeckPart } from "../../../../../core/src/main";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";

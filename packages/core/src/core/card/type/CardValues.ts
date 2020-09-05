@@ -1,6 +1,6 @@
 import { CardTypeCategory } from "./CardTypeCategory";
-import { MonsterTypeCategoryValues } from "./MonsterTypeCategoryValues";
-import { TypeCategoryValues } from "./TypeCategoryValues";
+import type { MonsterTypeCategoryValues } from "./MonsterTypeCategoryValues";
+import type { TypeCategoryValues } from "./TypeCategoryValues";
 
 interface CardValues {
     readonly [CardTypeCategory.MONSTER]: MonsterTypeCategoryValues;

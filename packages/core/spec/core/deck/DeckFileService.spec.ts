@@ -1,8 +1,7 @@
 import "reflect-metadata";
+import type { CardDatabase, DeckFileService } from "../../../src/main";
 import {
     baseModule,
-    CardDatabase,
-    DeckFileService,
     deckModule,
     DeckPart,
     FindCardBy,
@@ -11,7 +10,7 @@ import {
 import { MemoryCardDatabase } from "../../../src/core/card/MemoryCardDatabase";
 import { AxiosHttpService } from "../../../src/core/http/AxiosHttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
-import { HttpService } from "../../../src/core/http/HttpService";
+import type { HttpService } from "../../../src/core/http/HttpService";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { Container } from "inversify";

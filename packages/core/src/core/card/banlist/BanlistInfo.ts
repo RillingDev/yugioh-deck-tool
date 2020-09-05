@@ -1,4 +1,4 @@
-import { BanState } from "./BanState";
+import type { BanState } from "./BanState";
 import { Format } from "../format/Format";
 
 interface BanlistInfo {

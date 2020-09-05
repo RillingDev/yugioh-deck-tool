@@ -1,4 +1,4 @@
-import { Container } from "inversify";
+import type { Container } from "inversify";
 import { instance, mock } from "ts-mockito";
 
 type Class<T> = new (...args: never[]) => T;

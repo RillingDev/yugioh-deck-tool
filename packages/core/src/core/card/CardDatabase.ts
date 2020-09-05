@@ -1,11 +1,11 @@
-import { Card } from "./Card";
-import { CardSet } from "./set/CardSet";
-import { CardType } from "./type/CardType";
-import { CardTypeCategory } from "./type/CardTypeCategory";
+import type { Card } from "./Card";
+import type { CardSet } from "./set/CardSet";
+import type { CardType } from "./type/CardType";
+import type { CardTypeCategory } from "./type/CardTypeCategory";
 
 enum FindCardBy {
-    NAME,
-    PASSCODE,
+    NAME = "name",
+    PASSCODE = "passcode",
 }
 
 /**
