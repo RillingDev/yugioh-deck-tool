@@ -61,7 +61,7 @@ class DeckRandomizationService {
      * E.g. MONSTER with 0.65 would mean the deck should have around 65% monster cards.
      * null means the ratio check will be skipped.
      */
-    private static readonly CARD_TYPE_GROUP_RATIO = new Map<
+    private static readonly CARD_TYPE_CATEGORY_RATIO = new Map<
         CardTypeCategory,
         number | null
     >([
@@ -222,7 +222,7 @@ class DeckRandomizationService {
                 deckPartCards.length >= deckPartLimit / 2
             ) {
                 const cardTypeCategoryRatio: number | null =
-                    DeckRandomizationService.CARD_TYPE_GROUP_RATIO.get(
+                    DeckRandomizationService.CARD_TYPE_CATEGORY_RATIO.get(
                         card.type.category
                     ) ?? null;
                 const cardsOfTypeCategoryCount = deckPartCards.filter(
