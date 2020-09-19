@@ -9,14 +9,12 @@
         >
             <span>{{ vendor.name }}: {{ formatPrice(lookupResult) }}</span>
             <button
+                title="Some cards have no price data"
                 ref="missingCardButtons"
                 v-show="lookupResult.missing.length > 0"
                 class="btn btn-sm btn-warning price__warning"
             >
                 <span class="fas fa-exclamation" aria-hidden="true"></span>
-                <span class="sr-only" aria-hidden="true"
-                    >Some cards have no price data.</span
-                >
             </button>
             <BTooltip
                 custom-class="deck-tool__portal"

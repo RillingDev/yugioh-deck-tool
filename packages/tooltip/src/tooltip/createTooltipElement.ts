@@ -15,64 +15,18 @@ import {
     imageUrlSubType,
     imageUrlType,
 } from "../../../ui/src/main";
+import {
+    createDiv,
+    createImg,
+    createLi,
+    createParagraph,
+    createSpan,
+    createUl,
+} from "./domHelper";
 
 const priceService = tooltipContainer.get<PriceService>(
     TOOLTIP_TYPES.PriceService
 );
-
-const createElement = (type: string, classes: string[]): HTMLElement => {
-    const element = document.createElement(type);
-    classes.forEach((className) => element.classList.add(className));
-    return element;
-};
-
-const createDiv = (
-    classes: string[],
-    children: HTMLElement[]
-): HTMLDivElement => {
-    const element = createElement("div", classes) as HTMLDivElement;
-    children.forEach((child) => element.appendChild(child));
-    return element;
-};
-
-const createUl = (
-    classes: string[],
-    children: HTMLElement[]
-): HTMLUListElement => {
-    const element = createElement("ul", classes) as HTMLUListElement;
-    children.forEach((child) => element.appendChild(child));
-    return element;
-};
-
-const createLi = (classes: string[], textContent: string): HTMLLIElement => {
-    const element = createElement("li", classes) as HTMLLIElement;
-    element.textContent = textContent;
-    return element;
-};
-
-const createSpan = (
-    classes: string[],
-    textContent: string
-): HTMLSpanElement => {
-    const element = createElement("span", classes) as HTMLSpanElement;
-    element.textContent = textContent;
-    return element;
-};
-
-const createParagraph = (
-    classes: string[],
-    textContent: string
-): HTMLSpanElement => {
-    const element = createElement("p", classes) as HTMLParagraphElement;
-    element.textContent = textContent;
-    return element;
-};
-
-const createImg = (classes: string[], src: string): HTMLImageElement => {
-    const element = createElement("img", classes) as HTMLImageElement;
-    element.src = src;
-    return element;
-};
 
 export const createLoadingTooltip = (): HTMLElement =>
     createDiv(
@@ -88,20 +42,12 @@ export const createLoadingTooltip = (): HTMLElement =>
         ]
     );
 
-export const createErrorTooltip = (message: string): HTMLElement =>
-    createDiv(
-        ["card-tooltip__content", "card-tooltip__content--error"],
-        [
-            createDiv(
-                ["card-tooltip__error"],
-                [createSpan(["fas", "fa-times"], ""), createSpan([], message)]
-            ),
-        ]
-    );
-
 const createMonsterStats = (card: Card): HTMLElement => {
     const statsChildren: HTMLElement[] = [];
-    const statImage = createImg([], imageUrlAtk());
+    const statImage = createImg([], imageUrlAtk(), {
+        hidden: true,
+        alt: "ATK",
+    });
     statsChildren.push(statImage);
     if (card.atk != null) {
         statsChildren.push(createSpan([], `ATK/ ${card.atk}`));
@@ -118,10 +64,17 @@ const createSubType = (card: Card): HTMLElement => {
     const subTypeChildren: HTMLElement[] = [];
 
     if (card.type.category === CardTypeCategory.MONSTER) {
-        subTypeChildren.push(createImg([], imageUrlAttribute(card)));
+        subTypeChildren.push(
+            createImg([], imageUrlAttribute(card), {
+                hidden: true,
+                alt: "Attribute",
+            })
+        );
         subTypeChildren.push(createSpan([], `Attribute: ${card.attribute!}`));
     }
-    subTypeChildren.push(createImg([], imageUrlSubType(card)));
+    subTypeChildren.push(
+        createImg([], imageUrlSubType(card), { hidden: true, alt: "type" })
+    );
     subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
 
     return createDiv(["card-tooltip__subtype"], subTypeChildren);
@@ -160,12 +113,19 @@ const createDescription = (card: Card): HTMLElement =>
 const createCardDetailsCol = (card: Card): HTMLElement => {
     const children: HTMLElement[] = [];
 
+    const format = Format.TCG;
     const primaryDetails = createDiv(
         ["card-tooltip__details"],
         [
-            createImg([], imageUrlType(card)),
+            createImg([], imageUrlType(card), {
+                hidden: false,
+                alt: `Type: ${card.type.name}`,
+            }),
             createSpan(["card-tooltip__name"], card.name),
-            createImg([], imageUrlBanState(card, Format.TCG)),
+            createImg([], imageUrlBanState(card, format), {
+                hidden: false,
+                alt: `Ban State: ${card.banlist[format].name}`,
+            }),
         ]
     );
     children.push(primaryDetails);
@@ -183,7 +143,10 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
             const level = createDiv(
                 ["card-tooltip__level"],
                 [
-                    createImg([], imageUrlLevel()),
+                    createImg([], imageUrlLevel(), {
+                        hidden: true,
+                        alt: "level",
+                    }),
                     createSpan([], `Level/Rank: ${card.level}`),
                 ]
             );
@@ -192,7 +155,10 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
             const linkMarkers = createDiv(
                 ["card-tooltip__link-markers"],
                 [
-                    createImg([], imageUrlLinkMarker()),
+                    createImg([], imageUrlLinkMarker(), {
+                        hidden: true,
+                        alt: "Link Markers",
+                    }),
                     createSpan(
                         [],
                         `Link Markers: ${card.linkMarkers.join(", ")}`
@@ -213,7 +179,8 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 const createCardImageCol = (card: Card): HTMLElement => {
     const cardImage = createImg(
         ["card-tooltip__image"],
-        card.image?.url ?? "#"
+        card.image?.url ?? "#",
+        { hidden: false, alt: "Card Artwork" }
     );
     return createDiv(["card-tooltip__image__col"], [cardImage]);
 };
@@ -225,6 +192,17 @@ export const createTooltipElement = (card: Card): HTMLElement =>
             createDiv(
                 ["card-tooltip__content"],
                 [createCardDetailsCol(card), createCardImageCol(card)]
+            ),
+        ]
+    );
+
+export const createErrorTooltip = (message: string): HTMLElement =>
+    createDiv(
+        ["card-tooltip__content", "card-tooltip__content--error"],
+        [
+            createDiv(
+                ["card-tooltip__error"],
+                [createSpan(["fas", "fa-times"], ""), createSpan([], message)]
             ),
         ]
     );
