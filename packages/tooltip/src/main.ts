@@ -21,6 +21,8 @@ document.addEventListener("readystatechange", () => {
     }
 });
 
+// Only works sometimes, see https://github.com/FelixRilling/yugioh-deck-tool/issues/87
+// Promise wrapping probably not needed.
 export const hideTooltip = (): Promise<void> =>
     new Promise((resolve) => {
         instance.hide();
