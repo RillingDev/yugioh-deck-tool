@@ -1,17 +1,16 @@
 /**
- * Note: Execution has to be started by a user interaction event.
+ * Downloads a file.
  *
- * @public
+ * CAN ONLY BE USED FROM A USER-INITIATED EVENTS HANDLER.
+ *
+ * @param file File to download.
+ * @param context Context to use.
  */
-const downloadFile = (
-    fileObjectUrl: string,
-    fileName: string,
-    context: Document
-): void => {
+const downloadFile = (file: File, context: Document): void => {
     const el = context.createElement("a");
 
-    el.href = fileObjectUrl;
-    el.download = fileName;
+    el.href = URL.createObjectURL(file);
+    el.download = file.name;
 
     context.body.appendChild(el);
     el.click();

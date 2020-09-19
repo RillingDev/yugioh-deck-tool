@@ -9,11 +9,7 @@
 import { defineComponent, ref } from "@vue/composition-api";
 import { getLogger } from "../../../../../core/src/main";
 import { BDropdownItemButton } from "bootstrap-vue";
-import {
-    createScreenshot,
-    downloadFile,
-    SCREENSHOT_IMAGE_TYPE_EXTENSION,
-} from "../../../../../ui/src/main";
+import { createScreenshot, downloadFile } from "../../../../../ui/src/main";
 import { deckEmpty } from "../../../composition/state/deckEmpty";
 import {
     showError,
@@ -33,10 +29,6 @@ export default defineComponent({
         const screenshotReady = ref<boolean>(false);
 
         const screenshot = (): void => {
-            const screenshotName = `${
-                store.state.deck.active.name ?? "Deck Screenshot"
-            }.${SCREENSHOT_IMAGE_TYPE_EXTENSION}`;
-
             const deckEl = document.getElementById("deckToolDeck");
             if (deckEl == null) {
                 throw new TypeError("Could not get deck element!");
@@ -49,19 +41,23 @@ export default defineComponent({
                 "Creating screenshot, please wait.",
                 "deck-tool__portal"
             );
-            createScreenshot(deckEl, {
-                scale: 2,
-                onClone: (doc) => {
-                    doc.body.classList.add("deck-tool__screenshot-context");
-                },
-            })
-                .then((dataUrl) => {
+            createScreenshot(
+                deckEl,
+                store.state.deck.active.name ?? "Deck Screenshot",
+                {
+                    scale: 2,
+                    onClone: (doc) => {
+                        doc.body.classList.add("deck-tool__screenshot-context");
+                    },
+                }
+            )
+                .then((file) => {
                     showSuccess(
                         context,
                         "Screenshot created.",
                         "deck-tool__portal"
                     );
-                    downloadFile(dataUrl, screenshotName, document);
+                    downloadFile(file, document);
                 })
                 .catch((err) => {
                     logger.error("Could not create screenshot!", err);

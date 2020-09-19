@@ -1,5 +1,7 @@
 /**
- * Shows the native file upload dialog. CAN ONLY BE USED FROM A USER-INITIATED EVENTS HANDLER.
+ * Shows the native file upload dialog.
+ *
+ * CAN ONLY BE USED FROM A USER-INITIATED EVENTS HANDLER.
  *
  * @param accept Accepted file types.
  * @param callback Callback to access files.

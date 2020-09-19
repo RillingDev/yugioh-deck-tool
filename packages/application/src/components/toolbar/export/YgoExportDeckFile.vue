@@ -27,7 +27,7 @@ export default defineComponent({
             const deck = appStore(context).state.deck.active;
             const { fileContent, fileName } = deckFileService.toFile(deck);
             const file = new File([fileContent], fileName);
-            downloadFile(URL.createObjectURL(file), file.name, document);
+            downloadFile(file, document);
             showSuccess(
                 context,
                 "Successfully exported deck file.",
