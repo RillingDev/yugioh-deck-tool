@@ -27,20 +27,33 @@ enum RandomizationStrategy {
 @injectable()
 class DeckRandomizationService {
     private static readonly IGNORED_WORDS = new Set([
+        // Articles
+        "the",
         "a",
         "an",
-        "and",
-        "as",
-        "at",
-        "by",
+
+        // Conjunctions
         "for",
-        "in",
-        "of",
+        "and",
+        "nor",
+        "but",
+        "or",
+        "yet",
+        "so",
+
+        // Prepositions
         "on",
-        "the",
+        "in",
+        "at",
+        "for",
         "to",
+        "by",
         "with",
-        "from",
+        "of",
+
+        // Misc.
+        "as",
+        "be",
     ]);
 
     /**
