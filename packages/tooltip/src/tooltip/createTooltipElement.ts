@@ -20,7 +20,7 @@ const priceService = tooltipContainer.get<PriceService>(
     TOOLTIP_TYPES.PriceService
 );
 
-const createElement = (classes: string[], type: string): HTMLElement => {
+const createElement = (type: string, classes: string[]): HTMLElement => {
     const element = document.createElement(type);
     classes.forEach((className) => element.classList.add(className));
     return element;
@@ -30,7 +30,7 @@ const createDiv = (
     classes: string[],
     children: HTMLElement[]
 ): HTMLDivElement => {
-    const element = createElement(classes, "div") as HTMLDivElement;
+    const element = createElement("div", classes) as HTMLDivElement;
     children.forEach((child) => element.appendChild(child));
     return element;
 };
@@ -39,13 +39,13 @@ const createUl = (
     classes: string[],
     children: HTMLElement[]
 ): HTMLUListElement => {
-    const element = createElement(classes, "ul") as HTMLUListElement;
+    const element = createElement("ul", classes) as HTMLUListElement;
     children.forEach((child) => element.appendChild(child));
     return element;
 };
 
 const createLi = (classes: string[], textContent: string): HTMLLIElement => {
-    const element = createElement(classes, "li") as HTMLLIElement;
+    const element = createElement("li", classes) as HTMLLIElement;
     element.textContent = textContent;
     return element;
 };
@@ -54,7 +54,7 @@ const createSpan = (
     classes: string[],
     textContent: string
 ): HTMLSpanElement => {
-    const element = createElement(classes, "span") as HTMLSpanElement;
+    const element = createElement("span", classes) as HTMLSpanElement;
     element.textContent = textContent;
     return element;
 };
@@ -63,13 +63,13 @@ const createParagraph = (
     classes: string[],
     textContent: string
 ): HTMLSpanElement => {
-    const element = createElement(classes, "p") as HTMLParagraphElement;
+    const element = createElement("p", classes) as HTMLParagraphElement;
     element.textContent = textContent;
     return element;
 };
 
 const createImg = (classes: string[], src: string): HTMLImageElement => {
-    const element = createElement(classes, "img") as HTMLImageElement;
+    const element = createElement("img", classes) as HTMLImageElement;
     element.src = src;
     return element;
 };
