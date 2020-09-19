@@ -7,7 +7,7 @@ import { TYPES } from "../../types";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 import type { SortingService } from "../card/SortingService";
 import type { CardService } from "../card/CardService";
-import { random, sampleSize, shuffle, uniq, words } from "lodash";
+import { random, sampleSize, shuffle, words } from "lodash";
 import type { Card } from "../card/Card";
 import type { Format } from "../card/format/Format";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
@@ -167,7 +167,9 @@ class DeckRandomizationService {
             if (pool.length >= archetypeCount) {
                 break;
             }
-            const archetypeCards = this.findArchetypeCards(cards, archetype);
+            const archetypeCards = this.filterService.filter(cards, {
+                archetype: archetype,
+            });
             if (archetypeCards.length > 0) {
                 pool.push(archetypeCards);
             }
@@ -309,36 +311,33 @@ class DeckRandomizationService {
     }
 
     private createName(deck: Deck): string {
-        const cardsWithPlaySets = Array.from(
-            this.cardService
-                .countByCard([
-                    ...deck.parts[DeckPart.MAIN],
-                    ...deck.parts[DeckPart.EXTRA],
-                ])
-                .entries()
-        )
-            .filter(([, count]) => count === 3)
-            .map(([card]) => card);
-        const cardsWithPlaySetsWords = cardsWithPlaySets
-            .map((card) =>
-                words(card.name).filter(
-                    (word) =>
+        const countedCards = this.cardService.countByCard([
+            ...deck.parts[DeckPart.MAIN],
+            ...deck.parts[DeckPart.EXTRA],
+        ]);
+
+        const countRequiredForPlaySet = Math.max(
+            ...Array.from(countedCards.values())
+        );
+
+        const wordPool = new Set<string>();
+        for (const [card, count] of countedCards) {
+            if (count >= countRequiredForPlaySet) {
+                for (const word of words(card.name)) {
+                    if (
                         !DeckRandomizationService.IGNORED_WORDS.has(
                             word.toLowerCase()
                         )
-                )
-            )
-            .flat();
+                    ) {
+                        wordPool.add(word);
+                    }
+                }
+            }
+        }
         return sampleSize(
-            uniq(cardsWithPlaySetsWords),
+            Array.from(wordPool.values()),
             random(2, 3, false)
         ).join(" ");
-    }
-
-    private findArchetypeCards(cards: Card[], archetype: string): Card[] {
-        return this.filterService.filter(cards, {
-            archetype: archetype,
-        });
     }
 }
 
