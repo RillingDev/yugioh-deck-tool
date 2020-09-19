@@ -1,10 +1,6 @@
 import { tooltipContainer } from "../inversify.config";
-import type {
-    Card,
-    CardDatabase,
-    CardDataLoaderService,
-} from "../../../core/src/main";
-import { FindCardBy, getLogger } from "../../../core/src/main";
+import type { CardDataLoaderService } from "../../../core/src/main";
+import { getLogger } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 import {
     createErrorTooltip,
@@ -14,40 +10,16 @@ import {
 import { bindReferenceLink } from "./bindReferenceLink";
 import type { Instance } from "tippy.js";
 import { delegate } from "tippy.js";
-
-const cardDatabase = tooltipContainer.get<CardDatabase>(
-    TOOLTIP_TYPES.CardDatabase
-);
+import type { TooltipController } from "../controller/TooltipController";
 
 const cardDataLoaderService = tooltipContainer.get<CardDataLoaderService>(
     TOOLTIP_TYPES.CardDataLoaderService
 );
+const tooltipController = tooltipContainer.get<TooltipController>(
+    TOOLTIP_TYPES.TooltipController
+);
 
 const logger = getLogger("bindTooltip");
-
-const loadCard = async (cardKey: string): Promise<Card> => {
-    let resolvedCardKey = await cardDatabase.prepareCard(
-        cardKey,
-        FindCardBy.NAME
-    );
-    if (
-        resolvedCardKey != null &&
-        cardDatabase.hasCard(resolvedCardKey, FindCardBy.NAME)
-    ) {
-        return cardDatabase.getCard(resolvedCardKey, FindCardBy.NAME)!;
-    }
-    resolvedCardKey = await cardDatabase.prepareCard(
-        cardKey,
-        FindCardBy.PASSCODE
-    );
-    if (
-        resolvedCardKey != null &&
-        cardDatabase.hasCard(resolvedCardKey, FindCardBy.PASSCODE)
-    ) {
-        return cardDatabase.getCard(resolvedCardKey, FindCardBy.PASSCODE)!;
-    }
-    throw new Error(`Could not find card '${cardKey}'.`);
-};
 
 const showTooltip = (
     instance: Instance,
@@ -55,7 +27,8 @@ const showTooltip = (
     cardKey: string
 ): void => {
     logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
-    loadCard(cardKey)
+    tooltipController
+        .loadCard(cardKey)
         .then((card) => {
             logger.trace("Loaded card.", card);
             instance.setContent(createTooltipElement(card));
