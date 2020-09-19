@@ -12,7 +12,11 @@
                 <YgoImportFile />
                 <YgoImportYdkeUrl />
             </BDropdown>
-            <BDropdown variant="primary" id="deckExport" :disabled="!loaded">
+            <BDropdown
+                variant="primary"
+                id="deckExport"
+                :disabled="!loaded || empty"
+            >
                 <template v-slot:button-content>
                     <span
                         class="fas fas-in-button fa-file-export"
@@ -26,7 +30,11 @@
                 <YgoExportShareLink />
                 <YgoExportScreenshot />
             </BDropdown>
-            <BDropdown variant="primary" id="deckEdit" :disabled="!loaded">
+            <BDropdown
+                variant="primary"
+                id="deckEdit"
+                :disabled="!loaded || empty"
+            >
                 <template v-slot:button-content>
                     <span
                         class="fas fas-in-button fa-edit"
@@ -85,6 +93,7 @@ import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
 import { dataLoaded } from "../../composition/state/dataLoaded";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
+import { deckEmpty } from "../../composition/state/deckEmpty";
 
 export default defineComponent({
     components: {
@@ -111,8 +120,9 @@ export default defineComponent({
     props: {},
     setup(props, context) {
         const loaded = dataLoaded(context);
+        const empty = deckEmpty(context);
 
-        return { loaded };
+        return { loaded, empty };
     },
 });
 </script>

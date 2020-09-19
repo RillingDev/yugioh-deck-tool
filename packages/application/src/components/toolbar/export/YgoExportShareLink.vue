@@ -10,37 +10,26 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import type { DeckUriEncodingService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { copyText } from "../../../../../ui/src/main";
 import { appStore } from "../../../composition/state/appStore";
-import { deckEmpty } from "../../../composition/state/deckEmpty";
 import { showSuccess } from "../../../composition/feedback";
+import type { DeckUrlController } from "../../../controller/DeckUrlController";
 
-const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
-    APPLICATION_TYPES.DeckUriEncodingService
+const deckUrlController = applicationContainer.get<DeckUrlController>(
+    APPLICATION_TYPES.DeckUrlController
 );
 
 export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
     setup: (props, context) => {
-        const isDeckEmpty = deckEmpty(context);
-
         const copyLink = (): void => {
             const deck = appStore(context).state.deck.active;
-            const queryParamValue = deckUriEncodingService.toUrlQueryParamValue(
-                deck
-            );
-            const url = new URL(location.href);
-            url.search = "";
-            if (!isDeckEmpty.value) {
-                url.searchParams.append("e", queryParamValue);
-            }
-
-            copyText(url.toString(), document);
+            const shareLink = deckUrlController.getShareLink(deck);
+            copyText(shareLink.toString(), document);
             showSuccess(
                 context,
                 "Successfully copied share link to clipboard.",

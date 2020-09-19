@@ -37,18 +37,8 @@
 </template>
 
 <script lang="ts">
-import type {
-    Card,
-    CardDatabase,
-    CardService,
-    DeckPartConfig,
-} from "../../../../core/src/main";
-import {
-    CardTypeCategory,
-    DeckPart,
-    DefaultDeckPartConfig,
-    getLogger,
-} from "../../../../core/src/main";
+import type { Card, DeckPart, DeckPartConfig } from "../../../../core/src/main";
+import { DefaultDeckPartConfig, getLogger } from "../../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
@@ -63,61 +53,16 @@ import {
 } from "../../store/modules/deck";
 import { hideTooltip } from "../../../../tooltip/src/main";
 import { appStore } from "../../composition/state/appStore";
-import { removeEnd } from "lightdash";
-import type { DraggableChangeEventData } from "../../composition/controller/dragging";
+import type { DraggableChangeEventData } from "../../composition/dragging";
 import {
     createMoveInDeckPartValidator,
     DECK_PART_PROP,
-} from "../../composition/controller/dragging";
+} from "../../composition/dragging";
+import type { DeckController } from "../../controller/DeckController";
 
-const cardService = applicationContainer.get<CardService>(
-    APPLICATION_TYPES.CardService
+const deckController = applicationContainer.get<DeckController>(
+    APPLICATION_TYPES.DeckController
 );
-const cardDatabase = applicationContainer.get<CardDatabase>(
-    APPLICATION_TYPES.CardDatabase
-);
-
-/**
- * Calculates count of card types.
- * For main and side deck, count will be split by monster, spell, etc.,
- * whereas it will be split by monster subtype for the extra deck.
- *
- * @private
- * @param deckPart Deck-part that is being used.
- * @param cards Cards to analyse.
- * @return Array of type and count pairs.
- */
-const calculateDetailedTypeStats = (
-    deckPart: DeckPart,
-    cards: ReadonlyArray<Card>
-): [string, number][] => {
-    if (deckPart === DeckPart.EXTRA) {
-        const countedByType = cardService.countByType(cards);
-        return cardDatabase
-            .getTypes(CardTypeCategory.MONSTER)
-            .filter(
-                (cardType) =>
-                    countedByType.has(cardType) &&
-                    countedByType.get(cardType)! > 0
-            )
-            .map((cardType) => [
-                removeEnd(cardType.name, " Monster"),
-                countedByType.get(cardType)!,
-            ]);
-    }
-
-    const countedByTypeCategory = cardService.countByTypeCategory(cards);
-    return Object.values(CardTypeCategory)
-        .filter(
-            (typeCategory) =>
-                countedByTypeCategory.has(typeCategory) &&
-                countedByTypeCategory.get(typeCategory)! > 0
-        )
-        .map((typeCategory) => [
-            typeCategory,
-            countedByTypeCategory.get(typeCategory)!,
-        ]);
-};
 
 const logger = getLogger("YgoDeckPart");
 
@@ -152,10 +97,9 @@ export default defineComponent({
             if (currentCards.length === 0) {
                 return base;
             }
-            const details = calculateDetailedTypeStats(
-                props.deckPart,
-                currentCards
-            ).map(([type, count]) => `${count} ${type}`);
+            const details = deckController
+                .calculateDetailedTypeStats(props.deckPart, currentCards)
+                .map(([type, count]) => `${count} ${type}`);
             return `${base} (${details.join(" | ")})`;
         });
 

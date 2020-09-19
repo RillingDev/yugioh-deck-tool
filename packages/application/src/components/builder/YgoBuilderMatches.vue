@@ -42,7 +42,7 @@ import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
-import { createMoveFromBuilderValidator } from "../../composition/controller/dragging";
+import { createMoveFromBuilderValidator } from "../../composition/dragging";
 
 export default defineComponent({
     props: {

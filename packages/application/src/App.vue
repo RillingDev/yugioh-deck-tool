@@ -14,13 +14,7 @@
 </template>
 
 <script lang="ts">
-import type {
-    CardDatabase,
-    Deck,
-    DeckFileService,
-    DeckUriEncodingService,
-    UrlService,
-} from "../../core/src/main";
+import type { CardDatabase } from "../../core/src/main";
 import { getLogger } from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
@@ -34,59 +28,16 @@ import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
+import type { DeckUrlController } from "./controller/DeckUrlController";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
 );
-const deckFileService = applicationContainer.get<DeckFileService>(
-    APPLICATION_TYPES.DeckFileService
-);
-const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
-    APPLICATION_TYPES.DeckUriEncodingService
-);
-const urlService = applicationContainer.get<UrlService>(
-    APPLICATION_TYPES.UrlService
+const deckUrlController = applicationContainer.get<DeckUrlController>(
+    APPLICATION_TYPES.DeckUrlController
 );
 
 const logger = getLogger("App");
-
-const loadUriDeck = async (urlString: string): Promise<Deck | null> => {
-    // Load deck file from a remote URL
-    const remoteUrlValue = urlService.getSingleQueryParam(urlString, "u");
-    if (remoteUrlValue != null) {
-        const importResult = await deckFileService.fromRemoteFile(
-            location.origin,
-            remoteUrlValue
-        );
-        if (importResult.missing.length > 0) {
-            logger.warn(
-                `Could not read ${importResult.missing.length} cards in remote deck.`
-            );
-        }
-        return importResult.deck;
-    }
-
-    // Load encoded uri deck
-    const uriEncodedDeck = urlService.getSingleQueryParam(urlString, "e");
-    if (uriEncodedDeck != null) {
-        return deckUriEncodingService.fromUrlQueryParamValue(uriEncodedDeck);
-    }
-
-    // Check for legacy share link
-    const legacyUriEncodedDeck = urlService.getSingleQueryParam(
-        urlString,
-        "d",
-        false
-    );
-    if (legacyUriEncodedDeck != null) {
-        // Due to the old link containing illegal characters parseUrl causes issues
-        return deckUriEncodingService.fromLegacyUrlQueryParamValue(
-            legacyUriEncodedDeck,
-            atob
-        );
-    }
-    return Promise.resolve(null);
-};
 
 export default defineComponent({
     components: {
@@ -110,7 +61,7 @@ export default defineComponent({
             .then(() => {
                 appStore(context).commit(DATA_LOADED);
                 logger.info("Loaded data.");
-                return loadUriDeck(location.toString());
+                return deckUrlController.loadUriDeck(location.toString());
             })
             .then((result) => {
                 if (result != null) {
