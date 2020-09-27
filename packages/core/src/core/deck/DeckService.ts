@@ -38,23 +38,23 @@ class DeckService {
      * the check is done against a copy of the deck with the card removed in order to correctly test the card count.
      *
      * @param deck Deck to check.
+     * @param card Card to check.
      * @param oldDeckPart Deck part to card is moved from.
      * @param newDeckPart Deck part to card is moved to.
      * @param format Format to check for, may be null for none.
-     * @param card Card to check.
      * @return if the card can be moved for these parameters.
      */
     public canMove(
         deck: Deck,
+        card: Card,
         oldDeckPart: DeckPart,
         newDeckPart: DeckPart,
-        format: Format | null,
-        card: Card
+        format: Format | null
     ): boolean {
         const deckWithoutCard = this.cloneDeck(deck);
-        this.removeCard(deckWithoutCard, oldDeckPart, card);
+        this.removeCard(deckWithoutCard, card, oldDeckPart);
 
-        return this.canAdd(deckWithoutCard, newDeckPart, format, card);
+        return this.canAdd(deckWithoutCard, card, newDeckPart, format);
     }
 
     /**
@@ -63,16 +63,16 @@ class DeckService {
      * and special handling for certain card types (e.g. skill cards)
      *
      * @param deck Deck to check addition for.
+     * @param card Card to check.
      * @param deckPart Deck part to check addition for.
      * @param format Format to check for, may be null for none.
-     * @param card Card to check.
      * @return if the card can be added for these parameters.
      */
     public canAdd(
         deck: Deck,
+        card: Card,
         deckPart: DeckPart,
-        format: Format | null,
-        card: Card
+        format: Format | null
     ): boolean {
         // If the card is not allowed in this deck part, return false
         if (!card.type.deckParts.has(deckPart)) {
@@ -106,18 +106,38 @@ class DeckService {
     }
 
     /**
+     * Finds a deck part this card can be added to, or null if none is available.
+     *
+     * @param deck Deck to check addition for.
+     * @param card Card to check.
+     * @param format Format to check for, may be null for none.
+     * @return Deck part the card can be added to.
+     */
+    public findAvailableDeckPart(
+        deck: Deck,
+        card: Card,
+        format: Format | null
+    ): DeckPart | null {
+        return (
+            DECK_PART_ARR.find((currentDeckPart) =>
+                this.canAdd(deck, card, currentDeckPart, format)
+            ) ?? null
+        );
+    }
+
+    /**
      * Adds a card.
      * Make sure to use {@link #canAdd} before.
      *
      * @param deck Deck to add to.
-     * @param deckPart Deck part to add to.
      * @param card Card to add.
-     * @param newIndex Optional index to add the card at.
+     * @param deckPart Deck part to add to.
+     * @param newIndex? Optional index to add the card at.
      */
     public addCard(
         deck: Deck,
-        deckPart: DeckPart,
         card: Card,
+        deckPart: DeckPart,
         newIndex?: number
     ): void {
         const current = deck.parts[deckPart];
@@ -132,14 +152,14 @@ class DeckService {
      * Removes a card. if the card cannot be found, nothing will be done.
      *
      * @param deck Deck to remove from.
-     * @param deckPart Deck part to remove from.
      * @param card Card to remove.
-     * @param oldIndex Optional index to remove the card at.
+     * @param deckPart Deck part to remove from.
+     * @param oldIndex? Optional index to remove the card at.
      */
     public removeCard(
         deck: Deck,
-        deckPart: DeckPart,
         card: Card,
+        deckPart: DeckPart,
         oldIndex?: number
     ): void {
         const cards = deck.parts[deckPart];
@@ -159,15 +179,15 @@ class DeckService {
      * Move a card in its deck-part.
      *
      * @param deck Deck to use.
-     * @param deckPart Deck part to move in.
      * @param card Card to move.
+     * @param deckPart Deck part to move in.
      * @param oldIndex Index to move card from.
      * @param newIndex Index to move card to.
      */
     public reorderCard(
         deck: Deck,
-        deckPart: DeckPart,
         card: Card,
+        deckPart: DeckPart,
         oldIndex: number,
         newIndex: number
     ): void {

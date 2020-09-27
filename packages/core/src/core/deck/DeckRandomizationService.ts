@@ -244,7 +244,7 @@ class DeckRandomizationService {
             );
             // Attempt to add n cards, stopping if one of the additions is not possible.
             for (let i = 0; i < randomCardCount; i++) {
-                if (!this.deckService.canAdd(deck, deckPart, format, card)) {
+                if (!this.deckService.canAdd(deck, card, deckPart, format)) {
                     break;
                 }
                 deckPartCards.push(card);

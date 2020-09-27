@@ -50,7 +50,7 @@ export const createMoveInDeckPartValidator = (
     const format = appStore(context).state.format.active;
     const card = e.draggedContext.element;
 
-    return deckService.canMove(deck, oldDeckPart, newDeckPart, format, card);
+    return deckService.canMove(deck, card, oldDeckPart, newDeckPart, format);
 };
 
 export const createMoveFromBuilderValidator = (context: SetupContext) => (
@@ -65,5 +65,5 @@ export const createMoveFromBuilderValidator = (context: SetupContext) => (
     const format = appStore(context).state.format.active;
     const card = e.draggedContext.element;
 
-    return deckService.canAdd(deck, newDeckPart, format, card);
+    return deckService.canAdd(deck, card, newDeckPart, format);
 };

@@ -50,39 +50,39 @@ export const deckModule: Module<DeckState, AppState> = {
 
         [DECK_PART_CARDS_ADD](
             state,
-            payload: { deckPart: DeckPart; card: Card; newIndex?: number }
+            payload: { card: Card; deckPart: DeckPart; newIndex?: number }
         ) {
             deckService.addCard(
                 state.active,
-                payload.deckPart,
                 payload.card,
+                payload.deckPart,
                 payload.newIndex
             );
         },
         [DECK_PART_CARDS_REMOVE](
             state,
-            payload: { deckPart: DeckPart; card: Card; oldIndex?: number }
+            payload: { card: Card; deckPart: DeckPart; oldIndex?: number }
         ) {
             deckService.removeCard(
                 state.active,
-                payload.deckPart,
                 payload.card,
+                payload.deckPart,
                 payload.oldIndex
             );
         },
         [DECK_PART_CARDS_REORDER](
             state,
             payload: {
-                deckPart: DeckPart;
                 card: Card;
+                deckPart: DeckPart;
                 oldIndex: number;
                 newIndex: number;
             }
         ) {
             deckService.reorderCard(
                 state.active,
-                payload.deckPart,
                 payload.card,
+                payload.deckPart,
                 payload.oldIndex,
                 payload.newIndex
             );

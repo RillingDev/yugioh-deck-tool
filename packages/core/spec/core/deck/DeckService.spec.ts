@@ -67,14 +67,14 @@ describe("DeckService", () => {
                             [DeckPart.SIDE]: [],
                         },
                     },
-                    DeckPart.MAIN,
-                    Format.TCG,
                     createCard({
                         passcode: "456",
                         type: createCardType({
                             deckPart: new Set([DeckPart.EXTRA]),
                         }),
-                    })
+                    }),
+                    DeckPart.MAIN,
+                    Format.TCG
                 )
             ).toBeFalse();
         });
@@ -92,9 +92,9 @@ describe("DeckService", () => {
                             ),
                         },
                     },
+                    createCard({ passcode: "456" }),
                     DeckPart.SIDE,
-                    Format.TCG,
-                    createCard({ passcode: "456" })
+                    Format.TCG
                 )
             ).toBeFalse();
         });
@@ -114,9 +114,9 @@ describe("DeckService", () => {
                             [DeckPart.SIDE]: [card],
                         },
                     },
+                    card,
                     DeckPart.SIDE,
-                    Format.OCG,
-                    card
+                    Format.OCG
                 )
             ).toBeFalse();
         });
@@ -140,9 +140,9 @@ describe("DeckService", () => {
                             [DeckPart.SIDE]: [card],
                         },
                     },
+                    card,
                     DeckPart.SIDE,
-                    Format.OCG,
-                    card
+                    Format.OCG
                 )
             ).toBeFalse();
         });
@@ -161,9 +161,9 @@ describe("DeckService", () => {
                             [DeckPart.SIDE]: [],
                         },
                     },
+                    card,
                     DeckPart.SIDE,
-                    Format.OCG,
-                    card
+                    Format.OCG
                 )
             ).toBeTrue();
         });
@@ -183,7 +183,7 @@ describe("DeckService", () => {
                 },
             };
 
-            deckService.addCard(deck, DeckPart.SIDE, card);
+            deckService.addCard(deck, card, DeckPart.SIDE);
             expect(deck).toEqual({
                 name: null,
                 parts: {
@@ -209,7 +209,7 @@ describe("DeckService", () => {
                 },
             };
 
-            deckService.removeCard(deck, DeckPart.SIDE, card);
+            deckService.removeCard(deck, card, DeckPart.SIDE);
             expect(deck).toEqual({
                 name: null,
                 parts: {
