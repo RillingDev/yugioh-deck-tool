@@ -60,7 +60,7 @@ export const bindTooltipHandlers = (
     delegate(context, {
         target: "[data-name]",
         appendTo: tooltipContainerElement,
-        delay: [200, 0],
+        delay: [500, 0],
         placement: "auto",
         maxWidth: "none",
         // eslint-disable-next-line @typescript-eslint/naming-convention

@@ -135,7 +135,6 @@ export default defineComponent({
             );
         };
         const onChange = (e: DraggableChangeEventData): void => {
-            document.body.blur();
             if (e.removed != null) {
                 removeCard(e.removed.element, e.removed.oldIndex);
             } else if (e.added != null) {
