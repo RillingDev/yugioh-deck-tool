@@ -16,6 +16,7 @@
                         :card="card"
                         :scale-vertically="true"
                         class="builder-matches__match__card"
+                        @click="(e) => addCard(e, card)"
                     ></YgoCard>
                 </Draggable>
                 <div class="builder-matches__match__details">
@@ -36,14 +37,23 @@
 </template>
 
 <script lang="ts">
-import type { Card } from "../../../../core/src/main";
+import type { Card, DeckService } from "../../../../core/src/main";
 import { CardTypeCategory } from "../../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 import { createMoveFromBuilderValidator } from "../../composition/dragging";
+import { applicationContainer } from "../../inversify.config";
+import { APPLICATION_TYPES } from "../../types";
+import { appStore } from "../../composition/state/appStore";
+import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
+import { browserSupportsTouch } from "../../../../ui/src/main";
+import { showSuccess } from "../../composition/feedback";
 
+const deckService = applicationContainer.get<DeckService>(
+    APPLICATION_TYPES.DeckService
+);
 export default defineComponent({
     props: {
         matches: {
@@ -61,6 +71,7 @@ export default defineComponent({
     },
     setup(props, context) {
         const CARD_DISPLAY_LIMIT = 50;
+        const store = appStore(context);
 
         const limitedMatches = computed<Card[]>(() =>
             props.matches.slice(0, CARD_DISPLAY_LIMIT)
@@ -75,9 +86,29 @@ export default defineComponent({
                 ? `${card.attribute!}/${card.subType}`
                 : card.subType;
 
+        const addCard = (e: Event, card: Card): void => {
+            if (!browserSupportsTouch()) {
+                return;
+            }
+            e.preventDefault();
+            const deckPart = deckService.findAvailableDeckPart(
+                store.state.deck.active,
+                card,
+                store.state.format.active
+            );
+            if (deckPart != null) {
+                store.commit(DECK_PART_CARDS_ADD, { card, deckPart });
+                showSuccess(
+                    context,
+                    "Successfully added card to deck.",
+                    "deck-tool__portal"
+                );
+            }
+        };
+
         const canMove = createMoveFromBuilderValidator(context);
 
-        return { limitedMatches, typeText, subTypeText, canMove };
+        return { limitedMatches, typeText, subTypeText, canMove, addCard };
     },
 });
 </script>
