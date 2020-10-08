@@ -1,6 +1,6 @@
 {
   "name": "yugioh-deck-tool-application",
-  "version": "4.16.2",
+  "version": "5.0.0-0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
