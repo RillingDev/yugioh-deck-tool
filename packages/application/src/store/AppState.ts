@@ -1,7 +1,7 @@
-import { CurrencyState } from "./modules/currency";
-import { FormatState } from "./modules/format";
-import { DeckState } from "./modules/deck";
-import { DataState } from "./modules/data";
+import type { CurrencyState } from "./modules/currency";
+import type { FormatState } from "./modules/format";
+import type { DeckState } from "./modules/deck";
+import type { DataState } from "./modules/data";
 
 export interface AppState {
     data: DataState;

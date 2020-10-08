@@ -1,6 +1,6 @@
-import { Module } from "vuex";
+import type { Module } from "vuex";
 import { Format } from "../../../../core/src/main";
-import { AppState } from "../AppState";
+import type { AppState } from "../AppState";
 
 export const FORMAT_UPDATE = "FORMAT_UPDATE";
 

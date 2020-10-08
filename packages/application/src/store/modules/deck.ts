@@ -1,8 +1,13 @@
-import { Module } from "vuex";
-import { Card, Deck, DeckPart, DeckService } from "../../../../core/src/main";
+import type { Module } from "vuex";
+import type {
+    Card,
+    Deck,
+    DeckPart,
+    DeckService,
+} from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
-import { AppState } from "../AppState";
+import type { AppState } from "../AppState";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService

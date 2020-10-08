@@ -1,4 +1,4 @@
-import { SetupContext } from "@vue/composition-api";
+import type { SetupContext } from "@vue/composition-api";
 
 const showFeedback = (
     context: SetupContext,

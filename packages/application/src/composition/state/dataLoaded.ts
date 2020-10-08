@@ -1,4 +1,5 @@
-import { computed, ComputedRef, SetupContext } from "@vue/composition-api";
+import type { ComputedRef, SetupContext } from "@vue/composition-api";
+import { computed } from "@vue/composition-api";
 import { appStore } from "./appStore";
 
 export const dataLoaded = (context: SetupContext): ComputedRef<boolean> =>

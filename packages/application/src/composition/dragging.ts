@@ -1,8 +1,8 @@
-import { DeckPart, DeckService } from "../../../core/src/main";
+import type { DeckPart, DeckService } from "../../../core/src/main";
 import { appStore } from "./state/appStore";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
-import { SetupContext } from "@vue/composition-api";
+import type { SetupContext } from "@vue/composition-api";
 
 // TODO: Replace with real types
 export type DraggableChangeEventData = any;

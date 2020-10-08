@@ -1,6 +1,7 @@
-import { Currency, DEFAULT_CURRENCY_ARR } from "../../../../core/src/main";
-import { Module } from "vuex";
-import { AppState } from "../AppState";
+import type { Currency } from "../../../../core/src/main";
+import { DEFAULT_CURRENCY_ARR } from "../../../../core/src/main";
+import type { Module } from "vuex";
+import type { AppState } from "../AppState";
 
 export const CURRENCY_UPDATE = "CURRENCY_UPDATE";
 

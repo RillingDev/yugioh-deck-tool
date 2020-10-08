@@ -5,7 +5,7 @@ import { currencyModule } from "./modules/currency";
 import { deckModule } from "./modules/deck";
 import { formatModule } from "./modules/format";
 import { dataModule } from "./modules/data";
-import { AppState } from "./AppState";
+import type { AppState } from "./AppState";
 
 Vue.use(Vuex);
 

@@ -71,11 +71,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import {
-    BDropdown,
-    BDropdownDivider,
-    BDropdownItemButton,
-} from "bootstrap-vue";
+import { BDropdown, BDropdownDivider } from "bootstrap-vue";
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
 import YgoCurrency from "./YgoCurrency.vue";
@@ -104,7 +100,6 @@ export default defineComponent({
         YgoRandomizer,
         YgoDrawSim,
         BDropdown,
-        BDropdownItemButton,
         BDropdownDivider,
         YgoDeckSortButton,
         YgoDeckShuffleButton,

@@ -1,5 +1,5 @@
-import { Module } from "vuex";
-import { AppState } from "../AppState";
+import type { Module } from "vuex";
+import type { AppState } from "../AppState";
 
 export const DATA_LOADED = "DATA_LOADED";
 

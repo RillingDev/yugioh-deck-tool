@@ -1,12 +1,12 @@
 import { APPLICATION_TYPES } from "../types";
-import {
+import type {
     Deck,
     DeckFileService,
     DeckService,
     DeckUriEncodingService,
-    getLogger,
     UrlService,
 } from "../../../core/src/main";
+import { getLogger } from "../../../core/src/main";
 import { inject, injectable } from "inversify";
 
 /**
@@ -99,7 +99,7 @@ export class DeckUrlController {
      * @param deck Deck to encode.
      * @return Shareable link.
      */
-    public getShareLink(deck: Deck) {
+    public getShareLink(deck: Deck): URL {
         const url = new URL(location.href);
         url.search = "";
         if (this.deckService.getAllCards(deck).length > 0) {
