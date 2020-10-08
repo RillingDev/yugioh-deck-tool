@@ -6,19 +6,33 @@
                 v-for="card in limitedMatches"
                 :key="card.passcode"
             >
-                <Draggable
-                    :group="{ name: dragGroup, pull: 'clone', put: false }"
-                    :value="[card]"
-                    :move="(e) => canMove(e)"
-                    :animation="0"
-                >
+                <template v-if="isTouchDevice">
                     <YgoCard
                         :card="card"
                         :scale-vertically="true"
                         class="builder-matches__match__card"
-                        @click="(e) => addCard(e, card)"
+                        @click.prevent="() => addCard(card)"
                     ></YgoCard>
-                </Draggable>
+                </template>
+                <template v-else>
+                    <Draggable
+                        :group="{
+                            name: dragGroup,
+                            pull: 'clone',
+                            put: false,
+                        }"
+                        :value="[card]"
+                        :move="(e) => canMove(e)"
+                        :animation="0"
+                    >
+                        <YgoCard
+                            :card="card"
+                            :scale-vertically="true"
+                            class="builder-matches__match__card"
+                        ></YgoCard>
+                    </Draggable>
+                </template>
+
                 <div class="builder-matches__match__details">
                     <p>{{ card.name }}</p>
                     <p>
@@ -86,11 +100,9 @@ export default defineComponent({
                 ? `${card.attribute!}/${card.subType}`
                 : card.subType;
 
-        const addCard = (e: Event, card: Card): void => {
-            if (!browserSupportsTouch()) {
-                return;
-            }
-            e.preventDefault();
+        const isTouchDevice = computed<boolean>(browserSupportsTouch);
+
+        const addCard = (card: Card): void => {
             const deckPart = deckService.findAvailableDeckPart(
                 store.state.deck.active,
                 card,
@@ -108,7 +120,14 @@ export default defineComponent({
 
         const canMove = createMoveFromBuilderValidator(context);
 
-        return { limitedMatches, typeText, subTypeText, canMove, addCard };
+        return {
+            limitedMatches,
+            typeText,
+            subTypeText,
+            canMove,
+            addCard,
+            isTouchDevice,
+        };
     },
 });
 </script>
