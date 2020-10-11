@@ -25,6 +25,8 @@
             @change="(e) => onChange(e)"
             :revert-on-spill="true"
             :animation="0"
+            @start="() => disableTooltip()"
+            @end="() => enableTooltip()"
         >
             <YgoCard
                 :card="card"
@@ -51,7 +53,7 @@ import {
     DECK_PART_CARDS_REMOVE,
     DECK_PART_CARDS_REORDER,
 } from "../../store/modules/deck";
-import { hideTooltip } from "../../../../tooltip/src/main";
+import { enableTooltip, disableTooltip } from "../../../../tooltip/src/main";
 import { appStore } from "../../composition/state/appStore";
 import type { DraggableChangeEventData } from "../../composition/dragging";
 import {
@@ -109,27 +111,23 @@ export default defineComponent({
                 card,
                 newIndex,
             });
-        const removeCard = (card: Card, oldIndex: number): void => {
-            hideTooltip();
+        const removeCard = (card: Card, oldIndex: number): void =>
             appStore(context).commit(DECK_PART_CARDS_REMOVE, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,
             });
-        };
         const reorderCard = (
             card: Card,
             oldIndex: number,
             newIndex: number
-        ): void => {
-            hideTooltip();
+        ): void =>
             appStore(context).commit(DECK_PART_CARDS_REORDER, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,
                 newIndex,
             });
-        };
         const onChange = (e: DraggableChangeEventData): void => {
             if (e.removed != null) {
                 removeCard(e.removed.element, e.removed.oldIndex);
@@ -154,6 +152,8 @@ export default defineComponent({
             deckPartEmpty,
             onChange,
             canMove,
+            enableTooltip,
+            disableTooltip,
         };
     },
 });

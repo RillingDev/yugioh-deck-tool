@@ -1,15 +1,15 @@
 import "reflect-metadata";
 import "./styles/tooltip.scss";
 import { getLogger } from "../../core/src/main";
+import type { TooltipInstance } from "./tooltip/bindTooltip";
 import { bindTooltipHandlers } from "./tooltip/bindTooltip";
-import type { Instance } from "tippy.js";
 
 const logger = getLogger("tooltip");
 
 // We use a window global variable to ensure proper access if the script is ran multiple times from different sources.
 declare global {
     interface Window {
-        tooltipInstance?: Instance;
+        tooltipInstance?: TooltipInstance;
     }
 }
 
@@ -27,4 +27,5 @@ document.addEventListener("readystatechange", () => {
     }
 });
 
-export const hideTooltip = (): void => window.tooltipInstance?.hide();
+export const disableTooltip = (): void => window.tooltipInstance?.disable();
+export const enableTooltip = (): void => window.tooltipInstance?.enable();

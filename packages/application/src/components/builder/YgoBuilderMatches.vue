@@ -24,6 +24,8 @@
                         :value="[card]"
                         :move="(e) => canMove(e)"
                         :animation="0"
+                        @start="() => disableTooltip()"
+                        @end="() => enableTooltip()"
                     >
                         <YgoCard
                             :card="card"
@@ -64,6 +66,7 @@ import { appStore } from "../../composition/state/appStore";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
 import { browserSupportsTouch } from "../../../../ui/src/main";
 import { showSuccess } from "../../composition/feedback";
+import { enableTooltip, disableTooltip } from "../../../../tooltip/src/main";
 
 const deckService = applicationContainer.get<DeckService>(
     APPLICATION_TYPES.DeckService
@@ -127,6 +130,8 @@ export default defineComponent({
             canMove,
             addCard,
             isTouchDevice,
+            enableTooltip,
+            disableTooltip,
         };
     },
 });
