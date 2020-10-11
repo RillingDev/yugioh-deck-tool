@@ -16,14 +16,9 @@ declare global {
 document.addEventListener("readystatechange", () => {
     if (window.tooltipInstance == null) {
         logger.debug("Setting up card tooltip.");
-        const context = document.body;
-        const tooltipContainerElement = document.createElement("div");
-        tooltipContainerElement.id = "cardTooltipContainer";
-        context.appendChild(tooltipContainerElement);
-        window.tooltipInstance = bindTooltipHandlers(
-            context,
-            tooltipContainerElement
-        );
+        window.tooltipInstance = bindTooltipHandlers(document.body);
+    } else {
+        logger.debug("Tooltip instance exists, skipping setup.");
     }
 });
 

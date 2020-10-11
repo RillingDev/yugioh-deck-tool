@@ -58,13 +58,9 @@ export interface TooltipInstance {
     readonly enable: () => void;
 }
 
-export const bindTooltipHandlers = (
-    context: HTMLElement,
-    tooltipContainerElement: HTMLElement
-): TooltipInstance => {
+export const bindTooltipHandlers = (context: HTMLElement): TooltipInstance => {
     const delegateInstance = delegate(context, {
         target: "[data-name]",
-        appendTo: tooltipContainerElement,
         delay: [500, 0],
         placement: "auto",
         maxWidth: "none",
