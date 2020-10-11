@@ -110,29 +110,25 @@ export default defineComponent({
                 newIndex,
             });
         const removeCard = (card: Card, oldIndex: number): void => {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            hideTooltip().then(() =>
-                appStore(context).commit(DECK_PART_CARDS_REMOVE, {
-                    deckPart: props.deckPart,
-                    card,
-                    oldIndex,
-                })
-            );
+            hideTooltip();
+            appStore(context).commit(DECK_PART_CARDS_REMOVE, {
+                deckPart: props.deckPart,
+                card,
+                oldIndex,
+            });
         };
         const reorderCard = (
             card: Card,
             oldIndex: number,
             newIndex: number
         ): void => {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            hideTooltip().then(() =>
-                appStore(context).commit(DECK_PART_CARDS_REORDER, {
-                    deckPart: props.deckPart,
-                    card,
-                    oldIndex,
-                    newIndex,
-                })
-            );
+            hideTooltip();
+            appStore(context).commit(DECK_PART_CARDS_REORDER, {
+                deckPart: props.deckPart,
+                card,
+                oldIndex,
+                newIndex,
+            });
         };
         const onChange = (e: DraggableChangeEventData): void => {
             if (e.removed != null) {
