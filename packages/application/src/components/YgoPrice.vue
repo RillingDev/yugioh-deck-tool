@@ -87,9 +87,7 @@ export default defineComponent({
                 )
         );
         const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
-            cardService.createFormattedCardCountList(
-                cardService.countByCard(lookupResult.missing)
-            );
+            cardService.createFormattedCardCountList(lookupResult.missing);
         const formatPrice = (lookupResult: PriceLookupResult): string =>
             priceService.formatPrice(lookupResult.price, activeCurrency.value);
 

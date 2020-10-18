@@ -90,29 +90,18 @@ class CardService {
     /**
      * Creates a list of cards with their count in a text representation: {@code ["3x Foo Bar", "1x Fizz"]}
      *
-     * @param counted Counted card map.
+     * @param cards Cards to count.
      * @return List of string representation of cards with their count.
      */
-    public createFormattedCardCountList(counted: Counted<Card>): string[] {
-        return this.createCountedList(
-            counted,
-            (card, count) => `${count}x ${card.name}`
-        );
-    }
-
-    private createCountedList<T>(
-        counted: Counted<T>,
-        formatter: (key: T, count: number) => string
-    ): string[] {
-        return Array.from(counted.entries())
+    public createFormattedCardCountList(cards: Card[]): string[] {
+        return Array.from(this.countByCard(cards).entries())
             .filter(([, count]) => count > 0)
-            .map(([key, count]) => formatter(key, count));
+            .map(([card, count]) => `${count}x ${card.name}`);
     }
-
     /**
      * Gets a link to more details about a card.
      *
-     * @param card Card to create link for.
+     * @param card Card to create a link for.
      * @return Link.
      */
     public getReferenceLink(card: Card): string {

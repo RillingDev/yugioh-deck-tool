@@ -82,11 +82,7 @@ class DeckExportService {
         }
         const result: string[] = [];
         result.push(`${sectionName}:`);
-        result.push(
-            ...this.cardService.createFormattedCardCountList(
-                this.cardService.countByCard(cards)
-            )
-        );
+        result.push(...this.cardService.createFormattedCardCountList(cards));
         result.push("");
         return result;
     }
