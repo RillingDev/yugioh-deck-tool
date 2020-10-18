@@ -3,7 +3,11 @@ import { deepFreeze } from "lightdash";
 interface Currency {
     readonly id: string;
     readonly name: string;
-    readonly conversionRate: number; // Value of 1 USD in this currency
+
+    /**
+     * Value of 1 USD in this currency
+     */
+    readonly conversionRate: number;
     readonly fractionDigits: number;
 }
 

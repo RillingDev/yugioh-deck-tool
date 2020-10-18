@@ -50,7 +50,7 @@ class BanlistService {
             return DefaultBanState.BANNED;
         }
 
-        // If the format is listed,but no explicit banlist -> unlimited
+        // If the format is listed, but no explicit banlist -> unlimited
         if (!this.hasFormatBanlist(format)) {
             return DefaultBanState.UNLIMITED;
         }

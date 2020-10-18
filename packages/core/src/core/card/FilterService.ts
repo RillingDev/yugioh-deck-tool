@@ -13,8 +13,15 @@ import type { BanlistService } from "./banlist/BanlistService";
 interface CardFilter {
     name?: string | null;
 
-    typeCategory?: CardTypeCategory | null; // This can be used when wanting only type-category accuracy. For exact type matching see #type
-    type?: CardType | null; // This can be used when wanting exact type accuracy. For type category matching see #typeCategory
+    /**
+     * This can be used when wanting only type-category accuracy. For exact type matching see #type
+     */
+    typeCategory?: CardTypeCategory | null;
+
+    /**
+     * This can be used when wanting exact type accuracy. For type category matching see #typeCategory
+     */
+    type?: CardType | null;
     subType?: string | null;
 
     attribute?: string | null;
