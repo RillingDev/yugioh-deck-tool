@@ -33,4 +33,4 @@ tsconfig.*.tsbuildinfo
 
 
 # Build Output files
-dist/
+dist/*
