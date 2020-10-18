@@ -35,14 +35,14 @@ class DeckExportService {
      * Creates a shareable text in the following format for a deck:
      * <pre>
      * Monster:
-     * Foo x1
-     * Fizz x3
+     * 1x Foo
+     * 3x Fizz
      *
      * Spell:
-     * Bar x3
+     * 3x Bar
      *
      * Side:
-     * Foo x1
+     * 1x Foo
      * </pre>
      *
      * @param deck Deck to create the text for.

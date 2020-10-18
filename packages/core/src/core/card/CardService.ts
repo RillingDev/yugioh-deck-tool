@@ -88,7 +88,7 @@ class CardService {
     }
 
     /**
-     * Creates a list of cards with their count in a text representation: {@code ["Foo Bar x3", "Fizz x1"]}
+     * Creates a list of cards with their count in a text representation: {@code ["3x Foo Bar", "1x Fizz"]}
      *
      * @param counted Counted card map.
      * @return List of string representation of cards with their count.
@@ -96,7 +96,7 @@ class CardService {
     public createFormattedCardCountList(counted: Counted<Card>): string[] {
         return this.createCountedList(
             counted,
-            (card, count) => `${card.name} x${count}`
+            (card, count) => `${count}x ${card.name}`
         );
     }
 

@@ -47,21 +47,19 @@ describe("DeckExportService", () => {
                     [DeckPart.SIDE]: [card4, card4, card1, card4],
                 },
             });
-            expect(result).toEqual(
-                `Monster:
-foo ooo x2
+            expect(result).toEqual(`Monster:
+2x foo ooo
 
 Spell:
-foo x1
+1x foo
 
 Extra:
-bar x2
+2x bar
 
 Side:
-fizz x3
-foo x1
-`
-            );
+3x fizz
+1x foo
+`);
         });
     });
 
