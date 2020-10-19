@@ -1,9 +1,10 @@
 <template>
     <VSelect
         :options="formats"
-        :clearable="false"
+        :clearable="true"
         :searchable="false"
         title="Format"
+        placeholder="Format"
         v-model="format"
     />
 </template>
@@ -21,7 +22,7 @@ export default defineComponent({
     props: {},
     setup: (props, context) => {
         const formats = Object.values(Format);
-        const format = computed<Format>({
+        const format = computed<Format | null>({
             get() {
                 return appStore(context).state.format.active;
             },

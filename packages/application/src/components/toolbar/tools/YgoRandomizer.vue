@@ -69,7 +69,7 @@ export default defineComponent({
             sets: [],
         });
 
-        const format = computed<Format>(
+        const format = computed<Format | null>(
             () => appStore(context).state.format.active
         );
 

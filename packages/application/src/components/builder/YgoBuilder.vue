@@ -124,7 +124,7 @@ export default defineComponent({
             order: SortingOrder.DESC,
         });
 
-        const format = computed<Format>(
+        const format = computed<Format | null>(
             () => appStore(context).state.format.active
         );
         const formatCards = computed<Card[]>(() => {
