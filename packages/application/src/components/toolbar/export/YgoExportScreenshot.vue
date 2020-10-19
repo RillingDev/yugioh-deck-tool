@@ -23,7 +23,7 @@ const logger = getLogger("YgoExportScreenshot");
 export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const isDeckEmpty = deckEmpty(context);
         const store = appStore(context);
         const screenshotReady = ref<boolean>(false);

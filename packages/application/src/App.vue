@@ -47,7 +47,7 @@ export default defineComponent({
         YgoToolbar,
     },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const loaded = dataLoaded(context);
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";

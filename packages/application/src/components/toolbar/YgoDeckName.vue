@@ -16,7 +16,7 @@ import { appStore } from "../../composition/state/appStore";
 export default defineComponent({
     components: {},
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const deckName = computed<string | null>({
             get() {
                 return appStore(context).state.deck.active.name;

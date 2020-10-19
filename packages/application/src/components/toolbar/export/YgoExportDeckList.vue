@@ -22,7 +22,7 @@ const deckExportService = applicationContainer.get<DeckExportService>(
 export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const copyList = (): void => {
             const deck = appStore(context).state.deck.active;
             const deckList = deckExportService.toShareableText(deck);

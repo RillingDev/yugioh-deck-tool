@@ -30,7 +30,7 @@ const deckExportService = applicationContainer.get<DeckExportService>(
 export default defineComponent({
     components: {},
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const isDeckEmpty = deckEmpty(context);
 
         const buyLink = computed<string>(() =>

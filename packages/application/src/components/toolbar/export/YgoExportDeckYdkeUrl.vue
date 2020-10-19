@@ -25,7 +25,7 @@ const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const copyYdke = (): void => {
             const deck = appStore(context).state.deck.active;
             const ydke = deckUriEncodingService.toUri(deck);

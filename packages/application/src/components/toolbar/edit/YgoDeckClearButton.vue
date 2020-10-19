@@ -26,7 +26,7 @@ export default defineComponent({
         BDropdownItemButton,
     },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const clear = (): void => appStore(context).commit(DECK_CLEAR);
         const isDeckEmpty = deckEmpty(context);
 

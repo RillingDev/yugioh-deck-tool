@@ -20,7 +20,7 @@ import { appStore } from "../../composition/state/appStore";
 export default defineComponent({
     components: { VSelect },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const formats = Object.values(Format);
         const format = computed<Format | null>({
             get() {

@@ -22,7 +22,7 @@ import { appStore } from "../../composition/state/appStore";
 export default defineComponent({
     components: { VSelect },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const currencies = Object.values(DEFAULT_CURRENCY_ARR);
         const currency = computed<Currency>({
             get() {

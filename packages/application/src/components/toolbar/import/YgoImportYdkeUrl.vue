@@ -51,7 +51,7 @@ const logger = getLogger("YgoImportYdkeUrl");
 export default defineComponent({
     components: { BDropdownItemButton, BModal },
     props: {},
-    setup: function (props, context) {
+    setup(props, context) {
         const modal = ref<BModal>();
         const ydkeUrl = ref<string>("");
 

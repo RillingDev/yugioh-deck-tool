@@ -15,7 +15,7 @@ import { deckEmpty } from "../../../composition/state/deckEmpty";
 export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const shuffle = (): void => appStore(context).commit(DECK_SHUFFLE);
         const isDeckEmpty = deckEmpty(context);
 

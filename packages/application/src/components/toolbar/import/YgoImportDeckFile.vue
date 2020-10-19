@@ -33,7 +33,7 @@ const logger = getLogger("YgoImportDeckFile");
 export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
-    setup: (props, context) => {
+    setup(props, context) {
         const importDeckFile = async (file: File): Promise<ImportResult> => {
             const fileContent = await readFile(file);
             const result = deckFileService.fromFile({
