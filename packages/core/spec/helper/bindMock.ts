@@ -9,7 +9,6 @@ export const bindMock = <T>(
     clazz: Class<T>
 ): T => {
     const clazzMock = mock<T>(clazz);
-    container.unbind(identifier);
-    container.bind(identifier).toConstantValue(instance(clazzMock));
+    container.rebind(identifier).toConstantValue(instance(clazzMock));
     return clazzMock;
 };

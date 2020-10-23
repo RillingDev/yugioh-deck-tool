@@ -5,12 +5,10 @@ import { baseModule, TYPES } from "../../../src/main";
 import { Container } from "inversify";
 
 describe("CardService", () => {
-    let container: Container;
-
     let cardService: CardService;
 
     beforeEach(() => {
-        container = new Container();
+        const container = new Container();
         container.load(baseModule);
 
         cardService = container.get<CardService>(TYPES.CardService);

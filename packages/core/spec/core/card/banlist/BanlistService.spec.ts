@@ -10,12 +10,10 @@ import { createCard } from "../../../helper/dataFactories";
 import { Container } from "inversify";
 
 describe("BanlistService", () => {
-    let container: Container;
-
     let banlistService: BanlistService;
 
     beforeEach(() => {
-        container = new Container();
+        const container = new Container();
         container.load(baseModule);
 
         banlistService = container.get<BanlistService>(TYPES.BanlistService);

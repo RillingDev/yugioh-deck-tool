@@ -16,15 +16,13 @@ import { bindMock } from "../../helper/bindMock";
 import { Container } from "inversify";
 
 describe("DeckFileService", () => {
-    let container: Container;
-
     let deckFileService: DeckFileService;
 
     let mockCardDatabase: CardDatabase;
     let mockHttpService: HttpService;
 
     beforeEach(() => {
-        container = new Container();
+        const container = new Container();
         container.load(baseModule, deckModule);
 
         mockCardDatabase = bindMock<CardDatabase>(

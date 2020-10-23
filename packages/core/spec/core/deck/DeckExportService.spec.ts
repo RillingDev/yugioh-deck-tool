@@ -11,12 +11,10 @@ import { createCard, createCardType } from "../../helper/dataFactories";
 import { Container } from "inversify";
 
 describe("DeckExportService", () => {
-    let container: Container;
-
     let deckExportService: DeckExportService;
 
     beforeEach(() => {
-        container = new Container();
+        const container = new Container();
         container.load(baseModule, deckModule);
 
         deckExportService = container.get<DeckExportService>(

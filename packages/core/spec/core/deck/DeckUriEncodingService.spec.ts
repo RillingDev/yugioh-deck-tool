@@ -15,14 +15,12 @@ import { when } from "ts-mockito";
 import { Container } from "inversify";
 
 describe("DeckUriEncodingService", () => {
-    let container: Container;
-
     let deckUriEncodingService: DeckUriEncodingService;
 
     let mockCardDatabase: CardDatabase;
 
     beforeEach(() => {
-        container = new Container();
+        const container = new Container();
         container.load(baseModule, deckModule);
 
         mockCardDatabase = bindMock<CardDatabase>(

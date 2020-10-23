@@ -13,12 +13,10 @@ import { createCard, createCardType } from "../../helper/dataFactories";
 import { Container } from "inversify";
 
 describe("DeckService", () => {
-    let container: Container;
-
     let deckService: DeckService;
 
     beforeEach(() => {
-        container = new Container();
+        const container = new Container();
         container.load(baseModule, deckModule);
 
         deckService = container.get<DeckService>(TYPES.DeckService);
