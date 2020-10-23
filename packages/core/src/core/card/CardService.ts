@@ -62,7 +62,7 @@ class CardService {
      * @return Map mapping the card to its count.
      */
     public countByCard(cards: ReadonlyArray<Card>): Counted<Card> {
-        return countMapBy(cards, (card: Card) => card);
+        return countMapBy(cards, (card) => card);
     }
 
     /**
@@ -72,7 +72,7 @@ class CardService {
      * @return Map mapping the card type to its count.
      */
     public countByType(cards: ReadonlyArray<Card>): Counted<CardType> {
-        return countMapBy(cards, (card: Card) => card.type);
+        return countMapBy(cards, (card) => card.type);
     }
 
     /**
@@ -84,16 +84,16 @@ class CardService {
     public countByTypeCategory(
         cards: ReadonlyArray<Card>
     ): Counted<CardTypeCategory> {
-        return countMapBy(cards, (card: Card) => card.type.category);
+        return countMapBy(cards, (card) => card.type.category);
     }
 
     /**
-     * Creates a list of cards with their count in a text representation: {@code ["3x Foo Bar", "1x Fizz"]}
+     * Creates a list of cards with their count in a text representation: {@code ["3x Foo Bar", "1x Fizz"]}.
      *
      * @param cards Cards to count.
      * @return List of string representation of cards with their count.
      */
-    public createFormattedCardCountList(cards: Card[]): string[] {
+    public createFormattedCardCountList(cards: ReadonlyArray<Card>): string[] {
         return Array.from(this.countByCard(cards).entries())
             .filter(([, count]) => count > 0)
             .map(([card, count]) => `${count}x ${card.name}`);
