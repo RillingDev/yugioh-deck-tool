@@ -118,4 +118,30 @@ describe("CardService", () => {
             );
         });
     });
+
+    describe("createFormattedCardCountList", () => {
+        it("creates formatted list", () => {
+            const card1 = createCard({ passcode: "123", name: "Foo Bar" });
+            const card2 = createCard({ passcode: "456", name: "Fizz" });
+
+            expect(
+                cardService.createFormattedCardCountList([
+                    card1,
+                    card2,
+                    card1,
+                    card1,
+                ])
+            ).toEqual(["3x Foo Bar", "1x Fizz"]);
+        });
+    });
+
+    describe("getReferenceLink", () => {
+        it("creates link to ygoprodeck db", () => {
+            const card1 = createCard({ passcode: "123", name: "Foo Bar" });
+
+            expect(cardService.getReferenceLink(card1)).toEqual(
+                "https://db.ygoprodeck.com/card/?search=Foo%20Bar"
+            );
+        });
+    });
 });
