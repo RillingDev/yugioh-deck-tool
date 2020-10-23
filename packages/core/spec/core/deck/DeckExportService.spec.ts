@@ -1,14 +1,12 @@
 import "reflect-metadata";
-import type { DeckExportService } from "../../../src/main";
-import {
-    baseModule,
-    CardTypeCategory,
-    deckModule,
-    DeckPart,
-    TYPES,
-} from "../../../src/main";
+
 import { createCard, createCardType } from "../../helper/dataFactories";
 import { Container } from "inversify";
+import type { DeckExportService } from "../../../src/core/deck/DeckExportService";
+import { baseModule, deckModule } from "../../../src/inversify.config";
+import { TYPES } from "../../../src/types";
+import { CardTypeCategory } from "../../../src/core/card/type/CardTypeCategory";
+import { DeckPart } from "../../../src/core/deck/DeckPart";
 
 describe("DeckExportService", () => {
     let deckExportService: DeckExportService;

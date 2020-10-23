@@ -1,18 +1,17 @@
 import "reflect-metadata";
-import type { CardDatabase, DeckUriEncodingService } from "../../../src/main";
-import {
-    baseModule,
-    deckModule,
-    DeckPart,
-    FindCardBy,
-    TYPES,
-} from "../../../src/main";
+
 import { MemoryCardDatabase } from "../../../src/core/card/MemoryCardDatabase";
 import { deflate } from "pako";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { when } from "ts-mockito";
 import { Container } from "inversify";
+import type { DeckUriEncodingService } from "../../../src/core/deck/DeckUriEncodingService";
+import type { CardDatabase } from "../../../src/core/card/CardDatabase";
+import { FindCardBy } from "../../../src/core/card/CardDatabase";
+import { baseModule, deckModule } from "../../../src/inversify.config";
+import { TYPES } from "../../../src/types";
+import { DeckPart } from "../../../src/core/deck/DeckPart";
 
 describe("DeckUriEncodingService", () => {
     let deckUriEncodingService: DeckUriEncodingService;

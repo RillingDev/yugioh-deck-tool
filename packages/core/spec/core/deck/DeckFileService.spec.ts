@@ -1,12 +1,5 @@
 import "reflect-metadata";
-import type { CardDatabase, DeckFileService } from "../../../src/main";
-import {
-    baseModule,
-    deckModule,
-    DeckPart,
-    FindCardBy,
-    TYPES,
-} from "../../../src/main";
+
 import { MemoryCardDatabase } from "../../../src/core/card/MemoryCardDatabase";
 import { AxiosHttpService } from "../../../src/core/http/AxiosHttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
@@ -14,6 +7,12 @@ import type { HttpService } from "../../../src/core/http/HttpService";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { Container } from "inversify";
+import type { DeckFileService } from "../../../src/core/deck/DeckFileService";
+import type { CardDatabase } from "../../../src/core/card/CardDatabase";
+import { FindCardBy } from "../../../src/core/card/CardDatabase";
+import { baseModule, deckModule } from "../../../src/inversify.config";
+import { TYPES } from "../../../src/types";
+import { DeckPart } from "../../../src/core/deck/DeckPart";
 
 describe("DeckFileService", () => {
     let deckFileService: DeckFileService;

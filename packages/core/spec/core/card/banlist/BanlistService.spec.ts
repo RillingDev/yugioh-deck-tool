@@ -1,13 +1,12 @@
 import "reflect-metadata";
-import type { BanlistService } from "../../../../src/main";
-import {
-    baseModule,
-    DefaultBanState,
-    Format,
-    TYPES,
-} from "../../../../src/main";
+
 import { createCard } from "../../../helper/dataFactories";
 import { Container } from "inversify";
+import type { BanlistService } from "../../../../src/core/card/banlist/BanlistService";
+import { baseModule } from "../../../../src/inversify.config";
+import { TYPES } from "../../../../src/types";
+import { Format } from "../../../../src/core/card/format/Format";
+import { DefaultBanState } from "../../../../src/core/card/banlist/BanState";
 
 describe("BanlistService", () => {
     let banlistService: BanlistService;
