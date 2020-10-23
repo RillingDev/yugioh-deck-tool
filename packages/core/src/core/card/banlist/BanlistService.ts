@@ -25,10 +25,7 @@ class BanlistService {
      * @param format Format to check.
      * @return if the format has a banlist.
      */
-    public hasFormatBanlist(format: Format | null): boolean {
-        if (format == null) {
-            return false;
-        }
+    public hasBanlist(format: Format): boolean {
         return BanlistService.BANLIST_FORMATS.has(format);
     }
 
@@ -51,7 +48,7 @@ class BanlistService {
         }
 
         // If the format is listed, but no explicit banlist -> unlimited
-        if (!this.hasFormatBanlist(format)) {
+        if (!this.hasBanlist(format)) {
             return DefaultBanState.UNLIMITED;
         }
         // If a ban state is set -> use ban state

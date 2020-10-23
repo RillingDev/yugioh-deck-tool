@@ -189,7 +189,7 @@ export default defineComponent({
         prop: "filter",
         event: "change",
     },
-    setup(props, context) {
+    setup: function (props, context) {
         const banStates = DEFAULT_BAN_STATE_ARR;
         const cardTypeCategories = Object.values(CardTypeCategory);
 
@@ -216,11 +216,14 @@ export default defineComponent({
         const linkMarkers = computed<string[]>(() =>
             cardDatabase.getLinkMarkers()
         );
-        const hasBanStates = computed<boolean>(() =>
-            banlistService.hasFormatBanlist(
-                appStore(context).state.format.active
-            )
-        );
+
+        const hasBanStates = computed<boolean>(() => {
+            const format = appStore(context).state.format.active;
+            if (format == null) {
+                return false;
+            }
+            return banlistService.hasBanlist(format);
+        });
         const isMonster = computed<boolean>(
             () => internalFilter.typeCategory === CardTypeCategory.MONSTER
         );

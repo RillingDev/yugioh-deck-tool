@@ -21,6 +21,16 @@ describe("BanlistService", () => {
         banlistService = container.get<BanlistService>(TYPES.BanlistService);
     });
 
+    describe("hasBanlist", () => {
+        it("returns true only for TCG, OCG and GOAT", () => {
+            expect(banlistService.hasBanlist(Format.TCG)).toBeTrue();
+            expect(banlistService.hasBanlist(Format.OCG)).toBeTrue();
+            expect(banlistService.hasBanlist(Format.GOAT)).toBeTrue();
+
+            expect(banlistService.hasBanlist(Format.DUEL_LINKS)).toBeFalse();
+        });
+    });
+
     describe("getBanStateByFormat", () => {
         it("returns UNLIMITED if format is null", () => {
             expect(
