@@ -66,6 +66,26 @@ const cardService = applicationContainer.get<CardService>(
     APPLICATION_TYPES.CardService
 );
 
+const createDefaultFilter = (): CardFilter => {
+    return {
+        name: null,
+
+        typeCategory: null,
+        type: null,
+        subType: null,
+
+        attribute: null,
+        level: null,
+        linkMarker: [],
+
+        archetype: null,
+        format: null,
+        banState: null,
+
+        sets: [],
+    };
+};
+
 export default defineComponent({
     props: {
         dragGroup: {
@@ -80,43 +100,10 @@ export default defineComponent({
         BSidebar,
     },
     setup(props, context) {
-        const createDefaultFilter = (): CardFilter => {
-            return {
-                name: null,
-
-                typeCategory: null,
-                type: null,
-                subType: null,
-
-                attribute: null,
-                level: null,
-                linkMarker: [],
-
-                archetype: null,
-                format: null,
-                banState: null,
-
-                sets: [],
-            };
-        };
+        // We have to init all properties even if they are optional, because otherwise vue cant listen to changes.
         const filter = reactive<CardFilter>(createDefaultFilter());
         const resetFilter = (): void => {
-            const defaultFilter = createDefaultFilter();
-            filter.name = defaultFilter.name;
-
-            filter.typeCategory = defaultFilter.typeCategory;
-            filter.type = defaultFilter.type;
-
-            filter.subType = defaultFilter.subType;
-            filter.attribute = defaultFilter.attribute;
-            filter.level = defaultFilter.level;
-            filter.linkMarker = defaultFilter.linkMarker;
-            filter.archetype = defaultFilter.archetype;
-
-            filter.format = defaultFilter.format;
-            filter.banState = defaultFilter.banState;
-
-            filter.sets = defaultFilter.sets;
+            Object.assign(filter, createDefaultFilter());
         };
 
         const sortingOptions = ref<SortingOptions>({
@@ -128,6 +115,7 @@ export default defineComponent({
             () => appStore(context).state.format.active
         );
         const formatCards = computed<Card[]>(() => {
+            // Required to ensure render after loading.
             if (!loaded.value) {
                 return [];
             }

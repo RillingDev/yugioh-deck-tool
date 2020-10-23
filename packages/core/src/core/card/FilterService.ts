@@ -10,30 +10,30 @@ import { TYPES } from "../../types";
 import type { CardTypeCategory } from "./type/CardTypeCategory";
 import type { BanlistService } from "./banlist/BanlistService";
 
-interface CardFilter {
-    name?: string | null;
+type CardFilter = Partial<{
+    name: string | null;
 
     /**
      * This can be used when wanting only type-category accuracy. For exact type matching see #type
      */
-    typeCategory?: CardTypeCategory | null;
+    typeCategory: CardTypeCategory | null;
 
     /**
      * This can be used when wanting exact type accuracy. For type category matching see #typeCategory
      */
-    type?: CardType | null;
-    subType?: string | null;
+    type: CardType | null;
+    subType: string | null;
 
-    attribute?: string | null;
-    level?: number | null;
-    linkMarker?: string[];
+    attribute: string | null;
+    level: number | null;
+    linkMarker: string[];
 
-    archetype?: string | null;
-    format?: Format | null;
-    banState?: BanState | null;
+    archetype: string | null;
+    format: Format | null;
+    banState: BanState | null;
 
-    sets?: CardSet[];
-}
+    sets: CardSet[];
+}>;
 
 /**
  * @public
@@ -58,10 +58,7 @@ class FilterService {
      * @param filter Filter to apply. Generally null or empty array properties mean a check should be skipped.
      * @return Filtered cards.
      */
-    public filter(
-        cards: ReadonlyArray<Card>,
-        filter: Partial<CardFilter>
-    ): Card[] {
+    public filter(cards: ReadonlyArray<Card>, filter: CardFilter): Card[] {
         return cards.filter((card) => {
             if (
                 filter.name != null &&
