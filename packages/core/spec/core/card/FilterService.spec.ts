@@ -250,7 +250,7 @@ describe("FilterService", () => {
 
             expect(
                 filterService.filter([card1, card2, card3, card4], {
-                    linkMarker: ["Top"],
+                    linkMarkers: ["Top"],
                 })
             ).toEqual([card1, card2]);
         });

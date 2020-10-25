@@ -26,7 +26,7 @@ type CardFilter = Partial<{
 
     attribute: string | null;
     level: number | null;
-    linkMarker: string[];
+    linkMarkers: string[];
 
     archetype: string | null;
     format: Format | null;
@@ -99,10 +99,10 @@ class FilterService {
                 return false;
             }
             if (
-                filter.linkMarker != null &&
-                filter.linkMarker.length > 0 &&
+                filter.linkMarkers != null &&
+                filter.linkMarkers.length > 0 &&
                 (card.linkMarkers == null ||
-                    filter.linkMarker.some(
+                    filter.linkMarkers.some(
                         (linkMarker) => !card.linkMarkers!.includes(linkMarker)
                     ))
             ) {

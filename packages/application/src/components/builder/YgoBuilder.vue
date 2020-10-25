@@ -76,7 +76,7 @@ const createDefaultFilter = (): CardFilter => {
 
         attribute: null,
         level: null,
-        linkMarker: [],
+        linkMarkers: [],
 
         archetype: null,
         format: null,

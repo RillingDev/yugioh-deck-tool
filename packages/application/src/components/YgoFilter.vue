@@ -123,7 +123,7 @@
 
         <div
             class="form-group"
-            v-if="isFieldVisible('linkMarker')"
+            v-if="isFieldVisible('linkMarkers')"
             v-show="isMonster"
         >
             <VSelect
@@ -132,7 +132,7 @@
                 multiple
                 :options="linkMarkers"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.linkMarker"
+                v-model="internalFilter.linkMarkers"
             />
         </div>
     </form>
@@ -241,7 +241,7 @@ export default defineComponent({
                 internalFilter.subType = null;
                 internalFilter.attribute = null;
                 internalFilter.level = null;
-                internalFilter.linkMarker = [];
+                internalFilter.linkMarkers = [];
             }
         );
         watch(
