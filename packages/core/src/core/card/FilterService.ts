@@ -30,6 +30,10 @@ type CardFilter = Partial<{
 
     archetype: string | null;
     format: Format | null;
+
+    /**
+     * Only available if #format is set.
+     */
     banState: BanState | null;
 
     sets: CardSet[];
