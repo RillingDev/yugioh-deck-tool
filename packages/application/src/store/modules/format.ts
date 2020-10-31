@@ -11,7 +11,7 @@ export interface FormatState {
 export const formatModule: Module<FormatState, AppState> = {
     state: () => {
         return {
-            active: Format.TCG,
+            active: null,
         };
     },
     mutations: {
