@@ -14,12 +14,14 @@ type CardFilter = Partial<{
     name: string | null;
 
     /**
-     * This can be used when wanting only type-category accuracy. For exact type matching see #type
+     * This can be used when wanting only type-category accuracy.
+     * For exact type matching see {@link #type}.
      */
     typeCategory: CardTypeCategory | null;
 
     /**
-     * This can be used when wanting exact type accuracy. For type category matching see #typeCategory
+     * This can be used when wanting exact type accuracy.
+     * For type category matching see {@link #typeCategory}.
      */
     type: CardType | null;
     subType: string | null;

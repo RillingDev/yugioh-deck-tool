@@ -88,13 +88,19 @@ class DeckExportService {
     }
 
     /**
-     * Creates a buy link of a deck for tcgplayer.com.
+     * Creates an affiliate buy link of a deck for tcgplayer.com.
      *
      * @see https://docs.tcgplayer.com/docs/mass-entry-and-affiliate-linking
      * @param deck Deck to create a link for.
+     * @param affiliateMedium Tcgplayer.com affiliate code.
+     * @param affiliateSource Tcgplayer.com affiliate source name.
      * @return Buy link.
      */
-    public toBuyLink(deck: Deck): URL {
+    public toBuyLink(
+        deck: Deck,
+        affiliateMedium: string,
+        affiliateSource: string
+    ): URL {
         const countedCards: Map<Card, number> = this.cardService.countByCard(
             this.deckService.getAllCards(deck)
         );
@@ -105,8 +111,8 @@ class DeckExportService {
 
         const buyLink = new URL("massentry", "https://store.tcgplayer.com");
         buyLink.searchParams.append("utm_campaign", "affiliate");
-        buyLink.searchParams.append("utm_medium", "deck-builder");
-        buyLink.searchParams.append("utm_source", "YGOPRODeck");
+        buyLink.searchParams.append("utm_medium", affiliateMedium);
+        buyLink.searchParams.append("utm_source", affiliateSource);
         buyLink.searchParams.append("productline", "Yugioh");
         buyLink.searchParams.append("c", cardListUriParam);
         return buyLink;

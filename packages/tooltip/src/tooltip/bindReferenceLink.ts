@@ -21,7 +21,7 @@ export const bindReferenceLink = (
         !browserSupportsTouch() && // On touch devices binding a link causes issues with tooltips.
         isHrefBlank(target) // Only bind if no link is set already
     ) {
-        target.href = cardService.getReferenceLink(card);
+        target.href = cardService.getReferenceLink(card).toString();
         target.target = "_blank";
     }
 };

@@ -104,10 +104,10 @@ class CardService {
      * @param card Card to create a link for.
      * @return Link.
      */
-    public getReferenceLink(card: Card): string {
-        return `https://db.ygoprodeck.com/card/?search=${encodeURIComponent(
-            card.name
-        )}`;
+    public getReferenceLink(card: Card): URL {
+        const url = new URL("https://db.ygoprodeck.com/card/");
+        url.searchParams.append("search", card.name);
+        return url;
     }
 }
 

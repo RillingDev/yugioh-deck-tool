@@ -65,19 +65,20 @@ Side:
             const card2 = createCard({ passcode: "456", name: "bar" });
             const card3 = createCard({ passcode: "789", name: "fizz" });
 
-            const result = deckExportService.toBuyLink({
-                name: null,
-                parts: {
-                    [DeckPart.MAIN]: [card1],
-                    [DeckPart.EXTRA]: [card2, card2],
-                    [DeckPart.SIDE]: [card3, card3, card1, card3],
+            const result = deckExportService.toBuyLink(
+                {
+                    name: null,
+                    parts: {
+                        [DeckPart.MAIN]: [card1],
+                        [DeckPart.EXTRA]: [card2, card2],
+                        [DeckPart.SIDE]: [card3, card3, card1, card3],
+                    },
                 },
-            });
-
-            const expected = new URL(
-                "massentry",
-                "https://store.tcgplayer.com"
+                "deck-builder",
+                "YGOPRODeck"
             );
+
+            const expected = new URL("https://store.tcgplayer.com/massentry");
             expected.searchParams.append("utm_campaign", "affiliate");
             expected.searchParams.append("utm_medium", "deck-builder");
             expected.searchParams.append("utm_source", "YGOPRODeck");

@@ -33,11 +33,12 @@ export default defineComponent({
     setup(props, context) {
         const isDeckEmpty = deckEmpty(context);
 
-        const buyLink = computed<string>(() =>
-            deckExportService
-                .toBuyLink(appStore(context).state.deck.active)
-                .toString()
-        );
+        const buyLink = computed<string>(() => {
+            const deck = appStore(context).state.deck.active;
+            return deckExportService
+                .toBuyLink(deck, "deck-builder", "YGOPRODeck")
+                .toString();
+        });
 
         return { isDeckEmpty, buyLink };
     },

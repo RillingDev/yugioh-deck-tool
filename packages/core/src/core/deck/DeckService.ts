@@ -132,7 +132,7 @@ class DeckService {
      * @param deck Deck to add to.
      * @param card Card to add.
      * @param deckPart Deck part to add to.
-     * @param newIndex? Optional index to add the card at.
+     * @param newIndex Optional index to add the card at.
      */
     public addCard(
         deck: Deck,
@@ -154,7 +154,7 @@ class DeckService {
      * @param deck Deck to remove from.
      * @param card Card to remove.
      * @param deckPart Deck part to remove from.
-     * @param oldIndex? Optional index to remove the card at.
+     * @param oldIndex Optional index to remove the card at.
      */
     public removeCard(
         deck: Deck,
