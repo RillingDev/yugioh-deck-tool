@@ -74,7 +74,10 @@ const createCard = (data: {
     archetype: data.archetype ?? null,
 
     formats: data.formats ?? [Format.TCG, Format.OCG],
-    release: { [Format.TCG]: data.release?.TCG ?? null, [Format.OCG]: null },
+    release: {
+        [Format.TCG]: data.release?.TCG ?? null,
+        [Format.OCG]: data.release?.OCG ?? null,
+    },
     banlist: {
         [Format.TCG]: data.banlist?.TCG ?? DefaultBanState.UNLIMITED,
         [Format.OCG]: data.banlist?.OCG ?? DefaultBanState.UNLIMITED,
