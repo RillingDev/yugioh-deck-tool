@@ -109,11 +109,11 @@ class DeckExportService {
                 .map(([card, count]) => `${count} ${card.name}`)
                 .join("||") + "||";
 
-        const buyLink = new URL("massentry", "https://store.tcgplayer.com");
+        const buyLink = new URL("massentry", "https://www.tcgplayer.com");
+        buyLink.searchParams.append("productline", "Yugioh");
         buyLink.searchParams.append("utm_campaign", "affiliate");
         buyLink.searchParams.append("utm_medium", affiliateMedium);
         buyLink.searchParams.append("utm_source", affiliateSource);
-        buyLink.searchParams.append("productline", "Yugioh");
         buyLink.searchParams.append("c", cardListUriParam);
         return buyLink;
     }

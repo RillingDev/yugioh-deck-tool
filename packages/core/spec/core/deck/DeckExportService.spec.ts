@@ -78,7 +78,7 @@ Side:
                 "YGOPRODeck"
             );
 
-            const expected = new URL("https://store.tcgplayer.com/massentry");
+            const expected = new URL("https://www.tcgplayer.com/massentry");
             expected.searchParams.append("utm_campaign", "affiliate");
             expected.searchParams.append("utm_medium", "deck-builder");
             expected.searchParams.append("utm_source", "YGOPRODeck");
