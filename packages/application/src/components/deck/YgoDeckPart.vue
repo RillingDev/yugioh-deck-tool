@@ -32,6 +32,7 @@
                 :card="card"
                 :key="`${cardIndex}_${card.passcode}`"
                 v-for="(card, cardIndex) in cards"
+                @contextmenu.native.prevent="() => removeCard(card, cardIndex)"
             >
             </YgoCard>
         </Draggable>
@@ -53,7 +54,7 @@ import {
     DECK_PART_CARDS_REMOVE,
     DECK_PART_CARDS_REORDER,
 } from "../../store/modules/deck";
-import { enableTooltip, disableTooltip } from "../../../../tooltip/src/main";
+import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 import { appStore } from "../../composition/state/appStore";
 import type { DraggableChangeEventData } from "../../composition/dragging";
 import {
@@ -148,10 +149,14 @@ export default defineComponent({
         return {
             deckPartConfig,
             cards,
+
             deckPartStats,
             deckPartEmpty,
+
             onChange,
+            removeCard,
             canMove,
+
             enableTooltip,
             disableTooltip,
         };

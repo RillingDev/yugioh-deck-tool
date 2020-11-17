@@ -1,10 +1,5 @@
 <template>
-    <a
-        :data-name="card.name"
-        class="card"
-        tabindex="0"
-        @click="(e) => onClick(e)"
-    >
+    <a :data-name="card.name" class="card" tabindex="0">
         <img
             :alt="card.name"
             :class="{ 'card__img--vertically-scaling': scaleVertically }"
@@ -32,13 +27,12 @@ export default defineComponent({
             default: false,
         },
     },
-    setup(props, context) {
+    setup(props) {
         const imgSrc = computed<string>(
             () => props.card.image?.urlSmall ?? imageUrlCardPlaceholder()
         );
-        const onClick = (e: Event): void => context.emit("click", e);
 
-        return { imgSrc, onClick };
+        return { imgSrc };
     },
 });
 </script>
