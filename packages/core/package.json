@@ -8,13 +8,13 @@
         "test": "ts-node --project ./spec/tsconfig.json node_modules/jasmine/bin/jasmine --config=jasmine.json"
     },
     "dependencies": {
-        "axios": "^0.20.0",
+        "axios": "^0.21.0",
         "base64-js": "^1.5.1",
         "inversify": "^5.0.1",
         "lightdash": "^13.0.0",
         "lodash": "^4.17.19",
         "loglevel": "^1.7.1",
-        "pako": "^1.0.8"
+        "pako": "^2.0.2"
     },
     "peerDependencies": {
         "reflect-metadata": "^0.1.13"
@@ -27,7 +27,7 @@
         "@types/webpack-env": "^1.16.0",
         "@typescript-eslint/eslint-plugin": "^4.9.0",
         "@typescript-eslint/parser": "^4.9.0",
-        "eslint": "^7.14.0",
+        "eslint": "^7.15.0",
         "eslint-config-prettier": "^6.15.0",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-prettier": "^3.2.0",
