@@ -1,5 +1,5 @@
 import type { Module } from "vuex";
-import { Format } from "../../../../core/src/main";
+import type { Format } from "../../../../core/src/main";
 import type { AppState } from "../AppState";
 
 export const FORMAT_UPDATE = "FORMAT_UPDATE";

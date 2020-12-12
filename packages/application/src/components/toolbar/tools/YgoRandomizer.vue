@@ -46,9 +46,9 @@ import VSelect from "vue-select";
 import { appStore } from "../../../composition/state/appStore";
 import { dataLoaded } from "../../../composition/state/dataLoaded";
 
-const deckRandomizationService = applicationContainer.get<
-    DeckRandomizationService
->(APPLICATION_TYPES.DeckRandomizationService);
+const deckRandomizationService = applicationContainer.get<DeckRandomizationService>(
+    APPLICATION_TYPES.DeckRandomizationService
+);
 
 export default defineComponent({
     components: {
