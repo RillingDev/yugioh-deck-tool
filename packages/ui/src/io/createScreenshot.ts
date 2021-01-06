@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 
-const SCREENSHOT_IMAGE_TYPE_MIME = "image/png";
-const SCREENSHOT_IMAGE_TYPE_EXTENSION = "png";
+const SCREENSHOT_IMAGE_MIME_TYPE = "image/png";
+const SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION = "png";
 
 /**
  * Creates a screenshot of the given element and creates a data URL for it.
@@ -24,13 +24,17 @@ export const createScreenshot = async (
         onclone: options.onClone,
     });
 
-    const fileName = `${filenameBase}.${SCREENSHOT_IMAGE_TYPE_EXTENSION}`;
+    const fileName = `${filenameBase}.${SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION}`;
     return new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
             if (blob == null) {
                 reject(new TypeError("Could not convert canvas to blob."));
             }
-            resolve(new File([blob!], fileName));
-        }, SCREENSHOT_IMAGE_TYPE_MIME);
+            resolve(
+                new File([blob!], fileName, {
+                    type: blob!.type,
+                })
+            );
+        }, SCREENSHOT_IMAGE_MIME_TYPE);
     });
 };

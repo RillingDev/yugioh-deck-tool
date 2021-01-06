@@ -44,8 +44,5 @@ export type { CardFilter, FilterService } from "./core/card/FilterService";
 export type { DeckRandomizationService } from "./core/deck/DeckRandomizationService";
 export { RandomizationStrategy } from "./core/deck/DeckRandomizationService";
 export type { DeckUriEncodingService } from "./core/deck/DeckUriEncodingService";
-export type {
-    DeckFileService,
-    ImportResult,
-} from "./core/deck/DeckFileService";
+export { DeckFileService, ImportResult } from "./core/deck/DeckFileService";
 export type { UrlService } from "./core/http/UrlService";

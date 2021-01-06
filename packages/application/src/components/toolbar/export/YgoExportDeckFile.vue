@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import type { DeckFileService } from "../../../../../core/src/main";
+import { DeckFileService } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
@@ -26,7 +26,9 @@ export default defineComponent({
         const downloadDeck = (): void => {
             const deck = appStore(context).state.deck.active;
             const { fileContent, fileName } = deckFileService.toFile(deck);
-            const file = new File([fileContent], fileName);
+            const file = new File([fileContent], fileName, {
+                type: DeckFileService.DECK_FILE_MIME_TYPE,
+            });
             downloadFile(file, document);
             showSuccess(
                 context,

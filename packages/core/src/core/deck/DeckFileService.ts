@@ -29,6 +29,8 @@ class DeckFileService {
     private readonly deckService: DeckService;
     private readonly urlService: UrlService;
 
+    public static readonly DECK_FILE_MIME_TYPE = "text/ydk";
+
     constructor(
         @inject(TYPES.HttpService)
         httpService: HttpService,
