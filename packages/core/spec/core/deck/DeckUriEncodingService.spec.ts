@@ -33,59 +33,6 @@ describe("DeckUriEncodingService", () => {
         );
     });
 
-    describe("fromLegacyUrlQueryParamValue", () => {
-        it("puts per deckpart", () => {
-            const queryParamValue = deflate("123|*2456|789;999;*3123", {
-                to: "string",
-            });
-            const card1 = createCard({ passcode: "123" });
-            when(
-                mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
-            ).thenReturn(true);
-            when(
-                mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
-            ).thenReturn(card1);
-
-            const card2 = createCard({ passcode: "456" });
-            when(
-                mockCardDatabase.hasCard("456", FindCardBy.PASSCODE)
-            ).thenReturn(true);
-            when(
-                mockCardDatabase.getCard("456", FindCardBy.PASSCODE)
-            ).thenReturn(card2);
-
-            const card3 = createCard({ passcode: "789" });
-            when(
-                mockCardDatabase.hasCard("789", FindCardBy.PASSCODE)
-            ).thenReturn(true);
-            when(
-                mockCardDatabase.getCard("789", FindCardBy.PASSCODE)
-            ).thenReturn(card3);
-
-            const card4 = createCard({ passcode: "999" });
-            when(
-                mockCardDatabase.hasCard("999", FindCardBy.PASSCODE)
-            ).thenReturn(true);
-            when(
-                mockCardDatabase.getCard("999", FindCardBy.PASSCODE)
-            ).thenReturn(card4);
-
-            expect(
-                deckUriEncodingService.fromLegacyUrlQueryParamValue(
-                    queryParamValue,
-                    (str: string): string => str
-                )
-            ).toEqual({
-                name: null,
-                parts: {
-                    [DeckPart.MAIN]: [card1],
-                    [DeckPart.EXTRA]: [card2, card2],
-                    [DeckPart.SIDE]: [card3, card4, card1, card1, card1],
-                },
-            });
-        });
-    });
-
     describe("toUrlQueryParamValue", () => {
         it("creates value", () => {
             const card1 = createCard({ passcode: "123" });

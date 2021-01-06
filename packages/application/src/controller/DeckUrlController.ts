@@ -18,11 +18,9 @@ export class DeckUrlController {
 
     private static readonly PARAM_ENCODED_URI_DECK = "e";
     private static readonly PARAM_REMOTE_DECK = "u";
-    private static readonly PARAM_LEGACY_ENCODED_URI_DECK = "d";
 
     private readonly deckService: DeckService;
     private readonly deckUriEncodingService: DeckUriEncodingService;
-    private readonly urlService: UrlService;
     private readonly deckFileService: DeckFileService;
 
     constructor(
@@ -30,27 +28,23 @@ export class DeckUrlController {
         deckService: DeckService,
         @inject(APPLICATION_TYPES.DeckUriEncodingService)
         deckUriEncodingService: DeckUriEncodingService,
-        @inject(APPLICATION_TYPES.UrlService)
-        urlService: UrlService,
         @inject(APPLICATION_TYPES.DeckFileService)
         deckFileService: DeckFileService
     ) {
         this.deckService = deckService;
         this.deckUriEncodingService = deckUriEncodingService;
-        this.urlService = urlService;
         this.deckFileService = deckFileService;
     }
 
     /**
      * Loads referenced deck from current URL, if any exist.
      *
-     * @param urlString current URL.
+     * @param url current URL.
      * @return Parsed deck or null if none is found.
      */
-    public async loadUriDeck(urlString: string): Promise<Deck | null> {
+    public async loadUriDeck(url: URL): Promise<Deck | null> {
         // Load deck file from a remote URL
-        const remoteUrlValue = this.urlService.getSingleQueryParam(
-            urlString,
+        const remoteUrlValue = url.searchParams.get(
             DeckUrlController.PARAM_REMOTE_DECK
         );
         if (remoteUrlValue != null) {
@@ -67,8 +61,7 @@ export class DeckUrlController {
         }
 
         // Load encoded uri deck
-        const uriEncodedDeck = this.urlService.getSingleQueryParam(
-            urlString,
+        const uriEncodedDeck = url.searchParams.get(
             DeckUrlController.PARAM_ENCODED_URI_DECK
         );
         if (uriEncodedDeck != null) {
@@ -77,19 +70,6 @@ export class DeckUrlController {
             );
         }
 
-        // Check for legacy share link
-        const legacyUriEncodedDeck = this.urlService.getSingleQueryParam(
-            urlString,
-            DeckUrlController.PARAM_LEGACY_ENCODED_URI_DECK,
-            false
-        );
-        if (legacyUriEncodedDeck != null) {
-            // Due to the old link containing illegal characters parseUrl causes issues
-            return this.deckUriEncodingService.fromLegacyUrlQueryParamValue(
-                legacyUriEncodedDeck,
-                atob
-            );
-        }
         return Promise.resolve(null);
     }
 

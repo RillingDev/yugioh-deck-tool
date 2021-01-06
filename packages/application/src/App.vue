@@ -61,7 +61,7 @@ export default defineComponent({
             .then(() => {
                 appStore(context).commit(DATA_LOADED);
                 logger.info("Loaded data.");
-                return deckUrlController.loadUriDeck(location.toString());
+                return deckUrlController.loadUriDeck(new URL(location.href));
             })
             .then((result) => {
                 if (result != null) {

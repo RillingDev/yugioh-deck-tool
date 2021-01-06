@@ -7,7 +7,7 @@ import type { Card } from "../card/Card";
 import { isEqual } from "lodash";
 import type { DeckService } from "./DeckService";
 import { fromByteArray, toByteArray } from "base64-js";
-import { deflateRaw, inflate, inflateRaw } from "pako";
+import { deflateRaw, inflateRaw } from "pako";
 import { DECK_PART_ARR } from "./DeckPart";
 
 /**
@@ -203,64 +203,6 @@ class DeckUriEncodingService {
                 inflated.subarray(metaDataStart)
             );
         }
-        return deck;
-    }
-
-    /**
-     * @deprecated
-     */
-    public fromLegacyUrlQueryParamValue(
-        val: string,
-        base64Decoder: (data: string) => string
-    ): Deck {
-        const deck = this.deckService.createEmptyDeck();
-        const uncompressedValue = inflate(base64Decoder(val), {
-            to: "string",
-        });
-
-        const DELIMITERS = {
-            deckPart: "|",
-            passcode: ";",
-            cardAmount: "*",
-        };
-
-        uncompressedValue
-            .split(DELIMITERS.deckPart)
-            .forEach((deckPartList: string, index) => {
-                const deckPart = DECK_PART_ARR[index];
-                const deckPartCards = deck.parts[deckPart];
-
-                if (deckPartList.length > 0) {
-                    deckPartList.split(DELIMITERS.passcode).forEach((entry) => {
-                        let count = 1;
-                        let passcode = entry;
-                        if (entry.startsWith(DELIMITERS.cardAmount)) {
-                            count = Number(entry[1]);
-                            passcode = entry.slice(2);
-                        }
-
-                        if (
-                            !this.cardDatabase.hasCard(
-                                passcode,
-                                FindCardBy.PASSCODE
-                            )
-                        ) {
-                            throw new TypeError(
-                                `Unknown card ${passcode}, this hopefully should never happen.`
-                            );
-                        }
-                        const card = this.cardDatabase.getCard(
-                            passcode,
-                            FindCardBy.PASSCODE
-                        )!;
-
-                        for (let i = 0; i < count; i++) {
-                            deckPartCards.push(card);
-                        }
-                    });
-                }
-            });
-
         return deck;
     }
 

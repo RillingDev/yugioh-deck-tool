@@ -29,32 +29,6 @@ class UrlService {
         }
         return pathname.substr(pathname.lastIndexOf("/") + 1);
     }
-
-    /**
-     * Returns the value of the single query parameter value of an URL.
-     * DOES NOT WORK WITH MORE THAN ONE PARAMETER.
-     *
-     * @param url Url to check.
-     * @param key Key to get.
-     * @param validate If the URL should be validated. can not be used when the URL might contain illegal characters.
-     * @return Query value or null.
-     */
-    public getSingleQueryParam(
-        url: string,
-        key: string,
-        validate = true
-    ): string | null {
-        if (validate) {
-            return new URL(url).searchParams.get(key);
-        }
-
-        // Very primitive fallback that does not actually convert URL characters
-        const searchString = `?${key}=`;
-        if (!url.includes(searchString)) {
-            return null;
-        }
-        return url.substr(url.indexOf(searchString) + searchString.length);
-    }
 }
 
 export { UrlService };
