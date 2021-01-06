@@ -49,8 +49,7 @@ export const deckModule: Module<DeckState, AppState> = {
             state.active.parts = deckService.shuffle(state.active).parts;
         },
         [DECK_CLEAR](state) {
-            state.active.name = "";
-            state.active.parts = deckService.createEmptyDeck().parts;
+            state.active = deckService.createEmptyDeck();
         },
 
         [DECK_PART_CARDS_ADD](
