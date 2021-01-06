@@ -1,13 +1,18 @@
 import { deepFreeze } from "lightdash";
 
 interface Currency {
+    /**
+     * See {@link Intl.NumberFormatOptions#currency}.
+     */
     readonly id: string;
+
     readonly name: string;
 
     /**
-     * Value of 1 USD in this currency
+     * Value of 1 USD in this currency.
      */
     readonly conversionRate: number;
+
     readonly fractionDigits: number;
 }
 

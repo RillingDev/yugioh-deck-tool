@@ -2,7 +2,7 @@ import { injectable } from "inversify";
 import type { Card } from "../card/Card";
 import type { Vendor } from "./Vendor";
 import type { Currency } from "./Currency";
-import { sum } from "lodash";
+import { difference, sum } from "lodash";
 
 interface PriceLookupResult {
     price: number;
@@ -46,10 +46,12 @@ class PriceService {
         const missing: Card[] = cards.filter(
             (card) => !this.hasPrice(card, vendor)
         );
-        const prices = cards
-            .filter((card) => this.hasPrice(card, vendor))
-            .map((card) => this.getCardPrice(card, vendor, currency));
-        return { price: sum(prices), missing };
+        const price = sum(
+            difference(cards, missing).map((card) =>
+                this.getCardPrice(card, vendor, currency)
+            )
+        );
+        return { price, missing };
     }
 
     private hasPrice(card: Card, vendor: Vendor): boolean {
