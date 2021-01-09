@@ -3,12 +3,13 @@ export const INTERNAL_TYPES = {
 } as const;
 
 export const TYPES = {
+    EnvironmentConfig: Symbol.for("EnvironmentConfig"),
+
     HttpService: Symbol.for("HttpService"),
     UrlService: Symbol.for("UrlService"),
 
     CardDataLoaderService: Symbol.for("CardDataLoaderService"),
     CardDatabase: Symbol.for("CardDatabase"),
-
     CardService: Symbol.for("CardService"),
 
     BanlistService: Symbol.for("BanlistService"),
@@ -21,4 +22,10 @@ export const TYPES = {
     DeckFileService: Symbol.for("DeckFileService"),
     DeckUriEncodingService: Symbol.for("DeckUriEncodingService"),
     DeckRandomizationService: Symbol.for("DeckRandomizationService"),
+} as const;
+
+export const YGOPRODECK_TYPES = {
+    YgoprodeckCardDataLoaderService: Symbol.for(
+        "YgoprodeckCardDataLoaderService"
+    ),
 } as const;

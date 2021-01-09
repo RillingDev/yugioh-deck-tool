@@ -2,7 +2,6 @@ import type { CardSet } from "./set/CardSet";
 import type { CardValues } from "./type/CardValues";
 import type { UnlinkedCard } from "./UnlinkedCard";
 import type { FindCardBy } from "./CardDatabase";
-import type { Card } from "./Card";
 
 /**
  * Interface for a service loading card data, like available cards or sets.
@@ -36,11 +35,6 @@ interface CardDataLoaderService {
      * Get archetypes which exist, which can be compared against a cards archetype.
      */
     getArchetypes: () => Promise<string[]>;
-
-    /**
-     * Sends a request to increase the view count of the card by one.
-     */
-    updateViews: (card: Card) => Promise<void>;
 }
 
 export { CardDataLoaderService };

@@ -1,6 +1,9 @@
 import { tooltipContainer } from "../inversify.config";
-import type { CardDataLoaderService } from "../../../core/src/main";
-import { getLogger } from "../../../core/src/main";
+import type {
+    EnvironmentConfig,
+    YgoprodeckCardDataLoaderService,
+} from "../../../core/src/main";
+
 import { TOOLTIP_TYPES } from "../types";
 import {
     createErrorTooltip,
@@ -11,12 +14,21 @@ import { bindReferenceLink } from "./bindReferenceLink";
 import type { Instance } from "tippy.js";
 import { delegate } from "tippy.js";
 import type { TooltipController } from "../controller/TooltipController";
+import {
+    Environment,
+    TYPES,
+    YGOPRODECK_TYPES,
+    getLogger,
+} from "../../../core/src/main";
 
-const cardDataLoaderService = tooltipContainer.get<CardDataLoaderService>(
-    TOOLTIP_TYPES.CardDataLoaderService
-);
 const tooltipController = tooltipContainer.get<TooltipController>(
     TOOLTIP_TYPES.TooltipController
+);
+const environmentConfig = tooltipContainer.get<EnvironmentConfig>(
+    TYPES.EnvironmentConfig
+);
+const ygoprodeckCardDataLoaderService = tooltipContainer.get<YgoprodeckCardDataLoaderService>(
+    YGOPRODECK_TYPES.YgoprodeckCardDataLoaderService
 );
 
 const logger = getLogger("bindTooltip");
@@ -37,13 +49,15 @@ const showTooltip = (
                 bindReferenceLink(target, card);
             }
 
-            // Start request, but do not wait for it to finish.
-            cardDataLoaderService
-                .updateViews(card)
-                .then(() => logger.trace("Updated view count."))
-                .catch((err) =>
-                    logger.warn("Could not update view count.", err)
-                );
+            if (environmentConfig.getEnvironment() == Environment.YGOPRODECK) {
+                // Start request, but do not wait for it to finish.
+                ygoprodeckCardDataLoaderService
+                    .updateViews(card)
+                    .then(() => logger.trace("Updated view count."))
+                    .catch((err) =>
+                        logger.warn("Could not update view count.", err)
+                    );
+            }
         })
         .catch((err) => {
             instance.setContent(

@@ -8,7 +8,11 @@
         "test": "ts-node --project ./spec/tsconfig.json node_modules/jasmine/bin/jasmine --config=jasmine.json"
     },
     "dependencies": {
+        "inversify": "^5.0.5",
         "html2canvas": "^1.0.0-rc.7"
+    },
+    "peerDependencies": {
+        "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
         "@types/html2canvas": "0.0.36",

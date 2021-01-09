@@ -1,6 +1,6 @@
 import type { interfaces } from "inversify";
 import { ContainerModule } from "inversify";
-import { INTERNAL_TYPES, TYPES } from "./types";
+import { INTERNAL_TYPES, TYPES, YGOPRODECK_TYPES } from "./types";
 import type { CardDataLoaderService } from "./core/card/CardDataLoaderService";
 import { YgoprodeckCardDataLoaderService } from "./api/ygoprodeck/YgoprodeckCardDataLoaderService";
 import type { CardDatabase } from "./core/card/CardDatabase";
@@ -19,17 +19,20 @@ import { DeckFileService } from "./core/deck/DeckFileService";
 import { UrlService } from "./core/http/UrlService";
 import { CardLinkingService } from "./core/card/CardLinkingService";
 import { BanlistService } from "./core/card/banlist/BanlistService";
+import type { EnvironmentConfig } from "./EnvironmentConfig";
+import { DefaultEnvironmentConfig } from "./DefaultEnvironmentConfig";
 
 /**
  * Module containing card database access and basic domain services.
  */
 export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
+    bind<EnvironmentConfig>(TYPES.EnvironmentConfig).to(
+        DefaultEnvironmentConfig
+    );
+
     bind<HttpService>(TYPES.HttpService).to(AxiosHttpService);
     bind<UrlService>(TYPES.UrlService).to(UrlService);
 
-    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
-        YgoprodeckCardDataLoaderService
-    );
     bind<CardLinkingService>(INTERNAL_TYPES.CardLinkingService).to(
         CardLinkingService
     );
@@ -42,6 +45,14 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<PriceService>(TYPES.PriceService).to(PriceService);
     bind<SortingService>(TYPES.SortingService).to(SortingService);
     bind<FilterService>(TYPES.FilterService).to(FilterService);
+
+    // Ygoprodeck.com providers.
+    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
+        YgoprodeckCardDataLoaderService
+    );
+    bind<YgoprodeckCardDataLoaderService>(
+        YGOPRODECK_TYPES.YgoprodeckCardDataLoaderService
+    ).to(YgoprodeckCardDataLoaderService);
 });
 
 /**

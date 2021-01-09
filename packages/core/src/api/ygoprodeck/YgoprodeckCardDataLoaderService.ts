@@ -17,12 +17,10 @@ import type {
 } from "../../core/http/HttpService";
 import type { RawArchetype } from "./mapping/mapArchetype";
 import { mapArchetype } from "./mapping/mapArchetype";
-import {
-    DEVELOPMENT_MODE,
-    FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE,
-} from "../../mode";
 import { FindCardBy } from "../../core/card/CardDatabase";
 import type { Card } from "../../core/card/Card";
+import type { EnvironmentConfig } from "../../EnvironmentConfig";
+import { Environment } from "../../EnvironmentConfig";
 
 /**
  * {@link CardDataLoaderService} implementation using the YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
@@ -30,18 +28,17 @@ import type { Card } from "../../core/card/Card";
 @injectable()
 class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private static readonly CARD_INFO_CHUNK_SIZE = 2000;
-    private static readonly USE_INTERNAL_ENDPOINTS =
-        FORCE_YGOPRODECK_INTERNAL_ENDPOINTS_USAGE || !DEVELOPMENT_MODE;
-    private static readonly API_BASE_URL = YgoprodeckCardDataLoaderService.USE_INTERNAL_ENDPOINTS
-        ? "https://db.ygoprodeck.com/api_internal/v7/"
-        : "https://db.ygoprodeck.com/api/v7/";
 
+    private readonly environmentConfig: EnvironmentConfig;
     private readonly httpService: HttpService;
 
     constructor(
         @inject(TYPES.HttpService)
-        httpService: HttpService
+        httpService: HttpService,
+        @inject(TYPES.EnvironmentConfig)
+        environmentConfig: EnvironmentConfig
     ) {
+        this.environmentConfig = environmentConfig;
         this.httpService = httpService;
     }
 
@@ -69,7 +66,7 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
                 ...this.createBaseRequestConfig(),
                 params,
                 validateStatus: (status: number) =>
-                    status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found })
+                    status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found.
             }
         );
         if (response.status === 400) {
@@ -130,11 +127,11 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     }
 
     public async updateViews(card: Card): Promise<void> {
-        if (!YgoprodeckCardDataLoaderService.USE_INTERNAL_ENDPOINTS) {
-            return;
+        if (this.environmentConfig.getEnvironment() != Environment.YGOPRODECK) {
+            throw new Error("Only available in YGOPRODECK environment.");
         }
         await this.httpService.get<void>("updateViews.php", {
-            baseUrl: YgoprodeckCardDataLoaderService.API_BASE_URL,
+            baseUrl: this.getBaseUrl(),
             timeout: 3000,
             responseType: "text",
             params: {
@@ -143,9 +140,16 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         });
     }
 
+    private getBaseUrl(): string {
+        if (this.environmentConfig.getEnvironment() == Environment.YGOPRODECK) {
+            return "https://db.ygoprodeck.com/api_internal/v7/";
+        }
+        return "https://db.ygoprodeck.com/api/v7/";
+    }
+
     private createBaseRequestConfig(): HttpRequestConfig {
         return {
-            baseUrl: YgoprodeckCardDataLoaderService.API_BASE_URL,
+            baseUrl: this.getBaseUrl(),
             timeout: 10000,
             responseType: "json",
         };

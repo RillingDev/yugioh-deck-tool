@@ -14,3 +14,4 @@ export {
     imageUrlType,
     imageUrlCardPlaceholder,
 } from "./resources";
+export { HostEnvironmentConfig } from "./HostEnvironmentConfig";
