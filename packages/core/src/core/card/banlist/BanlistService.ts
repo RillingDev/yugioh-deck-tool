@@ -5,9 +5,6 @@ import type { BanState } from "./BanState";
 import { DefaultBanState } from "./BanState";
 import type { BanlistInfo } from "./BanlistInfo";
 
-/**
- * @public
- */
 @injectable()
 class BanlistService {
     /**

@@ -1,8 +1,5 @@
 import { injectable } from "inversify";
 
-/**
- * @public
- */
 @injectable()
 class UrlService {
     /**

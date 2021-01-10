@@ -4,9 +4,6 @@ import type { Card, CardDatabase, CardService } from "../../../core/src/main";
 import { CardTypeCategory, DeckPart } from "../../../core/src/main";
 import { inject, injectable } from "inversify";
 
-/**
- * @private
- */
 @injectable()
 export class DeckController {
     private readonly cardDatabase: CardDatabase;
@@ -27,7 +24,6 @@ export class DeckController {
      * For main and side deck, count will be split by monster, spell, etc.,
      * whereas it will be split by monster subtype for the extra deck.
      *
-     * @private
      * @param deckPart Deck-part that is being used.
      * @param cards Cards to analyse.
      * @return Array of type and count pairs.

@@ -53,9 +53,6 @@ type CardFilter = Partial<{
     sets: CardSet[];
 }>;
 
-/**
- * @public
- */
 @injectable()
 class FilterService {
     private readonly cardService: CardService;

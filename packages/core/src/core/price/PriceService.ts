@@ -9,9 +9,6 @@ interface PriceLookupResult {
     missing: Card[];
 }
 
-/**
- * @public
- */
 @injectable()
 class PriceService {
     /**

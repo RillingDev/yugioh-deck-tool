@@ -10,9 +10,6 @@ import { fromByteArray, toByteArray } from "base64-js";
 import { deflateRaw, inflateRaw } from "pako";
 import { DECK_PART_ARR } from "./DeckPart";
 
-/**
- * @public
- */
 @injectable()
 class DeckUriEncodingService {
     // A 32 bit integer is able to store all 8 digit passcodes

@@ -8,9 +8,6 @@ enum FindCardBy {
     PASSCODE = "passcode",
 }
 
-/**
- * @public
- */
 interface CardDatabase {
     /**
      * Fully fills the database.

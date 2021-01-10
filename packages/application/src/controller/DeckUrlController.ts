@@ -4,14 +4,10 @@ import type {
     DeckFileService,
     DeckService,
     DeckUriEncodingService,
-    UrlService,
 } from "../../../core/src/main";
 import { getLogger } from "../../../core/src/main";
 import { inject, injectable } from "inversify";
 
-/**
- * @private
- */
 @injectable()
 export class DeckUrlController {
     private static readonly logger = getLogger(DeckUrlController);

@@ -5,9 +5,6 @@ import type { CardType } from "./type/CardType";
 import type { Card } from "./Card";
 import { getLogger } from "../../logger";
 
-/**
- * @private
- */
 @injectable()
 class CardLinkingService {
     private static readonly logger = getLogger(CardLinkingService);

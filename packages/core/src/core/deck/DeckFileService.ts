@@ -19,9 +19,6 @@ interface DeckFile {
     readonly fileContent: string;
 }
 
-/**
- * @public
- */
 @injectable()
 class DeckFileService {
     private readonly httpService: HttpService;

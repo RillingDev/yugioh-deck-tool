@@ -12,9 +12,6 @@ import { deepFreeze } from "lightdash";
 import type { CardLinkingService } from "./CardLinkingService";
 import { getLogger } from "../../logger";
 
-/**
- * @private
- */
 @injectable()
 class MemoryCardDatabase implements CardDatabase {
     private static readonly logger = getLogger(MemoryCardDatabase);

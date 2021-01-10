@@ -9,9 +9,6 @@ import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import type { FilterService } from "../card/FilterService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
-/**
- * @public
- */
 @injectable()
 class DeckExportService {
     private readonly deckService: DeckService;

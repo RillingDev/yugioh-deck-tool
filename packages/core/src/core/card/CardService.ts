@@ -7,9 +7,6 @@ import type { CardType } from "./type/CardType";
 
 export type Counted<T> = Map<T, number>;
 
-/**
- * @public
- */
 @injectable()
 class CardService {
     /**

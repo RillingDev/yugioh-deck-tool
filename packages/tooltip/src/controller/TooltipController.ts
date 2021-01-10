@@ -3,9 +3,6 @@ import type { Card, CardDatabase } from "../../../core/src/main";
 import { FindCardBy } from "../../../core/src/main";
 import { TOOLTIP_TYPES } from "../types";
 
-/**
- * @private
- */
 @injectable()
 export class TooltipController {
     private readonly cardDatabase: CardDatabase;
