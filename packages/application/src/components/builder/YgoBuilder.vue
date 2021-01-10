@@ -37,6 +37,7 @@ import type {
     Card,
     CardDatabase,
     CardFilter,
+    CardPredicate,
     CardService,
     FilterService,
     Format,
@@ -86,6 +87,21 @@ const createDefaultFilter = (): CardFilter => {
     };
 };
 
+const addableInAtLeastOneDeckPartCardPredicate: CardPredicate = (card) =>
+    card.type.deckParts.size > 0;
+
+// Useful to avoid e.g. alternate artworks
+const createUniqueByNameCardPredicate = (): CardPredicate => {
+    const seenNames = new Set<string>();
+    return (card) => {
+        if (seenNames.has(card.name)) {
+            return false;
+        }
+        seenNames.add(card.name);
+        return true;
+    };
+};
+
 export default defineComponent({
     props: {
         dragGroup: {
@@ -111,18 +127,22 @@ export default defineComponent({
             order: SortingOrder.DESC,
         });
 
+        const loaded = dataLoaded(context);
+
         const format = computed<Format | null>(
             () => appStore(context).state.format.active
         );
+
         const formatCards = computed<Card[]>(() => {
             // Required to ensure render after loading.
             if (!loaded.value) {
                 return [];
             }
-            const uniqueCards = cardService
-                .getUniqueByName(cardDatabase.getCards())
-                .filter((card) => card.type.deckParts.size > 0); // Only show cards that can be added to at least one deck-part
-            return filterService.filter(uniqueCards, {
+            return filterService.filter(cardDatabase.getCards(), {
+                customPredicates: [
+                    addableInAtLeastOneDeckPartCardPredicate,
+                    createUniqueByNameCardPredicate(),
+                ],
                 format: format.value,
             });
         });
@@ -133,8 +153,6 @@ export default defineComponent({
             });
             return sortingService.sort(filtered, sortingOptions.value);
         });
-
-        const loaded = dataLoaded(context);
 
         return {
             filter,

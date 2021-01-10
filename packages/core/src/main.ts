@@ -42,7 +42,11 @@ export {
     SortingOrder,
     SortingOptions,
 } from "./core/card/SortingService";
-export type { CardFilter, FilterService } from "./core/card/FilterService";
+export type {
+    CardFilter,
+    FilterService,
+    CardPredicate,
+} from "./core/card/FilterService";
 export type { DeckRandomizationService } from "./core/deck/DeckRandomizationService";
 export { RandomizationStrategy } from "./core/deck/DeckRandomizationService";
 export type { DeckUriEncodingService } from "./core/deck/DeckUriEncodingService";

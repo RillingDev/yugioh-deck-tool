@@ -16,44 +16,6 @@ describe("CardService", () => {
         cardService = container.get<CardService>(TYPES.CardService);
     });
 
-    describe("getUniqueByName", () => {
-        it("gets unique by name", () => {
-            const card1a = createCard({
-                passcode: "123",
-                name: "foo",
-            });
-            const card1b = createCard({
-                passcode: "456",
-                name: "foo",
-            });
-            const card2 = createCard({
-                passcode: "789",
-                name: "bar",
-            });
-
-            expect(
-                cardService.getUniqueByName([card1a, card1b, card2])
-            ).toEqual([card1a, card2]);
-        });
-
-        it("goes just by name, not alternate names like treatedAs", () => {
-            const card1 = createCard({
-                passcode: "123",
-                name: "foo",
-            });
-            const card2 = createCard({
-                passcode: "456",
-                name: "fizz",
-                treatedAs: "foo",
-            });
-
-            expect(cardService.getUniqueByName([card1, card2])).toEqual([
-                card1,
-                card2,
-            ]);
-        });
-    });
-
     describe("getAllNames", () => {
         it("gets all names", () => {
             expect(

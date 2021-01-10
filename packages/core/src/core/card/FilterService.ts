@@ -10,7 +10,19 @@ import { TYPES } from "../../types";
 import type { CardTypeCategory } from "./type/CardTypeCategory";
 import type { BanlistService } from "./banlist/BanlistService";
 
+type CardPredicate = (card: Card) => boolean;
+
 type CardFilter = Partial<{
+    /**
+     * Custom filter parts (e.g. user owned cards).
+     * Executed in order.
+     * If all predicates return true, the card is included in the result.
+     */
+    customPredicates: CardPredicate[];
+
+    /**
+     * Card name (sub)string matcher.
+     */
     name: string | null;
 
     /**
@@ -66,6 +78,13 @@ class FilterService {
      */
     public filter(cards: ReadonlyArray<Card>, filter: CardFilter): Card[] {
         return cards.filter((card) => {
+            if (
+                filter.customPredicates != null &&
+                !filter.customPredicates.every((predicate) => predicate(card))
+            ) {
+                return false;
+            }
+
             if (
                 filter.name != null &&
                 filter.name !== "" &&
@@ -145,4 +164,4 @@ class FilterService {
     }
 }
 
-export { FilterService, CardFilter };
+export { FilterService, CardFilter, CardPredicate };

@@ -5,7 +5,10 @@ import { Container } from "inversify";
 import { anything, when } from "ts-mockito";
 import { bindMock } from "../../helper/bindMock";
 import { CardService } from "../../../src/core/card/CardService";
-import type { FilterService } from "../../../src/core/card/FilterService";
+import type {
+    CardPredicate,
+    FilterService,
+} from "../../../src/core/card/FilterService";
 import { baseModule } from "../../../src/inversify.config";
 import { BanlistService } from "../../../src/core/card/banlist/BanlistService";
 import { TYPES } from "../../../src/types";
@@ -387,6 +390,56 @@ describe("FilterService", () => {
                     sets: [set1, set2],
                 })
             ).toEqual([card1, card2, card3]);
+        });
+
+        it("uses custom predicate", () => {
+            const predicate: CardPredicate = (card) =>
+                card.passcode.includes("1");
+
+            const card1 = createCard({
+                passcode: "123",
+            });
+            const card2 = createCard({
+                passcode: "789",
+            });
+            const card3 = createCard({
+                passcode: "666",
+            });
+            const card4 = createCard({
+                passcode: "321",
+            });
+
+            expect(
+                filterService.filter([card1, card2, card3, card4], {
+                    customPredicates: [predicate],
+                })
+            ).toEqual([card1, card4]);
+        });
+
+        it("requires all custom predicates to return true", () => {
+            const predicate1: CardPredicate = (card) =>
+                card.passcode.includes("1");
+            const predicate2: CardPredicate = (card) =>
+                card.passcode.startsWith("3");
+
+            const card1 = createCard({
+                passcode: "123",
+            });
+            const card2 = createCard({
+                passcode: "789",
+            });
+            const card3 = createCard({
+                passcode: "666",
+            });
+            const card4 = createCard({
+                passcode: "321",
+            });
+
+            expect(
+                filterService.filter([card1, card2, card3, card4], {
+                    customPredicates: [predicate1, predicate2],
+                })
+            ).toEqual([card4]);
         });
     });
 });
