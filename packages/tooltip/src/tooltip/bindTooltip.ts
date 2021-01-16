@@ -2,6 +2,7 @@ import { tooltipContainer } from "../inversify.config";
 import type {
     EnvironmentConfig,
     YgoprodeckCardDataLoaderService,
+    YgoprodeckService,
 } from "../../../core/src/main";
 
 import { TOOLTIP_TYPES } from "../types";
@@ -27,8 +28,8 @@ const tooltipController = tooltipContainer.get<TooltipController>(
 const environmentConfig = tooltipContainer.get<EnvironmentConfig>(
     TYPES.EnvironmentConfig
 );
-const ygoprodeckCardDataLoaderService = tooltipContainer.get<YgoprodeckCardDataLoaderService>(
-    YGOPRODECK_TYPES.YgoprodeckCardDataLoaderService
+const ygoprodeckService = tooltipContainer.get<YgoprodeckService>(
+    YGOPRODECK_TYPES.YgoprodeckService
 );
 
 const logger = getLogger("bindTooltip");
@@ -51,8 +52,8 @@ const showTooltip = (
 
             if (environmentConfig.getEnvironment() == Environment.YGOPRODECK) {
                 // Start request, but do not wait for it to finish.
-                ygoprodeckCardDataLoaderService
-                    .updateViews(card)
+                ygoprodeckService
+                    .increaseCardViewCount(card)
                     .then(() => logger.trace("Updated view count."))
                     .catch((err) =>
                         logger.warn("Could not update view count.", err)

@@ -1,3 +1,5 @@
+import { YgoprodeckService } from "./api/ygoprodeck/YgoprodeckService";
+
 export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";
 export { TYPES, YGOPRODECK_TYPES } from "./types";
@@ -54,3 +56,4 @@ export { DeckFileService, ImportResult } from "./core/deck/DeckFileService";
 export type { UrlService } from "./core/http/UrlService";
 
 export type { YgoprodeckCardDataLoaderService } from "./api/ygoprodeck/YgoprodeckCardDataLoaderService";
+export type { YgoprodeckService } from "./api/ygoprodeck/YgoprodeckService";

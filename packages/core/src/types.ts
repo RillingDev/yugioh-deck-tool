@@ -24,8 +24,15 @@ export const TYPES = {
     DeckRandomizationService: Symbol.for("DeckRandomizationService"),
 } as const;
 
+export const YGOPRODECK_INTERNAL_TYPES = {
+    YgoprodeckApiService: Symbol.for("YgoprodeckApiService"),
+} as const;
+
 export const YGOPRODECK_TYPES = {
     YgoprodeckCardDataLoaderService: Symbol.for(
         "YgoprodeckCardDataLoaderService"
+    ),
+    YgoprodeckService: Symbol.for(
+        "YgoprodeckService"
     ),
 } as const;

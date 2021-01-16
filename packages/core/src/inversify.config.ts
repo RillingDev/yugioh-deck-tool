@@ -1,6 +1,11 @@
 import type { interfaces } from "inversify";
 import { ContainerModule } from "inversify";
-import { INTERNAL_TYPES, TYPES, YGOPRODECK_TYPES } from "./types";
+import {
+    INTERNAL_TYPES,
+    TYPES,
+    YGOPRODECK_INTERNAL_TYPES,
+    YGOPRODECK_TYPES,
+} from "./types";
 import type { CardDataLoaderService } from "./core/card/CardDataLoaderService";
 import { YgoprodeckCardDataLoaderService } from "./api/ygoprodeck/YgoprodeckCardDataLoaderService";
 import type { CardDatabase } from "./core/card/CardDatabase";
@@ -21,6 +26,8 @@ import { CardLinkingService } from "./core/card/CardLinkingService";
 import { BanlistService } from "./core/card/banlist/BanlistService";
 import type { EnvironmentConfig } from "./EnvironmentConfig";
 import { DefaultEnvironmentConfig } from "./DefaultEnvironmentConfig";
+import { YgoprodeckApiService } from "./api/ygoprodeck/YgoprodeckApiService";
+import { YgoprodeckService } from "./api/ygoprodeck/YgoprodeckService";
 
 /**
  * Module containing card database access and basic domain services.
@@ -47,12 +54,18 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<FilterService>(TYPES.FilterService).to(FilterService);
 
     // Ygoprodeck.com providers.
-    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
-        YgoprodeckCardDataLoaderService
+    bind<YgoprodeckApiService>(
+        YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService
+    ).to(YgoprodeckApiService);
+    bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
+        YgoprodeckService
     );
     bind<YgoprodeckCardDataLoaderService>(
         YGOPRODECK_TYPES.YgoprodeckCardDataLoaderService
     ).to(YgoprodeckCardDataLoaderService);
+    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
+        YgoprodeckCardDataLoaderService
+    );
 });
 
 /**
