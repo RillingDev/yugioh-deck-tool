@@ -60,9 +60,6 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
         YgoprodeckService
     );
-    bind<YgoprodeckCardDataLoaderService>(
-        YGOPRODECK_TYPES.YgoprodeckCardDataLoaderService
-    ).to(YgoprodeckCardDataLoaderService);
     bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
         YgoprodeckCardDataLoaderService
     );

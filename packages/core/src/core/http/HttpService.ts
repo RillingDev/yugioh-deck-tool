@@ -5,11 +5,18 @@ interface HttpResponse<TData> {
 }
 
 interface HttpRequestConfig {
-    timeout: number;
-    responseType: "json" | "text";
     baseUrl?: string;
+
     params?: Record<string, string | number | boolean | null>;
     data?: Record<string, string | number | boolean | null>;
+    withCredentials?: boolean;
+    auth?: {
+        username: string;
+        password: string;
+    };
+
+    responseType: "json" | "text";
+    timeout: number;
     validateStatus?: (status: number) => boolean;
 }
 

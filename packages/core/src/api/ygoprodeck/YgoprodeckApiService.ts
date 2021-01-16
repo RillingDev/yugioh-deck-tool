@@ -19,13 +19,19 @@ import { Environment } from "../../EnvironmentConfig";
 import type { Format } from "../../core/card/format/Format";
 
 interface CardInfoOptions {
-    includeAliased: boolean;
+    includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
 
     format?: Format | null;
     passcode?: string | null;
     fuzzyName?: string | null;
 
     sorting?: "relevance" | null;
+
+    // Optional Ygoprodeck credentials. When provided, only cards in this users collection are returned.
+    auth?: {
+        username: string;
+        token: string;
+    };
 }
 
 /**
@@ -55,12 +61,10 @@ export class YgoprodeckApiService {
             "cardinfo.php",
             {
                 baseUrl: this.getBaseUrl(),
+                params: this.createCardInfoParams(options),
+                ...this.createAuthConfigValues(options),
                 timeout: 5000,
                 responseType: "json",
-                params: {
-                    ...this.createCardInfoParameters(options),
-                    misc: "yes",
-                },
                 validateStatus: (status: number) =>
                     status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found.
             }
@@ -74,6 +78,9 @@ export class YgoprodeckApiService {
     }
 
     public async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
+        const params = this.createCardInfoParams(options);
+        const authConfigValues = this.createAuthConfigValues(options);
+
         const responseData = await this.loadPaginated<RawCard>(
             YgoprodeckApiService.CHUNK_SIZE,
             async (offset) => {
@@ -81,14 +88,14 @@ export class YgoprodeckApiService {
                     PaginatedResponse<RawCard[]>
                 >("cardinfo.php", {
                     baseUrl: this.getBaseUrl(),
-                    timeout: 10000,
-                    responseType: "json",
                     params: {
-                        ...this.createCardInfoParameters(options),
-                        misc: "yes",
+                        ...params,
                         num: YgoprodeckApiService.CHUNK_SIZE,
                         offset,
                     },
+                    ...authConfigValues,
+                    timeout: 10000,
+                    responseType: "json",
                 });
                 return response.data;
             }
@@ -97,10 +104,11 @@ export class YgoprodeckApiService {
         return responseData.map(mapCard);
     }
 
-    private createCardInfoParameters(
+    private createCardInfoParams(
         options: CardInfoOptions
     ): Record<string, string> {
         const params: Record<string, string> = {};
+        params.misc = "yes"; // Always needed
         if (options.includeAliased) {
             params.includeAliased = "yes";
         }
@@ -159,9 +167,6 @@ export class YgoprodeckApiService {
     }
 
     public async updateViews(card: Card): Promise<void> {
-        if (this.environmentConfig.getEnvironment() != Environment.YGOPRODECK) {
-            throw new Error("Only available in YGOPRODECK environment.");
-        }
         await this.httpService.get<void>("updateViews.php", {
             baseUrl: this.getBaseUrl(),
             timeout: 3000,
@@ -197,5 +202,24 @@ export class YgoprodeckApiService {
         }
 
         return result;
+    }
+
+    private createAuthConfigValues(
+        options: CardInfoOptions
+    ): {
+        withCredentials: boolean;
+        auth?: { username: string; password: string };
+    } {
+        if (options.auth == null) {
+            return { withCredentials: false };
+        }
+
+        return {
+            withCredentials: true,
+            auth: {
+                username: options.auth.username,
+                password: options.auth.token,
+            },
+        };
     }
 }
