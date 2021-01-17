@@ -5,6 +5,7 @@ import { DeckController } from "./controller/DeckController";
 import { APPLICATION_TYPES } from "./types";
 import { DeckUrlController } from "./controller/DeckUrlController";
 import { HostEnvironmentConfig } from "../../ui/src/main";
+import { FilterController } from "./controller/FilterController";
 
 const applicationContainer = new Container();
 applicationContainer.load(baseModule, deckModule);
@@ -19,5 +20,8 @@ applicationContainer
 applicationContainer
     .bind<DeckUrlController>(APPLICATION_TYPES.DeckUrlController)
     .to(DeckUrlController);
+applicationContainer
+    .bind<FilterController>(APPLICATION_TYPES.FilterController)
+    .to(FilterController);
 
 export { applicationContainer };

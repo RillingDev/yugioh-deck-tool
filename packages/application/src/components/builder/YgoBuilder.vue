@@ -37,8 +37,6 @@ import type {
     Card,
     CardDatabase,
     CardFilter,
-    CardPredicate,
-    CardService,
     FilterService,
     Format,
     SortingOptions,
@@ -53,6 +51,7 @@ import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
 import { appStore } from "../../composition/state/appStore";
 import { dataLoaded } from "../../composition/state/dataLoaded";
 import { BSidebar } from "bootstrap-vue";
+import type { FilterController } from "../../controller/FilterController";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(
     APPLICATION_TYPES.CardDatabase
@@ -63,8 +62,8 @@ const sortingService = applicationContainer.get<SortingService>(
 const filterService = applicationContainer.get<FilterService>(
     APPLICATION_TYPES.FilterService
 );
-const cardService = applicationContainer.get<CardService>(
-    APPLICATION_TYPES.CardService
+const filterController = applicationContainer.get<FilterController>(
+    APPLICATION_TYPES.FilterController
 );
 
 const createDefaultFilter = (): CardFilter => {
@@ -84,21 +83,6 @@ const createDefaultFilter = (): CardFilter => {
         banState: null,
 
         sets: [],
-    };
-};
-
-const addableInAtLeastOneDeckPartCardPredicate: CardPredicate = (card) =>
-    card.type.deckParts.size > 0;
-
-// Useful to avoid e.g. alternate artworks
-const createUniqueByNameCardPredicate = (): CardPredicate => {
-    const seenNames = new Set<string>();
-    return (card) => {
-        if (seenNames.has(card.name)) {
-            return false;
-        }
-        seenNames.add(card.name);
-        return true;
     };
 };
 
@@ -140,8 +124,8 @@ export default defineComponent({
             }
             return filterService.filter(cardDatabase.getCards(), {
                 customPredicates: [
-                    addableInAtLeastOneDeckPartCardPredicate,
-                    createUniqueByNameCardPredicate(),
+                    filterController.createAddableInAtLeastOneDeckPartCardPredicate(),
+                    filterController.createUniqueByNameCardPredicate(),
                 ],
                 format: format.value,
             });
