@@ -1,4 +1,5 @@
 import type { DeckPart, DeckService } from "../../../core/src/main";
+import { TYPES } from "../../../core/src/main";
 import { appStore } from "./state/appStore";
 import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
@@ -12,9 +13,7 @@ export type DraggableMoveValidatorData = any;
 // This component prop is used to find the deck part of a component tree.
 export const DECK_PART_PROP = "deckPart";
 
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
+const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 const findComponentParentMatching = (
     el: Vue,

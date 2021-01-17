@@ -15,7 +15,7 @@
 </template>
 <script lang="ts">
 import type { Card, DeckService } from "../../../../core/src/main";
-import { DECK_PART_ARR } from "../../../../core/src/main";
+import { DECK_PART_ARR, TYPES } from "../../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
@@ -24,9 +24,7 @@ import { APPLICATION_TYPES } from "../../types";
 import YgoDeckPart from "./YgoDeckPart.vue";
 import { appStore } from "../../composition/state/appStore";
 
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
+const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export default defineComponent({
     components: {

@@ -9,7 +9,7 @@ import type { HttpService } from "../http/HttpService";
 import type { UrlService } from "../http/UrlService";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 
-interface ImportResult {
+export interface ImportResult {
     readonly deck: Deck;
     readonly missing: string[];
 }
@@ -20,7 +20,7 @@ interface DeckFile {
 }
 
 @injectable()
-class DeckFileService {
+export class DeckFileService {
     private readonly httpService: HttpService;
     private readonly cardDatabase: CardDatabase;
     private readonly deckService: DeckService;
@@ -138,5 +138,3 @@ class DeckFileService {
         };
     }
 }
-
-export { DeckFileService, ImportResult };

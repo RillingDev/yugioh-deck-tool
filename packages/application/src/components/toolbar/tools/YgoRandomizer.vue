@@ -35,7 +35,7 @@ import type {
     DeckRandomizationService,
     Format,
 } from "../../../../../core/src/main";
-import { RandomizationStrategy } from "../../../../../core/src/main";
+import { RandomizationStrategy, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
@@ -47,7 +47,7 @@ import { appStore } from "../../../composition/state/appStore";
 import { dataLoaded } from "../../../composition/state/dataLoaded";
 
 const deckRandomizationService = applicationContainer.get<DeckRandomizationService>(
-    APPLICATION_TYPES.DeckRandomizationService
+    TYPES.DeckRandomizationService
 );
 
 export default defineComponent({

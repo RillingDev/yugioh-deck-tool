@@ -48,18 +48,14 @@ import type {
     PriceService,
     Vendor,
 } from "../../../core/src/main";
-import { DEFAULT_VENDOR_ARR } from "../../../core/src/main";
+import { DEFAULT_VENDOR_ARR, TYPES } from "../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { appStore } from "../composition/state/appStore";
 import { BTooltip } from "bootstrap-vue";
 
-const priceService = applicationContainer.get<PriceService>(
-    APPLICATION_TYPES.PriceService
-);
-const cardService = applicationContainer.get<CardService>(
-    APPLICATION_TYPES.CardService
-);
+const priceService = applicationContainer.get<PriceService>(TYPES.PriceService);
+const cardService = applicationContainer.get<CardService>(TYPES.CardService);
 export default defineComponent({
     components: { BTooltip },
     props: {

@@ -5,13 +5,11 @@ import type {
     DeckPart,
     DeckService,
 } from "../../../../core/src/main";
+import { TYPES } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import type { AppState } from "../AppState";
 
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
+const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export const DECK_NAME_UPDATE = "DECK_NAME_UPDATE";
 

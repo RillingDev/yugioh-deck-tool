@@ -18,13 +18,14 @@
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
 import type { DeckExportService } from "../../../../core/src/main";
+import { TYPES } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { appStore } from "../../composition/state/appStore";
 import { deckEmpty } from "../../composition/state/deckEmpty";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
-    APPLICATION_TYPES.DeckExportService
+    TYPES.DeckExportService
 );
 
 export default defineComponent({

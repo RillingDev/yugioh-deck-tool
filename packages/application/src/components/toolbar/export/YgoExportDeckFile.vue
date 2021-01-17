@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { DeckFileService } from "../../../../../core/src/main";
+import { DeckFileService, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
@@ -16,7 +16,7 @@ import { appStore } from "../../../composition/state/appStore";
 import { showSuccess } from "../../../composition/feedback";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
-    APPLICATION_TYPES.DeckFileService
+    TYPES.DeckFileService
 );
 
 export default defineComponent({

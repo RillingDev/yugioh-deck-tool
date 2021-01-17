@@ -1,7 +1,7 @@
 import { removeEnd } from "lightdash";
 import { APPLICATION_TYPES } from "../types";
 import type { Card, CardDatabase, CardService } from "../../../core/src/main";
-import { CardTypeCategory, DeckPart } from "../../../core/src/main";
+import { CardTypeCategory, DeckPart, TYPES } from "../../../core/src/main";
 import { inject, injectable } from "inversify";
 
 @injectable()
@@ -10,9 +10,9 @@ export class DeckController {
     private readonly cardService: CardService;
 
     constructor(
-        @inject(APPLICATION_TYPES.CardDatabase)
+        @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase,
-        @inject(APPLICATION_TYPES.CardService)
+        @inject(TYPES.CardService)
         cardService: CardService
     ) {
         this.cardDatabase = cardDatabase;

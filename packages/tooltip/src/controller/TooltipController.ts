@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify";
 import type { Card, CardDatabase } from "../../../core/src/main";
-import { FindCardBy } from "../../../core/src/main";
+import { TYPES, FindCardBy } from "../../../core/src/main";
+
 import { TOOLTIP_TYPES } from "../types";
 
 @injectable()
@@ -8,7 +9,7 @@ export class TooltipController {
     private readonly cardDatabase: CardDatabase;
 
     constructor(
-        @inject(TOOLTIP_TYPES.CardDatabase)
+        @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase
     ) {
         this.cardDatabase = cardDatabase;

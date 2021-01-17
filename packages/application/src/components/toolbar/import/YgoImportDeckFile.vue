@@ -11,7 +11,7 @@ import type {
     DeckFileService,
     ImportResult,
 } from "../../../../../core/src/main";
-import { getLogger } from "../../../../../core/src/main";
+import { getLogger, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
@@ -25,7 +25,7 @@ import {
 } from "../../../composition/feedback";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
-    APPLICATION_TYPES.DeckFileService
+    TYPES.DeckFileService
 );
 
 const logger = getLogger("YgoImportDeckFile");

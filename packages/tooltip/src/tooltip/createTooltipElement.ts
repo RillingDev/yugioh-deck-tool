@@ -3,9 +3,9 @@ import {
     CardTypeCategory,
     DEFAULT_VENDOR_ARR,
     Format,
+    TYPES,
 } from "../../../core/src/main";
 import { tooltipContainer } from "../inversify.config";
-import { TOOLTIP_TYPES } from "../types";
 import {
     imageUrlAtk,
     imageUrlAttribute,
@@ -24,9 +24,7 @@ import {
     createUl,
 } from "./domHelper";
 
-const priceService = tooltipContainer.get<PriceService>(
-    TOOLTIP_TYPES.PriceService
-);
+const priceService = tooltipContainer.get<PriceService>(TYPES.PriceService);
 
 export const createLoadingTooltip = (): HTMLElement =>
     createDiv(

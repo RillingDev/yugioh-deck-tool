@@ -1,12 +1,7 @@
-import { TYPES } from "../../core/src/main";
-
-const APPLICATION_TYPES = Object.assign(
-    {
-        DeckController: Symbol.for("DeckController"),
-        DeckUrlController: Symbol.for("DeckUrlController"),
-        FilterController: Symbol.for("FilterController"),
-    },
-    TYPES
-);
+const APPLICATION_TYPES = {
+    DeckController: Symbol.for("DeckController"),
+    DeckUrlController: Symbol.for("DeckUrlController"),
+    FilterController: Symbol.for("FilterController"),
+};
 
 export { APPLICATION_TYPES };

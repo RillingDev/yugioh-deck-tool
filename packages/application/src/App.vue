@@ -15,7 +15,8 @@
 
 <script lang="ts">
 import type { CardDatabase } from "../../core/src/main";
-import { getLogger } from "../../core/src/main";
+import { TYPES, getLogger } from "../../core/src/main";
+
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
@@ -30,9 +31,7 @@ import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import type { DeckUrlController } from "./controller/DeckUrlController";
 
-const cardDatabase = applicationContainer.get<CardDatabase>(
-    APPLICATION_TYPES.CardDatabase
-);
+const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const deckUrlController = applicationContainer.get<DeckUrlController>(
     APPLICATION_TYPES.DeckUrlController
 );

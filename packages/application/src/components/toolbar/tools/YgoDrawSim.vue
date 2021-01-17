@@ -46,16 +46,14 @@
 <script lang="ts">
 import YgoCard from "../../YgoCard.vue";
 import type { Card, Deck, DeckService } from "../../../../../core/src/main";
-import { DeckPart } from "../../../../../core/src/main";
+import { DeckPart, TYPES } from "../../../../../core/src/main";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { appStore } from "../../../composition/state/appStore";
 
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
+const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export default defineComponent({
     components: {

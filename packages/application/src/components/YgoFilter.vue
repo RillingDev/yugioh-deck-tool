@@ -147,6 +147,7 @@ import type {
     CardType,
 } from "../../../core/src/main";
 import {
+    TYPES,
     CardTypeCategory,
     DEFAULT_BAN_STATE_ARR,
 } from "../../../core/src/main";
@@ -163,11 +164,9 @@ import { applicationContainer } from "../inversify.config";
 import { APPLICATION_TYPES } from "../types";
 import { appStore } from "../composition/state/appStore";
 
-const cardDatabase = applicationContainer.get<CardDatabase>(
-    APPLICATION_TYPES.CardDatabase
-);
+const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const banlistService = applicationContainer.get<BanlistService>(
-    APPLICATION_TYPES.BanlistService
+    TYPES.BanlistService
 );
 
 export default defineComponent({

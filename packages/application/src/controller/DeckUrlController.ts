@@ -5,7 +5,7 @@ import type {
     DeckService,
     DeckUriEncodingService,
 } from "../../../core/src/main";
-import { getLogger } from "../../../core/src/main";
+import { getLogger, TYPES } from "../../../core/src/main";
 import { inject, injectable } from "inversify";
 
 @injectable()
@@ -20,11 +20,11 @@ export class DeckUrlController {
     private readonly deckFileService: DeckFileService;
 
     constructor(
-        @inject(APPLICATION_TYPES.DeckService)
+        @inject(TYPES.DeckService)
         deckService: DeckService,
-        @inject(APPLICATION_TYPES.DeckUriEncodingService)
+        @inject(TYPES.DeckUriEncodingService)
         deckUriEncodingService: DeckUriEncodingService,
-        @inject(APPLICATION_TYPES.DeckFileService)
+        @inject(TYPES.DeckFileService)
         deckFileService: DeckFileService
     ) {
         this.deckService = deckService;

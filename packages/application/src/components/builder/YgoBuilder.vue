@@ -42,7 +42,11 @@ import type {
     SortingOptions,
     SortingService,
 } from "../../../../core/src/main";
-import { SortingOrder, SortingStrategy } from "../../../../core/src/main";
+import {
+    SortingOrder,
+    SortingStrategy,
+    TYPES,
+} from "../../../../core/src/main";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
@@ -53,14 +57,12 @@ import { dataLoaded } from "../../composition/state/dataLoaded";
 import { BSidebar } from "bootstrap-vue";
 import type { FilterController } from "../../controller/FilterController";
 
-const cardDatabase = applicationContainer.get<CardDatabase>(
-    APPLICATION_TYPES.CardDatabase
-);
+const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const sortingService = applicationContainer.get<SortingService>(
-    APPLICATION_TYPES.SortingService
+    TYPES.SortingService
 );
 const filterService = applicationContainer.get<FilterService>(
-    APPLICATION_TYPES.FilterService
+    TYPES.FilterService
 );
 const filterController = applicationContainer.get<FilterController>(
     APPLICATION_TYPES.FilterController

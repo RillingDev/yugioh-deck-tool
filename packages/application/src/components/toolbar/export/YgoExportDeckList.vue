@@ -8,6 +8,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import type { DeckExportService } from "../../../../../core/src/main";
+import { TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
@@ -16,7 +17,7 @@ import { appStore } from "../../../composition/state/appStore";
 import { showSuccess } from "../../../composition/feedback";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
-    APPLICATION_TYPES.DeckExportService
+    TYPES.DeckExportService
 );
 
 export default defineComponent({

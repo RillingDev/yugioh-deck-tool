@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import type { Card, DeckService } from "../../../../core/src/main";
-import { CardTypeCategory } from "../../../../core/src/main";
+import { CardTypeCategory, TYPES } from "../../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
@@ -68,9 +68,7 @@ import { browserSupportsTouch } from "../../../../ui/src/main";
 import { showSuccess } from "../../composition/feedback";
 import { enableTooltip, disableTooltip } from "../../../../tooltip/src/main";
 
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
+const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 export default defineComponent({
     props: {
         matches: {

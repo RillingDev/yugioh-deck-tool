@@ -34,7 +34,7 @@ import type {
     Deck,
     DeckUriEncodingService,
 } from "../../../../../core/src/main";
-import { getLogger } from "../../../../../core/src/main";
+import { getLogger, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
@@ -43,7 +43,7 @@ import { appStore } from "../../../composition/state/appStore";
 import { showError, showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
-    APPLICATION_TYPES.DeckUriEncodingService
+    TYPES.DeckUriEncodingService
 );
 
 const logger = getLogger("YgoImportYdkeUrl");

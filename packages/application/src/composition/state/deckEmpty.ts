@@ -4,10 +4,9 @@ import { appStore } from "./appStore";
 import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import type { DeckService } from "../../../../core/src/main";
+import { TYPES } from "../../../../core/src/main";
 
-const deckService = applicationContainer.get<DeckService>(
-    APPLICATION_TYPES.DeckService
-);
+const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export const deckEmpty = (context: SetupContext): ComputedRef<boolean> =>
     computed<boolean>(
