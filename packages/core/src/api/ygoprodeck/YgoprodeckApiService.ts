@@ -207,15 +207,13 @@ export class YgoprodeckApiService {
     private createAuthConfigValues(
         options: CardInfoOptions
     ): {
-        withCredentials: boolean;
         auth?: { username: string; password: string };
     } {
         if (options.auth == null) {
-            return { withCredentials: false };
+            return {};
         }
 
         return {
-            withCredentials: true,
             auth: {
                 username: options.auth.username,
                 password: options.auth.token,
