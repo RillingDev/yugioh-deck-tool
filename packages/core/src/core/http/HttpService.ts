@@ -9,6 +9,7 @@ interface HttpRequestConfig {
 
     params?: Record<string, string | number | boolean | null>;
     data?: Record<string, string | number | boolean | null>;
+    headers?: Record<string, string | number | boolean | null>;
     auth?: {
         username: string;
         password: string;

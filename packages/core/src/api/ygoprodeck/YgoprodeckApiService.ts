@@ -10,13 +10,14 @@ import { mapCardValues } from "./mapping/mapCardValues";
 import type { CardValues } from "../../core/card/type/CardValues";
 import type { UnlinkedCard } from "../../core/card/UnlinkedCard";
 import { TYPES } from "../../types";
-import type { HttpService } from "../../core/http/HttpService";
+import { HttpService } from "../../core/http/HttpService";
 import type { RawArchetype } from "./mapping/mapArchetype";
 import { mapArchetype } from "./mapping/mapArchetype";
 import type { Card } from "../../core/card/Card";
-import type { EnvironmentConfig } from "../../EnvironmentConfig";
-import { Environment } from "../../EnvironmentConfig";
+import { Environment, EnvironmentConfig } from "../../EnvironmentConfig";
+
 import type { Format } from "../../core/card/format/Format";
+import { fromByteArray } from "base64-js";
 
 interface CardInfoOptions {
     includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
@@ -43,6 +44,7 @@ export class YgoprodeckApiService {
 
     private readonly environmentConfig: EnvironmentConfig;
     private readonly httpService: HttpService;
+    private readonly textEncoder: TextEncoder;
 
     constructor(
         @inject(TYPES.HttpService)
@@ -52,6 +54,7 @@ export class YgoprodeckApiService {
     ) {
         this.environmentConfig = environmentConfig;
         this.httpService = httpService;
+        this.textEncoder = new TextEncoder();
     }
 
     public async getSingleCard(
@@ -62,7 +65,7 @@ export class YgoprodeckApiService {
             {
                 baseUrl: this.getBaseUrl(),
                 params: this.createCardInfoParams(options),
-                ...this.createAuthConfigValues(options),
+                headers: this.createAuthHeaders(options),
                 timeout: 5000,
                 responseType: "json",
                 validateStatus: (status: number) =>
@@ -79,7 +82,7 @@ export class YgoprodeckApiService {
 
     public async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
         const params = this.createCardInfoParams(options);
-        const authConfigValues = this.createAuthConfigValues(options);
+        const authHeaders = this.createAuthHeaders(options);
 
         const responseData = await this.loadPaginated<RawCard>(
             YgoprodeckApiService.CHUNK_SIZE,
@@ -93,7 +96,7 @@ export class YgoprodeckApiService {
                         num: YgoprodeckApiService.CHUNK_SIZE,
                         offset,
                     },
-                    ...authConfigValues,
+                    headers: authHeaders,
                     timeout: 10000,
                     responseType: "json",
                 });
@@ -204,20 +207,20 @@ export class YgoprodeckApiService {
         return result;
     }
 
-    private createAuthConfigValues(
+    private createAuthHeaders(
         options: CardInfoOptions
-    ): {
-        auth?: { username: string; password: string };
-    } {
+    ): Record<string, string> {
         if (options.auth == null) {
             return {};
         }
-
+        // See https://tools.ietf.org/html/rfc7617 and https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme
+        const encodedCredentials = fromByteArray(
+            this.textEncoder.encode(
+                `${options.auth.username}:${options.auth.token}`
+            )
+        );
         return {
-            auth: {
-                username: options.auth.username,
-                password: options.auth.token,
-            },
+            "X-Authorization": `Basic ${encodedCredentials}`,
         };
     }
 }
