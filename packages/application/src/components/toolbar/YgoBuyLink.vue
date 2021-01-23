@@ -20,7 +20,6 @@ import { computed, defineComponent } from "@vue/composition-api";
 import type { DeckExportService } from "../../../../core/src/main";
 import { TYPES } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import { appStore } from "../../composition/state/appStore";
 import { deckEmpty } from "../../composition/state/deckEmpty";
 

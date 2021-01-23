@@ -36,7 +36,6 @@ import type {
 } from "../../../../../core/src/main";
 import { getLogger, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
-import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { appStore } from "../../../composition/state/appStore";

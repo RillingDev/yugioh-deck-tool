@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
 import { TYPES, YGOPRODECK_INTERNAL_TYPES } from "../../types";
-import type { YgoprodeckApiService } from "./YgoprodeckApiService";
+import { YgoprodeckApiService } from "./YgoprodeckApiService";
 import type { Card } from "../../core/card/Card";
-import type { EnvironmentConfig } from "../../EnvironmentConfig";
-import { Environment } from "../../EnvironmentConfig";
+import { Environment, EnvironmentConfig } from "../../EnvironmentConfig";
+
 import type { UnlinkedCard } from "../../core/card/UnlinkedCard";
 
 @injectable()

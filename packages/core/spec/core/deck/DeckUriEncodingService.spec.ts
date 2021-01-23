@@ -1,7 +1,6 @@
 import "reflect-metadata";
 
 import { MemoryCardDatabase } from "../../../src/core/card/MemoryCardDatabase";
-import { deflate } from "pako";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { when } from "ts-mockito";

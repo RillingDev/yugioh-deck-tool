@@ -20,7 +20,6 @@ import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import YgoDeckPart from "./YgoDeckPart.vue";
 import { appStore } from "../../composition/state/appStore";
 

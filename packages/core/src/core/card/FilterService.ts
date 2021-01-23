@@ -5,10 +5,10 @@ import type { Format } from "./format/Format";
 import type { CardType } from "./type/CardType";
 import { intersection, isEmpty } from "lodash";
 import type { BanState } from "./banlist/BanState";
-import type { CardService } from "./CardService";
+import { CardService } from "./CardService";
 import { TYPES } from "../../types";
 import type { CardTypeCategory } from "./type/CardTypeCategory";
-import type { BanlistService } from "./banlist/BanlistService";
+import { BanlistService } from "./banlist/BanlistService";
 
 type CardPredicate = (card: Card) => boolean;
 

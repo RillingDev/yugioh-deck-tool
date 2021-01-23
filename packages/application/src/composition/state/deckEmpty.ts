@@ -2,7 +2,6 @@ import type { ComputedRef, SetupContext } from "@vue/composition-api";
 import { computed } from "@vue/composition-api";
 import { appStore } from "./appStore";
 import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import type { DeckService } from "../../../../core/src/main";
 import { TYPES } from "../../../../core/src/main";
 

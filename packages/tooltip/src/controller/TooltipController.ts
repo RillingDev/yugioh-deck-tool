@@ -1,8 +1,6 @@
 import { inject, injectable } from "inversify";
-import type { Card, CardDatabase } from "../../../core/src/main";
-import { TYPES, FindCardBy } from "../../../core/src/main";
-
-import { TOOLTIP_TYPES } from "../types";
+import type { Card } from "../../../core/src/main";
+import { FindCardBy, TYPES, CardDatabase } from "../../../core/src/main";
 
 @injectable()
 export class TooltipController {

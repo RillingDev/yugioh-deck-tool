@@ -49,7 +49,6 @@ import type { Card, Deck, DeckService } from "../../../../../core/src/main";
 import { DeckPart, TYPES } from "../../../../../core/src/main";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
-import { APPLICATION_TYPES } from "../../../types";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { appStore } from "../../../composition/state/appStore";
 

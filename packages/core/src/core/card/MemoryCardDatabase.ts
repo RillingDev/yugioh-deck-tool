@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { INTERNAL_TYPES, TYPES } from "../../types";
-import type { CardDataLoaderService } from "./CardDataLoaderService";
+import { CardDataLoaderService } from "./CardDataLoaderService";
 import type { Card } from "./Card";
 import type { CardSet } from "./set/CardSet";
 import type { CardDatabase } from "./CardDatabase";
@@ -9,7 +9,7 @@ import type { CardType } from "./type/CardType";
 import { CardTypeCategory } from "./type/CardTypeCategory";
 import type { UnlinkedCard } from "./UnlinkedCard";
 import { deepFreeze } from "lightdash";
-import type { CardLinkingService } from "./CardLinkingService";
+import { CardLinkingService } from "./CardLinkingService";
 import { getLogger } from "../../logger";
 
 @injectable()

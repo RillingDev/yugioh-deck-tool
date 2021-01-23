@@ -61,12 +61,11 @@ import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 import { createMoveFromBuilderValidator } from "../../composition/dragging";
 import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import { appStore } from "../../composition/state/appStore";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
 import { browserSupportsTouch } from "../../../../browser-common/src/main";
 import { showSuccess } from "../../composition/feedback";
-import { enableTooltip, disableTooltip } from "../../../../tooltip/src/main";
+import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 export default defineComponent({

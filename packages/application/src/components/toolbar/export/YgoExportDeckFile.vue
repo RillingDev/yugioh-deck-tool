@@ -9,7 +9,6 @@
 import { defineComponent } from "@vue/composition-api";
 import { DeckFileService, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
-import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../../../browser-common/src/main";
 import { appStore } from "../../../composition/state/appStore";

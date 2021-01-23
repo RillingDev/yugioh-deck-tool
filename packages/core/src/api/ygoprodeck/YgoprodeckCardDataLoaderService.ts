@@ -5,7 +5,7 @@ import type { CardValues } from "../../core/card/type/CardValues";
 import type { UnlinkedCard } from "../../core/card/UnlinkedCard";
 import { YGOPRODECK_INTERNAL_TYPES } from "../../types";
 import { FindCardBy } from "../../core/card/CardDatabase";
-import type { YgoprodeckApiService } from "./YgoprodeckApiService";
+import { YgoprodeckApiService } from "./YgoprodeckApiService";
 
 @injectable()
 class YgoprodeckCardDataLoaderService implements CardDataLoaderService {

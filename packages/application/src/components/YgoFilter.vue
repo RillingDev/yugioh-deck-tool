@@ -147,9 +147,9 @@ import type {
     CardType,
 } from "../../../core/src/main";
 import {
-    TYPES,
     CardTypeCategory,
     DEFAULT_BAN_STATE_ARR,
+    TYPES,
 } from "../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import {
@@ -161,7 +161,6 @@ import {
 
 import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
-import { APPLICATION_TYPES } from "../types";
 import { appStore } from "../composition/state/appStore";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);

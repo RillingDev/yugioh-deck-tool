@@ -1,11 +1,11 @@
 import { inject, injectable } from "inversify";
 import type { Deck } from "./Deck";
 import { TYPES } from "../../types";
-import type { CardDatabase } from "../card/CardDatabase";
-import { FindCardBy } from "../card/CardDatabase";
+import { CardDatabase, FindCardBy } from "../card/CardDatabase";
+
 import type { Card } from "../card/Card";
 import { isEqual } from "lodash";
-import type { DeckService } from "./DeckService";
+import { DeckService } from "./DeckService";
 import { fromByteArray, toByteArray } from "base64-js";
 import { deflateRaw, inflateRaw } from "pako";
 import { DECK_PART_ARR } from "./DeckPart";

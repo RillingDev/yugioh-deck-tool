@@ -37,7 +37,6 @@ import type {
 } from "../../../../../core/src/main";
 import { RandomizationStrategy, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
-import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, ref } from "@vue/composition-api";

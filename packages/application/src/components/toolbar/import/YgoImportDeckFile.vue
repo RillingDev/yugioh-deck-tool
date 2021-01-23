@@ -13,7 +13,6 @@ import type {
 } from "../../../../../core/src/main";
 import { getLogger, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
-import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { readFile, uploadFile } from "../../../../../browser-common/src/main";
 import { DECK_REPLACE } from "../../../store/modules/deck";
