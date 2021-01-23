@@ -4,7 +4,7 @@ import { Container } from "inversify";
 import { DeckController } from "./controller/DeckController";
 import { APPLICATION_TYPES } from "./types";
 import { DeckUrlController } from "./controller/DeckUrlController";
-import { HostEnvironmentConfig } from "../../ui/src/main";
+import { HostEnvironmentConfig } from "../../browser-common/src/main";
 import { FilterController } from "./controller/FilterController";
 
 const applicationContainer = new Container();

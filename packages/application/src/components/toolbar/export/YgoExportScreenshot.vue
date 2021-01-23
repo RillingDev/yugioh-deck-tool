@@ -9,7 +9,7 @@
 import { defineComponent, ref } from "@vue/composition-api";
 import { getLogger } from "../../../../../core/src/main";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { createScreenshot, downloadFile } from "../../../../../ui/src/main";
+import { createScreenshot, downloadFile } from "../../../../../browser-common/src/main";
 import { deckEmpty } from "../../../composition/state/deckEmpty";
 import {
     showError,

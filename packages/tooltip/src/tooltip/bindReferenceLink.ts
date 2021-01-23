@@ -1,7 +1,7 @@
 import { tooltipContainer } from "../inversify.config";
 import type { Card, CardService } from "../../../core/src/main";
 import { TYPES } from "../../../core/src/main";
-import { browserSupportsTouch } from "../../../ui/src/main";
+import { browserSupportsTouch } from "../../../browser-common/src/main";
 
 const cardService = tooltipContainer.get<CardService>(TYPES.CardService);
 

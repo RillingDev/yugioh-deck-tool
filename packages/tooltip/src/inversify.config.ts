@@ -3,7 +3,7 @@ import { baseModule, TYPES } from "../../core/src/main";
 import { Container } from "inversify";
 import { TOOLTIP_TYPES } from "./types";
 import { TooltipController } from "./controller/TooltipController";
-import { HostEnvironmentConfig } from "../../ui/src/main";
+import { HostEnvironmentConfig } from "../../browser-common/src/main";
 
 const tooltipContainer = new Container();
 tooltipContainer.load(baseModule);

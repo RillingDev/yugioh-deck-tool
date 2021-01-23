@@ -1,5 +1,5 @@
 {
-    "name": "yugioh-deck-tool-ui",
+    "name": "yugioh-deck-tool-browser-common",
     "version": "5.0.0",
     "private": true,
     "scripts": {

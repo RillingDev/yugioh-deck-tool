@@ -14,7 +14,7 @@ import {
     imageUrlLinkMarker,
     imageUrlSubType,
     imageUrlType,
-} from "../../../ui/src/main";
+} from "../../../browser-common/src/main";
 import {
     createDiv,
     createImg,

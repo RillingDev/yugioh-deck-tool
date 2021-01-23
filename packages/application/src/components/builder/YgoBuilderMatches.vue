@@ -64,7 +64,7 @@ import { applicationContainer } from "../../inversify.config";
 import { APPLICATION_TYPES } from "../../types";
 import { appStore } from "../../composition/state/appStore";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
-import { browserSupportsTouch } from "../../../../ui/src/main";
+import { browserSupportsTouch } from "../../../../browser-common/src/main";
 import { showSuccess } from "../../composition/feedback";
 import { enableTooltip, disableTooltip } from "../../../../tooltip/src/main";
 
@@ -136,8 +136,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../ui/src/styles/variables";
-@import "../../../../ui/src/styles/mixins";
+@import "../../../../browser-common/src/styles/variables";
+@import "../../../../browser-common/src/styles/mixins";
 
 .deck-tool {
     .builder-matches {

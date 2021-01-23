@@ -14,7 +14,7 @@ import type { DeckUriEncodingService } from "../../../../../core/src/main";
 import { TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { copyText } from "../../../../../ui/src/main";
+import { copyText } from "../../../../../browser-common/src/main";
 import { appStore } from "../../../composition/state/appStore";
 import { showSuccess } from "../../../composition/feedback";
 

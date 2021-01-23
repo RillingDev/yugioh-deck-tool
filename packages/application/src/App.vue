@@ -85,8 +85,8 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import "../ui/src/styles/mixins";
-@import "../ui/src/styles/variables";
+@import "../../browser-common/src/styles/mixins";
+@import "../../browser-common/src/styles/variables";
 
 .deck-tool {
     .deck-tool__body {

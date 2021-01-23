@@ -66,8 +66,8 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import "../../../../ui/src/styles/variables";
-@import "../../../../ui/src/styles/mixins";
+@import "../../../../browser-common/src/styles/variables";
+@import "../../../../browser-common/src/styles/mixins";
 
 .deck-tool {
     .sorting-options {

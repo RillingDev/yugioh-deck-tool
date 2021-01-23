@@ -100,8 +100,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../ui/src/styles/component/price";
-@import "../../../ui/src/styles/variables";
+@import "../../../browser-common/src/styles/component/price";
+@import "../../../browser-common/src/styles/variables";
 
 .deck-tool,
 .deck-tool__portal {
