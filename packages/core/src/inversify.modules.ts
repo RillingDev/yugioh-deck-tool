@@ -52,21 +52,10 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<PriceService>(TYPES.PriceService).to(PriceService);
     bind<SortingService>(TYPES.SortingService).to(SortingService);
     bind<FilterService>(TYPES.FilterService).to(FilterService);
-
-    // Ygoprodeck.com providers.
-    bind<YgoprodeckApiService>(
-        YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService
-    ).to(YgoprodeckApiService);
-    bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
-        YgoprodeckService
-    );
-    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
-        YgoprodeckCardDataLoaderService
-    );
 });
 
 /**
- * Module containing deck import/export/modification functionality. Requires {@link baseModule}.
+ * Module containing deck import/export/modification functionality. Requires {@link ygoprodeckModule}.
  */
 export const deckModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<DeckExportService>(TYPES.DeckExportService).to(DeckExportService);
@@ -78,4 +67,20 @@ export const deckModule = new ContainerModule((bind: interfaces.Bind) => {
         DeckRandomizationService
     );
     bind<DeckService>(TYPES.DeckService).to(DeckService);
+});
+
+/**
+ * Module containing ygoprodeck.com providers.
+ */
+export const ygoprodeckModule = new ContainerModule((bind: interfaces.Bind) => {
+    bind<YgoprodeckApiService>(
+        YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService
+    ).to(YgoprodeckApiService);
+    bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
+        YgoprodeckService
+    );
+
+    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
+        YgoprodeckCardDataLoaderService
+    );
 });

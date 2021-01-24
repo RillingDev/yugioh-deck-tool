@@ -3,10 +3,12 @@ import "reflect-metadata";
 import { createCard } from "../../../helper/dataFactories";
 import { Container } from "inversify";
 import type { BanlistService } from "../../../../src/core/card/banlist/BanlistService";
-import { baseModule } from "../../../../src/inversify.config";
+import { baseModule } from "../../../../src/inversify.modules";
 import { TYPES } from "../../../../src/types";
 import { Format } from "../../../../src/core/card/format/Format";
 import { DefaultBanState } from "../../../../src/core/card/banlist/BanState";
+import type { CardDataLoaderService } from "../../../../src/core/card/CardDataLoaderService";
+import { MockDataLoaderService } from "../../../helper/MockDataLoaderService";
 
 describe("BanlistService", () => {
     let banlistService: BanlistService;
@@ -14,6 +16,9 @@ describe("BanlistService", () => {
     beforeEach(() => {
         const container = new Container();
         container.load(baseModule);
+        container
+            .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
+            .to(MockDataLoaderService);
 
         banlistService = container.get<BanlistService>(TYPES.BanlistService);
     });

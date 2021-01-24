@@ -8,9 +8,11 @@ import { Container } from "inversify";
 import type { DeckUriEncodingService } from "../../../src/core/deck/DeckUriEncodingService";
 import type { CardDatabase } from "../../../src/core/card/CardDatabase";
 import { FindCardBy } from "../../../src/core/card/CardDatabase";
-import { baseModule, deckModule } from "../../../src/inversify.config";
+import { baseModule, deckModule } from "../../../src/inversify.modules";
 import { TYPES } from "../../../src/types";
 import { DeckPart } from "../../../src/core/deck/DeckPart";
+import type { CardDataLoaderService } from "../../../src/core/card/CardDataLoaderService";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("DeckUriEncodingService", () => {
     let deckUriEncodingService: DeckUriEncodingService;
@@ -20,6 +22,9 @@ describe("DeckUriEncodingService", () => {
     beforeEach(() => {
         const container = new Container();
         container.load(baseModule, deckModule);
+        container
+            .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
+            .to(MockDataLoaderService);
 
         mockCardDatabase = bindMock<CardDatabase>(
             container,

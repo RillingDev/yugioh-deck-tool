@@ -3,10 +3,12 @@ import "reflect-metadata";
 import { createCard, createCardType } from "../../helper/dataFactories";
 import { Container } from "inversify";
 import type { DeckExportService } from "../../../src/core/deck/DeckExportService";
-import { baseModule, deckModule } from "../../../src/inversify.config";
+import { baseModule, deckModule } from "../../../src/inversify.modules";
 import { TYPES } from "../../../src/types";
 import { CardTypeCategory } from "../../../src/core/card/type/CardTypeCategory";
 import { DeckPart } from "../../../src/core/deck/DeckPart";
+import type { CardDataLoaderService } from "../../../src/core/card/CardDataLoaderService";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("DeckExportService", () => {
     let deckExportService: DeckExportService;
@@ -14,6 +16,9 @@ describe("DeckExportService", () => {
     beforeEach(() => {
         const container = new Container();
         container.load(baseModule, deckModule);
+        container
+            .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
+            .to(MockDataLoaderService);
 
         deckExportService = container.get<DeckExportService>(
             TYPES.DeckExportService

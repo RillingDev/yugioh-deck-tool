@@ -1,7 +1,7 @@
 export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";
-export { TYPES, YGOPRODECK_TYPES } from "./types";
-export { baseModule, deckModule } from "./inversify.config";
+export { TYPES } from "./types";
+export { baseModule, deckModule } from "./inversify.modules";
 
 export { Environment } from "./EnvironmentConfig";
 export type { EnvironmentConfig } from "./EnvironmentConfig";
@@ -54,5 +54,7 @@ export { DeckFileService } from "./core/deck/DeckFileService";
 export type { ImportResult } from "./core/deck/DeckFileService";
 export type { UrlService } from "./core/http/UrlService";
 
+export { YGOPRODECK_TYPES } from "./types";
+export { ygoprodeckModule } from "./inversify.modules";
 export type { YgoprodeckCardDataLoaderService } from "./api/ygoprodeck/YgoprodeckCardDataLoaderService";
 export type { YgoprodeckService } from "./api/ygoprodeck/YgoprodeckService";

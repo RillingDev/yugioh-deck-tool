@@ -1,5 +1,10 @@
 import type { EnvironmentConfig } from "../../core/src/main";
-import { baseModule, deckModule, TYPES } from "../../core/src/main";
+import {
+    ygoprodeckModule,
+    deckModule,
+    TYPES,
+    baseModule,
+} from "../../core/src/main";
 import { Container } from "inversify";
 import { DeckController } from "./controller/DeckController";
 import { APPLICATION_TYPES } from "./types";
@@ -8,7 +13,7 @@ import { HostEnvironmentConfig } from "../../browser-common/src/main";
 import { FilterController } from "./controller/FilterController";
 
 const applicationContainer = new Container();
-applicationContainer.load(baseModule, deckModule);
+applicationContainer.load(baseModule, ygoprodeckModule, deckModule);
 
 applicationContainer
     .rebind<EnvironmentConfig>(TYPES.EnvironmentConfig)

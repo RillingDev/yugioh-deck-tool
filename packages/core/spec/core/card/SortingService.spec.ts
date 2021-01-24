@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
 import { bindMock } from "../../helper/bindMock";
-import { baseModule } from "../../../src/inversify.config";
+import { baseModule } from "../../../src/inversify.modules";
 import { TYPES } from "../../../src/types";
 import type { SortingService } from "../../../src/core/card/SortingService";
 import {
@@ -13,6 +13,8 @@ import {
 import type { CardDatabase } from "../../../src/core/card/CardDatabase";
 import { MemoryCardDatabase } from "../../../src/core/card/MemoryCardDatabase";
 import { Format } from "../../../src/core/card/format/Format";
+import type { CardDataLoaderService } from "../../../src/core/card/CardDataLoaderService";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("SortingService", () => {
     let sortingService: SortingService;
@@ -22,6 +24,9 @@ describe("SortingService", () => {
     beforeEach(() => {
         const container = new Container();
         container.load(baseModule);
+        container
+            .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
+            .to(MockDataLoaderService);
 
         mockCardDatabase = bindMock<CardDatabase>(
             container,

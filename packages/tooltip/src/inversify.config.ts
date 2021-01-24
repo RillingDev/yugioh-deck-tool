@@ -1,12 +1,12 @@
 import type { EnvironmentConfig } from "../../core/src/main";
-import { baseModule, TYPES } from "../../core/src/main";
+import { ygoprodeckModule, TYPES, baseModule } from "../../core/src/main";
 import { Container } from "inversify";
 import { TOOLTIP_TYPES } from "./types";
 import { TooltipController } from "./controller/TooltipController";
 import { HostEnvironmentConfig } from "../../browser-common/src/main";
 
 const tooltipContainer = new Container();
-tooltipContainer.load(baseModule);
+tooltipContainer.load(baseModule, ygoprodeckModule);
 
 tooltipContainer
     .rebind<EnvironmentConfig>(TYPES.EnvironmentConfig)

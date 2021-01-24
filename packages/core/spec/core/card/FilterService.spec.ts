@@ -9,13 +9,15 @@ import type {
     CardPredicate,
     FilterService,
 } from "../../../src/core/card/FilterService";
-import { baseModule } from "../../../src/inversify.config";
+import { baseModule } from "../../../src/inversify.modules";
 import { BanlistService } from "../../../src/core/card/banlist/BanlistService";
 import { TYPES } from "../../../src/types";
 import { CardTypeCategory } from "../../../src/core/card/type/CardTypeCategory";
 import { DeckPart } from "../../../src/core/deck/DeckPart";
 import { Format } from "../../../src/core/card/format/Format";
 import { DefaultBanState } from "../../../src/core/card/banlist/BanState";
+import type { CardDataLoaderService } from "../../../src/core/card/CardDataLoaderService";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("FilterService", () => {
     let filterService: FilterService;
@@ -26,6 +28,9 @@ describe("FilterService", () => {
     beforeEach(() => {
         const container = new Container();
         container.load(baseModule);
+        container
+            .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
+            .to(MockDataLoaderService);
 
         mockCardService = bindMock<CardService>(
             container,
