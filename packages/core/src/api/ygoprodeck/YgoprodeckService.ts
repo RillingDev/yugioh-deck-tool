@@ -4,8 +4,6 @@ import { YgoprodeckApiService } from "./YgoprodeckApiService";
 import type { Card } from "../../core/card/Card";
 import { Environment, EnvironmentConfig } from "../../EnvironmentConfig";
 
-import type { UnlinkedCard } from "../../core/card/UnlinkedCard";
-
 @injectable()
 export class YgoprodeckService {
     private readonly ygoprodeckApiService: YgoprodeckApiService;
@@ -26,16 +24,19 @@ export class YgoprodeckService {
         return this.ygoprodeckApiService.updateViews(card);
     }
 
-    public async getCardCollection(
+    public async getCardCollectionPasscodes(
         username: string,
         token: string
-    ): Promise<UnlinkedCard[]> {
+    ): Promise<Set<string>> {
         this.validateEnv();
-        return this.ygoprodeckApiService.getCards({
+        const unlinkedCards = await this.ygoprodeckApiService.getCards({
             format: null,
             includeAliased: true,
             auth: { username, token },
         });
+        return new Set(
+            unlinkedCards.map((unlinkedCard) => unlinkedCard.passcode)
+        );
     }
 
     private validateEnv(): void {

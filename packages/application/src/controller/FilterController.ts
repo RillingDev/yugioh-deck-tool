@@ -1,23 +1,15 @@
-import type { Card, CardPredicate } from "../../../core/src/main";
+import type { CardPredicate } from "../../../core/src/main";
 import { injectable } from "inversify";
 
 @injectable()
 export class FilterController {
     /**
-     * Creates a predicate only allowing cards exist in the provided list.
+     * Creates a predicate only allowing card passcodes provided.
      *
-     * @return a predicate only allowing cards exist in the provided list.
+     * @return a predicate only allowing card passcodes provided.
      */
-    public createIncludedInListCardPredicate(
-        cards: ReadonlyArray<Card>
-    ): CardPredicate {
-        return this.createPassCodePredicate(
-            new Set<string>(cards.map((card) => card.passcode))
-        );
-    }
-
-    private createPassCodePredicate(passcodes: Set<string>): CardPredicate {
-        return (card: Card) => passcodes.has(card.passcode);
+    public createPassCodePredicate(passcodes: Set<string>): CardPredicate {
+        return (card) => passcodes.has(card.passcode);
     }
 
     /**
