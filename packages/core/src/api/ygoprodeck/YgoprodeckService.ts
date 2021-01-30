@@ -1,5 +1,6 @@
 import { inject, injectable } from "inversify";
 import { TYPES, YGOPRODECK_INTERNAL_TYPES } from "../../types";
+import type { Credentials } from "./YgoprodeckApiService";
 import { YgoprodeckApiService } from "./YgoprodeckApiService";
 import type { Card } from "../../core/card/Card";
 import { Environment, EnvironmentConfig } from "../../EnvironmentConfig";
@@ -25,14 +26,13 @@ export class YgoprodeckService {
     }
 
     public async getCardCollectionPasscodes(
-        username: string,
-        token: string
+        credentials: Credentials
     ): Promise<Set<string>> {
         this.validateEnv();
         const unlinkedCards = await this.ygoprodeckApiService.getCards({
             format: null,
             includeAliased: true,
-            auth: { username, token },
+            auth: credentials,
         });
         return new Set(
             unlinkedCards.map((unlinkedCard) => unlinkedCard.passcode)

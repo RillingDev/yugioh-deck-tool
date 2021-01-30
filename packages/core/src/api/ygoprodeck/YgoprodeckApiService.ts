@@ -20,19 +20,21 @@ import type { Format } from "../../core/card/format/Format";
 import { fromByteArray } from "base64-js";
 
 interface CardInfoOptions {
-    includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
+    readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
 
-    format?: Format | null;
-    passcode?: string | null;
-    fuzzyName?: string | null;
+    readonly format?: Format | null;
+    readonly passcode?: string | null;
+    readonly fuzzyName?: string | null;
 
-    sorting?: "relevance" | null;
+    readonly sorting?: "relevance" | null;
 
     // Optional Ygoprodeck credentials. When provided, only cards in this users collection are returned.
-    auth?: {
-        username: string;
-        token: string;
-    };
+    readonly auth?: Credentials;
+}
+
+export interface Credentials {
+    readonly username: string;
+    readonly token: string;
 }
 
 /**

@@ -10,6 +10,7 @@ import { DeckController } from "./controller/DeckController";
 import { APPLICATION_TYPES } from "./types";
 import { DeckUrlController } from "./controller/DeckUrlController";
 import { HostEnvironmentConfig } from "../../browser-common/src/main";
+import { YgoprodeckController } from "./controller/YgoprodeckController";
 
 const applicationContainer = new Container();
 applicationContainer.load(baseModule, ygoprodeckModule, deckModule);
@@ -24,5 +25,9 @@ applicationContainer
 applicationContainer
     .bind<DeckUrlController>(APPLICATION_TYPES.DeckUrlController)
     .to(DeckUrlController);
+
+applicationContainer
+    .bind<YgoprodeckController>(APPLICATION_TYPES.YgoprodeckController)
+    .to(YgoprodeckController);
 
 export { applicationContainer };

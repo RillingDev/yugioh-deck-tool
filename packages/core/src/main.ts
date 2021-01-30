@@ -57,4 +57,5 @@ export {
 export { YGOPRODECK_TYPES } from "./types";
 export { ygoprodeckModule } from "./inversify.modules";
 export type { YgoprodeckCardDataLoaderService } from "./api/ygoprodeck/YgoprodeckCardDataLoaderService";
+export type { Credentials } from "./api/ygoprodeck/YgoprodeckApiService";
 export type { YgoprodeckService } from "./api/ygoprodeck/YgoprodeckService";

@@ -32,6 +32,8 @@ import { defineComponent, ref } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError } from "../../composition/feedback";
+import { APPLICATION_TYPES } from "../../types";
+import type { YgoprodeckController } from "../../controller/YgoprodeckController";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
     YGOPRODECK_TYPES.YgoprodeckService
@@ -41,6 +43,9 @@ const environmentConfig = applicationContainer.get<EnvironmentConfig>(
 );
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
     TYPES.CardPredicateService
+);
+const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
+    APPLICATION_TYPES.YgoprodeckController
 );
 
 const logger = getLogger("YgoCollectionFilter");
@@ -62,8 +67,7 @@ export default defineComponent({
                 return () => true;
             }
             const cards = await ygoprodeckService.getCardCollectionPasscodes(
-                "foo",
-                "bar"
+                ygoprodeckController.getCredentials()
             );
             return cardPredicateService.createPassCodePredicate(cards);
         };
