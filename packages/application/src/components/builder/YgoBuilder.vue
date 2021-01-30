@@ -127,6 +127,7 @@ export default defineComponent({
             return filterService.filter(cardDatabase.getCards(), {
                 customPredicates: [
                     filterController.createAddableInAtLeastOneDeckPartCardPredicate(),
+                    ...(filter.customPredicates ?? []),
                     filterController.createUniqueByNameCardPredicate(),
                 ],
                 format: format.value,

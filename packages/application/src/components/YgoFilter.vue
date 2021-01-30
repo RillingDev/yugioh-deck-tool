@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form @submit.prevent="() => {}">
         <div class="form-group" v-if="isFieldVisible('search')">
             <input
                 @input="() => onFilterChanged()"
@@ -135,6 +135,16 @@
                 v-model="internalFilter.linkMarkers"
             />
         </div>
+
+        <template v-if="isYgoprodeck && isFieldVisible('collection')">
+            <hr />
+            <YgoCollectionFilter
+                @change="
+                    (predicate) => onCollectionFilterPredicateChange(predicate)
+                "
+            />
+            <hr />
+        </template>
     </form>
 </template>
 
@@ -143,12 +153,15 @@ import type {
     BanlistService,
     CardDatabase,
     CardFilter,
+    CardPredicate,
     CardSet,
     CardType,
+    EnvironmentConfig,
 } from "../../../core/src/main";
 import {
     CardTypeCategory,
     DEFAULT_BAN_STATE_ARR,
+    Environment,
     TYPES,
 } from "../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
@@ -162,10 +175,14 @@ import {
 import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
 import { appStore } from "../composition/state/appStore";
+import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const banlistService = applicationContainer.get<BanlistService>(
     TYPES.BanlistService
+);
+const environmentConfig = applicationContainer.get<EnvironmentConfig>(
+    TYPES.EnvironmentConfig
 );
 
 export default defineComponent({
@@ -182,6 +199,7 @@ export default defineComponent({
     },
     components: {
         VSelect,
+        YgoCollectionFilter,
     },
     model: {
         prop: "filter",
@@ -225,12 +243,22 @@ export default defineComponent({
         const isMonster = computed<boolean>(
             () => internalFilter.typeCategory === CardTypeCategory.MONSTER
         );
+        const isYgoprodeck = computed<boolean>(
+            () => environmentConfig.getEnvironment() == Environment.YGOPRODECK
+        );
 
         const isFieldVisible = (fieldName: string): boolean =>
             props.showOnly == null || props.showOnly.includes(fieldName);
 
         const onFilterChanged = (): void =>
             context.emit("change", internalFilter);
+
+        const onCollectionFilterPredicateChange = (
+            predicate: CardPredicate
+        ): void => {
+            internalFilter.customPredicates = [predicate];
+            onFilterChanged();
+        };
 
         watch(
             () => internalFilter.typeCategory,
@@ -263,8 +291,10 @@ export default defineComponent({
             internalFilter,
 
             hasBanStates,
+            isYgoprodeck,
             isMonster,
 
+            onCollectionFilterPredicateChange,
             onFilterChanged,
             isFieldVisible,
         };
