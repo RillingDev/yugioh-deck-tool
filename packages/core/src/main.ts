@@ -42,17 +42,17 @@ export type {
     SortingOptions,
 } from "./core/card/SortingService";
 export { SortingStrategy, SortingOrder } from "./core/card/SortingService";
-export type {
-    CardFilter,
-    FilterService,
-    CardPredicate,
-} from "./core/card/FilterService";
+export type { CardFilter, FilterService } from "./core/card/FilterService";
 export type { DeckRandomizationService } from "./core/deck/DeckRandomizationService";
 export { RandomizationStrategy } from "./core/deck/DeckRandomizationService";
 export type { DeckUriEncodingService } from "./core/deck/DeckUriEncodingService";
 export { DeckFileService } from "./core/deck/DeckFileService";
 export type { ImportResult } from "./core/deck/DeckFileService";
 export type { UrlService } from "./core/http/UrlService";
+export {
+    CardPredicate,
+    CardPredicateService,
+} from "./core/card/CardPredicateService";
 
 export { YGOPRODECK_TYPES } from "./types";
 export { ygoprodeckModule } from "./inversify.modules";

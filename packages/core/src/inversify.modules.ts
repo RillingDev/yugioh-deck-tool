@@ -28,6 +28,7 @@ import type { EnvironmentConfig } from "./EnvironmentConfig";
 import { DefaultEnvironmentConfig } from "./DefaultEnvironmentConfig";
 import { YgoprodeckApiService } from "./api/ygoprodeck/YgoprodeckApiService";
 import { YgoprodeckService } from "./api/ygoprodeck/YgoprodeckService";
+import { CardPredicateService } from "./core/card/CardPredicateService";
 
 /**
  * Module containing card database access and basic domain services.
@@ -48,6 +49,9 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
         .inSingletonScope();
 
     bind<CardService>(TYPES.CardService).to(CardService);
+    bind<CardPredicateService>(TYPES.CardPredicateService).to(
+        CardPredicateService
+    );
     bind<BanlistService>(TYPES.BanlistService).to(BanlistService);
     bind<PriceService>(TYPES.PriceService).to(PriceService);
     bind<SortingService>(TYPES.SortingService).to(SortingService);

@@ -9,8 +9,7 @@ import { CardService } from "./CardService";
 import { TYPES } from "../../types";
 import type { CardTypeCategory } from "./type/CardTypeCategory";
 import { BanlistService } from "./banlist/BanlistService";
-
-type CardPredicate = (card: Card) => boolean;
+import type { CardPredicate } from "./CardPredicateService";
 
 type CardFilter = Partial<{
     /**
@@ -161,4 +160,4 @@ class FilterService {
     }
 }
 
-export { FilterService, CardFilter, CardPredicate };
+export { FilterService, CardFilter };

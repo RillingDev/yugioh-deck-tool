@@ -1,8 +1,10 @@
-import type { CardPredicate } from "../../../core/src/main";
 import { injectable } from "inversify";
+import type { Card } from "./Card";
+
+export type CardPredicate = (card: Card) => boolean;
 
 @injectable()
-export class FilterController {
+export class CardPredicateService {
     /**
      * Creates a predicate only allowing card passcodes provided.
      *

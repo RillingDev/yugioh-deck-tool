@@ -32,11 +32,11 @@
 
 <script lang="ts">
 import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import type {
     Card,
     CardDatabase,
     CardFilter,
+    CardPredicateService,
     FilterService,
     Format,
     SortingOptions,
@@ -55,7 +55,6 @@ import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
 import { appStore } from "../../composition/state/appStore";
 import { dataLoaded } from "../../composition/state/dataLoaded";
 import { BSidebar } from "bootstrap-vue";
-import type { FilterController } from "../../controller/FilterController";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const sortingService = applicationContainer.get<SortingService>(
@@ -64,8 +63,8 @@ const sortingService = applicationContainer.get<SortingService>(
 const filterService = applicationContainer.get<FilterService>(
     TYPES.FilterService
 );
-const filterController = applicationContainer.get<FilterController>(
-    APPLICATION_TYPES.FilterController
+const cardPredicateService = applicationContainer.get<CardPredicateService>(
+    TYPES.CardPredicateService
 );
 
 const createDefaultFilter = (): CardFilter => {
@@ -126,9 +125,9 @@ export default defineComponent({
             }
             return filterService.filter(cardDatabase.getCards(), {
                 customPredicates: [
-                    filterController.createAddableInAtLeastOneDeckPartCardPredicate(),
+                    cardPredicateService.createAddableInAtLeastOneDeckPartCardPredicate(),
                     ...(filter.customPredicates ?? []),
-                    filterController.createUniqueByNameCardPredicate(),
+                    cardPredicateService.createUniqueByNameCardPredicate(),
                 ],
                 format: format.value,
             });

@@ -5,10 +5,7 @@ import { Container } from "inversify";
 import { anything, when } from "ts-mockito";
 import { bindMock } from "../../helper/bindMock";
 import { CardService } from "../../../src/core/card/CardService";
-import type {
-    CardPredicate,
-    FilterService,
-} from "../../../src/core/card/FilterService";
+import type { FilterService } from "../../../src/core/card/FilterService";
 import { baseModule } from "../../../src/inversify.modules";
 import { BanlistService } from "../../../src/core/card/banlist/BanlistService";
 import { TYPES } from "../../../src/types";
@@ -18,6 +15,7 @@ import { Format } from "../../../src/core/card/format/Format";
 import { DefaultBanState } from "../../../src/core/card/banlist/BanState";
 import type { CardDataLoaderService } from "../../../src/core/card/CardDataLoaderService";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
+import type { CardPredicate } from "../../../src/core/card/CardPredicateService";
 
 describe("FilterService", () => {
     let filterService: FilterService;

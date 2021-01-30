@@ -18,6 +18,7 @@
 <script lang="ts">
 import type {
     CardPredicate,
+    CardPredicateService,
     EnvironmentConfig,
     YgoprodeckService,
 } from "../../../../core/src/main";
@@ -31,8 +32,6 @@ import { defineComponent, ref } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError } from "../../composition/feedback";
-import type { FilterController } from "../../controller/FilterController";
-import { APPLICATION_TYPES } from "../../types";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
     YGOPRODECK_TYPES.YgoprodeckService
@@ -40,8 +39,8 @@ const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
 const environmentConfig = applicationContainer.get<EnvironmentConfig>(
     TYPES.EnvironmentConfig
 );
-const filterController = applicationContainer.get<FilterController>(
-    APPLICATION_TYPES.FilterController
+const cardPredicateService = applicationContainer.get<CardPredicateService>(
+    TYPES.CardPredicateService
 );
 
 const logger = getLogger("YgoCollectionFilter");
@@ -66,7 +65,7 @@ export default defineComponent({
                 "foo",
                 "bar"
             );
-            return filterController.createPassCodePredicate(cards);
+            return cardPredicateService.createPassCodePredicate(cards);
         };
         const reload = (): void => {
             createPredicate()

@@ -11,6 +11,7 @@ export const TYPES = {
     CardDataLoaderService: Symbol.for("CardDataLoaderService"),
     CardDatabase: Symbol.for("CardDatabase"),
     CardService: Symbol.for("CardService"),
+    CardPredicateService: Symbol.for("CardPredicateService"),
 
     BanlistService: Symbol.for("BanlistService"),
     PriceService: Symbol.for("PriceService"),
