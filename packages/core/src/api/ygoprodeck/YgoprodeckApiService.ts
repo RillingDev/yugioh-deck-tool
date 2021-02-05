@@ -131,6 +131,10 @@ export class YgoprodeckApiService {
         if (options.sorting != null) {
             params.sort = options.sorting;
         }
+        if (options.auth != null) {
+            // If authorization is used, somewhat unique value is required to ensure no caching is done server-side
+            params.cachebust = String(Date.now());
+        }
         return params;
     }
 
