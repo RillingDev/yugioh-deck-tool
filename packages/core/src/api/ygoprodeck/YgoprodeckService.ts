@@ -20,6 +20,11 @@ export class YgoprodeckService {
         this.environmentConfig = environmentConfig;
     }
 
+    /**
+     * Sends an event that a card has been viewed.
+     *
+     * @param card Card that was viewed.
+     */
     public async increaseCardViewCount(card: Card): Promise<void> {
         this.validateEnv();
         return this.ygoprodeckApiService.updateViews(card);
@@ -39,7 +44,7 @@ export class YgoprodeckService {
         );
     }
 
-    private validateEnv(): void {
+    public validateEnv(): void {
         if (this.environmentConfig.getEnvironment() != Environment.YGOPRODECK) {
             throw new Error("Only available in YGOPRODECK environment.");
         }

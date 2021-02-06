@@ -7,6 +7,10 @@ import { YGOPRODECK_INTERNAL_TYPES } from "../../types";
 import { FindCardBy } from "../../core/card/CardDatabase";
 import { YgoprodeckApiService } from "./YgoprodeckApiService";
 
+/**
+ * Implementation of {@link CardDataLoaderService} using {@link YgoprodeckApiService}.
+ * Can be used outside of ygoprodeck.com.
+ */
 @injectable()
 class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     private readonly ygoprodeckApiService: YgoprodeckApiService;

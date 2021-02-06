@@ -19,15 +19,9 @@
 import type {
     CardPredicate,
     CardPredicateService,
-    EnvironmentConfig,
     YgoprodeckService,
 } from "../../../../core/src/main";
-import {
-    Environment,
-    getLogger,
-    TYPES,
-    YGOPRODECK_TYPES,
-} from "../../../../core/src/main";
+import { getLogger, TYPES, YGOPRODECK_TYPES } from "../../../../core/src/main";
 import { defineComponent, ref } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
@@ -38,9 +32,6 @@ import type { YgoprodeckController } from "../../controller/YgoprodeckController
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
     YGOPRODECK_TYPES.YgoprodeckService
 );
-const environmentConfig = applicationContainer.get<EnvironmentConfig>(
-    TYPES.EnvironmentConfig
-);
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
     TYPES.CardPredicateService
 );
@@ -50,16 +41,13 @@ const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
 
 const logger = getLogger("YgoCollectionFilter");
 
+/**
+ * Should only be mounted if running in ygoprodeck env and having credentials available.
+ */
 export default defineComponent({
     props: {},
     components: { BFormCheckbox },
     setup(props, context) {
-        if (environmentConfig.getEnvironment() != Environment.YGOPRODECK) {
-            throw new Error(
-                "Component cannot be used outside of YGOPRODECK environment."
-            );
-        }
-
         const checked = ref<boolean>(false);
 
         const createPredicate = async (): Promise<CardPredicate> => {

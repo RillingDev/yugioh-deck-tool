@@ -136,7 +136,7 @@
             />
         </div>
 
-        <template v-if="isYgoprodeck && isFieldVisible('collection')">
+        <template v-if="showCollectionFilter && isFieldVisible('collection')">
             <hr />
             <YgoCollectionFilter
                 @change="
@@ -176,6 +176,8 @@ import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
 import { appStore } from "../composition/state/appStore";
 import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
+import type { YgoprodeckController } from "../controller/YgoprodeckController";
+import { APPLICATION_TYPES } from "../types";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const banlistService = applicationContainer.get<BanlistService>(
@@ -183,6 +185,9 @@ const banlistService = applicationContainer.get<BanlistService>(
 );
 const environmentConfig = applicationContainer.get<EnvironmentConfig>(
     TYPES.EnvironmentConfig
+);
+const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
+    APPLICATION_TYPES.YgoprodeckController
 );
 
 export default defineComponent({
@@ -243,8 +248,10 @@ export default defineComponent({
         const isMonster = computed<boolean>(
             () => internalFilter.typeCategory === CardTypeCategory.MONSTER
         );
-        const isYgoprodeck = computed<boolean>(
-            () => environmentConfig.getEnvironment() == Environment.YGOPRODECK
+        const showCollectionFilter = computed<boolean>(
+            () =>
+                environmentConfig.getEnvironment() == Environment.YGOPRODECK &&
+                ygoprodeckController.hasCredentials()
         );
 
         const isFieldVisible = (fieldName: string): boolean =>
@@ -291,7 +298,7 @@ export default defineComponent({
             internalFilter,
 
             hasBanStates,
-            isYgoprodeck,
+            showCollectionFilter,
             isMonster,
 
             onCollectionFilterPredicateChange,

@@ -1,5 +1,5 @@
 import type { Credentials } from "../../../core/src/main";
-import { Environment, EnvironmentConfig, TYPES } from "../../../core/src/main";
+import { YGOPRODECK_TYPES, YgoprodeckService } from "../../../core/src/main";
 import { inject, injectable } from "inversify";
 
 declare global {
@@ -11,24 +11,30 @@ declare global {
 
 @injectable()
 export class YgoprodeckController {
-    private readonly environmentConfig: EnvironmentConfig;
+    private readonly ygoprodeckService: YgoprodeckService;
 
     constructor(
-        @inject(TYPES.EnvironmentConfig)
-        environmentConfig: EnvironmentConfig
+        @inject(YGOPRODECK_TYPES.YgoprodeckService)
+        ygoprodeckService: YgoprodeckService
     ) {
-        this.environmentConfig = environmentConfig;
+        this.ygoprodeckService = ygoprodeckService;
     }
 
+    /**
+     * Checks if ygoprodeck.com credentials are available.
+     */
     public hasCredentials(): boolean {
-        this.validateEnv();
+        this.ygoprodeckService.validateEnv();
         return (
             window.ygoprodeckUsername != null && window.ygoprodeckToken != null
         );
     }
 
+    /**
+     * Retrieves ygoprodeck.com credentials.
+     */
     public getCredentials(): Credentials {
-        this.validateEnv();
+        this.ygoprodeckService.validateEnv();
         if (!this.hasCredentials()) {
             throw new TypeError("Insufficient credentials available.");
         }
@@ -36,11 +42,5 @@ export class YgoprodeckController {
             username: window.ygoprodeckUsername!,
             token: window.ygoprodeckToken!,
         };
-    }
-
-    private validateEnv(): void {
-        if (this.environmentConfig.getEnvironment() != Environment.YGOPRODECK) {
-            throw new Error("Only available in YGOPRODECK environment.");
-        }
     }
 }
