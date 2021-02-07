@@ -9,16 +9,14 @@
     "fix": "eslint ./src/ --ext .ts --ext .vue --fix"
   },
   "dependencies": {
+    "core-js": "^3.8.1",
     "@vue/composition-api": "^1.0.0-rc.1",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.8.3",
     "inversify": "^5.0.5",
     "lightdash": "^13.0.1",
     "lodash": "^4.17.20",
     "lodash-es": "^4.17.20",
-    "popper.js": "^1.16.1",
-    "portal-vue": "^2.1.7",
     "reflect-metadata": "^0.1.13",
     "vue": "^2.6.12",
     "vue-select": "^3.11.2",
