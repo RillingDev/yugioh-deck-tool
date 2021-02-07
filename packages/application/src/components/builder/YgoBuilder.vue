@@ -69,6 +69,8 @@ const cardPredicateService = applicationContainer.get<CardPredicateService>(
 
 const createDefaultFilter = (): CardFilter => {
     return {
+        customPredicates: [],
+
         name: null,
 
         typeCategory: null,
