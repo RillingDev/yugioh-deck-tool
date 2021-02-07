@@ -78,7 +78,7 @@ describe("DeckService", () => {
                     DeckPart.MAIN,
                     Format.TCG
                 )
-            ).toBeFalse();
+            ).toBe(false);
         });
 
         it("checks deck part limit", () => {
@@ -98,7 +98,7 @@ describe("DeckService", () => {
                     DeckPart.SIDE,
                     Format.TCG
                 )
-            ).toBeFalse();
+            ).toBe(false);
         });
 
         it("checks total link card count", () => {
@@ -120,7 +120,7 @@ describe("DeckService", () => {
                     DeckPart.SIDE,
                     Format.OCG
                 )
-            ).toBeFalse();
+            ).toBe(false);
         });
 
         it("checks against ban list", () => {
@@ -146,7 +146,7 @@ describe("DeckService", () => {
                     DeckPart.SIDE,
                     Format.OCG
                 )
-            ).toBeFalse();
+            ).toBe(false);
         });
 
         it("returns true if a card can be added", () => {
@@ -167,7 +167,7 @@ describe("DeckService", () => {
                     DeckPart.SIDE,
                     Format.OCG
                 )
-            ).toBeTrue();
+            ).toBe(true);
         });
     });
 

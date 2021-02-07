@@ -1,10 +1,13 @@
 module.exports = {
     parser: "vue-eslint-parser",
+
     parserOptions: {
         tsconfigRootDir: __dirname,
         project: ["./tsconfig.json"],
     },
+
     plugins: ["@typescript-eslint", "prettier", "import", "vue"],
+
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -20,6 +23,7 @@ module.exports = {
         "@vue/prettier/@typescript-eslint",
         "../../.eslintrc.js",
     ],
+
     rules: {
         "import/no-default-export": "off", // Causes Issues with Vue
 
@@ -40,4 +44,16 @@ module.exports = {
             },
         ],
     },
+
+    overrides: [
+      {
+        files: [
+          '**/__tests__/*.{j,t}s?(x)',
+          '**/tests/unit/**/*.spec.{j,t}s?(x)'
+        ],
+        env: {
+          jest: true
+        }
+      }
+    ]
 };

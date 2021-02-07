@@ -25,11 +25,11 @@ describe("BanlistService", () => {
 
     describe("hasBanlist", () => {
         it("returns true only for TCG, OCG and GOAT", () => {
-            expect(banlistService.hasBanlist(Format.TCG)).toBeTrue();
-            expect(banlistService.hasBanlist(Format.OCG)).toBeTrue();
-            expect(banlistService.hasBanlist(Format.GOAT)).toBeTrue();
+            expect(banlistService.hasBanlist(Format.TCG)).toBe(true);
+            expect(banlistService.hasBanlist(Format.OCG)).toBe(true);
+            expect(banlistService.hasBanlist(Format.GOAT)).toBe(true);
 
-            expect(banlistService.hasBanlist(Format.DUEL_LINKS)).toBeFalse();
+            expect(banlistService.hasBanlist(Format.DUEL_LINKS)).toBe(false);
         });
     });
 

@@ -1,20 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "importHelpers": true,
-    "skipLibCheck": true,
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
-  },
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.vue",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "importHelpers": true,
+        "skipLibCheck": true,
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    },
+    "include": ["./src/**/*.ts", "./src/**/*.vue", "tests/**/*.ts"],
+    "exclude": ["node_modules"]
 }

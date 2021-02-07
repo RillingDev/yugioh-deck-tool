@@ -1,5 +1,5 @@
 describe("dummy", () => {
     it("is true", () => {
-        expect(true).toBeTrue();
+        expect(true).toBe(true);
     });
 });

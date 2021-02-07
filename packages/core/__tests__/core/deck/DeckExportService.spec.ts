@@ -84,10 +84,10 @@ Side:
             );
 
             const expected = new URL("https://www.tcgplayer.com/massentry");
+            expected.searchParams.append("productline", "Yugioh");
             expected.searchParams.append("utm_campaign", "affiliate");
             expected.searchParams.append("utm_medium", "deck-builder");
             expected.searchParams.append("utm_source", "YGOPRODeck");
-            expected.searchParams.append("productline", "Yugioh");
             expected.searchParams.append("c", "2 foo||2 bar||3 fizz||");
 
             expect(result).toEqual(expected);

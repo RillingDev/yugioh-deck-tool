@@ -52,14 +52,14 @@ describe("CardService", () => {
             const card1 = createCard({ name: "foo" });
             const card2 = createCard({ name: "bar", treatedAs: "bazz" });
 
-            expect(cardService.isTreatedAsSame(card1, card2)).toBeFalse();
+            expect(cardService.isTreatedAsSame(card1, card2)).toBe(false);
         });
 
         it("returns true if the names overlap", () => {
             const card1 = createCard({ name: "foo" });
             const card2 = createCard({ name: "bar", treatedAs: "foo" });
 
-            expect(cardService.isTreatedAsSame(card1, card2)).toBeTrue();
+            expect(cardService.isTreatedAsSame(card1, card2)).toBe(true);
         });
     });
 
@@ -109,7 +109,7 @@ describe("CardService", () => {
             const card1 = createCard({ passcode: "123", name: "Foo Bar" });
 
             expect(cardService.getReferenceLink(card1)).toEqual(
-                new URL("https://db.ygoprodeck.com/card/?search=Foo%20Bar")
+                new URL("https://db.ygoprodeck.com/card/?search=Foo+Bar")
             );
         });
     });
