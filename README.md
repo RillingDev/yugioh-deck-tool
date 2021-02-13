@@ -38,27 +38,9 @@ Then perform the following steps:
 
 The `.map` files are optional and only used for debugging.
 
-### Modules
+### Architecture
 
--   `core` Shared business logic and communication with the [YGOProDeck API](https://db.ygoprodeck.com/api-guide/).
--   `ui` Shared UI logic/styling requiring a browser.
--   `application` Vue app source code.
--   `tooltip` Card tooltip.
-
-#### Dependency Tree
-
-```text
-         core                // Shared code independent of platform.
-          ^
-          |
-          |
-          ui                 // Shared code requiring Browser/DOM.
-         ^  ^
-        /    \
-       /      \
-      /        \
-application--->tooltip        // Browser entry points.
-```
+See [Architecture.md](./ARCHITECTURE.md)
 
 ## Credits
 
