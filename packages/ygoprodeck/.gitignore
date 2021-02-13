@@ -1,0 +1,36 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.log
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*.zip
+*~
+
+# OS or Editor folders
+._*
+.idea
+.project
+.settings
+.tmproj
+*.esproj
+*.sublime-project
+*.sublime-workspace
+
+# Vendor Files
+node_modules/
+
+# Debug Files
+npm-debug.*
+
+# Temp Files
+tsconfig.tsbuildinfo
+tsconfig.*.tsbuildinfo
+
+
+
+# Build Output files
+dist/

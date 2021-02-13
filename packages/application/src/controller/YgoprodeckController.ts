@@ -1,6 +1,9 @@
-import type { Credentials } from "../../../core/src/main";
-import { YGOPRODECK_TYPES, YgoprodeckService } from "../../../core/src/main";
 import { inject, injectable } from "inversify";
+import type { Credentials } from "../../../ygoprodeck/src/main";
+import {
+    YgoprodeckService,
+    YGOPRODECK_TYPES,
+} from "../../../ygoprodeck/src/main";
 
 declare global {
     interface Window {

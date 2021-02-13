@@ -19,15 +19,16 @@
 import type {
     CardPredicate,
     CardPredicateService,
-    YgoprodeckService,
 } from "../../../../core/src/main";
-import { getLogger, TYPES, YGOPRODECK_TYPES } from "../../../../core/src/main";
+import { getLogger, TYPES } from "../../../../core/src/main";
 import { defineComponent, ref } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError } from "../../composition/feedback";
 import { APPLICATION_TYPES } from "../../types";
 import type { YgoprodeckController } from "../../controller/YgoprodeckController";
+import type { YgoprodeckService } from "../../../../ygoprodeck/src/main";
+import { YGOPRODECK_TYPES } from "../../../../ygoprodeck/src/main";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
     YGOPRODECK_TYPES.YgoprodeckService

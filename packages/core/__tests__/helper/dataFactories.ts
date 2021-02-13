@@ -1,15 +1,15 @@
-import type { Card } from "../../src/core/card/Card";
-import { Format } from "../../src/core/card/format/Format";
-import type { CardImage } from "../../src/core/card/CardImage";
-import type { CardPrices } from "../../src/core/card/CardPrices";
-import type { ReleaseInfo } from "../../src/core/card/ReleaseInfo";
-import type { BanlistInfo } from "../../src/core/card/banlist/BanlistInfo";
-import type { CardType } from "../../src/core/card/type/CardType";
-import type { CardSet } from "../../src/core/card/set/CardSet";
-import { CardTypeCategory } from "../../src/core/card/type/CardTypeCategory";
-import { DefaultBanState } from "../../src/core/card/banlist/BanState";
-import type { Vendor } from "../../src/core/price/Vendor";
-import { DeckPart } from "../../src/core/deck/DeckPart";
+import type { Card } from "../../src/card/Card";
+import { Format } from "../../src/card/format/Format";
+import type { CardImage } from "../../src/card/CardImage";
+import type { CardPrices } from "../../src/card/CardPrices";
+import type { ReleaseInfo } from "../../src/card/ReleaseInfo";
+import type { BanlistInfo } from "../../src/card/banlist/BanlistInfo";
+import type { CardType } from "../../src/card/type/CardType";
+import type { CardSet } from "../../src/card/set/CardSet";
+import { CardTypeCategory } from "../../src/card/type/CardTypeCategory";
+import { DefaultBanState } from "../../src/card/banlist/BanState";
+import type { Vendor } from "../../src/price/Vendor";
+import { DeckPart } from "../../src/deck/DeckPart";
 
 const createCardType = (data: {
     name?: string;

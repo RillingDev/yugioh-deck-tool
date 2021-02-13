@@ -1,34 +1,25 @@
 import type { interfaces } from "inversify";
 import { ContainerModule } from "inversify";
-import {
-    INTERNAL_TYPES,
-    TYPES,
-    YGOPRODECK_INTERNAL_TYPES,
-    YGOPRODECK_TYPES,
-} from "./types";
-import type { CardDataLoaderService } from "./core/card/CardDataLoaderService";
-import { YgoprodeckCardDataLoaderService } from "./api/ygoprodeck/YgoprodeckCardDataLoaderService";
-import type { CardDatabase } from "./core/card/CardDatabase";
-import { MemoryCardDatabase } from "./core/card/MemoryCardDatabase";
-import { CardService } from "./core/card/CardService";
-import { PriceService } from "./core/price/PriceService";
-import { DeckExportService } from "./core/deck/DeckExportService";
-import { DeckService } from "./core/deck/DeckService";
-import { SortingService } from "./core/card/SortingService";
-import { FilterService } from "./core/card/FilterService";
-import { AxiosHttpService } from "./core/http/AxiosHttpService";
-import type { HttpService } from "./core/http/HttpService";
-import { DeckRandomizationService } from "./core/deck/DeckRandomizationService";
-import { DeckUriEncodingService } from "./core/deck/DeckUriEncodingService";
-import { DeckFileService } from "./core/deck/DeckFileService";
-import { UrlService } from "./core/http/UrlService";
-import { CardLinkingService } from "./core/card/CardLinkingService";
-import { BanlistService } from "./core/card/banlist/BanlistService";
+import { INTERNAL_TYPES, TYPES } from "./types";
+import type { CardDatabase } from "./card/CardDatabase";
+import { MemoryCardDatabase } from "./card/MemoryCardDatabase";
+import { CardService } from "./card/CardService";
+import { PriceService } from "./price/PriceService";
+import { DeckExportService } from "./deck/DeckExportService";
+import { DeckService } from "./deck/DeckService";
+import { SortingService } from "./card/SortingService";
+import { FilterService } from "./card/FilterService";
+import { AxiosHttpService } from "./http/AxiosHttpService";
+import type { HttpService } from "./http/HttpService";
+import { DeckRandomizationService } from "./deck/DeckRandomizationService";
+import { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
+import { DeckFileService } from "./deck/DeckFileService";
+import { UrlService } from "./http/UrlService";
+import { CardLinkingService } from "./card/CardLinkingService";
+import { BanlistService } from "./card/banlist/BanlistService";
 import type { EnvironmentConfig } from "./EnvironmentConfig";
 import { DefaultEnvironmentConfig } from "./DefaultEnvironmentConfig";
-import { YgoprodeckApiService } from "./api/ygoprodeck/YgoprodeckApiService";
-import { YgoprodeckService } from "./api/ygoprodeck/YgoprodeckService";
-import { CardPredicateService } from "./core/card/CardPredicateService";
+import { CardPredicateService } from "./card/CardPredicateService";
 
 /**
  * Module containing card database access and basic domain services.
@@ -59,7 +50,7 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
 });
 
 /**
- * Module containing deck import/export/modification functionality. Requires {@link ygoprodeckModule}.
+ * Module containing deck import/export/modification functionality. Requires {@link baseModule}.
  */
 export const deckModule = new ContainerModule((bind: interfaces.Bind) => {
     bind<DeckExportService>(TYPES.DeckExportService).to(DeckExportService);
@@ -71,20 +62,4 @@ export const deckModule = new ContainerModule((bind: interfaces.Bind) => {
         DeckRandomizationService
     );
     bind<DeckService>(TYPES.DeckService).to(DeckService);
-});
-
-/**
- * Module containing ygoprodeck.com providers.
- */
-export const ygoprodeckModule = new ContainerModule((bind: interfaces.Bind) => {
-    bind<YgoprodeckApiService>(
-        YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService
-    ).to(YgoprodeckApiService);
-    bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
-        YgoprodeckService
-    );
-
-    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
-        YgoprodeckCardDataLoaderService
-    );
 });
