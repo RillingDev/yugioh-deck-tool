@@ -1,5 +1,5 @@
 import type { Card } from "../card/Card";
-import { DeckPart } from "./DeckPart";
+import type { DeckPart } from "./DeckPart";
 
 interface Deck {
     name: string | null;

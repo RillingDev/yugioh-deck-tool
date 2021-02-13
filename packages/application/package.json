@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit",
-    "lint": "eslint ./src/ --ext .ts --ext .vue",
-    "fix": "eslint ./src/ --ext .ts --ext .vue --fix"
+    "lint": "eslint ./src/ ./tests/  --ext .ts --ext .vue",
+    "fix": "eslint ./src/ ./tests/  --ext .ts --ext .vue --fix"
   },
   "dependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",

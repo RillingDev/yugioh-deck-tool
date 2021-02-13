@@ -1,4 +1,4 @@
-import { CardTypeCategory } from "./CardTypeCategory";
+import type { CardTypeCategory } from "./CardTypeCategory";
 import type { MonsterTypeCategoryValues } from "./MonsterTypeCategoryValues";
 import type { TypeCategoryValues } from "./TypeCategoryValues";
 

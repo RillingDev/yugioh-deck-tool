@@ -1,5 +1,5 @@
 import type { BanState } from "./BanState";
-import { Format } from "../format/Format";
+import type { Format } from "../format/Format";
 
 interface BanlistInfo {
     readonly [Format.OCG]: BanState;
