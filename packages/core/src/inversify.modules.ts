@@ -20,6 +20,7 @@ import { BanlistService } from "./card/banlist/BanlistService";
 import type { EnvironmentConfig } from "./EnvironmentConfig";
 import { DefaultEnvironmentConfig } from "./DefaultEnvironmentConfig";
 import { CardPredicateService } from "./card/CardPredicateService";
+import { EncodingService } from "./util/EncodingService";
 
 /**
  * Module containing card database access and basic domain services.
@@ -29,6 +30,7 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
         DefaultEnvironmentConfig
     );
 
+    bind<EncodingService>(TYPES.EncodingService).to(EncodingService);
     bind<HttpService>(TYPES.HttpService).to(AxiosHttpService);
     bind<UrlService>(TYPES.UrlService).to(UrlService);
 

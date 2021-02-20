@@ -6,9 +6,9 @@ import { CardDatabase, FindCardBy } from "../card/CardDatabase";
 import type { Card } from "../card/Card";
 import { isEqual } from "lodash";
 import { DeckService } from "./DeckService";
-import { fromByteArray, toByteArray } from "base64-js";
 import { deflateRaw, inflateRaw } from "pako";
 import { DECK_PART_ARR } from "./DeckPart";
+import { EncodingService } from "../util/EncodingService";
 
 @injectable()
 class DeckUriEncodingService {
@@ -28,19 +28,19 @@ class DeckUriEncodingService {
 
     readonly #cardDatabase: CardDatabase;
     readonly #deckService: DeckService;
-    readonly #textEncoder: TextEncoder;
-    readonly #textDecoder: TextDecoder;
+    readonly #encodingService: EncodingService;
 
     constructor(
         @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase,
         @inject(TYPES.DeckService)
-        deckService: DeckService
+        deckService: DeckService,
+        @inject(TYPES.EncodingService)
+        encodingService: EncodingService
     ) {
         this.#deckService = deckService;
         this.#cardDatabase = cardDatabase;
-        this.#textEncoder = new TextEncoder();
-        this.#textDecoder = new TextDecoder();
+        this.#encodingService = encodingService;
     }
 
     /**
@@ -60,7 +60,10 @@ class DeckUriEncodingService {
                 encodedCards.push(...this.encodeCardBlock(card));
             }
             encodedDeckParts.push(
-                this.encodeBase64String(Uint8Array.from(encodedCards), false)
+                this.#encodingService.encodeBase64String(
+                    Uint8Array.from(encodedCards),
+                    false
+                )
             );
         }
         return new URL(
@@ -98,7 +101,7 @@ class DeckUriEncodingService {
             deckPartIndex++
         ) {
             const deckPartCards = deck.parts[DECK_PART_ARR[deckPartIndex]];
-            const decodedDeckPartCards = this.decode64String(
+            const decodedDeckPartCards = this.#encodingService.decodeBase64String(
                 uriParts[deckPartIndex],
                 false
             );
@@ -148,11 +151,11 @@ class DeckUriEncodingService {
             );
         }
         if (deck.name != null && deck.name !== "") {
-            result.push(...this.#textEncoder.encode(deck.name));
+            result.push(...this.#encodingService.encodeText(deck.name));
         }
 
         const deflated = deflateRaw(Uint8Array.from(result));
-        return this.encodeBase64String(deflated, true);
+        return this.#encodingService.encodeBase64String(deflated, true);
     }
 
     /**
@@ -164,7 +167,10 @@ class DeckUriEncodingService {
     public fromUrlQueryParamValue(queryParamValue: string): Deck {
         const deck = this.#deckService.createEmptyDeck();
 
-        const decoded = this.decode64String(queryParamValue, true);
+        const decoded = this.#encodingService.decodeBase64String(
+            queryParamValue,
+            true
+        );
         const inflated = inflateRaw(decoded);
 
         let deckPartIndex = 0;
@@ -196,7 +202,7 @@ class DeckUriEncodingService {
             }
         }
         if (metaDataStart != null && metaDataStart < inflated.length) {
-            deck.name = this.#textDecoder.decode(
+            deck.name = this.#encodingService.decodeText(
                 inflated.subarray(metaDataStart)
             );
         }
@@ -240,34 +246,6 @@ class DeckUriEncodingService {
             0,
             DeckUriEncodingService.URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
         );
-    }
-
-    private encodeBase64String(
-        arr: Uint8Array,
-        useUriParamSafeAlphabet: boolean
-    ): string {
-        let encoded = fromByteArray(arr);
-        if (useUriParamSafeAlphabet) {
-            encoded = encoded
-                .replace(/=/g, "~")
-                .replace(/\+/g, "_")
-                .replace(/\//g, "-");
-        }
-        return encoded;
-    }
-
-    private decode64String(
-        str: string,
-        useUriParamSafeAlphabet: boolean
-    ): Uint8Array {
-        let encoded = str;
-        if (useUriParamSafeAlphabet) {
-            encoded = encoded
-                .replace(/~/g, "=")
-                .replace(/_/g, "+")
-                .replace(/-/g, "/");
-        }
-        return toByteArray(encoded);
     }
 }
 

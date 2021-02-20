@@ -8,20 +8,19 @@ import type { RawCardValues } from "./mapping/mapCardValues";
 import { mapCardValues } from "./mapping/mapCardValues";
 import type { RawArchetype } from "./mapping/mapArchetype";
 import { mapArchetype } from "./mapping/mapArchetype";
-
-import { fromByteArray } from "base64-js";
 import type {
     Card,
     CardSet,
-    Format,
     CardValues,
+    Format,
     UnlinkedCard,
 } from "../../../core/src/main";
 import {
+    EncodingService,
     Environment,
     EnvironmentConfig,
-    TYPES,
     HttpService,
+    TYPES,
 } from "../../../core/src/main";
 
 interface CardInfoOptions {
@@ -51,17 +50,19 @@ export class YgoprodeckApiService {
 
     readonly #environmentConfig: EnvironmentConfig;
     readonly #httpService: HttpService;
-    readonly #textEncoder: TextEncoder;
+    readonly #encodingService: EncodingService;
 
     constructor(
         @inject(TYPES.HttpService)
         httpService: HttpService,
         @inject(TYPES.EnvironmentConfig)
-        environmentConfig: EnvironmentConfig
+        environmentConfig: EnvironmentConfig,
+        @inject(TYPES.EncodingService)
+        encodingService: EncodingService
     ) {
         this.#environmentConfig = environmentConfig;
         this.#httpService = httpService;
-        this.#textEncoder = new TextEncoder();
+        this.#encodingService = encodingService;
     }
 
     public async getSingleCard(
@@ -227,10 +228,11 @@ export class YgoprodeckApiService {
             return {};
         }
         // See https://tools.ietf.org/html/rfc7617 and https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme
-        const encodedCredentials = fromByteArray(
-            this.#textEncoder.encode(
+        const encodedCredentials = this.#encodingService.encodeBase64String(
+            this.#encodingService.encodeText(
                 `${options.auth.username}:${options.auth.token}`
-            )
+            ),
+            false
         );
         return {
             "X-Authorization": `Basic ${encodedCredentials}`,

@@ -5,6 +5,7 @@ export const INTERNAL_TYPES = {
 export const TYPES = {
     EnvironmentConfig: Symbol.for("EnvironmentConfig"),
 
+    EncodingService: Symbol.for("EncodingService"),
     HttpService: Symbol.for("HttpService"),
     UrlService: Symbol.for("UrlService"),
 
