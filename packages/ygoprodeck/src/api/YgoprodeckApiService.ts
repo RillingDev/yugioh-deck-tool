@@ -49,9 +49,9 @@ export interface Credentials {
 export class YgoprodeckApiService {
     private static readonly CHUNK_SIZE = 2000;
 
-    private readonly environmentConfig: EnvironmentConfig;
-    private readonly httpService: HttpService;
-    private readonly textEncoder: TextEncoder;
+    readonly #environmentConfig: EnvironmentConfig;
+    readonly #httpService: HttpService;
+    readonly #textEncoder: TextEncoder;
 
     constructor(
         @inject(TYPES.HttpService)
@@ -59,15 +59,15 @@ export class YgoprodeckApiService {
         @inject(TYPES.EnvironmentConfig)
         environmentConfig: EnvironmentConfig
     ) {
-        this.environmentConfig = environmentConfig;
-        this.httpService = httpService;
-        this.textEncoder = new TextEncoder();
+        this.#environmentConfig = environmentConfig;
+        this.#httpService = httpService;
+        this.#textEncoder = new TextEncoder();
     }
 
     public async getSingleCard(
         options: CardInfoOptions
     ): Promise<UnlinkedCard | null> {
-        const response = await this.httpService.get<{ data: RawCard[] }>(
+        const response = await this.#httpService.get<{ data: RawCard[] }>(
             "cardinfo.php",
             {
                 baseUrl: this.getBaseUrl(),
@@ -94,7 +94,7 @@ export class YgoprodeckApiService {
         const responseData = await this.loadPaginated<RawCard>(
             YgoprodeckApiService.CHUNK_SIZE,
             async (offset) => {
-                const response = await this.httpService.get<
+                const response = await this.#httpService.get<
                     PaginatedResponse<RawCard[]>
                 >("cardinfo.php", {
                     baseUrl: this.getBaseUrl(),
@@ -144,7 +144,7 @@ export class YgoprodeckApiService {
     }
 
     public async getCardSets(): Promise<CardSet[]> {
-        const response = await this.httpService.get<RawCardSet[]>(
+        const response = await this.#httpService.get<RawCardSet[]>(
             "cardsets.php",
 
             {
@@ -157,7 +157,7 @@ export class YgoprodeckApiService {
     }
 
     public async getCardValues(): Promise<CardValues> {
-        const response = await this.httpService.get<RawCardValues>(
+        const response = await this.#httpService.get<RawCardValues>(
             "cardvalues.php",
             {
                 baseUrl: this.getBaseUrl(),
@@ -169,7 +169,7 @@ export class YgoprodeckApiService {
     }
 
     public async getArchetypes(): Promise<string[]> {
-        const response = await this.httpService.get<RawArchetype[]>(
+        const response = await this.#httpService.get<RawArchetype[]>(
             "archetypes.php",
             {
                 baseUrl: this.getBaseUrl(),
@@ -181,7 +181,7 @@ export class YgoprodeckApiService {
     }
 
     public async updateViews(card: Card): Promise<void> {
-        await this.httpService.get<void>("updateViews.php", {
+        await this.#httpService.get<void>("updateViews.php", {
             baseUrl: this.getBaseUrl(),
             timeout: 3000,
             responseType: "text",
@@ -192,7 +192,9 @@ export class YgoprodeckApiService {
     }
 
     private getBaseUrl(): string {
-        if (this.environmentConfig.getEnvironment() == Environment.YGOPRODECK) {
+        if (
+            this.#environmentConfig.getEnvironment() == Environment.YGOPRODECK
+        ) {
             return "https://db.ygoprodeck.com/api_internal/v7/";
         }
         return "https://db.ygoprodeck.com/api/v7/";
@@ -226,7 +228,7 @@ export class YgoprodeckApiService {
         }
         // See https://tools.ietf.org/html/rfc7617 and https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme
         const encodedCredentials = fromByteArray(
-            this.textEncoder.encode(
+            this.#textEncoder.encode(
                 `${options.auth.username}:${options.auth.token}`
             )
         );

@@ -7,8 +7,8 @@ import { Environment, EnvironmentConfig, TYPES } from "../../../core/src/main";
 
 @injectable()
 export class YgoprodeckService {
-    private readonly ygoprodeckApiService: YgoprodeckApiService;
-    private readonly environmentConfig: EnvironmentConfig;
+    readonly #ygoprodeckApiService: YgoprodeckApiService;
+    readonly #environmentConfig: EnvironmentConfig;
 
     constructor(
         @inject(YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService)
@@ -16,8 +16,8 @@ export class YgoprodeckService {
         @inject(TYPES.EnvironmentConfig)
         environmentConfig: EnvironmentConfig
     ) {
-        this.ygoprodeckApiService = ygoprodeckApiService;
-        this.environmentConfig = environmentConfig;
+        this.#ygoprodeckApiService = ygoprodeckApiService;
+        this.#environmentConfig = environmentConfig;
     }
 
     /**
@@ -27,14 +27,14 @@ export class YgoprodeckService {
      */
     public async increaseCardViewCount(card: Card): Promise<void> {
         this.validateEnv();
-        return this.ygoprodeckApiService.updateViews(card);
+        return this.#ygoprodeckApiService.updateViews(card);
     }
 
     public async getCardCollectionPasscodes(
         credentials: Credentials
     ): Promise<Set<string>> {
         this.validateEnv();
-        const unlinkedCards = await this.ygoprodeckApiService.getCards({
+        const unlinkedCards = await this.#ygoprodeckApiService.getCards({
             format: null,
             includeAliased: true,
             auth: credentials,
@@ -45,7 +45,9 @@ export class YgoprodeckService {
     }
 
     public validateEnv(): void {
-        if (this.environmentConfig.getEnvironment() != Environment.YGOPRODECK) {
+        if (
+            this.#environmentConfig.getEnvironment() != Environment.YGOPRODECK
+        ) {
             throw new Error("Only available in YGOPRODECK environment.");
         }
     }
