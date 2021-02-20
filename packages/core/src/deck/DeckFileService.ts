@@ -21,10 +21,10 @@ interface DeckFile {
 
 @injectable()
 export class DeckFileService {
-    private readonly httpService: HttpService;
-    private readonly cardDatabase: CardDatabase;
-    private readonly deckService: DeckService;
-    private readonly urlService: UrlService;
+    readonly #httpService: HttpService;
+    readonly #cardDatabase: CardDatabase;
+    readonly #deckService: DeckService;
+    readonly #urlService: UrlService;
 
     public static readonly DECK_FILE_MIME_TYPE = "text/ydk";
 
@@ -38,10 +38,10 @@ export class DeckFileService {
         @inject(TYPES.UrlService)
         urlService: UrlService
     ) {
-        this.httpService = httpService;
-        this.deckService = deckService;
-        this.cardDatabase = cardDatabase;
-        this.urlService = urlService;
+        this.#httpService = httpService;
+        this.#deckService = deckService;
+        this.#cardDatabase = cardDatabase;
+        this.#urlService = urlService;
     }
 
     /**
@@ -56,12 +56,12 @@ export class DeckFileService {
         currentUrl: string,
         remoteUrl: string
     ): Promise<ImportResult> {
-        if (!this.urlService.hasSameOrigin(currentUrl, remoteUrl)) {
+        if (!this.#urlService.hasSameOrigin(currentUrl, remoteUrl)) {
             throw new Error("Decks can only be loaded from the same origin.");
         }
 
-        const fileName = this.urlService.getFileName(remoteUrl);
-        const response = await this.httpService.get<string>(remoteUrl, {
+        const fileName = this.#urlService.getFileName(remoteUrl);
+        const response = await this.#httpService.get<string>(remoteUrl, {
             responseType: "text",
             timeout: 5000,
         });
@@ -79,7 +79,7 @@ export class DeckFileService {
      */
     public fromFile(deckFile: DeckFile): ImportResult {
         const missing: string[] = [];
-        const deck = this.deckService.createEmptyDeck();
+        const deck = this.#deckService.createEmptyDeck();
 
         const lines = deckFile.fileContent
             .split("\n")
@@ -98,10 +98,12 @@ export class DeckFileService {
             // Only start processing once a deck part indicator was found. this allows for arbitrary file metadata as "head" of the file.
             if (currentDeckPart != null) {
                 const passcode = line.replace(/^0+/, ""); // Some applications pad the start with zeros, remove those.
-                if (!this.cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
+                if (
+                    !this.#cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)
+                ) {
                     missing.push(passcode);
                 } else {
-                    const card = this.cardDatabase.getCard(
+                    const card = this.#cardDatabase.getCard(
                         passcode,
                         FindCardBy.PASSCODE
                     )!;

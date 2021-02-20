@@ -69,11 +69,11 @@ class DeckRandomizationService {
         [CardTypeCategory.SKILL, null],
     ]);
 
-    private readonly cardDatabase: CardDatabase;
-    private readonly deckService: DeckService;
-    private readonly filterService: FilterService;
-    private readonly sortingService: SortingService;
-    private readonly cardService: CardService;
+    readonly #cardDatabase: CardDatabase;
+    readonly #deckService: DeckService;
+    readonly #filterService: FilterService;
+    readonly #sortingService: SortingService;
+    readonly #cardService: CardService;
 
     constructor(
         @inject(TYPES.CardDatabase)
@@ -87,11 +87,11 @@ class DeckRandomizationService {
         @inject(TYPES.CardService)
         cardService: CardService
     ) {
-        this.deckService = deckService;
-        this.cardDatabase = cardDatabase;
-        this.filterService = filterService;
-        this.sortingService = sortingService;
-        this.cardService = cardService;
+        this.#deckService = deckService;
+        this.#cardDatabase = cardDatabase;
+        this.#filterService = filterService;
+        this.#sortingService = sortingService;
+        this.#cardService = cardService;
     }
 
     /**
@@ -105,10 +105,10 @@ class DeckRandomizationService {
         strategy: RandomizationStrategy,
         filter?: CardFilter
     ): Deck {
-        const deck = this.deckService.createEmptyDeck();
-        let cards = this.cardDatabase.getCards();
+        const deck = this.#deckService.createEmptyDeck();
+        let cards = this.#cardDatabase.getCards();
         if (filter != null) {
-            cards = this.filterService.filter(cards, filter);
+            cards = this.#filterService.filter(cards, filter);
         }
 
         const primaryPools: Card[][] = [];
@@ -152,7 +152,7 @@ class DeckRandomizationService {
             );
         }
         deck.name = this.createName(deck);
-        return this.deckService.sort(deck);
+        return this.#deckService.sort(deck);
     }
 
     private getRandomArchetypeCardPools(
@@ -160,12 +160,12 @@ class DeckRandomizationService {
         archetypeCount: number
     ): Card[][] {
         const pool: Card[][] = [];
-        const archetypes = shuffle(this.cardDatabase.getArchetypes());
+        const archetypes = shuffle(this.#cardDatabase.getArchetypes());
         for (const archetype of archetypes) {
             if (pool.length >= archetypeCount) {
                 break;
             }
-            const archetypeCards = this.filterService.filter(cards, {
+            const archetypeCards = this.#filterService.filter(cards, {
                 archetype: archetype,
             });
             if (archetypeCards.length > 0) {
@@ -242,7 +242,7 @@ class DeckRandomizationService {
             );
             // Attempt to add n cards, stopping if one of the additions is not possible.
             for (let i = 0; i < randomCardCount; i++) {
-                if (!this.deckService.canAdd(deck, card, deckPart, format)) {
+                if (!this.#deckService.canAdd(deck, card, deckPart, format)) {
                     break;
                 }
                 deckPartCards.push(card);
@@ -309,7 +309,7 @@ class DeckRandomizationService {
     }
 
     private createName(deck: Deck): string {
-        const countedCards = this.cardService.countByCard([
+        const countedCards = this.#cardService.countByCard([
             ...deck.parts[DeckPart.MAIN],
             ...deck.parts[DeckPart.EXTRA],
         ]);

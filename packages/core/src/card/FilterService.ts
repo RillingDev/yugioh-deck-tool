@@ -54,15 +54,15 @@ type CardFilter = Partial<{
 
 @injectable()
 class FilterService {
-    private readonly cardService: CardService;
-    private readonly banlistService: BanlistService;
+    readonly #cardService: CardService;
+    readonly #banlistService: BanlistService;
 
     constructor(
         @inject(TYPES.CardService) cardService: CardService,
         @inject(TYPES.BanlistService) banlistService: BanlistService
     ) {
-        this.cardService = cardService;
-        this.banlistService = banlistService;
+        this.#cardService = cardService;
+        this.#banlistService = banlistService;
     }
 
     /**
@@ -84,7 +84,7 @@ class FilterService {
             if (
                 filter.name != null &&
                 filter.name !== "" &&
-                !this.cardService
+                !this.#cardService
                     .getAllNames(card)
                     .some((name) =>
                         name.toLowerCase().includes(filter.name!.toLowerCase())
@@ -141,8 +141,10 @@ class FilterService {
             if (
                 filter.banState != null &&
                 filter.format != null &&
-                this.banlistService.getBanStateByFormat(card, filter.format) !==
-                    filter.banState
+                this.#banlistService.getBanStateByFormat(
+                    card,
+                    filter.format
+                ) !== filter.banState
             ) {
                 return false;
             }

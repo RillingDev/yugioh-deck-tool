@@ -37,13 +37,13 @@ type Comparator<T> = (a: T, b: T) => number;
 
 @injectable()
 class SortingService {
-    private readonly cardDatabase: CardDatabase;
+    readonly #cardDatabase: CardDatabase;
 
     constructor(
         @inject(TYPES.CardDatabase)
         cardDatabase: CardDatabase
     ) {
-        this.cardDatabase = cardDatabase;
+        this.#cardDatabase = cardDatabase;
     }
 
     /**
@@ -171,7 +171,7 @@ class SortingService {
 
     private createSubTypeComparator(order: SortingOrder): Comparator<Card> {
         return (a: Card, b: Card) => {
-            const subTypes = this.cardDatabase.getSubTypes(a.type.category);
+            const subTypes = this.#cardDatabase.getSubTypes(a.type.category);
             return (
                 (subTypes.indexOf(a.subType) - subTypes.indexOf(b.subType)) *
                 this.getOrderModifier(order)

@@ -26,10 +26,10 @@ class DeckUriEncodingService {
     private static readonly YDKE_URI_PROTOCOL = "ydke://";
     private static readonly YDKE_DELIMITER = "!";
 
-    private readonly cardDatabase: CardDatabase;
-    private readonly deckService: DeckService;
-    private readonly textEncoder: TextEncoder;
-    private readonly textDecoder: TextDecoder;
+    readonly #cardDatabase: CardDatabase;
+    readonly #deckService: DeckService;
+    readonly #textEncoder: TextEncoder;
+    readonly #textDecoder: TextDecoder;
 
     constructor(
         @inject(TYPES.CardDatabase)
@@ -37,10 +37,10 @@ class DeckUriEncodingService {
         @inject(TYPES.DeckService)
         deckService: DeckService
     ) {
-        this.deckService = deckService;
-        this.cardDatabase = cardDatabase;
-        this.textEncoder = new TextEncoder();
-        this.textDecoder = new TextDecoder();
+        this.#deckService = deckService;
+        this.#cardDatabase = cardDatabase;
+        this.#textEncoder = new TextEncoder();
+        this.#textDecoder = new TextDecoder();
     }
 
     /**
@@ -91,7 +91,7 @@ class DeckUriEncodingService {
             );
         }
 
-        const deck = this.deckService.createEmptyDeck();
+        const deck = this.#deckService.createEmptyDeck();
         for (
             let deckPartIndex = 0;
             deckPartIndex < uriParts.length;
@@ -148,7 +148,7 @@ class DeckUriEncodingService {
             );
         }
         if (deck.name != null && deck.name !== "") {
-            result.push(...this.textEncoder.encode(deck.name));
+            result.push(...this.#textEncoder.encode(deck.name));
         }
 
         const deflated = deflateRaw(Uint8Array.from(result));
@@ -162,7 +162,7 @@ class DeckUriEncodingService {
      * @return Deck.
      */
     public fromUrlQueryParamValue(queryParamValue: string): Deck {
-        const deck = this.deckService.createEmptyDeck();
+        const deck = this.#deckService.createEmptyDeck();
 
         const decoded = this.decode64String(queryParamValue, true);
         const inflated = inflateRaw(decoded);
@@ -196,7 +196,7 @@ class DeckUriEncodingService {
             }
         }
         if (metaDataStart != null && metaDataStart < inflated.length) {
-            deck.name = this.textDecoder.decode(
+            deck.name = this.#textDecoder.decode(
                 inflated.subarray(metaDataStart)
             );
         }
@@ -209,13 +209,13 @@ class DeckUriEncodingService {
 
     private decodeCardBlock(block: Uint8Array): Card {
         const passcode = String(this.decodeNumber(block));
-        if (!this.cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
+        if (!this.#cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
             throw new TypeError(
                 `Could not find card for passcode '${passcode}'.`
             );
         }
 
-        return this.cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!;
+        return this.#cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!;
     }
 
     private encodeNumber(number: number): Uint8Array {

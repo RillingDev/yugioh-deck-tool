@@ -1,23 +1,23 @@
 interface HttpResponse<TData> {
-    data: TData;
-    status: number;
-    statusText: string;
+    readonly data: TData;
+    readonly status: number;
+    readonly statusText: string;
 }
 
 interface HttpRequestConfig {
-    baseUrl?: string;
+    readonly baseUrl?: string;
 
-    params?: Record<string, string | number | boolean | null>;
-    data?: Record<string, string | number | boolean | null>;
-    headers?: Record<string, string | number | boolean | null>;
-    auth?: {
-        username: string;
-        password: string;
+    readonly params?: Record<string, string | number | boolean | null>;
+    readonly data?: Record<string, string | number | boolean | null>;
+    readonly headers?: Record<string, string | number | boolean | null>;
+    readonly auth?: {
+        readonly username: string;
+        readonly password: string;
     };
 
-    responseType: "json" | "text";
-    timeout: number;
-    validateStatus?: (status: number) => boolean;
+    readonly responseType: "json" | "text";
+    readonly timeout: number;
+    readonly validateStatus?: (status: number) => boolean;
 }
 
 /**

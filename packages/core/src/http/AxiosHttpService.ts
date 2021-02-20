@@ -9,10 +9,10 @@ import { injectable } from "inversify";
 
 @injectable()
 class AxiosHttpService implements HttpService {
-    private readonly httpClient: AxiosInstance;
+    readonly #httpClient: AxiosInstance;
 
     constructor() {
-        this.httpClient = axios.create({
+        this.#httpClient = axios.create({
             validateStatus: (status) => status === 200,
         });
     }

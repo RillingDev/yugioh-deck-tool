@@ -16,23 +16,23 @@ import { getLogger } from "../logger";
 class MemoryCardDatabase implements CardDatabase {
     private static readonly logger = getLogger(MemoryCardDatabase);
 
-    private readonly cardDataLoaderService: CardDataLoaderService;
-    private readonly cardLinkingService: CardLinkingService;
+    readonly #cardDataLoaderService: CardDataLoaderService;
+    readonly #cardLinkingService: CardLinkingService;
 
-    private loadingSets: Promise<void> | null;
-    private loadingArchetypes: Promise<void> | null;
-    private loadingCardValues: Promise<void> | null;
-    private loadingAllCards: Promise<void> | null;
+    #loadingSets: Promise<void> | null;
+    #loadingArchetypes: Promise<void> | null;
+    #loadingCardValues: Promise<void> | null;
+    #loadingAllCards: Promise<void> | null;
 
-    private readonly cardsByPasscode: Map<string, Card>;
-    private readonly cardsByName: Map<string, Card>;
-    private readonly sets: CardSet[];
-    private readonly archetypes: string[];
-    private readonly types: Map<CardTypeCategory, CardType[]>;
-    private readonly subTypes: Map<CardTypeCategory, string[]>;
-    private readonly attributes: string[];
-    private readonly linkMarkers: string[];
-    private readonly levels: number[];
+    readonly #cardsByPasscode: Map<string, Card>;
+    readonly #cardsByName: Map<string, Card>;
+    readonly #sets: CardSet[];
+    readonly #archetypes: string[];
+    readonly #types: Map<CardTypeCategory, CardType[]>;
+    readonly #subTypes: Map<CardTypeCategory, string[]>;
+    readonly #attributes: string[];
+    readonly #linkMarkers: string[];
+    readonly #levels: number[];
 
     constructor(
         @inject(TYPES.CardDataLoaderService)
@@ -40,33 +40,33 @@ class MemoryCardDatabase implements CardDatabase {
         @inject(INTERNAL_TYPES.CardLinkingService)
         cardLinkingService: CardLinkingService
     ) {
-        this.cardDataLoaderService = cardDataLoaderService;
-        this.cardLinkingService = cardLinkingService;
+        this.#cardDataLoaderService = cardDataLoaderService;
+        this.#cardLinkingService = cardLinkingService;
 
-        this.loadingSets = null;
-        this.loadingArchetypes = null;
-        this.loadingCardValues = null;
-        this.loadingAllCards = null;
+        this.#loadingSets = null;
+        this.#loadingArchetypes = null;
+        this.#loadingCardValues = null;
+        this.#loadingAllCards = null;
 
-        this.cardsByPasscode = new Map<string, Card>();
-        this.cardsByName = new Map<string, Card>();
-        this.sets = [];
-        this.archetypes = [];
-        this.types = new Map<CardTypeCategory, CardType[]>(
+        this.#cardsByPasscode = new Map<string, Card>();
+        this.#cardsByName = new Map<string, Card>();
+        this.#sets = [];
+        this.#archetypes = [];
+        this.#types = new Map<CardTypeCategory, CardType[]>(
             Object.values(CardTypeCategory).map((typeCategory) => [
                 typeCategory,
                 [],
             ])
         );
-        this.subTypes = new Map<CardTypeCategory, string[]>(
+        this.#subTypes = new Map<CardTypeCategory, string[]>(
             Object.values(CardTypeCategory).map((typeCategory) => [
                 typeCategory,
                 [],
             ])
         );
-        this.attributes = [];
-        this.linkMarkers = [];
-        this.levels = [];
+        this.#attributes = [];
+        this.#linkMarkers = [];
+        this.#levels = [];
     }
 
     public async prepareAll(): Promise<void> {
@@ -95,35 +95,35 @@ class MemoryCardDatabase implements CardDatabase {
     }
 
     public getCards(): Card[] {
-        return Array.from(this.cardsByPasscode.values());
+        return Array.from(this.#cardsByPasscode.values());
     }
 
     public getSets(): CardSet[] {
-        return this.sets;
+        return this.#sets;
     }
 
     public getArchetypes(): string[] {
-        return this.archetypes;
+        return this.#archetypes;
     }
 
     public getTypes(typeCategory: CardTypeCategory): CardType[] {
-        return this.types.get(typeCategory)!;
+        return this.#types.get(typeCategory)!;
     }
 
     public getSubTypes(typeCategory: CardTypeCategory): string[] {
-        return this.subTypes.get(typeCategory)!;
+        return this.#subTypes.get(typeCategory)!;
     }
 
     public getAttributes(): string[] {
-        return this.attributes;
+        return this.#attributes;
     }
 
     public getLevels(): number[] {
-        return this.levels;
+        return this.#levels;
     }
 
     public getLinkMarkers(): string[] {
-        return this.linkMarkers;
+        return this.#linkMarkers;
     }
 
     /**
@@ -139,7 +139,7 @@ class MemoryCardDatabase implements CardDatabase {
         if (this.hasCard(cardKey, findCardBy)) {
             card = this.getCard(cardKey, findCardBy)!;
         } else {
-            card = await this.cardDataLoaderService.getCard(
+            card = await this.#cardDataLoaderService.getCard(
                 cardKey,
                 findCardBy
             );
@@ -154,115 +154,115 @@ class MemoryCardDatabase implements CardDatabase {
     }
 
     private async loadAllCards(): Promise<void> {
-        if (this.loadingAllCards == null) {
-            this.loadingAllCards = this.cardDataLoaderService
+        if (this.#loadingAllCards == null) {
+            this.#loadingAllCards = this.#cardDataLoaderService
                 .getAllCards()
                 .then((cards) => this.registerCards(cards));
         }
-        return this.loadingAllCards;
+        return this.#loadingAllCards;
     }
 
     private loadArchetypes(): Promise<void> {
-        if (this.loadingArchetypes == null) {
-            this.loadingArchetypes = this.cardDataLoaderService
+        if (this.#loadingArchetypes == null) {
+            this.#loadingArchetypes = this.#cardDataLoaderService
                 .getArchetypes()
                 .then((archetypes) => {
-                    this.archetypes.push(...archetypes);
-                    deepFreeze(this.archetypes);
+                    this.#archetypes.push(...archetypes);
+                    deepFreeze(this.#archetypes);
                     MemoryCardDatabase.logger.debug(
                         "Registered archetypes.",
-                        this.archetypes
+                        this.#archetypes
                     );
                 });
         }
-        return this.loadingArchetypes;
+        return this.#loadingArchetypes;
     }
 
     private loadSets(): Promise<void> {
-        if (this.loadingSets == null) {
-            this.loadingSets = this.cardDataLoaderService
+        if (this.#loadingSets == null) {
+            this.#loadingSets = this.#cardDataLoaderService
                 .getAllCardSets()
                 .then((cardSets) => {
-                    this.sets.push(...cardSets);
-                    deepFreeze(this.sets);
+                    this.#sets.push(...cardSets);
+                    deepFreeze(this.#sets);
                     MemoryCardDatabase.logger.debug(
                         "Registered sets.",
-                        this.sets
+                        this.#sets
                     );
                 });
         }
-        return this.loadingSets;
+        return this.#loadingSets;
     }
 
     private async loadCardValues(): Promise<void> {
-        if (this.loadingCardValues == null) {
-            this.loadingCardValues = this.cardDataLoaderService
+        if (this.#loadingCardValues == null) {
+            this.#loadingCardValues = this.#cardDataLoaderService
                 .getCardValues()
                 .then((cardValues) => {
                     for (const typeCategory of Object.values(
                         CardTypeCategory
                     )) {
-                        const cardTypes = this.types.get(typeCategory)!;
+                        const cardTypes = this.#types.get(typeCategory)!;
                         cardTypes.push(...cardValues[typeCategory].types);
                         deepFreeze(cardTypes);
 
-                        const cardSubTypes = this.subTypes.get(typeCategory)!;
+                        const cardSubTypes = this.#subTypes.get(typeCategory)!;
                         cardSubTypes.push(...cardValues[typeCategory].subTypes);
                         deepFreeze(cardSubTypes);
                     }
                     MemoryCardDatabase.logger.debug(
                         "Registered types and sub-types.",
-                        this.types,
-                        this.subTypes
+                        this.#types,
+                        this.#subTypes
                     );
 
-                    this.attributes.push(
+                    this.#attributes.push(
                         ...cardValues[CardTypeCategory.MONSTER].attributes
                     );
-                    deepFreeze(this.attributes);
+                    deepFreeze(this.#attributes);
 
-                    this.levels.push(
+                    this.#levels.push(
                         ...cardValues[CardTypeCategory.MONSTER].levels
                     );
-                    deepFreeze(this.levels);
+                    deepFreeze(this.#levels);
 
-                    this.linkMarkers.push(
+                    this.#linkMarkers.push(
                         ...cardValues[CardTypeCategory.MONSTER].linkMarkers
                     );
-                    deepFreeze(this.linkMarkers);
+                    deepFreeze(this.#linkMarkers);
                     MemoryCardDatabase.logger.debug(
                         "Registered monster values.",
-                        this.attributes,
-                        this.levels,
-                        this.linkMarkers
+                        this.#attributes,
+                        this.#levels,
+                        this.#linkMarkers
                     );
                 });
         }
-        return this.loadingCardValues;
+        return this.#loadingCardValues;
     }
 
     private registerCards(unlinkedCards: UnlinkedCard[]): void {
         const setMap = new Map<string, CardSet>(
-            this.sets.map((set) => [set.name, set])
+            this.#sets.map((set) => [set.name, set])
         );
-        const types = Array.from(this.types.values()).flat();
+        const types = Array.from(this.#types.values()).flat();
         const typeMap = new Map<string, CardType>(
             types.map((type) => [type.name, type])
         );
 
         for (const unlinkedCard of unlinkedCards) {
-            if (this.cardsByPasscode.has(unlinkedCard.passcode)) {
+            if (this.#cardsByPasscode.has(unlinkedCard.passcode)) {
                 continue;
             }
-            const card = this.cardLinkingService.linkCard(
+            const card = this.#cardLinkingService.linkCard(
                 unlinkedCard,
                 setMap,
                 typeMap
             );
 
             deepFreeze(card);
-            this.cardsByPasscode.set(card.passcode, card);
-            this.cardsByName.set(card.name, card);
+            this.#cardsByPasscode.set(card.passcode, card);
+            this.#cardsByName.set(card.name, card);
             MemoryCardDatabase.logger.trace(
                 `Registered card '${card.passcode}'.`
             );
@@ -271,8 +271,8 @@ class MemoryCardDatabase implements CardDatabase {
 
     private getCardMap(findCardBy: FindCardBy): Map<string, Card> {
         return findCardBy == FindCardBy.PASSCODE
-            ? this.cardsByPasscode
-            : this.cardsByName;
+            ? this.#cardsByPasscode
+            : this.#cardsByName;
     }
 }
 

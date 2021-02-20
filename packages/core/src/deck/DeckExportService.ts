@@ -11,9 +11,9 @@ import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 @injectable()
 class DeckExportService {
-    private readonly deckService: DeckService;
-    private readonly cardService: CardService;
-    private readonly filterService: FilterService;
+    readonly #deckService: DeckService;
+    readonly #cardService: CardService;
+    readonly #filterService: FilterService;
 
     constructor(
         @inject(TYPES.DeckService)
@@ -23,9 +23,9 @@ class DeckExportService {
         @inject(TYPES.FilterService)
         filterService: FilterService
     ) {
-        this.deckService = deckService;
-        this.cardService = cardService;
-        this.filterService = filterService;
+        this.#deckService = deckService;
+        this.#cardService = cardService;
+        this.#filterService = filterService;
     }
 
     /**
@@ -55,7 +55,7 @@ class DeckExportService {
                     result.push(
                         ...this.createCardList(
                             typeCategory,
-                            this.filterService.filter(cards, {
+                            this.#filterService.filter(cards, {
                                 typeCategory: typeCategory,
                             })
                         )
@@ -79,7 +79,7 @@ class DeckExportService {
         }
         const result: string[] = [];
         result.push(`${sectionName}:`);
-        result.push(...this.cardService.createFormattedCardCountList(cards));
+        result.push(...this.#cardService.createFormattedCardCountList(cards));
         result.push("");
         return result;
     }
@@ -98,8 +98,8 @@ class DeckExportService {
         affiliateMedium: string,
         affiliateSource: string
     ): URL {
-        const countedCards: Map<Card, number> = this.cardService.countByCard(
-            this.deckService.getAllCards(deck)
+        const countedCards: Map<Card, number> = this.#cardService.countByCard(
+            this.#deckService.getAllCards(deck)
         );
         const cardListUriParam =
             Array.from(countedCards.entries())

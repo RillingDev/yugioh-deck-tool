@@ -15,18 +15,18 @@ import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 @injectable()
 class DeckService {
-    private readonly cardService: CardService;
-    private readonly sortingService: SortingService;
-    private readonly banlistService: BanlistService;
+    readonly #cardService: CardService;
+    readonly #sortingService: SortingService;
+    readonly #banlistService: BanlistService;
 
     constructor(
         @inject(TYPES.CardService) cardService: CardService,
         @inject(TYPES.SortingService) sortingService: SortingService,
         @inject(TYPES.BanlistService) banlistService: BanlistService
     ) {
-        this.cardService = cardService;
-        this.sortingService = sortingService;
-        this.banlistService = banlistService;
+        this.#cardService = cardService;
+        this.#sortingService = sortingService;
+        this.#banlistService = banlistService;
     }
 
     /**
@@ -96,9 +96,9 @@ class DeckService {
         // If adding this card would make the total count of this card in this deck
         // be larger than allowed by the banlist, return false
         const count = this.getAllCards(deck).filter((existingCard) =>
-            this.cardService.isTreatedAsSame(existingCard, card)
+            this.#cardService.isTreatedAsSame(existingCard, card)
         ).length;
-        const banState = this.banlistService.getBanStateByFormat(card, format);
+        const banState = this.#banlistService.getBanStateByFormat(card, format);
         return count < banState.count;
     }
 
@@ -205,7 +205,7 @@ class DeckService {
     public sort(deck: Deck): Deck {
         const deckClone = this.cloneDeck(deck);
         for (const deckPart of DECK_PART_ARR) {
-            deckClone.parts[deckPart] = this.sortingService.sort(
+            deckClone.parts[deckPart] = this.#sortingService.sort(
                 deckClone.parts[deckPart],
                 {
                     strategy: SortingStrategy.DEFAULT,
