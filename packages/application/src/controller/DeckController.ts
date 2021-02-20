@@ -11,8 +11,8 @@ import { inject, injectable } from "inversify";
 
 @injectable()
 export class DeckController {
-    private readonly cardDatabase: CardDatabase;
-    private readonly cardService: CardService;
+    readonly #cardDatabase: CardDatabase;
+    readonly #cardService: CardService;
 
     constructor(
         @inject(TYPES.CardDatabase)
@@ -20,8 +20,8 @@ export class DeckController {
         @inject(TYPES.CardService)
         cardService: CardService
     ) {
-        this.cardDatabase = cardDatabase;
-        this.cardService = cardService;
+        this.#cardDatabase = cardDatabase;
+        this.#cardService = cardService;
     }
 
     /**
@@ -38,8 +38,8 @@ export class DeckController {
         cards: ReadonlyArray<Card>
     ): [string, number][] {
         if (deckPart === DeckPart.EXTRA) {
-            const countedByType = this.cardService.countByType(cards);
-            return this.cardDatabase
+            const countedByType = this.#cardService.countByType(cards);
+            return this.#cardDatabase
                 .getTypes(CardTypeCategory.MONSTER)
                 .filter(
                     (cardType) =>
@@ -52,7 +52,7 @@ export class DeckController {
                 ]);
         }
 
-        const countedByTypeCategory = this.cardService.countByTypeCategory(
+        const countedByTypeCategory = this.#cardService.countByTypeCategory(
             cards
         );
         return Object.values(CardTypeCategory)

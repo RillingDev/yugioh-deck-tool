@@ -15,9 +15,9 @@ export class DeckUrlController {
     private static readonly PARAM_ENCODED_URI_DECK = "e";
     private static readonly PARAM_REMOTE_DECK = "u";
 
-    private readonly deckService: DeckService;
-    private readonly deckUriEncodingService: DeckUriEncodingService;
-    private readonly deckFileService: DeckFileService;
+    readonly #deckService: DeckService;
+    readonly #deckUriEncodingService: DeckUriEncodingService;
+    readonly #deckFileService: DeckFileService;
 
     constructor(
         @inject(TYPES.DeckService)
@@ -27,9 +27,9 @@ export class DeckUrlController {
         @inject(TYPES.DeckFileService)
         deckFileService: DeckFileService
     ) {
-        this.deckService = deckService;
-        this.deckUriEncodingService = deckUriEncodingService;
-        this.deckFileService = deckFileService;
+        this.#deckService = deckService;
+        this.#deckUriEncodingService = deckUriEncodingService;
+        this.#deckFileService = deckFileService;
     }
 
     /**
@@ -44,7 +44,7 @@ export class DeckUrlController {
             DeckUrlController.PARAM_REMOTE_DECK
         );
         if (remoteUrlValue != null) {
-            const importResult = await this.deckFileService.fromRemoteFile(
+            const importResult = await this.#deckFileService.fromRemoteFile(
                 location.origin,
                 remoteUrlValue
             );
@@ -61,7 +61,7 @@ export class DeckUrlController {
             DeckUrlController.PARAM_ENCODED_URI_DECK
         );
         if (uriEncodedDeck != null) {
-            return this.deckUriEncodingService.fromUrlQueryParamValue(
+            return this.#deckUriEncodingService.fromUrlQueryParamValue(
                 uriEncodedDeck
             );
         }
@@ -78,10 +78,10 @@ export class DeckUrlController {
     public getShareLink(deck: Deck): URL {
         const url = new URL(location.href);
         url.search = "";
-        if (this.deckService.getAllCards(deck).length > 0) {
+        if (this.#deckService.getAllCards(deck).length > 0) {
             url.searchParams.append(
                 DeckUrlController.PARAM_ENCODED_URI_DECK,
-                this.deckUriEncodingService.toUrlQueryParamValue(deck)
+                this.#deckUriEncodingService.toUrlQueryParamValue(deck)
             );
         }
         return url;

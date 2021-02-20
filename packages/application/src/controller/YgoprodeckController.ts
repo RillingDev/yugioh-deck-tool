@@ -14,20 +14,20 @@ declare global {
 
 @injectable()
 export class YgoprodeckController {
-    private readonly ygoprodeckService: YgoprodeckService;
+    readonly #ygoprodeckService: YgoprodeckService;
 
     constructor(
         @inject(YGOPRODECK_TYPES.YgoprodeckService)
         ygoprodeckService: YgoprodeckService
     ) {
-        this.ygoprodeckService = ygoprodeckService;
+        this.#ygoprodeckService = ygoprodeckService;
     }
 
     /**
      * Checks if ygoprodeck.com credentials are available.
      */
     public hasCredentials(): boolean {
-        this.ygoprodeckService.validateEnv();
+        this.#ygoprodeckService.validateEnv();
         return (
             window.ygoprodeckUsername != null && window.ygoprodeckToken != null
         );
@@ -37,7 +37,7 @@ export class YgoprodeckController {
      * Retrieves ygoprodeck.com credentials.
      */
     public getCredentials(): Credentials {
-        this.ygoprodeckService.validateEnv();
+        this.#ygoprodeckService.validateEnv();
         if (!this.hasCredentials()) {
             throw new TypeError("Insufficient credentials available.");
         }
