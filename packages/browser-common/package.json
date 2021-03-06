@@ -8,8 +8,8 @@
         "test": "jest"
     },
     "dependencies": {
-        "inversify": "^5.0.5",
-        "html2canvas": "^1.0.0-rc.7"
+        "html2canvas": "^1.0.0-rc.7",
+        "inversify": "^5.0.5"
     },
     "peerDependencies": {
         "reflect-metadata": "^0.1.13"

@@ -15,7 +15,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/FelixRilling/yugioh-deck-tool.git"
+        "url": "https://github.com/FelixRilling/yugioh-deck-tool.git"
     },
     "scripts": {
         "setup": "npm ci && lerna bootstrap",
@@ -26,6 +26,5 @@
     },
     "devDependencies": {
         "lerna": "^4.0.0"
-    },
-    "dependencies": {}
+    }
 }
