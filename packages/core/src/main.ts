@@ -53,4 +53,5 @@ export type { EncodingService } from "./util/EncodingService";
 export type {
     CardPredicate,
     CardPredicateService,
+    CardCountFunction,
 } from "./card/CardPredicateService";

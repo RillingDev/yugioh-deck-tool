@@ -55,10 +55,12 @@ export default defineComponent({
             if (!checked.value) {
                 return () => true;
             }
-            const cards = await ygoprodeckService.getCardCollectionPasscodes(
+            const collectionCardCountFunction = await ygoprodeckService.getCollectionCardCountFunction(
                 ygoprodeckController.getCredentials()
             );
-            return cardPredicateService.createPassCodePredicate(cards);
+            return cardPredicateService.createAtLeastOneAvailablePredicate(
+                collectionCardCountFunction
+            );
         };
         const reload = (): void => {
             createPredicate()

@@ -2,8 +2,9 @@ import { inject, injectable } from "inversify";
 import { YGOPRODECK_INTERNAL_TYPES } from "../types";
 import type { Credentials } from "./YgoprodeckApiService";
 import { YgoprodeckApiService } from "./YgoprodeckApiService";
-import type { Card } from "../../../core/src/main";
+import type { Card, CardCountFunction } from "../../../core/src/main";
 import { Environment, EnvironmentConfig, TYPES } from "../../../core/src/main";
+import { countMapBy } from "lightdash";
 
 @injectable()
 export class YgoprodeckService {
@@ -30,18 +31,27 @@ export class YgoprodeckService {
         return this.#ygoprodeckApiService.updateViews(card);
     }
 
-    public async getCardCollectionPasscodes(
+    public async getCollectionCardCountFunction(
         credentials: Credentials
-    ): Promise<Set<string>> {
+    ): Promise<CardCountFunction> {
         this.validateEnv();
         const unlinkedCards = await this.#ygoprodeckApiService.getCards({
             format: null,
             includeAliased: true,
             auth: credentials,
         });
-        return new Set(
-            unlinkedCards.map((unlinkedCard) => unlinkedCard.passcode)
+        return this.createCardCountFunction(
+            countMapBy(unlinkedCards, (unlinkedCard) => unlinkedCard.passcode)
         );
+    }
+
+    private createCardCountFunction(
+        countedByPasscode: Map<string, number>
+    ): CardCountFunction {
+        return (card: Card) =>
+            countedByPasscode.has(card.passcode)
+                ? countedByPasscode.get(card.passcode)!
+                : 0;
     }
 
     public validateEnv(): void {

@@ -3,15 +3,19 @@ import type { Card } from "./Card";
 
 export type CardPredicate = (card: Card) => boolean;
 
+export type CardCountFunction = (card: Card) => number;
+
 @injectable()
 export class CardPredicateService {
     /**
-     * Creates a predicate only allowing card passcodes provided.
+     * Creates a predicate based on a CardCountFunction. If at least one exists, predicate is true.
      *
-     * @return a predicate only allowing card passcodes provided.
+     * @return a predicate based on the CardCountFunction.
      */
-    public createPassCodePredicate(passcodes: Set<string>): CardPredicate {
-        return (card) => passcodes.has(card.passcode);
+    public createAtLeastOneAvailablePredicate(
+        cardCodeFunction: CardCountFunction
+    ): CardPredicate {
+        return (card) => cardCodeFunction(card) > 0;
     }
 
     /**
