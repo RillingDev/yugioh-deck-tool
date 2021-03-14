@@ -93,7 +93,6 @@ export class YgoprodeckApiService {
         const authHeaders = this.createAuthHeaders(options);
 
         const responseData = await this.loadPaginated<RawCard>(
-            YgoprodeckApiService.CHUNK_SIZE,
             async (offset) => {
                 const response = await this.#httpService.get<
                     PaginatedResponse<RawCard[]>
@@ -202,20 +201,20 @@ export class YgoprodeckApiService {
     }
 
     private async loadPaginated<T>(
-        pageSize: number,
         fetcher: (offset: number) => Promise<PaginatedResponse<T[]>>
     ): Promise<T[]> {
         const result: T[] = [];
         let offset = 0;
-        let total: number | null = null;
+        let pagesRemaining: number | null = null;
 
-        while (total == null || result.length < total) {
+        while (pagesRemaining == null || pagesRemaining > 0) {
             const response = await fetcher(offset);
             result.push(...response.data);
-            if (total == null) {
-                total = response.meta.total_rows;
+
+            pagesRemaining = response.meta.pages_remaining;
+            if (response.meta.next_page_offset != null) {
+                offset = response.meta.next_page_offset;
             }
-            offset += pageSize;
         }
 
         return result;
