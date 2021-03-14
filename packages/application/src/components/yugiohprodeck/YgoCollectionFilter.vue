@@ -16,11 +16,8 @@
 </template>
 
 <script lang="ts">
-import type {
-    CardPredicate,
-    CardPredicateService,
-} from "../../../../core/src/main";
-import { getLogger, TYPES } from "../../../../core/src/main";
+import type { CardCountFunction } from "../../../../core/src/main";
+import { getLogger } from "../../../../core/src/main";
 import { defineComponent, ref } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
@@ -29,12 +26,11 @@ import { APPLICATION_TYPES } from "../../types";
 import type { YgoprodeckController } from "../../controller/YgoprodeckController";
 import type { YgoprodeckService } from "../../../../ygoprodeck/src/main";
 import { YGOPRODECK_TYPES } from "../../../../ygoprodeck/src/main";
+import { appStore } from "../../composition/state/appStore";
+import { SET_CARD_COUNT_FUNCTION } from "../../store/modules/collection";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
     YGOPRODECK_TYPES.YgoprodeckService
-);
-const cardPredicateService = applicationContainer.get<CardPredicateService>(
-    TYPES.CardPredicateService
 );
 const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
     APPLICATION_TYPES.YgoprodeckController
@@ -49,22 +45,29 @@ export default defineComponent({
     props: {},
     components: { BFormCheckbox },
     setup(props, context) {
-        const checked = ref<boolean>(false);
+        const checked = ref<boolean>(
+            appStore(context).state.collection.cardCountFunction != null
+        );
 
-        const createPredicate = async (): Promise<CardPredicate> => {
+        const setCardCountFunction = (
+            newCardCountFunction: CardCountFunction | null
+        ): void =>
+            appStore(context).commit(SET_CARD_COUNT_FUNCTION, {
+                cardCountFunction: newCardCountFunction,
+            });
+
+        const loadCollection = async (): Promise<CardCountFunction | null> => {
             if (!checked.value) {
-                return () => true;
+                return null;
             }
-            const collectionCardCountFunction = await ygoprodeckService.getCollectionCardCountFunction(
+            return ygoprodeckService.getCollectionCardCountFunction(
                 ygoprodeckController.getCredentials()
-            );
-            return cardPredicateService.createAtLeastOneAvailablePredicate(
-                collectionCardCountFunction
             );
         };
         const reload = (): void => {
-            createPredicate()
-                .then((predicate) => context.emit("change", predicate))
+            loadCollection()
+                .then(setCardCountFunction)
+                .then(() => context.emit("change"))
                 .catch((err) => {
                     logger.error("Could load user collection!", err);
                     showError(

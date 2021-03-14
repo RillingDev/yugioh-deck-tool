@@ -138,11 +138,7 @@
 
         <template v-if="showCollectionFilter && isFieldVisible('collection')">
             <hr />
-            <YgoCollectionFilter
-                @change="
-                    (predicate) => onCollectionFilterPredicateChange(predicate)
-                "
-            />
+            <YgoCollectionFilter @change="() => onCollectionFilterChange()" />
             <hr />
         </template>
     </form>
@@ -154,6 +150,7 @@ import type {
     CardDatabase,
     CardFilter,
     CardPredicate,
+    CardPredicateService,
     CardSet,
     CardType,
     EnvironmentConfig,
@@ -179,6 +176,9 @@ import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
 import type { YgoprodeckController } from "../controller/YgoprodeckController";
 import { APPLICATION_TYPES } from "../types";
 
+const cardPredicateService = applicationContainer.get<CardPredicateService>(
+    TYPES.CardPredicateService
+);
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const banlistService = applicationContainer.get<BanlistService>(
     TYPES.BanlistService
@@ -253,6 +253,15 @@ export default defineComponent({
                 environmentConfig.getEnvironment() == Environment.YGOPRODECK &&
                 ygoprodeckController.hasCredentials()
         );
+        const collectionPredicate = computed<CardPredicate | null>(() => {
+            const countFunction = appStore(context).state.collection
+                .cardCountFunction;
+            return countFunction == null
+                ? null
+                : cardPredicateService.createAtLeastOneAvailablePredicate(
+                      countFunction
+                  );
+        });
 
         const isFieldVisible = (fieldName: string): boolean =>
             props.showOnly == null || props.showOnly.includes(fieldName);
@@ -260,10 +269,13 @@ export default defineComponent({
         const onFilterChanged = (): void =>
             context.emit("change", internalFilter);
 
-        const onCollectionFilterPredicateChange = (
-            predicate: CardPredicate
-        ): void => {
-            internalFilter.customPredicates = [predicate];
+        const onCollectionFilterChange = (): void => {
+            // TODO use composition API instead of manual event handling + assignment
+            if (collectionPredicate.value != null) {
+                internalFilter.customPredicates = [collectionPredicate.value];
+            } else {
+                internalFilter.customPredicates = [];
+            }
             onFilterChanged();
         };
 
@@ -301,7 +313,7 @@ export default defineComponent({
             showCollectionFilter,
             isMonster,
 
-            onCollectionFilterPredicateChange,
+            onCollectionFilterChange,
             onFilterChanged,
             isFieldVisible,
         };
