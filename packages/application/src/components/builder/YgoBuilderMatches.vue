@@ -38,10 +38,15 @@
                 <div class="builder-matches__match__details">
                     <p>{{ card.name }}</p>
                     <p>
-                        <small>{{ typeText(card) }}</small>
+                        <small>{{ getTypeText(card) }}</small>
                     </p>
                     <p>
-                        <small>{{ subTypeText(card) }}</small>
+                        <small>{{ getSubTypeText(card) }}</small>
+                    </p>
+                    <p>
+                        <small v-show="getCardCount(card) != null">
+                            {{ getCardCount(card) }} in Collection
+                        </small>
                     </p>
                 </div>
             </li>
@@ -53,7 +58,11 @@
 </template>
 
 <script lang="ts">
-import type { Card, DeckService } from "../../../../core/src/main";
+import type {
+    Card,
+    CardCountFunction,
+    DeckService,
+} from "../../../../core/src/main";
 import { CardTypeCategory, TYPES } from "../../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
@@ -68,6 +77,9 @@ import { showSuccess } from "../../composition/feedback";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
+
+const CARD_DISPLAY_LIMIT = 50;
+
 export default defineComponent({
     props: {
         matches: {
@@ -84,21 +96,26 @@ export default defineComponent({
         Draggable,
     },
     setup(props, context) {
-        const CARD_DISPLAY_LIMIT = 50;
         const store = appStore(context);
+
+        const cardCountFunction = computed<CardCountFunction | null>(
+            () => store.state.collection.cardCountFunction
+        );
 
         const limitedMatches = computed<Card[]>(() =>
             props.matches.slice(0, CARD_DISPLAY_LIMIT)
         );
 
-        const typeText = (card: Card): string =>
+        const getTypeText = (card: Card): string =>
             card.type.category === CardTypeCategory.MONSTER
                 ? card.type.name
                 : card.type.category;
-        const subTypeText = (card: Card): string =>
+        const getSubTypeText = (card: Card): string =>
             card.type.category === CardTypeCategory.MONSTER
                 ? `${card.attribute!}/${card.subType}`
                 : card.subType;
+        const getCardCount = (card: Card): number | null =>
+            cardCountFunction.value?.(card) ?? null;
 
         const isTouchDevice = computed<boolean>(browserSupportsTouch);
 
@@ -122,8 +139,9 @@ export default defineComponent({
 
         return {
             limitedMatches,
-            typeText,
-            subTypeText,
+            getTypeText,
+            getSubTypeText,
+            getCardCount,
             canMove,
             addCard,
             isTouchDevice,
