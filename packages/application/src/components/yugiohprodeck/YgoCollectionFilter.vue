@@ -18,7 +18,7 @@
 <script lang="ts">
 import type { CardCountFunction } from "../../../../core/src/main";
 import { getLogger } from "../../../../core/src/main";
-import { defineComponent, ref } from "@vue/composition-api";
+import { computed, defineComponent, ref, watch } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError } from "../../composition/feedback";
@@ -43,18 +43,24 @@ const logger = getLogger("YgoCollectionFilter");
  */
 export default defineComponent({
     props: {},
+    emits: ["change"],
     components: { BFormCheckbox },
     setup(props, context) {
-        const checked = ref<boolean>(
-            appStore(context).state.collection.cardCountFunction != null
+        const cardCountFunction = computed<CardCountFunction | null>({
+            get: () => appStore(context).state.collection.cardCountFunction,
+            set: (value) =>
+                appStore(context).commit(SET_CARD_COUNT_FUNCTION, {
+                    cardCountFunction: value,
+                }),
+        });
+        const checked = ref<boolean>(cardCountFunction.value != null);
+        // TODO find a way to link ref with vuex state without watch
+        watch(
+            () => cardCountFunction.value,
+            () => {
+                checked.value = cardCountFunction.value != null;
+            }
         );
-
-        const setCardCountFunction = (
-            newCardCountFunction: CardCountFunction | null
-        ): void =>
-            appStore(context).commit(SET_CARD_COUNT_FUNCTION, {
-                cardCountFunction: newCardCountFunction,
-            });
 
         const loadCollection = async (): Promise<CardCountFunction | null> => {
             if (!checked.value) {
@@ -66,8 +72,8 @@ export default defineComponent({
         };
         const reload = (): void => {
             loadCollection()
-                .then(setCardCountFunction)
-                .then(() => context.emit("change"))
+                .then((loaded) => (cardCountFunction.value = loaded))
+                .then((loaded) => context.emit("change", loaded))
                 .catch((err) => {
                     logger.error("Could load user collection!", err);
                     showError(
