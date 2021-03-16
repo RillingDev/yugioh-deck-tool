@@ -160,6 +160,33 @@ class FilterService {
             return true;
         });
     }
+
+    /**
+     * Creates an empty filter instance including all optional fields initialized.
+     *
+     * @return Empty filter.
+     */
+    public createDefaultFilter(): CardFilter {
+        return {
+            customPredicates: [],
+
+            name: null,
+
+            typeCategory: null,
+            type: null,
+            subType: null,
+
+            attribute: null,
+            level: null,
+            linkMarkers: [],
+
+            archetype: null,
+            format: null,
+            banState: null,
+
+            sets: [],
+        };
+    }
 }
 
 export { FilterService, CardFilter };
