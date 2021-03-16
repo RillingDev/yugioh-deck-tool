@@ -139,8 +139,13 @@
         <template v-if="showCollectionFilter && isFieldVisible('collection')">
             <hr />
             <YgoCollectionFilter @change="() => onCollectionFilterChange()" />
-            <hr />
         </template>
+
+        <hr />
+        <button class="btn btn-danger" @click="() => resetFilter()">
+            <span class="fas fas-in-button fa-trash" aria-hidden="true"></span>
+            Reset Filter
+        </button>
     </form>
 </template>
 
@@ -154,6 +159,8 @@ import type {
     CardSet,
     CardType,
     EnvironmentConfig,
+    FilterService,
+    CardCountFunction,
 } from "../../../core/src/main";
 import {
     CardTypeCategory,
@@ -175,6 +182,7 @@ import { appStore } from "../composition/state/appStore";
 import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
 import type { YgoprodeckController } from "../controller/YgoprodeckController";
 import { APPLICATION_TYPES } from "../types";
+import { SET_CARD_COUNT_FUNCTION } from "../store/modules/collection";
 
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
     TYPES.CardPredicateService
@@ -182,6 +190,9 @@ const cardPredicateService = applicationContainer.get<CardPredicateService>(
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const banlistService = applicationContainer.get<BanlistService>(
     TYPES.BanlistService
+);
+const filterService = applicationContainer.get<FilterService>(
+    TYPES.FilterService
 );
 const environmentConfig = applicationContainer.get<EnvironmentConfig>(
     TYPES.EnvironmentConfig
@@ -253,15 +264,26 @@ export default defineComponent({
                 environmentConfig.getEnvironment() == Environment.YGOPRODECK &&
                 ygoprodeckController.hasCredentials()
         );
+
+        const cardCountFunction = computed<CardCountFunction | null>({
+            get: () => appStore(context).state.collection.cardCountFunction,
+            set: (value) =>
+                appStore(context).commit(SET_CARD_COUNT_FUNCTION, {
+                    cardCountFunction: value,
+                }),
+        });
         const collectionPredicate = computed<CardPredicate | null>(() => {
-            const countFunction = appStore(context).state.collection
-                .cardCountFunction;
-            return countFunction == null
+            return cardCountFunction.value == null
                 ? null
                 : cardPredicateService.createAtLeastOneAvailablePredicate(
-                      countFunction
+                      cardCountFunction.value
                   );
         });
+
+        const resetFilter = (): void => {
+            cardCountFunction.value = null;
+            Object.assign(internalFilter, filterService.createDefaultFilter());
+        };
 
         const isFieldVisible = (fieldName: string): boolean =>
             props.showOnly == null || props.showOnly.includes(fieldName);
@@ -312,7 +334,7 @@ export default defineComponent({
             hasBanStates,
             showCollectionFilter,
             isMonster,
-
+            resetFilter,
             onCollectionFilterChange,
             onFilterChanged,
             isFieldVisible,

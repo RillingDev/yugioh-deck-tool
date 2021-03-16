@@ -3,13 +3,6 @@
         <BSidebar id="filterSidebar" title="Filter Cards">
             <div class="container">
                 <YgoFilter v-model="filter" v-if="loaded" />
-                <button class="btn btn-danger" @click="() => resetFilter()">
-                    <span
-                        class="fas fas-in-button fa-trash"
-                        aria-hidden="true"
-                    ></span>
-                    Reset Filter
-                </button>
             </div>
         </BSidebar>
         <div class="builder__details">
@@ -67,28 +60,6 @@ const cardPredicateService = applicationContainer.get<CardPredicateService>(
     TYPES.CardPredicateService
 );
 
-const createDefaultFilter = (): CardFilter => {
-    return {
-        customPredicates: [],
-
-        name: null,
-
-        typeCategory: null,
-        type: null,
-        subType: null,
-
-        attribute: null,
-        level: null,
-        linkMarkers: [],
-
-        archetype: null,
-        format: null,
-        banState: null,
-
-        sets: [],
-    };
-};
-
 export default defineComponent({
     props: {
         dragGroup: {
@@ -104,10 +75,9 @@ export default defineComponent({
     },
     setup(props, context) {
         // We have to init all properties even if they are optional, because otherwise vue cant listen to changes.
-        const filter = reactive<CardFilter>(createDefaultFilter());
-        const resetFilter = (): void => {
-            Object.assign(filter, createDefaultFilter());
-        };
+        const filter = reactive<CardFilter>(
+            filterService.createDefaultFilter()
+        );
 
         const sortingOptions = ref<SortingOptions>({
             strategy: SortingStrategy.DEFAULT,
@@ -149,8 +119,6 @@ export default defineComponent({
             loaded,
             formatCards,
             filteredCards,
-
-            resetFilter,
         };
     },
 });
