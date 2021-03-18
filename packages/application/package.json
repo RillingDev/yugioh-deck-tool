@@ -5,9 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "vue-cli-service test:unit",
     "lint": "eslint ./src/ ./tests/  --ext .ts --ext .vue",
-    "fix": "eslint ./src/ ./tests/  --ext .ts --ext .vue --fix"
+    "fix": "eslint ./src/ ./tests/  --ext .ts --ext .vue --fix",
+    "test": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@vue/composition-api": "^1.0.0-rc.2",
@@ -31,12 +31,12 @@
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
-    "@vue/cli-plugin-babel": "^4.5.11",
+    "@vue/cli-plugin-babel": "^4.5.12",
     "@vue/cli-plugin-eslint": "^4.5.11",
     "@vue/cli-plugin-typescript": "^4.5.11",
     "@vue/cli-plugin-unit-jest": "^4.5.11",
     "@vue/cli-plugin-vuex": "^4.5.11",
-    "@vue/cli-service": "^4.5.11",
+    "@vue/cli-service": "^4.5.12",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^1.0.3",
