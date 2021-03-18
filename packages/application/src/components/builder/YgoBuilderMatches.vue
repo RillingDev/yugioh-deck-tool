@@ -44,9 +44,9 @@
                         <small>{{ getSubTypeText(card) }}</small>
                     </p>
                     <p>
-                        <small v-show="getCardCount(card) != null">
-                            {{ getCardCount(card) }} in Collection
-                        </small>
+                        <small v-show="getCardCount(card) != null"
+                            >{{ getCardCount(card) }} in Collection</small
+                        >
                     </p>
                 </div>
             </li>
