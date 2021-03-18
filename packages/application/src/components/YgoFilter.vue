@@ -141,11 +141,16 @@
             <YgoCollectionFilter @change="() => onCollectionFilterChange()" />
         </template>
 
-        <hr />
-        <button class="btn btn-danger" @click="() => resetFilter()">
-            <span class="fas fas-in-button fa-trash" aria-hidden="true"></span>
-            Reset Filter
-        </button>
+        <template v-if="isFieldVisible('reset')">
+            <hr />
+            <button class="btn btn-danger" @click="() => resetFilter()">
+                <span
+                    class="fas fas-in-button fa-trash"
+                    aria-hidden="true"
+                ></span>
+                Reset Filter
+            </button>
+        </template>
     </form>
 </template>
 
