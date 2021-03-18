@@ -50,7 +50,7 @@ import { DeckPart, TYPES } from "../../../../../core/src/main";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { computed, defineComponent, ref } from "@vue/composition-api";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -65,7 +65,9 @@ export default defineComponent({
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);
 
-        const deck = computed<Deck>(() => appStore(context).state.deck.active);
+        const deck = computed<Deck>(
+            () => useAppStore(context).state.deck.active
+        );
         const hasMainDeckCards = computed<boolean>(
             () => deck.value.parts[DeckPart.MAIN].length > 0
         );

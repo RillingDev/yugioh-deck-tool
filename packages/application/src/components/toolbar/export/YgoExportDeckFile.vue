@@ -11,7 +11,7 @@ import { DeckFileService, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../../../browser-common/src/main";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 import { showSuccess } from "../../../composition/feedback";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
@@ -23,7 +23,7 @@ export default defineComponent({
     props: {},
     setup(props, context) {
         const downloadDeck = (): void => {
-            const deck = appStore(context).state.deck.active;
+            const deck = useAppStore(context).state.deck.active;
             const { fileContent, fileName } = deckFileService.toFile(deck);
             const file = new File([fileContent], fileName, {
                 type: DeckFileService.DECK_FILE_MIME_TYPE,

@@ -178,7 +178,7 @@ import {
 
 import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
-import { appStore } from "../composition/state/appStore";
+import { useAppStore } from "../composition/state/useAppStore";
 import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
 import type { YgoprodeckController } from "../controller/YgoprodeckController";
 import { APPLICATION_TYPES } from "../types";
@@ -250,7 +250,7 @@ export default defineComponent({
         );
 
         const hasBanStates = computed<boolean>(() => {
-            const format = appStore(context).state.format.active;
+            const format = useAppStore(context).state.format.active;
             if (format == null) {
                 return false;
             }
@@ -266,9 +266,9 @@ export default defineComponent({
         );
 
         const cardCountFunction = computed<CardCountFunction | null>({
-            get: () => appStore(context).state.collection.cardCountFunction,
+            get: () => useAppStore(context).state.collection.cardCountFunction,
             set: (value) =>
-                appStore(context).commit(SET_CARD_COUNT_FUNCTION, {
+                useAppStore(context).commit(SET_CARD_COUNT_FUNCTION, {
                     cardCountFunction: value,
                 }),
         });

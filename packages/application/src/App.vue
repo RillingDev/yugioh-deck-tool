@@ -21,15 +21,15 @@ import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
 import { defineComponent } from "@vue/composition-api";
-import { DATA_LOADED } from "./store/modules/data";
 import { BOverlay } from "bootstrap-vue";
-import { appStore } from "./composition/state/appStore";
-import { dataLoaded } from "./composition/state/dataLoaded";
+import { useAppStore } from "./composition/state/useAppStore";
+import { useDataLoaded } from "./composition/state/useDataLoaded";
 import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import type { DeckUrlController } from "./controller/DeckUrlController";
+import { startLoading, stopLoading } from "./composition/loading";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const deckUrlController = applicationContainer.get<DeckUrlController>(
@@ -47,24 +47,23 @@ export default defineComponent({
     },
     props: {},
     setup(props, context) {
-        const loaded = dataLoaded(context);
+        const loaded = useDataLoaded(context);
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
-        cardDatabase
-            .prepareAll()
+        startLoading(context)
+            .then(() => cardDatabase.prepareAll())
             .catch((err) => {
                 logger.error("Could not load data!", err);
                 showError(context, "Could not load data!", "deck-tool__portal");
             })
             .then(() => {
-                appStore(context).commit(DATA_LOADED);
                 logger.info("Loaded data.");
                 return deckUrlController.loadUriDeck(new URL(location.href));
             })
             .then((result) => {
                 if (result != null) {
-                    appStore(context).commit(DECK_REPLACE, { deck: result });
+                    useAppStore(context).commit(DECK_REPLACE, { deck: result });
                     logger.info("Loaded deck from URI.");
                 } else {
                     logger.info(
@@ -75,7 +74,8 @@ export default defineComponent({
             .catch((err) => {
                 logger.error("Could not load deck!", err);
                 showError(context, "Could not load deck!", "deck-tool__portal");
-            });
+            })
+            .finally(() => stopLoading(context));
 
         return {
             loaded,

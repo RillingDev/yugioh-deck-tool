@@ -70,7 +70,7 @@ import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 import { createMoveFromBuilderValidator } from "../../composition/dragging";
 import { applicationContainer } from "../../inversify.config";
-import { appStore } from "../../composition/state/appStore";
+import { useAppStore } from "../../composition/state/useAppStore";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
 import { browserSupportsTouch } from "../../../../browser-common/src/main";
 import { showSuccess } from "../../composition/feedback";
@@ -96,7 +96,7 @@ export default defineComponent({
         Draggable,
     },
     setup(props, context) {
-        const store = appStore(context);
+        const store = useAppStore(context);
 
         const cardCountFunction = computed<CardCountFunction | null>(
             () => store.state.collection.cardCountFunction

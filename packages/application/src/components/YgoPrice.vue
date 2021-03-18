@@ -50,7 +50,7 @@ import type {
 import { DEFAULT_VENDOR_ARR, TYPES } from "../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, ref } from "@vue/composition-api";
-import { appStore } from "../composition/state/appStore";
+import { useAppStore } from "../composition/state/useAppStore";
 import { BTooltip } from "bootstrap-vue";
 
 const priceService = applicationContainer.get<PriceService>(TYPES.PriceService);
@@ -65,7 +65,7 @@ export default defineComponent({
     },
     setup(props, context) {
         const activeCurrency = computed<Currency>(
-            () => appStore(context).state.currency.active
+            () => useAppStore(context).state.currency.active
         );
 
         const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(

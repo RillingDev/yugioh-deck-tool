@@ -2,7 +2,7 @@
     <div class="builder">
         <BSidebar id="filterSidebar" title="Filter Cards">
             <div class="container">
-                <YgoFilter v-model="filter" v-if="loaded" />
+                <YgoFilter v-model="filter" />
             </div>
         </BSidebar>
         <div class="builder__details">
@@ -45,8 +45,8 @@ import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
-import { appStore } from "../../composition/state/appStore";
-import { dataLoaded } from "../../composition/state/dataLoaded";
+import { useAppStore } from "../../composition/state/useAppStore";
+import { useDataLoaded } from "../../composition/state/useDataLoaded";
 import { BSidebar } from "bootstrap-vue";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
@@ -84,10 +84,10 @@ export default defineComponent({
             order: SortingOrder.DESC,
         });
 
-        const loaded = dataLoaded(context);
+        const loaded = useDataLoaded(context);
 
         const format = computed<Format | null>(
-            () => appStore(context).state.format.active
+            () => useAppStore(context).state.format.active
         );
 
         const formatCards = computed<Card[]>(() => {
@@ -116,7 +116,6 @@ export default defineComponent({
             filter,
             sortingOptions,
 
-            loaded,
             formatCards,
             filteredCards,
         };

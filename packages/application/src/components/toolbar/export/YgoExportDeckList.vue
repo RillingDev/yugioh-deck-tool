@@ -12,7 +12,7 @@ import { TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { copyText } from "../../../../../browser-common/src/main";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 import { showSuccess } from "../../../composition/feedback";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
@@ -24,7 +24,7 @@ export default defineComponent({
     props: {},
     setup(props, context) {
         const copyList = (): void => {
-            const deck = appStore(context).state.deck.active;
+            const deck = useAppStore(context).state.deck.active;
             const deckList = deckExportService.toShareableText(deck);
             copyText(deckList, document);
             showSuccess(

@@ -13,13 +13,13 @@ import {
     createScreenshot,
     downloadFile,
 } from "../../../../../browser-common/src/main";
-import { deckEmpty } from "../../../composition/state/deckEmpty";
+import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 import {
     showError,
     showInfo,
     showSuccess,
 } from "../../../composition/feedback";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 
 const logger = getLogger("YgoExportScreenshot");
 
@@ -27,8 +27,8 @@ export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
     setup(props, context) {
-        const isDeckEmpty = deckEmpty(context);
-        const store = appStore(context);
+        const isDeckEmpty = useDeckEmpty(context);
+        const store = useAppStore(context);
         const screenshotReady = ref<boolean>(false);
 
         const screenshot = (): void => {

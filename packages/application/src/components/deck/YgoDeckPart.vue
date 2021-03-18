@@ -55,7 +55,7 @@ import {
     DECK_PART_CARDS_REORDER,
 } from "../../store/modules/deck";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
-import { appStore } from "../../composition/state/appStore";
+import { useAppStore } from "../../composition/state/useAppStore";
 import type { DraggableChangeEventData } from "../../composition/dragging";
 import {
     createMoveInDeckPartValidator,
@@ -91,7 +91,7 @@ export default defineComponent({
         );
 
         const cards = computed<Card[]>(
-            () => appStore(context).state.deck.active.parts[props.deckPart]
+            () => useAppStore(context).state.deck.active.parts[props.deckPart]
         );
         const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
         const deckPartStats = computed<string>(() => {
@@ -107,13 +107,13 @@ export default defineComponent({
         });
 
         const addCard = (card: Card, newIndex: number): void =>
-            appStore(context).commit(DECK_PART_CARDS_ADD, {
+            useAppStore(context).commit(DECK_PART_CARDS_ADD, {
                 deckPart: props.deckPart,
                 card,
                 newIndex,
             });
         const removeCard = (card: Card, oldIndex: number): void =>
-            appStore(context).commit(DECK_PART_CARDS_REMOVE, {
+            useAppStore(context).commit(DECK_PART_CARDS_REMOVE, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,
@@ -123,7 +123,7 @@ export default defineComponent({
             oldIndex: number,
             newIndex: number
         ): void =>
-            appStore(context).commit(DECK_PART_CARDS_REORDER, {
+            useAppStore(context).commit(DECK_PART_CARDS_REORDER, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,

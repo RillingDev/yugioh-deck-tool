@@ -15,10 +15,10 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 import { DECK_CLEAR } from "../../../store/modules/deck";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
-import { deckEmpty } from "../../../composition/state/deckEmpty";
+import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 
 export default defineComponent({
     components: {
@@ -27,8 +27,8 @@ export default defineComponent({
     },
     props: {},
     setup(props, context) {
-        const clear = (): void => appStore(context).commit(DECK_CLEAR);
-        const isDeckEmpty = deckEmpty(context);
+        const clear = (): void => useAppStore(context).commit(DECK_CLEAR);
+        const isDeckEmpty = useDeckEmpty(context);
 
         return { isDeckEmpty, clear };
     },

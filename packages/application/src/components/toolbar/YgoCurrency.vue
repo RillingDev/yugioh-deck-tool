@@ -17,7 +17,7 @@ import VSelect from "vue-select";
 import type { Currency } from "../../../../core/src/main";
 import { DEFAULT_CURRENCY_ARR } from "../../../../core/src/main";
 import { CURRENCY_UPDATE } from "../../store/modules/currency";
-import { appStore } from "../../composition/state/appStore";
+import { useAppStore } from "../../composition/state/useAppStore";
 
 export default defineComponent({
     components: { VSelect },
@@ -26,10 +26,10 @@ export default defineComponent({
         const currencies = Object.values(DEFAULT_CURRENCY_ARR);
         const currency = computed<Currency>({
             get() {
-                return appStore(context).state.currency.active;
+                return useAppStore(context).state.currency.active;
             },
             set(newCurrency) {
-                appStore(context).commit(CURRENCY_UPDATE, {
+                useAppStore(context).commit(CURRENCY_UPDATE, {
                     currency: newCurrency,
                 });
             },

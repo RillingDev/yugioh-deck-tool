@@ -16,7 +16,7 @@ import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { readFile, uploadFile } from "../../../../../browser-common/src/main";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 import {
     showError,
     showSuccess,
@@ -39,7 +39,7 @@ export default defineComponent({
                 fileContent,
                 fileName: file.name,
             });
-            appStore(context).commit(DECK_REPLACE, {
+            useAppStore(context).commit(DECK_REPLACE, {
                 deck: result.deck,
             });
 

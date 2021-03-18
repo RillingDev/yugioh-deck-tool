@@ -20,8 +20,8 @@ import { computed, defineComponent } from "@vue/composition-api";
 import type { DeckExportService } from "../../../../core/src/main";
 import { TYPES } from "../../../../core/src/main";
 import { applicationContainer } from "../../inversify.config";
-import { appStore } from "../../composition/state/appStore";
-import { deckEmpty } from "../../composition/state/deckEmpty";
+import { useAppStore } from "../../composition/state/useAppStore";
+import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
     TYPES.DeckExportService
@@ -31,10 +31,10 @@ export default defineComponent({
     components: {},
     props: {},
     setup(props, context) {
-        const isDeckEmpty = deckEmpty(context);
+        const isDeckEmpty = useDeckEmpty(context);
 
         const buyLink = computed<string>(() => {
-            const deck = appStore(context).state.deck.active;
+            const deck = useAppStore(context).state.deck.active;
             return deckExportService
                 .toBuyLink(deck, "deck-builder", "YGOPRODeck")
                 .toString();

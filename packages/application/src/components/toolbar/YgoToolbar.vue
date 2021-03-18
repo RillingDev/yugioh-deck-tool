@@ -87,9 +87,9 @@ import YgoExportDeckFile from "./export/YgoExportDeckFile.vue";
 import YgoExportDeckYdkeUrl from "./export/YgoExportDeckYdkeUrl.vue";
 import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
-import { dataLoaded } from "../../composition/state/dataLoaded";
+import { useDataLoaded } from "../../composition/state/useDataLoaded";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
-import { deckEmpty } from "../../composition/state/deckEmpty";
+import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
 
 export default defineComponent({
     components: {
@@ -114,8 +114,8 @@ export default defineComponent({
     },
     props: {},
     setup(props, context) {
-        const loaded = dataLoaded(context);
-        const empty = deckEmpty(context);
+        const loaded = useDataLoaded(context);
+        const empty = useDeckEmpty(context);
 
         return { loaded, empty };
     },

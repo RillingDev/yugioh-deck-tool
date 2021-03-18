@@ -1,6 +1,6 @@
 import type { DeckPart, DeckService } from "../../../core/src/main";
 import { TYPES } from "../../../core/src/main";
-import { appStore } from "./state/appStore";
+import { useAppStore } from "./state/useAppStore";
 import { applicationContainer } from "../inversify.config";
 import type { SetupContext } from "@vue/composition-api";
 
@@ -44,8 +44,8 @@ export const createMoveInDeckPartValidator = (
     if (newDeckPart == null) {
         return false;
     }
-    const deck = appStore(context).state.deck.active;
-    const format = appStore(context).state.format.active;
+    const deck = useAppStore(context).state.deck.active;
+    const format = useAppStore(context).state.format.active;
     const card = e.draggedContext.element;
 
     return deckService.canMove(deck, card, oldDeckPart, newDeckPart, format);
@@ -59,8 +59,8 @@ export const createMoveFromBuilderValidator = (context: SetupContext) => (
     if (newDeckPart == null) {
         return false;
     }
-    const deck = appStore(context).state.deck.active;
-    const format = appStore(context).state.format.active;
+    const deck = useAppStore(context).state.deck.active;
+    const format = useAppStore(context).state.format.active;
     const card = e.draggedContext.element;
 
     return deckService.canAdd(deck, card, newDeckPart, format);

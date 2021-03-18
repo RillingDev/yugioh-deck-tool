@@ -15,7 +15,7 @@ import { TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { copyText } from "../../../../../browser-common/src/main";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 import { showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
@@ -27,7 +27,7 @@ export default defineComponent({
     props: {},
     setup(props, context) {
         const copyYdke = (): void => {
-            const deck = appStore(context).state.deck.active;
+            const deck = useAppStore(context).state.deck.active;
             const ydke = deckUriEncodingService.toUri(deck);
             copyText(ydke.toString(), document);
             showSuccess(

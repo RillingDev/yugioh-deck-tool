@@ -7,17 +7,17 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 import { DECK_SORT } from "../../../store/modules/deck";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { deckEmpty } from "../../../composition/state/deckEmpty";
+import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 
 export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
     setup(props, context) {
-        const sort = (): void => appStore(context).commit(DECK_SORT);
-        const isDeckEmpty = deckEmpty(context);
+        const sort = (): void => useAppStore(context).commit(DECK_SORT);
+        const isDeckEmpty = useDeckEmpty(context);
 
         return { isDeckEmpty, sort };
     },

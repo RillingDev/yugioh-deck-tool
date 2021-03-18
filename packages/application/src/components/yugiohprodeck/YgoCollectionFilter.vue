@@ -26,8 +26,9 @@ import { APPLICATION_TYPES } from "../../types";
 import type { YgoprodeckController } from "../../controller/YgoprodeckController";
 import type { YgoprodeckService } from "../../../../ygoprodeck/src/main";
 import { YGOPRODECK_TYPES } from "../../../../ygoprodeck/src/main";
-import { appStore } from "../../composition/state/appStore";
+import { useAppStore } from "../../composition/state/useAppStore";
 import { SET_CARD_COUNT_FUNCTION } from "../../store/modules/collection";
+import { startLoading, stopLoading } from "../../composition/loading";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
     YGOPRODECK_TYPES.YgoprodeckService
@@ -47,9 +48,9 @@ export default defineComponent({
     components: { BFormCheckbox },
     setup(props, context) {
         const cardCountFunction = computed<CardCountFunction | null>({
-            get: () => appStore(context).state.collection.cardCountFunction,
+            get: () => useAppStore(context).state.collection.cardCountFunction,
             set: (value) =>
-                appStore(context).commit(SET_CARD_COUNT_FUNCTION, {
+                useAppStore(context).commit(SET_CARD_COUNT_FUNCTION, {
                     cardCountFunction: value,
                 }),
         });
@@ -71,7 +72,8 @@ export default defineComponent({
             );
         };
         const reload = (): void => {
-            loadCollection()
+            startLoading(context)
+                .then(() => loadCollection())
                 .then((loaded) => (cardCountFunction.value = loaded))
                 .then((loaded) => context.emit("change", loaded))
                 .catch((err) => {
@@ -81,7 +83,8 @@ export default defineComponent({
                         "Could load user collection!",
                         "deck-tool__portal"
                     );
-                });
+                })
+                .finally(() => stopLoading(context));
         };
 
         return { checked, reload };

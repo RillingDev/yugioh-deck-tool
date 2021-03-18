@@ -38,7 +38,7 @@ import { getLogger, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { appStore } from "../../../composition/state/appStore";
+import { useAppStore } from "../../../composition/state/useAppStore";
 import { showError, showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
@@ -67,7 +67,7 @@ export default defineComponent({
                 );
                 return;
             }
-            appStore(context).commit(DECK_REPLACE, {
+            useAppStore(context).commit(DECK_REPLACE, {
                 deck,
             });
             showSuccess(

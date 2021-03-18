@@ -3,5 +3,5 @@ import type { store } from "../../store/store";
 
 type AppStore = typeof store;
 
-export const appStore = (context: SetupContext): AppStore =>
+export const useAppStore = (context: SetupContext): AppStore =>
     context.root.$store as AppStore;

@@ -42,8 +42,8 @@ import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
-import { appStore } from "../../../composition/state/appStore";
-import { dataLoaded } from "../../../composition/state/dataLoaded";
+import { useAppStore } from "../../../composition/state/useAppStore";
+import { useDataLoaded } from "../../../composition/state/useDataLoaded";
 
 const deckRandomizationService = applicationContainer.get<DeckRandomizationService>(
     TYPES.DeckRandomizationService
@@ -69,7 +69,7 @@ export default defineComponent({
         });
 
         const format = computed<Format | null>(
-            () => appStore(context).state.format.active
+            () => useAppStore(context).state.format.active
         );
 
         const randomize = (): void => {
@@ -80,10 +80,10 @@ export default defineComponent({
                     format: format.value,
                 }
             );
-            appStore(context).commit(DECK_REPLACE, { deck: randomizedDeck });
+            useAppStore(context).commit(DECK_REPLACE, { deck: randomizedDeck });
         };
 
-        const loaded = dataLoaded(context);
+        const loaded = useDataLoaded(context);
 
         return {
             strategy,
