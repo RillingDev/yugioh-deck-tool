@@ -28,8 +28,9 @@ const deckExportService = applicationContainer.get<DeckExportService>(
 );
 
 export default defineComponent({
-    components: {},
     props: {},
+    emits: [],
+    components: {},
     setup(props, context) {
         const isDeckEmpty = useDeckEmpty(context);
 

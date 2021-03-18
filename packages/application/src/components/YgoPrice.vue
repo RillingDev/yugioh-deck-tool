@@ -56,13 +56,14 @@ import { BTooltip } from "bootstrap-vue";
 const priceService = applicationContainer.get<PriceService>(TYPES.PriceService);
 const cardService = applicationContainer.get<CardService>(TYPES.CardService);
 export default defineComponent({
-    components: { BTooltip },
     props: {
         cards: {
             required: true,
             type: Array as PropType<Card[]>,
         },
     },
+    emits: [],
+    components: { BTooltip },
     setup(props, context) {
         const activeCurrency = computed<Currency>(
             () => useAppStore(context).state.currency.active

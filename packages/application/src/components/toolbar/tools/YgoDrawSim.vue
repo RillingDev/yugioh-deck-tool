@@ -55,12 +55,13 @@ import { useAppStore } from "../../../composition/state/useAppStore";
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export default defineComponent({
+    props: {},
+    emits: [],
     components: {
         YgoCard,
         BModal,
         BDropdownItemButton,
     },
-    props: {},
     setup(props, context) {
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);

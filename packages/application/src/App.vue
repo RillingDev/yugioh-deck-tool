@@ -20,7 +20,7 @@ import { getLogger, TYPES } from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, PropType } from "@vue/composition-api";
 import { BOverlay } from "bootstrap-vue";
 import { useAppStore } from "./composition/state/useAppStore";
 import { useDataLoaded } from "./composition/state/useDataLoaded";
@@ -39,13 +39,14 @@ const deckUrlController = applicationContainer.get<DeckUrlController>(
 const logger = getLogger("App");
 
 export default defineComponent({
+    props: {},
+    emits: [],
     components: {
         BOverlay,
         YgoDeck,
         YgoBuilder,
         YgoToolbar,
     },
-    props: {},
     setup(props, context) {
         const loaded = useDataLoaded(context);
 

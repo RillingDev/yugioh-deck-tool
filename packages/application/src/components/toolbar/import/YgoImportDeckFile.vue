@@ -30,8 +30,9 @@ const deckFileService = applicationContainer.get<DeckFileService>(
 const logger = getLogger("YgoImportDeckFile");
 
 export default defineComponent({
-    components: { BDropdownItemButton },
     props: {},
+    emits: [],
+    components: { BDropdownItemButton },
     setup(props, context) {
         const importDeckFile = async (file: File): Promise<ImportResult> => {
             const fileContent = await readFile(file);

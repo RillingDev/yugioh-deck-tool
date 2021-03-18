@@ -23,8 +23,9 @@ const deckUrlController = applicationContainer.get<DeckUrlController>(
 );
 
 export default defineComponent({
-    components: { BDropdownItemButton },
     props: {},
+    emits: [],
+    components: { BDropdownItemButton },
     setup(props, context) {
         const copyLink = (): void => {
             const deck = useAppStore(context).state.deck.active;

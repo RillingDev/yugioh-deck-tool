@@ -36,12 +36,13 @@ export default defineComponent({
             type: Object as PropType<SortingOptions>,
         },
     },
-    components: {
-        VSelect,
-    },
+    emits: ["change"],
     model: {
         prop: "sortingOptions",
         event: "change",
+    },
+    components: {
+        VSelect,
     },
     setup(props, context) {
         const internalSortingOptions = reactive<SortingOptions>(

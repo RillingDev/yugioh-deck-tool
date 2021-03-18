@@ -13,8 +13,9 @@ import { BDropdownItemButton } from "bootstrap-vue";
 import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 
 export default defineComponent({
-    components: { BDropdownItemButton },
     props: {},
+    emits: [],
+    components: { BDropdownItemButton },
     setup(props, context) {
         const shuffle = (): void => useAppStore(context).commit(DECK_SHUFFLE);
         const isDeckEmpty = useDeckEmpty(context);

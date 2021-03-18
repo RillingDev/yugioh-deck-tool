@@ -67,6 +67,7 @@ export default defineComponent({
             type: String as PropType<string>,
         },
     },
+    emits: [],
     components: {
         YgoFilter,
         YgoSortingOptions,

@@ -152,6 +152,7 @@
 <script lang="ts">
 import type {
     BanlistService,
+    CardCountFunction,
     CardDatabase,
     CardFilter,
     CardPredicate,
@@ -160,7 +161,6 @@ import type {
     CardType,
     EnvironmentConfig,
     FilterService,
-    CardCountFunction,
 } from "../../../core/src/main";
 import {
     CardTypeCategory,
@@ -213,13 +213,14 @@ export default defineComponent({
             default: null,
         },
     },
-    components: {
-        VSelect,
-        YgoCollectionFilter,
-    },
+    emits: ["change"],
     model: {
         prop: "filter",
         event: "change",
+    },
+    components: {
+        VSelect,
+        YgoCollectionFilter,
     },
     setup: function (props, context) {
         const banStates = DEFAULT_BAN_STATE_ARR;

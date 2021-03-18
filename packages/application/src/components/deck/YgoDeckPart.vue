@@ -70,11 +70,6 @@ const deckController = applicationContainer.get<DeckController>(
 const logger = getLogger("YgoDeckPart");
 
 export default defineComponent({
-    components: {
-        YgoPrice,
-        YgoCard,
-        Draggable,
-    },
     props: {
         [DECK_PART_PROP]: {
             required: true,
@@ -84,6 +79,12 @@ export default defineComponent({
             required: true,
             type: String as PropType<string>,
         },
+    },
+    emits: [],
+    components: {
+        YgoPrice,
+        YgoCard,
+        Draggable,
     },
     setup(props, context) {
         const deckPartConfig = computed<DeckPartConfig>(

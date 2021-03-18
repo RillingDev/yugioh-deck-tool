@@ -92,6 +92,8 @@ import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
 import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
 
 export default defineComponent({
+    props: {},
+    emits: [],
     components: {
         YgoFormat,
         YgoDeckName,
@@ -112,7 +114,6 @@ export default defineComponent({
         YgoExportShareLink,
         YgoExportScreenshot,
     },
-    props: {},
     setup(props, context) {
         const loaded = useDataLoaded(context);
         const empty = useDeckEmpty(context);

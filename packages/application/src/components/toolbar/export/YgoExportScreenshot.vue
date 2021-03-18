@@ -24,8 +24,9 @@ import { useAppStore } from "../../../composition/state/useAppStore";
 const logger = getLogger("YgoExportScreenshot");
 
 export default defineComponent({
-    components: { BDropdownItemButton },
     props: {},
+    emits: [],
+    components: { BDropdownItemButton },
     setup(props, context) {
         const isDeckEmpty = useDeckEmpty(context);
         const store = useAppStore(context);

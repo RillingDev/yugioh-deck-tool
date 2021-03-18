@@ -50,6 +50,8 @@ const deckRandomizationService = applicationContainer.get<DeckRandomizationServi
 );
 
 export default defineComponent({
+    props: {},
+    emits: [],
     components: {
         YgoFilter,
         VSelect,
@@ -57,7 +59,6 @@ export default defineComponent({
         BDropdownItemButton,
         BDropdownGroup,
     },
-    props: {},
     setup(props, context) {
         const strategies = Object.values(RandomizationStrategy);
 

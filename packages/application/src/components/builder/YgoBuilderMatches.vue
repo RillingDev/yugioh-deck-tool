@@ -91,6 +91,7 @@ export default defineComponent({
             type: String as PropType<string>,
         },
     },
+    emits: [],
     components: {
         YgoCard,
         Draggable,

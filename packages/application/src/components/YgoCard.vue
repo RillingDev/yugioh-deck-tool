@@ -27,6 +27,8 @@ export default defineComponent({
             default: false,
         },
     },
+    emits: [],
+    components: {},
     setup(props) {
         const imgSrc = computed<string>(
             () => props.card.image?.urlSmall ?? imageUrlCardPlaceholder()

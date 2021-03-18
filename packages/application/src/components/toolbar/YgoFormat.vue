@@ -18,8 +18,9 @@ import { Format } from "../../../../core/src/main";
 import { useAppStore } from "../../composition/state/useAppStore";
 
 export default defineComponent({
-    components: { VSelect },
     props: {},
+    emits: [],
+    components: { VSelect },
     setup(props, context) {
         const formats = Object.values(Format);
         const format = computed<Format | null>({

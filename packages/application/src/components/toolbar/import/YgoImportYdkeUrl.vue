@@ -48,8 +48,9 @@ const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 const logger = getLogger("YgoImportYdkeUrl");
 
 export default defineComponent({
-    components: { BDropdownItemButton, BModal },
     props: {},
+    emits: [],
+    components: { BDropdownItemButton, BModal },
     setup(props, context) {
         const modal = ref<BModal>();
         const ydkeUrl = ref<string>("");

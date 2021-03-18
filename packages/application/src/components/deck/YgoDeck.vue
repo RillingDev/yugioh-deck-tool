@@ -26,15 +26,16 @@ import { useAppStore } from "../../composition/state/useAppStore";
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export default defineComponent({
-    components: {
-        YgoDeckPart,
-        YgoPrice,
-    },
     props: {
         dragGroup: {
             required: true,
             type: String as PropType<string>,
         },
+    },
+    emits: [],
+    components: {
+        YgoDeckPart,
+        YgoPrice,
     },
     setup(props, context) {
         const deckParts = DECK_PART_ARR;

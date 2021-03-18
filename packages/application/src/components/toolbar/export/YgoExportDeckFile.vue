@@ -19,8 +19,9 @@ const deckFileService = applicationContainer.get<DeckFileService>(
 );
 
 export default defineComponent({
-    components: { BDropdownItemButton },
     props: {},
+    emits: [],
+    components: { BDropdownItemButton },
     setup(props, context) {
         const downloadDeck = (): void => {
             const deck = useAppStore(context).state.deck.active;

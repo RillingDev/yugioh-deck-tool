@@ -20,8 +20,9 @@ import { CURRENCY_UPDATE } from "../../store/modules/currency";
 import { useAppStore } from "../../composition/state/useAppStore";
 
 export default defineComponent({
-    components: { VSelect },
     props: {},
+    emits: [],
+    components: { VSelect },
     setup(props, context) {
         const currencies = Object.values(DEFAULT_CURRENCY_ARR);
         const currency = computed<Currency>({

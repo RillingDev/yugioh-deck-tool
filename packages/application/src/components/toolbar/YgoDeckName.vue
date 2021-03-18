@@ -14,8 +14,9 @@ import { DECK_NAME_UPDATE } from "../../store/modules/deck";
 import { useAppStore } from "../../composition/state/useAppStore";
 
 export default defineComponent({
-    components: {},
     props: {},
+    emits: [],
+    components: {},
     setup(props, context) {
         const deckName = computed<string | null>({
             get() {
