@@ -49,12 +49,14 @@ export default defineComponent({
     setup(props, context) {
         const cardCountFunction = computed<CardCountFunction | null>({
             get: () => useAppStore(context).state.collection.cardCountFunction,
-            set: (value) =>
+            set: (newCardCountFunction) =>
                 useAppStore(context).commit(SET_CARD_COUNT_FUNCTION, {
-                    cardCountFunction: value,
+                    cardCountFunction: newCardCountFunction,
                 }),
         });
+
         const checked = ref<boolean>(cardCountFunction.value != null);
+
         // TODO find a way to link ref with vuex state without watch
         watch(
             () => cardCountFunction.value,

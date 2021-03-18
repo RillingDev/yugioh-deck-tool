@@ -1,8 +1,8 @@
 <template>
     <VSelect
         :options="currencies"
-        :get-option-key="(currency) => currency.name"
-        :get-option-label="(currency) => currency.name"
+        :get-option-key="(currentCurrency) => currentCurrency.name"
+        :get-option-label="(currentCurrency) => currentCurrency.name"
         v-model="currency"
         :clearable="false"
         :searchable="false"
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, readonly } from "@vue/composition-api";
 
 import VSelect from "vue-select";
 import type { Currency } from "../../../../core/src/main";
@@ -24,16 +24,15 @@ export default defineComponent({
     emits: [],
     components: { VSelect },
     setup(props, context) {
-        const currencies = Object.values(DEFAULT_CURRENCY_ARR);
+        const currencies = readonly<Currency[]>(
+            Object.values(DEFAULT_CURRENCY_ARR)
+        );
         const currency = computed<Currency>({
-            get() {
-                return useAppStore(context).state.currency.active;
-            },
-            set(newCurrency) {
+            get: () => useAppStore(context).state.currency.active,
+            set: (newCurrency) =>
                 useAppStore(context).commit(CURRENCY_UPDATE, {
                     currency: newCurrency,
-                });
-            },
+                }),
         });
 
         return { currencies, currency };

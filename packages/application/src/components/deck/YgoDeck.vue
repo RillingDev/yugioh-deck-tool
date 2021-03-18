@@ -14,10 +14,10 @@
     </div>
 </template>
 <script lang="ts">
-import type { Card, DeckService } from "../../../../core/src/main";
+import type { Card, DeckPart, DeckService } from "../../../../core/src/main";
 import { DECK_PART_ARR, TYPES } from "../../../../core/src/main";
 import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, readonly } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
 import YgoDeckPart from "./YgoDeckPart.vue";
@@ -38,7 +38,7 @@ export default defineComponent({
         YgoPrice,
     },
     setup(props, context) {
-        const deckParts = DECK_PART_ARR;
+        const deckParts = readonly<DeckPart[]>(DECK_PART_ARR);
         const allCards = computed<Card[]>(() =>
             deckService.getAllCards(useAppStore(context).state.deck.active)
         );

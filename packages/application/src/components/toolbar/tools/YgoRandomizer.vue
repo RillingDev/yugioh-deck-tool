@@ -39,7 +39,7 @@ import { RandomizationStrategy, TYPES } from "../../../../../core/src/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { computed, defineComponent, ref } from "@vue/composition-api";
+import { computed, defineComponent, readonly, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
 import { useAppStore } from "../../../composition/state/useAppStore";
@@ -60,7 +60,9 @@ export default defineComponent({
         BDropdownGroup,
     },
     setup(props, context) {
-        const strategies = Object.values(RandomizationStrategy);
+        const strategies = readonly<RandomizationStrategy[]>(
+            Object.values(RandomizationStrategy)
+        );
 
         const strategy = ref<RandomizationStrategy>(
             RandomizationStrategy.ARCHETYPE_2

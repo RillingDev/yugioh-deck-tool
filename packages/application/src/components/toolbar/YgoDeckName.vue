@@ -19,14 +19,11 @@ export default defineComponent({
     components: {},
     setup(props, context) {
         const deckName = computed<string | null>({
-            get() {
-                return useAppStore(context).state.deck.active.name;
-            },
-            set(newName) {
+            get: () => useAppStore(context).state.deck.active.name,
+            set: (newName) =>
                 useAppStore(context).commit(DECK_NAME_UPDATE, {
                     name: newName,
-                });
-            },
+                }),
         });
 
         return { deckName };

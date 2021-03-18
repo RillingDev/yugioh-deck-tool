@@ -157,6 +157,7 @@
 <script lang="ts">
 import type {
     BanlistService,
+    BanState,
     CardCountFunction,
     CardDatabase,
     CardFilter,
@@ -178,6 +179,7 @@ import {
     computed,
     defineComponent,
     reactive,
+    readonly,
     watch,
 } from "@vue/composition-api";
 
@@ -228,8 +230,10 @@ export default defineComponent({
         YgoCollectionFilter,
     },
     setup: function (props, context) {
-        const banStates = DEFAULT_BAN_STATE_ARR;
-        const cardTypeCategories = Object.values(CardTypeCategory);
+        const banStates = readonly<BanState[]>(DEFAULT_BAN_STATE_ARR);
+        const cardTypeCategories = readonly<CardTypeCategory[]>(
+            Object.values(CardTypeCategory)
+        );
 
         const internalFilter = reactive<CardFilter>(props.filter);
 

@@ -74,7 +74,7 @@ export default defineComponent({
                 });
         };
 
-        const openFileDialog = (): void => {
+        const openFileDialog = (): void =>
             uploadFile(
                 ".ydk",
                 (files) => {
@@ -84,7 +84,6 @@ export default defineComponent({
                 },
                 document
             );
-        };
 
         return { openFileDialog };
     },

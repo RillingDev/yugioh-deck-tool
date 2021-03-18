@@ -55,6 +55,7 @@ import { BTooltip } from "bootstrap-vue";
 
 const priceService = applicationContainer.get<PriceService>(TYPES.PriceService);
 const cardService = applicationContainer.get<CardService>(TYPES.CardService);
+
 export default defineComponent({
     props: {
         cards: {

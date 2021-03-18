@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, readonly } from "@vue/composition-api";
 
 import VSelect from "vue-select";
 import { FORMAT_UPDATE } from "../../store/modules/format";
@@ -22,16 +22,13 @@ export default defineComponent({
     emits: [],
     components: { VSelect },
     setup(props, context) {
-        const formats = Object.values(Format);
+        const formats = readonly<Format[]>(Object.values(Format));
         const format = computed<Format | null>({
-            get() {
-                return useAppStore(context).state.format.active;
-            },
-            set(newFormat) {
+            get: () => useAppStore(context).state.format.active,
+            set: (newFormat) =>
                 useAppStore(context).commit(FORMAT_UPDATE, {
                     format: newFormat,
-                });
-            },
+                }),
         });
 
         return { formats, format };

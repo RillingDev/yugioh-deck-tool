@@ -4,7 +4,7 @@
             <div class="deck-tool__body__primary">
                 <YgoToolbar />
                 <hr />
-                <YgoDeck :drag-group="dragGroup" v-show="loaded" />
+                <YgoDeck v-show="loaded" :drag-group="dragGroup" />
             </div>
             <div class="deck-tool__body__secondary">
                 <YgoBuilder :drag-group="dragGroup" />
@@ -20,7 +20,7 @@ import { getLogger, TYPES } from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
-import { defineComponent, PropType } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import { BOverlay } from "bootstrap-vue";
 import { useAppStore } from "./composition/state/useAppStore";
 import { useDataLoaded } from "./composition/state/useDataLoaded";

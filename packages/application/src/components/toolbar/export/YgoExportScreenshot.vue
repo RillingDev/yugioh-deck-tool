@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import { getLogger } from "../../../../../core/src/main";
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
@@ -29,8 +29,6 @@ export default defineComponent({
     components: { BDropdownItemButton },
     setup(props, context) {
         const isDeckEmpty = useDeckEmpty(context);
-        const store = useAppStore(context);
-        const screenshotReady = ref<boolean>(false);
 
         const screenshot = (): void => {
             const deckEl = document.getElementById("deckToolDeck");
@@ -47,7 +45,8 @@ export default defineComponent({
             );
             createScreenshot(
                 deckEl,
-                store.state.deck.active.name ?? "Deck Screenshot",
+                useAppStore(context).state.deck.active.name ??
+                    "Deck Screenshot",
                 {
                     scale: 2,
                     onClone: (doc) => {
@@ -73,7 +72,7 @@ export default defineComponent({
                 });
         };
 
-        return { isDeckEmpty, screenshotReady, screenshot };
+        return { isDeckEmpty, screenshot };
     },
 });
 </script>
