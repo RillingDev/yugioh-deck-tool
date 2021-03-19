@@ -46,6 +46,7 @@ interface UnlinkedCard {
     readonly image: CardImage | null;
     readonly prices: CardPrices;
     readonly views: number;
+    readonly quantity: number | null; // Number when querying collection, null otherwise
 }
 
 export { UnlinkedCard, CardSetAppearance };

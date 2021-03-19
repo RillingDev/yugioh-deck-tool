@@ -2,9 +2,13 @@ import { inject, injectable } from "inversify";
 import { YGOPRODECK_INTERNAL_TYPES } from "../types";
 import type { Credentials } from "./YgoprodeckApiService";
 import { YgoprodeckApiService } from "./YgoprodeckApiService";
-import type { Card, CardCountFunction } from "../../../core/src/main";
+import type {
+    Card,
+    CardCountFunction,
+    UnlinkedCard,
+} from "../../../core/src/main";
 import { Environment, EnvironmentConfig, TYPES } from "../../../core/src/main";
-import { countMapBy } from "lightdash";
+import { toMapBy } from "lightdash";
 
 @injectable()
 export class YgoprodeckService {
@@ -41,7 +45,11 @@ export class YgoprodeckService {
             auth: credentials,
         });
         return this.createCardCountFunction(
-            countMapBy(unlinkedCards, (unlinkedCard) => unlinkedCard.passcode)
+            toMapBy<number, string, UnlinkedCard>(
+                unlinkedCards,
+                (_key, unlinkedCard) => unlinkedCard.passcode,
+                (_key, unlinkedCard) => unlinkedCard.quantity!
+            )
         );
     }
 

@@ -39,6 +39,8 @@ interface RawCard {
     archetype?: string;
     misc_info?: RawMiscInfo[];
     banlist_info?: RawBanListInfo;
+
+    cardq?: number; // Only exists when querying collection
 }
 
 interface RawCardSetAppearance {
@@ -206,6 +208,7 @@ const mapCard = (rawCard: RawCard): UnlinkedCard => {
         },
 
         views: miscInfo?.views ?? 0,
+        quantity: rawCard.cardq ?? null,
     };
 };
 
