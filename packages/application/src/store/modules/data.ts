@@ -1,21 +1,27 @@
 import type { Module } from "vuex";
 import type { AppState } from "../AppState";
 
-export const SET_DATA_LOADED = "SET_DATA_LOADED";
+export const ESSENTIAL_DATA_LOADED = "ESSENTIAL_DATA_LOADED";
+export const SET_LOADING = "SET_LOADING";
 
 export interface DataState {
-    loaded: boolean;
+    essentialDataLoaded: boolean;
+    loading: boolean;
 }
 
 export const dataModule: Module<DataState, AppState> = {
     state: () => {
         return {
-            loaded: false,
+            essentialDataLoaded: false,
+            loading: true,
         };
     },
     mutations: {
-        [SET_DATA_LOADED](state, payload: { loaded: boolean }) {
-            state.loaded = payload.loaded;
+        [ESSENTIAL_DATA_LOADED](state) {
+            state.essentialDataLoaded = true;
+        },
+        [SET_LOADING](state, payload: { loading: boolean }) {
+            state.loading = payload.loading;
         },
     },
 };

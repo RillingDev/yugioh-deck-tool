@@ -1,10 +1,16 @@
 <template>
     <BDropdownGroup>
-        <BDropdownItemButton @click="() => randomize()" :disabled="!loaded">
+        <BDropdownItemButton
+            :disabled="!essentialDataLoaded"
+            @click="() => randomize()"
+        >
             <span class="fas fa-magic fas-in-button" aria-hidden="true"></span>
             Randomize
         </BDropdownItemButton>
-        <BDropdownItemButton v-b-modal.randomizerSettings :disabled="!loaded">
+        <BDropdownItemButton
+            v-b-modal.randomizerSettings
+            :disabled="!essentialDataLoaded"
+        >
             <span class="fas fa-cogs fas-in-button" aria-hidden="true"></span>
             Randomizer Settings
             <BModal
@@ -43,7 +49,7 @@ import { computed, defineComponent, readonly, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
 import { useAppStore } from "../../../composition/state/useAppStore";
-import { useDataLoaded } from "../../../composition/state/useDataLoaded";
+import { useEssentialDataLoaded } from "../../../composition/loading";
 
 const deckRandomizationService = applicationContainer.get<DeckRandomizationService>(
     TYPES.DeckRandomizationService
@@ -86,14 +92,14 @@ export default defineComponent({
             useAppStore(context).commit(DECK_REPLACE, { deck: randomizedDeck });
         };
 
-        const loaded = useDataLoaded(context);
+        const essentialDataLoaded = useEssentialDataLoaded(context);
 
         return {
             strategy,
             strategies,
             filter,
 
-            loaded,
+            essentialDataLoaded,
 
             randomize,
         };

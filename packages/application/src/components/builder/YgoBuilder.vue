@@ -3,7 +3,7 @@
         <BSidebar id="filterSidebar" title="Filter Cards">
             <div class="container">
                 <!-- FIXME: hiding is required for filter to correctly apply loaded data currently -->
-                <YgoFilter v-model="filter" v-if="loaded" />
+                <YgoFilter v-if="essentialDataLoaded" v-model="filter" />
             </div>
         </BSidebar>
         <div class="builder__details">
@@ -47,8 +47,8 @@ import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
 import { useAppStore } from "../../composition/state/useAppStore";
-import { useDataLoaded } from "../../composition/state/useDataLoaded";
 import { BSidebar } from "bootstrap-vue";
+import { useEssentialDataLoaded } from "../../composition/loading";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const sortingService = applicationContainer.get<SortingService>(
@@ -86,7 +86,7 @@ export default defineComponent({
             order: SortingOrder.DESC,
         });
 
-        const loaded = useDataLoaded(context);
+        const essentialDataLoaded = useEssentialDataLoaded(context);
 
         const format = computed<Format | null>(
             () => useAppStore(context).state.format.active
@@ -94,7 +94,7 @@ export default defineComponent({
 
         const formatCards = computed<Card[]>(() => {
             // Required to ensure render after loading.
-            if (!loaded.value) {
+            if (!essentialDataLoaded.value) {
                 return [];
             }
             return filterService.filter(cardDatabase.getCards(), {
@@ -117,7 +117,7 @@ export default defineComponent({
         return {
             filter,
             sortingOptions,
-            loaded,
+            essentialDataLoaded,
 
             formatCards,
             filteredCards,

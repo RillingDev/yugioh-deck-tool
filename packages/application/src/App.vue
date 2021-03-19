@@ -1,10 +1,10 @@
 <template>
-    <BOverlay :show="!loaded">
+    <BOverlay :show="loading">
         <div class="deck-tool__body">
             <div class="deck-tool__body__primary">
                 <YgoToolbar />
                 <hr />
-                <YgoDeck v-show="loaded" :drag-group="dragGroup" />
+                <YgoDeck v-show="!loading" :drag-group="dragGroup" />
             </div>
             <div class="deck-tool__body__secondary">
                 <YgoBuilder :drag-group="dragGroup" />
@@ -20,16 +20,16 @@ import { getLogger, TYPES } from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
-import { defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import { BOverlay } from "bootstrap-vue";
 import { useAppStore } from "./composition/state/useAppStore";
-import { useDataLoaded } from "./composition/state/useDataLoaded";
 import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import type { DeckUrlController } from "./controller/DeckUrlController";
 import { startLoading, stopLoading } from "./composition/loading";
+import { ESSENTIAL_DATA_LOADED } from "./store/modules/data";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const deckUrlController = applicationContainer.get<DeckUrlController>(
@@ -48,12 +48,14 @@ export default defineComponent({
         YgoToolbar,
     },
     setup(props, context) {
-        const loaded = useDataLoaded(context);
+        const appStore = useAppStore(context);
+        const loading = computed<boolean>(() => appStore.state.data.loading);
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
         startLoading(context)
             .then(() => cardDatabase.prepareAll())
+            .then(() => appStore.commit(ESSENTIAL_DATA_LOADED))
             .catch((err) => {
                 logger.error("Could not load data!", err);
                 showError(context, "Could not load data!", "deck-tool__portal");
@@ -64,7 +66,7 @@ export default defineComponent({
             })
             .then((result) => {
                 if (result != null) {
-                    useAppStore(context).commit(DECK_REPLACE, { deck: result });
+                    appStore.commit(DECK_REPLACE, { deck: result });
                     logger.info("Loaded deck from URI.");
                 } else {
                     logger.info(
@@ -79,7 +81,8 @@ export default defineComponent({
             .finally(() => stopLoading(context));
 
         return {
-            loaded,
+            loading,
+
             dragGroup,
         };
     },

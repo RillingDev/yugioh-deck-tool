@@ -1,7 +1,11 @@
 <template>
     <div class="toolbar form-group">
         <div role="group" class="toolbar__items">
-            <BDropdown variant="primary" id="deckImport" :disabled="!loaded">
+            <BDropdown
+                id="deckImport"
+                :disabled="!essentialDataLoaded"
+                variant="primary"
+            >
                 <template v-slot:button-content>
                     <span
                         class="fas fas-in-button fa-file-import"
@@ -15,7 +19,7 @@
             <BDropdown
                 variant="primary"
                 id="deckExport"
-                :disabled="!loaded || empty"
+                :disabled="!essentialDataLoaded || empty"
             >
                 <template v-slot:button-content>
                     <span
@@ -33,7 +37,7 @@
             <BDropdown
                 variant="primary"
                 id="deckEdit"
-                :disabled="!loaded || empty"
+                :disabled="!essentialDataLoaded || empty"
             >
                 <template v-slot:button-content>
                     <span
@@ -46,7 +50,11 @@
                 <YgoDeckShuffleButton />
                 <YgoDeckClearButton />
             </BDropdown>
-            <BDropdown variant="primary" id="deckTools" :disabled="!loaded">
+            <BDropdown
+                id="deckTools"
+                :disabled="!essentialDataLoaded"
+                variant="primary"
+            >
                 <template v-slot:button-content>
                     <span
                         class="fas fas-in-button fa-magic"
@@ -87,9 +95,9 @@ import YgoExportDeckFile from "./export/YgoExportDeckFile.vue";
 import YgoExportDeckYdkeUrl from "./export/YgoExportDeckYdkeUrl.vue";
 import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
-import { useDataLoaded } from "../../composition/state/useDataLoaded";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
 import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
+import { useEssentialDataLoaded } from "../../composition/loading";
 
 export default defineComponent({
     props: {},
@@ -115,10 +123,10 @@ export default defineComponent({
         YgoExportScreenshot,
     },
     setup(props, context) {
-        const loaded = useDataLoaded(context);
+        const essentialDataLoaded = useEssentialDataLoaded(context);
         const empty = useDeckEmpty(context);
 
-        return { loaded, empty };
+        return { essentialDataLoaded, empty };
     },
 });
 </script>
