@@ -2,8 +2,7 @@
     <div class="builder">
         <BSidebar id="filterSidebar" title="Filter Cards">
             <div class="container">
-                <!-- FIXME: hiding is required for filter to correctly apply loaded data currently -->
-                <YgoFilter v-if="essentialDataLoaded" v-model="filter" />
+                <YgoFilter v-model="filter" />
             </div>
         </BSidebar>
         <div class="builder__details">

@@ -28,7 +28,10 @@
             />
         </div>
 
-        <div class="form-group" v-if="isFieldVisible('sets')">
+        <div
+            class="form-group"
+            v-if="isFieldVisible('sets') && essentialDataLoaded"
+        >
             <VSelect
                 :get-option-key="(set) => set.name"
                 :get-option-label="(set) => set.name"
@@ -41,7 +44,10 @@
             />
         </div>
 
-        <div class="form-group" v-if="isFieldVisible('archetype')">
+        <div
+            class="form-group"
+            v-if="isFieldVisible('archetype') && essentialDataLoaded"
+        >
             <VSelect
                 title="Archetype"
                 placeholder="Archetype"
@@ -64,7 +70,7 @@
 
         <div
             class="form-group"
-            v-if="isFieldVisible('type')"
+            v-if="isFieldVisible('type') && essentialDataLoaded"
             v-show="isMonster"
         >
             <VSelect
@@ -80,7 +86,7 @@
 
         <div
             class="form-group"
-            v-if="isFieldVisible('subType')"
+            v-if="isFieldVisible('subType') && essentialDataLoaded"
             v-show="internalFilter.typeCategory != null"
         >
             <VSelect
@@ -95,7 +101,7 @@
         <div
             class="form-group"
             v-show="isMonster"
-            v-if="isFieldVisible('attribute')"
+            v-if="isFieldVisible('attribute') && essentialDataLoaded"
         >
             <VSelect
                 title="Attribute"
@@ -108,7 +114,7 @@
 
         <div
             class="form-group"
-            v-if="isFieldVisible('level')"
+            v-if="isFieldVisible('level') && essentialDataLoaded"
             v-show="isMonster"
         >
             <VSelect
@@ -123,7 +129,7 @@
 
         <div
             class="form-group"
-            v-if="isFieldVisible('linkMarkers')"
+            v-if="isFieldVisible('linkMarkers') && essentialDataLoaded"
             v-show="isMonster"
         >
             <VSelect
@@ -190,6 +196,7 @@ import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
 import type { YgoprodeckController } from "../controller/YgoprodeckController";
 import { APPLICATION_TYPES } from "../types";
 import { SET_CARD_COUNT_FUNCTION } from "../store/modules/collection";
+import { useEssentialDataLoaded } from "../composition/loading";
 
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
     TYPES.CardPredicateService
@@ -230,6 +237,8 @@ export default defineComponent({
         YgoCollectionFilter,
     },
     setup: function (props, context) {
+        const essentialDataLoaded = useEssentialDataLoaded(context);
+
         const banStates = readonly<BanState[]>(DEFAULT_BAN_STATE_ARR);
         const cardTypeCategories = readonly<CardTypeCategory[]>(
             Object.values(CardTypeCategory)
@@ -341,6 +350,7 @@ export default defineComponent({
 
             internalFilter,
 
+            essentialDataLoaded,
             hasBanStates,
             showCollectionFilter,
             isMonster,
