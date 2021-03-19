@@ -137,6 +137,8 @@ class MemoryCardDatabase implements CardDatabase {
     ): Promise<string | null> {
         let card: UnlinkedCard | Card | null;
         if (this.hasCard(cardKey, findCardBy)) {
+            // It's more readable this way
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             card = this.getCard(cardKey, findCardBy)!;
         } else {
             card = await this.#cardDataLoaderService.getCard(
