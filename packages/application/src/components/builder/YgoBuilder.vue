@@ -2,7 +2,8 @@
     <div class="builder">
         <BSidebar id="filterSidebar" title="Filter Cards">
             <div class="container">
-                <YgoFilter v-model="filter" />
+                <!-- FIXME: hiding is required for filter to correctly apply loaded data currently -->
+                <YgoFilter v-model="filter" v-if="loaded" />
             </div>
         </BSidebar>
         <div class="builder__details">
@@ -116,6 +117,7 @@ export default defineComponent({
         return {
             filter,
             sortingOptions,
+            loaded,
 
             formatCards,
             filteredCards,
