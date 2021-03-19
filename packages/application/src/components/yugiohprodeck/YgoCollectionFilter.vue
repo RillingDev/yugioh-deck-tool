@@ -77,7 +77,7 @@ export default defineComponent({
             startLoading(context)
                 .then(() => loadCollection())
                 .then((loaded) => (cardCountFunction.value = loaded))
-                .then((loaded) => context.emit("change", loaded))
+                .then(() => context.emit("change"))
                 .catch((err) => {
                     logger.error("Could load user collection!", err);
                     showError(
