@@ -25,6 +25,7 @@ describe("SortingService", () => {
             .bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
             .to(MockDataLoaderService);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         mockCardDatabase = bindMock<CardDatabase>(
             container,
             TYPES.CardDatabase,
