@@ -20,7 +20,7 @@ import { getLogger, TYPES } from "../../core/src/main";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, onMounted } from "@vue/composition-api";
 import { BOverlay } from "bootstrap-vue";
 import { useAppStore } from "./composition/state/useAppStore";
 import { showError } from "./composition/feedback";
@@ -53,32 +53,44 @@ export default defineComponent({
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
-        startLoading(context)
-            .then(() => cardDatabase.prepareAll())
-            .then(() => appStore.commit(ESSENTIAL_DATA_LOADED))
-            .catch((err) => {
-                logger.error("Could not load data!", err);
-                showError(context, "Could not load data!", "deck-tool__portal");
-            })
-            .then(() => {
-                logger.info("Loaded data.");
-                return deckUrlController.loadUriDeck(new URL(location.href));
-            })
-            .then((result) => {
-                if (result != null) {
-                    appStore.commit(DECK_REPLACE, { deck: result });
-                    logger.info("Loaded deck from URI.");
-                } else {
-                    logger.info(
-                        "No URI deck loaded, starting with empty deck."
+        onMounted(() =>
+            startLoading(context)
+                .then(() => cardDatabase.prepareAll())
+                .then(() => appStore.commit(ESSENTIAL_DATA_LOADED))
+                .catch((err) => {
+                    logger.error("Could not load data!", err);
+                    showError(
+                        context,
+                        "Could not load data!",
+                        "deck-tool__portal"
                     );
-                }
-            })
-            .catch((err) => {
-                logger.error("Could not load deck!", err);
-                showError(context, "Could not load deck!", "deck-tool__portal");
-            })
-            .finally(() => stopLoading(context));
+                })
+                .then(() => {
+                    logger.info("Loaded data.");
+                    return deckUrlController.loadUriDeck(
+                        new URL(location.href)
+                    );
+                })
+                .then((result) => {
+                    if (result != null) {
+                        appStore.commit(DECK_REPLACE, { deck: result });
+                        logger.info("Loaded deck from URI.");
+                    } else {
+                        logger.info(
+                            "No URI deck loaded, starting with empty deck."
+                        );
+                    }
+                })
+                .catch((err) => {
+                    logger.error("Could not load deck!", err);
+                    showError(
+                        context,
+                        "Could not load deck!",
+                        "deck-tool__portal"
+                    );
+                })
+                .finally(() => stopLoading(context))
+        );
 
         return {
             loading,
