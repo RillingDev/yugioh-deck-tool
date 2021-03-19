@@ -61,64 +61,69 @@ describe("FilterService", () => {
             ]);
         });
 
-        it("filters by name", () => {
-            const card1 = createCard({
-                passcode: "123",
-                name: "foo",
-            });
-            const card2 = createCard({
-                passcode: "789",
-                name: "bar",
-            });
+        describe("name", () => {
+            it("filters by name", () => {
+                const card1 = createCard({
+                    passcode: "123",
+                    name: "foo",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                    name: "bar",
+                });
 
-            when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
-            when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+                when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
+                when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
 
-            expect(
-                filterService.filter([card1, card2], {
-                    name: "fo",
-                })
-            ).toEqual([card1]);
-        });
-
-        it("filters by name ignoring case", () => {
-            const card1 = createCard({
-                passcode: "123",
-                name: "foo",
-            });
-            const card2 = createCard({
-                passcode: "789",
-                name: "bar",
+                expect(
+                    filterService.filter([card1, card2], {
+                        name: "fo",
+                    })
+                ).toEqual([card1]);
             });
 
-            when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
-            when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+            it("ignoring case", () => {
+                const card1 = createCard({
+                    passcode: "123",
+                    name: "foo",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                    name: "bar",
+                });
 
-            expect(
-                filterService.filter([card1, card2], {
-                    name: "fO",
-                })
-            ).toEqual([card1]);
-        });
+                when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
+                when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
 
-        it("filters by name for alternate names", () => {
-            const card1 = createCard({
-                passcode: "123",
-                name: "foo",
+                expect(
+                    filterService.filter([card1, card2], {
+                        name: "fO",
+                    })
+                ).toEqual([card1]);
             });
-            const card2 = createCard({
-                passcode: "789",
-                name: "bar",
+
+            it("for alternate names", () => {
+                const card1 = createCard({
+                    passcode: "123",
+                    name: "foo",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                    name: "bar",
+                });
+
+                when(mockCardService.getAllNames(card1)).thenReturn([
+                    "foo",
+                    "föö",
+                ]);
+                when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+
+                expect(
+                    filterService.filter([card1, card2], {
+                        name: "fö",
+                    })
+                ).toEqual([card1]);
             });
-
-            when(mockCardService.getAllNames(card1)).thenReturn(["foo", "föö"]);
-            when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
-
-            expect(
-                filterService.filter([card1, card2], {
-                    name: "fö",
-                })
-            ).toEqual([card1]);
         });
 
         it("filters by type category", () => {
@@ -299,150 +304,156 @@ describe("FilterService", () => {
             ).toEqual([card1, card2]);
         });
 
-        it("filters by ban state", () => {
-            const card1 = createCard({
-                passcode: "123",
-            });
-            const card2 = createCard({
-                passcode: "789",
+        describe("ban state", () => {
+            it("filters by ban state", () => {
+                const card1 = createCard({
+                    passcode: "123",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                });
+
+                when(
+                    mockBanlistService.getBanStateByFormat(card1, Format.TCG)
+                ).thenReturn(DefaultBanState.LIMITED);
+                when(
+                    mockBanlistService.getBanStateByFormat(card2, Format.TCG)
+                ).thenReturn(DefaultBanState.BANNED);
+
+                expect(
+                    filterService.filter([card1, card2], {
+                        banState: DefaultBanState.LIMITED,
+                        format: Format.TCG,
+                    })
+                ).toEqual([card1]);
             });
 
-            when(
-                mockBanlistService.getBanStateByFormat(card1, Format.TCG)
-            ).thenReturn(DefaultBanState.LIMITED);
-            when(
-                mockBanlistService.getBanStateByFormat(card2, Format.TCG)
-            ).thenReturn(DefaultBanState.BANNED);
+            it("ignores ban state if no format is set", () => {
+                const card1 = createCard({
+                    passcode: "123",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                });
 
-            expect(
-                filterService.filter([card1, card2], {
-                    banState: DefaultBanState.LIMITED,
-                    format: Format.TCG,
-                })
-            ).toEqual([card1]);
+                when(
+                    mockBanlistService.getBanStateByFormat(card1, anything())
+                ).thenReturn(DefaultBanState.LIMITED);
+                when(
+                    mockBanlistService.getBanStateByFormat(card2, anything())
+                ).thenReturn(DefaultBanState.BANNED);
+
+                expect(
+                    filterService.filter([card1, card2], {
+                        banState: DefaultBanState.LIMITED,
+                    })
+                ).toEqual([card1, card2]);
+            });
         });
 
-        it("ignores ban state if no format is set", () => {
-            const card1 = createCard({
-                passcode: "123",
-            });
-            const card2 = createCard({
-                passcode: "789",
-            });
-
-            when(
-                mockBanlistService.getBanStateByFormat(card1, anything())
-            ).thenReturn(DefaultBanState.LIMITED);
-            when(
-                mockBanlistService.getBanStateByFormat(card2, anything())
-            ).thenReturn(DefaultBanState.BANNED);
-
-            expect(
-                filterService.filter([card1, card2], {
-                    banState: DefaultBanState.LIMITED,
-                })
-            ).toEqual([card1, card2]);
-        });
-
-        it("filters by set", () => {
-            const set1 = { name: "Foo", code: "foo" };
-            const set2 = { name: "Bar", code: "bar" };
-            const card1 = createCard({
-                passcode: "123",
-                sets: [set1],
-            });
-            const card2 = createCard({
-                passcode: "789",
-                sets: [set1, set2],
-            });
-            const card3 = createCard({
-                passcode: "666",
-                sets: [set2],
-            });
-
-            expect(
-                filterService.filter([card1, card2, card3], {
+        describe("set", () => {
+            it("filters by set", () => {
+                const set1 = { name: "Foo", code: "foo" };
+                const set2 = { name: "Bar", code: "bar" };
+                const card1 = createCard({
+                    passcode: "123",
                     sets: [set1],
-                })
-            ).toEqual([card1, card2]);
-        });
-
-        it("filters by set additive", () => {
-            const set1 = { name: "Foo", code: "foo" };
-            const set2 = { name: "Bar", code: "bar" };
-            const set3 = { name: "Bar", code: "bar" };
-            const card1 = createCard({
-                passcode: "123",
-                sets: [set1],
-            });
-            const card2 = createCard({
-                passcode: "789",
-                sets: [set1, set2],
-            });
-            const card3 = createCard({
-                passcode: "666",
-                sets: [set2, set3],
-            });
-            const card4 = createCard({
-                passcode: "321",
-                sets: [set3],
-            });
-
-            expect(
-                filterService.filter([card1, card2, card3, card4], {
+                });
+                const card2 = createCard({
+                    passcode: "789",
                     sets: [set1, set2],
-                })
-            ).toEqual([card1, card2, card3]);
+                });
+                const card3 = createCard({
+                    passcode: "666",
+                    sets: [set2],
+                });
+
+                expect(
+                    filterService.filter([card1, card2, card3], {
+                        sets: [set1],
+                    })
+                ).toEqual([card1, card2]);
+            });
+
+            it("filters by set additive", () => {
+                const set1 = { name: "Foo", code: "foo" };
+                const set2 = { name: "Bar", code: "bar" };
+                const set3 = { name: "Bar", code: "bar" };
+                const card1 = createCard({
+                    passcode: "123",
+                    sets: [set1],
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                    sets: [set1, set2],
+                });
+                const card3 = createCard({
+                    passcode: "666",
+                    sets: [set2, set3],
+                });
+                const card4 = createCard({
+                    passcode: "321",
+                    sets: [set3],
+                });
+
+                expect(
+                    filterService.filter([card1, card2, card3, card4], {
+                        sets: [set1, set2],
+                    })
+                ).toEqual([card1, card2, card3]);
+            });
         });
 
-        it("uses custom predicate", () => {
-            const predicate: CardPredicate = (card) =>
-                card.passcode.includes("1");
+        describe("custom predicate", () => {
+            it("uses custom predicate", () => {
+                const predicate: CardPredicate = (card) =>
+                    card.passcode.includes("1");
 
-            const card1 = createCard({
-                passcode: "123",
-            });
-            const card2 = createCard({
-                passcode: "789",
-            });
-            const card3 = createCard({
-                passcode: "666",
-            });
-            const card4 = createCard({
-                passcode: "321",
-            });
+                const card1 = createCard({
+                    passcode: "123",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                });
+                const card3 = createCard({
+                    passcode: "666",
+                });
+                const card4 = createCard({
+                    passcode: "321",
+                });
 
-            expect(
-                filterService.filter([card1, card2, card3, card4], {
-                    customPredicates: [predicate],
-                })
-            ).toEqual([card1, card4]);
-        });
-
-        it("requires all custom predicates to return true", () => {
-            const predicate1: CardPredicate = (card) =>
-                card.passcode.includes("1");
-            const predicate2: CardPredicate = (card) =>
-                card.passcode.startsWith("3");
-
-            const card1 = createCard({
-                passcode: "123",
-            });
-            const card2 = createCard({
-                passcode: "789",
-            });
-            const card3 = createCard({
-                passcode: "666",
-            });
-            const card4 = createCard({
-                passcode: "321",
+                expect(
+                    filterService.filter([card1, card2, card3, card4], {
+                        customPredicates: [predicate],
+                    })
+                ).toEqual([card1, card4]);
             });
 
-            expect(
-                filterService.filter([card1, card2, card3, card4], {
-                    customPredicates: [predicate1, predicate2],
-                })
-            ).toEqual([card4]);
+            it("requires all custom predicates to return true", () => {
+                const predicate1: CardPredicate = (card) =>
+                    card.passcode.includes("1");
+                const predicate2: CardPredicate = (card) =>
+                    card.passcode.startsWith("3");
+
+                const card1 = createCard({
+                    passcode: "123",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                });
+                const card3 = createCard({
+                    passcode: "666",
+                });
+                const card4 = createCard({
+                    passcode: "321",
+                });
+
+                expect(
+                    filterService.filter([card1, card2, card3, card4], {
+                        customPredicates: [predicate1, predicate2],
+                    })
+                ).toEqual([card4]);
+            });
         });
     });
 });
