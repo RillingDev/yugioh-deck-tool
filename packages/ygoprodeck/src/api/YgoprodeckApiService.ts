@@ -22,6 +22,7 @@ import {
     HttpService,
     TYPES,
 } from "../../../core/src/main";
+import { createEmptyPaginatedResponse } from "./PaginatedResponse";
 
 interface CardInfoOptions {
     readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
@@ -47,6 +48,10 @@ export interface Credentials {
 @injectable()
 export class YgoprodeckApiService {
     private static readonly CHUNK_SIZE = 2000;
+
+    // Is returned if no matching cards or an empty list should be returned.
+    // While not technically an error, the API treats it as such.
+    private static readonly HTTP_STATUS_NO_MATCHES = 400;
 
     readonly #environmentConfig: EnvironmentConfig;
     readonly #httpService: HttpService;
@@ -76,11 +81,10 @@ export class YgoprodeckApiService {
                 headers: this.createAuthHeaders(options),
                 timeout: 5000,
                 responseType: "json",
-                validateStatus: (status: number) =>
-                    status === 200 || status === 400, // Special 400 handling, we expect this if a card is not found.
+                validateStatus: this.createCardInfoStatusValidator(),
             }
         );
-        if (response.status === 400) {
+        if (response.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES) {
             return null;
         }
         const responseData = response.data;
@@ -106,7 +110,14 @@ export class YgoprodeckApiService {
                     headers: authHeaders,
                     timeout: 10000,
                     responseType: "json",
+                    validateStatus: this.createCardInfoStatusValidator(),
                 });
+                if (
+                    response.status ===
+                    YgoprodeckApiService.HTTP_STATUS_NO_MATCHES
+                ) {
+                    return createEmptyPaginatedResponse([]);
+                }
                 return response.data;
             }
         );
@@ -236,5 +247,11 @@ export class YgoprodeckApiService {
         return {
             "X-Authorization": `Basic ${encodedCredentials}`,
         };
+    }
+
+    private createCardInfoStatusValidator(): (status: number) => boolean {
+        return (status) =>
+            (status >= 200 && status <= 299) ||
+            status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES;
     }
 }

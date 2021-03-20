@@ -15,4 +15,17 @@ interface PaginatedResponse<T> {
     };
 }
 
-export { PaginatedResponse };
+const createEmptyPaginatedResponse = <T>(data: T): PaginatedResponse<T> => {
+    return {
+        data: data,
+        meta: {
+            current_rows: 0,
+            total_rows: 0,
+            rows_remaining: 0,
+            total_pages: 0,
+            pages_remaining: 0,
+        },
+    };
+};
+
+export { PaginatedResponse, createEmptyPaginatedResponse };
