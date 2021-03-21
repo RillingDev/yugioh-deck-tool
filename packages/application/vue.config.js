@@ -33,6 +33,7 @@ module.exports = {
         config.module.rules.delete("tsx");
         config.module.rules.delete("pug");
         config.module.rules.delete("sass");
+        config.module.rules.delete("postcss");
         config.module.rules.delete("less");
         config.module.rules.delete("stylus");
     },
