@@ -3,6 +3,7 @@
     "compilerOptions": {
         "importHelpers": true,
         "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
     },
     "include": ["./src/**/*.ts", "./src/**/*.vue", "tests/**/*.ts"],
