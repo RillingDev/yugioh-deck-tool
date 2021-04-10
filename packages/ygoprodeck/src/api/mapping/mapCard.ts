@@ -9,12 +9,8 @@ import type {
     ReleaseInfo,
     UnlinkedCard,
     Vendor,
-} from "../../../../core/src/main";
-import {
-    DefaultBanState,
-    DefaultVendor,
-    Format,
-} from "../../../../core/src/main";
+} from "@yugioh-deck-tool/core";
+import { DefaultBanState, DefaultVendor, Format } from "@yugioh-deck-tool/core";
 
 // https://jvilk.com/MakeTypes/
 interface RawCard {

@@ -1,6 +1,6 @@
 import { tooltipContainer } from "../inversify.config";
-import type { EnvironmentConfig } from "../../../core/src/main";
-import { Environment, getLogger, TYPES } from "../../../core/src/main";
+import type { EnvironmentConfig } from "@yugioh-deck-tool/core";
+import { Environment, getLogger, TYPES } from "@yugioh-deck-tool/core";
 
 import { TOOLTIP_TYPES } from "../types";
 import {
@@ -12,8 +12,8 @@ import { bindReferenceLink } from "./bindReferenceLink";
 import type { Instance } from "tippy.js";
 import { delegate } from "tippy.js";
 import type { TooltipController } from "../controller/TooltipController";
-import type { YgoprodeckService } from "../../../ygoprodeck/src/main";
-import { YGOPRODECK_TYPES } from "../../../ygoprodeck/src/main";
+import type { YgoprodeckService } from "@yugioh-deck-tool/ygoprodeck";
+import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
 
 const tooltipController = tooltipContainer.get<TooltipController>(
     TOOLTIP_TYPES.TooltipController

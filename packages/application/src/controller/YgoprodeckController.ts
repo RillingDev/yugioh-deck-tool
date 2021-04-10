@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
-import type { Credentials } from "../../../ygoprodeck/src/main";
+import type { Credentials } from "@yugioh-deck-tool/ygoprodeck";
 import {
     YgoprodeckService,
     YGOPRODECK_TYPES,
-} from "../../../ygoprodeck/src/main";
+} from "@yugioh-deck-tool/ygoprodeck";
 
 declare global {
     interface Window {

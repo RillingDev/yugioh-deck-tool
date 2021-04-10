@@ -1,11 +1,11 @@
-import type { Deck } from "../../../core/src/main";
+import type { Deck } from "@yugioh-deck-tool/core";
 import {
     DeckFileService,
     DeckService,
     DeckUriEncodingService,
     getLogger,
     TYPES,
-} from "../../../core/src/main";
+} from "@yugioh-deck-tool/core";
 import { inject, injectable } from "inversify";
 
 @injectable()

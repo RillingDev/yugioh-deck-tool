@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts">
-import type { CardCountFunction } from "../../../../core/src/main";
-import { getLogger } from "../../../../core/src/main";
+import type { CardCountFunction } from "@yugioh-deck-tool/core";
+import { getLogger } from "@yugioh-deck-tool/core";
 import { computed, defineComponent, ref, watch } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { getExistingElseThrow, requireNonNilElseThrow } from "lightdash";
-import type { CardType, CardValues } from "../../../../core/src/main";
-import { CardTypeCategory, DeckPart } from "../../../../core/src/main";
+import type { CardType, CardValues } from "@yugioh-deck-tool/core";
+import { CardTypeCategory, DeckPart } from "@yugioh-deck-tool/core";
 
 // https://jvilk.com/MakeTypes/
 interface RawCardValues {

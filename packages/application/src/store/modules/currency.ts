@@ -1,5 +1,5 @@
-import type { Currency } from "../../../../core/src/main";
-import { DEFAULT_CURRENCY_ARR } from "../../../../core/src/main";
+import type { Currency } from "@yugioh-deck-tool/core";
+import { DEFAULT_CURRENCY_ARR } from "@yugioh-deck-tool/core";
 import type { Module } from "vuex";
 import type { AppState } from "../AppState";
 

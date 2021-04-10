@@ -10,11 +10,11 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import type { DeckUriEncodingService } from "../../../../../core/src/main";
-import { TYPES } from "../../../../../core/src/main";
+import type { DeckUriEncodingService } from "@yugioh-deck-tool/core";
+import { TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { copyText } from "../../../../../browser-common/src/main";
+import { copyText } from "@yugioh-deck-tool/browser-common";
 import { useAppStore } from "../../../composition/state/useAppStore";
 import { showSuccess } from "../../../composition/feedback";
 

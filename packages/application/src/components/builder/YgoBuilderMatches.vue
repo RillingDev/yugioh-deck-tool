@@ -62,8 +62,8 @@ import type {
     Card,
     CardCountFunction,
     DeckService,
-} from "../../../../core/src/main";
-import { CardTypeCategory, TYPES } from "../../../../core/src/main";
+} from "@yugioh-deck-tool/core";
+import { CardTypeCategory, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
@@ -72,7 +72,7 @@ import { createMoveFromBuilderValidator } from "../../composition/dragging";
 import { applicationContainer } from "../../inversify.config";
 import { useAppStore } from "../../composition/state/useAppStore";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
-import { browserSupportsTouch } from "../../../../browser-common/src/main";
+import { browserSupportsTouch } from "@yugioh-deck-tool/browser-common";
 import { showSuccess } from "../../composition/feedback";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 

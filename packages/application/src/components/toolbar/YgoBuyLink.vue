@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import type { DeckExportService } from "../../../../core/src/main";
-import { TYPES } from "../../../../core/src/main";
+import type { DeckExportService } from "@yugioh-deck-tool/core";
+import { TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../inversify.config";
 import { useAppStore } from "../../composition/state/useAppStore";
 import { useDeckEmpty } from "../../composition/state/useDeckEmpty";

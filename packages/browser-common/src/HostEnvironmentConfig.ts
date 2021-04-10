@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
-import type { EnvironmentConfig } from "../../core/src/main";
-import { Environment } from "../../core/src/main";
+import type { EnvironmentConfig } from "@yugioh-deck-tool/core";
+import { Environment } from "@yugioh-deck-tool/core";
 
 /**
  * EnvironmentConfig using the current browser location host.

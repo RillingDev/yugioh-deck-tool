@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts">
-import type { CardDatabase } from "../../core/src/main";
-import { getLogger, TYPES } from "../../core/src/main";
+import type { CardDatabase } from "@yugioh-deck-tool/core";
+import { getLogger, TYPES } from "@yugioh-deck-tool/core";
 
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";

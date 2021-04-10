@@ -7,14 +7,11 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import type {
-    DeckFileService,
-    ImportResult,
-} from "../../../../../core/src/main";
-import { getLogger, TYPES } from "../../../../../core/src/main";
+import type { DeckFileService, ImportResult } from "@yugioh-deck-tool/core";
+import { getLogger, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { readFile, uploadFile } from "../../../../../browser-common/src/main";
+import { readFile, uploadFile } from "@yugioh-deck-tool/browser-common";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { useAppStore } from "../../../composition/state/useAppStore";
 import {

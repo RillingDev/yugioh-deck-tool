@@ -1,5 +1,5 @@
-import type { DeckPart, DeckService } from "../../../core/src/main";
-import { TYPES } from "../../../core/src/main";
+import type { DeckPart, DeckService } from "@yugioh-deck-tool/core";
+import { TYPES } from "@yugioh-deck-tool/core";
 import { useAppStore } from "./state/useAppStore";
 import { applicationContainer } from "../inversify.config";
 import type { SetupContext } from "@vue/composition-api";

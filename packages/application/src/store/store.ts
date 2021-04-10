@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { DEVELOPMENT_MODE } from "../../../core/src/main";
+import { DEVELOPMENT_MODE } from "@yugioh-deck-tool/core";
 import { currencyModule } from "./modules/currency";
 import { deckModule } from "./modules/deck";
 import { formatModule } from "./modules/format";

@@ -40,8 +40,8 @@ import type {
     CardFilter,
     DeckRandomizationService,
     Format,
-} from "../../../../../core/src/main";
-import { RandomizationStrategy, TYPES } from "../../../../../core/src/main";
+} from "@yugioh-deck-tool/core";
+import { RandomizationStrategy, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";

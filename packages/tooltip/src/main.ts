@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import "./styles/tooltip.scss";
-import { getLogger } from "../../core/src/main";
+import { getLogger } from "@yugioh-deck-tool/core";
 import type { TooltipInstance } from "./tooltip/bindTooltip";
 import { bindTooltipHandlers } from "./tooltip/bindTooltip";
 

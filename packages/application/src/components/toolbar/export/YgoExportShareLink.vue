@@ -13,7 +13,7 @@ import { defineComponent } from "@vue/composition-api";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { copyText } from "../../../../../browser-common/src/main";
+import { copyText } from "@yugioh-deck-tool/browser-common";
 import { useAppStore } from "../../../composition/state/useAppStore";
 import { showSuccess } from "../../../composition/feedback";
 import type { DeckUrlController } from "../../../controller/DeckUrlController";

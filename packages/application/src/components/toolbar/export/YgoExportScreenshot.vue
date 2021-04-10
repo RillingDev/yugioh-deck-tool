@@ -7,12 +7,12 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { getLogger } from "../../../../../core/src/main";
+import { getLogger } from "@yugioh-deck-tool/core";
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
     createScreenshot,
     downloadFile,
-} from "../../../../../browser-common/src/main";
+} from "@yugioh-deck-tool/browser-common";
 import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 import {
     showError,

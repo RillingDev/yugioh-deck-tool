@@ -1,12 +1,12 @@
-import type { EnvironmentConfig } from "../../core/src/main";
-import { baseModule, deckModule, TYPES } from "../../core/src/main";
+import type { EnvironmentConfig } from "@yugioh-deck-tool/core";
+import { baseModule, deckModule, TYPES } from "@yugioh-deck-tool/core";
 import { Container } from "inversify";
 import { DeckController } from "./controller/DeckController";
 import { APPLICATION_TYPES } from "./types";
 import { DeckUrlController } from "./controller/DeckUrlController";
-import { HostEnvironmentConfig } from "../../browser-common/src/main";
+import { HostEnvironmentConfig } from "@yugioh-deck-tool/browser-common";
 import { YgoprodeckController } from "./controller/YgoprodeckController";
-import { ygoprodeckModule } from "../../ygoprodeck/src/main";
+import { ygoprodeckModule } from "@yugioh-deck-tool/ygoprodeck";
 
 const applicationContainer = new Container();
 applicationContainer.load(baseModule, deckModule, ygoprodeckModule);

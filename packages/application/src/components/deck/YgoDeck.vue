@@ -14,8 +14,8 @@
     </div>
 </template>
 <script lang="ts">
-import type { Card, DeckPart, DeckService } from "../../../../core/src/main";
-import { DECK_PART_ARR, TYPES } from "../../../../core/src/main";
+import type { Card, DeckPart, DeckService } from "@yugioh-deck-tool/core";
+import { DECK_PART_ARR, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, readonly } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";

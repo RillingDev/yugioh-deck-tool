@@ -1,13 +1,15 @@
 {
-    "name": "yugioh-deck-tool-ygoprodeck",
-    "version": "5.1.0-0",
+    "name": "@yugioh-deck-tool/ygoprodeck",
+    "version": "5.1.0",
+    "main": "./src/main.ts",
     "private": true,
     "scripts": {
-        "lint": "eslint ./src/ ./__tests__/  --ext .ts",
-        "fix": "eslint ./src/ ./__tests__/  --ext .ts --fix",
+        "lint": "eslint ./src/ ./__tests__/ --ext .ts",
+        "fix": "eslint ./src/ ./__tests__/ --ext .ts --fix",
         "test": "jest"
     },
     "dependencies": {
+        "@yugioh-deck-tool/core": "5.1.0",
         "inversify": "^5.0.5",
         "lightdash": "^13.0.1",
         "lodash": "^4.17.21"

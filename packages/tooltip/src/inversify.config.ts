@@ -1,10 +1,10 @@
-import type { EnvironmentConfig } from "../../core/src/main";
-import { TYPES, baseModule } from "../../core/src/main";
+import type { EnvironmentConfig } from "@yugioh-deck-tool/core";
+import { TYPES, baseModule } from "@yugioh-deck-tool/core";
 import { Container } from "inversify";
 import { TOOLTIP_TYPES } from "./types";
 import { TooltipController } from "./controller/TooltipController";
-import { HostEnvironmentConfig } from "../../browser-common/src/main";
-import { ygoprodeckModule } from "../../ygoprodeck/src/main";
+import { HostEnvironmentConfig } from "@yugioh-deck-tool/browser-common";
+import { ygoprodeckModule } from "@yugioh-deck-tool/ygoprodeck";
 
 const tooltipContainer = new Container();
 tooltipContainer.load(baseModule, ygoprodeckModule);

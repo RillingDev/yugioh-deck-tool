@@ -14,14 +14,14 @@ import type {
     CardValues,
     Format,
     UnlinkedCard,
-} from "../../../core/src/main";
+} from "@yugioh-deck-tool/core";
 import {
     EncodingService,
     Environment,
     EnvironmentConfig,
     HttpService,
     TYPES,
-} from "../../../core/src/main";
+} from "@yugioh-deck-tool/core";
 import { createEmptyPaginatedResponse } from "./PaginatedResponse";
 
 interface CardInfoOptions {

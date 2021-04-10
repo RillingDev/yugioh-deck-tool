@@ -1,10 +1,11 @@
 {
-    "name": "yugioh-deck-tool-core",
-    "version": "5.1.0-0",
+    "name": "@yugioh-deck-tool/core",
+    "version": "5.1.0",
+    "main": "./src/main.ts",
     "private": true,
     "scripts": {
-        "lint": "eslint ./src/ ./__tests__/  --ext .ts",
-        "fix": "eslint ./src/ ./__tests__/  --ext .ts --fix",
+        "lint": "eslint ./src/ ./__tests__/ --ext .ts",
+        "fix": "eslint ./src/ ./__tests__/ --ext .ts --fix",
         "test": "jest"
     },
     "dependencies": {

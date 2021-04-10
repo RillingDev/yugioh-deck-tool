@@ -12,8 +12,8 @@
 <script lang="ts">
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
-import type { Card } from "../../../core/src/main";
-import { imageUrlCardPlaceholder } from "../../../browser-common/src/main";
+import type { Card } from "@yugioh-deck-tool/core";
+import { imageUrlCardPlaceholder } from "@yugioh-deck-tool/browser-common";
 
 export default defineComponent({
     props: {

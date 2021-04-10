@@ -1,5 +1,5 @@
 import type { Module } from "vuex";
-import type { Format } from "../../../../core/src/main";
+import type { Format } from "@yugioh-deck-tool/core";
 import type { AppState } from "../AppState";
 
 export const FORMAT_UPDATE = "FORMAT_UPDATE";

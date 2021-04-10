@@ -2,8 +2,8 @@ import "reflect-metadata";
 
 import { shallowMount } from "@vue/test-utils";
 import YgoCard from "../../../src/components/YgoCard.vue";
-import type { Card } from "../../../../core/src/main";
-import { createCard } from "../../../../core/__tests__/helper/dataFactories";
+import type { Card } from "@yugioh-deck-tool/core";
+import { createCard } from "@yugioh-deck-tool/core/__tests__/helper/dataFactories";
 
 describe("YgoCard.vue", () => {
     it("binds card name", () => {

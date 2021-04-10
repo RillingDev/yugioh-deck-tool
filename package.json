@@ -18,7 +18,7 @@
         "url": "https://github.com/FelixRilling/yugioh-deck-tool.git"
     },
     "scripts": {
-        "setup": "npm ci && lerna bootstrap",
+        "setup": "yarn install && lerna bootstrap",
         "lint": "lerna run lint",
         "fix": "lerna run fix",
         "test": "lerna run test",
@@ -26,5 +26,8 @@
     },
     "devDependencies": {
         "lerna": "^4.0.0"
-    }
+    },
+    "workspaces": [
+        "packages/*"
+    ]
 }

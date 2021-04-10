@@ -1,10 +1,10 @@
-import type { Card, PriceService } from "../../../core/src/main";
+import type { Card, PriceService } from "@yugioh-deck-tool/core";
 import {
     CardTypeCategory,
     DEFAULT_VENDOR_ARR,
     Format,
     TYPES,
-} from "../../../core/src/main";
+} from "@yugioh-deck-tool/core";
 import { tooltipContainer } from "../inversify.config";
 import {
     imageUrlAtk,
@@ -14,7 +14,7 @@ import {
     imageUrlLinkMarker,
     imageUrlSubType,
     imageUrlType,
-} from "../../../browser-common/src/main";
+} from "@yugioh-deck-tool/browser-common";
 import {
     createDiv,
     createImg,

@@ -6,8 +6,8 @@ import type {
     Card,
     CardCountFunction,
     UnlinkedCard,
-} from "../../../core/src/main";
-import { Environment, EnvironmentConfig, TYPES } from "../../../core/src/main";
+} from "@yugioh-deck-tool/core";
+import { Environment, EnvironmentConfig, TYPES } from "@yugioh-deck-tool/core";
 import { toMapBy } from "lightdash";
 
 @injectable()

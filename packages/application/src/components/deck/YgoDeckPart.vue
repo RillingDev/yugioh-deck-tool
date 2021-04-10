@@ -40,8 +40,8 @@
 </template>
 
 <script lang="ts">
-import type { Card, DeckPart, DeckPartConfig } from "../../../../core/src/main";
-import { DefaultDeckPartConfig, getLogger } from "../../../../core/src/main";
+import type { Card, DeckPart, DeckPartConfig } from "@yugioh-deck-tool/core";
+import { DefaultDeckPartConfig, getLogger } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";

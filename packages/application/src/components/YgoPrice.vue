@@ -46,8 +46,8 @@ import type {
     PriceLookupResult,
     PriceService,
     Vendor,
-} from "../../../core/src/main";
-import { DEFAULT_VENDOR_ARR, TYPES } from "../../../core/src/main";
+} from "@yugioh-deck-tool/core";
+import { DEFAULT_VENDOR_ARR, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { useAppStore } from "../composition/state/useAppStore";

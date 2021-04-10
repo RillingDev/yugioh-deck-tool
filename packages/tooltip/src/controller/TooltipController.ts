@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-import type { Card } from "../../../core/src/main";
-import { FindCardBy, TYPES, CardDatabase } from "../../../core/src/main";
+import type { Card } from "@yugioh-deck-tool/core";
+import { FindCardBy, TYPES, CardDatabase } from "@yugioh-deck-tool/core";
 
 @injectable()
 export class TooltipController {
