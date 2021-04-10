@@ -8,31 +8,44 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import type { DeckExportService } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
+import { getLogger, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { copyText } from "@yugioh-deck-tool/browser-common";
 import { useAppStore } from "../../../composition/state/useAppStore";
-import { showSuccess } from "../../../composition/feedback";
+import { showError, showSuccess } from "../../../composition/feedback";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
     TYPES.DeckExportService
 );
 
+const logger = getLogger("YgoExportDeckList");
+
 export default defineComponent({
+    components: { BDropdownItemButton },
     props: {},
     emits: [],
-    components: { BDropdownItemButton },
     setup(props, context) {
         const copyList = (): void => {
             const deck = useAppStore(context).state.deck.active;
             const deckList = deckExportService.toShareableText(deck);
-            copyText(deckList, document);
-            showSuccess(
-                context,
-                "Successfully copied deck list to clipboard.",
-                "deck-tool__portal"
-            );
+
+            navigator.clipboard
+                .writeText(deckList)
+                .then(() =>
+                    showSuccess(
+                        context,
+                        "Successfully copied deck list to clipboard.",
+                        "deck-tool__portal"
+                    )
+                )
+                .catch((err) => {
+                    logger.error("Could not copy deck list!", err);
+                    showError(
+                        context,
+                        "Could not copy deck list.",
+                        "deck-tool__portal"
+                    );
+                });
         };
 
         return { copyList };

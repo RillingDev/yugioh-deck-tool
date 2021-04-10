@@ -11,31 +11,44 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import type { DeckUriEncodingService } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
+import { getLogger, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { copyText } from "@yugioh-deck-tool/browser-common";
 import { useAppStore } from "../../../composition/state/useAppStore";
-import { showSuccess } from "../../../composition/feedback";
+import { showError, showSuccess } from "../../../composition/feedback";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     TYPES.DeckUriEncodingService
 );
 
+const logger = getLogger("YgoExportDeckYdkeUrl");
+
 export default defineComponent({
+    components: { BDropdownItemButton },
     props: {},
     emits: [],
-    components: { BDropdownItemButton },
     setup(props, context) {
         const copyYdke = (): void => {
             const deck = useAppStore(context).state.deck.active;
             const ydke = deckUriEncodingService.toUri(deck);
-            copyText(ydke.toString(), document);
-            showSuccess(
-                context,
-                "Successfully copied YDKe to clipboard.",
-                "deck-tool__portal"
-            );
+
+            navigator.clipboard
+                .writeText(ydke.toString())
+                .then(() =>
+                    showSuccess(
+                        context,
+                        "Successfully copied YDKe to clipboard.",
+                        "deck-tool__portal"
+                    )
+                )
+                .catch((err) => {
+                    logger.error("Could not copy YDKe!", err);
+                    showError(
+                        context,
+                        "Could not copy YDKe.",
+                        "deck-tool__portal"
+                    );
+                });
         };
 
         return { copyYdke };

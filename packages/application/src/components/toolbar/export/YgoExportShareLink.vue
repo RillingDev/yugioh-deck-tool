@@ -13,29 +13,43 @@ import { defineComponent } from "@vue/composition-api";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { copyText } from "@yugioh-deck-tool/browser-common";
 import { useAppStore } from "../../../composition/state/useAppStore";
-import { showSuccess } from "../../../composition/feedback";
+import { showError, showSuccess } from "../../../composition/feedback";
 import type { DeckUrlController } from "../../../controller/DeckUrlController";
+import { getLogger } from "../../../../../core/src/logger";
 
 const deckUrlController = applicationContainer.get<DeckUrlController>(
     APPLICATION_TYPES.DeckUrlController
 );
 
+const logger = getLogger("YgoExportShareLink");
+
 export default defineComponent({
+    components: { BDropdownItemButton },
     props: {},
     emits: [],
-    components: { BDropdownItemButton },
     setup(props, context) {
         const copyLink = (): void => {
             const deck = useAppStore(context).state.deck.active;
             const shareLink = deckUrlController.getShareLink(deck);
-            copyText(shareLink.toString(), document);
-            showSuccess(
-                context,
-                "Successfully copied share link to clipboard.",
-                "deck-tool__portal"
-            );
+
+            navigator.clipboard
+                .writeText(shareLink.toString())
+                .then(() =>
+                    showSuccess(
+                        context,
+                        "Successfully copied share link to clipboard.",
+                        "deck-tool__portal"
+                    )
+                )
+                .catch((err) => {
+                    logger.error("Could not copy share link!", err);
+                    showError(
+                        context,
+                        "Could not copy share link.",
+                        "deck-tool__portal"
+                    );
+                });
         };
 
         return { copyLink };

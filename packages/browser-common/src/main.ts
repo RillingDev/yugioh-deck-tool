@@ -1,4 +1,3 @@
-export { copyText } from "./io/copyText";
 export { readFile } from "./io/readFile";
 export { downloadFile } from "./io/downloadFile";
 export { uploadFile } from "./io/uploadFile";
