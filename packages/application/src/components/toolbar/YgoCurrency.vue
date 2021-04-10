@@ -1,9 +1,9 @@
 <template>
     <VSelect
+        v-model="currency"
         :options="currencies"
         :get-option-key="(currentCurrency) => currentCurrency.name"
         :get-option-label="(currentCurrency) => currentCurrency.name"
-        v-model="currency"
         :clearable="false"
         :searchable="false"
         title="Active Currency"
@@ -20,9 +20,9 @@ import { CURRENCY_UPDATE } from "../../store/modules/currency";
 import { useAppStore } from "../../composition/state/useAppStore";
 
 export default defineComponent({
+    components: { VSelect },
     props: {},
     emits: [],
-    components: { VSelect },
     setup(props, context) {
         const currencies = readonly<Currency[]>(
             Object.values(DEFAULT_CURRENCY_ARR)

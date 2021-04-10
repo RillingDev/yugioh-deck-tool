@@ -1,10 +1,10 @@
 <template>
     <input
+        v-model="deckName"
         class="form-control"
         title="Deck Name"
         placeholder="Deck Name"
         type="text"
-        v-model="deckName"
     />
 </template>
 
@@ -14,9 +14,9 @@ import { DECK_NAME_UPDATE } from "../../store/modules/deck";
 import { useAppStore } from "../../composition/state/useAppStore";
 
 export default defineComponent({
+    components: {},
     props: {},
     emits: [],
-    components: {},
     setup(props, context) {
         const deckName = computed<string | null>({
             get: () => useAppStore(context).state.deck.active.name,

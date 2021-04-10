@@ -21,12 +21,12 @@ import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 
 export default defineComponent({
-    props: {},
-    emits: [],
     components: {
         BModal,
         BDropdownItemButton,
     },
+    props: {},
+    emits: [],
     setup(props, context) {
         const clear = (): void => useAppStore(context).commit(DECK_CLEAR);
         const isDeckEmpty = useDeckEmpty(context);

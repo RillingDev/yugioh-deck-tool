@@ -1,22 +1,23 @@
 <template>
     <form @submit.prevent="() => {}">
-        <div class="form-group" v-if="isFieldVisible('search')">
+        <div v-if="isFieldVisible('search')" class="form-group">
             <input
-                @input="() => onFilterChanged()"
+                v-model="internalFilter.name"
                 class="form-control"
                 placeholder="Search"
                 title="Search"
                 type="search"
-                v-model="internalFilter.name"
+                @input="() => onFilterChanged()"
             />
         </div>
 
         <div
-            class="form-group"
             v-if="isFieldVisible('banState')"
             v-show="hasBanStates"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.banState"
                 :get-option-key="(banState) => banState.name"
                 :get-option-label="(banState) => banState.name"
                 :options="banStates"
@@ -24,15 +25,15 @@
                 title="Limit"
                 placeholder="Limit"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.banState"
             />
         </div>
 
         <div
-            class="form-group"
             v-if="isFieldVisible('sets') && essentialDataLoaded"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.sets"
                 :get-option-key="(set) => set.name"
                 :get-option-label="(set) => set.name"
                 multiple
@@ -40,105 +41,104 @@
                 title="Set"
                 placeholder="Set"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.sets"
             />
         </div>
 
         <div
-            class="form-group"
             v-if="isFieldVisible('archetype') && essentialDataLoaded"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.archetype"
                 title="Archetype"
                 placeholder="Archetype"
                 :options="archetypes"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.archetype"
             />
         </div>
 
-        <div class="form-group" v-if="isFieldVisible('typeCategory')">
+        <div v-if="isFieldVisible('typeCategory')" class="form-group">
             <VSelect
+                v-model="internalFilter.typeCategory"
                 title="Type"
                 placeholder="Type"
                 :options="cardTypeCategories"
                 :searchable="false"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.typeCategory"
             />
         </div>
 
         <div
-            class="form-group"
             v-if="isFieldVisible('type') && essentialDataLoaded"
             v-show="isMonster"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.type"
                 title="Monster Type"
                 placeholder="Monster Type"
                 :get-option-key="(type) => type.name"
                 :get-option-label="(type) => type.name.replace(' Monster', '')"
                 :options="types"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.type"
             />
         </div>
 
         <div
-            class="form-group"
             v-if="isFieldVisible('subType') && essentialDataLoaded"
             v-show="internalFilter.typeCategory != null"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.subType"
                 :title="`${internalFilter.typeCategory} Subtype`"
                 :placeholder="`${internalFilter.typeCategory} Subtype`"
                 :options="subTypes"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.subType"
             />
         </div>
 
         <div
-            class="form-group"
             v-show="isMonster"
             v-if="isFieldVisible('attribute') && essentialDataLoaded"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.attribute"
                 title="Attribute"
                 placeholder="Attribute"
                 :options="attributes"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.attribute"
             />
         </div>
 
         <div
-            class="form-group"
             v-if="isFieldVisible('level') && essentialDataLoaded"
             v-show="isMonster"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.level"
                 title="Level/Rank"
                 placeholder="Level/Rank"
                 :options="levels"
                 :searchable="false"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.level"
             />
         </div>
 
         <div
-            class="form-group"
             v-if="isFieldVisible('linkMarkers') && essentialDataLoaded"
             v-show="isMonster"
+            class="form-group"
         >
             <VSelect
+                v-model="internalFilter.linkMarkers"
                 title="Link Markers"
                 placeholder="Link Markers"
                 multiple
                 :options="linkMarkers"
                 @input="() => onFilterChanged()"
-                v-model="internalFilter.linkMarkers"
             />
         </div>
 
@@ -216,6 +216,14 @@ const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
 );
 
 export default defineComponent({
+    components: {
+        VSelect,
+        YgoCollectionFilter,
+    },
+    model: {
+        prop: "filter",
+        event: "change",
+    },
     props: {
         filter: {
             required: true,
@@ -228,14 +236,6 @@ export default defineComponent({
         },
     },
     emits: ["change"],
-    model: {
-        prop: "filter",
-        event: "change",
-    },
-    components: {
-        VSelect,
-        YgoCollectionFilter,
-    },
     setup: function (props, context) {
         const essentialDataLoaded = useEssentialDataLoaded(context);
 

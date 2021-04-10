@@ -1,5 +1,5 @@
 <template>
-    <BDropdownItemButton @click="() => screenshot()" v-b-modal.deckScreenshot>
+    <BDropdownItemButton v-b-modal.deckScreenshot @click="() => screenshot()">
         <span class="fas fa-image fas-in-button" aria-hidden="true"></span>
         To Screenshot
     </BDropdownItemButton>
@@ -24,9 +24,9 @@ import { useAppStore } from "../../../composition/state/useAppStore";
 const logger = getLogger("YgoExportScreenshot");
 
 export default defineComponent({
+    components: { BDropdownItemButton },
     props: {},
     emits: [],
-    components: { BDropdownItemButton },
     setup(props, context) {
         const isDeckEmpty = useDeckEmpty(context);
 

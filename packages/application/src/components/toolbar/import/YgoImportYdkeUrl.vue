@@ -6,8 +6,8 @@
         ></span>
         From YDKe URL
         <BModal
-            ref="modal"
             id="ydkeImport"
+            ref="modal"
             modal-class="deck-tool__portal"
             title="Import Deck From YDKe URL"
             hide-footer
@@ -15,12 +15,12 @@
         >
             <div class="form-group">
                 <input
+                    v-model="ydkeUrl"
                     autofocus
                     type="text"
                     class="form-control"
                     title="YDKe URL"
                     placeholder="YDKe URL"
-                    v-model="ydkeUrl"
                     @input="() => onInput()"
                 />
             </div>
@@ -45,9 +45,9 @@ const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 const logger = getLogger("YgoImportYdkeUrl");
 
 export default defineComponent({
+    components: { BDropdownItemButton, BModal },
     props: {},
     emits: [],
-    components: { BDropdownItemButton, BModal },
     setup(props, context) {
         const modal = ref<BModal>();
         const ydkeUrl = ref<string>("");

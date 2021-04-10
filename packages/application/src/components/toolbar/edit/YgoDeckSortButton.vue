@@ -1,5 +1,5 @@
 <template>
-    <BDropdownItemButton @click="() => sort()" :disabled="isDeckEmpty">
+    <BDropdownItemButton :disabled="isDeckEmpty" @click="() => sort()">
         <span class="fas fa-sort fas-in-button" aria-hidden="true"></span>
         Sort
     </BDropdownItemButton>
@@ -13,9 +13,9 @@ import { BDropdownItemButton } from "bootstrap-vue";
 import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 
 export default defineComponent({
+    components: { BDropdownItemButton },
     props: {},
     emits: [],
-    components: { BDropdownItemButton },
     setup(props, context) {
         const sort = (): void => useAppStore(context).commit(DECK_SORT);
         const isDeckEmpty = useDeckEmpty(context);

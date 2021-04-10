@@ -1,11 +1,11 @@
 <template>
     <VSelect
+        v-model="format"
         :options="formats"
         :clearable="true"
         :searchable="false"
         title="Format"
         placeholder="Format"
-        v-model="format"
     />
 </template>
 
@@ -18,9 +18,9 @@ import { Format } from "@yugioh-deck-tool/core";
 import { useAppStore } from "../../composition/state/useAppStore";
 
 export default defineComponent({
+    components: { VSelect },
     props: {},
     emits: [],
-    components: { VSelect },
     setup(props, context) {
         const formats = readonly<Format[]>(Object.values(Format));
         const format = computed<Format | null>({
