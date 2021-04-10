@@ -5,7 +5,7 @@ import { CardDatabase } from "./CardDatabase";
 import { TYPES } from "../types";
 import { Format } from "./format/Format";
 
-enum SortingStrategy {
+export enum SortingStrategy {
     /**
      * Sort cards like they would appear in a sorted deck
      */
@@ -23,12 +23,12 @@ enum SortingStrategy {
     RELEASE_OCG = "Date: OCG",
 }
 
-enum SortingOrder {
+export enum SortingOrder {
     DESC = "Desc",
     ASC = "Asc",
 }
 
-interface SortingOptions {
+export interface SortingOptions {
     strategy: SortingStrategy;
     order?: SortingOrder;
 }
@@ -36,7 +36,7 @@ interface SortingOptions {
 type Comparator<T> = (a: T, b: T) => number;
 
 @injectable()
-class SortingService {
+export class SortingService {
     readonly #cardDatabase: CardDatabase;
 
     constructor(
@@ -191,5 +191,3 @@ class SortingService {
         return order === SortingOrder.ASC ? -1 : 1;
     }
 }
-
-export { SortingService, SortingOptions, SortingStrategy, SortingOrder };

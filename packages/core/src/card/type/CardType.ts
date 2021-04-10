@@ -4,7 +4,7 @@ import type { DeckPart } from "../../deck/DeckPart";
 /**
  * Card type, e.g. "Spell" or "Xyz Monster"
  */
-interface CardType {
+export interface CardType {
     readonly name: string;
 
     /**
@@ -22,5 +22,3 @@ interface CardType {
      */
     readonly deckParts: Set<DeckPart>;
 }
-
-export { CardType };

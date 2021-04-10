@@ -1,7 +1,7 @@
 import type { Card } from "../card/Card";
 import type { DeckPart } from "./DeckPart";
 
-interface Deck {
+export interface Deck {
     name: string | null;
     parts: {
         [DeckPart.MAIN]: Card[];
@@ -9,5 +9,3 @@ interface Deck {
         [DeckPart.SIDE]: Card[];
     };
 }
-
-export { Deck };

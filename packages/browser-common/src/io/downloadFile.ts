@@ -6,7 +6,7 @@
  * @param file File to download.
  * @param context Context to use.
  */
-const downloadFile = (file: File, context: Document): void => {
+export const downloadFile = (file: File, context: Document): void => {
     const objectUrl = URL.createObjectURL(file);
 
     const el = context.createElement("a");
@@ -19,5 +19,3 @@ const downloadFile = (file: File, context: Document): void => {
     el.remove();
     URL.revokeObjectURL(objectUrl);
 };
-
-export { downloadFile };

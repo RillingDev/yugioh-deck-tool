@@ -3,7 +3,7 @@ import { getLogger as getLoglevelLogger, levels } from "loglevel";
 import { DEVELOPMENT_MODE } from "./mode";
 import { name as getName } from "lightdash";
 
-const getLogger = (consumer: unknown): Logger => {
+export const getLogger = (consumer: unknown): Logger => {
     const name = getName(consumer);
     if (name == null) {
         throw new TypeError(
@@ -14,5 +14,3 @@ const getLogger = (consumer: unknown): Logger => {
     logger.setLevel(DEVELOPMENT_MODE ? levels.DEBUG : levels.WARN);
     return logger;
 };
-
-export { getLogger };

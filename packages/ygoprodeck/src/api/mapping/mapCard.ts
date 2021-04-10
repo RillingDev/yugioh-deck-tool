@@ -13,7 +13,7 @@ import type {
 import { DefaultBanState, DefaultVendor, Format } from "@yugioh-deck-tool/core";
 
 // https://jvilk.com/MakeTypes/
-interface RawCard {
+export interface RawCard {
     id: number;
     name: string;
     desc: string;
@@ -170,7 +170,7 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => {
     };
 };
 
-const mapCard = (rawCard: RawCard): UnlinkedCard => {
+export const mapCard = (rawCard: RawCard): UnlinkedCard => {
     const miscInfo: RawMiscInfo | null =
         rawCard.misc_info != null ? rawCard.misc_info[0] : null;
     return {
@@ -207,5 +207,3 @@ const mapCard = (rawCard: RawCard): UnlinkedCard => {
         quantity: rawCard.cardq ?? null,
     };
 };
-
-export { mapCard, RawCard };

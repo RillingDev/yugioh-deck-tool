@@ -7,7 +7,7 @@ import type { BanlistInfo } from "./banlist/BanlistInfo";
 /**
  * @see CardLinkingService
  */
-interface CardSetAppearance {
+export interface CardSetAppearance {
     readonly name: string;
     readonly code: string;
 }
@@ -18,7 +18,7 @@ interface CardSetAppearance {
  * @see Card
  * @see CardLinkingService
  */
-interface UnlinkedCard {
+export interface UnlinkedCard {
     readonly passcode: string;
     readonly name: string;
     readonly description: string;
@@ -48,5 +48,3 @@ interface UnlinkedCard {
     readonly views: number;
     readonly quantity: number | null; // Number when querying collection, null otherwise
 }
-
-export { UnlinkedCard, CardSetAppearance };

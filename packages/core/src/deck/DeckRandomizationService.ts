@@ -14,7 +14,7 @@ import type { Format } from "../card/format/Format";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
-enum RandomizationStrategy {
+export enum RandomizationStrategy {
     NORMAL = "Normal",
     ARCHETYPE_1 = "1 Archetype",
     ARCHETYPE_2 = "2 Archetypes",
@@ -23,7 +23,7 @@ enum RandomizationStrategy {
 }
 
 @injectable()
-class DeckRandomizationService {
+export class DeckRandomizationService {
     private static readonly IGNORED_WORDS = new Set([
         // Articles
         "the",
@@ -338,5 +338,3 @@ class DeckRandomizationService {
         ).join(" ");
     }
 }
-
-export { DeckRandomizationService, RandomizationStrategy };

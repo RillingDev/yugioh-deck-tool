@@ -9,7 +9,7 @@ import type { CardType } from "./type/CardType";
 /**
  * Regular card. Also see {@link UnlinkedCard}.
  */
-interface Card {
+export interface Card {
     /**
      * Passcode/ID is an 8-digit unique code for each card
      */
@@ -48,5 +48,3 @@ interface Card {
     readonly prices: CardPrices;
     readonly views: number;
 }
-
-export { Card };

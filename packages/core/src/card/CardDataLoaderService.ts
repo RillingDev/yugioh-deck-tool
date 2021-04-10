@@ -6,7 +6,7 @@ import type { FindCardBy } from "./CardDatabase";
 /**
  * Interface for a service loading card data, like available cards or sets.
  */
-interface CardDataLoaderService {
+export interface CardDataLoaderService {
     /**
      * Gets a card by its exact name OR passcode. Return null if none is found.
      */
@@ -36,5 +36,3 @@ interface CardDataLoaderService {
      */
     getArchetypes: () => Promise<string[]>;
 }
-
-export { CardDataLoaderService };

@@ -7,7 +7,7 @@
  * @param callback Callback to access files.
  * @param context Context to use.
  */
-const uploadFile = (
+export const uploadFile = (
     accept: string,
     callback: (files: null | FileList) => void,
     context: Document
@@ -24,5 +24,3 @@ const uploadFile = (
     el.click();
     el.remove();
 };
-
-export { uploadFile };

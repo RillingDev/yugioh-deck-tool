@@ -1,10 +1,10 @@
-interface HttpResponse<TData> {
+export interface HttpResponse<TData> {
     readonly data: TData;
     readonly status: number;
     readonly statusText: string;
 }
 
-interface HttpRequestConfig {
+export interface HttpRequestConfig {
     readonly baseUrl?: string;
 
     readonly params?: Record<string, string | number | boolean | null>;
@@ -23,11 +23,9 @@ interface HttpRequestConfig {
 /**
  * HTTP client abstraction allowing for simple GET requests.
  */
-interface HttpService {
+export interface HttpService {
     get: <TData>(
         url: string,
         requestConfig: HttpRequestConfig
     ) => Promise<HttpResponse<TData>>;
 }
-
-export { HttpService, HttpRequestConfig, HttpResponse };

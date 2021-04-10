@@ -5,7 +5,7 @@ import type { CardType, CardValues } from "@yugioh-deck-tool/core";
 import { CardTypeCategory, DeckPart } from "@yugioh-deck-tool/core";
 
 // https://jvilk.com/MakeTypes/
-interface RawCardValues {
+export interface RawCardValues {
     types: RawCardType[];
     MONSTER: RawMonsterTypeCategoryValues;
     SPELL: RawTypeCategoryValues;
@@ -58,7 +58,7 @@ const mapTypes = (typeNames: string[], types: CardType[]): CardType[] =>
         )
     );
 
-const mapCardValues = (data: RawCardValues): CardValues => {
+export const mapCardValues = (data: RawCardValues): CardValues => {
     const types: CardType[] = data.types.map((type) => {
         return {
             name: type.name,
@@ -89,5 +89,3 @@ const mapCardValues = (data: RawCardValues): CardValues => {
         },
     };
 };
-
-export { mapCardValues, RawCardValues };

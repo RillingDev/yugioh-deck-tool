@@ -13,7 +13,7 @@ import { CardLinkingService } from "./CardLinkingService";
 import { getLogger } from "../logger";
 
 @injectable()
-class MemoryCardDatabase implements CardDatabase {
+export class MemoryCardDatabase implements CardDatabase {
     private static readonly logger = getLogger(MemoryCardDatabase);
 
     readonly #cardDataLoaderService: CardDataLoaderService;
@@ -277,5 +277,3 @@ class MemoryCardDatabase implements CardDatabase {
             : this.#cardsByName;
     }
 }
-
-export { MemoryCardDatabase };

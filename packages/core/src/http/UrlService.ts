@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 
 @injectable()
-class UrlService {
+export class UrlService {
     /**
      * Checks if two URLs have the same origin.
      *
@@ -27,5 +27,3 @@ class UrlService {
         return pathname.substr(pathname.lastIndexOf("/") + 1);
     }
 }
-
-export { UrlService };

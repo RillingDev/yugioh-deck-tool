@@ -8,7 +8,7 @@ import axios from "axios";
 import { injectable } from "inversify";
 
 @injectable()
-class AxiosHttpService implements HttpService {
+export class AxiosHttpService implements HttpService {
     readonly #httpClient: AxiosInstance;
 
     constructor() {
@@ -28,5 +28,3 @@ class AxiosHttpService implements HttpService {
         });
     }
 }
-
-export { AxiosHttpService };

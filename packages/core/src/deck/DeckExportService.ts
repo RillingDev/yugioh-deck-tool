@@ -10,7 +10,7 @@ import { FilterService } from "../card/FilterService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 @injectable()
-class DeckExportService {
+export class DeckExportService {
     readonly #deckService: DeckService;
     readonly #cardService: CardService;
     readonly #filterService: FilterService;
@@ -115,5 +115,3 @@ class DeckExportService {
         return buyLink;
     }
 }
-
-export { DeckExportService };

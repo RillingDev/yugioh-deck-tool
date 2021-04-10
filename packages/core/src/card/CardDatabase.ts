@@ -3,12 +3,12 @@ import type { CardSet } from "./set/CardSet";
 import type { CardType } from "./type/CardType";
 import type { CardTypeCategory } from "./type/CardTypeCategory";
 
-enum FindCardBy {
+export enum FindCardBy {
     NAME = "name",
     PASSCODE = "passcode",
 }
 
-interface CardDatabase {
+export interface CardDatabase {
     /**
      * Fully fills the database.
      */
@@ -45,5 +45,3 @@ interface CardDatabase {
 
     getLinkMarkers: () => string[];
 }
-
-export { FindCardBy, CardDatabase };

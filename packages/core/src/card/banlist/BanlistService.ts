@@ -6,7 +6,7 @@ import { DefaultBanState } from "./BanState";
 import type { BanlistInfo } from "./BanlistInfo";
 
 @injectable()
-class BanlistService {
+export class BanlistService {
     /**
      * Formats which have a banlist. See {@link BanlistInfo}.
      */
@@ -52,5 +52,3 @@ class BanlistService {
         return card.banlist[format as keyof BanlistInfo];
     }
 }
-
-export { BanlistService };

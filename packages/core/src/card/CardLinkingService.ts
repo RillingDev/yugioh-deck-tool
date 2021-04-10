@@ -6,7 +6,7 @@ import type { Card } from "./Card";
 import { getLogger } from "../logger";
 
 @injectable()
-class CardLinkingService {
+export class CardLinkingService {
     private static readonly logger = getLogger(CardLinkingService);
 
     /**
@@ -64,5 +64,3 @@ class CardLinkingService {
         return matchingType;
     }
 }
-
-export { CardLinkingService };

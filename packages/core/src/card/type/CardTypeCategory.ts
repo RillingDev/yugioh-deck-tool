@@ -1,11 +1,9 @@
 /**
  * @see CardType
  */
-enum CardTypeCategory {
+export enum CardTypeCategory {
     MONSTER = "Monster",
     SPELL = "Spell",
     TRAP = "Trap",
     SKILL = "Skill",
 }
-
-export { CardTypeCategory };

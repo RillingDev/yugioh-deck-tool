@@ -11,7 +11,7 @@ import type { CardTypeCategory } from "./type/CardTypeCategory";
 import { BanlistService } from "./banlist/BanlistService";
 import type { CardPredicate } from "./CardPredicateService";
 
-type CardFilter = Partial<{
+export type CardFilter = Partial<{
     /**
      * Custom filter parts (e.g. user owned cards).
      * Executed in order.
@@ -53,7 +53,7 @@ type CardFilter = Partial<{
 }>;
 
 @injectable()
-class FilterService {
+export class FilterService {
     readonly #cardService: CardService;
     readonly #banlistService: BanlistService;
 
@@ -188,5 +188,3 @@ class FilterService {
         };
     }
 }
-
-export { FilterService, CardFilter };

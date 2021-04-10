@@ -4,13 +4,13 @@ import type { Vendor } from "./Vendor";
 import type { Currency } from "./Currency";
 import { difference, sum } from "lodash";
 
-interface PriceLookupResult {
+export interface PriceLookupResult {
     price: number;
     missing: Card[];
 }
 
 @injectable()
-class PriceService {
+export class PriceService {
     /**
      * Formats a price for its currency.
      *
@@ -75,5 +75,3 @@ class PriceService {
         return priceInUsd * currency.conversionRate;
     }
 }
-
-export { PriceService, PriceLookupResult };

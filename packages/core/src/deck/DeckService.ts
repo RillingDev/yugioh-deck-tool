@@ -14,7 +14,7 @@ import { BanlistService } from "../card/banlist/BanlistService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 @injectable()
-class DeckService {
+export class DeckService {
     readonly #cardService: CardService;
     readonly #sortingService: SortingService;
     readonly #banlistService: BanlistService;
@@ -282,5 +282,3 @@ class DeckService {
         };
     }
 }
-
-export { DeckService };

@@ -1,4 +1,4 @@
-enum Format {
+export enum Format {
     OCG = "OCG",
     TCG = "TCG",
     GOAT = "GOAT",
@@ -8,5 +8,3 @@ enum Format {
     RUSH_DUEL = "Rush Duel",
     DUEL_LINKS = "Duel Links",
 }
-
-export { Format };

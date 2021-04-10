@@ -11,7 +11,7 @@ import { DECK_PART_ARR } from "./DeckPart";
 import { EncodingService } from "../util/EncodingService";
 
 @injectable()
-class DeckUriEncodingService {
+export class DeckUriEncodingService {
     // A 32 bit integer is able to store all 8 digit passcodes
     // Note that currently we assume only little endian systems are used.
     private static readonly BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
@@ -248,5 +248,3 @@ class DeckUriEncodingService {
         );
     }
 }
-
-export { DeckUriEncodingService };

@@ -14,7 +14,7 @@ import { FindCardBy } from "@yugioh-deck-tool/core";
  * Can be used outside of ygoprodeck.com.
  */
 @injectable()
-class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
+export class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
     readonly #ygoprodeckApiService: YgoprodeckApiService;
 
     constructor(
@@ -63,5 +63,3 @@ class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         return this.#ygoprodeckApiService.getArchetypes();
     }
 }
-
-export { YgoprodeckCardDataLoaderService };

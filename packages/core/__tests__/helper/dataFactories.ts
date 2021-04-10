@@ -11,7 +11,7 @@ import { DefaultBanState } from "../../src/card/banlist/BanState";
 import type { Vendor } from "../../src/price/Vendor";
 import { DeckPart } from "../../src/deck/DeckPart";
 
-const createCardType = (data: {
+export const createCardType = (data: {
     name?: string;
     group?: CardTypeCategory;
     sortGroup?: number;
@@ -23,7 +23,7 @@ const createCardType = (data: {
     deckParts: data.deckPart ?? new Set([DeckPart.MAIN, DeckPart.SIDE]),
 });
 
-const createCard = (data: {
+export const createCard = (data: {
     passcode?: string;
     name?: string;
     description?: string;
@@ -86,5 +86,3 @@ const createCard = (data: {
 
     views: data.views ?? 0,
 });
-
-export { createCard, createCardType };

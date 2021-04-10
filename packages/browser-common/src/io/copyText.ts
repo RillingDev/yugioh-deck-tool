@@ -6,7 +6,7 @@
  * @param str Text to copy.
  * @param context Context to use.
  */
-const copyText = (str: string, context: Document): void => {
+export const copyText = (str: string, context: Document): void => {
     const el = context.createElement("textarea");
 
     el.value = str;
@@ -16,5 +16,3 @@ const copyText = (str: string, context: Document): void => {
     context.execCommand("copy");
     el.remove();
 };
-
-export { copyText };

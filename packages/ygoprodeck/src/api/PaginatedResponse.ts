@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-interface PaginatedResponse<T> {
+export interface PaginatedResponse<T> {
     data: T;
     meta: {
         current_rows: number;
@@ -15,7 +15,9 @@ interface PaginatedResponse<T> {
     };
 }
 
-const createEmptyPaginatedResponse = <T>(data: T): PaginatedResponse<T> => {
+export const createEmptyPaginatedResponse = <T>(
+    data: T
+): PaginatedResponse<T> => {
     return {
         data: data,
         meta: {
@@ -27,5 +29,3 @@ const createEmptyPaginatedResponse = <T>(data: T): PaginatedResponse<T> => {
         },
     };
 };
-
-export { PaginatedResponse, createEmptyPaginatedResponse };
