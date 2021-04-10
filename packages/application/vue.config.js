@@ -11,12 +11,11 @@ module.exports = {
         config.optimization.splitChunks({
             cacheGroups: {
                 common: {
-                    test: /.*\.js/,
-                    name: "common",
+                    name: "chunk-common",
                     minChunks: 2,
                     priority: -20,
                     chunks: "initial",
-                    reuseExistingChunk: true,
+                    reuseExistingChunk: true
                 },
             },
         });
@@ -28,8 +27,6 @@ module.exports = {
         config.resolve.alias.delete("@");
 
         // Unbind unused plugins/rules
-        config.plugins.delete("preload");
-        config.plugins.delete("prefetch");
         config.module.rules.delete("tsx");
         config.module.rules.delete("pug");
         config.module.rules.delete("sass");
