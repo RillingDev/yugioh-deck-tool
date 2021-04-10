@@ -4,7 +4,7 @@ const SCREENSHOT_IMAGE_MIME_TYPE = "image/png";
 const SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION = "png";
 
 /**
- * Creates a screenshot of the given element and creates a data URL for it.
+ * Creates a screenshot of the given element.
  *
  * @param el Element to screenshot.
  * @param filenameBase Filename up until extension (e.g. "foo" to receive a file with the name "foo.png")
