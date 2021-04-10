@@ -6,7 +6,7 @@
                 :disabled="!essentialDataLoaded"
                 variant="primary"
             >
-                <template v-slot:button-content>
+                <template #button-content>
                     <span
                         class="fas fas-in-button fa-file-import"
                         aria-hidden="true"
@@ -17,11 +17,11 @@
                 <YgoImportYdkeUrl />
             </BDropdown>
             <BDropdown
-                variant="primary"
                 id="deckExport"
+                variant="primary"
                 :disabled="!essentialDataLoaded || empty"
             >
-                <template v-slot:button-content>
+                <template #button-content>
                     <span
                         class="fas fas-in-button fa-file-export"
                         aria-hidden="true"
@@ -35,11 +35,11 @@
                 <YgoExportScreenshot />
             </BDropdown>
             <BDropdown
-                variant="primary"
                 id="deckEdit"
+                variant="primary"
                 :disabled="!essentialDataLoaded || empty"
             >
-                <template v-slot:button-content>
+                <template #button-content>
                     <span
                         class="fas fas-in-button fa-edit"
                         aria-hidden="true"
@@ -55,7 +55,7 @@
                 :disabled="!essentialDataLoaded"
                 variant="primary"
             >
-                <template v-slot:button-content>
+                <template #button-content>
                     <span
                         class="fas fas-in-button fa-magic"
                         aria-hidden="true"
@@ -100,8 +100,6 @@ import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
 import { useEssentialDataLoaded } from "../../composition/loading";
 
 export default defineComponent({
-    props: {},
-    emits: [],
     components: {
         YgoFormat,
         YgoDeckName,
@@ -122,6 +120,8 @@ export default defineComponent({
         YgoExportShareLink,
         YgoExportScreenshot,
     },
+    props: {},
+    emits: [],
     setup(props, context) {
         const essentialDataLoaded = useEssentialDataLoaded(context);
         const empty = useDeckEmpty(context);
@@ -132,8 +132,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../browser-common/src/styles/variables";
-@import "../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
     .toolbar__items {

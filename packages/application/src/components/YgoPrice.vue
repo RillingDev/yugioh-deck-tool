@@ -1,17 +1,17 @@
 <template>
     <ul class="price price--group">
         <li
-            :class="`price__vendor--${vendor.id}`"
+            v-for="([vendor, lookupResult], index) in priceByVendor.entries()"
             :key="vendor.id"
+            :class="`price__vendor--${vendor.id}`"
             :title="`${vendor.name} Price`"
             class="price__vendor"
-            v-for="([vendor, lookupResult], index) in priceByVendor.entries()"
         >
             <span>{{ vendor.name }}: {{ formatPrice(lookupResult) }}</span>
             <button
-                title="Some cards have no price data"
-                ref="missingCardButtons"
                 v-show="lookupResult.missing.length > 0"
+                ref="missingCardButtons"
+                title="Some cards have no price data"
                 class="btn btn-sm btn-warning price__warning"
             >
                 <span class="fas fa-exclamation" aria-hidden="true"></span>
@@ -101,8 +101,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../browser-common/src/styles/component/price";
-@import "../../../browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/component/price";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
 
 .deck-tool,
 .deck-tool__portal {

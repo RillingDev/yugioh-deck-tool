@@ -1,5 +1,5 @@
 <template>
-    <div class="deck" id="deckToolDeck">
+    <div id="deckToolDeck" class="deck">
         <header class="deck__header">
             <h1 class="deck__total h4">Total</h1>
             <YgoPrice :cards="allCards" />
@@ -52,8 +52,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../browser-common/src/styles/variables";
-@import "../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
     .deck {

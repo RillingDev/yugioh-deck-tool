@@ -2,22 +2,22 @@
     <form class="form-group sorting-options">
         <label class="sorting-options__label w-50"> Sort by </label>
         <VSelect
+            v-model="internalSortingOptions.strategy"
             class="sorting-options__input w-100"
             title="Sorting Strategy"
             :options="sortingStrategies"
             :clearable="false"
             :searchable="false"
             @input="() => onOptionsChanged()"
-            v-model="internalSortingOptions.strategy"
         />
         <VSelect
+            v-model="internalSortingOptions.order"
             class="sorting-options__input w-100"
             title="Sorting Order"
             :options="sortingOrders"
             :clearable="false"
             :searchable="false"
             @input="() => onOptionsChanged()"
-            v-model="internalSortingOptions.order"
         />
     </form>
 </template>
@@ -37,12 +37,12 @@ export default defineComponent({
         },
     },
     emits: ["change"],
+    components: {
+        VSelect,
+    },
     model: {
         prop: "sortingOptions",
         event: "change",
-    },
-    components: {
-        VSelect,
     },
     setup(props, context) {
         const internalSortingOptions = reactive<SortingOptions>(
@@ -67,8 +67,8 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import "../../../../browser-common/src/styles/variables";
-@import "../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
     .sorting-options {

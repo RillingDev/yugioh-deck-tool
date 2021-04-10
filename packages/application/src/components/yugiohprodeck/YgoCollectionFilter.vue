@@ -4,10 +4,10 @@
             >Use User Collection
         </BFormCheckbox>
         <button
-            @click="() => reload()"
             class="btn btn-primary btn-sm"
             title="Reload the User Collection contents"
             :disabled="!checked"
+            @click="() => reload()"
         >
             <span class="fas fa-sync fas-in-button" aria-hidden="true"></span>
             Reload
@@ -43,9 +43,9 @@ const logger = getLogger("YgoCollectionFilter");
  * Should only be mounted if running in ygoprodeck env and having credentials available.
  */
 export default defineComponent({
+    components: { BFormCheckbox },
     props: {},
     emits: ["change"],
-    components: { BFormCheckbox },
     setup(props, context) {
         const cardCountFunction = computed<CardCountFunction | null>({
             get: () => useAppStore(context).state.collection.cardCountFunction,
@@ -97,8 +97,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../browser-common/src/styles/variables";
-@import "../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
     .collection-filter {

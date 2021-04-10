@@ -32,10 +32,10 @@
             </div>
             <div class="draw-sim__output">
                 <YgoCard
-                    class="draw-sim__output__card"
-                    :card="card"
                     v-for="(card, index) of drawnCards"
                     :key="`${index}_${card.passcode}`"
+                    class="draw-sim__output__card"
+                    :card="card"
                 />
             </div>
             <button class="btn btn-primary" @click="() => draw()">Draw</button>
@@ -55,13 +55,13 @@ import { useAppStore } from "../../../composition/state/useAppStore";
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export default defineComponent({
-    props: {},
-    emits: [],
     components: {
         YgoCard,
         BModal,
         BDropdownItemButton,
     },
+    props: {},
+    emits: [],
     setup(props, context) {
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);
@@ -96,8 +96,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../../browser-common/src/styles/variables";
-@import "../../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool__portal {
     .draw-sim__modal {

@@ -39,14 +39,14 @@ const deckUrlController = applicationContainer.get<DeckUrlController>(
 const logger = getLogger("App");
 
 export default defineComponent({
-    props: {},
-    emits: [],
     components: {
         BOverlay,
         YgoDeck,
         YgoBuilder,
         YgoToolbar,
     },
+    props: {},
+    emits: [],
     setup(props, context) {
         const appStore = useAppStore(context);
         const loading = computed<boolean>(() => appStore.state.data.loading);
@@ -101,8 +101,8 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-@import "../../browser-common/src/styles/mixins";
-@import "../../browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
 
 .deck-tool {
     .deck-tool__body {

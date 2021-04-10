@@ -22,16 +22,16 @@
             :group="{ name: dragGroup, pull: true, put: true }"
             :value="cards"
             :move="(e) => canMove(e)"
-            @change="(e) => onChange(e)"
             :revert-on-spill="true"
             :animation="0"
+            @change="(e) => onChange(e)"
             @start="() => disableTooltip()"
             @end="() => enableTooltip()"
         >
             <YgoCard
-                :card="card"
-                :key="`${cardIndex}_${card.passcode}`"
                 v-for="(card, cardIndex) in cards"
+                :key="`${cardIndex}_${card.passcode}`"
+                :card="card"
                 @contextmenu.native.prevent="() => removeCard(card, cardIndex)"
             >
             </YgoCard>
@@ -167,8 +167,8 @@ export default defineComponent({
 
 <style lang="scss">
 @use "sass:color";
-@import "../../../../browser-common/src/styles/variables";
-@import "../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
     .deck-part {

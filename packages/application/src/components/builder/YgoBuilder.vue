@@ -10,7 +10,7 @@
                 Result: {{ filteredCards.length }} of
                 {{ formatCards.length }} Cards
             </small>
-            <button class="btn btn-primary" v-b-toggle.filterSidebar>
+            <button v-b-toggle.filterSidebar class="btn btn-primary">
                 <span
                     class="fas fas-in-button fa-search"
                     aria-hidden="true"
@@ -122,8 +122,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../browser-common/src/styles/variables";
-@import "../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
     .builder {

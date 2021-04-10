@@ -21,8 +21,8 @@
             >
                 <div class="form-group">
                     <VSelect
-                        :options="strategies"
                         v-model="strategy"
+                        :options="strategies"
                         :clearable="false"
                         title="Randomization Strategy"
                     />
@@ -56,8 +56,6 @@ const deckRandomizationService = applicationContainer.get<DeckRandomizationServi
 );
 
 export default defineComponent({
-    props: {},
-    emits: [],
     components: {
         YgoFilter,
         VSelect,
@@ -65,6 +63,8 @@ export default defineComponent({
         BDropdownItemButton,
         BDropdownGroup,
     },
+    props: {},
+    emits: [],
     setup(props, context) {
         const strategies = readonly<RandomizationStrategy[]>(
             Object.values(RandomizationStrategy)
@@ -108,8 +108,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../../browser-common/src/styles/variables";
-@import "../../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool__portal {
     .randomizer__btn-group {

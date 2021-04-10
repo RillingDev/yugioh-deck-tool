@@ -1,10 +1,10 @@
 <template>
     <div class="builder_matches">
-        <ol class="builder-matches__list" v-show="matches.length > 0">
+        <ol v-show="matches.length > 0" class="builder-matches__list">
             <li
-                class="builder-matches__match"
                 v-for="card in limitedMatches"
                 :key="card.passcode"
+                class="builder-matches__match"
             >
                 <template v-if="isTouchDevice">
                     <YgoCard
@@ -51,7 +51,7 @@
                 </div>
             </li>
         </ol>
-        <div class="builder-matches__no-matches" v-show="matches.length === 0">
+        <div v-show="matches.length === 0" class="builder-matches__no-matches">
             No matches found.
         </div>
     </div>
@@ -154,8 +154,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../browser-common/src/styles/variables";
-@import "../../../../browser-common/src/styles/mixins";
+@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
     .builder-matches {
