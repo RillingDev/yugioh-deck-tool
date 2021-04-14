@@ -15,7 +15,8 @@ Live version: <https://ygoprodeck.com/card-database/deck-prices/>.
 Prerequisites:
 
 -   Git
--   Node.js & npm
+-   Node.js
+-   yarn
 
 Then perform the following steps:
 
