@@ -4,6 +4,7 @@
         "importHelpers": true,
         "skipLibCheck": true,
         "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
     },
     "include": ["./src/**/*.ts", "./src/**/*.vue", "./tests/**/*.ts"],

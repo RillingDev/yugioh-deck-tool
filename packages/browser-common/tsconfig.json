@@ -1,6 +1,18 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "lib": ["esnext", "dom"]
-    }
+        "allowSyntheticDefaultImports": true,
+        "noEmit": true,
+        "lib": [
+            "esnext",
+            "dom"
+        ]
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./__tests__/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
