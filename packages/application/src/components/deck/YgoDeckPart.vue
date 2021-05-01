@@ -57,10 +57,7 @@ import {
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 import { useAppStore } from "../../composition/state/useAppStore";
 import type { DraggableChangeEventData } from "../../composition/dragging";
-import {
-    createMoveInDeckPartValidator,
-    DECK_PART_PROP,
-} from "../../composition/dragging";
+import { createMoveInDeckPartValidator, DECK_PART_PROP, } from "../../composition/dragging";
 import type { DeckController } from "../../controller/DeckController";
 
 const deckController = applicationContainer.get<DeckController>(
@@ -238,12 +235,12 @@ export default defineComponent({
             padding: $margin-sm;
             border: 3px solid $black;
             gap: $margin-sm;
-            grid-template-columns: repeat(auto-fill, minmax(7ch, 1fr));
+            grid-template-columns: repeat(6, 1fr);
             @include screen-min-width(md) {
-                grid-template-columns: repeat(auto-fill, minmax(8.5ch, 1fr));
+                grid-template-columns: repeat(8, 1fr);
             }
             @include screen-min-width(lg) {
-                grid-template-columns: repeat(auto-fill, minmax(10ch, 1fr));
+                grid-template-columns: repeat(10, 1fr);
             }
         }
     }
