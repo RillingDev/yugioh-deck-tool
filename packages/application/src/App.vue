@@ -57,14 +57,6 @@ export default defineComponent({
             startLoading(context)
                 .then(() => cardDatabase.prepareAll())
                 .then(() => appStore.commit(ESSENTIAL_DATA_LOADED))
-                .catch((err) => {
-                    logger.error("Could not load data!", err);
-                    showError(
-                        context,
-                        "Could not load data!",
-                        "deck-tool__portal"
-                    );
-                })
                 .then(() => {
                     logger.info("Loaded data.");
                     return deckUrlController.loadUriDeck(
@@ -82,10 +74,10 @@ export default defineComponent({
                     }
                 })
                 .catch((err) => {
-                    logger.error("Could not load deck!", err);
+                    logger.error("Could not start the application!", err);
                     showError(
                         context,
-                        "Could not load deck!",
+                        "Could not start the application!",
                         "deck-tool__portal"
                     );
                 })
