@@ -36,11 +36,7 @@
 </template>
 
 <script lang="ts">
-import type {
-    CardFilter,
-    DeckRandomizationService,
-    Format,
-} from "@yugioh-deck-tool/core";
+import type { CardFilter, DeckRandomizationService, Format, } from "@yugioh-deck-tool/core";
 import { RandomizationStrategy, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
@@ -51,9 +47,10 @@ import VSelect from "vue-select";
 import { useAppStore } from "../../../composition/state/useAppStore";
 import { useEssentialDataLoaded } from "../../../composition/loading";
 
-const deckRandomizationService = applicationContainer.get<DeckRandomizationService>(
-    TYPES.DeckRandomizationService
-);
+const deckRandomizationService =
+    applicationContainer.get<DeckRandomizationService>(
+        TYPES.DeckRandomizationService
+    );
 
 export default defineComponent({
     components: {

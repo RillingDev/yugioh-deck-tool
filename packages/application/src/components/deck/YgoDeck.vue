@@ -26,6 +26,10 @@ import { useAppStore } from "../../composition/state/useAppStore";
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 export default defineComponent({
+    components: {
+        YgoDeckPart,
+        YgoPrice,
+    },
     props: {
         dragGroup: {
             required: true,
@@ -33,10 +37,6 @@ export default defineComponent({
         },
     },
     emits: [],
-    components: {
-        YgoDeckPart,
-        YgoPrice,
-    },
     setup(props, context) {
         const deckParts = readonly<DeckPart[]>(DECK_PART_ARR);
         const allCards = computed<Card[]>(() =>

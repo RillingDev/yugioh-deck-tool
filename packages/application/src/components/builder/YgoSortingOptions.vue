@@ -30,13 +30,6 @@ import { defineComponent, reactive } from "@vue/composition-api";
 import VSelect from "vue-select";
 
 export default defineComponent({
-    props: {
-        sortingOptions: {
-            required: true,
-            type: Object as PropType<SortingOptions>,
-        },
-    },
-    emits: ["change"],
     components: {
         VSelect,
     },
@@ -44,6 +37,13 @@ export default defineComponent({
         prop: "sortingOptions",
         event: "change",
     },
+    props: {
+        sortingOptions: {
+            required: true,
+            type: Object as PropType<SortingOptions>,
+        },
+    },
+    emits: ["change"],
     setup(props, context) {
         const internalSortingOptions = reactive<SortingOptions>(
             props.sortingOptions

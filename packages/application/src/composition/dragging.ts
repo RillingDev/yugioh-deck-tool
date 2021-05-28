@@ -35,33 +35,38 @@ const findDeckPartForComponent = (el: Vue): DeckPart | null =>
         (current) => current.$props[DECK_PART_PROP] != null
     )?.$props[DECK_PART_PROP];
 
-export const createMoveInDeckPartValidator = (
-    context: SetupContext,
-    oldDeckPart: DeckPart
-) => (e: DraggableMoveValidatorData): boolean => {
-    const target = e.relatedContext.component;
-    const newDeckPart = findDeckPartForComponent(target);
-    if (newDeckPart == null) {
-        return false;
-    }
-    const deck = useAppStore(context).state.deck.active;
-    const format = useAppStore(context).state.format.active;
-    const card = e.draggedContext.element;
+export const createMoveInDeckPartValidator =
+    (context: SetupContext, oldDeckPart: DeckPart) =>
+        (e: DraggableMoveValidatorData): boolean => {
+            const target = e.relatedContext.component;
+            const newDeckPart = findDeckPartForComponent(target);
+            if (newDeckPart == null) {
+                return false;
+            }
+            const deck = useAppStore(context).state.deck.active;
+            const format = useAppStore(context).state.format.active;
+            const card = e.draggedContext.element;
 
-    return deckService.canMove(deck, card, oldDeckPart, newDeckPart, format);
-};
+            return deckService.canMove(
+                deck,
+                card,
+                oldDeckPart,
+                newDeckPart,
+                format
+            );
+        };
 
-export const createMoveFromBuilderValidator = (context: SetupContext) => (
-    e: DraggableMoveValidatorData
-): boolean => {
-    const target = e.relatedContext.component;
-    const newDeckPart = findDeckPartForComponent(target);
-    if (newDeckPart == null) {
-        return false;
-    }
-    const deck = useAppStore(context).state.deck.active;
-    const format = useAppStore(context).state.format.active;
-    const card = e.draggedContext.element;
+export const createMoveFromBuilderValidator =
+    (context: SetupContext) =>
+        (e: DraggableMoveValidatorData): boolean => {
+            const target = e.relatedContext.component;
+            const newDeckPart = findDeckPartForComponent(target);
+            if (newDeckPart == null) {
+                return false;
+            }
+            const deck = useAppStore(context).state.deck.active;
+            const format = useAppStore(context).state.format.active;
+            const card = e.draggedContext.element;
 
-    return deckService.canAdd(deck, card, newDeckPart, format);
-};
+            return deckService.canAdd(deck, card, newDeckPart, format);
+        };

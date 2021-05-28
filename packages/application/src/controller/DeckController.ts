@@ -52,9 +52,8 @@ export class DeckController {
                 ]);
         }
 
-        const countedByTypeCategory = this.#cardService.countByTypeCategory(
-            cards
-        );
+        const countedByTypeCategory =
+            this.#cardService.countByTypeCategory(cards);
         return Object.values(CardTypeCategory)
             .filter(
                 (typeCategory) =>

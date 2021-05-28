@@ -16,6 +16,7 @@ import type { Card } from "@yugioh-deck-tool/core";
 import { imageUrlCardPlaceholder } from "@yugioh-deck-tool/browser-common";
 
 export default defineComponent({
+    components: {},
     props: {
         card: {
             required: true,
@@ -28,7 +29,6 @@ export default defineComponent({
         },
     },
     emits: [],
-    components: {},
     setup(props) {
         const imgSrc = computed<string>(
             () => props.card.image?.urlSmall ?? imageUrlCardPlaceholder()

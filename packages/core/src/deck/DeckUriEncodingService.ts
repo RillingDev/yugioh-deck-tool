@@ -18,9 +18,8 @@ export class DeckUriEncodingService {
     private static readonly LIMIT =
         2 ** (DeckUriEncodingService.BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.
 
-    private static readonly URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK: Uint8Array = new Uint8Array(
-        DeckUriEncodingService.BLOCK_BYTE_SIZE
-    ).fill(0);
+    private static readonly URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK: Uint8Array =
+        new Uint8Array(DeckUriEncodingService.BLOCK_BYTE_SIZE).fill(0);
     private static readonly URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN = true;
 
     private static readonly YDKE_URI_PROTOCOL = "ydke://";
@@ -101,10 +100,11 @@ export class DeckUriEncodingService {
             deckPartIndex++
         ) {
             const deckPartCards = deck.parts[DECK_PART_ARR[deckPartIndex]];
-            const decodedDeckPartCards = this.#encodingService.decodeBase64String(
-                uriParts[deckPartIndex],
-                false
-            );
+            const decodedDeckPartCards =
+                this.#encodingService.decodeBase64String(
+                    uriParts[deckPartIndex],
+                    false
+                );
             for (
                 let blockStart = 0;
                 blockStart < decodedDeckPartCards.length;

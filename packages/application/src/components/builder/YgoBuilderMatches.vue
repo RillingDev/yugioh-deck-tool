@@ -58,11 +58,7 @@
 </template>
 
 <script lang="ts">
-import type {
-    Card,
-    CardCountFunction,
-    DeckService,
-} from "@yugioh-deck-tool/core";
+import type { Card, CardCountFunction, DeckService, } from "@yugioh-deck-tool/core";
 import { CardTypeCategory, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
@@ -81,6 +77,10 @@ const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 const CARD_DISPLAY_LIMIT = 50;
 
 export default defineComponent({
+    components: {
+        YgoCard,
+        Draggable,
+    },
     props: {
         matches: {
             required: true,
@@ -92,10 +92,6 @@ export default defineComponent({
         },
     },
     emits: [],
-    components: {
-        YgoCard,
-        Draggable,
-    },
     setup(props, context) {
         const store = useAppStore(context);
 

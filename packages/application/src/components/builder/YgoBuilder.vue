@@ -57,6 +57,12 @@ const cardPredicateService = applicationContainer.get<CardPredicateService>(
 );
 
 export default defineComponent({
+    components: {
+        YgoFilter,
+        YgoSortingOptions,
+        YgoBuilderMatches,
+        BSidebar,
+    },
     props: {
         dragGroup: {
             required: true,
@@ -64,12 +70,6 @@ export default defineComponent({
         },
     },
     emits: [],
-    components: {
-        YgoFilter,
-        YgoSortingOptions,
-        YgoBuilderMatches,
-        BSidebar,
-    },
     setup(props, context) {
         // We have to init all properties even if they are optional, because otherwise vue cant listen to changes.
         const filter = reactive<CardFilter>(
