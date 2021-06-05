@@ -1,11 +1,15 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "importHelpers": true,
         "skipLibCheck": true,
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+        "lib": [
+            "ESNext",
+            "DOM",
+            "DOM.Iterable",
+            "ScriptHost"
+        ]
     },
     "include": ["./src/**/*.ts", "./src/**/*.vue", "./tests/**/*.ts"],
     "exclude": ["node_modules"]

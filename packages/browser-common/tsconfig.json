@@ -1,11 +1,11 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
         "noEmit": true,
         "lib": [
-            "esnext",
-            "dom"
+            "ESNext",
+            "DOM"
         ]
     },
     "include": [

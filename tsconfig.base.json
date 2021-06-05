@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        // General
+        "newLine": "LF",
+        "removeComments": false,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "strict": true,
+        // Per-project
+        "target": "ES2020",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
+}
