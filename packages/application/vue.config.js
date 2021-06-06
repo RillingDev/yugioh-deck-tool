@@ -11,7 +11,7 @@ module.exports = {
         config.optimization.splitChunks({
             cacheGroups: {
                 common: {
-                    name: "chunk-common",
+                    name: "common",
                     minChunks: 2,
                     priority: -20,
                     chunks: "initial",
