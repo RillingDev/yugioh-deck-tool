@@ -17,7 +17,7 @@ import VSelect from "vue-select";
 import type { Currency } from "@yugioh-deck-tool/core";
 import { DEFAULT_CURRENCY_ARR } from "@yugioh-deck-tool/core";
 import { CURRENCY_UPDATE } from "../../store/modules/currency";
-import { useAppStore } from "../../composition/state/useAppStore";
+import { useStore } from "../../store/store";
 
 export default defineComponent({
     components: { VSelect },
@@ -28,9 +28,9 @@ export default defineComponent({
             Object.values(DEFAULT_CURRENCY_ARR)
         );
         const currency = computed<Currency>({
-            get: () => useAppStore(context).state.currency.active,
+            get: () => useStore().state.currency.active,
             set: (newCurrency) =>
-                useAppStore(context).commit(CURRENCY_UPDATE, {
+                useStore().commit(CURRENCY_UPDATE, {
                     currency: newCurrency,
                 }),
         });

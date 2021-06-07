@@ -58,7 +58,11 @@
 </template>
 
 <script lang="ts">
-import type { Card, CardCountFunction, DeckService, } from "@yugioh-deck-tool/core";
+import type {
+    Card,
+    CardCountFunction,
+    DeckService,
+} from "@yugioh-deck-tool/core";
 import { CardTypeCategory, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
@@ -66,11 +70,11 @@ import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 import { createMoveFromBuilderValidator } from "../../composition/dragging";
 import { applicationContainer } from "../../inversify.config";
-import { useAppStore } from "../../composition/state/useAppStore";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
 import { browserSupportsTouch } from "@yugioh-deck-tool/browser-common";
 import { showSuccess } from "../../composition/feedback";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
+import { useStore } from "../../store/store";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -93,7 +97,7 @@ export default defineComponent({
     },
     emits: [],
     setup(props, context) {
-        const store = useAppStore(context);
+        const store = useStore();
 
         const cardCountFunction = computed<CardCountFunction | null>(
             () => store.state.collection.cardCountFunction
@@ -132,7 +136,7 @@ export default defineComponent({
             }
         };
 
-        const canMove = createMoveFromBuilderValidator(context);
+        const canMove = createMoveFromBuilderValidator();
 
         return {
             limitedMatches,

@@ -50,7 +50,7 @@ import { DeckPart, TYPES } from "@yugioh-deck-tool/core";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { computed, defineComponent, ref } from "@vue/composition-api";
-import { useAppStore } from "../../../composition/state/useAppStore";
+import { useStore } from "../../../store/store";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -66,9 +66,7 @@ export default defineComponent({
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);
 
-        const deck = computed<Deck>(
-            () => useAppStore(context).state.deck.active
-        );
+        const deck = computed<Deck>(() => useStore().state.deck.active);
         const hasMainDeckCards = computed<boolean>(
             () => deck.value.parts[DeckPart.MAIN].length > 0
         );

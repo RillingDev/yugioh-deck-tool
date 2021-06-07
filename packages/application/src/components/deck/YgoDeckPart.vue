@@ -55,10 +55,13 @@ import {
     DECK_PART_CARDS_REORDER,
 } from "../../store/modules/deck";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
-import { useAppStore } from "../../composition/state/useAppStore";
 import type { DraggableChangeEventData } from "../../composition/dragging";
-import { createMoveInDeckPartValidator, DECK_PART_PROP, } from "../../composition/dragging";
+import {
+    createMoveInDeckPartValidator,
+    DECK_PART_PROP,
+} from "../../composition/dragging";
 import type { DeckController } from "../../controller/DeckController";
+import { useStore } from "../../store/store";
 
 const deckController = applicationContainer.get<DeckController>(
     APPLICATION_TYPES.DeckController
@@ -89,7 +92,7 @@ export default defineComponent({
         );
 
         const cards = computed<Card[]>(
-            () => useAppStore(context).state.deck.active.parts[props.deckPart]
+            () => useStore().state.deck.active.parts[props.deckPart]
         );
         const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
         const deckPartStats = computed<string>(() => {
@@ -105,13 +108,13 @@ export default defineComponent({
         });
 
         const addCard = (card: Card, newIndex: number): void =>
-            useAppStore(context).commit(DECK_PART_CARDS_ADD, {
+            useStore().commit(DECK_PART_CARDS_ADD, {
                 deckPart: props.deckPart,
                 card,
                 newIndex,
             });
         const removeCard = (card: Card, oldIndex: number): void =>
-            useAppStore(context).commit(DECK_PART_CARDS_REMOVE, {
+            useStore().commit(DECK_PART_CARDS_REMOVE, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,
@@ -121,7 +124,7 @@ export default defineComponent({
             oldIndex: number,
             newIndex: number
         ): void =>
-            useAppStore(context).commit(DECK_PART_CARDS_REORDER, {
+            useStore().commit(DECK_PART_CARDS_REORDER, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,
@@ -142,7 +145,7 @@ export default defineComponent({
                 logger.warn("Unexpected drag event type.", e);
             }
         };
-        const canMove = createMoveInDeckPartValidator(context, props.deckPart);
+        const canMove = createMoveInDeckPartValidator(props.deckPart);
 
         return {
             deckPartConfig,

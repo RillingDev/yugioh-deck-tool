@@ -35,8 +35,8 @@ import { getLogger, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { useAppStore } from "../../../composition/state/useAppStore";
 import { showError, showSuccess } from "../../../composition/feedback";
+import { useStore } from "../../../store/store";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     TYPES.DeckUriEncodingService
@@ -65,7 +65,7 @@ export default defineComponent({
                 );
                 return;
             }
-            useAppStore(context).commit(DECK_REPLACE, {
+            useStore().commit(DECK_REPLACE, {
                 deck,
             });
             showSuccess(

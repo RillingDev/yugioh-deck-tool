@@ -14,8 +14,8 @@ import type { DeckUriEncodingService } from "@yugioh-deck-tool/core";
 import { getLogger, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { useAppStore } from "../../../composition/state/useAppStore";
 import { showError, showSuccess } from "../../../composition/feedback";
+import { useStore } from "../../../store/store";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
     TYPES.DeckUriEncodingService
@@ -29,7 +29,7 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const copyYdke = (): void => {
-            const deck = useAppStore(context).state.deck.active;
+            const deck = useStore().state.deck.active;
             const ydke = deckUriEncodingService.toUri(deck);
 
             navigator.clipboard

@@ -21,3 +21,6 @@ export const store = new Vuex.Store<AppState>({
     },
     strict: DEVELOPMENT_MODE,
 });
+
+// Prepare for Vuex4 (https://next.vuex.vuejs.org/guide/typescript-support.html#simplifying-usestore-usage)
+export const useStore = (): typeof store => store;

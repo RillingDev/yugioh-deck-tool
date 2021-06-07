@@ -50,8 +50,8 @@ import type {
 import { DEFAULT_VENDOR_ARR, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, ref } from "@vue/composition-api";
-import { useAppStore } from "../composition/state/useAppStore";
 import { BTooltip } from "bootstrap-vue";
+import { useStore } from "../store/store";
 
 const priceService = applicationContainer.get<PriceService>(TYPES.PriceService);
 const cardService = applicationContainer.get<CardService>(TYPES.CardService);
@@ -67,7 +67,7 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const activeCurrency = computed<Currency>(
-            () => useAppStore(context).state.currency.active
+            () => useStore().state.currency.active
         );
 
         const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(

@@ -11,8 +11,8 @@ import type { DeckExportService } from "@yugioh-deck-tool/core";
 import { getLogger, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { useAppStore } from "../../../composition/state/useAppStore";
 import { showError, showSuccess } from "../../../composition/feedback";
+import { useStore } from "../../../store/store";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
     TYPES.DeckExportService
@@ -26,7 +26,7 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const copyList = (): void => {
-            const deck = useAppStore(context).state.deck.active;
+            const deck = useStore().state.deck.active;
             const deckList = deckExportService.toShareableText(deck);
 
             navigator.clipboard

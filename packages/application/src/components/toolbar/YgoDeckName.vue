@@ -11,7 +11,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
 import { DECK_NAME_UPDATE } from "../../store/modules/deck";
-import { useAppStore } from "../../composition/state/useAppStore";
+import { useStore } from "../../store/store";
 
 export default defineComponent({
     components: {},
@@ -19,9 +19,9 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const deckName = computed<string | null>({
-            get: () => useAppStore(context).state.deck.active.name,
+            get: () => useStore().state.deck.active.name,
             set: (newName) =>
-                useAppStore(context).commit(DECK_NAME_UPDATE, {
+                useStore().commit(DECK_NAME_UPDATE, {
                     name: newName,
                 }),
         });

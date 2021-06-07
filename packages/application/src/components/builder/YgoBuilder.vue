@@ -41,9 +41,9 @@ import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
-import { useAppStore } from "../../composition/state/useAppStore";
 import { BSidebar } from "bootstrap-vue";
-import { useEssentialDataLoaded } from "../../composition/loading";
+import { useEssentialDataLoaded } from "../../composition/state/loading";
+import { useStore } from "../../store/store";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const sortingService = applicationContainer.get<SortingService>(
@@ -81,10 +81,10 @@ export default defineComponent({
             order: SortingOrder.DESC,
         });
 
-        const essentialDataLoaded = useEssentialDataLoaded(context);
+        const essentialDataLoaded = useEssentialDataLoaded();
 
         const format = computed<Format | null>(
-            () => useAppStore(context).state.format.active
+            () => useStore().state.format.active
         );
 
         const formatCards = computed<Card[]>(() => {

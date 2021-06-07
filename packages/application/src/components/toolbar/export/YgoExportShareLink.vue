@@ -13,10 +13,10 @@ import { defineComponent } from "@vue/composition-api";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { useAppStore } from "../../../composition/state/useAppStore";
 import { showError, showSuccess } from "../../../composition/feedback";
 import type { DeckUrlController } from "../../../controller/DeckUrlController";
 import { getLogger } from "../../../../../core/src/logger";
+import { useStore } from "../../../store/store";
 
 const deckUrlController = applicationContainer.get<DeckUrlController>(
     APPLICATION_TYPES.DeckUrlController
@@ -30,7 +30,7 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const copyLink = (): void => {
-            const deck = useAppStore(context).state.deck.active;
+            const deck = useStore().state.deck.active;
             const shareLink = deckUrlController.getShareLink(deck);
 
             navigator.clipboard

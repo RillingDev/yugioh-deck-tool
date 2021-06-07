@@ -19,7 +19,7 @@ import {
     showInfo,
     showSuccess,
 } from "../../../composition/feedback";
-import { useAppStore } from "../../../composition/state/useAppStore";
+import { useStore } from "../../../store/store";
 
 const logger = getLogger("YgoExportScreenshot");
 
@@ -28,7 +28,7 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const isDeckEmpty = useDeckEmpty(context);
+        const isDeckEmpty = useDeckEmpty();
 
         const screenshot = (): void => {
             const deckEl = document.getElementById("deckToolDeck");
@@ -45,8 +45,7 @@ export default defineComponent({
             );
             createScreenshot(
                 deckEl,
-                useAppStore(context).state.deck.active.name ??
-                    "Deck Screenshot",
+                useStore().state.deck.active.name ?? "Deck Screenshot",
                 {
                     scale: 2,
                     onClone: (doc) => {

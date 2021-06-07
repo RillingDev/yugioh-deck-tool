@@ -15,7 +15,7 @@ import { computed, defineComponent, readonly } from "@vue/composition-api";
 import VSelect from "vue-select";
 import { FORMAT_UPDATE } from "../../store/modules/format";
 import { Format } from "@yugioh-deck-tool/core";
-import { useAppStore } from "../../composition/state/useAppStore";
+import { useStore } from "../../store/store";
 
 export default defineComponent({
     components: { VSelect },
@@ -24,9 +24,9 @@ export default defineComponent({
     setup(props, context) {
         const formats = readonly<Format[]>(Object.values(Format));
         const format = computed<Format | null>({
-            get: () => useAppStore(context).state.format.active,
+            get: () => useStore().state.format.active,
             set: (newFormat) =>
-                useAppStore(context).commit(FORMAT_UPDATE, {
+                useStore().commit(FORMAT_UPDATE, {
                     format: newFormat,
                 }),
         });

@@ -191,12 +191,12 @@ import {
 
 import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
-import { useAppStore } from "../composition/state/useAppStore";
 import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
 import type { YgoprodeckController } from "../controller/YgoprodeckController";
 import { APPLICATION_TYPES } from "../types";
 import { SET_CARD_COUNT_FUNCTION } from "../store/modules/collection";
-import { useEssentialDataLoaded } from "../composition/loading";
+import { useEssentialDataLoaded } from "../composition/state/loading";
+import { useStore } from "../store/store";
 
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
     TYPES.CardPredicateService
@@ -237,7 +237,7 @@ export default defineComponent({
     },
     emits: ["change"],
     setup: function (props, context) {
-        const essentialDataLoaded = useEssentialDataLoaded(context);
+        const essentialDataLoaded = useEssentialDataLoaded();
 
         const banStates = readonly<BanState[]>(DEFAULT_BAN_STATE_ARR);
         const cardTypeCategories = readonly<CardTypeCategory[]>(
@@ -269,7 +269,7 @@ export default defineComponent({
         );
 
         const hasBanStates = computed<boolean>(() => {
-            const format = useAppStore(context).state.format.active;
+            const format = useStore().state.format.active;
             if (format == null) {
                 return false;
             }
@@ -285,9 +285,9 @@ export default defineComponent({
         );
 
         const cardCountFunction = computed<CardCountFunction | null>({
-            get: () => useAppStore(context).state.collection.cardCountFunction,
+            get: () => useStore().state.collection.cardCountFunction,
             set: (value) =>
-                useAppStore(context).commit(SET_CARD_COUNT_FUNCTION, {
+                useStore().commit(SET_CARD_COUNT_FUNCTION, {
                     cardCountFunction: value,
                 }),
         });

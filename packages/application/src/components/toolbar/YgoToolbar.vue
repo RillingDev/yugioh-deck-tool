@@ -97,7 +97,7 @@ import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
 import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
-import { useEssentialDataLoaded } from "../../composition/loading";
+import { useEssentialDataLoaded } from "../../composition/state/loading";
 
 export default defineComponent({
     components: {
@@ -123,8 +123,8 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const essentialDataLoaded = useEssentialDataLoaded(context);
-        const empty = useDeckEmpty(context);
+        const essentialDataLoaded = useEssentialDataLoaded();
+        const empty = useDeckEmpty();
 
         return { essentialDataLoaded, empty };
     },

@@ -1,8 +1,7 @@
 import type { DeckPart, DeckService } from "@yugioh-deck-tool/core";
 import { TYPES } from "@yugioh-deck-tool/core";
-import { useAppStore } from "./state/useAppStore";
 import { applicationContainer } from "../inversify.config";
-import type { SetupContext } from "@vue/composition-api";
+import { useStore } from "../store/store";
 
 // TODO: Replace with real types
 export type DraggableChangeEventData = any;
@@ -36,37 +35,37 @@ const findDeckPartForComponent = (el: Vue): DeckPart | null =>
     )?.$props[DECK_PART_PROP];
 
 export const createMoveInDeckPartValidator =
-    (context: SetupContext, oldDeckPart: DeckPart) =>
-        (e: DraggableMoveValidatorData): boolean => {
-            const target = e.relatedContext.component;
-            const newDeckPart = findDeckPartForComponent(target);
-            if (newDeckPart == null) {
-                return false;
-            }
-            const deck = useAppStore(context).state.deck.active;
-            const format = useAppStore(context).state.format.active;
-            const card = e.draggedContext.element;
+    (oldDeckPart: DeckPart) =>
+    (e: DraggableMoveValidatorData): boolean => {
+        const target = e.relatedContext.component;
+        const newDeckPart = findDeckPartForComponent(target);
+        if (newDeckPart == null) {
+            return false;
+        }
+        const deck = useStore().state.deck.active;
+        const format = useStore().state.format.active;
+        const card = e.draggedContext.element;
 
-            return deckService.canMove(
-                deck,
-                card,
-                oldDeckPart,
-                newDeckPart,
-                format
-            );
-        };
+        return deckService.canMove(
+            deck,
+            card,
+            oldDeckPart,
+            newDeckPart,
+            format
+        );
+    };
 
 export const createMoveFromBuilderValidator =
-    (context: SetupContext) =>
-        (e: DraggableMoveValidatorData): boolean => {
-            const target = e.relatedContext.component;
-            const newDeckPart = findDeckPartForComponent(target);
-            if (newDeckPart == null) {
-                return false;
-            }
-            const deck = useAppStore(context).state.deck.active;
-            const format = useAppStore(context).state.format.active;
-            const card = e.draggedContext.element;
+    () =>
+    (e: DraggableMoveValidatorData): boolean => {
+        const target = e.relatedContext.component;
+        const newDeckPart = findDeckPartForComponent(target);
+        if (newDeckPart == null) {
+            return false;
+        }
+        const deck = useStore().state.deck.active;
+        const format = useStore().state.format.active;
+        const card = e.draggedContext.element;
 
-            return deckService.canAdd(deck, card, newDeckPart, format);
-        };
+        return deckService.canAdd(deck, card, newDeckPart, format);
+    };

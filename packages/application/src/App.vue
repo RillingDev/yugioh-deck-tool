@@ -22,14 +22,14 @@ import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
 import { computed, defineComponent, onMounted } from "@vue/composition-api";
 import { BOverlay } from "bootstrap-vue";
-import { useAppStore } from "./composition/state/useAppStore";
 import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import type { DeckUrlController } from "./controller/DeckUrlController";
-import { startLoading, stopLoading } from "./composition/loading";
+import { startLoading, stopLoading } from "./composition/state/loading";
 import { ESSENTIAL_DATA_LOADED } from "./store/modules/data";
+import { useStore } from "./store/store";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const deckUrlController = applicationContainer.get<DeckUrlController>(
@@ -48,15 +48,14 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const appStore = useAppStore(context);
-        const loading = computed<boolean>(() => appStore.state.data.loading);
+        const loading = computed<boolean>(() => useStore().state.data.loading);
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
         onMounted(() =>
-            startLoading(context)
+            startLoading()
                 .then(() => cardDatabase.prepareAll())
-                .then(() => appStore.commit(ESSENTIAL_DATA_LOADED))
+                .then(() => useStore().commit(ESSENTIAL_DATA_LOADED))
                 .then(() => {
                     logger.info("Loaded data.");
                     return deckUrlController.loadUriDeck(
@@ -65,7 +64,7 @@ export default defineComponent({
                 })
                 .then((result) => {
                     if (result != null) {
-                        appStore.commit(DECK_REPLACE, { deck: result });
+                        useStore().commit(DECK_REPLACE, { deck: result });
                         logger.info("Loaded deck from URI.");
                     } else {
                         logger.info(
@@ -81,7 +80,7 @@ export default defineComponent({
                         "deck-tool__portal"
                     );
                 })
-                .finally(() => stopLoading(context))
+                .finally(() => stopLoading())
         );
 
         return {

@@ -13,12 +13,12 @@ import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { readFile, uploadFile } from "@yugioh-deck-tool/browser-common";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { useAppStore } from "../../../composition/state/useAppStore";
 import {
     showError,
     showSuccess,
     showWarning,
 } from "../../../composition/feedback";
+import { useStore } from "../../../store/store";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
     TYPES.DeckFileService
@@ -37,7 +37,7 @@ export default defineComponent({
                 fileContent,
                 fileName: file.name,
             });
-            useAppStore(context).commit(DECK_REPLACE, {
+            useStore().commit(DECK_REPLACE, {
                 deck: result.deck,
             });
 
