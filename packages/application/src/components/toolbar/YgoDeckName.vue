@@ -18,10 +18,12 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
+        const store = useStore();
+
         const deckName = computed<string | null>({
-            get: () => useStore().state.deck.active.name,
+            get: () => store.state.deck.active.name,
             set: (newName) =>
-                useStore().commit(DECK_NAME_UPDATE, {
+                store.commit(DECK_NAME_UPDATE, {
                     name: newName,
                 }),
         });

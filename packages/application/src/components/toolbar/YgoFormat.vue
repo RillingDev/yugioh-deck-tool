@@ -23,10 +23,13 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const formats = readonly<Format[]>(Object.values(Format));
+
+        const store = useStore();
+
         const format = computed<Format | null>({
-            get: () => useStore().state.format.active,
+            get: () => store.state.format.active,
             set: (newFormat) =>
-                useStore().commit(FORMAT_UPDATE, {
+                store.commit(FORMAT_UPDATE, {
                     format: newFormat,
                 }),
         });

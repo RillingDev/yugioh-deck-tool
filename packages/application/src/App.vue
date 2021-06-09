@@ -48,14 +48,16 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const loading = computed<boolean>(() => useStore().state.data.loading);
+        const store = useStore();
+
+        const loading = computed<boolean>(() => store.state.data.loading);
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
         onMounted(() =>
             startLoading()
                 .then(() => cardDatabase.prepareAll())
-                .then(() => useStore().commit(ESSENTIAL_DATA_LOADED))
+                .then(() => store.commit(ESSENTIAL_DATA_LOADED))
                 .then(() => {
                     logger.info("Loaded data.");
                     return deckUrlController.loadUriDeck(
@@ -64,7 +66,7 @@ export default defineComponent({
                 })
                 .then((result) => {
                     if (result != null) {
-                        useStore().commit(DECK_REPLACE, { deck: result });
+                        store.commit(DECK_REPLACE, { deck: result });
                         logger.info("Loaded deck from URI.");
                     } else {
                         logger.info(

@@ -39,8 +39,11 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const deckParts = readonly<DeckPart[]>(DECK_PART_ARR);
+
+        const store = useStore();
+
         const allCards = computed<Card[]>(() =>
-            deckService.getAllCards(useStore().state.deck.active)
+            deckService.getAllCards(store.state.deck.active)
         );
 
         return {

@@ -29,8 +29,10 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
+        const store = useStore();
+
         const copyLink = (): void => {
-            const deck = useStore().state.deck.active;
+            const deck = store.state.deck.active;
             const shareLink = deckUrlController.getShareLink(deck);
 
             navigator.clipboard

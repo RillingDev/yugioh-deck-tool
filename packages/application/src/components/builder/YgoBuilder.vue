@@ -42,7 +42,6 @@ import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
 import { BSidebar } from "bootstrap-vue";
-import { useEssentialDataLoaded } from "../../composition/state/loading";
 import { useStore } from "../../store/store";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
@@ -81,11 +80,13 @@ export default defineComponent({
             order: SortingOrder.DESC,
         });
 
-        const essentialDataLoaded = useEssentialDataLoaded();
+        const store = useStore();
 
-        const format = computed<Format | null>(
-            () => useStore().state.format.active
+        const essentialDataLoaded = computed<boolean>(
+            () => store.state.data.essentialDataLoaded
         );
+
+        const format = computed<Format | null>(() => store.state.format.active);
 
         const formatCards = computed<Card[]>(() => {
             // Required to ensure render after loading.

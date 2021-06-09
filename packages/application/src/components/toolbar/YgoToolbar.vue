@@ -96,7 +96,6 @@ import YgoExportDeckYdkeUrl from "./export/YgoExportDeckYdkeUrl.vue";
 import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
-import { useEssentialDataLoaded } from "../../composition/state/loading";
 import { useStore } from "../../store/store";
 
 export default defineComponent({
@@ -124,7 +123,9 @@ export default defineComponent({
     emits: [],
     setup(props, context) {
         const store = useStore();
-        const essentialDataLoaded = useEssentialDataLoaded();
+        const essentialDataLoaded = computed<boolean>(
+            () => store.state.data.essentialDataLoaded
+        );
 
         const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
 

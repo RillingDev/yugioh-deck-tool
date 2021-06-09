@@ -25,8 +25,10 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
+        const store = useStore();
+
         const copyList = (): void => {
-            const deck = useStore().state.deck.active;
+            const deck = store.state.deck.active;
             const deckList = deckExportService.toShareableText(deck);
 
             navigator.clipboard

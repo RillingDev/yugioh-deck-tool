@@ -66,7 +66,8 @@ export default defineComponent({
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);
 
-        const deck = computed<Deck>(() => useStore().state.deck.active);
+        const store = useStore();
+        const deck = computed<Deck>(() => store.state.deck.active);
         const hasMainDeckCards = computed<boolean>(
             () => deck.value.parts[DeckPart.MAIN].length > 0
         );

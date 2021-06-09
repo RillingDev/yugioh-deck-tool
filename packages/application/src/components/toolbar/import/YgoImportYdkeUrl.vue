@@ -52,6 +52,8 @@ export default defineComponent({
         const modal = ref<BModal>();
         const ydkeUrl = ref<string>("");
 
+        const store = useStore();
+
         const onInput = (): void => {
             let deck: Deck;
             try {
@@ -65,7 +67,7 @@ export default defineComponent({
                 );
                 return;
             }
-            useStore().commit(DECK_REPLACE, {
+            store.commit(DECK_REPLACE, {
                 deck,
             });
             showSuccess(

@@ -48,7 +48,6 @@ import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, readonly, ref } from "@vue/composition-api";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
-import { useEssentialDataLoaded } from "../../../composition/state/loading";
 import { useStore } from "../../../store/store";
 
 const deckRandomizationService =
@@ -78,9 +77,9 @@ export default defineComponent({
             sets: [],
         });
 
-        const format = computed<Format | null>(
-            () => useStore().state.format.active
-        );
+        const store = useStore();
+
+        const format = computed<Format | null>(() => store.state.format.active);
 
         const randomize = (): void => {
             const randomizedDeck = deckRandomizationService.randomize(
@@ -90,10 +89,12 @@ export default defineComponent({
                     format: format.value,
                 }
             );
-            useStore().commit(DECK_REPLACE, { deck: randomizedDeck });
+            store.commit(DECK_REPLACE, { deck: randomizedDeck });
         };
 
-        const essentialDataLoaded = useEssentialDataLoaded();
+        const essentialDataLoaded = computed<boolean>(
+            () => store.state.data.essentialDataLoaded
+        );
 
         return {
             strategy,

@@ -23,8 +23,10 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
+        const store = useStore();
+
         const downloadDeck = (): void => {
-            const deck = useStore().state.deck.active;
+            const deck = store.state.deck.active;
             const { fileContent, fileName } = deckFileService.toFile(deck);
             const file = new File([fileContent], fileName, {
                 type: DeckFileService.DECK_FILE_MIME_TYPE,

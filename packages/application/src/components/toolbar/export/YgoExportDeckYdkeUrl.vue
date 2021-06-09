@@ -28,8 +28,10 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
+        const store = useStore();
+
         const copyYdke = (): void => {
-            const deck = useStore().state.deck.active;
+            const deck = store.state.deck.active;
             const ydke = deckUriEncodingService.toUri(deck);
 
             navigator.clipboard

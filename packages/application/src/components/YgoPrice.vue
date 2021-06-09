@@ -66,8 +66,10 @@ export default defineComponent({
     },
     emits: [],
     setup(props, context) {
+        const store = useStore();
+
         const activeCurrency = computed<Currency>(
-            () => useStore().state.currency.active
+            () => store.state.currency.active
         );
 
         const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(

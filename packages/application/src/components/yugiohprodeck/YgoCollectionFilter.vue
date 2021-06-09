@@ -47,10 +47,12 @@ export default defineComponent({
     props: {},
     emits: ["change"],
     setup(props, context) {
+        const store = useStore();
+
         const cardCountFunction = computed<CardCountFunction | null>({
-            get: () => useStore().state.collection.cardCountFunction,
+            get: () => store.state.collection.cardCountFunction,
             set: (newCardCountFunction) =>
-                useStore().commit(SET_CARD_COUNT_FUNCTION, {
+                store.commit(SET_CARD_COUNT_FUNCTION, {
                     cardCountFunction: newCardCountFunction,
                 }),
         });

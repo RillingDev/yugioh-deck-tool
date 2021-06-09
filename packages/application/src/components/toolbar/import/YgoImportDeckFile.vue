@@ -31,13 +31,15 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
+        const store = useStore();
+
         const importDeckFile = async (file: File): Promise<ImportResult> => {
             const fileContent = await readFile(file);
             const result = deckFileService.fromFile({
                 fileContent,
                 fileName: file.name,
             });
-            useStore().commit(DECK_REPLACE, {
+            store.commit(DECK_REPLACE, {
                 deck: result.deck,
             });
 

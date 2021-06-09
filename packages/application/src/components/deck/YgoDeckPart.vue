@@ -91,8 +91,9 @@ export default defineComponent({
             () => DefaultDeckPartConfig[props.deckPart]
         );
 
+        const store = useStore();
         const cards = computed<Card[]>(
-            () => useStore().state.deck.active.parts[props.deckPart]
+            () => store.state.deck.active.parts[props.deckPart]
         );
         const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
         const deckPartStats = computed<string>(() => {
@@ -108,13 +109,13 @@ export default defineComponent({
         });
 
         const addCard = (card: Card, newIndex: number): void =>
-            useStore().commit(DECK_PART_CARDS_ADD, {
+            store.commit(DECK_PART_CARDS_ADD, {
                 deckPart: props.deckPart,
                 card,
                 newIndex,
             });
         const removeCard = (card: Card, oldIndex: number): void =>
-            useStore().commit(DECK_PART_CARDS_REMOVE, {
+            store.commit(DECK_PART_CARDS_REMOVE, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,
@@ -124,7 +125,7 @@ export default defineComponent({
             oldIndex: number,
             newIndex: number
         ): void =>
-            useStore().commit(DECK_PART_CARDS_REORDER, {
+            store.commit(DECK_PART_CARDS_REORDER, {
                 deckPart: props.deckPart,
                 card,
                 oldIndex,

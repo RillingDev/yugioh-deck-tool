@@ -27,10 +27,13 @@ export default defineComponent({
         const currencies = readonly<Currency[]>(
             Object.values(DEFAULT_CURRENCY_ARR)
         );
+
+        const store = useStore();
+
         const currency = computed<Currency>({
-            get: () => useStore().state.currency.active,
+            get: () => store.state.currency.active,
             set: (newCurrency) =>
-                useStore().commit(CURRENCY_UPDATE, {
+                store.commit(CURRENCY_UPDATE, {
                     currency: newCurrency,
                 }),
         });
