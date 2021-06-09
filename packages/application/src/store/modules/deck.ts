@@ -27,6 +27,10 @@ export const deckModule: Module<DeckState, AppState> = {
             active: deckService.createEmptyDeck(),
         };
     },
+    getters: {
+        isDeckEmpty: (state) =>
+            deckService.getAllCards(state.active).length === 0,
+    },
     mutations: {
         [DECK_NAME_UPDATE](state, payload: { name: string }) {
             state.active.name = payload.name;

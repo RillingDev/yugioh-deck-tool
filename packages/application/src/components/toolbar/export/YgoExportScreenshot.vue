@@ -1,19 +1,22 @@
 <template>
-    <BDropdownItemButton v-b-modal.deckScreenshot @click="() => screenshot()">
+    <BDropdownItemButton
+        v-b-modal.deckScreenshot
+        :disabled="deckEmpty"
+        @click="() => screenshot()"
+    >
         <span class="fas fa-image fas-in-button" aria-hidden="true"></span>
         To Screenshot
     </BDropdownItemButton>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import { getLogger } from "@yugioh-deck-tool/core";
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
     createScreenshot,
     downloadFile,
 } from "@yugioh-deck-tool/browser-common";
-import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 import {
     showError,
     showInfo,
@@ -28,7 +31,9 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const isDeckEmpty = useDeckEmpty();
+        const store = useStore();
+
+        const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
 
         const screenshot = (): void => {
             const deckEl = document.getElementById("deckToolDeck");
@@ -45,7 +50,7 @@ export default defineComponent({
             );
             createScreenshot(
                 deckEl,
-                useStore().state.deck.active.name ?? "Deck Screenshot",
+                store.state.deck.active.name ?? "Deck Screenshot",
                 {
                     scale: 2,
                     onClone: (doc) => {
@@ -71,7 +76,7 @@ export default defineComponent({
                 });
         };
 
-        return { isDeckEmpty, screenshot };
+        return { deckEmpty, screenshot };
     },
 });
 </script>

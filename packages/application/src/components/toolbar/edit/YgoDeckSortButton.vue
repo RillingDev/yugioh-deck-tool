@@ -1,15 +1,14 @@
 <template>
-    <BDropdownItemButton :disabled="isDeckEmpty" @click="() => sort()">
+    <BDropdownItemButton :disabled="deckEmpty" @click="() => sort()">
         <span class="fas fa-sort fas-in-button" aria-hidden="true"></span>
         Sort
     </BDropdownItemButton>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import { DECK_SORT } from "../../../store/modules/deck";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 import { useStore } from "../../../store/store";
 
 export default defineComponent({
@@ -17,10 +16,13 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const sort = (): void => useStore().commit(DECK_SORT);
-        const isDeckEmpty = useDeckEmpty();
+        const store = useStore();
 
-        return { isDeckEmpty, sort };
+        const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
+
+        const sort = (): void => store.commit(DECK_SORT);
+
+        return { deckEmpty, sort };
     },
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
     <a
-        :disabled="isDeckEmpty"
-        :class="{ disabled: isDeckEmpty }"
+        :disabled="deckEmpty"
+        :class="{ disabled: deckEmpty }"
         :href="buyLink"
         class="btn btn-primary"
         target="_blank"
@@ -20,7 +20,6 @@ import { computed, defineComponent } from "@vue/composition-api";
 import type { DeckExportService } from "@yugioh-deck-tool/core";
 import { TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../inversify.config";
-import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
 import { useStore } from "../../store/store";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
@@ -32,16 +31,18 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const isDeckEmpty = useDeckEmpty();
+        const store = useStore();
+
+        const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
 
         const buyLink = computed<string>(() => {
-            const deck = useStore().state.deck.active;
+            const deck = store.state.deck.active;
             return deckExportService
                 .toBuyLink(deck, "deck-builder", "YGOPRODeck")
                 .toString();
         });
 
-        return { isDeckEmpty, buyLink };
+        return { deckEmpty, buyLink };
     },
 });
 </script>

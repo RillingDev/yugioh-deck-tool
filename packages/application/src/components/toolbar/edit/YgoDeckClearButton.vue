@@ -1,5 +1,5 @@
 <template>
-    <BDropdownItemButton v-b-modal.clearDeck :disabled="isDeckEmpty">
+    <BDropdownItemButton v-b-modal.clearDeck :disabled="deckEmpty">
         <span class="fas fa-trash fas-in-button" aria-hidden="true"></span>
         Clear
         <BModal
@@ -14,10 +14,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import { DECK_CLEAR } from "../../../store/modules/deck";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
-import { useDeckEmpty } from "../../../composition/state/useDeckEmpty";
 import { useStore } from "../../../store/store";
 
 export default defineComponent({
@@ -28,10 +27,13 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
-        const clear = (): void => useStore().commit(DECK_CLEAR);
-        const isDeckEmpty = useDeckEmpty();
+        const store = useStore();
 
-        return { isDeckEmpty, clear };
+        const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
+
+        const clear = (): void => store.commit(DECK_CLEAR);
+
+        return { deckEmpty, clear };
     },
 });
 </script>

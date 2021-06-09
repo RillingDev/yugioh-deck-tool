@@ -19,7 +19,7 @@
             <BDropdown
                 id="deckExport"
                 variant="primary"
-                :disabled="!essentialDataLoaded || empty"
+                :disabled="!essentialDataLoaded || deckEmpty"
             >
                 <template #button-content>
                     <span
@@ -37,7 +37,7 @@
             <BDropdown
                 id="deckEdit"
                 variant="primary"
-                :disabled="!essentialDataLoaded || empty"
+                :disabled="!essentialDataLoaded || deckEmpty"
             >
                 <template #button-content>
                     <span
@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import { BDropdown, BDropdownDivider } from "bootstrap-vue";
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
@@ -96,8 +96,8 @@ import YgoExportDeckYdkeUrl from "./export/YgoExportDeckYdkeUrl.vue";
 import YgoExportDeckList from "./export/YgoExportDeckList.vue";
 import YgoExportShareLink from "./export/YgoExportShareLink.vue";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
-import { useDeckEmpty } from "../../composition/state/useDeckEmpty";
 import { useEssentialDataLoaded } from "../../composition/state/loading";
+import { useStore } from "../../store/store";
 
 export default defineComponent({
     components: {
@@ -123,10 +123,12 @@ export default defineComponent({
     props: {},
     emits: [],
     setup(props, context) {
+        const store = useStore();
         const essentialDataLoaded = useEssentialDataLoaded();
-        const empty = useDeckEmpty();
 
-        return { essentialDataLoaded, empty };
+        const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
+
+        return { essentialDataLoaded, deckEmpty };
     },
 });
 </script>
