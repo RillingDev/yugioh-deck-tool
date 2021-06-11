@@ -9,36 +9,24 @@ export type DraggableSpillEventData = any;
 export type DraggableMoveValidatorData = any;
 
 // This component prop is used to find the deck part of a component tree.
-export const DECK_PART_PROP = "deckPart";
-
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
-const findComponentParentMatching = (
-    el: Vue,
-    predicate: (current: Vue) => boolean
-): Vue | null => {
-    let current = el;
-    while (current.$parent != current.$root) {
-        if (predicate(current)) {
-            return current;
-        }
-        current = current.$parent;
-    }
-    return null;
+/**
+ * Contract: Draggable element drop zone MAY have the attribute 'data-deck-part-area'.
+ * If it does, the value MUST be one of {@link DeckPart}.
+ */
+export const findDeckPartForDraggableValidatorData = (
+    e: DraggableMoveValidatorData
+) => {
+    const targetEl: HTMLElement = e.to;
+    const areaMarker = targetEl.dataset["deckPartArea"];
+    return areaMarker != null ? (areaMarker as DeckPart) : null;
 };
-
-// Workaround-ish solution to allow fetching the target deck part of a a drag event.
-const findDeckPartForComponent = (el: Vue): DeckPart | null =>
-    findComponentParentMatching(
-        el,
-        (current) => current.$props[DECK_PART_PROP] != null
-    )?.$props[DECK_PART_PROP];
 
 export const createMoveInDeckPartValidator =
     (oldDeckPart: DeckPart) =>
     (e: DraggableMoveValidatorData): boolean => {
-        const target = e.relatedContext.component;
-        const newDeckPart = findDeckPartForComponent(target);
+        const newDeckPart = findDeckPartForDraggableValidatorData(e);
         if (newDeckPart == null) {
             return false;
         }
@@ -58,8 +46,7 @@ export const createMoveInDeckPartValidator =
 export const createMoveFromBuilderValidator =
     () =>
     (e: DraggableMoveValidatorData): boolean => {
-        const target = e.relatedContext.component;
-        const newDeckPart = findDeckPartForComponent(target);
+        const newDeckPart = findDeckPartForDraggableValidatorData(e);
         if (newDeckPart == null) {
             return false;
         }

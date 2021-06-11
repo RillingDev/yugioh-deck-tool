@@ -24,6 +24,7 @@
             :move="(e) => canMove(e)"
             :revert-on-spill="true"
             :animation="0"
+            :data-deck-part-area="deckPart"
             @change="(e) => onChange(e)"
             @start="() => disableTooltip()"
             @end="() => enableTooltip()"
@@ -56,10 +57,7 @@ import {
 } from "../../store/modules/deck";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 import type { DraggableChangeEventData } from "../../composition/dragging";
-import {
-    createMoveInDeckPartValidator,
-    DECK_PART_PROP,
-} from "../../composition/dragging";
+import { createMoveInDeckPartValidator } from "../../composition/dragging";
 import type { DeckController } from "../../controller/DeckController";
 import { useStore } from "../../store/store";
 
@@ -76,7 +74,7 @@ export default defineComponent({
         Draggable,
     },
     props: {
-        [DECK_PART_PROP]: {
+        deckPart: {
             required: true,
             type: String as PropType<DeckPart>,
         },
