@@ -68,7 +68,11 @@ import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
-import { createMoveFromBuilderValidator } from "../../composition/dragging";
+import type { DraggableMoveValidatorData } from "../../composition/dragging";
+import {
+    findCardForDraggableValidatorData,
+    findDeckPartForDraggableValidatorData,
+} from "../../composition/dragging";
 import { applicationContainer } from "../../inversify.config";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
 import { browserSupportsTouch } from "@yugioh-deck-tool/browser-common";
@@ -136,7 +140,17 @@ export default defineComponent({
             }
         };
 
-        const canMove = createMoveFromBuilderValidator();
+        const canMove = (e: DraggableMoveValidatorData): boolean => {
+            const card = findCardForDraggableValidatorData(e);
+            const newDeckPart = findDeckPartForDraggableValidatorData(e);
+            if (newDeckPart == null) {
+                return false;
+            }
+            const deck = store.state.deck.active;
+            const format = store.state.format.active;
+
+            return deckService.canAdd(deck, card, newDeckPart, format);
+        };
 
         return {
             limitedMatches,

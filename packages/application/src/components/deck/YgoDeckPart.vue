@@ -41,8 +41,17 @@
 </template>
 
 <script lang="ts">
-import type { Card, DeckPart, DeckPartConfig } from "@yugioh-deck-tool/core";
-import { DefaultDeckPartConfig, getLogger } from "@yugioh-deck-tool/core";
+import type {
+    Card,
+    DeckPart,
+    DeckPartConfig,
+    DeckService,
+} from "@yugioh-deck-tool/core";
+import {
+    DefaultDeckPartConfig,
+    getLogger,
+    TYPES,
+} from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import YgoPrice from "../YgoPrice.vue";
@@ -56,14 +65,21 @@ import {
     DECK_PART_CARDS_REORDER,
 } from "../../store/modules/deck";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
-import type { DraggableChangeEventData } from "../../composition/dragging";
-import { createMoveInDeckPartValidator } from "../../composition/dragging";
+import type {
+    DraggableChangeEventData,
+    DraggableMoveValidatorData,
+} from "../../composition/dragging";
+import {
+    findCardForDraggableValidatorData,
+    findDeckPartForDraggableValidatorData,
+} from "../../composition/dragging";
 import type { DeckController } from "../../controller/DeckController";
 import { useStore } from "../../store/store";
 
 const deckController = applicationContainer.get<DeckController>(
     APPLICATION_TYPES.DeckController
 );
+const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 const logger = getLogger("YgoDeckPart");
 
@@ -144,7 +160,24 @@ export default defineComponent({
                 logger.warn("Unexpected drag event type.", e);
             }
         };
-        const canMove = createMoveInDeckPartValidator(props.deckPart);
+        const canMove = (e: DraggableMoveValidatorData): boolean => {
+            const card = findCardForDraggableValidatorData(e);
+            const newDeckPart = findDeckPartForDraggableValidatorData(e);
+            if (newDeckPart == null) {
+                return false;
+            }
+            const oldDeckPart = props.deckPart;
+            const deck = store.state.deck.active;
+            const format = store.state.format.active;
+
+            return deckService.canMove(
+                deck,
+                card,
+                oldDeckPart,
+                newDeckPart,
+                format
+            );
+        };
 
         return {
             deckPartConfig,
