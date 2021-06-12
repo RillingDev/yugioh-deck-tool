@@ -27,8 +27,8 @@ import type { YgoprodeckController } from "../../controller/YgoprodeckController
 import type { YgoprodeckService } from "../../../../ygoprodeck/src/main";
 import { YGOPRODECK_TYPES } from "../../../../ygoprodeck/src/main";
 import { SET_CARD_COUNT_FUNCTION } from "../../store/modules/collection";
-import { startLoading, stopLoading } from "../../composition/state/loading";
 import { useStore } from "../../store/store";
+import { SET_LOADING } from "../../store/modules/data";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
     YGOPRODECK_TYPES.YgoprodeckService
@@ -76,7 +76,8 @@ export default defineComponent({
             );
         };
         const reload = (): void => {
-            startLoading()
+            Promise.resolve()
+                .then(() => store.commit(SET_LOADING, { loading: true }))
                 .then(() => loadCollection())
                 .then((loadedCollectionCardCountFunction) => {
                     cardCountFunction.value = loadedCollectionCardCountFunction;
@@ -90,7 +91,7 @@ export default defineComponent({
                         "deck-tool__portal"
                     );
                 })
-                .finally(() => stopLoading());
+                .finally(() => store.commit(SET_LOADING, { loading: false }));
         };
 
         return { checked, reload };

@@ -27,8 +27,7 @@ import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import type { DeckUrlController } from "./controller/DeckUrlController";
-import { startLoading, stopLoading } from "./composition/state/loading";
-import { ESSENTIAL_DATA_LOADED } from "./store/modules/data";
+import { ESSENTIAL_DATA_LOADED, SET_LOADING } from "./store/modules/data";
 import { useStore } from "./store/store";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
@@ -54,8 +53,9 @@ export default defineComponent({
 
         const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
-        onMounted(() =>
-            startLoading()
+        onMounted(() => {
+            Promise.resolve()
+                .then(() => store.commit(SET_LOADING, { loading: true }))
                 .then(() => cardDatabase.prepareAll())
                 .then(() => store.commit(ESSENTIAL_DATA_LOADED))
                 .then(() => {
@@ -82,8 +82,8 @@ export default defineComponent({
                         "deck-tool__portal"
                     );
                 })
-                .finally(() => stopLoading())
-        );
+                .finally(() => store.commit(SET_LOADING, { loading: false }));
+        });
 
         return {
             loading,
