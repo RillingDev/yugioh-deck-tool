@@ -1,6 +1,10 @@
 <template>
     <div class="builder_matches">
-        <ol v-show="matches.length > 0" class="builder-matches__list">
+        <ol
+            v-show="matches.length > 0"
+            class="builder-matches__list"
+            @scroll.passive="(e) => scrollHandler(e)"
+        >
             <li
                 v-for="card in limitedMatches"
                 :key="card.passcode"
@@ -65,7 +69,7 @@ import type {
 } from "@yugioh-deck-tool/core";
 import { CardTypeCategory, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, watch } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 import type { DraggableMoveValidatorData } from "../../composition/dragging";
@@ -77,12 +81,11 @@ import { applicationContainer } from "../../inversify.config";
 import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
 import { browserSupportsTouch } from "@yugioh-deck-tool/browser-common";
 import { showSuccess } from "../../composition/feedback";
+import { useInfiniteScrolling } from "../../composition/infiniteScrolling";
 import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 import { useStore } from "../../store/store";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
-
-const CARD_DISPLAY_LIMIT = 50;
 
 export default defineComponent({
     components: {
@@ -103,12 +106,22 @@ export default defineComponent({
     setup(props, context) {
         const store = useStore();
 
+        const { limitRef, resetLimit, scrollHandler } = useInfiniteScrolling(
+            50,
+            25,
+            () => props.matches.length
+        );
+        watch(
+            () => props.matches,
+            () => resetLimit()
+        );
+
         const cardCountFunction = computed<CardCountFunction | null>(
             () => store.state.collection.cardCountFunction
         );
 
         const limitedMatches = computed<Card[]>(() =>
-            props.matches.slice(0, CARD_DISPLAY_LIMIT)
+            props.matches.slice(0, limitRef.value)
         );
 
         const getTypeText = (card: Card): string =>
@@ -162,6 +175,7 @@ export default defineComponent({
             isTouchDevice,
             enableTooltip,
             disableTooltip,
+            scrollHandler,
         };
     },
 });
