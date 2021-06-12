@@ -1,8 +1,8 @@
-import { debounce } from "lodash";
+import { throttle } from "lodash";
 import type { Ref } from "@vue/composition-api";
 import { ref } from "@vue/composition-api";
 
-const SCROLL_DEBOUNCE_TIMEOUT = 100;
+const SCROLL_THROTTLE_TIMEOUT = 100;
 
 /**
  * Primitive infinite scroll utility.
@@ -21,7 +21,7 @@ export const useInfiniteScrolling = (
 } => {
     const limitRef = ref<number>(initialLimit);
 
-    const scrollHandler = debounce((e: Event) => {
+    const scrollHandler = throttle((e: Event) => {
         const target = e.target as HTMLElement;
 
         const distanceToBottomTrigger = target.clientHeight / 2;
@@ -34,7 +34,7 @@ export const useInfiniteScrolling = (
         ) {
             limitRef.value = limitRef.value + increment;
         }
-    }, SCROLL_DEBOUNCE_TIMEOUT);
+    }, SCROLL_THROTTLE_TIMEOUT);
 
     const resetLimit = (): void => {
         limitRef.value = initialLimit;
