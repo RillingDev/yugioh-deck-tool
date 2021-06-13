@@ -1,6 +1,6 @@
 import { deepFreeze } from "lightdash";
 
-interface BanState {
+export interface BanState {
     readonly name: string;
     readonly count: number;
 }
@@ -12,6 +12,7 @@ const DefaultBanState = {
     BANNED: { name: "Banned", count: 0 },
 } as const;
 deepFreeze(DefaultBanState);
+export { DefaultBanState };
 
 const DEFAULT_BAN_STATE_ARR = [
     DefaultBanState.UNLIMITED,
@@ -20,5 +21,4 @@ const DEFAULT_BAN_STATE_ARR = [
     DefaultBanState.BANNED,
 ];
 deepFreeze(DEFAULT_BAN_STATE_ARR);
-
-export { BanState, DefaultBanState, DEFAULT_BAN_STATE_ARR };
+export { DEFAULT_BAN_STATE_ARR };

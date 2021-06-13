@@ -1,7 +1,7 @@
 import { deepFreeze } from "lightdash";
 import { DeckPart } from "./DeckPart";
 
-interface DeckPartConfig {
+export interface DeckPartConfig {
     readonly name: string;
     readonly indicator: string;
     readonly min: number;
@@ -33,5 +33,4 @@ const DefaultDeckPartConfig = {
     },
 } as const;
 deepFreeze(DefaultDeckPartConfig);
-
-export { DeckPartConfig, DefaultDeckPartConfig };
+export { DefaultDeckPartConfig };

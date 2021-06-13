@@ -1,6 +1,6 @@
 import { deepFreeze } from "lightdash";
 
-interface Currency {
+export interface Currency {
     /**
      * See {@link Intl.NumberFormatOptions#currency}.
      */
@@ -74,6 +74,7 @@ const DefaultCurrency = {
     },
 } as const;
 deepFreeze(DefaultCurrency);
+export { DefaultCurrency };
 
 const DEFAULT_CURRENCY_ARR: Currency[] = [
     DefaultCurrency.USD,
@@ -87,5 +88,4 @@ const DEFAULT_CURRENCY_ARR: Currency[] = [
     DefaultCurrency.IDR,
 ];
 deepFreeze(DEFAULT_CURRENCY_ARR);
-
-export { Currency, DEFAULT_CURRENCY_ARR, DefaultCurrency };
+export { DEFAULT_CURRENCY_ARR };
