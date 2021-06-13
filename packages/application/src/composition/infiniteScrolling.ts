@@ -1,25 +1,30 @@
 import { throttle } from "lodash";
 import type { Ref } from "@vue/composition-api";
-import { ref } from "@vue/composition-api";
+import { computed, ref, watch } from "@vue/composition-api";
 
 const SCROLL_THROTTLE_TIMEOUT = 100;
 
 /**
  * Primitive infinite scroll utility.
- * Provides a reactive limit that is increased once a scroll event is triggered that moves is nearing the bottom end of the target element.
- * Consumer should use limit to dynamically render more items upon it being increased.
- * A callback to reset the limit is provided if the consumer wishes to reset the limit e.g. after available list items change.
+ * Provides a reactive limited list that grows larger once a scroll event is triggered
+ * that moves is nearing the bottom end of the target element.
+ *
+ * Scroll event must be bound to the container hosting the list.
+ * Consumer should use limited array return value to dynamically render more items upon it being increased.
  */
-export const useInfiniteScrolling = (
+export const useInfiniteScrolling = <T>(
+    fullArr: Ref<ReadonlyArray<T>>,
     initialLimit: number,
-    increment: number,
-    maxLimitSupplier: () => number
+    increment: number
 ): {
-    limitRef: Ref<number>;
     scrollHandler: (e: Event) => void;
-    resetLimit: () => void;
+    limitedArr: Readonly<Ref<ReadonlyArray<T>>>;
 } => {
     const limitRef = ref<number>(initialLimit);
+
+    const limitedArr = computed<ReadonlyArray<T>>(() =>
+        fullArr.value.slice(0, limitRef.value)
+    );
 
     const scrollHandler = throttle((e: Event) => {
         const target = e.target as HTMLElement;
@@ -28,17 +33,20 @@ export const useInfiniteScrolling = (
         const distanceToBottom =
             target.scrollHeight - (target.scrollTop + target.clientHeight);
 
-        if (
-            distanceToBottom < distanceToBottomTrigger &&
-            limitRef.value < maxLimitSupplier()
-        ) {
-            limitRef.value = limitRef.value + increment;
+        if (distanceToBottom < distanceToBottomTrigger) {
+            limitRef.value = Math.min(
+                limitRef.value + increment,
+                fullArr.value.length
+            );
         }
     }, SCROLL_THROTTLE_TIMEOUT);
 
-    const resetLimit = (): void => {
-        limitRef.value = initialLimit;
-    };
+    watch(
+        () => fullArr.value,
+        () => {
+            limitRef.value = initialLimit;
+        }
+    );
 
-    return { limitRef, scrollHandler, resetLimit };
+    return { scrollHandler, limitedArr };
 };

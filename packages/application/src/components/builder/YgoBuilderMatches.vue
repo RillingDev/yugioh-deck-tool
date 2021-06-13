@@ -69,7 +69,7 @@ import type {
 } from "@yugioh-deck-tool/core";
 import { CardTypeCategory, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent, watch } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import YgoCard from "../YgoCard.vue";
 import Draggable from "vuedraggable";
 import type { DraggableMoveValidatorData } from "../../composition/dragging";
@@ -106,22 +106,15 @@ export default defineComponent({
     setup(props, context) {
         const store = useStore();
 
-        const { limitRef, resetLimit, scrollHandler } = useInfiniteScrolling(
-            50,
-            25,
-            () => props.matches.length
-        );
-        watch(
-            () => props.matches,
-            () => resetLimit()
-        );
+        const { limitedArr: limitedMatches, scrollHandler } =
+            useInfiniteScrolling(
+                computed(() => props.matches),
+                50,
+                25
+            );
 
         const cardCountFunction = computed<CardCountFunction | null>(
             () => store.state.collection.cardCountFunction
-        );
-
-        const limitedMatches = computed<Card[]>(() =>
-            props.matches.slice(0, limitRef.value)
         );
 
         const getTypeText = (card: Card): string =>
