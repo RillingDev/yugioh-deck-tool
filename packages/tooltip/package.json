@@ -1,6 +1,6 @@
 {
     "name": "@yugioh-deck-tool/tooltip",
-    "version": "5.1.0",
+    "version": "5.2.0",
     "main": "./src/main.ts",
     "private": true,
     "scripts": {
@@ -9,9 +9,9 @@
         "test": "jest"
     },
     "dependencies": {
-        "@yugioh-deck-tool/browser-common": "5.1.0",
-        "@yugioh-deck-tool/core": "5.1.0",
-        "@yugioh-deck-tool/ygoprodeck": "5.1.0",
+        "@yugioh-deck-tool/browser-common": "^5.2.0",
+        "@yugioh-deck-tool/core": "^5.2.0",
+        "@yugioh-deck-tool/ygoprodeck": "^5.2.0",
         "inversify": "^5.1.1",
         "lodash": "^4.17.21",
         "reflect-metadata": "^0.1.13",

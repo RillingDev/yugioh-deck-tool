@@ -1,6 +1,6 @@
 {
     "name": "@yugioh-deck-tool/browser-common",
-    "version": "5.1.0",
+    "version": "5.2.0",
     "main": "./src/main.ts",
     "private": true,
     "scripts": {
@@ -9,7 +9,7 @@
         "test": "jest"
     },
     "dependencies": {
-        "@yugioh-deck-tool/core": "5.1.0",
+        "@yugioh-deck-tool/core": "^5.2.0",
         "html2canvas": "^1.0.0-rc.7",
         "inversify": "^5.1.1"
     },
