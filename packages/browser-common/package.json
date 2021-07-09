@@ -10,15 +10,14 @@
     },
     "dependencies": {
         "@yugioh-deck-tool/core": "^5.2.0",
-        "html2canvas": "^1.0.0-rc.7",
+        "html2canvas": "^1.0.0",
         "inversify": "^5.1.1"
     },
     "peerDependencies": {
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
-        "@types/html2canvas": "0.0.36",
-        "@types/jest": "^26.0.19",
+        "@types/jest": "^27.0.0",
         "@types/webpack-env": "^1.16.0",
         "@typescript-eslint/eslint-plugin": "^4.25.0",
         "@typescript-eslint/parser": "^4.25.0",
@@ -26,9 +25,9 @@
         "eslint-config-prettier": "^8.1.0",
         "eslint-plugin-import": "^2.22.3",
         "eslint-plugin-prettier": "^3.4.0",
-        "jest": "^26.6.3",
+        "jest": "^27.0.6",
         "prettier": "^2.3.0",
-        "ts-jest": "^26.5.2",
+        "ts-jest": "^27.0.3",
         "ts-mockito": "^2.6.1",
         "typescript": "^4.3.2"
     }
