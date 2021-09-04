@@ -24,7 +24,7 @@
         "eslint": "^7.27.0",
         "eslint-config-prettier": "^8.1.0",
         "eslint-plugin-import": "^2.22.3",
-        "eslint-plugin-prettier": "^3.4.0",
+        "eslint-plugin-prettier": "^4.0.0",
         "jest": "^27.0.6",
         "prettier": "^2.3.0",
         "ts-jest": "^27.0.3",
