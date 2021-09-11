@@ -11,6 +11,14 @@ export interface ApplicationInstance {
      * Get a copy of the current deck.
      */
     readonly getDeck: () => ExternalDeck;
+
+    /**
+     * Registers an event handler.
+     *
+     * Supported events:
+     * - `change` - Fired if the current deck changes in any way.
+     */
+    readonly on: (event: string, callback: Callback) => void;
 }
 
 /**
@@ -32,6 +40,8 @@ export interface ExternalCard {
     readonly passcode: string;
     readonly name: string;
 }
+
+export type Callback = () => void;
 
 declare global {
     interface Window {
