@@ -25,11 +25,11 @@ export interface ApplicationInstance {
  * Version of {@link Deck} modified to only export required data with a stable interface.
  */
 export interface ExternalDeck {
-    name: string | null;
-    parts: {
-        main: ExternalCard[];
-        extra: ExternalCard[];
-        side: ExternalCard[];
+    readonly name: string | null;
+    readonly parts: {
+        readonly main: ReadonlyArray<ExternalCard>;
+        readonly extra: ReadonlyArray<ExternalCard>;
+        readonly side: ReadonlyArray<ExternalCard>;
     };
 }
 
