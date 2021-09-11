@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import Vue from "vue";
 import VueCompositionApi from "@vue/composition-api";
+import { bindApplicationApi } from "./api";
 import App from "./App.vue";
 import { store } from "./store/store";
 import "./styles/main.scss";
@@ -15,4 +16,6 @@ Vue.use(VBTogglePlugin);
 new Vue({
     store,
     render: (h) => h(App),
-}).$mount("#deckToolApplication");
+})
+    .$mount("#deckToolApplication")
+    .$nextTick(() => bindApplicationApi());
