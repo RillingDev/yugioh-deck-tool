@@ -1,19 +1,20 @@
-import { tooltipContainer } from "../inversify.config";
 import type { EnvironmentConfig } from "@yugioh-deck-tool/core";
 import { Environment, getLogger, TYPES } from "@yugioh-deck-tool/core";
+import type { YgoprodeckService } from "@yugioh-deck-tool/ygoprodeck";
+import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
+import type { Instance } from "tippy.js";
+import { delegate } from "tippy.js";
+import type { TooltipInstance } from "../api";
+import type { TooltipController } from "../controller/TooltipController";
+import { tooltipContainer } from "../inversify.config";
 
 import { TOOLTIP_TYPES } from "../types";
+import { bindReferenceLink } from "./bindReferenceLink";
 import {
     createErrorTooltip,
     createLoadingTooltip,
     createTooltipElement,
 } from "./createTooltipElement";
-import { bindReferenceLink } from "./bindReferenceLink";
-import type { Instance } from "tippy.js";
-import { delegate } from "tippy.js";
-import type { TooltipController } from "../controller/TooltipController";
-import type { YgoprodeckService } from "@yugioh-deck-tool/ygoprodeck";
-import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
 
 const tooltipController = tooltipContainer.get<TooltipController>(
     TOOLTIP_TYPES.TooltipController
@@ -60,11 +61,6 @@ const showTooltip = (
             logger.error("Error while loading card.", err);
         });
 };
-
-export interface TooltipInstance {
-    readonly disable: () => void;
-    readonly enable: () => void;
-}
 
 export const bindTooltipHandlers = (context: HTMLElement): TooltipInstance => {
     const delegateInstance = delegate(context, {

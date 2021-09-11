@@ -41,6 +41,8 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import type {
     Card,
     DeckPart,
@@ -52,19 +54,7 @@ import {
     getLogger,
     TYPES,
 } from "@yugioh-deck-tool/core";
-import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent } from "@vue/composition-api";
-import YgoPrice from "../YgoPrice.vue";
-import YgoCard from "../YgoCard.vue";
-import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import Draggable from "vuedraggable";
-import {
-    DECK_PART_CARDS_ADD,
-    DECK_PART_CARDS_REMOVE,
-    DECK_PART_CARDS_REORDER,
-} from "../../store/modules/deck";
-import { disableTooltip, enableTooltip } from "../../../../tooltip/src/main";
 import type {
     DraggableChangeEventData,
     DraggableMoveValidatorData,
@@ -73,8 +63,18 @@ import {
     findCardForDraggableValidatorData,
     findDeckPartForDraggableValidatorData,
 } from "../../composition/dragging";
+import { useTooltip } from "../../composition/tooltip";
 import type { DeckController } from "../../controller/DeckController";
+import { applicationContainer } from "../../inversify.config";
+import {
+    DECK_PART_CARDS_ADD,
+    DECK_PART_CARDS_REMOVE,
+    DECK_PART_CARDS_REORDER,
+} from "../../store/modules/deck";
 import { useStore } from "../../store/store";
+import { APPLICATION_TYPES } from "../../types";
+import YgoCard from "../YgoCard.vue";
+import YgoPrice from "../YgoPrice.vue";
 
 const deckController = applicationContainer.get<DeckController>(
     APPLICATION_TYPES.DeckController
@@ -100,7 +100,7 @@ export default defineComponent({
         },
     },
     emits: [],
-    setup(props, context) {
+    setup(props) {
         const deckPartConfig = computed<DeckPartConfig>(
             () => DefaultDeckPartConfig[props.deckPart]
         );
@@ -178,6 +178,8 @@ export default defineComponent({
                 format
             );
         };
+
+        const { disableTooltip, enableTooltip } = useTooltip();
 
         return {
             deckPartConfig,
