@@ -126,6 +126,48 @@ describe("FilterService", () => {
             });
         });
 
+        describe("description", () => {
+            it("filters by description", () => {
+                const card1 = createCard({
+                    passcode: "123",
+                    description: "foo",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                    description: "bar",
+                });
+
+                when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
+                when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+
+                expect(
+                    filterService.filter([card1, card2], {
+                        description: "fo",
+                    })
+                ).toEqual([card1]);
+            });
+
+            it("ignoring case", () => {
+                const card1 = createCard({
+                    passcode: "123",
+                    description: "foo",
+                });
+                const card2 = createCard({
+                    passcode: "789",
+                    description: "bar",
+                });
+
+                when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
+                when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+
+                expect(
+                    filterService.filter([card1, card2], {
+                        description: "fO",
+                    })
+                ).toEqual([card1]);
+            });
+        });
+
         it("filters by type category", () => {
             const card1 = createCard({
                 passcode: "123",

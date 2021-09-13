@@ -69,7 +69,7 @@ export default defineComponent({
         },
     },
     emits: [],
-    setup(props, context) {
+    setup() {
         // We have to init all properties even if they are optional, because otherwise vue cant listen to changes.
         const filter = reactive<CardFilter>(
             filterService.createDefaultFilter()

@@ -4,8 +4,19 @@
             <input
                 v-model="internalFilter.name"
                 class="form-control"
-                placeholder="Search"
-                title="Search"
+                placeholder="Card Name"
+                title="Name"
+                type="search"
+                @input="() => onFilterChanged()"
+            />
+        </div>
+
+        <div v-if="isFieldVisible('description')" class="form-group">
+            <input
+                v-model="internalFilter.description"
+                class="form-control"
+                placeholder="Card Description/Effect"
+                title="Description/Effect"
                 type="search"
                 @input="() => onFilterChanged()"
             />

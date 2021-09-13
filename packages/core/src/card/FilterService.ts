@@ -1,15 +1,15 @@
 import { inject, injectable } from "inversify";
-import type { Card } from "./Card";
-import type { CardSet } from "./set/CardSet";
-import type { Format } from "./format/Format";
-import type { CardType } from "./type/CardType";
 import { intersection, isEmpty } from "lodash";
-import type { BanState } from "./banlist/BanState";
-import { CardService } from "./CardService";
 import { TYPES } from "../types";
-import type { CardTypeCategory } from "./type/CardTypeCategory";
 import { BanlistService } from "./banlist/BanlistService";
+import type { BanState } from "./banlist/BanState";
+import type { Card } from "./Card";
 import type { CardPredicate } from "./CardPredicateService";
+import { CardService } from "./CardService";
+import type { Format } from "./format/Format";
+import type { CardSet } from "./set/CardSet";
+import type { CardType } from "./type/CardType";
+import type { CardTypeCategory } from "./type/CardTypeCategory";
 
 export type CardFilter = Partial<{
     /**
@@ -23,6 +23,11 @@ export type CardFilter = Partial<{
      * Card name (sub)string matcher.
      */
     name: string | null;
+
+    /**
+     * Card description/effect substring matcher.
+     */
+    description: string | null;
 
     /**
      * This can be used when wanting only type-category accuracy.
@@ -83,12 +88,22 @@ export class FilterService {
 
             if (
                 filter.name != null &&
-                filter.name !== "" &&
+                filter.name.length > 0 &&
                 !this.#cardService
                     .getAllNames(card)
                     .some((name) =>
                         name.toLowerCase().includes(filter.name!.toLowerCase())
                     )
+            ) {
+                return false;
+            }
+
+            if (
+                filter.description != null &&
+                filter.description.length > 0 &&
+                !card.description
+                    .toLowerCase()
+                    .includes(filter.description.toLowerCase())
             ) {
                 return false;
             }
@@ -171,6 +186,7 @@ export class FilterService {
             customPredicates: [],
 
             name: null,
+            description: null,
 
             typeCategory: null,
             type: null,
