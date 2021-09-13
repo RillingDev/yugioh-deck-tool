@@ -40,7 +40,7 @@ import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent, reactive, ref } from "@vue/composition-api";
+import { computed, defineComponent, ref } from "@vue/composition-api";
 import { BSidebar } from "bootstrap-vue";
 import { useStore } from "../../store/store";
 
@@ -70,10 +70,7 @@ export default defineComponent({
     },
     emits: [],
     setup() {
-        // We have to init all properties even if they are optional, because otherwise vue cant listen to changes.
-        const filter = reactive<CardFilter>(
-            filterService.createDefaultFilter()
-        );
+        const filter = ref<CardFilter>(filterService.createDefaultFilter());
 
         const sortingOptions = ref<SortingOptions>({
             strategy: SortingStrategy.DEFAULT,
@@ -96,7 +93,7 @@ export default defineComponent({
             return filterService.filter(cardDatabase.getCards(), {
                 customPredicates: [
                     cardPredicateService.createAddableInAtLeastOneDeckPartCardPredicate(),
-                    ...(filter.customPredicates ?? []),
+                    ...(filter.value.customPredicates ?? []),
                     cardPredicateService.createUniqueByNameCardPredicate(),
                 ],
                 format: format.value,
@@ -104,7 +101,7 @@ export default defineComponent({
         });
         const filteredCards = computed<Card[]>(() => {
             const filtered = filterService.filter(formatCards.value, {
-                ...filter,
+                ...filter.value,
                 format: format.value,
             });
             return sortingService.sort(filtered, sortingOptions.value);

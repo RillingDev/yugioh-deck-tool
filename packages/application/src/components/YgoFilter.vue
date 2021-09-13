@@ -199,6 +199,7 @@ import {
     readonly,
     watch,
 } from "@vue/composition-api";
+import { clone } from "lodash";
 
 import VSelect from "vue-select";
 import { applicationContainer } from "../inversify.config";
@@ -258,7 +259,7 @@ export default defineComponent({
             Object.values(CardTypeCategory)
         );
 
-        const internalFilter = reactive<CardFilter>(props.filter);
+        const internalFilter = reactive<CardFilter>(clone(props.filter));
 
         const sets = computed<CardSet[]>(() => cardDatabase.getSets());
         const archetypes = computed<string[]>(() =>
@@ -316,13 +317,14 @@ export default defineComponent({
         const resetFilter = (): void => {
             cardCountFunction.value = null;
             Object.assign(internalFilter, filterService.createDefaultFilter());
+            onFilterChanged();
         };
 
         const isFieldVisible = (fieldName: string): boolean =>
             props.showOnly == null || props.showOnly.includes(fieldName);
 
         const onFilterChanged = (): void =>
-            context.emit("change", internalFilter);
+            context.emit("change", clone(internalFilter));
 
         const onCollectionFilterChange = (): void => {
             // TODO use composition API instead of manual event handling + assignment
