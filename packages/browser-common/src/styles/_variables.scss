@@ -43,13 +43,13 @@ $colors: (
     "gray-dark": $gray-800,
 );
 
-$color-deck-part-main: #b97b51;
-$color-deck-part-extra: #8078a8;
-$color-deck-part-side: #728e56;
+$color-deck-part-main: #9f653d;
+$color-deck-part-extra: #756aaa;
+$color-deck-part-side: #628045;
 
 $color-vendor-tcgplayer: #0e5b93;
 $color-vendor-cardmarket: #012169;
-$color-vendor-coolstuffinc: #41bfc3;
+$color-vendor-coolstuffinc: #2fccd0;
 
 $primary: $color-deck-part-main;
 $secondary: color.adjust($color-deck-part-main, $lightness: -13.25%);
