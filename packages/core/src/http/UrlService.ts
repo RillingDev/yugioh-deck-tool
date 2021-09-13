@@ -9,7 +9,7 @@ export class UrlService {
      * @param urlB Second URL.
      * @return If they have the same URL.
      */
-    public hasSameOrigin(urlA: string, urlB: string): boolean {
+    hasSameOrigin(urlA: string, urlB: string): boolean {
         return new URL(urlA).origin === new URL(urlB).origin;
     }
 
@@ -19,7 +19,7 @@ export class UrlService {
      * @param url URL to check.
      * @return File name or empty string.
      */
-    public getFileName(url: string): string {
+    getFileName(url: string): string {
         const pathname = new URL(url).pathname;
         if (!pathname.includes("/")) {
             return "";

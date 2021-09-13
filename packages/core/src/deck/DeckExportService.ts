@@ -45,7 +45,7 @@ export class DeckExportService {
      * @param deck Deck to create the text for.
      * @return Text form of the deck.
      */
-    public toShareableText(deck: Deck): string {
+    toShareableText(deck: Deck): string {
         const result: string[] = [];
         for (const deckPart of DECK_PART_ARR) {
             const cards = deck.parts[deckPart];
@@ -53,7 +53,7 @@ export class DeckExportService {
             if (deckPart === DeckPart.MAIN) {
                 for (const typeCategory of Object.values(CardTypeCategory)) {
                     result.push(
-                        ...this.createCardList(
+                        ...this.#createCardList(
                             typeCategory,
                             this.#filterService.filter(cards, {
                                 typeCategory: typeCategory,
@@ -63,7 +63,7 @@ export class DeckExportService {
                 }
             } else {
                 result.push(
-                    ...this.createCardList(
+                    ...this.#createCardList(
                         DefaultDeckPartConfig[deckPart].name,
                         cards
                     )
@@ -73,7 +73,7 @@ export class DeckExportService {
         return result.join("\n");
     }
 
-    private createCardList(sectionName: string, cards: Card[]): string[] {
+    #createCardList(sectionName: string, cards: Card[]): string[] {
         if (cards.length === 0) {
             return [];
         }
@@ -93,7 +93,7 @@ export class DeckExportService {
      * @param affiliateSource Tcgplayer.com affiliate source name.
      * @return Buy link.
      */
-    public toBuyLink(
+    toBuyLink(
         deck: Deck,
         affiliateMedium: string,
         affiliateSource: string

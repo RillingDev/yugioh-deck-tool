@@ -101,10 +101,7 @@ export class DeckRandomizationService {
      * @param filter Filter to apply to card pool before randomization (e.g. a certain format).
      * @return Randomized deck.
      */
-    public randomize(
-        strategy: RandomizationStrategy,
-        filter?: CardFilter
-    ): Deck {
+    randomize(strategy: RandomizationStrategy, filter?: CardFilter): Deck {
         const deck = this.#deckService.createEmptyDeck();
         let cards = this.#cardDatabase.getCards();
         if (filter != null) {
@@ -114,11 +111,11 @@ export class DeckRandomizationService {
         const primaryPools: Card[][] = [];
         const secondaryPool: Card[] = cards;
 
-        const archetypeCount = this.getArchetypeCount(strategy);
+        const archetypeCount = this.#getArchetypeCount(strategy);
         const isArchetypeStrategy = archetypeCount !== 0;
         if (isArchetypeStrategy) {
             primaryPools.push(
-                ...this.getRandomArchetypeCardPools(cards, archetypeCount)
+                ...this.#getRandomArchetypeCardPools(cards, archetypeCount)
             );
         }
 
@@ -127,10 +124,10 @@ export class DeckRandomizationService {
             for (const primaryPool of primaryPools) {
                 let cardsPerPool = 0;
                 if (isArchetypeStrategy) {
-                    cardsPerPool = this.getCardsPerArchetypeCount(strategy);
+                    cardsPerPool = this.#getCardsPerArchetypeCount(strategy);
                 }
 
-                this.addCards(
+                this.#addCards(
                     deck,
                     deckPart,
                     format,
@@ -141,7 +138,7 @@ export class DeckRandomizationService {
                 );
             }
 
-            this.addCards(
+            this.#addCards(
                 deck,
                 deckPart,
                 format,
@@ -151,11 +148,11 @@ export class DeckRandomizationService {
                 null
             );
         }
-        deck.name = this.createName(deck);
+        deck.name = this.#createName(deck);
         return this.#deckService.sort(deck);
     }
 
-    private getRandomArchetypeCardPools(
+    #getRandomArchetypeCardPools(
         cards: Card[],
         archetypeCount: number
     ): Card[][] {
@@ -187,7 +184,7 @@ export class DeckRandomizationService {
      * @param preferPlaySet If higher counts of cards should be preferred.
      * @param limit Optional limit of how many cards should be added. Note that is only a soft limit,
      */
-    private addCards(
+    #addCards(
         deck: Deck,
         deckPart: DeckPart,
         format: Format | null,
@@ -198,7 +195,7 @@ export class DeckRandomizationService {
     ): void {
         const deckPartCards = deck.parts[deckPart];
         const initialLength = deckPartCards.length;
-        const deckPartLimit = this.getDeckPartLimit(deckPart, strategy);
+        const deckPartLimit = this.#getDeckPartLimit(deckPart, strategy);
         for (const card of shuffle(pool)) {
             // If we reached the deck part limit: break, skipping all other cards in the pool
             if (deckPartCards.length >= deckPartLimit) {
@@ -236,7 +233,7 @@ export class DeckRandomizationService {
                 }
             }
 
-            const randomCardCount = this.getRandomCardCount(
+            const randomCardCount = this.#getRandomCardCount(
                 strategy,
                 preferPlaySet
             );
@@ -250,7 +247,7 @@ export class DeckRandomizationService {
         }
     }
 
-    private getArchetypeCount(strategy: RandomizationStrategy): number {
+    #getArchetypeCount(strategy: RandomizationStrategy): number {
         if (strategy === RandomizationStrategy.ARCHETYPE_1) {
             return 1;
         }
@@ -263,11 +260,11 @@ export class DeckRandomizationService {
         return 0;
     }
 
-    private getCardsPerArchetypeCount(strategy: RandomizationStrategy): number {
-        return Math.ceil(30 / this.getArchetypeCount(strategy));
+    #getCardsPerArchetypeCount(strategy: RandomizationStrategy): number {
+        return Math.ceil(30 / this.#getArchetypeCount(strategy));
     }
 
-    private getDeckPartLimit(
+    #getDeckPartLimit(
         deckPart: DeckPart,
         strategy: RandomizationStrategy
     ): number {
@@ -281,7 +278,7 @@ export class DeckRandomizationService {
         return DefaultDeckPartConfig[deckPart].recommended;
     }
 
-    private getRandomCardCount(
+    #getRandomCardCount(
         strategy: RandomizationStrategy,
         preferPlaySet: boolean
     ): number {
@@ -308,7 +305,7 @@ export class DeckRandomizationService {
         return 1;
     }
 
-    private createName(deck: Deck): string {
+    #createName(deck: Deck): string {
         const countedCards = this.#cardService.countByCard([
             ...deck.parts[DeckPart.MAIN],
             ...deck.parts[DeckPart.EXTRA],

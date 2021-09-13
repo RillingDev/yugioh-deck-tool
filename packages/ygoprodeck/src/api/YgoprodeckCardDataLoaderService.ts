@@ -24,7 +24,7 @@ export class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         this.#ygoprodeckApiService = ygoprodeckApiService;
     }
 
-    public async getCard(
+    async getCard(
         cardKey: string,
         findCardBy: FindCardBy
     ): Promise<UnlinkedCard | null> {
@@ -44,22 +44,22 @@ export class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
         }
     }
 
-    public async getAllCards(): Promise<UnlinkedCard[]> {
+    async getAllCards(): Promise<UnlinkedCard[]> {
         return this.#ygoprodeckApiService.getCards({
             format: null,
             includeAliased: true,
         });
     }
 
-    public async getAllCardSets(): Promise<CardSet[]> {
+    async getAllCardSets(): Promise<CardSet[]> {
         return this.#ygoprodeckApiService.getCardSets();
     }
 
-    public async getCardValues(): Promise<CardValues> {
+    async getCardValues(): Promise<CardValues> {
         return this.#ygoprodeckApiService.getCardValues();
     }
 
-    public async getArchetypes(): Promise<string[]> {
+    async getArchetypes(): Promise<string[]> {
         return this.#ygoprodeckApiService.getArchetypes();
     }
 }

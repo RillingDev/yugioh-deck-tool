@@ -41,14 +41,14 @@ export class DeckService {
      * @param format Format to check for, may be null for none.
      * @return if the card can be moved for these parameters.
      */
-    public canMove(
+    canMove(
         deck: Deck,
         card: Card,
         oldDeckPart: DeckPart,
         newDeckPart: DeckPart,
         format: Format | null
     ): boolean {
-        const deckWithoutCard = this.cloneDeck(deck);
+        const deckWithoutCard = this.#cloneDeck(deck);
         this.removeCard(deckWithoutCard, card, oldDeckPart);
 
         return this.canAdd(deckWithoutCard, card, newDeckPart, format);
@@ -65,7 +65,7 @@ export class DeckService {
      * @param format Format to check for, may be null for none.
      * @return if the card can be added for these parameters.
      */
-    public canAdd(
+    canAdd(
         deck: Deck,
         card: Card,
         deckPart: DeckPart,
@@ -110,7 +110,7 @@ export class DeckService {
      * @param format Format to check for, may be null for none.
      * @return Deck part the card can be added to.
      */
-    public findAvailableDeckPart(
+    findAvailableDeckPart(
         deck: Deck,
         card: Card,
         format: Format | null
@@ -131,7 +131,7 @@ export class DeckService {
      * @param deckPart Deck part to add to.
      * @param newIndex Optional index to add the card at.
      */
-    public addCard(
+    addCard(
         deck: Deck,
         card: Card,
         deckPart: DeckPart,
@@ -153,7 +153,7 @@ export class DeckService {
      * @param deckPart Deck part to remove from.
      * @param oldIndex Optional index to remove the card at.
      */
-    public removeCard(
+    removeCard(
         deck: Deck,
         card: Card,
         deckPart: DeckPart,
@@ -181,7 +181,7 @@ export class DeckService {
      * @param oldIndex Index to move card from.
      * @param newIndex Index to move card to.
      */
-    public reorderCard(
+    reorderCard(
         deck: Deck,
         card: Card,
         deckPart: DeckPart,
@@ -202,8 +202,8 @@ export class DeckService {
      * @param deck Deck to sort.
      * @return Sorted copy.
      */
-    public sort(deck: Deck): Deck {
-        const deckClone = this.cloneDeck(deck);
+    sort(deck: Deck): Deck {
+        const deckClone = this.#cloneDeck(deck);
         for (const deckPart of DECK_PART_ARR) {
             deckClone.parts[deckPart] = this.#sortingService.sort(
                 deckClone.parts[deckPart],
@@ -221,8 +221,8 @@ export class DeckService {
      * @param deck Deck to shuffle.
      * @return Shuffled copy.
      */
-    public shuffle(deck: Deck): Deck {
-        const deckClone = this.cloneDeck(deck);
+    shuffle(deck: Deck): Deck {
+        const deckClone = this.#cloneDeck(deck);
         for (const deckPart of DECK_PART_ARR) {
             deckClone.parts[deckPart] = shuffle(deckClone.parts[deckPart]);
         }
@@ -236,7 +236,7 @@ export class DeckService {
      * @param goingFirst If the simulation should be for a player going first (instead of going second).
      * @return The simulated starting hand cards.
      */
-    public getSimulatedStartingHand(deck: Deck, goingFirst: boolean): Card[] {
+    getSimulatedStartingHand(deck: Deck, goingFirst: boolean): Card[] {
         return sampleSize(deck.parts[DeckPart.MAIN], goingFirst ? 5 : 6);
     }
 
@@ -246,7 +246,7 @@ export class DeckService {
      * @param deck Deck to get cards for.
      * @return All cards of the deck.
      */
-    public getAllCards(deck: Deck): Card[] {
+    getAllCards(deck: Deck): Card[] {
         const result = [];
         for (const deckPart of DECK_PART_ARR) {
             result.push(...deck.parts[deckPart]);
@@ -259,7 +259,7 @@ export class DeckService {
      *
      * @return Created deck.
      */
-    public createEmptyDeck(): Deck {
+    createEmptyDeck(): Deck {
         return {
             name: null,
             parts: {
@@ -270,7 +270,7 @@ export class DeckService {
         };
     }
 
-    private cloneDeck(deck: Deck): Deck {
+    #cloneDeck(deck: Deck): Deck {
         // Manual copy to avoid accidentally creating new cards.
         return {
             name: deck.name,

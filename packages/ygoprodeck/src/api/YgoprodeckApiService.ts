@@ -70,18 +70,18 @@ export class YgoprodeckApiService {
         this.#encodingService = encodingService;
     }
 
-    public async getSingleCard(
+    async getSingleCard(
         options: CardInfoOptions
     ): Promise<UnlinkedCard | null> {
         const response = await this.#httpService.get<{ data: RawCard[] }>(
             "cardinfo.php",
             {
-                baseUrl: this.getBaseUrl(),
-                params: this.createCardInfoParams(options),
-                headers: this.createAuthHeaders(options),
+                baseUrl: this.#getBaseUrl(),
+                params: this.#createCardInfoParams(options),
+                headers: this.#createAuthHeaders(options),
                 timeout: 5000,
                 responseType: "json",
-                validateStatus: this.createCardInfoStatusValidator(),
+                validateStatus: this.#createCardInfoStatusValidator(),
             }
         );
         if (response.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES) {
@@ -92,16 +92,16 @@ export class YgoprodeckApiService {
         return mapCard(responseData.data[0]);
     }
 
-    public async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
-        const params = this.createCardInfoParams(options);
-        const authHeaders = this.createAuthHeaders(options);
+    async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
+        const params = this.#createCardInfoParams(options);
+        const authHeaders = this.#createAuthHeaders(options);
 
-        const responseData = await this.loadPaginated<RawCard>(
+        const responseData = await this.#loadPaginated<RawCard>(
             async (offset) => {
                 const response = await this.#httpService.get<
                     PaginatedResponse<RawCard[]>
                 >("cardinfo.php", {
-                    baseUrl: this.getBaseUrl(),
+                    baseUrl: this.#getBaseUrl(),
                     params: {
                         ...params,
                         num: YgoprodeckApiService.CHUNK_SIZE,
@@ -110,7 +110,7 @@ export class YgoprodeckApiService {
                     headers: authHeaders,
                     timeout: 10000,
                     responseType: "json",
-                    validateStatus: this.createCardInfoStatusValidator(),
+                    validateStatus: this.#createCardInfoStatusValidator(),
                 });
                 if (
                     response.status ===
@@ -125,9 +125,7 @@ export class YgoprodeckApiService {
         return responseData.map(mapCard);
     }
 
-    private createCardInfoParams(
-        options: CardInfoOptions
-    ): Record<string, string> {
+    #createCardInfoParams(options: CardInfoOptions): Record<string, string> {
         const params: Record<string, string> = {};
         params.misc = "yes"; // Always needed
         if (options.includeAliased) {
@@ -154,12 +152,12 @@ export class YgoprodeckApiService {
         return params;
     }
 
-    public async getCardSets(): Promise<CardSet[]> {
+    async getCardSets(): Promise<CardSet[]> {
         const response = await this.#httpService.get<RawCardSet[]>(
             "cardsets.php",
 
             {
-                baseUrl: this.getBaseUrl(),
+                baseUrl: this.#getBaseUrl(),
                 timeout: 10000,
                 responseType: "json",
             }
@@ -167,11 +165,11 @@ export class YgoprodeckApiService {
         return response.data.map(mapCardSet);
     }
 
-    public async getCardValues(): Promise<CardValues> {
+    async getCardValues(): Promise<CardValues> {
         const response = await this.#httpService.get<RawCardValues>(
             "cardvalues.php",
             {
-                baseUrl: this.getBaseUrl(),
+                baseUrl: this.#getBaseUrl(),
                 timeout: 10000,
                 responseType: "json",
             }
@@ -179,11 +177,11 @@ export class YgoprodeckApiService {
         return mapCardValues(response.data);
     }
 
-    public async getArchetypes(): Promise<string[]> {
+    async getArchetypes(): Promise<string[]> {
         const response = await this.#httpService.get<RawArchetype[]>(
             "archetypes.php",
             {
-                baseUrl: this.getBaseUrl(),
+                baseUrl: this.#getBaseUrl(),
                 timeout: 10000,
                 responseType: "json",
             }
@@ -191,9 +189,9 @@ export class YgoprodeckApiService {
         return response.data.map(mapArchetype);
     }
 
-    public async updateViews(card: Card): Promise<void> {
+    async updateViews(card: Card): Promise<void> {
         await this.#httpService.get<void>("updateViews.php", {
-            baseUrl: this.getBaseUrl(),
+            baseUrl: this.#getBaseUrl(),
             timeout: 3000,
             responseType: "text",
             params: {
@@ -202,7 +200,7 @@ export class YgoprodeckApiService {
         });
     }
 
-    private getBaseUrl(): string {
+    #getBaseUrl(): string {
         if (
             this.#environmentConfig.getEnvironment() == Environment.YGOPRODECK
         ) {
@@ -211,7 +209,7 @@ export class YgoprodeckApiService {
         return "https://db.ygoprodeck.com/api/v7/";
     }
 
-    private async loadPaginated<T>(
+    async #loadPaginated<T>(
         fetcher: (offset: number) => Promise<PaginatedResponse<T[]>>
     ): Promise<T[]> {
         const result: T[] = [];
@@ -231,9 +229,7 @@ export class YgoprodeckApiService {
         return result;
     }
 
-    private createAuthHeaders(
-        options: CardInfoOptions
-    ): Record<string, string> {
+    #createAuthHeaders(options: CardInfoOptions): Record<string, string> {
         if (options.auth == null) {
             return {};
         }
@@ -249,7 +245,7 @@ export class YgoprodeckApiService {
         };
     }
 
-    private createCardInfoStatusValidator(): (status: number) => boolean {
+    #createCardInfoStatusValidator(): (status: number) => boolean {
         return (status) =>
             (status >= 200 && status <= 299) ||
             status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES;

@@ -7,23 +7,23 @@ import { CardTypeCategory } from "../../src/card/type/CardTypeCategory";
 
 @injectable()
 export class MockDataLoaderService implements CardDataLoaderService {
-    public getAllCardSets(): Promise<CardSet[]> {
+    getAllCardSets(): Promise<CardSet[]> {
         return Promise.resolve([]);
     }
 
-    public getAllCards(): Promise<UnlinkedCard[]> {
+    getAllCards(): Promise<UnlinkedCard[]> {
         return Promise.resolve([]);
     }
 
-    public getArchetypes(): Promise<string[]> {
+    getArchetypes(): Promise<string[]> {
         return Promise.resolve([]);
     }
 
-    public getCard(): Promise<UnlinkedCard | null> {
+    getCard(): Promise<UnlinkedCard | null> {
         return Promise.resolve(null);
     }
 
-    public getCardValues(): Promise<CardValues> {
+    getCardValues(): Promise<CardValues> {
         return Promise.resolve({
             [CardTypeCategory.MONSTER]: {
                 subTypes: [],

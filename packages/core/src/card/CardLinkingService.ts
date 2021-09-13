@@ -17,19 +17,19 @@ export class CardLinkingService {
      * @param typeMap Type data to link against.
      * @return linked card.
      */
-    public linkCard(
+    linkCard(
         unlinkedCard: UnlinkedCard,
         setMap: Map<string, CardSet>,
         typeMap: Map<string, CardType>
     ): Card {
         return {
             ...unlinkedCard,
-            type: this.linkType(unlinkedCard.type, typeMap),
-            sets: this.linkSets(unlinkedCard.sets, setMap),
+            type: this.#linkType(unlinkedCard.type, typeMap),
+            sets: this.#linkSets(unlinkedCard.sets, setMap),
         };
     }
 
-    private linkSets(
+    #linkSets(
         setAppearances: CardSetAppearance[],
         setCache: Map<string, CardSet>
     ): CardSet[] {
@@ -50,10 +50,7 @@ export class CardLinkingService {
             .filter((set) => set != null) as CardSet[];
     }
 
-    private linkType(
-        typeName: string,
-        typeCache: Map<string, CardType>
-    ): CardType {
+    #linkType(typeName: string, typeCache: Map<string, CardType>): CardType {
         if (!typeCache.has(typeName)) {
             throw new TypeError(`Could not find type '${typeName}'.`);
         }

@@ -12,14 +12,14 @@ export class EncodingService {
     /**
      * @see TextEncoder#encode
      */
-    public encodeText(text: string): Uint8Array {
+    encodeText(text: string): Uint8Array {
         return this.#textEncoder.encode(text);
     }
 
     /**
      * @see TextDecoder#decode
      */
-    public decodeText(input: BufferSource): string {
+    decodeText(input: BufferSource): string {
         return this.#textDecoder.decode(input);
     }
 
@@ -29,7 +29,7 @@ export class EncodingService {
      * @param input Input to encode.
      * @param useUriParamSafeAlphabet If an alphabet suitable for URI query parameters should be used. If this is enabled, this flag also has to be set when decoding.
      */
-    public encodeBase64String(
+    encodeBase64String(
         input: Uint8Array,
         useUriParamSafeAlphabet: boolean
     ): string {
@@ -49,7 +49,7 @@ export class EncodingService {
      * @param base64 Base64 to decode.
      * @param useUriParamSafeAlphabet If an alphabet suitable for URI query parameters was used for encoding.
      */
-    public decodeBase64String(
+    decodeBase64String(
         base64: string,
         useUriParamSafeAlphabet: boolean
     ): Uint8Array {

@@ -38,7 +38,7 @@ export class DeckUrlController {
      * @param url current URL.
      * @return Parsed deck or null if none is found.
      */
-    public async loadUriDeck(url: URL): Promise<Deck | null> {
+    async loadUriDeck(url: URL): Promise<Deck | null> {
         // Load deck file from a remote URL
         const remoteUrlValue = url.searchParams.get(
             DeckUrlController.PARAM_REMOTE_DECK
@@ -75,7 +75,7 @@ export class DeckUrlController {
      * @param deck Deck to encode.
      * @return Shareable link.
      */
-    public getShareLink(deck: Deck): URL {
+    getShareLink(deck: Deck): URL {
         const url = new URL(location.href);
         url.search = "";
         if (this.#deckService.getAllCards(deck).length > 0) {

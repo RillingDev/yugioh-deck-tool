@@ -30,12 +30,12 @@ export class YgoprodeckService {
      *
      * @param card Card that was viewed.
      */
-    public async increaseCardViewCount(card: Card): Promise<void> {
+    async increaseCardViewCount(card: Card): Promise<void> {
         this.validateEnv();
         return this.#ygoprodeckApiService.updateViews(card);
     }
 
-    public async getCollectionCardCountFunction(
+    async getCollectionCardCountFunction(
         credentials: Credentials
     ): Promise<CardCountFunction> {
         this.validateEnv();
@@ -44,7 +44,7 @@ export class YgoprodeckService {
             includeAliased: true,
             auth: credentials,
         });
-        return this.createCardCountFunction(
+        return this.#createCardCountFunction(
             toMapBy<number, string, UnlinkedCard>(
                 unlinkedCards,
                 (_key, unlinkedCard) => unlinkedCard.passcode,
@@ -53,7 +53,7 @@ export class YgoprodeckService {
         );
     }
 
-    private createCardCountFunction(
+    #createCardCountFunction(
         countedByPasscode: Map<string, number>
     ): CardCountFunction {
         return (card: Card) =>
@@ -62,7 +62,7 @@ export class YgoprodeckService {
                 : 0;
     }
 
-    public validateEnv(): void {
+    validateEnv(): void {
         if (
             this.#environmentConfig.getEnvironment() != Environment.YGOPRODECK
         ) {

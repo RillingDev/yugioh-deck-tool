@@ -15,7 +15,7 @@ export class CardService {
      * @param card Card to check.
      * @return Names of this card.
      */
-    public getAllNames(card: Card): string[] {
+    getAllNames(card: Card): string[] {
         const names = [card.name];
         if (card.treatedAs != null) {
             names.push(card.treatedAs);
@@ -33,7 +33,7 @@ export class CardService {
      * @param cardB Second card.
      * @return If the cards are treated as the same.
      */
-    public isTreatedAsSame(cardA: Card, cardB: Card): boolean {
+    isTreatedAsSame(cardA: Card, cardB: Card): boolean {
         return (
             intersection(this.getAllNames(cardA), this.getAllNames(cardB))
                 .length > 0
@@ -46,7 +46,7 @@ export class CardService {
      * @param cards Cards to count.
      * @return Map mapping the card to its count.
      */
-    public countByCard(cards: ReadonlyArray<Card>): Counted<Card> {
+    countByCard(cards: ReadonlyArray<Card>): Counted<Card> {
         return countMapBy(cards, (card) => card);
     }
 
@@ -56,7 +56,7 @@ export class CardService {
      * @param cards Cards to count.
      * @return Map mapping the card type to its count.
      */
-    public countByType(cards: ReadonlyArray<Card>): Counted<CardType> {
+    countByType(cards: ReadonlyArray<Card>): Counted<CardType> {
         return countMapBy(cards, (card) => card.type);
     }
 
@@ -66,9 +66,7 @@ export class CardService {
      * @param cards Cards to count.
      * @return Map mapping the card type category to its count.
      */
-    public countByTypeCategory(
-        cards: ReadonlyArray<Card>
-    ): Counted<CardTypeCategory> {
+    countByTypeCategory(cards: ReadonlyArray<Card>): Counted<CardTypeCategory> {
         return countMapBy(cards, (card) => card.type.category);
     }
 
@@ -78,7 +76,7 @@ export class CardService {
      * @param cards Cards to count.
      * @return List of string representation of cards with their count.
      */
-    public createFormattedCardCountList(cards: ReadonlyArray<Card>): string[] {
+    createFormattedCardCountList(cards: ReadonlyArray<Card>): string[] {
         return Array.from(this.countByCard(cards).entries())
             .filter(([, count]) => count > 0)
             .map(([card, count]) => `${count}x ${card.name}`);
@@ -89,7 +87,7 @@ export class CardService {
      * @param card Card to create a link for.
      * @return Link.
      */
-    public getReferenceLink(card: Card): URL {
+    getReferenceLink(card: Card): URL {
         const url = new URL("https://db.ygoprodeck.com/card/");
         url.searchParams.append("search", card.name);
         return url;

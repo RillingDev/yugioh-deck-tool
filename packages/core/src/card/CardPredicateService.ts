@@ -12,7 +12,7 @@ export class CardPredicateService {
      *
      * @return a predicate based on the CardCountFunction.
      */
-    public createAtLeastOneAvailablePredicate(
+    createAtLeastOneAvailablePredicate(
         cardCodeFunction: CardCountFunction
     ): CardPredicate {
         return (card) => cardCodeFunction(card) > 0;
@@ -24,7 +24,7 @@ export class CardPredicateService {
      *
      * @return a predicate only allowing cards which can be added to at least one deck part.
      */
-    public createAddableInAtLeastOneDeckPartCardPredicate(): CardPredicate {
+    createAddableInAtLeastOneDeckPartCardPredicate(): CardPredicate {
         return (card) => card.type.deckParts.size > 0;
     }
 
@@ -34,7 +34,7 @@ export class CardPredicateService {
      *
      * @return a predicate only allowing the first of each name.
      */
-    public createUniqueByNameCardPredicate(): CardPredicate {
+    createUniqueByNameCardPredicate(): CardPredicate {
         const seenNames = new Set<string>();
         return (card) => {
             if (seenNames.has(card.name)) {

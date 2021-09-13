@@ -26,7 +26,7 @@ export class YgoprodeckController {
     /**
      * Checks if ygoprodeck.com credentials are available.
      */
-    public hasCredentials(): boolean {
+    hasCredentials(): boolean {
         this.#ygoprodeckService.validateEnv();
         return (
             window.ygoprodeckUsername != null && window.ygoprodeckToken != null
@@ -36,7 +36,7 @@ export class YgoprodeckController {
     /**
      * Retrieves ygoprodeck.com credentials.
      */
-    public getCredentials(): Credentials {
+    getCredentials(): Credentials {
         this.#ygoprodeckService.validateEnv();
         if (!this.hasCredentials()) {
             throw new TypeError("Insufficient credentials available.");

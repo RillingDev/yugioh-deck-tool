@@ -33,7 +33,7 @@ export class DeckController {
      * @param cards Cards to analyse.
      * @return Array of type and count pairs.
      */
-    public calculateDetailedTypeStats(
+    calculateDetailedTypeStats(
         deckPart: DeckPart,
         cards: ReadonlyArray<Card>
     ): [string, number][] {

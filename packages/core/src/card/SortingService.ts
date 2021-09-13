@@ -53,40 +53,40 @@ export class SortingService {
      * @param options Options describing how to sort.
      * @return Sorted cards.
      */
-    public sort(cards: Card[], options: SortingOptions): Card[] {
-        const comparator = this.findComparator(
+    sort(cards: Card[], options: SortingOptions): Card[] {
+        const comparator = this.#findComparator(
             options.strategy,
             options.order ?? SortingOrder.DESC
         );
         return cards.sort(comparator);
     }
 
-    private findComparator(
+    #findComparator(
         strategy: SortingStrategy,
         order: SortingOrder
     ): Comparator<Card> {
         if (strategy === SortingStrategy.NAME) {
-            return this.createNameComparator(order);
+            return this.#createNameComparator(order);
         }
         if (strategy === SortingStrategy.ATK) {
-            return this.createAtkComparator(order);
+            return this.#createAtkComparator(order);
         }
         if (strategy === SortingStrategy.DEF) {
-            return this.createDefComparator(order);
+            return this.#createDefComparator(order);
         }
         if (strategy === SortingStrategy.LEVEL) {
-            return this.createLevelComparator(order);
+            return this.#createLevelComparator(order);
         }
         if (strategy === SortingStrategy.RELEASE_TCG) {
-            return this.compareReleaseDate(order, Format.TCG);
+            return this.#compareReleaseDate(order, Format.TCG);
         }
         if (strategy === SortingStrategy.RELEASE_OCG) {
-            return this.compareReleaseDate(order, Format.OCG);
+            return this.#compareReleaseDate(order, Format.OCG);
         }
         if (strategy === SortingStrategy.VIEWS) {
-            return this.createViewsComparator(order);
+            return this.#createViewsComparator(order);
         } else {
-            return this.createDefaultComparator(order);
+            return this.#createDefaultComparator(order);
         }
     }
 
@@ -94,13 +94,13 @@ export class SortingService {
      * Deck-sorting function loosely based on
      * {@see https://github.com/Fluorohydride/ygopro}'s ./gframe/client_card.cpp sorting methods
      */
-    private createDefaultComparator(order: SortingOrder): Comparator<Card> {
-        const levelComparator = this.createLevelComparator(order);
-        const sortGroupComparator = this.createSortGroupComparator(order);
-        const atkComparator = this.createAtkComparator(order);
-        const defComparator = this.createDefComparator(order);
-        const subTypeComparator = this.createSubTypeComparator(order);
-        const nameComparator = this.createNameComparator(order);
+    #createDefaultComparator(order: SortingOrder): Comparator<Card> {
+        const levelComparator = this.#createLevelComparator(order);
+        const sortGroupComparator = this.#createSortGroupComparator(order);
+        const atkComparator = this.#createAtkComparator(order);
+        const defComparator = this.#createDefComparator(order);
+        const subTypeComparator = this.#createSubTypeComparator(order);
+        const nameComparator = this.#createNameComparator(order);
         return (a, b) => {
             // First, sort after the sort group.
             if (a.type.sortGroup != b.type.sortGroup) {
@@ -130,64 +130,64 @@ export class SortingService {
         };
     }
 
-    private createAtkComparator(order: SortingOrder): Comparator<Card> {
-        return this.createComparator((card) => card.atk ?? 0, order);
+    #createAtkComparator(order: SortingOrder): Comparator<Card> {
+        return this.#createComparator((card) => card.atk ?? 0, order);
     }
 
-    private createDefComparator(order: SortingOrder): Comparator<Card> {
-        return this.createComparator((card) => card.def ?? 0, order);
+    #createDefComparator(order: SortingOrder): Comparator<Card> {
+        return this.#createComparator((card) => card.def ?? 0, order);
     }
 
-    private createLevelComparator(order: SortingOrder): Comparator<Card> {
-        return this.createComparator((card) => card.level ?? 0, order);
+    #createLevelComparator(order: SortingOrder): Comparator<Card> {
+        return this.#createComparator((card) => card.level ?? 0, order);
     }
 
-    private createViewsComparator(order: SortingOrder): Comparator<Card> {
-        return this.createComparator((card) => card.views, order);
+    #createViewsComparator(order: SortingOrder): Comparator<Card> {
+        return this.#createComparator((card) => card.views, order);
     }
 
-    private createSortGroupComparator(order: SortingOrder): Comparator<Card> {
-        const orderModifier = this.getOrderModifier(order) * -1;
+    #createSortGroupComparator(order: SortingOrder): Comparator<Card> {
+        const orderModifier = this.#getOrderModifier(order) * -1;
         return (a: Card, b: Card) =>
             (b.type.sortGroup - a.type.sortGroup) * orderModifier;
     }
 
-    private compareReleaseDate(
+    #compareReleaseDate(
         order: SortingOrder,
         format: Format.TCG | Format.OCG
     ): Comparator<Card> {
         const fallbackRelease = order === SortingOrder.ASC ? Infinity : 0;
-        return this.createComparator(
+        return this.#createComparator(
             (card) => card.release[format] ?? fallbackRelease,
             order
         );
     }
 
-    private createNameComparator(order: SortingOrder): Comparator<Card> {
+    #createNameComparator(order: SortingOrder): Comparator<Card> {
         return order === SortingOrder.DESC
             ? (a: Card, b: Card) => a.name.localeCompare(b.name)
             : (a: Card, b: Card) => b.name.localeCompare(a.name);
     }
 
-    private createSubTypeComparator(order: SortingOrder): Comparator<Card> {
+    #createSubTypeComparator(order: SortingOrder): Comparator<Card> {
         return (a: Card, b: Card) => {
             const subTypes = this.#cardDatabase.getSubTypes(a.type.category);
             return (
                 (subTypes.indexOf(a.subType) - subTypes.indexOf(b.subType)) *
-                this.getOrderModifier(order)
+                this.#getOrderModifier(order)
             );
         };
     }
 
-    private createComparator(
+    #createComparator(
         selector: (card: Card) => number,
         order: SortingOrder
     ): Comparator<Card> {
         return (a: Card, b: Card) =>
-            (selector(b) - selector(a)) * this.getOrderModifier(order);
+            (selector(b) - selector(a)) * this.#getOrderModifier(order);
     }
 
-    private getOrderModifier(order: SortingOrder): number {
+    #getOrderModifier(order: SortingOrder): number {
         return order === SortingOrder.ASC ? -1 : 1;
     }
 }

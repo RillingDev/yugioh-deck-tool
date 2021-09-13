@@ -51,12 +51,12 @@ export class DeckUriEncodingService {
      * @param deck Deck to encode.
      * @return `ydke` URI.
      */
-    public toUri(deck: Deck): URL {
+    toUri(deck: Deck): URL {
         const encodedDeckParts: string[] = [];
         for (const deckPart of DECK_PART_ARR) {
             const encodedCards = [];
             for (const card of deck.parts[deckPart]) {
-                encodedCards.push(...this.encodeCardBlock(card));
+                encodedCards.push(...this.#encodeCardBlock(card));
             }
             encodedDeckParts.push(
                 this.#encodingService.encodeBase64String(
@@ -81,7 +81,7 @@ export class DeckUriEncodingService {
      * @param uri `ydke` URI to decode
      * @return Deck.
      */
-    public fromUri(uri: string): Deck {
+    fromUri(uri: string): Deck {
         const uriParts = uri
             .slice(DeckUriEncodingService.YDKE_URI_PROTOCOL.length)
             .split(DeckUriEncodingService.YDKE_DELIMITER);
@@ -114,7 +114,7 @@ export class DeckUriEncodingService {
                     blockStart,
                     blockStart + DeckUriEncodingService.BLOCK_BYTE_SIZE
                 );
-                deckPartCards.push(this.decodeCardBlock(block));
+                deckPartCards.push(this.#decodeCardBlock(block));
             }
         }
         return deck;
@@ -139,12 +139,12 @@ export class DeckUriEncodingService {
      * @param deck Deck to encode.
      * @return Value that can be decoded to yield the same deck.
      */
-    public toUrlQueryParamValue(deck: Deck): string {
+    toUrlQueryParamValue(deck: Deck): string {
         const result: number[] = []; // Array of unsigned 8 bit numbers, using this over Uint8Array for convenience.
 
         for (const deckPart of DECK_PART_ARR) {
             for (const card of deck.parts[deckPart]) {
-                result.push(...this.encodeCardBlock(card));
+                result.push(...this.#encodeCardBlock(card));
             }
             result.push(
                 ...DeckUriEncodingService.URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
@@ -164,7 +164,7 @@ export class DeckUriEncodingService {
      * @param queryParamValue query parameter value.
      * @return Deck.
      */
-    public fromUrlQueryParamValue(queryParamValue: string): Deck {
+    fromUrlQueryParamValue(queryParamValue: string): Deck {
         const deck = this.#deckService.createEmptyDeck();
 
         const decoded = this.#encodingService.decodeBase64String(
@@ -198,7 +198,7 @@ export class DeckUriEncodingService {
                 deckPartIndex++;
             } else {
                 const deckPartCards = deck.parts[DECK_PART_ARR[deckPartIndex]];
-                deckPartCards.push(this.decodeCardBlock(block));
+                deckPartCards.push(this.#decodeCardBlock(block));
             }
         }
         if (metaDataStart != null && metaDataStart < inflated.length) {
@@ -209,12 +209,12 @@ export class DeckUriEncodingService {
         return deck;
     }
 
-    private encodeCardBlock(card: Card): Uint8Array {
-        return this.encodeNumber(Number(card.passcode));
+    #encodeCardBlock(card: Card): Uint8Array {
+        return this.#encodeNumber(Number(card.passcode));
     }
 
-    private decodeCardBlock(block: Uint8Array): Card {
-        const passcode = String(this.decodeNumber(block));
+    #decodeCardBlock(block: Uint8Array): Card {
+        const passcode = String(this.#decodeNumber(block));
         if (!this.#cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
             throw new TypeError(
                 `Could not find card for passcode '${passcode}'.`
@@ -224,7 +224,7 @@ export class DeckUriEncodingService {
         return this.#cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!;
     }
 
-    private encodeNumber(number: number): Uint8Array {
+    #encodeNumber(number: number): Uint8Array {
         if (number <= 0 || number >= DeckUriEncodingService.LIMIT) {
             throw new TypeError(
                 `Number '${number} is of range (has to be > 0 and < ${DeckUriEncodingService.LIMIT})'.`
@@ -240,7 +240,7 @@ export class DeckUriEncodingService {
         return new Uint8Array(buffer);
     }
 
-    private decodeNumber(block: Uint8Array): number {
+    #decodeNumber(block: Uint8Array): number {
         // See #encodeNumber for details
         return new DataView(block.buffer).getUint32(
             0,

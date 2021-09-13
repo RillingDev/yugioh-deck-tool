@@ -22,7 +22,7 @@ export class BanlistService {
      * @param format Format to check.
      * @return if the format has a banlist.
      */
-    public hasBanlist(format: Format): boolean {
+    hasBanlist(format: Format): boolean {
         return BanlistService.BANLIST_FORMATS.has(format);
     }
 
@@ -33,7 +33,7 @@ export class BanlistService {
      * @param format Format to check against. May be null for no format.
      * @return BanState for the card in the format.
      */
-    public getBanStateByFormat(card: Card, format: Format | null): BanState {
+    getBanStateByFormat(card: Card, format: Format | null): BanState {
         // If no format is specified, it is unknown -> unlimited
         if (format == null) {
             return DefaultBanState.UNLIMITED;

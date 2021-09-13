@@ -52,7 +52,7 @@ export class DeckFileService {
      * @throws Error if origins do not match.
      * @return Loaded deck.
      */
-    public async fromRemoteFile(
+    async fromRemoteFile(
         currentUrl: string,
         remoteUrl: string
     ): Promise<ImportResult> {
@@ -77,7 +77,7 @@ export class DeckFileService {
      * @param deckFile File to load.
      * @return Deck.
      */
-    public fromFile(deckFile: DeckFile): ImportResult {
+    fromFile(deckFile: DeckFile): ImportResult {
         const missing: string[] = [];
         const deck = this.#deckService.createEmptyDeck();
 
@@ -124,7 +124,7 @@ export class DeckFileService {
      * @param deck Deck to create a file for.
      * @return Deck file.
      */
-    public toFile(deck: Deck): DeckFile {
+    toFile(deck: Deck): DeckFile {
         const fileLines: string[] = [];
 
         for (const deckPart of DECK_PART_ARR) {

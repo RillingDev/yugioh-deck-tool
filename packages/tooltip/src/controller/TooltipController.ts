@@ -19,7 +19,7 @@ export class TooltipController {
      * @param cardKey Key to load by (either name or ID).
      * @return Card.
      */
-    public async loadCard(cardKey: string): Promise<Card> {
+    async loadCard(cardKey: string): Promise<Card> {
         let resolvedCardKey = await this.cardDatabase.prepareCard(
             cardKey,
             FindCardBy.NAME
