@@ -23,7 +23,7 @@ export default defineComponent({
     components: { VSelect },
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const currencies = readonly<Currency[]>(
             Object.values(DEFAULT_CURRENCY_ARR)
         );

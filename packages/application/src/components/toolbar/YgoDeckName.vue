@@ -17,7 +17,7 @@ export default defineComponent({
     components: {},
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const store = useStore();
 
         const deckName = computed<string | null>({

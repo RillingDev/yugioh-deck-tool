@@ -121,7 +121,7 @@ export default defineComponent({
     },
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const store = useStore();
         const essentialDataLoaded = computed<boolean>(
             () => store.state.data.essentialDataLoaded

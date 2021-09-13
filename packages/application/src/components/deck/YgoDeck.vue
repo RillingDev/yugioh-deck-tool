@@ -37,7 +37,7 @@ export default defineComponent({
         },
     },
     emits: [],
-    setup(props, context) {
+    setup() {
         const deckParts = readonly<DeckPart[]>(DECK_PART_ARR);
 
         const store = useStore();

@@ -21,7 +21,7 @@ export default defineComponent({
     components: { VSelect },
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const formats = readonly<Format[]>(Object.values(Format));
 
         const store = useStore();

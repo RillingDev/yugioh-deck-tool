@@ -62,7 +62,7 @@ export default defineComponent({
     },
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const goingFirst = ref<boolean>(true);
         const drawnCards = ref<Card[]>([]);
 

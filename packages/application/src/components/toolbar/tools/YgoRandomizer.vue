@@ -65,7 +65,7 @@ export default defineComponent({
     },
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const strategies = readonly<RandomizationStrategy[]>(
             Object.values(RandomizationStrategy)
         );

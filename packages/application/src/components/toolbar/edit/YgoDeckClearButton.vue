@@ -26,7 +26,7 @@ export default defineComponent({
     },
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const store = useStore();
 
         const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);

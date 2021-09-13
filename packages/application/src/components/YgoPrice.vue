@@ -65,7 +65,7 @@ export default defineComponent({
         },
     },
     emits: [],
-    setup(props, context) {
+    setup(props) {
         const store = useStore();
 
         const activeCurrency = computed<Currency>(

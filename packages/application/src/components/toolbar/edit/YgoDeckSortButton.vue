@@ -15,7 +15,7 @@ export default defineComponent({
     components: { BDropdownItemButton },
     props: {},
     emits: [],
-    setup(props, context) {
+    setup() {
         const store = useStore();
 
         const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);

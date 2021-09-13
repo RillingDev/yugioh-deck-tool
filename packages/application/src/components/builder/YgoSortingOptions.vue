@@ -23,10 +23,11 @@
 </template>
 
 <script lang="ts">
-import type { SortingOptions } from "@yugioh-deck-tool/core";
-import { SortingOrder, SortingStrategy } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { defineComponent, reactive } from "@vue/composition-api";
+import type { SortingOptions } from "@yugioh-deck-tool/core";
+import { SortingOrder, SortingStrategy } from "@yugioh-deck-tool/core";
+import { clone } from "lodash";
 import VSelect from "vue-select";
 
 export default defineComponent({
@@ -46,14 +47,14 @@ export default defineComponent({
     emits: ["change"],
     setup(props, context) {
         const internalSortingOptions = reactive<SortingOptions>(
-            props.sortingOptions
+            clone(props.sortingOptions)
         );
 
         const sortingStrategies = Object.values(SortingStrategy);
         const sortingOrders = Object.values(SortingOrder);
 
         const onOptionsChanged = (): void =>
-            context.emit("change", internalSortingOptions);
+            context.emit("change", clone(internalSortingOptions));
 
         return {
             sortingStrategies,
