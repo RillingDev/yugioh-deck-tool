@@ -4,4 +4,5 @@ import "./styles/tooltip.scss";
 
 document.addEventListener("DOMContentLoaded", () => bindTooltipApi());
 
-export { getTooltipApi, TooltipInstance } from "./api";
+export { getTooltipApi } from "./api";
+export type { TooltipInstance } from "./api";
