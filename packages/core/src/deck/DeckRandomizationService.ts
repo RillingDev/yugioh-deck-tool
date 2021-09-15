@@ -122,10 +122,9 @@ export class DeckRandomizationService {
         const format = filter?.format ?? null;
         for (const deckPart of DECK_PART_ARR) {
             for (const primaryPool of primaryPools) {
-                let cardsPerPool = 0;
-                if (isArchetypeStrategy) {
-                    cardsPerPool = this.#getCardsPerArchetypeCount(strategy);
-                }
+                const cardsPerPool = isArchetypeStrategy
+                    ? this.#getCardsPerArchetypeCount(strategy)
+                    : 0;
 
                 this.#addCards(
                     deck,
