@@ -9,7 +9,9 @@
     },
     "include": [
         "./src/**/*.ts",
-        "./__tests__/**/*.ts"
+        "./src/**/*.json",
+        "./__tests__/**/*.ts",
+        "./scripts/**/*.ts"
     ],
     "exclude": [
         "node_modules"

@@ -6,7 +6,8 @@
     "scripts": {
         "lint": "eslint ./src/ ./__tests__/ --ext .ts",
         "fix": "eslint ./src/ ./__tests__/ --ext .ts --fix",
-        "test": "jest"
+        "test": "jest",
+        "build:update-conversion-rates": "ts-node scripts/updateConversionRates.ts"
     },
     "dependencies": {
         "axios": "^0.21.1",
@@ -37,6 +38,7 @@
         "reflect-metadata": "^0.1.13",
         "ts-jest": "^27.0.3",
         "ts-mockito": "^2.6.1",
+        "ts-node": "^10.2.1",
         "typescript": "^4.4.3"
     }
 }

@@ -1,4 +1,5 @@
 import { deepFreeze } from "lightdash";
+import ConversionRatesJson from "./currencyConversionRates.json";
 
 export interface Currency {
     /**
@@ -8,69 +9,77 @@ export interface Currency {
 
     readonly name: string;
 
+    readonly fractionDigits: number;
+
     /**
      * Value of 1 USD in this currency.
      */
     readonly conversionRate: number;
-
-    readonly fractionDigits: number;
 }
 
+const ConversionRates = ConversionRatesJson as Record<string, number>;
+const getConversionRate = (id: string): number => {
+    if (id in ConversionRates) {
+        return ConversionRates[id];
+    }
+    throw new TypeError(`No conversion rate found for '${id}'.`);
+};
+
 // Values from https://api.exchangeratesapi.io/latest?base=USD
-const DefaultCurrency = {
+const DefaultCurrency: Record<string, Currency> = {
     USD: {
         id: "USD",
         name: "US Dollar",
-        conversionRate: 1.0,
         fractionDigits: 2,
+        conversionRate: getConversionRate("USD"),
     },
     EUR: {
         id: "EUR",
         name: "Euro",
-        conversionRate: 0.845094228,
         fractionDigits: 2,
+        conversionRate: getConversionRate("EUR"),
     },
     GBP: {
         id: "GBP",
         name: "British Pound",
-        conversionRate: 0.7717231471,
         fractionDigits: 2,
+        conversionRate: getConversionRate("GBP"),
     },
     CAD: {
         id: "CAD",
         name: "Canadian Dollar",
-        conversionRate: 1.3184315051,
         fractionDigits: 2,
+        conversionRate: getConversionRate("CAD"),
     },
     AUD: {
         id: "AUD",
         name: "Australian Dollar",
-        conversionRate: 1.3726020451,
         fractionDigits: 2,
+        conversionRate: getConversionRate("AUD"),
     },
     MXN: {
         id: "MXN",
         name: "Mexican Peso",
-        conversionRate: 20.9028986732,
         fractionDigits: 1,
+        conversionRate: getConversionRate("MXN"),
     },
     BRL: {
         id: "BRL",
         name: "Brazilian Real",
-        conversionRate: 5.2544578721,
         fractionDigits: 1,
+        conversionRate: getConversionRate("BRL"),
     },
     THB: {
         id: "THB",
         name: "Thai Baht",
-        conversionRate: 31.1746809769,
         fractionDigits: 0,
+        conversionRate: getConversionRate("THB"),
     },
     IDR: {
         id: "IDR",
         name: "Indonesian Rupiah",
-        conversionRate: 14735.003802924,
         fractionDigits: 0,
+        conversionRate: getConversionRate("IDR"),
     },
 } as const;
 deepFreeze(DefaultCurrency);

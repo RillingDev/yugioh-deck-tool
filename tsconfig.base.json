@@ -9,6 +9,7 @@
         // Per-project
         "target": "ES2021",
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "resolveJsonModule": true
     }
 }
