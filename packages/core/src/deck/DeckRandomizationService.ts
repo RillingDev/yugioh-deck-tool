@@ -196,9 +196,9 @@ export class DeckRandomizationService {
      * @param format Format to validate against.
      * @param strategy Strategy that is in use.
      * @param pool Pool to pick cards from.
-     *              only limiting the next cycle of card picking, not the card count of an already picked card.
      * @param preferPlaySet If higher counts of cards should be preferred.
      * @param limit Optional limit of how many cards should be added. Note that is only a soft limit,
+     *              only limiting the next cycle of card picking, not the card count of an already picked card.
      * @param typeCategoryWeighting see {@link RandomizationOptions}.
      */
     #addCards(
@@ -215,12 +215,12 @@ export class DeckRandomizationService {
         const initialLength = deckPartCards.length;
         const deckPartLimit = this.#getDeckPartLimit(deckPart, strategy);
         for (const card of shuffle(pool)) {
-            // If we reached the deck part limit: break, skipping all other cards in the pool
+            // If we reached the deck part limit: break, skipping all other cards in the pool.
             if (deckPartCards.length >= deckPartLimit) {
                 break;
             }
 
-            // If a limit is set and the count of cards added in this #addCards invocation reaches the limit: break
+            // If a limit is set and the count of cards added in this #addCards invocation reaches the limit: break.
             if (
                 limit != null &&
                 deckPartCards.length - initialLength >= limit
@@ -228,8 +228,8 @@ export class DeckRandomizationService {
                 break;
             }
 
-            // Once half of the main deck part is full, check against ratios
-            // If a card ratio is exceeded: continue with the next card
+            // Once half of the main deck part is full, check against ratios.
+            // If a card ratio is exceeded: continue with the next card.
             if (
                 deckPart === DeckPart.MAIN &&
                 deckPartCards.length >= deckPartLimit / 2
