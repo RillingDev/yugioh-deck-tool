@@ -125,6 +125,9 @@ export default defineComponent({
 
 .deck-tool {
     .builder {
+        position: sticky;
+        top: 0.5rem;
+
         &__details {
             display: flex;
             justify-content: space-between;
