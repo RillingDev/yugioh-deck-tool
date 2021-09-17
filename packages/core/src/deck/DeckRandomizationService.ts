@@ -22,7 +22,10 @@ export enum RandomizationStrategy {
     HIGHLANDER = "Highlander",
 }
 
-type TypeCategoryWeighting = ReadonlyMap<CardTypeCategory, number | null>;
+export type TypeCategoryWeighting = ReadonlyMap<
+    CardTypeCategory,
+    number | null
+>;
 
 export type RandomizationOptions = Partial<{
     /**
@@ -38,12 +41,13 @@ export type RandomizationOptions = Partial<{
     readonly typeCategoryWeighting: TypeCategoryWeighting;
 }>;
 
-const DEFAULT_TYPE_CATEGORY_RATIO: TypeCategoryWeighting = new Map([
-    [CardTypeCategory.MONSTER, 0.625],
-    [CardTypeCategory.SPELL, 0.275],
-    [CardTypeCategory.TRAP, 0.1],
-    [CardTypeCategory.SKILL, null],
-]);
+export const createDefaultTypeCategoryWeighting = (): TypeCategoryWeighting =>
+    new Map([
+        [CardTypeCategory.MONSTER, 0.625],
+        [CardTypeCategory.SPELL, 0.275],
+        [CardTypeCategory.TRAP, 0.1],
+        [CardTypeCategory.SKILL, null],
+    ]);
 
 @injectable()
 export class DeckRandomizationService {
@@ -114,7 +118,8 @@ export class DeckRandomizationService {
         options: RandomizationOptions = {}
     ): Deck {
         const typeCategoryWeighting =
-            options.typeCategoryWeighting ?? DEFAULT_TYPE_CATEGORY_RATIO;
+            options.typeCategoryWeighting ??
+            createDefaultTypeCategoryWeighting();
         const filter = options.filter ?? null;
         const format = filter?.format ?? null;
 
@@ -211,7 +216,7 @@ export class DeckRandomizationService {
     ): void {
         const deckPartCards = deck.parts[deckPart];
         const initialLength = deckPartCards.length;
-        const deckPartLimit = this.#getDeckPartLimit(deckPart, strategy);
+        const deckPartLimit = this.#getDeckPartLimit(strategy, deckPart);
         for (const card of shuffle(pool)) {
             // If we reached the deck part limit: break, skipping all other cards in the pool.
             if (deckPartCards.length >= deckPartLimit) {
@@ -286,8 +291,8 @@ export class DeckRandomizationService {
     }
 
     #getDeckPartLimit(
-        deckPart: DeckPart,
-        strategy: RandomizationStrategy
+        strategy: RandomizationStrategy,
+        deckPart: DeckPart
     ): number {
         if (strategy === RandomizationStrategy.HIGHLANDER) {
             if (deckPart === DeckPart.SIDE) {

@@ -52,8 +52,12 @@ export { FilterService } from "./card/FilterService";
 export {
     DeckRandomizationService,
     RandomizationStrategy,
+    createDefaultTypeCategoryWeighting,
 } from "./deck/DeckRandomizationService";
-export type { RandomizationOptions } from "./deck/DeckRandomizationService";
+export type {
+    RandomizationOptions,
+    TypeCategoryWeighting,
+} from "./deck/DeckRandomizationService";
 export { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 export { DeckFileService } from "./deck/DeckFileService";
 export type { ImportResult } from "./deck/DeckFileService";
