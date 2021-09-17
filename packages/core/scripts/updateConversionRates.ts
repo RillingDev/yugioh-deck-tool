@@ -1,17 +1,15 @@
 import axios from "axios";
 import { readFile, writeFile } from "fs/promises";
-import { join } from "path";
+import { requireNonNilElseThrow } from "lightdash";
+import process from "process";
 
 /**
- * This scripts updates the conversion rates in {@link CONVERSION_RATES_PATH}
- * based on the latest values available from this API:
- * https://www.frankfurter.app/docs/
+ * This scripts updates the conversion rates in {@link path}
+ * based on the latest values available from this API: https://www.frankfurter.app/docs/
+ *
+ * Usage: Invoke this script with the path to the JSON file as argument.
  */
 
-const CONVERSION_RATES_PATH = join(
-    __dirname,
-    "../src/price/currencyConversionRates.json"
-);
 const ENCODING = "utf8";
 
 const BASE_CURRENCY = "USD";
@@ -21,9 +19,9 @@ interface PartialApiResponse {
     readonly rates: Record<string, number>;
 }
 
-const updateConversionRates = async (): Promise<void> => {
+const updateConversionRates = async (path: string): Promise<void> => {
     const conversionRates = JSON.parse(
-        await readFile(CONVERSION_RATES_PATH, { encoding: ENCODING })
+        await readFile(path, { encoding: ENCODING })
     ) as Record<string, number>;
 
     const requestedCurrencies = Object.keys(conversionRates).filter(
@@ -53,11 +51,15 @@ const updateConversionRates = async (): Promise<void> => {
     }
     console.log(conversionRates);
 
-    await writeFile(CONVERSION_RATES_PATH, JSON.stringify(conversionRates), {
+    await writeFile(path, JSON.stringify(conversionRates), {
         encoding: ENCODING,
     });
 };
 
-updateConversionRates()
+const path = requireNonNilElseThrow(
+    process.argv[2],
+    () => new TypeError("No path provided.")
+);
+updateConversionRates(path)
     .then(() => console.log("Updated conversion rates."))
     .catch((e) => console.error(e));

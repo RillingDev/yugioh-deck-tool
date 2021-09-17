@@ -17,6 +17,7 @@ export interface Currency {
     readonly conversionRate: number;
 }
 
+// Conversion rates are updated via npm script.
 const ConversionRates = ConversionRatesJson as Record<string, number>;
 const getConversionRate = (id: string): number => {
     if (id in ConversionRates) {

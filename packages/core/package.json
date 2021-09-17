@@ -7,7 +7,7 @@
         "lint": "eslint ./src/ ./__tests__/ --ext .ts",
         "fix": "eslint ./src/ ./__tests__/ --ext .ts --fix",
         "test": "jest",
-        "build:update-conversion-rates": "ts-node scripts/updateConversionRates.ts"
+        "build:update-conversion-rates": "ts-node scripts/updateConversionRates.ts ./src/price/currencyConversionRates.json && prettier -w ./src/price/currencyConversionRates.json"
     },
     "dependencies": {
         "axios": "^0.21.1",
