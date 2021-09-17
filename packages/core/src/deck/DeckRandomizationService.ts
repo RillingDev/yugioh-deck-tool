@@ -1,18 +1,18 @@
 import { inject, injectable } from "inversify";
-import type { CardFilter } from "../card/FilterService";
-import { FilterService } from "../card/FilterService";
-import type { Deck } from "./Deck";
-import { CardDatabase } from "../card/CardDatabase";
-import { DeckService } from "./DeckService";
-import { TYPES } from "../types";
-import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import { SortingService } from "../card/SortingService";
-import { CardService } from "../card/CardService";
 import { random, sampleSize, shuffle, words } from "lodash";
 import type { Card } from "../card/Card";
+import { CardDatabase } from "../card/CardDatabase";
+import { CardService } from "../card/CardService";
+import type { CardFilter } from "../card/FilterService";
+import { FilterService } from "../card/FilterService";
 import type { Format } from "../card/format/Format";
+import { SortingService } from "../card/SortingService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
+import { TYPES } from "../types";
+import type { Deck } from "./Deck";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
+import { DefaultDeckPartConfig } from "./DeckPartConfig";
+import { DeckService } from "./DeckService";
 
 export enum RandomizationStrategy {
     NORMAL = "Normal",
@@ -21,6 +21,29 @@ export enum RandomizationStrategy {
     ARCHETYPE_3 = "3 Archetypes",
     HIGHLANDER = "Highlander",
 }
+
+type TypeCategoryWeighting = ReadonlyMap<CardTypeCategory, number | null>;
+
+export type RandomizationOptions = Partial<{
+    /**
+     * Filter to apply to card pool before randomization (e.g. a certain format).
+     */
+    readonly filter: CardFilter;
+
+    /**
+     * Percentage of cards a deck should have by card type category.
+     * E.g. MONSTER with 0.65 would mean the deck should have around 65% monster cards.
+     * null means the ratio check will be skipped.
+     */
+    readonly typeCategoryWeighting: TypeCategoryWeighting;
+}>;
+
+const DEFAULT_TYPE_CATEGORY_RATIO: TypeCategoryWeighting = new Map([
+    [CardTypeCategory.MONSTER, 0.625],
+    [CardTypeCategory.SPELL, 0.275],
+    [CardTypeCategory.TRAP, 0.1],
+    [CardTypeCategory.SKILL, null],
+]);
 
 @injectable()
 export class DeckRandomizationService {
@@ -54,21 +77,6 @@ export class DeckRandomizationService {
         "be",
     ]);
 
-    /**
-     * Percentage of cards a deck should have by card type category.
-     * E.g. MONSTER with 0.65 would mean the deck should have around 65% monster cards.
-     * null means the ratio check will be skipped.
-     */
-    private static readonly CARD_TYPE_CATEGORY_RATIO = new Map<
-        CardTypeCategory,
-        number | null
-    >([
-        [CardTypeCategory.MONSTER, 0.625],
-        [CardTypeCategory.SPELL, 0.275],
-        [CardTypeCategory.TRAP, 0.1],
-        [CardTypeCategory.SKILL, null],
-    ]);
-
     readonly #cardDatabase: CardDatabase;
     readonly #deckService: DeckService;
     readonly #filterService: FilterService;
@@ -98,11 +106,18 @@ export class DeckRandomizationService {
      * Creates a random deck for the given strategy and filter.
      *
      * @param strategy Strategy to use.
-     * @param filter Filter to apply to card pool before randomization (e.g. a certain format).
+     * @param options Additional options.
      * @return Randomized deck.
      */
-    randomize(strategy: RandomizationStrategy, filter?: CardFilter): Deck {
-        const deck = this.#deckService.createEmptyDeck();
+    randomize(
+        strategy: RandomizationStrategy,
+        options: RandomizationOptions = {}
+    ): Deck {
+        const typeCategoryWeighting =
+            options.typeCategoryWeighting ?? DEFAULT_TYPE_CATEGORY_RATIO;
+        const filter = options.filter ?? null;
+        const format = filter?.format ?? null;
+
         let cards = this.#cardDatabase.getCards();
         if (filter != null) {
             cards = this.#filterService.filter(cards, filter);
@@ -119,7 +134,7 @@ export class DeckRandomizationService {
             );
         }
 
-        const format = filter?.format ?? null;
+        const deck = this.#deckService.createEmptyDeck();
         for (const deckPart of DECK_PART_ARR) {
             for (const primaryPool of primaryPools) {
                 const cardsPerPool = isArchetypeStrategy
@@ -133,7 +148,8 @@ export class DeckRandomizationService {
                     strategy,
                     primaryPool,
                     deckPart === DeckPart.MAIN,
-                    cardsPerPool
+                    cardsPerPool,
+                    typeCategoryWeighting
                 );
             }
 
@@ -144,7 +160,8 @@ export class DeckRandomizationService {
                 strategy,
                 secondaryPool,
                 false,
-                null
+                null,
+                typeCategoryWeighting
             );
         }
         deck.name = this.#createName(deck);
@@ -182,6 +199,7 @@ export class DeckRandomizationService {
      *              only limiting the next cycle of card picking, not the card count of an already picked card.
      * @param preferPlaySet If higher counts of cards should be preferred.
      * @param limit Optional limit of how many cards should be added. Note that is only a soft limit,
+     * @param typeCategoryWeighting see {@link RandomizationOptions}.
      */
     #addCards(
         deck: Deck,
@@ -190,7 +208,8 @@ export class DeckRandomizationService {
         strategy: RandomizationStrategy,
         pool: Card[],
         preferPlaySet: boolean,
-        limit: number | null
+        limit: number | null,
+        typeCategoryWeighting: TypeCategoryWeighting
     ): void {
         const deckPartCards = deck.parts[deckPart];
         const initialLength = deckPartCards.length;
@@ -215,18 +234,16 @@ export class DeckRandomizationService {
                 deckPart === DeckPart.MAIN &&
                 deckPartCards.length >= deckPartLimit / 2
             ) {
-                const cardTypeCategoryRatio: number | null =
-                    DeckRandomizationService.CARD_TYPE_CATEGORY_RATIO.get(
-                        card.type.category
-                    ) ?? null;
+                const typeCategoryRatio: number | null =
+                    typeCategoryWeighting.get(card.type.category) ?? null;
                 const cardsOfTypeCategoryCount = deckPartCards.filter(
                     (deckPartCard) =>
                         deckPartCard.type.category === card.type.category
                 ).length;
                 if (
-                    cardTypeCategoryRatio != null &&
+                    typeCategoryRatio != null &&
                     cardsOfTypeCategoryCount >=
-                        deckPartLimit * cardTypeCategoryRatio
+                        deckPartLimit * typeCategoryRatio
                 ) {
                     continue;
                 }

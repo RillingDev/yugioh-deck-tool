@@ -85,8 +85,10 @@ export default defineComponent({
             const randomizedDeck = deckRandomizationService.randomize(
                 strategy.value,
                 {
-                    ...filter.value,
-                    format: format.value,
+                    filter: {
+                        ...filter.value,
+                        format: format.value,
+                    },
                 }
             );
             store.commit(DECK_REPLACE, { deck: randomizedDeck });

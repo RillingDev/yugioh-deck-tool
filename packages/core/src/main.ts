@@ -49,8 +49,11 @@ export {
 } from "./card/SortingService";
 export type { CardFilter } from "./card/FilterService";
 export { FilterService } from "./card/FilterService";
-export { DeckRandomizationService } from "./deck/DeckRandomizationService";
-export { RandomizationStrategy } from "./deck/DeckRandomizationService";
+export {
+    DeckRandomizationService,
+    RandomizationStrategy,
+} from "./deck/DeckRandomizationService";
+export type { RandomizationOptions } from "./deck/DeckRandomizationService";
 export { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 export { DeckFileService } from "./deck/DeckFileService";
 export type { ImportResult } from "./deck/DeckFileService";
