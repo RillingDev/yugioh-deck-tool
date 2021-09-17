@@ -127,8 +127,7 @@ export class DeckRandomizationService {
         const secondaryPool: Card[] = cards;
 
         const archetypeCount = this.#getArchetypeCount(strategy);
-        const isArchetypeStrategy = archetypeCount !== 0;
-        if (isArchetypeStrategy) {
+        if (archetypeCount > 0) {
             primaryPools.push(
                 ...this.#getRandomArchetypeCardPools(cards, archetypeCount)
             );
@@ -136,21 +135,20 @@ export class DeckRandomizationService {
 
         const deck = this.#deckService.createEmptyDeck();
         for (const deckPart of DECK_PART_ARR) {
-            for (const primaryPool of primaryPools) {
-                const cardsPerPool = isArchetypeStrategy
-                    ? this.#getCardsPerArchetypeCount(strategy)
-                    : 0;
-
-                this.#addCards(
-                    deck,
-                    deckPart,
-                    format,
-                    strategy,
-                    primaryPool,
-                    deckPart === DeckPart.MAIN,
-                    cardsPerPool,
-                    typeCategoryWeighting
-                );
+            if (primaryPools.length > 0) {
+                const cardCountPerPool = this.#getCardCountPerPool(strategy);
+                for (const primaryPool of primaryPools) {
+                    this.#addCards(
+                        deck,
+                        deckPart,
+                        format,
+                        strategy,
+                        primaryPool,
+                        deckPart === DeckPart.MAIN,
+                        cardCountPerPool,
+                        typeCategoryWeighting
+                    );
+                }
             }
 
             this.#addCards(
@@ -276,8 +274,15 @@ export class DeckRandomizationService {
         return 0;
     }
 
-    #getCardsPerArchetypeCount(strategy: RandomizationStrategy): number {
-        return Math.ceil(30 / this.#getArchetypeCount(strategy));
+    #getCardCountPerPool(strategy: RandomizationStrategy): number {
+        const archetypeCount = this.#getArchetypeCount(strategy);
+        // Currently only archetype strategies can use the primary pool.
+        if (archetypeCount === 0) {
+            throw new TypeError(
+                "Cannot determine card count per pool for this strategy."
+            );
+        }
+        return Math.ceil(30 / archetypeCount);
     }
 
     #getDeckPartLimit(
