@@ -1,6 +1,6 @@
 {
     "name": "@yugioh-deck-tool/application",
-    "version": "5.2.0",
+    "version": "5.3.0",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
@@ -11,10 +11,10 @@
     },
     "dependencies": {
         "@vue/composition-api": "^1.0.0-rc.2",
-        "@yugioh-deck-tool/browser-common": "^5.2.0",
-        "@yugioh-deck-tool/core": "^5.2.0",
-        "@yugioh-deck-tool/tooltip": "^5.2.0",
-        "@yugioh-deck-tool/ygoprodeck": "^5.2.0",
+        "@yugioh-deck-tool/browser-common": "^5.3.0",
+        "@yugioh-deck-tool/core": "^5.3.0",
+        "@yugioh-deck-tool/tooltip": "^5.3.0",
+        "@yugioh-deck-tool/ygoprodeck": "^5.3.0",
         "bootstrap": "^4.6.0",
         "bootstrap-vue": "^2.21.2",
         "core-js": "^3.8.3",
