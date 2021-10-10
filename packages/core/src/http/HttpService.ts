@@ -1,15 +1,9 @@
-export interface HttpResponse<TData> {
-    readonly data: TData;
-    readonly status: number;
-    readonly statusText: string;
-}
-
-export interface HttpRequestConfig {
+export interface HttpRequestConfig<TData> {
     readonly baseUrl?: string;
 
     readonly params?: Record<string, string | number | boolean | null>;
-    readonly data?: Record<string, string | number | boolean | null>;
-    readonly headers?: Record<string, string | number | boolean | null>;
+    readonly data?: TData;
+    readonly headers?: Record<string, string>;
     readonly auth?: {
         readonly username: string;
         readonly password: string;
@@ -20,12 +14,18 @@ export interface HttpRequestConfig {
     readonly validateStatus?: (status: number) => boolean;
 }
 
+export interface HttpResponse<TData> {
+    readonly data: TData;
+    readonly status: number;
+    readonly statusText: string;
+}
+
 /**
  * HTTP client abstraction allowing for simple GET requests.
  */
 export interface HttpService {
-    get: <TData>(
+    get: <TResponse>(
         url: string,
-        requestConfig: HttpRequestConfig
-    ) => Promise<HttpResponse<TData>>;
+        requestConfig: HttpRequestConfig<void>
+    ) => Promise<HttpResponse<TResponse>>;
 }

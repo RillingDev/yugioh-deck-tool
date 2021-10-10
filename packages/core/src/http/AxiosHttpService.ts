@@ -3,7 +3,7 @@ import type {
     HttpResponse,
     HttpService,
 } from "./HttpService";
-import type { AxiosInstance } from "axios";
+import type { AxiosInstance, AxiosResponse } from "axios";
 import axios from "axios";
 import { injectable } from "inversify";
 
@@ -17,11 +17,11 @@ export class AxiosHttpService implements HttpService {
         });
     }
 
-    get<TData>(
+    get<TResponse>(
         url: string,
-        requestConfig: HttpRequestConfig
-    ): Promise<HttpResponse<TData>> {
-        return axios.get<TData>(url, {
+        requestConfig: HttpRequestConfig<void>
+    ): Promise<HttpResponse<TResponse>> {
+        return axios.get<void, AxiosResponse<TResponse>>(url, {
             ...requestConfig,
             // eslint-disable-next-line @typescript-eslint/naming-convention
             baseURL: requestConfig.baseUrl,
