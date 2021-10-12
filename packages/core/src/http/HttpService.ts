@@ -1,23 +1,25 @@
 export interface HttpRequestConfig<TData> {
     readonly baseUrl?: string;
 
-    readonly params?: Record<string, string | number | boolean | null>;
     readonly data?: TData;
     readonly headers?: Record<string, string>;
-    readonly auth?: {
-        readonly username: string;
-        readonly password: string;
-    };
+    readonly params?: Record<string, string | number | boolean | null>;
 
     readonly responseType: "json" | "text";
     readonly timeout: number;
     readonly validateStatus?: (status: number) => boolean;
+    readonly auth?: {
+        readonly username: string;
+        readonly password: string;
+    };
 }
 
 export interface HttpResponse<TData> {
-    readonly data: TData;
     readonly status: number;
     readonly statusText: string;
+
+    readonly data: TData;
+    readonly headers: Record<string, string>;
 }
 
 /**

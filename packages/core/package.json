@@ -10,7 +10,7 @@
         "build:update-conversion-rates": "ts-node scripts/updateConversionRates.ts ./src/price/currencyConversionRates.json && prettier -w ./src/price/currencyConversionRates.json"
     },
     "dependencies": {
-        "axios": "^0.22.0",
+        "axios": "^0.23.0",
         "base64-js": "^1.5.1",
         "inversify": "^5.1.1",
         "lightdash": "^13.0.1",
