@@ -226,6 +226,7 @@ describe("DeckFileService", () => {
                 data: "deck file content",
                 status: 200,
                 statusText: "status",
+                headers: {},
             });
 
             const result = await deckFileService.fromRemoteFile(
@@ -250,6 +251,7 @@ describe("DeckFileService", () => {
                 data: fileContent,
                 status: 200,
                 statusText: "status",
+                headers: {},
             });
 
             const result = await deckFileService.fromRemoteFile(
