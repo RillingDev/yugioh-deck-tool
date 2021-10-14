@@ -11,7 +11,7 @@
     "dependencies": {
         "@yugioh-deck-tool/core": "^5.3.0",
         "html2canvas": "^1.0.0",
-        "inversify": "^5.1.1"
+        "inversify": "^6.0.1"
     },
     "peerDependencies": {
         "reflect-metadata": "^0.1.13"

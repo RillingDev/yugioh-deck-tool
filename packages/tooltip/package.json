@@ -12,7 +12,7 @@
         "@yugioh-deck-tool/browser-common": "^5.3.0",
         "@yugioh-deck-tool/core": "^5.3.0",
         "@yugioh-deck-tool/ygoprodeck": "^5.3.0",
-        "inversify": "^5.1.1",
+        "inversify": "^6.0.1",
         "lodash": "^4.17.21",
         "reflect-metadata": "^0.1.13",
         "tippy.js": "^6.3.1"
