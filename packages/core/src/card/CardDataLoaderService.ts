@@ -32,7 +32,7 @@ export interface CardDataLoaderService {
 	getCardValues: () => Promise<CardValues>;
 
 	/**
-	 * Get archetypes which exist, which can be compared against a cards archetype.
+	 * Get archetypes which exist, which can be compared against a card's archetype.
 	 */
 	getArchetypes: () => Promise<string[]>;
 }

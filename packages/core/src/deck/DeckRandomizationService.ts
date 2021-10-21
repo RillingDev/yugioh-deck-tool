@@ -192,7 +192,7 @@ export class DeckRandomizationService {
 	}
 
 	/**
-	 * Attempts to adds cards from the pool to the deck for the given part.
+	 * Attempts to add cards from the pool to the deck for the given part.
 	 *
 	 * @param deck Deck to add to.
 	 * @param deckPart Deck part to add to.
@@ -281,7 +281,7 @@ export class DeckRandomizationService {
 
 	#getCardCountPerPool(strategy: RandomizationStrategy): number {
 		const archetypeCount = this.#getArchetypeCount(strategy);
-		// Currently only archetype strategies can use the primary pool.
+		// Currently, only archetype strategies can use the primary pool.
 		if (archetypeCount === 0) {
 			throw new TypeError(
 				"Cannot determine card count per pool for this strategy."

@@ -33,7 +33,7 @@ interface CardInfoOptions {
 
 	readonly sorting?: "relevance" | null;
 
-	// Optional Ygoprodeck credentials. When provided, only cards in this users collection are returned.
+	// Optional Ygoprodeck credentials. When provided, only cards in this user's collection are returned.
 	readonly auth?: Credentials;
 }
 
@@ -146,7 +146,7 @@ export class YgoprodeckApiService {
 			params.sort = options.sorting;
 		}
 		if (options.auth != null) {
-			// If authorization is used, somewhat unique value is required to ensure no caching is done server-side
+			// If authorization is used, a somewhat unique value is required to ensure no caching is done server-side
 			params.cachebust = String(Date.now());
 		}
 		return params;

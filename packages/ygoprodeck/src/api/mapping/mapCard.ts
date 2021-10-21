@@ -121,7 +121,7 @@ const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
 	});
 };
 
-// Map back against main source instead of google's CDN.
+// Map back against main source instead of Google's CDN.
 const mapCardImage = (imageUrl: string): string =>
 	imageUrl.replace(
 		"https://storage.googleapis.com/ygoprodeck.com/",

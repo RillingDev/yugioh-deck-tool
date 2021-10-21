@@ -12,7 +12,7 @@ import { EncodingService } from "../util/EncodingService";
 
 @injectable()
 export class DeckUriEncodingService {
-	// A 32 bit integer is able to store all 8 digit passcodes
+	// A 32-bit integer is able to store all 8 digit passcodes
 	// Note that currently we assume only little endian systems are used.
 	private static readonly BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
 	private static readonly LIMIT =
@@ -127,7 +127,7 @@ export class DeckUriEncodingService {
 	 * <ol>
 	 *     <li>Create byte array of deck name and cards (see below)</li>
 	 *     <li>Deflate the byte array to producer shorter results</li>
-	 *     <li>Base64 encode the value with an URI safe alphabet to allow usage in URI query parameter values</li>
+	 *     <li>Base64 encode the value with a URI safe alphabet to allow usage in URI query parameter values</li>
 	 * </ol>
 	 *
 	 * Byte Array structure:
@@ -140,7 +140,7 @@ export class DeckUriEncodingService {
 	 * @return Value that can be decoded to yield the same deck.
 	 */
 	toUrlQueryParamValue(deck: Deck): string {
-		const result: number[] = []; // Array of unsigned 8 bit numbers, using this over Uint8Array for convenience.
+		const result: number[] = []; // Array of unsigned 8-bit numbers, using this over Uint8Array for convenience.
 
 		for (const deckPart of DECK_PART_ARR) {
 			for (const card of deck.parts[deckPart]) {
@@ -190,7 +190,7 @@ export class DeckUriEncodingService {
 					DeckUriEncodingService.URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
 				)
 			) {
-				// After the last deck part, meta data starts
+				// After the last deck part, metadata starts
 				if (deckPartIndex === DECK_PART_ARR.length - 1) {
 					metaDataStart = blockEnd;
 					break;

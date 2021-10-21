@@ -11,7 +11,7 @@ import { FindCardBy } from "@yugioh-deck-tool/core";
 
 /**
  * Implementation of {@link CardDataLoaderService} using {@link YgoprodeckApiService}.
- * Can be used outside of ygoprodeck.com.
+ * Can be used outside ygoprodeck.com.
  */
 @injectable()
 export class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
@@ -36,7 +36,7 @@ export class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
 			});
 		} else {
 			return this.#ygoprodeckApiService.getSingleCard({
-				fuzzyName: cardKey, // fuzzy name matching so we get the most similar match instead of an exact match.
+				fuzzyName: cardKey, // fuzzy name matching, so we get the most similar match instead of an exact match.
 				sorting: "relevance",
 				format: null,
 				includeAliased: false,
