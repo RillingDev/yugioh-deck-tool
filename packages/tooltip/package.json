@@ -1,36 +1,36 @@
 {
-    "name": "@yugioh-deck-tool/tooltip",
-    "version": "5.3.0",
-    "main": "./src/main.ts",
-    "private": true,
-    "scripts": {
-        "lint": "eslint ./src/ ./__tests__/ --ext .ts",
-        "fix": "eslint ./src/ ./__tests__/ --ext .ts --fix",
-        "test": "jest"
-    },
-    "dependencies": {
-        "@yugioh-deck-tool/browser-common": "^5.3.0",
-        "@yugioh-deck-tool/core": "^5.3.0",
-        "@yugioh-deck-tool/ygoprodeck": "^5.3.0",
-        "inversify": "^6.0.1",
-        "lodash": "^4.17.21",
-        "reflect-metadata": "^0.1.13",
-        "tippy.js": "^6.3.1"
-    },
-    "devDependencies": {
-        "@types/jest": "^27.0.0",
-        "@types/lodash": "^4.14.170",
-        "@types/webpack-env": "^1.16.0",
-        "@typescript-eslint/eslint-plugin": "^4.25.0",
-        "@typescript-eslint/parser": "^4.25.0",
-        "eslint": "^7.27.0",
-        "eslint-config-prettier": "^8.1.0",
-        "eslint-plugin-import": "^2.22.3",
-        "eslint-plugin-prettier": "^4.0.0",
-        "jest": "^27.0.6",
-        "prettier": "^2.3.0",
-        "ts-jest": "^27.0.3",
-        "ts-mockito": "^2.6.1",
-        "typescript": "^4.4.3"
-    }
+	"name": "@yugioh-deck-tool/tooltip",
+	"version": "5.3.0",
+	"main": "./src/main.ts",
+	"private": true,
+	"scripts": {
+		"lint": "eslint ./src/ ./__tests__/ --ext .ts",
+		"fix": "eslint ./src/ ./__tests__/ --ext .ts --fix",
+		"test": "jest"
+	},
+	"dependencies": {
+		"@yugioh-deck-tool/browser-common": "^5.3.0",
+		"@yugioh-deck-tool/core": "^5.3.0",
+		"@yugioh-deck-tool/ygoprodeck": "^5.3.0",
+		"inversify": "^6.0.1",
+		"lodash": "^4.17.21",
+		"reflect-metadata": "^0.1.13",
+		"tippy.js": "^6.3.1"
+	},
+	"devDependencies": {
+		"@types/jest": "^27.0.0",
+		"@types/lodash": "^4.14.170",
+		"@types/webpack-env": "^1.16.0",
+		"@typescript-eslint/eslint-plugin": "^4.25.0",
+		"@typescript-eslint/parser": "^4.25.0",
+		"eslint": "^7.27.0",
+		"eslint-config-prettier": "^8.1.0",
+		"eslint-plugin-import": "^2.22.3",
+		"eslint-plugin-prettier": "^4.0.0",
+		"jest": "^27.0.6",
+		"prettier": "^2.3.0",
+		"ts-jest": "^27.0.3",
+		"ts-mockito": "^2.6.1",
+		"typescript": "^4.4.3"
+	}
 }

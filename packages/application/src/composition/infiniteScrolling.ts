@@ -13,40 +13,40 @@ const SCROLL_THROTTLE_TIMEOUT = 100;
  * Consumer should use limited array return value to dynamically render more items upon it being increased.
  */
 export const useInfiniteScrolling = <T>(
-    fullArr: Ref<ReadonlyArray<T>>,
-    initialLimit: number,
-    increment: number
+	fullArr: Ref<ReadonlyArray<T>>,
+	initialLimit: number,
+	increment: number
 ): {
-    scrollHandler: (e: Event) => void;
-    limitedArr: Readonly<Ref<ReadonlyArray<T>>>;
+	scrollHandler: (e: Event) => void;
+	limitedArr: Readonly<Ref<ReadonlyArray<T>>>;
 } => {
-    const limitRef = ref<number>(initialLimit);
+	const limitRef = ref<number>(initialLimit);
 
-    const limitedArr = computed<ReadonlyArray<T>>(() =>
-        fullArr.value.slice(0, limitRef.value)
-    );
+	const limitedArr = computed<ReadonlyArray<T>>(() =>
+		fullArr.value.slice(0, limitRef.value)
+	);
 
-    const scrollHandler = throttle((e: Event) => {
-        const target = e.target as HTMLElement;
+	const scrollHandler = throttle((e: Event) => {
+		const target = e.target as HTMLElement;
 
-        const distanceToBottomTrigger = target.clientHeight / 2;
-        const distanceToBottom =
-            target.scrollHeight - (target.scrollTop + target.clientHeight);
+		const distanceToBottomTrigger = target.clientHeight / 2;
+		const distanceToBottom =
+			target.scrollHeight - (target.scrollTop + target.clientHeight);
 
-        if (distanceToBottom < distanceToBottomTrigger) {
-            limitRef.value = Math.min(
-                limitRef.value + increment,
-                fullArr.value.length
-            );
-        }
-    }, SCROLL_THROTTLE_TIMEOUT);
+		if (distanceToBottom < distanceToBottomTrigger) {
+			limitRef.value = Math.min(
+				limitRef.value + increment,
+				fullArr.value.length
+			);
+		}
+	}, SCROLL_THROTTLE_TIMEOUT);
 
-    watch(
-        () => fullArr.value,
-        () => {
-            limitRef.value = initialLimit;
-        }
-    );
+	watch(
+		() => fullArr.value,
+		() => {
+			limitRef.value = initialLimit;
+		}
+	);
 
-    return { scrollHandler, limitedArr };
+	return { scrollHandler, limitedArr };
 };

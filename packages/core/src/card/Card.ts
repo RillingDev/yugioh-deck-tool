@@ -10,41 +10,41 @@ import type { CardType } from "./type/CardType";
  * Regular card. Also see {@link UnlinkedCard}.
  */
 export interface Card {
-    /**
-     * Passcode/ID is an 8-digit unique code for each card
-     */
-    readonly passcode: string;
-    readonly name: string;
-    readonly description: string;
+	/**
+	 * Passcode/ID is an 8-digit unique code for each card
+	 */
+	readonly passcode: string;
+	readonly name: string;
+	readonly description: string;
 
-    /**
-     * @see CardType
-     */
-    readonly type: CardType;
+	/**
+	 * @see CardType
+	 */
+	readonly type: CardType;
 
-    /**
-     * E.g. "Warrior" or "Equip Spell"
-     */
-    readonly subType: string;
+	/**
+	 * E.g. "Warrior" or "Equip Spell"
+	 */
+	readonly subType: string;
 
-    readonly attribute: string | null;
-    readonly atk: number | null;
-    readonly def: number | null;
-    readonly level: number | null;
-    readonly pendulumScale: number | null;
-    readonly linkRating: number | null;
-    readonly linkMarkers: string[] | null;
+	readonly attribute: string | null;
+	readonly atk: number | null;
+	readonly def: number | null;
+	readonly level: number | null;
+	readonly pendulumScale: number | null;
+	readonly linkRating: number | null;
+	readonly linkMarkers: string[] | null;
 
-    readonly betaName: string | null;
-    readonly treatedAs: string | null;
-    readonly archetype: string | null;
+	readonly betaName: string | null;
+	readonly treatedAs: string | null;
+	readonly archetype: string | null;
 
-    readonly release: ReleaseInfo;
-    readonly sets: CardSet[];
-    readonly formats: Format[];
-    readonly banlist: BanlistInfo;
+	readonly release: ReleaseInfo;
+	readonly sets: CardSet[];
+	readonly formats: Format[];
+	readonly banlist: BanlistInfo;
 
-    readonly image: CardImage | null;
-    readonly prices: CardPrices;
-    readonly views: number;
+	readonly image: CardImage | null;
+	readonly prices: CardPrices;
+	readonly views: number;
 }

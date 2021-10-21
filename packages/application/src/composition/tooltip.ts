@@ -6,17 +6,17 @@ import { getTooltipApi } from "@yugioh-deck-tool/tooltip";
  * If tooltip is not (yet) initialized, functions are noop.
  */
 export const useTooltip: () => {
-    enableTooltip: () => void;
-    disableTooltip: () => void;
+	enableTooltip: () => void;
+	disableTooltip: () => void;
 } = () => {
-    return {
-        /**
-         * @see TooltipInstance#disable
-         */
-        disableTooltip: () => getTooltipApi()?.disable(),
-        /**
-         * @see TooltipInstance#enable
-         */
-        enableTooltip: () => getTooltipApi()?.enable(),
-    };
+	return {
+		/**
+		 * @see TooltipInstance#disable
+		 */
+		disableTooltip: () => getTooltipApi()?.disable(),
+		/**
+		 * @see TooltipInstance#enable
+		 */
+		enableTooltip: () => getTooltipApi()?.enable(),
+	};
 };

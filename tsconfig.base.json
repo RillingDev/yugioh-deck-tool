@@ -2,7 +2,6 @@
     "compilerOptions": {
         // General
         "newLine": "LF",
-        "removeComments": false,
         "moduleResolution": "node",
         "esModuleInterop": true,
         "strict": true,

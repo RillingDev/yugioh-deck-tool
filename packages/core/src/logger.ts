@@ -4,13 +4,13 @@ import { DEVELOPMENT_MODE } from "./mode";
 import { name as getName } from "lightdash";
 
 export const getLogger = (consumer: unknown): Logger => {
-    const name = getName(consumer);
-    if (name == null) {
-        throw new TypeError(
-            `Cannot find name for consumer: '${String(consumer)}'`
-        );
-    }
-    const logger = getLoglevelLogger(name);
-    logger.setLevel(DEVELOPMENT_MODE ? levels.DEBUG : levels.WARN);
-    return logger;
+	const name = getName(consumer);
+	if (name == null) {
+		throw new TypeError(
+			`Cannot find name for consumer: '${String(consumer)}'`
+		);
+	}
+	const logger = getLoglevelLogger(name);
+	logger.setLevel(DEVELOPMENT_MODE ? levels.DEBUG : levels.WARN);
+	return logger;
 };

@@ -1,11 +1,11 @@
 @import "variables";
 
 @mixin screen-min-width($breakpoint) {
-    @if map-has-key($grid-breakpoints, $breakpoint) {
-        @media (min-width: #{map-get($grid-breakpoints, $breakpoint)}) {
-            @content;
-        }
-    } @else {
-        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. ";
-    }
+	@if map-has-key($grid-breakpoints, $breakpoint) {
+		@media (min-width: #{map-get($grid-breakpoints, $breakpoint)}) {
+			@content;
+		}
+	} @else {
+		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. ";
+	}
 }

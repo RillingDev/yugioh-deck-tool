@@ -11,14 +11,14 @@ import { TYPES } from "@yugioh-deck-tool/core";
  * Module containing ygoprodeck.com providers.
  */
 export const ygoprodeckModule = new ContainerModule((bind: interfaces.Bind) => {
-    bind<YgoprodeckApiService>(
-        YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService
-    ).to(YgoprodeckApiService);
-    bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
-        YgoprodeckService
-    );
+	bind<YgoprodeckApiService>(
+		YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService
+	).to(YgoprodeckApiService);
+	bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
+		YgoprodeckService
+	);
 
-    bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
-        YgoprodeckCardDataLoaderService
-    );
+	bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
+		YgoprodeckCardDataLoaderService
+	);
 });

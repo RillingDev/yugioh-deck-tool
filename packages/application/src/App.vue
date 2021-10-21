@@ -1,16 +1,16 @@
 <template>
-    <BOverlay :show="loading">
-        <div class="deck-tool__body">
-            <div class="deck-tool__body__primary">
-                <YgoToolbar />
-                <hr />
-                <YgoDeck v-show="!loading" :drag-group="dragGroup" />
-            </div>
-            <div class="deck-tool__body__secondary">
-                <YgoBuilder :drag-group="dragGroup" />
-            </div>
-        </div>
-    </BOverlay>
+	<BOverlay :show="loading">
+		<div class="deck-tool__body">
+			<div class="deck-tool__body__primary">
+				<YgoToolbar />
+				<hr />
+				<YgoDeck v-show="!loading" :drag-group="dragGroup" />
+			</div>
+			<div class="deck-tool__body__secondary">
+				<YgoBuilder :drag-group="dragGroup" />
+			</div>
+		</div>
+	</BOverlay>
 </template>
 
 <script lang="ts">
@@ -32,65 +32,65 @@ import { useStore } from "./store/store";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const deckUrlController = applicationContainer.get<DeckUrlController>(
-    APPLICATION_TYPES.DeckUrlController
+	APPLICATION_TYPES.DeckUrlController
 );
 
 const logger = getLogger("App");
 
 export default defineComponent({
-    components: {
-        BOverlay,
-        YgoDeck,
-        YgoBuilder,
-        YgoToolbar,
-    },
-    props: {},
-    emits: [],
-    setup(props, context) {
-        const store = useStore();
+	components: {
+		BOverlay,
+		YgoDeck,
+		YgoBuilder,
+		YgoToolbar,
+	},
+	props: {},
+	emits: [],
+	setup(props, context) {
+		const store = useStore();
 
-        const loading = computed<boolean>(() => store.state.data.loading);
+		const loading = computed<boolean>(() => store.state.data.loading);
 
-        const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
+		const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
-        onMounted(() => {
-            Promise.resolve()
-                .then(() => store.commit(SET_LOADING, { loading: true }))
-                .then(() => cardDatabase.prepareAll())
-                .then(() => store.commit(ESSENTIAL_DATA_LOADED))
-                .then(() => {
-                    logger.info("Loaded data.");
-                    return deckUrlController.loadUriDeck(
-                        new URL(location.href)
-                    );
-                })
-                .then((result) => {
-                    if (result != null) {
-                        store.commit(DECK_REPLACE, { deck: result });
-                        logger.info("Loaded deck from URI.");
-                    } else {
-                        logger.info(
-                            "No URI deck loaded, starting with empty deck."
-                        );
-                    }
-                })
-                .catch((err) => {
-                    logger.error("Could not start the application!", err);
-                    showError(
-                        context,
-                        "Could not start the application!",
-                        "deck-tool__portal"
-                    );
-                })
-                .finally(() => store.commit(SET_LOADING, { loading: false }));
-        });
+		onMounted(() => {
+			Promise.resolve()
+				.then(() => store.commit(SET_LOADING, { loading: true }))
+				.then(() => cardDatabase.prepareAll())
+				.then(() => store.commit(ESSENTIAL_DATA_LOADED))
+				.then(() => {
+					logger.info("Loaded data.");
+					return deckUrlController.loadUriDeck(
+						new URL(location.href)
+					);
+				})
+				.then((result) => {
+					if (result != null) {
+						store.commit(DECK_REPLACE, { deck: result });
+						logger.info("Loaded deck from URI.");
+					} else {
+						logger.info(
+							"No URI deck loaded, starting with empty deck."
+						);
+					}
+				})
+				.catch((err) => {
+					logger.error("Could not start the application!", err);
+					showError(
+						context,
+						"Could not start the application!",
+						"deck-tool__portal"
+					);
+				})
+				.finally(() => store.commit(SET_LOADING, { loading: false }));
+		});
 
-        return {
-            loading,
+		return {
+			loading,
 
-            dragGroup,
-        };
-    },
+			dragGroup,
+		};
+	},
 });
 </script>
 <style lang="scss">
@@ -98,26 +98,26 @@ export default defineComponent({
 @import "~@yugioh-deck-tool/browser-common/src/styles/variables";
 
 .deck-tool {
-    .deck-tool__body {
-        display: flex;
-        flex-direction: column;
+	.deck-tool__body {
+		display: flex;
+		flex-direction: column;
 
-        &__primary {
-            width: 100%;
-        }
+		&__primary {
+			width: 100%;
+		}
 
-        &__secondary {
-            width: 100%;
-        }
+		&__secondary {
+			width: 100%;
+		}
 
-        @include screen-min-width(md) {
-            flex-direction: row;
+		@include screen-min-width(md) {
+			flex-direction: row;
 
-            &__secondary {
-                max-width: 340px;
-                margin-left: $margin-lg;
-            }
-        }
-    }
+			&__secondary {
+				max-width: 340px;
+				margin-left: $margin-lg;
+			}
+		}
+	}
 }
 </style>

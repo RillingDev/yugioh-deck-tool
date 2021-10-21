@@ -7,15 +7,15 @@
  * @param context Context to use.
  */
 export const downloadFile = (file: File, context: Document): void => {
-    const objectUrl = URL.createObjectURL(file);
+	const objectUrl = URL.createObjectURL(file);
 
-    const el = context.createElement("a");
-    el.href = objectUrl;
-    el.download = file.name;
+	const el = context.createElement("a");
+	el.href = objectUrl;
+	el.download = file.name;
 
-    context.body.appendChild(el);
-    el.click();
+	context.body.appendChild(el);
+	el.click();
 
-    el.remove();
-    URL.revokeObjectURL(objectUrl);
+	el.remove();
+	URL.revokeObjectURL(objectUrl);
 };

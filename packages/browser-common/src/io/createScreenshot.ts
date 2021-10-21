@@ -12,29 +12,29 @@ const SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION = "png";
  * @return Image file.
  */
 export const createScreenshot = async (
-    el: HTMLElement,
-    filenameBase: string,
-    options: {
-        scale?: number;
-        onClone?: (doc: Document) => void;
-    }
+	el: HTMLElement,
+	filenameBase: string,
+	options: {
+		scale?: number;
+		onClone?: (doc: Document) => void;
+	}
 ): Promise<File> => {
-    const canvas = await html2canvas(el, {
-        scale: options.scale,
-        onclone: options.onClone,
-    });
+	const canvas = await html2canvas(el, {
+		scale: options.scale,
+		onclone: options.onClone,
+	});
 
-    const fileName = `${filenameBase}.${SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION}`;
-    return new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => {
-            if (blob == null) {
-                reject(new TypeError("Could not convert canvas to blob."));
-            }
-            resolve(
-                new File([blob!], fileName, {
-                    type: blob!.type,
-                })
-            );
-        }, SCREENSHOT_IMAGE_MIME_TYPE);
-    });
+	const fileName = `${filenameBase}.${SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION}`;
+	return new Promise((resolve, reject) => {
+		canvas.toBlob((blob) => {
+			if (blob == null) {
+				reject(new TypeError("Could not convert canvas to blob."));
+			}
+			resolve(
+				new File([blob!], fileName, {
+					type: blob!.type,
+				})
+			);
+		}, SCREENSHOT_IMAGE_MIME_TYPE);
+	});
 };

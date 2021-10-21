@@ -1,18 +1,18 @@
 <template>
-    <a
-        :disabled="deckEmpty"
-        :class="{ disabled: deckEmpty }"
-        :href="buyLink"
-        class="btn btn-primary"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-        <span
-            class="fas fas-in-button fa-shopping-cart"
-            aria-hidden="true"
-        ></span>
-        Buy Deck
-    </a>
+	<a
+		:disabled="deckEmpty"
+		:class="{ disabled: deckEmpty }"
+		:href="buyLink"
+		class="btn btn-primary"
+		target="_blank"
+		rel="noopener noreferrer"
+	>
+		<span
+			class="fas fas-in-button fa-shopping-cart"
+			aria-hidden="true"
+		></span>
+		Buy Deck
+	</a>
 </template>
 
 <script lang="ts">
@@ -23,26 +23,26 @@ import { applicationContainer } from "../../inversify.config";
 import { useStore } from "../../store/store";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
-    TYPES.DeckExportService
+	TYPES.DeckExportService
 );
 
 export default defineComponent({
-    components: {},
-    props: {},
-    emits: [],
-    setup() {
-        const store = useStore();
+	components: {},
+	props: {},
+	emits: [],
+	setup() {
+		const store = useStore();
 
-        const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
+		const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
 
-        const buyLink = computed<string>(() => {
-            const deck = store.state.deck.active;
-            return deckExportService
-                .toBuyLink(deck, "deck-builder", "YGOPRODeck")
-                .toString();
-        });
+		const buyLink = computed<string>(() => {
+			const deck = store.state.deck.active;
+			return deckExportService
+				.toBuyLink(deck, "deck-builder", "YGOPRODeck")
+				.toString();
+		});
 
-        return { deckEmpty, buyLink };
-    },
+		return { deckEmpty, buyLink };
+	},
 });
 </script>

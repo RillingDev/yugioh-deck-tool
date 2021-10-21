@@ -8,7 +8,7 @@ import { Environment } from "./EnvironmentConfig";
  */
 @injectable()
 export class DefaultEnvironmentConfig implements EnvironmentConfig {
-    getEnvironment(): Environment {
-        return Environment.DEFAULT;
-    }
+	getEnvironment(): Environment {
+		return Environment.DEFAULT;
+	}
 }

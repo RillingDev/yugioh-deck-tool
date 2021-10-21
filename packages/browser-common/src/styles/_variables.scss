@@ -15,15 +15,15 @@ $gray-900: #212121;
 $black: #000;
 
 $grays: (
-    "100": $gray-100,
-    "200": $gray-200,
-    "300": $gray-300,
-    "400": $gray-400,
-    "500": $gray-500,
-    "600": $gray-600,
-    "700": $gray-700,
-    "800": $gray-800,
-    "900": $gray-900,
+	"100": $gray-100,
+	"200": $gray-200,
+	"300": $gray-300,
+	"400": $gray-400,
+	"500": $gray-500,
+	"600": $gray-600,
+	"700": $gray-700,
+	"800": $gray-800,
+	"900": $gray-900,
 );
 
 $blue: #3f88c5;
@@ -33,14 +33,14 @@ $yellow: #f3c221;
 $green: #9ad557;
 
 $colors: (
-    "blue": $blue,
-    "red": $red,
-    "orange": $orange,
-    "yellow": $yellow,
-    "green": $green,
-    "white": $white,
-    "gray": $gray-600,
-    "gray-dark": $gray-800,
+	"blue": $blue,
+	"red": $red,
+	"orange": $orange,
+	"yellow": $yellow,
+	"green": $green,
+	"white": $white,
+	"gray": $gray-600,
+	"gray-dark": $gray-800,
 );
 
 $color-deck-part-main: #9f653d;
@@ -61,14 +61,14 @@ $light: $gray-100;
 $dark: $gray-800;
 
 $theme-colors: (
-    "primary": $primary,
-    "secondary": $secondary,
-    "success": $success,
-    "info": $info,
-    "warning": $warning,
-    "danger": $danger,
-    "light": $light,
-    "dark": $dark,
+	"primary": $primary,
+	"secondary": $secondary,
+	"success": $success,
+	"info": $info,
+	"warning": $warning,
+	"danger": $danger,
+	"light": $light,
+	"dark": $dark,
 );
 
 // Font system
@@ -83,18 +83,18 @@ $font-size-sm: $font-size-base * 0.85;
 // Breakpoints / Spacing
 
 $grid-breakpoints: (
-    xs: 0,
-    sm: 600px,
-    md: 766px,
-    lg: 1054px,
-    xl: 1220px,
+	xs: 0,
+	sm: 600px,
+	md: 766px,
+	lg: 1054px,
+	xl: 1220px,
 );
 
 $container-max-widths: (
-    sm: 600px,
-    md: 766px,
-    lg: 1054px,
-    xl: 1220px,
+	sm: 600px,
+	md: 766px,
+	lg: 1054px,
+	xl: 1220px,
 );
 
 $margin-sm: 0.25rem;

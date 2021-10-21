@@ -11,15 +11,15 @@ import { collectionModule } from "./modules/collection";
 Vue.use(Vuex);
 
 export const store = new Store<AppState>({
-    modules: {
-        data: dataModule,
+	modules: {
+		data: dataModule,
 
-        currency: currencyModule,
-        format: formatModule,
-        deck: deckModule,
-        collection: collectionModule,
-    },
-    strict: DEVELOPMENT_MODE,
+		currency: currencyModule,
+		format: formatModule,
+		deck: deckModule,
+		collection: collectionModule,
+	},
+	strict: DEVELOPMENT_MODE,
 });
 
 // Prepare for Vuex4 (https://next.vuex.vuejs.org/guide/typescript-support.html#simplifying-usestore-usage)

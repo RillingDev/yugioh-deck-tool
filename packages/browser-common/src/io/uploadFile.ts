@@ -8,19 +8,19 @@
  * @param context Context to use.
  */
 export const uploadFile = (
-    accept: string,
-    callback: (files: null | FileList) => void,
-    context: Document
+	accept: string,
+	callback: (files: null | FileList) => void,
+	context: Document
 ): void => {
-    const el = context.createElement("input");
+	const el = context.createElement("input");
 
-    el.type = "file";
-    el.accept = accept;
-    el.addEventListener("input", (e) => {
-        callback((e.target as HTMLInputElement).files);
-    });
+	el.type = "file";
+	el.accept = accept;
+	el.addEventListener("input", (e) => {
+		callback((e.target as HTMLInputElement).files);
+	});
 
-    context.body.appendChild(el);
-    el.click();
-    el.remove();
+	context.body.appendChild(el);
+	el.click();
+	el.remove();
 };

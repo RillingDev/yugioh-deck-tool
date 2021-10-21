@@ -14,9 +14,9 @@ Live version: <https://ygoprodeck.com/card-database/deck-prices/>.
 
 Prerequisites:
 
-- Git
-- Node.js
-- yarn
+-   Git
+-   Node.js
+-   yarn
 
 Then perform the following steps:
 
@@ -26,18 +26,18 @@ Then perform the following steps:
 
 #### NPM Scripts
 
-- `serve` in _application_ to develop.
-- `test` to compile and run tests.
-- `build` to build production files.
+-   `serve` in _application_ to develop.
+-   `test` to compile and run tests.
+-   `build` to build production files.
 
 #### Build Output
 
-- `common.js` contains code required for both the tooltip and the deck-tool to work, **and has to be
-  loaded before these**.
-- `app.js` and `app.css` contain code for the actual deck-tool.
-- `tooltip.js` and `tooltip.css` contain code for the tooltips.
-- `index.html` contains a basic setup loading the aforementioned files and starts the deck-tool with
-  tooltips.
+-   `common.js` contains code required for both the tooltip and the deck-tool to work, **and has to be
+    loaded before these**.
+-   `app.js` and `app.css` contain code for the actual deck-tool.
+-   `tooltip.js` and `tooltip.css` contain code for the tooltips.
+-   `index.html` contains a basic setup loading the aforementioned files and starts the deck-tool with
+    tooltips.
 
 The `.map` files are optional and only used for debugging.
 
@@ -58,10 +58,10 @@ See `./packages/tooltip/src/api.ts` and `./packages/application/src/api.ts` for 
 
 ## Credits
 
-- Thanks to Alan from <https://ygoprodeck.com/> for providing the API for all card data, as well as
-  supporting the development.
-- Thanks to the awesome people at <https://github.com/edo9300/edopro> for the great duel simulator
-  that this application is inspired by.
+-   Thanks to Alan from <https://ygoprodeck.com/> for providing the API for all card data, as well as
+    supporting the development.
+-   Thanks to the awesome people at <https://github.com/edo9300/edopro> for the great duel simulator
+    that this application is inspired by.
 
 ## License
 

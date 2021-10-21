@@ -13,8 +13,8 @@ export type { UnlinkedCard, CardSetAppearance } from "./card/UnlinkedCard";
 export type { BanlistInfo } from "./card/banlist/BanlistInfo";
 export type { BanState } from "./card/banlist/BanState";
 export {
-    DefaultBanState,
-    DEFAULT_BAN_STATE_ARR,
+	DefaultBanState,
+	DEFAULT_BAN_STATE_ARR,
 } from "./card/banlist/BanState";
 export type { CardSet } from "./card/set/CardSet";
 export type { CardValues } from "./card/type/CardValues";
@@ -43,20 +43,20 @@ export { DeckExportService } from "./deck/DeckExportService";
 export { DeckService } from "./deck/DeckService";
 export type { SortingOptions } from "./card/SortingService";
 export {
-    SortingService,
-    SortingStrategy,
-    SortingOrder,
+	SortingService,
+	SortingStrategy,
+	SortingOrder,
 } from "./card/SortingService";
 export type { CardFilter } from "./card/FilterService";
 export { FilterService } from "./card/FilterService";
 export {
-    DeckRandomizationService,
-    RandomizationStrategy,
-    createDefaultTypeCategoryWeighting,
+	DeckRandomizationService,
+	RandomizationStrategy,
+	createDefaultTypeCategoryWeighting,
 } from "./deck/DeckRandomizationService";
 export type {
-    RandomizationOptions,
-    TypeCategoryWeighting,
+	RandomizationOptions,
+	TypeCategoryWeighting,
 } from "./deck/DeckRandomizationService";
 export { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 export { DeckFileService } from "./deck/DeckFileService";
@@ -65,6 +65,6 @@ export { UrlService } from "./http/UrlService";
 export { EncodingService } from "./util/EncodingService";
 export { CardPredicateService } from "./card/CardPredicateService";
 export type {
-    CardPredicate,
-    CardCountFunction,
+	CardPredicate,
+	CardCountFunction,
 } from "./card/CardPredicateService";

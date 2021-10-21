@@ -5,10 +5,10 @@ import type { DataState } from "./modules/data";
 import type { CollectionState } from "./modules/collection";
 
 export interface AppState {
-    data: DataState;
+	data: DataState;
 
-    deck: DeckState;
-    currency: CurrencyState;
-    format: FormatState;
-    collection: CollectionState;
+	deck: DeckState;
+	currency: CurrencyState;
+	format: FormatState;
+	collection: CollectionState;
 }

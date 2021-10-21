@@ -1,12 +1,12 @@
 <template>
-    <VSelect
-        v-model="format"
-        :options="formats"
-        :clearable="true"
-        :searchable="false"
-        title="Format"
-        placeholder="Format"
-    />
+	<VSelect
+		v-model="format"
+		:options="formats"
+		:clearable="true"
+		:searchable="false"
+		title="Format"
+		placeholder="Format"
+	/>
 </template>
 
 <script lang="ts">
@@ -18,23 +18,23 @@ import { Format } from "@yugioh-deck-tool/core";
 import { useStore } from "../../store/store";
 
 export default defineComponent({
-    components: { VSelect },
-    props: {},
-    emits: [],
-    setup() {
-        const formats = readonly<Format[]>(Object.values(Format));
+	components: { VSelect },
+	props: {},
+	emits: [],
+	setup() {
+		const formats = readonly<Format[]>(Object.values(Format));
 
-        const store = useStore();
+		const store = useStore();
 
-        const format = computed<Format | null>({
-            get: () => store.state.format.active,
-            set: (newFormat) =>
-                store.commit(FORMAT_UPDATE, {
-                    format: newFormat,
-                }),
-        });
+		const format = computed<Format | null>({
+			get: () => store.state.format.active,
+			set: (newFormat) =>
+				store.commit(FORMAT_UPDATE, {
+					format: newFormat,
+				}),
+		});
 
-        return { formats, format };
-    },
+		return { formats, format };
+	},
 });
 </script>

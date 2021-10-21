@@ -14,8 +14,8 @@ Vue.use(VBModalPlugin);
 Vue.use(VBTogglePlugin);
 
 new Vue({
-    store,
-    render: (h) => h(App),
+	store,
+	render: (h) => h(App),
 })
-    .$mount("#deckToolApplication")
-    .$nextTick(() => bindApplicationApi());
+	.$mount("#deckToolApplication")
+	.$nextTick(() => bindApplicationApi());

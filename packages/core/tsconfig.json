@@ -1,19 +1,19 @@
 {
-    "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-        "noEmit": true,
-        "lib": [
-            "ESNext",
-            "DOM"
-        ]
-    },
-    "include": [
-        "./src/**/*.ts",
-        "./src/**/*.json",
-        "./__tests__/**/*.ts",
-        "./scripts/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true,
+		"lib": [
+			"ESNext",
+			"DOM"
+		]
+	},
+	"include": [
+		"./src/**/*.ts",
+		"./src/**/*.json",
+		"./__tests__/**/*.ts",
+		"./scripts/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }

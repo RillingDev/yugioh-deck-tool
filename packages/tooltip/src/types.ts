@@ -1,3 +1,3 @@
 export const TOOLTIP_TYPES = {
-    TooltipController: Symbol.for("TooltipController"),
+	TooltipController: Symbol.for("TooltipController"),
 };

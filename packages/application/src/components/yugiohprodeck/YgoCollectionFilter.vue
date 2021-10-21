@@ -1,18 +1,18 @@
 <template>
-    <div class="form-group collection-filter">
-        <BFormCheckbox v-model="checked" @input="() => reload()"
-            >Use User Collection
-        </BFormCheckbox>
-        <button
-            class="btn btn-primary btn-sm"
-            title="Reload the User Collection contents"
-            :disabled="!checked"
-            @click="() => reload()"
-        >
-            <span class="fas fa-sync fas-in-button" aria-hidden="true"></span>
-            Reload
-        </button>
-    </div>
+	<div class="form-group collection-filter">
+		<BFormCheckbox v-model="checked" @input="() => reload()"
+			>Use User Collection
+		</BFormCheckbox>
+		<button
+			class="btn btn-primary btn-sm"
+			title="Reload the User Collection contents"
+			:disabled="!checked"
+			@click="() => reload()"
+		>
+			<span class="fas fa-sync fas-in-button" aria-hidden="true"></span>
+			Reload
+		</button>
+	</div>
 </template>
 
 <script lang="ts">
@@ -31,10 +31,10 @@ import { useStore } from "../../store/store";
 import { SET_LOADING } from "../../store/modules/data";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
-    YGOPRODECK_TYPES.YgoprodeckService
+	YGOPRODECK_TYPES.YgoprodeckService
 );
 const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
-    APPLICATION_TYPES.YgoprodeckController
+	APPLICATION_TYPES.YgoprodeckController
 );
 
 const logger = getLogger("YgoCollectionFilter");
@@ -43,59 +43,59 @@ const logger = getLogger("YgoCollectionFilter");
  * Should only be mounted if running in ygoprodeck env and having credentials available.
  */
 export default defineComponent({
-    components: { BFormCheckbox },
-    props: {},
-    emits: ["change"],
-    setup(props, context) {
-        const store = useStore();
+	components: { BFormCheckbox },
+	props: {},
+	emits: ["change"],
+	setup(props, context) {
+		const store = useStore();
 
-        const cardCountFunction = computed<CardCountFunction | null>({
-            get: () => store.state.collection.cardCountFunction,
-            set: (newCardCountFunction) =>
-                store.commit(SET_CARD_COUNT_FUNCTION, {
-                    cardCountFunction: newCardCountFunction,
-                }),
-        });
+		const cardCountFunction = computed<CardCountFunction | null>({
+			get: () => store.state.collection.cardCountFunction,
+			set: (newCardCountFunction) =>
+				store.commit(SET_CARD_COUNT_FUNCTION, {
+					cardCountFunction: newCardCountFunction,
+				}),
+		});
 
-        const checked = ref<boolean>(cardCountFunction.value != null);
+		const checked = ref<boolean>(cardCountFunction.value != null);
 
-        // TODO find a way to link ref with vuex state without watch
-        watch(
-            () => cardCountFunction.value,
-            () => {
-                checked.value = cardCountFunction.value != null;
-            }
-        );
+		// TODO find a way to link ref with vuex state without watch
+		watch(
+			() => cardCountFunction.value,
+			() => {
+				checked.value = cardCountFunction.value != null;
+			}
+		);
 
-        const loadCollection = async (): Promise<CardCountFunction | null> => {
-            if (!checked.value) {
-                return null;
-            }
-            return ygoprodeckService.getCollectionCardCountFunction(
-                ygoprodeckController.getCredentials()
-            );
-        };
-        const reload = (): void => {
-            Promise.resolve()
-                .then(() => store.commit(SET_LOADING, { loading: true }))
-                .then(() => loadCollection())
-                .then((loadedCollectionCardCountFunction) => {
-                    cardCountFunction.value = loadedCollectionCardCountFunction;
-                })
-                .then(() => context.emit("change"))
-                .catch((err) => {
-                    logger.error("Could load user collection!", err);
-                    showError(
-                        context,
-                        "Could load user collection!",
-                        "deck-tool__portal"
-                    );
-                })
-                .finally(() => store.commit(SET_LOADING, { loading: false }));
-        };
+		const loadCollection = async (): Promise<CardCountFunction | null> => {
+			if (!checked.value) {
+				return null;
+			}
+			return ygoprodeckService.getCollectionCardCountFunction(
+				ygoprodeckController.getCredentials()
+			);
+		};
+		const reload = (): void => {
+			Promise.resolve()
+				.then(() => store.commit(SET_LOADING, { loading: true }))
+				.then(() => loadCollection())
+				.then((loadedCollectionCardCountFunction) => {
+					cardCountFunction.value = loadedCollectionCardCountFunction;
+				})
+				.then(() => context.emit("change"))
+				.catch((err) => {
+					logger.error("Could load user collection!", err);
+					showError(
+						context,
+						"Could load user collection!",
+						"deck-tool__portal"
+					);
+				})
+				.finally(() => store.commit(SET_LOADING, { loading: false }));
+		};
 
-        return { checked, reload };
-    },
+		return { checked, reload };
+	},
 });
 </script>
 
@@ -104,10 +104,10 @@ export default defineComponent({
 @import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
-    .collection-filter {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+	.collection-filter {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 }
 </style>

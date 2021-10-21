@@ -1,4 +1,4 @@
 export interface CardImage {
-    readonly url: string;
-    readonly urlSmall: string;
+	readonly url: string;
+	readonly urlSmall: string;
 }

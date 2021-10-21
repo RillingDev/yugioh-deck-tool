@@ -1,33 +1,33 @@
 {
-    "name": "yugioh-deck-tool",
-    "private": true,
-    "description": "A tool to view deck prices, share and edit decks, create random decks and much more",
-    "author": "FelixRilling",
-    "bugs": {
-        "url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
-    },
-    "homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
-    "keywords": [
-        "yugioh",
-        "deck",
-        "app"
-    ],
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/FelixRilling/yugioh-deck-tool.git"
-    },
-    "scripts": {
-        "setup": "yarn install && lerna bootstrap",
-        "lint": "lerna run lint",
-        "fix": "lerna run fix",
-        "test": "lerna run test",
-        "build": "lerna run build"
-    },
-    "devDependencies": {
-        "lerna": "^4.0.0"
-    },
-    "workspaces": [
-        "packages/*"
-    ]
+	"name": "yugioh-deck-tool",
+	"private": true,
+	"description": "A tool to view deck prices, share and edit decks, create random decks and much more",
+	"author": "FelixRilling",
+	"bugs": {
+		"url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
+	},
+	"homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
+	"keywords": [
+		"yugioh",
+		"deck",
+		"app"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/FelixRilling/yugioh-deck-tool.git"
+	},
+	"scripts": {
+		"setup": "yarn install && lerna bootstrap",
+		"lint": "lerna run lint",
+		"fix": "lerna run fix",
+		"test": "lerna run test",
+		"build": "lerna run build"
+	},
+	"devDependencies": {
+		"lerna": "^4.0.0"
+	},
+	"workspaces": [
+		"packages/*"
+	]
 }

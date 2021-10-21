@@ -1,18 +1,18 @@
 {
-    "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "noEmit": true,
-        "lib": [
-            "ESNext",
-            "DOM"
-        ]
-    },
-    "include": [
-        "./src/**/*.ts",
-        "./__tests__/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"noEmit": true,
+		"lib": [
+			"ESNext",
+			"DOM"
+		]
+	},
+	"include": [
+		"./src/**/*.ts",
+		"./__tests__/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }

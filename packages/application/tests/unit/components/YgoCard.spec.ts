@@ -7,16 +7,16 @@ import { createCard } from "@yugioh-deck-tool/core/__tests__/helper/dataFactorie
 import VueCompositionApi from "@vue/composition-api";
 
 describe("YgoCard.vue", () => {
-    it("binds card name", () => {
-        const card: Card = createCard({ passcode: "123", name: "foo" });
+	it("binds card name", () => {
+		const card: Card = createCard({ passcode: "123", name: "foo" });
 
-        const localVue = createLocalVue();
-        localVue.use(VueCompositionApi);
-        const wrapper = shallowMount(YgoCard, {
-            localVue,
-            propsData: { card },
-        });
+		const localVue = createLocalVue();
+		localVue.use(VueCompositionApi);
+		const wrapper = shallowMount(YgoCard, {
+			localVue,
+			propsData: { card },
+		});
 
-        expect(wrapper.attributes()["data-name"]).toEqual("foo");
-    });
+		expect(wrapper.attributes()["data-name"]).toEqual("foo");
+	});
 });

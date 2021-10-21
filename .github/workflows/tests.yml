@@ -2,26 +2,25 @@ name: Tests
 
 on:
     push:
-        branches: [ development, master ]
+        branches: [development, master]
     pull_request:
-        branches: [ development ]
+        branches: [development]
 
 jobs:
     test:
-
         runs-on: ubuntu-latest
 
         strategy:
             matrix:
-                node-version: [ 16.x ]
+                node-version: [16.x]
 
         steps:
-            -   uses: actions/checkout@v2
-            -   name: Use Node.js ${{ matrix.node-version }}
-                uses: actions/setup-node@v2
-                with:
-                    node-version: ${{ matrix.node-version }}
-            -   run: npm run setup
-            -   run: npm run lint
-            -   run: npm run build
-            -   run: npm run test
+            - uses: actions/checkout@v2
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v2
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm run setup
+            - run: npm run lint
+            - run: npm run build
+            - run: npm run test

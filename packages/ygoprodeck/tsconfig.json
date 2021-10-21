@@ -1,17 +1,17 @@
 {
-    "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-        "noEmit": true,
-        "lib": [
-            "ESNext",
-            "DOM"
-        ]
-    },
-    "include": [
-        "./src/**/*.ts",
-        "./__tests__/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true,
+		"lib": [
+			"ESNext",
+			"DOM"
+		]
+	},
+	"include": [
+		"./src/**/*.ts",
+		"./__tests__/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }

@@ -18,75 +18,75 @@ export const DECK_PART_CARDS_REMOVE = "DECK_PART_CARDS_REMOVE";
 export const DECK_PART_CARDS_REORDER = "DECK_PART_CARDS_REORDER";
 
 export interface DeckState {
-    active: Deck;
+	active: Deck;
 }
 
 export const deckModule: Module<DeckState, AppState> = {
-    state: () => {
-        return {
-            active: deckService.createEmptyDeck(),
-        };
-    },
-    getters: {
-        isDeckEmpty: (state) =>
-            deckService.getAllCards(state.active).length === 0,
-    },
-    mutations: {
-        [DECK_NAME_UPDATE](state, payload: { name: string }) {
-            state.active.name = payload.name;
-        },
+	state: () => {
+		return {
+			active: deckService.createEmptyDeck(),
+		};
+	},
+	getters: {
+		isDeckEmpty: (state) =>
+			deckService.getAllCards(state.active).length === 0,
+	},
+	mutations: {
+		[DECK_NAME_UPDATE](state, payload: { name: string }) {
+			state.active.name = payload.name;
+		},
 
-        [DECK_REPLACE](state, payload: { deck: Deck }) {
-            state.active = payload.deck;
-        },
-        [DECK_SORT](state) {
-            state.active.parts = deckService.sort(state.active).parts;
-        },
-        [DECK_SHUFFLE](state) {
-            state.active.parts = deckService.shuffle(state.active).parts;
-        },
-        [DECK_CLEAR](state) {
-            state.active = deckService.createEmptyDeck();
-        },
+		[DECK_REPLACE](state, payload: { deck: Deck }) {
+			state.active = payload.deck;
+		},
+		[DECK_SORT](state) {
+			state.active.parts = deckService.sort(state.active).parts;
+		},
+		[DECK_SHUFFLE](state) {
+			state.active.parts = deckService.shuffle(state.active).parts;
+		},
+		[DECK_CLEAR](state) {
+			state.active = deckService.createEmptyDeck();
+		},
 
-        [DECK_PART_CARDS_ADD](
-            state,
-            payload: { card: Card; deckPart: DeckPart; newIndex?: number }
-        ) {
-            deckService.addCard(
-                state.active,
-                payload.card,
-                payload.deckPart,
-                payload.newIndex
-            );
-        },
-        [DECK_PART_CARDS_REMOVE](
-            state,
-            payload: { card: Card; deckPart: DeckPart; oldIndex?: number }
-        ) {
-            deckService.removeCard(
-                state.active,
-                payload.card,
-                payload.deckPart,
-                payload.oldIndex
-            );
-        },
-        [DECK_PART_CARDS_REORDER](
-            state,
-            payload: {
-                card: Card;
-                deckPart: DeckPart;
-                oldIndex: number;
-                newIndex: number;
-            }
-        ) {
-            deckService.reorderCard(
-                state.active,
-                payload.card,
-                payload.deckPart,
-                payload.oldIndex,
-                payload.newIndex
-            );
-        },
-    },
+		[DECK_PART_CARDS_ADD](
+			state,
+			payload: { card: Card; deckPart: DeckPart; newIndex?: number }
+		) {
+			deckService.addCard(
+				state.active,
+				payload.card,
+				payload.deckPart,
+				payload.newIndex
+			);
+		},
+		[DECK_PART_CARDS_REMOVE](
+			state,
+			payload: { card: Card; deckPart: DeckPart; oldIndex?: number }
+		) {
+			deckService.removeCard(
+				state.active,
+				payload.card,
+				payload.deckPart,
+				payload.oldIndex
+			);
+		},
+		[DECK_PART_CARDS_REORDER](
+			state,
+			payload: {
+				card: Card;
+				deckPart: DeckPart;
+				oldIndex: number;
+				newIndex: number;
+			}
+		) {
+			deckService.reorderCard(
+				state.active,
+				payload.card,
+				payload.deckPart,
+				payload.oldIndex,
+				payload.newIndex
+			);
+		},
+	},
 };

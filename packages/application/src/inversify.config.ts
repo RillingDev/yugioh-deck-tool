@@ -12,18 +12,18 @@ const applicationContainer = new Container();
 applicationContainer.load(baseModule, deckModule, ygoprodeckModule);
 
 applicationContainer
-    .rebind<EnvironmentConfig>(TYPES.EnvironmentConfig)
-    .to(HostEnvironmentConfig);
+	.rebind<EnvironmentConfig>(TYPES.EnvironmentConfig)
+	.to(HostEnvironmentConfig);
 
 applicationContainer
-    .bind<DeckController>(APPLICATION_TYPES.DeckController)
-    .to(DeckController);
+	.bind<DeckController>(APPLICATION_TYPES.DeckController)
+	.to(DeckController);
 applicationContainer
-    .bind<DeckUrlController>(APPLICATION_TYPES.DeckUrlController)
-    .to(DeckUrlController);
+	.bind<DeckUrlController>(APPLICATION_TYPES.DeckUrlController)
+	.to(DeckUrlController);
 
 applicationContainer
-    .bind<YgoprodeckController>(APPLICATION_TYPES.YgoprodeckController)
-    .to(YgoprodeckController);
+	.bind<YgoprodeckController>(APPLICATION_TYPES.YgoprodeckController)
+	.to(YgoprodeckController);
 
 export { applicationContainer };

@@ -1,11 +1,11 @@
 <template>
-    <input
-        v-model="deckName"
-        class="form-control"
-        title="Deck Name"
-        placeholder="Deck Name"
-        type="text"
-    />
+	<input
+		v-model="deckName"
+		class="form-control"
+		title="Deck Name"
+		placeholder="Deck Name"
+		type="text"
+	/>
 </template>
 
 <script lang="ts">
@@ -14,21 +14,21 @@ import { DECK_NAME_UPDATE } from "../../store/modules/deck";
 import { useStore } from "../../store/store";
 
 export default defineComponent({
-    components: {},
-    props: {},
-    emits: [],
-    setup() {
-        const store = useStore();
+	components: {},
+	props: {},
+	emits: [],
+	setup() {
+		const store = useStore();
 
-        const deckName = computed<string | null>({
-            get: () => store.state.deck.active.name,
-            set: (newName) =>
-                store.commit(DECK_NAME_UPDATE, {
-                    name: newName,
-                }),
-        });
+		const deckName = computed<string | null>({
+			get: () => store.state.deck.active.name,
+			set: (newName) =>
+				store.commit(DECK_NAME_UPDATE, {
+					name: newName,
+				}),
+		});
 
-        return { deckName };
-    },
+		return { deckName };
+	},
 });
 </script>

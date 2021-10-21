@@ -11,11 +11,11 @@ export type DraggableMoveValidatorData = any;
  * If it does, the value MUST be one of {@link DeckPart}.
  */
 export const findDeckPartForDraggableValidatorData = (
-    e: DraggableMoveValidatorData
+	e: DraggableMoveValidatorData
 ): DeckPart | null => {
-    const targetEl: HTMLElement = e.to;
-    const areaMarker = targetEl.dataset["deckPartArea"];
-    return areaMarker != null ? (areaMarker as DeckPart) : null;
+	const targetEl: HTMLElement = e.to;
+	const areaMarker = targetEl.dataset["deckPartArea"];
+	return areaMarker != null ? (areaMarker as DeckPart) : null;
 };
 
 /**
@@ -23,5 +23,5 @@ export const findDeckPartForDraggableValidatorData = (
  * MUST only be used for drag move validation if the draggable element data is a {@link Card}.
  */
 export const findCardForDraggableValidatorData = (
-    e: DraggableMoveValidatorData
+	e: DraggableMoveValidatorData
 ): Card => e.draggedContext.element;

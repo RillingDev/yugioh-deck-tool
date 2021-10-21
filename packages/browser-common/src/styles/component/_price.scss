@@ -1,37 +1,37 @@
 @import "../variables";
 
 @mixin price {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0;
 
-    &--group {
-        justify-content: flex-start;
-        flex-direction: row;
-        margin-bottom: 0;
-    }
+	&--group {
+		justify-content: flex-start;
+		flex-direction: row;
+		margin-bottom: 0;
+	}
 
-    &__vendor {
-        font-size: $font-size-sm;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.325rem;
-        text-align: center;
-        color: $white;
+	&__vendor {
+		font-size: $font-size-sm;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.325rem;
+		text-align: center;
+		color: $white;
 
-        &--tcgplayer {
-            background-color: $color-vendor-tcgplayer;
-        }
+		&--tcgplayer {
+			background-color: $color-vendor-tcgplayer;
+		}
 
-        &--cardmarket {
-            background-color: $color-vendor-cardmarket;
-        }
+		&--cardmarket {
+			background-color: $color-vendor-cardmarket;
+		}
 
-        &--coolstuffinc {
-            background-color: $color-vendor-coolstuffinc;
-            color: $black;
-        }
-    }
+		&--coolstuffinc {
+			background-color: $color-vendor-coolstuffinc;
+			color: $black;
+		}
+	}
 }

@@ -1,13 +1,13 @@
 <template>
-    <VSelect
-        v-model="currency"
-        :options="currencies"
-        :get-option-key="(currentCurrency) => currentCurrency.name"
-        :get-option-label="(currentCurrency) => currentCurrency.name"
-        :clearable="false"
-        :searchable="false"
-        title="Active Currency"
-    ></VSelect>
+	<VSelect
+		v-model="currency"
+		:options="currencies"
+		:get-option-key="(currentCurrency) => currentCurrency.name"
+		:get-option-label="(currentCurrency) => currentCurrency.name"
+		:clearable="false"
+		:searchable="false"
+		title="Active Currency"
+	></VSelect>
 </template>
 
 <script lang="ts">
@@ -20,25 +20,25 @@ import { CURRENCY_UPDATE } from "../../store/modules/currency";
 import { useStore } from "../../store/store";
 
 export default defineComponent({
-    components: { VSelect },
-    props: {},
-    emits: [],
-    setup() {
-        const currencies = readonly<Currency[]>(
-            Object.values(DEFAULT_CURRENCY_ARR)
-        );
+	components: { VSelect },
+	props: {},
+	emits: [],
+	setup() {
+		const currencies = readonly<Currency[]>(
+			Object.values(DEFAULT_CURRENCY_ARR)
+		);
 
-        const store = useStore();
+		const store = useStore();
 
-        const currency = computed<Currency>({
-            get: () => store.state.currency.active,
-            set: (newCurrency) =>
-                store.commit(CURRENCY_UPDATE, {
-                    currency: newCurrency,
-                }),
-        });
+		const currency = computed<Currency>({
+			get: () => store.state.currency.active,
+			set: (newCurrency) =>
+				store.commit(CURRENCY_UPDATE, {
+					currency: newCurrency,
+				}),
+		});
 
-        return { currencies, currency };
-    },
+		return { currencies, currency };
+	},
 });
 </script>
