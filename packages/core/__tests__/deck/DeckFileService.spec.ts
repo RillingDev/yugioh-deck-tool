@@ -3,7 +3,10 @@ import "reflect-metadata";
 import { MemoryCardDatabase } from "../../src/card/MemoryCardDatabase";
 import { AxiosHttpService } from "../../src/http/AxiosHttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
-import type { HttpService } from "../../src/http/HttpService";
+import type {
+	HttpService,
+	HttpRequestConfig,
+} from "../../src/http/HttpService";
 import { createCard } from "../helper/dataFactories";
 import { bindMock } from "../helper/bindMock";
 import { Container } from "inversify";
@@ -218,11 +221,21 @@ describe("DeckFileService", () => {
 				);
 			}
 
-			verify(mockHttpService.get(anyString(), anything())).never();
+			verify(
+				mockHttpService.get(
+					anyString() as string,
+					anything() as HttpRequestConfig<void>
+				)
+			).never();
 		});
 
 		it("loads name from path", async () => {
-			when(mockHttpService.get(anyString(), anything())).thenResolve({
+			when(
+				mockHttpService.get(
+					anyString() as string,
+					anything() as HttpRequestConfig<void>
+				)
+			).thenResolve({
 				data: "deck file content",
 				status: 200,
 				statusText: "status",
@@ -247,7 +260,12 @@ describe("DeckFileService", () => {
 			when(
 				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card);
-			when(mockHttpService.get(anyString(), anything())).thenResolve({
+			when(
+				mockHttpService.get(
+					anyString() as string,
+					anything() as HttpRequestConfig<void>
+				)
+			).thenResolve({
 				data: fileContent,
 				status: 200,
 				statusText: "status",
