@@ -4,6 +4,7 @@
         "newLine": "LF",
         "moduleResolution": "node",
         "esModuleInterop": true,
+		"useDefineForClassFields": true,
         "strict": true,
         // Per-project
         "target": "ES2021",
