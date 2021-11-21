@@ -3,11 +3,12 @@
         // General
         "newLine": "LF",
         "moduleResolution": "node",
-        "esModuleInterop": true,
-		"useDefineForClassFields": true,
         "strict": true,
+		"useDefineForClassFields": true,
         // Per-project
-        "target": "ES2021",
+		"esModuleInterop": true,
+		"target": "ES2021",
+		"module": "ES2020",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "resolveJsonModule": true
