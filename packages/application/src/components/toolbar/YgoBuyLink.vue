@@ -38,7 +38,10 @@ export default defineComponent({
 		const buyLink = computed<string>(() => {
 			const deck = store.state.deck.active;
 			return deckExportService
-				.toBuyLink(deck, "deck-builder", "YGOPRODeck")
+				.toBuyLink(deck, {
+					medium: "deck-builder",
+					source: "YGOPRODeck",
+				})
 				.toString();
 		});
 

@@ -79,8 +79,10 @@ Side:
 						[DeckPart.SIDE]: [card3, card3, card1, card3],
 					},
 				},
-				"deck-builder",
-				"YGOPRODeck"
+				{
+					medium: "deck-builder",
+					source: "YGOPRODeck",
+				}
 			);
 
 			const expected = new URL("https://www.tcgplayer.com/massentry");

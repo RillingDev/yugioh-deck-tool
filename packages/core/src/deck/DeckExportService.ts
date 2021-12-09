@@ -89,14 +89,12 @@ export class DeckExportService {
 	 *
 	 * @see https://docs.tcgplayer.com/docs/mass-entry-and-affiliate-linking
 	 * @param deck Deck to create a link for.
-	 * @param affiliateMedium Tcgplayer.com affiliate code.
-	 * @param affiliateSource Tcgplayer.com affiliate source name.
+	 * @param affiliate Tcgplayer.com affiliate code/source.
 	 * @return Buy link.
 	 */
 	toBuyLink(
 		deck: Deck,
-		affiliateMedium: string,
-		affiliateSource: string
+		affiliate: { medium: string; source: string } | null
 	): URL {
 		const countedCards: Map<Card, number> = this.#cardService.countByCard(
 			this.#deckService.getAllCards(deck)
@@ -108,9 +106,11 @@ export class DeckExportService {
 
 		const buyLink = new URL("massentry", "https://www.tcgplayer.com");
 		buyLink.searchParams.append("productline", "Yugioh");
-		buyLink.searchParams.append("utm_campaign", "affiliate");
-		buyLink.searchParams.append("utm_medium", affiliateMedium);
-		buyLink.searchParams.append("utm_source", affiliateSource);
+		if (affiliate != null) {
+			buyLink.searchParams.append("utm_campaign", "affiliate");
+			buyLink.searchParams.append("utm_medium", affiliate.medium);
+			buyLink.searchParams.append("utm_source", affiliate.source);
+		}
 		buyLink.searchParams.append("c", cardListUriParam);
 		return buyLink;
 	}
