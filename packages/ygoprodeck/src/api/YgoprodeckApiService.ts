@@ -89,7 +89,10 @@ export class YgoprodeckApiService {
 		}
 		const responseData = response.data;
 		// If a match is found, we take the very first item (best match).
-		return mapCard(responseData.data[0]);
+		return mapCard(
+			responseData.data[0],
+			this.#environmentConfig.getEnvironment()
+		);
 	}
 
 	async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
@@ -122,7 +125,9 @@ export class YgoprodeckApiService {
 			}
 		);
 
-		return responseData.map(mapCard);
+		return responseData.map((rawCard) =>
+			mapCard(rawCard, this.#environmentConfig.getEnvironment())
+		);
 	}
 
 	#createCardInfoParams(options: CardInfoOptions): Record<string, string> {

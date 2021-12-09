@@ -6,11 +6,17 @@ import type {
 	CardImage,
 	CardPrices,
 	CardSetAppearance,
+	EnvironmentConfig,
 	ReleaseInfo,
 	UnlinkedCard,
 	Vendor,
 } from "@yugioh-deck-tool/core";
-import { DefaultBanState, DefaultVendor, Format } from "@yugioh-deck-tool/core";
+import {
+	DefaultBanState,
+	DefaultVendor,
+	Environment,
+	Format,
+} from "@yugioh-deck-tool/core";
 
 // https://jvilk.com/MakeTypes/
 export interface RawCard {
@@ -122,20 +128,30 @@ const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
 };
 
 // Map back against main source instead of Google's CDN.
-const mapCardImage = (imageUrl: string): string =>
+const convertToNonCdnImageUrl = (imageUrl: string): string =>
 	imageUrl.replace(
 		"https://storage.googleapis.com/ygoprodeck.com/",
 		"https://ygoprodeck.com/"
 	);
-const mapImage = (rawCard: RawCard): CardImage | null => {
+const mapImage = (
+	rawCard: RawCard,
+	environment: Environment
+): CardImage | null => {
 	if (rawCard.card_images == null) {
 		return null;
 	}
 	const image = rawCard.card_images[0];
-	return {
-		url: mapCardImage(image.image_url),
-		urlSmall: mapCardImage(image.image_url_small),
-	};
+	if (environment == Environment.YGOPRODECK) {
+		return {
+			url: convertToNonCdnImageUrl(image.image_url),
+			urlSmall: convertToNonCdnImageUrl(image.image_url_small),
+		};
+	} else {
+		return {
+			url: image.image_url,
+			urlSmall: image.image_url_small,
+		};
+	}
 };
 
 const mapPrices = (rawCard: RawCard): CardPrices => {
@@ -170,7 +186,10 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => {
 	};
 };
 
-export const mapCard = (rawCard: RawCard): UnlinkedCard => {
+export const mapCard = (
+	rawCard: RawCard,
+	environment: Environment
+): UnlinkedCard => {
 	const miscInfo: RawMiscInfo | null =
 		rawCard.misc_info != null ? rawCard.misc_info[0] : null;
 	return {
@@ -189,7 +208,7 @@ export const mapCard = (rawCard: RawCard): UnlinkedCard => {
 		linkMarkers: rawCard.linkmarkers ?? null,
 
 		sets: mapCardSets(rawCard),
-		image: mapImage(rawCard),
+		image: mapImage(rawCard, environment),
 		prices: mapPrices(rawCard),
 
 		betaName: miscInfo?.beta_name ?? null,
