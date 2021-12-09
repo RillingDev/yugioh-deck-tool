@@ -17,13 +17,19 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import type { DeckExportService } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
+import type {
+	DeckExportService,
+	EnvironmentConfig,
+} from "@yugioh-deck-tool/core";
+import { Environment, TYPES } from "@yugioh-deck-tool/core";
 import { applicationContainer } from "../../inversify.config";
 import { useStore } from "../../store/store";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
 	TYPES.DeckExportService
+);
+const environmentConfig = applicationContainer.get<EnvironmentConfig>(
+	TYPES.EnvironmentConfig
 );
 
 export default defineComponent({
@@ -37,12 +43,14 @@ export default defineComponent({
 
 		const buyLink = computed<string>(() => {
 			const deck = store.state.deck.active;
-			return deckExportService
-				.toBuyLink(deck, {
-					medium: "deck-builder",
-					source: "YGOPRODeck",
-				})
-				.toString();
+			const affiliate =
+				environmentConfig.getEnvironment() == Environment.YGOPRODECK
+					? {
+							medium: "deck-builder",
+							source: "YGOPRODeck",
+					  }
+					: null;
+			return deckExportService.toBuyLink(deck, affiliate).toString();
 		});
 
 		return { deckEmpty, buyLink };
