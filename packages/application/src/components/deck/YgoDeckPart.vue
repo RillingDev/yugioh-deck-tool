@@ -213,7 +213,7 @@ export default defineComponent({
 			.deck-part__content {
 				border-color: color.adjust(
 					$color-deck-part-main,
-					$lightness: -8%
+					$lightness: -13.25%
 				);
 				background-color: $color-deck-part-main;
 			}
@@ -223,7 +223,7 @@ export default defineComponent({
 			.deck-part__content {
 				border-color: color.adjust(
 					$color-deck-part-extra,
-					$lightness: -8%
+					$lightness: -13.25%
 				);
 				background-color: $color-deck-part-extra;
 			}
@@ -233,7 +233,7 @@ export default defineComponent({
 			.deck-part__content {
 				border-color: color.adjust(
 					$color-deck-part-side,
-					$lightness: -8%
+					$lightness: -13.25%
 				);
 				background-color: $color-deck-part-side;
 			}
