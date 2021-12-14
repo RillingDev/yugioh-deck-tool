@@ -6,7 +6,6 @@ import type {
 	CardImage,
 	CardPrices,
 	CardSetAppearance,
-	EnvironmentConfig,
 	ReleaseInfo,
 	UnlinkedCard,
 	Vendor,
