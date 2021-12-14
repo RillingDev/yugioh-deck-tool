@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        // General
-        "newLine": "LF",
-        "moduleResolution": "node",
-        "strict": true,
+	"compilerOptions": {
+		// General
+		"newLine": "LF",
+		"moduleResolution": "node",
+		"strict": true,
 		"useDefineForClassFields": true,
-        // Per-project
+		// Per-project
 		"esModuleInterop": true,
 		"target": "ES2021",
 		"module": "ES2020",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "resolveJsonModule": true
-    }
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"resolveJsonModule": true
+	}
 }

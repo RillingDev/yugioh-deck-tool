@@ -5,24 +5,24 @@
 // Core layout
 //
 .deck-tool__header {
-    text-align: center;
+	text-align: center;
 }
 
 .deck-tool__application {
-    margin-top: $margin-md;
-    margin-bottom: $margin-md;
+	margin-top: $margin-md;
+	margin-bottom: $margin-md;
 }
 
 //
 // General utility classes
 //
 .container {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: $margin-lg;
-    padding-right: $margin-lg;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: $margin-lg;
+	padding-right: $margin-lg;
 }
 
 .fas-in-button {
-    margin-right: 0.25rem;
+	margin-right: 0.25rem;
 }
