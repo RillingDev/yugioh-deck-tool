@@ -1,9 +1,20 @@
 import { inject, injectable } from "inversify";
-import { Environment, EnvironmentConfig, TYPES } from "@yugioh-deck-tool/core";
+import type { Card, CardType } from "@yugioh-deck-tool/core";
+import {
+	CardTypeCategory,
+	Environment,
+	EnvironmentConfig,
+	TYPES,
+} from "@yugioh-deck-tool/core";
 
 @injectable()
 export class ResourceService {
 	readonly #environmentConfig: EnvironmentConfig;
+
+	private static readonly YGOPRODECK_ASSET_BASE_URL =
+		"https://ygoprodeck.com/pics/icons";
+	private static readonly CDN_ASSET_BASE_URL =
+		"https://storage.googleapis.com/ygoprodeck.com/assets";
 
 	constructor(
 		@inject(TYPES.EnvironmentConfig)
@@ -23,11 +34,23 @@ export class ResourceService {
 		if (
 			this.#environmentConfig.getEnvironment() == Environment.YGOPRODECK
 		) {
-			return initialCardImageUrl;
+			return initialCardImageUrl.replace(
+				"https://storage.googleapis.com/ygoprodeck.com/",
+				"https://ygoprodeck.com/"
+			);
 		}
-		return initialCardImageUrl.replace(
-			"https://storage.googleapis.com/ygoprodeck.com/",
-			"https://ygoprodeck.com/"
-		);
+		return initialCardImageUrl;
+	}
+
+	getTypeImageUrl(card: Card): string {
+		const fileName = `${encodeURIComponent(card.type.name)}.jpg`;
+		return `${this.#getAssetBaseUrl()}/${fileName}`;
+	}
+
+	#getAssetBaseUrl(): string {
+		return this.#environmentConfig.getEnvironment() ==
+			Environment.YGOPRODECK
+			? ResourceService.YGOPRODECK_ASSET_BASE_URL
+			: ResourceService.CDN_ASSET_BASE_URL;
 	}
 }

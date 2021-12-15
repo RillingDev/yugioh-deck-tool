@@ -13,7 +13,6 @@ import {
 	imageUrlLevel,
 	imageUrlLinkMarker,
 	imageUrlSubType,
-	imageUrlType,
 } from "@yugioh-deck-tool/browser-common";
 import {
 	createDiv,
@@ -23,8 +22,13 @@ import {
 	createSpan,
 	createUl,
 } from "./domHelper";
+import type { ResourceService } from "@yugioh-deck-tool/ygoprodeck";
+import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
 
 const priceService = tooltipContainer.get<PriceService>(TYPES.PriceService);
+const resourceService = tooltipContainer.get<ResourceService>(
+	YGOPRODECK_TYPES.ResourceService
+);
 
 export const createLoadingTooltip = (): HTMLElement =>
 	createDiv(
@@ -115,7 +119,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 	const primaryDetails = createDiv(
 		["card-tooltip__details"],
 		[
-			createImg([], imageUrlType(card), {
+			createImg([], resourceService.getTypeImageUrl(card), {
 				hidden: false,
 				alt: `Type: ${card.type.name}`,
 			}),

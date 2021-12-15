@@ -1,10 +1,6 @@
 import type { BanlistInfo, Card } from "@yugioh-deck-tool/core";
 import { CardTypeCategory } from "@yugioh-deck-tool/core";
 
-export const imageUrlType = (card: Card): string =>
-	`https://ygoprodeck.com/pics/icons/${encodeURIComponent(
-		card.type.name
-	)}.jpg`;
 export const imageUrlSubType = (card: Card): string =>
 	card.type.category === CardTypeCategory.MONSTER
 		? `https://ygoprodeck.com/pics/${encodeURIComponent(card.subType)}.png`

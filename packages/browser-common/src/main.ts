@@ -10,7 +10,6 @@ export {
 	imageUrlLevel,
 	imageUrlLinkMarker,
 	imageUrlSubType,
-	imageUrlType,
 	imageUrlCardPlaceholder,
 } from "./resources";
 export { HostEnvironmentConfig } from "./HostEnvironmentConfig";
