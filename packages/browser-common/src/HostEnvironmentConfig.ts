@@ -7,8 +7,14 @@ import { Environment } from "@yugioh-deck-tool/core";
  */
 @injectable()
 export class HostEnvironmentConfig implements EnvironmentConfig {
+	#isYgoprodeck: boolean | null = null;
+
 	getEnvironment(): Environment {
-		return location.host.endsWith("ygoprodeck.com")
+		if (this.#isYgoprodeck == null) {
+			this.#isYgoprodeck = location.host.endsWith("ygoprodeck.com");
+		}
+
+		return this.#isYgoprodeck
 			? Environment.YGOPRODECK
 			: Environment.DEFAULT;
 	}

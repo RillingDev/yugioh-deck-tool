@@ -23,6 +23,8 @@ import {
 	HttpService,
 	TYPES,
 } from "@yugioh-deck-tool/core";
+import { ResourceService } from "./ResourceService";
+import { YGOPRODECK_TYPES } from "../types";
 
 interface CardInfoOptions {
 	readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
@@ -56,6 +58,7 @@ export class YgoprodeckApiService {
 	readonly #environmentConfig: EnvironmentConfig;
 	readonly #httpService: HttpService;
 	readonly #encodingService: EncodingService;
+	readonly #resourceService: ResourceService;
 
 	constructor(
 		@inject(TYPES.HttpService)
@@ -63,11 +66,14 @@ export class YgoprodeckApiService {
 		@inject(TYPES.EnvironmentConfig)
 		environmentConfig: EnvironmentConfig,
 		@inject(TYPES.EncodingService)
-		encodingService: EncodingService
+		encodingService: EncodingService,
+		@inject(YGOPRODECK_TYPES.ResourceService)
+		resourceService: ResourceService
 	) {
 		this.#environmentConfig = environmentConfig;
 		this.#httpService = httpService;
 		this.#encodingService = encodingService;
+		this.#resourceService = resourceService;
 	}
 
 	async getSingleCard(
@@ -89,10 +95,7 @@ export class YgoprodeckApiService {
 		}
 		const responseData = response.data;
 		// If a match is found, we take the very first item (best match).
-		return mapCard(
-			responseData.data[0],
-			this.#environmentConfig.getEnvironment()
-		);
+		return mapCard(responseData.data[0], this.#resourceService);
 	}
 
 	async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
@@ -126,7 +129,7 @@ export class YgoprodeckApiService {
 		);
 
 		return responseData.map((rawCard) =>
-			mapCard(rawCard, this.#environmentConfig.getEnvironment())
+			mapCard(rawCard, this.#resourceService)
 		);
 	}
 

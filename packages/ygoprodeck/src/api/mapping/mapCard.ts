@@ -16,6 +16,7 @@ import {
 	Environment,
 	Format,
 } from "@yugioh-deck-tool/core";
+import type { ResourceService } from "../ResourceService";
 
 // https://jvilk.com/MakeTypes/
 export interface RawCard {
@@ -134,23 +135,18 @@ const convertToNonCdnImageUrl = (imageUrl: string): string =>
 	);
 const mapImage = (
 	rawCard: RawCard,
-	environment: Environment
+	resourceService: ResourceService
 ): CardImage | null => {
 	if (rawCard.card_images == null) {
 		return null;
 	}
 	const image = rawCard.card_images[0];
-	if (environment == Environment.YGOPRODECK) {
-		return {
-			url: convertToNonCdnImageUrl(image.image_url),
-			urlSmall: convertToNonCdnImageUrl(image.image_url_small),
-		};
-	} else {
-		return {
-			url: image.image_url,
-			urlSmall: image.image_url_small,
-		};
-	}
+	return {
+		url: resourceService.getEffectiveCardImageUrl(image.image_url),
+		urlSmall: resourceService.getEffectiveCardImageUrl(
+			image.image_url_small
+		),
+	};
 };
 
 const mapPrices = (rawCard: RawCard): CardPrices => {
@@ -187,7 +183,7 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => {
 
 export const mapCard = (
 	rawCard: RawCard,
-	environment: Environment
+	resourceService: ResourceService
 ): UnlinkedCard => {
 	const miscInfo: RawMiscInfo | null =
 		rawCard.misc_info != null ? rawCard.misc_info[0] : null;
@@ -207,7 +203,7 @@ export const mapCard = (
 		linkMarkers: rawCard.linkmarkers ?? null,
 
 		sets: mapCardSets(rawCard),
-		image: mapImage(rawCard, environment),
+		image: mapImage(rawCard, resourceService),
 		prices: mapPrices(rawCard),
 
 		betaName: miscInfo?.beta_name ?? null,

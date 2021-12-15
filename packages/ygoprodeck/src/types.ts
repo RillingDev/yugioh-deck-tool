@@ -4,4 +4,5 @@ export const YGOPRODECK_INTERNAL_TYPES = {
 
 export const YGOPRODECK_TYPES = {
 	YgoprodeckService: Symbol.for("YgoprodeckService"),
+	ResourceService: Symbol.for("ResourceService"),
 } as const;

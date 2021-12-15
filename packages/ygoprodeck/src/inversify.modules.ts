@@ -6,6 +6,7 @@ import { YgoprodeckApiService } from "./api/YgoprodeckApiService";
 import { YgoprodeckService } from "./api/YgoprodeckService";
 import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
 import { TYPES } from "@yugioh-deck-tool/core";
+import { ResourceService } from "./api/ResourceService";
 
 /**
  * Module containing ygoprodeck.com providers.
@@ -17,6 +18,8 @@ export const ygoprodeckModule = new ContainerModule((bind: interfaces.Bind) => {
 	bind<YgoprodeckService>(YGOPRODECK_TYPES.YgoprodeckService).to(
 		YgoprodeckService
 	);
+
+	bind<ResourceService>(YGOPRODECK_TYPES.ResourceService).to(ResourceService);
 
 	bind<CardDataLoaderService>(TYPES.CardDataLoaderService).to(
 		YgoprodeckCardDataLoaderService
