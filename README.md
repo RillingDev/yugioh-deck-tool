@@ -1,12 +1,10 @@
-# YuGiOh Deck-Tool
+# Yu-Gi-Oh! Deck-Tool
 
-> A tool to view deck prices, share and edit decks, create random decks and much more
+> A tool to share and edit decks, view deck prices, and much more.
 
 ## Introduction
 
-A tool to view deck prices, share and edit decks, create random decks and much more.
-
-Live version: <https://ygoprodeck.com/card-database/deck-prices/>.
+The live version can be found on [YGOPRODeck](https://ygoprodeck.com/card-database/deck-prices/).
 
 ## Development
 
