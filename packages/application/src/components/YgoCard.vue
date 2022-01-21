@@ -13,7 +13,13 @@
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import type { Card } from "@yugioh-deck-tool/core";
-import { imageUrlCardPlaceholder } from "@yugioh-deck-tool/browser-common";
+import { tooltipContainer } from "@yugioh-deck-tool/tooltip/src/inversify.config";
+import type { ResourceService } from "@yugioh-deck-tool/ygoprodeck";
+import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
+
+const resourceService = tooltipContainer.get<ResourceService>(
+	YGOPRODECK_TYPES.ResourceService
+);
 
 export default defineComponent({
 	components: {},
@@ -31,7 +37,9 @@ export default defineComponent({
 	emits: [],
 	setup(props) {
 		const imgSrc = computed<string>(
-			() => props.card.image?.urlSmall ?? imageUrlCardPlaceholder()
+			() =>
+				props.card.image?.urlSmall ??
+				resourceService.getPlaceholderCardImageUrl()
 		);
 
 		return { imgSrc };

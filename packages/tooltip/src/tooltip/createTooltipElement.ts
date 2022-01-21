@@ -7,14 +7,6 @@ import {
 } from "@yugioh-deck-tool/core";
 import { tooltipContainer } from "../inversify.config";
 import {
-	imageUrlAtk,
-	imageUrlAttribute,
-	imageUrlBanState,
-	imageUrlLevel,
-	imageUrlLinkMarker,
-	imageUrlSubType,
-} from "@yugioh-deck-tool/browser-common";
-import {
 	createDiv,
 	createImg,
 	createLi,
@@ -46,7 +38,7 @@ export const createLoadingTooltip = (): HTMLElement =>
 
 const createMonsterStats = (card: Card): HTMLElement => {
 	const statsChildren: HTMLElement[] = [];
-	const statImage = createImg([], imageUrlAtk(), {
+	const statImage = createImg([], resourceService.getAtkImageUrl(), {
 		hidden: true,
 		alt: "ATK",
 	});
@@ -67,7 +59,7 @@ const createSubType = (card: Card): HTMLElement => {
 
 	if (card.type.category === CardTypeCategory.MONSTER) {
 		subTypeChildren.push(
-			createImg([], imageUrlAttribute(card), {
+			createImg([], resourceService.getAttributeImageUrl(card), {
 				hidden: true,
 				alt: "Attribute",
 			})
@@ -75,7 +67,10 @@ const createSubType = (card: Card): HTMLElement => {
 		subTypeChildren.push(createSpan([], `Attribute: ${card.attribute!}`));
 	}
 	subTypeChildren.push(
-		createImg([], imageUrlSubType(card), { hidden: true, alt: "type" })
+		createImg([], resourceService.getSubTypeImageUrl(card), {
+			hidden: true,
+			alt: "type",
+		})
 	);
 	subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
 
@@ -124,7 +119,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 				alt: `Type: ${card.type.name}`,
 			}),
 			createSpan(["card-tooltip__name"], card.name),
-			createImg([], imageUrlBanState(card, format), {
+			createImg([], resourceService.getBanStateImageUrl(card, format), {
 				hidden: false,
 				alt: `Ban State: ${card.banlist[format].name}`,
 			}),
@@ -145,7 +140,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 			const level = createDiv(
 				["card-tooltip__level"],
 				[
-					createImg([], imageUrlLevel(), {
+					createImg([], resourceService.getLevelImageUrl(), {
 						hidden: true,
 						alt: "level",
 					}),
@@ -157,7 +152,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 			const linkMarkers = createDiv(
 				["card-tooltip__link-markers"],
 				[
-					createImg([], imageUrlLinkMarker(), {
+					createImg([], resourceService.getLinkMarkerImageUrl(), {
 						hidden: true,
 						alt: "Link Markers",
 					}),

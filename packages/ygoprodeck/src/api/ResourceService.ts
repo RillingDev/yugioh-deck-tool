@@ -1,20 +1,17 @@
 import { inject, injectable } from "inversify";
-import type { Card, CardType } from "@yugioh-deck-tool/core";
-import {
-	CardTypeCategory,
-	Environment,
-	EnvironmentConfig,
-	TYPES,
-} from "@yugioh-deck-tool/core";
+import type { BanlistInfo, Card } from "@yugioh-deck-tool/core";
+import { Environment, EnvironmentConfig, TYPES } from "@yugioh-deck-tool/core";
 
 @injectable()
 export class ResourceService {
 	readonly #environmentConfig: EnvironmentConfig;
 
-	private static readonly YGOPRODECK_ASSET_BASE_URL =
-		"https://ygoprodeck.com/pics/icons";
-	private static readonly CDN_ASSET_BASE_URL =
-		"https://storage.googleapis.com/ygoprodeck.com/assets";
+	private static readonly YGOPRODECK_BASE_URL = "https://ygoprodeck.com";
+	private static readonly CDN_BASE_URL =
+		"https://storage.googleapis.com/ygoprodeck.com";
+
+	private static readonly YGOPRODECK_ASSET_BASE_URL = `${ResourceService.YGOPRODECK_BASE_URL}/pics/icons`;
+	private static readonly CDN_ASSET_BASE_URL = `${ResourceService.CDN_BASE_URL}/assets`;
 
 	constructor(
 		@inject(TYPES.EnvironmentConfig)
@@ -35,16 +32,53 @@ export class ResourceService {
 			this.#environmentConfig.getEnvironment() == Environment.YGOPRODECK
 		) {
 			return initialCardImageUrl.replace(
-				"https://storage.googleapis.com/ygoprodeck.com/",
-				"https://ygoprodeck.com/"
+				ResourceService.CDN_BASE_URL,
+				ResourceService.YGOPRODECK_BASE_URL
 			);
 		}
 		return initialCardImageUrl;
 	}
 
+	getPlaceholderCardImageUrl(): string {
+		return this.getEffectiveCardImageUrl(
+			`${ResourceService.CDN_BASE_URL}/pics_small/4035199.jpg`
+		);
+	}
+
 	getTypeImageUrl(card: Card): string {
-		const fileName = `${encodeURIComponent(card.type.name)}.jpg`;
-		return `${this.#getAssetBaseUrl()}/${fileName}`;
+		return `${this.#getAssetBaseUrl()}/${encodeURIComponent(
+			card.type.name
+		)}.jpg`;
+	}
+
+	getSubTypeImageUrl(card: Card): string {
+		return `${this.#getAssetBaseUrl()}/race/${encodeURIComponent(
+			card.subType
+		)}.png`;
+	}
+
+	getAttributeImageUrl(card: Card): string {
+		return `${this.#getAssetBaseUrl()}/attributes/${encodeURIComponent(
+			card.attribute!
+		)}.jpg`;
+	}
+
+	getAtkImageUrl(): string {
+		return `${this.#getAssetBaseUrl()}/misc/atk.png`;
+	}
+
+	getLevelImageUrl(): string {
+		return `${this.#getAssetBaseUrl()}/misc/level.png`;
+	}
+
+	getLinkMarkerImageUrl(): string {
+		return `${this.#getAssetBaseUrl()}/linkarrows/Right.png`;
+	}
+
+	getBanStateImageUrl(card: Card, format: keyof BanlistInfo): string {
+		return `${this.#getAssetBaseUrl()}/${encodeURIComponent(
+			card.banlist[format].name
+		)}.png`;
 	}
 
 	#getAssetBaseUrl(): string {
