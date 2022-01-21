@@ -84,10 +84,10 @@ export default defineComponent({
 				})
 				.then(() => context.emit("change"))
 				.catch((err) => {
-					logger.error("Could load user collection!", err);
+					logger.error("Could not load user collection!", err);
 					showError(
 						context,
-						"Could load user collection!",
+						"Could not load user collection!",
 						"deck-tool__portal"
 					);
 				})
