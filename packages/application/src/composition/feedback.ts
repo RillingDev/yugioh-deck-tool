@@ -1,7 +1,7 @@
 import type { SetupContext } from "@vue/composition-api";
 
 const showFeedback = (
-	context: SetupContext,
+	context: SetupContext<any>,
 	message: string,
 	cssClass: string,
 	variant: string
@@ -14,25 +14,25 @@ const showFeedback = (
 	});
 
 export const showInfo = (
-	context: SetupContext,
+	context: SetupContext<any>,
 	message: string,
 	cssClass: string
 ): void => showFeedback(context, message, cssClass, "info");
 
 export const showSuccess = (
-	context: SetupContext,
+	context: SetupContext<any>,
 	message: string,
 	cssClass: string
 ): void => showFeedback(context, message, cssClass, "success");
 
 export const showWarning = (
-	context: SetupContext,
+	context: SetupContext<any>,
 	message: string,
 	cssClass: string
 ): void => showFeedback(context, message, cssClass, "warning");
 
 export const showError = (
-	context: SetupContext,
+	context: SetupContext<any>,
 	message: string,
 	cssClass: string
 ): void => showFeedback(context, message, cssClass, "danger");
