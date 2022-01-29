@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
 import { DEVELOPMENT_MODE } from "@yugioh-deck-tool/core";
-import { currencyModule } from "./modules/currency";
 import { deckModule } from "./modules/deck";
 import { formatModule } from "./modules/format";
 import { dataModule } from "./modules/data";
@@ -14,7 +13,6 @@ export const store = new Store<AppState>({
 	modules: {
 		data: dataModule,
 
-		currency: currencyModule,
 		format: formatModule,
 		deck: deckModule,
 		collection: collectionModule,

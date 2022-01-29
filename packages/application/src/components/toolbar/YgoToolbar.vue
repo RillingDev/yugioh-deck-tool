@@ -71,8 +71,7 @@
 
 		<div class="toolbar__items" role="group">
 			<YgoDeckName class="w-100" />
-			<YgoFormat class="w-100" />
-			<YgoCurrency class="w-100" />
+			<YgoFormat class="w-50" />
 		</div>
 	</div>
 </template>
@@ -82,7 +81,6 @@ import { computed, defineComponent } from "@vue/composition-api";
 import { BDropdown, BDropdownDivider } from "bootstrap-vue";
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
-import YgoCurrency from "./YgoCurrency.vue";
 import YgoBuyLink from "./YgoBuyLink.vue";
 import YgoRandomizer from "./tools/YgoRandomizer.vue";
 import YgoDrawSim from "./tools/YgoDrawSim.vue";
@@ -102,7 +100,6 @@ export default defineComponent({
 	components: {
 		YgoFormat,
 		YgoDeckName,
-		YgoCurrency,
 		YgoBuyLink,
 		YgoRandomizer,
 		YgoDrawSim,

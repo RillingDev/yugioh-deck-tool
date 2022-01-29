@@ -7,7 +7,10 @@
 			:title="`${vendor.name} Price`"
 			class="price__vendor"
 		>
-			<span>{{ vendor.name }}: {{ formatPrice(lookupResult) }}</span>
+			<span
+				>{{ vendor.name }}:
+				{{ formatPrice(lookupResult, vendor) }}</span
+			>
 			<button
 				v-show="lookupResult.missing.length > 0"
 				ref="missingCardButtons"
@@ -66,20 +69,13 @@ export default defineComponent({
 	},
 	emits: [],
 	setup(props) {
-		const store = useStore();
-
-		const activeCurrency = computed<Currency>(
-			() => store.state.currency.active
-		);
-
 		const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(
 			() =>
 				new Map(
 					DEFAULT_VENDOR_ARR.map((vendor) => {
 						const lookupResult = priceService.getPrice(
 							props.cards,
-							vendor,
-							activeCurrency.value
+							vendor
 						);
 						return [vendor, lookupResult];
 					})
@@ -87,8 +83,11 @@ export default defineComponent({
 		);
 		const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
 			cardService.createFormattedCardCountList(lookupResult.missing);
-		const formatPrice = (lookupResult: PriceLookupResult): string =>
-			priceService.formatPrice(lookupResult.price, activeCurrency.value);
+		const formatPrice = (
+			lookupResult: PriceLookupResult,
+			vendor: Vendor
+		): string =>
+			priceService.formatPrice(lookupResult.price, vendor.currency);
 
 		const missingCardButtons = ref<HTMLElement[]>([]);
 

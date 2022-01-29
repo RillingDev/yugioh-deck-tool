@@ -80,7 +80,7 @@ const createSubType = (card: Card): HTMLElement => {
 const createPrice = (card: Card): HTMLElement => {
 	const priceItems: HTMLElement[] = [];
 	for (const vendor of DEFAULT_VENDOR_ARR) {
-		const lookupResult = priceService.getPrice([card], vendor, null);
+		const lookupResult = priceService.getPrice([card], vendor);
 		if (lookupResult.missing.length > 0) {
 			continue;
 		}

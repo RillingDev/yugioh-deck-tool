@@ -40,11 +40,7 @@ describe("PriceService", () => {
 				]),
 			});
 			expect(
-				priceService.getPrice(
-					[card1],
-					DefaultVendor.TCG_PLAYER,
-					DefaultCurrency.USD
-				)
+				priceService.getPrice([card1], DefaultVendor.TCG_PLAYER)
 			).toEqual({
 				price: 0,
 				missing: [card1],
@@ -60,77 +56,9 @@ describe("PriceService", () => {
 				]),
 			});
 			expect(
-				priceService.getPrice(
-					[card1],
-					DefaultVendor.COOL_STUFF_INC,
-					DefaultCurrency.USD
-				)
+				priceService.getPrice([card1], DefaultVendor.COOL_STUFF_INC)
 			).toEqual({
 				price: 1000,
-				missing: [],
-			});
-		});
-
-		it("converts based on requested currency", () => {
-			const card1 = createCard({
-				passcode: "123",
-				prices: new Map<Vendor, number>([
-					[DefaultVendor.TCG_PLAYER, 1000], // USD currency
-				]),
-			});
-			expect(
-				priceService.getPrice([card1], DefaultVendor.TCG_PLAYER, {
-					id: "WTF",
-					name: "???",
-					conversionRate: 0.5,
-					fractionDigits: 2,
-				})
-			).toEqual({
-				price: 500,
-				missing: [],
-			});
-		});
-
-		it("works with non-USD vendor", () => {
-			const someVendor = {
-				name: "Some Store",
-				id: "somestore",
-				currency: {
-					id: "WTF",
-					name: "???",
-					conversionRate: 0.5,
-					fractionDigits: 2,
-				},
-			};
-			const card1 = createCard({
-				passcode: "123",
-				prices: new Map<Vendor, number>([[someVendor, 500]]),
-			});
-			expect(
-				priceService.getPrice([card1], someVendor, DefaultCurrency.USD)
-			).toEqual({
-				price: 1000,
-				missing: [],
-			});
-		});
-
-		it("defaults to vendor currency", () => {
-			const someVendor = {
-				name: "Some Store",
-				id: "somestore",
-				currency: {
-					id: "WTF",
-					name: "???",
-					conversionRate: 0.5,
-					fractionDigits: 2,
-				},
-			};
-			const card1 = createCard({
-				passcode: "123",
-				prices: new Map<Vendor, number>([[someVendor, 500]]),
-			});
-			expect(priceService.getPrice([card1], someVendor, null)).toEqual({
-				price: 500,
 				missing: [],
 			});
 		});
@@ -155,8 +83,7 @@ describe("PriceService", () => {
 			expect(
 				priceService.getPrice(
 					[card1, card1, card2, card3],
-					DefaultVendor.TCG_PLAYER,
-					null
+					DefaultVendor.TCG_PLAYER
 				)
 			).toEqual({
 				price: 1100,

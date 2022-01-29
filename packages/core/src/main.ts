@@ -25,7 +25,7 @@ export { DefaultDeckPartConfig } from "./deck/DeckPartConfig";
 export { Format } from "./card/format/Format";
 export type { ReleaseInfo } from "./card/ReleaseInfo";
 export type { Currency } from "./price/Currency";
-export { DEFAULT_CURRENCY_ARR, DefaultCurrency } from "./price/Currency";
+export { DefaultCurrency } from "./price/Currency";
 export type { CardType } from "./card/type/CardType";
 export { CardTypeCategory } from "./card/type/CardTypeCategory";
 export type { Vendor } from "./price/Vendor";
