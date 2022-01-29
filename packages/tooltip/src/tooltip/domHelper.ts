@@ -4,8 +4,8 @@ const createElement = (
 	children: HTMLElement[]
 ): HTMLElement => {
 	const element = document.createElement(type);
-	classes.forEach((className) => element.classList.add(className));
-	children.forEach((child) => element.appendChild(child));
+	element.classList.add(...classes);
+	element.append(...children);
 	return element;
 };
 
@@ -38,7 +38,7 @@ export const createSpan = (
 	return element;
 };
 
-export const createParagraph = (
+export const createP = (
 	classes: string[],
 	textContent: string
 ): HTMLSpanElement => {

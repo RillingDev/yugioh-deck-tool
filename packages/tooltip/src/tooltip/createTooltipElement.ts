@@ -10,7 +10,7 @@ import {
 	createDiv,
 	createImg,
 	createLi,
-	createParagraph,
+	createP,
 	createSpan,
 	createUl,
 } from "./domHelper";
@@ -102,9 +102,7 @@ const createPrice = (card: Card): HTMLElement => {
 const createDescription = (card: Card): HTMLElement =>
 	createDiv(
 		["card-tooltip__description"],
-		card.description
-			.split("\n")
-			.map((paragraph) => createParagraph([], paragraph))
+		card.description.split("\n").map((paragraph) => createP([], paragraph))
 	);
 
 const createCardDetailsCol = (card: Card): HTMLElement => {
