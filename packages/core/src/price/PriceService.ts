@@ -2,11 +2,10 @@ import { injectable } from "inversify";
 import type { Card } from "../card/Card";
 import type { Vendor } from "./Vendor";
 import type { Currency } from "./Currency";
-import { difference, sum } from "lodash";
 
 export interface PriceLookupResult {
-	price: number;
-	missing: Card[];
+	readonly price: number;
+	readonly missing: ReadonlyArray<Card>;
 }
 
 @injectable()
@@ -35,28 +34,17 @@ export class PriceService {
 	 * @return Object containing total sum for this vendor's currency, as well as a list of cards for which no price
 	 * could be found.
 	 */
-	getPrice(cards: Card[], vendor: Vendor): PriceLookupResult {
-		const missing: Card[] = cards.filter(
-			(card) => !this.#hasPrice(card, vendor)
-		);
-		const price = sum(
-			difference(cards, missing).map((card) =>
-				this.#getCardPrice(card, vendor)
-			)
-		);
-		return { price, missing };
-	}
-
-	#hasPrice(card: Card, vendor: Vendor): boolean {
-		return card.prices.has(vendor);
-	}
-
-	#getCardPrice(card: Card, vendor: Vendor): number {
-		if (!this.#hasPrice(card, vendor)) {
-			throw new TypeError(
-				`No price exists for this vendor: ${vendor.id}`
-			);
+	getPrice(cards: ReadonlyArray<Card>, vendor: Vendor): PriceLookupResult {
+		let price = 0;
+		const missing: Card[] = [];
+		for (const card of cards) {
+			if (card.prices.has(vendor)) {
+				const cardPrice = card.prices.get(vendor)!;
+				price += cardPrice;
+			} else {
+				missing.push(card);
+			}
 		}
-		return card.prices.get(vendor)!;
+		return { price, missing };
 	}
 }
