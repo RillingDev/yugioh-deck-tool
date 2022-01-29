@@ -19,6 +19,9 @@
 			],
 			"@yugioh-deck-tool/browser-common": [
 				"./src/browser-common/main.ts"
+			],
+			"@yugioh-deck-tool/ygoprodeck": [
+				"./src/ygoprodeck/main.ts"
 			]
 		}
 	},

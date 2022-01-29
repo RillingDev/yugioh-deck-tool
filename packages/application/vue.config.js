@@ -26,14 +26,15 @@ module.exports = defineConfig({
 				},
 			},
 		});
-
-		// Always use ESM version as the normal version clutters `window` and causes issues when other JS code brings their own version.
-		config.resolve.alias.set("lodash$", "lodash-es");
-
 		// "@" == source root
+		// Note that these are specified inside the tsconfig as well.
 		config.resolve.alias.set("@yugioh-deck-tool/application", "@/application/main.ts");
 		config.resolve.alias.set("@yugioh-deck-tool/tooltip", "@/tooltip/main.ts");
 		config.resolve.alias.set("@yugioh-deck-tool/browser-common", "@/browser-common/main.ts");
+		config.resolve.alias.set("@yugioh-deck-tool/ygoprodeck", "@/ygoprodeck/main.ts");
+
+		// Always use ESM version as the normal version clutters `window` and causes issues when other JS code brings their own version.
+		config.resolve.alias.set("lodash$", "lodash-es");
 
 		// Unbind unused plugins/rules
 		config.module.rules.delete("tsx");
