@@ -114,8 +114,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/variables";
-@import "../../../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/mixins";
+@import "../../../../browser-common/styles/variables";
 
 .deck-tool__portal {
 	.randomizer__btn-group {

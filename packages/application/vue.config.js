@@ -31,8 +31,9 @@ module.exports = defineConfig({
 		config.resolve.alias.set("lodash$", "lodash-es");
 
 		// "@" == source root
-		config.resolve.alias.set("@yugioh-deck-tool/application$", "@/application/main.ts");
-		config.resolve.alias.set("@yugioh-deck-tool/tooltip$", "@/tooltip/main.ts");
+		config.resolve.alias.set("@yugioh-deck-tool/application", "@/application/main.ts");
+		config.resolve.alias.set("@yugioh-deck-tool/tooltip", "@/tooltip/main.ts");
+		config.resolve.alias.set("@yugioh-deck-tool/browser-common", "@/browser-common/main.ts");
 
 		// Unbind unused plugins/rules
 		config.module.rules.delete("tsx");

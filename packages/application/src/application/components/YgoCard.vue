@@ -48,7 +48,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "../../browser-common/styles/variables";
 
 .deck-tool,
 .deck-tool__portal {
