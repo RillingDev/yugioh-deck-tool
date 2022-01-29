@@ -13,11 +13,11 @@
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
 import type { Card } from "@yugioh-deck-tool/core";
-import { tooltipContainer } from "@yugioh-deck-tool/tooltip/src/inversify.config";
 import type { ResourceService } from "@yugioh-deck-tool/ygoprodeck";
 import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
+import { applicationContainer } from "../inversify.config";
 
-const resourceService = tooltipContainer.get<ResourceService>(
+const resourceService = applicationContainer.get<ResourceService>(
 	YGOPRODECK_TYPES.ResourceService
 );
 

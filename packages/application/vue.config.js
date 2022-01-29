@@ -12,7 +12,7 @@ module.exports = defineConfig({
 			.entry("app")
 			.delete("./src/main.ts")
 			.add("./src/application/main.ts");
-		config.entry("tooltip").add("@yugioh-deck-tool/tooltip");
+		config.entry("tooltip").add("./src/tooltip/main.ts");
 
 		// Only use code common to both entry points for chunks, no vendor chunks.
 		config.optimization.splitChunks({
@@ -30,8 +30,9 @@ module.exports = defineConfig({
 		// Always use ESM version as the normal version clutters `window` and causes issues when other JS code brings their own version.
 		config.resolve.alias.set("lodash$", "lodash-es");
 
-		// Remove opinionated root alias
-		config.resolve.alias.delete("@");
+		// "@" == source root
+		config.resolve.alias.set("@yugioh-deck-tool/application$", "@/application/main.ts");
+		config.resolve.alias.set("@yugioh-deck-tool/tooltip$", "@/tooltip/main.ts");
 
 		// Unbind unused plugins/rules
 		config.module.rules.delete("tsx");

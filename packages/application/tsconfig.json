@@ -4,7 +4,20 @@
 		"importHelpers": true,
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
-		"lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"]
+		"lib": [
+			"ESNext",
+			"DOM",
+			"DOM.Iterable",
+			"ScriptHost"
+		],
+		"paths": {
+			"@yugioh-deck-tool/application": [
+				"./src/application/main.ts"
+			],
+			"@yugioh-deck-tool/tooltip": [
+				"./src/tooltip/main.ts"
+			]
+		}
 	},
 	"include": ["./src/**/*.ts", "./src/**/*.vue", "./tests/**/*.ts"],
 	"exclude": ["node_modules"]
