@@ -102,8 +102,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "~@yugioh-deck-tool/browser-common/src/styles/component/price";
-@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/component/price";
+@import "../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/variables";
 
 .deck-tool,
 .deck-tool__portal {

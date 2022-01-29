@@ -202,8 +202,8 @@ export default defineComponent({
 
 <style lang="scss">
 @use "sass:color";
-@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
-@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
+@import "../../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "../../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
 	.deck-part {

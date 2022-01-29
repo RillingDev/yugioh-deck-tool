@@ -24,8 +24,8 @@ import { BFormCheckbox } from "bootstrap-vue";
 import { showError } from "../../composition/feedback";
 import { APPLICATION_TYPES } from "../../types";
 import type { YgoprodeckController } from "../../controller/YgoprodeckController";
-import type { YgoprodeckService } from "../../../../ygoprodeck/src/main";
-import { YGOPRODECK_TYPES } from "../../../../ygoprodeck/src/main";
+import type { YgoprodeckService } from "@yugioh-deck-tool/ygoprodeck";
+import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
 import { SET_CARD_COUNT_FUNCTION } from "../../store/modules/collection";
 import { useStore } from "../../store/store";
 import { SET_LOADING } from "../../store/modules/data";
@@ -100,8 +100,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "~@yugioh-deck-tool/browser-common/src/styles/variables";
-@import "~@yugioh-deck-tool/browser-common/src/styles/mixins";
+@import "../../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/variables";
+@import "../../../../../../node_modules/@yugioh-deck-tool/browser-common/src/styles/mixins";
 
 .deck-tool {
 	.collection-filter {

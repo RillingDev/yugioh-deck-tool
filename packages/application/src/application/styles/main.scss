@@ -2,23 +2,23 @@
 // Variables
 ///
 // Bootstrap
-@import "./bootstrap/variables";
-@import "./bootstrap/reboot-mixin";
+@import "bootstrap/variables";
+@import "bootstrap/reboot-mixin";
 
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+@import "../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../node_modules/bootstrap/scss/mixins";
 
 // Bootstrap Vue
-@import "./bootstrap-vue/variables";
+@import "bootstrap-vue/variables";
 
-@import "~bootstrap-vue/src/variables";
-@import "~bootstrap-vue/src/utilities";
+@import "../../../../../node_modules/bootstrap-vue/src/variables";
+@import "../../../../../node_modules/bootstrap-vue/src/utilities";
 
 // Vue Select
-@import "./vue-select/variables";
+@import "vue-select/variables";
 
-@import "~vue-select/src/scss/global/variables";
+@import "../../../../../node_modules/vue-select/src/scss/global/variables";
 
 //
 // Main Styles
@@ -28,20 +28,20 @@
 	//
 	// Bootstrap
 	//
-	@import "~bootstrap/scss/root";
+	@import "../../../../../node_modules/bootstrap/scss/root";
 	@include reboot(); // Custom reboot variant
-	@import "~bootstrap/scss/type";
-	@import "~bootstrap/scss/images";
+	@import "../../../../../node_modules/bootstrap/scss/type";
+	@import "../../../../../node_modules/bootstrap/scss/images";
 	// @import "~bootstrap/scss/code";
 	// @import "~bootstrap/scss/grid";
 	// @import "~bootstrap/scss/tables";
-	@import "~bootstrap/scss/forms";
-	@import "~bootstrap/scss/buttons";
-	@import "~bootstrap/scss/transitions";
-	@import "~bootstrap/scss/dropdown";
-	@import "~bootstrap/scss/button-group";
-	@import "~bootstrap/scss/input-group";
-	@import "~bootstrap/scss/custom-forms";
+	@import "../../../../../node_modules/bootstrap/scss/forms";
+	@import "../../../../../node_modules/bootstrap/scss/buttons";
+	@import "../../../../../node_modules/bootstrap/scss/transitions";
+	@import "../../../../../node_modules/bootstrap/scss/dropdown";
+	@import "../../../../../node_modules/bootstrap/scss/button-group";
+	@import "../../../../../node_modules/bootstrap/scss/input-group";
+	@import "../../../../../node_modules/bootstrap/scss/custom-forms";
 	// @import "~bootstrap/scss/nav";
 	// @import "~bootstrap/scss/navbar";
 	// @import "~bootstrap/scss/card";
@@ -53,14 +53,14 @@
 	// @import "~bootstrap/scss/progress";
 	// @import "~bootstrap/scss/media";
 	// @import "~bootstrap/scss/list-group";
-	@import "~bootstrap/scss/close";
-	@import "~bootstrap/scss/toasts";
-	@import "~bootstrap/scss/modal";
-	@import "~bootstrap/scss/tooltip";
+	@import "../../../../../node_modules/bootstrap/scss/close";
+	@import "../../../../../node_modules/bootstrap/scss/toasts";
+	@import "../../../../../node_modules/bootstrap/scss/modal";
+	@import "../../../../../node_modules/bootstrap/scss/tooltip";
 	// @import "~bootstrap/scss/popover";
 	// @import "~bootstrap/scss/carousel";
-	@import "~bootstrap/scss/spinners";
-	@import "~bootstrap/scss/utilities";
+	@import "../../../../../node_modules/bootstrap/scss/spinners";
+	@import "../../../../../node_modules/bootstrap/scss/utilities";
 	// @import "~bootstrap/scss/print";
 
 	// Bootstrap Vue
@@ -91,18 +91,18 @@
 	// @import "~bootstrap-vue/src/icons/index";
 
 	// Vue Select
-	@import "~vue-select/src/scss/global/component";
-	@import "~vue-select/src/scss/global/animations";
-	@import "~vue-select/src/scss/global/states";
-	@import "~vue-select/src/scss/modules/dropdown-toggle";
-	@import "~vue-select/src/scss/modules/open-indicator";
-	@import "~vue-select/src/scss/modules/clear";
-	@import "~vue-select/src/scss/modules/dropdown-menu";
-	@import "~vue-select/src/scss/modules/dropdown-option";
-	@import "~vue-select/src/scss/modules/selected";
-	@import "~vue-select/src/scss/modules/search-input";
+	@import "../../../../../node_modules/vue-select/src/scss/global/component";
+	@import "../../../../../node_modules/vue-select/src/scss/global/animations";
+	@import "../../../../../node_modules/vue-select/src/scss/global/states";
+	@import "../../../../../node_modules/vue-select/src/scss/modules/dropdown-toggle";
+	@import "../../../../../node_modules/vue-select/src/scss/modules/open-indicator";
+	@import "../../../../../node_modules/vue-select/src/scss/modules/clear";
+	@import "../../../../../node_modules/vue-select/src/scss/modules/dropdown-menu";
+	@import "../../../../../node_modules/vue-select/src/scss/modules/dropdown-option";
+	@import "../../../../../node_modules/vue-select/src/scss/modules/selected";
+	@import "../../../../../node_modules/vue-select/src/scss/modules/search-input";
 	// @import "~vue-select/src/scss/modules/spinner";
-	@import "./vue-select/adjustments";
+	@import "vue-select/adjustments";
 
 	// App
 	@import "general";
@@ -110,9 +110,9 @@
 
 // Some elements have to be placed outside the .deck-tool, these are global
 // Note that these styles are included both in the above section and here, to decrease the odds of specificity issues
-@import "~bootstrap/scss/modal";
-@import "~bootstrap/scss/toasts";
-@import "~bootstrap/scss/tooltip";
+@import "../../../../../node_modules/bootstrap/scss/modal";
+@import "../../../../../node_modules/bootstrap/scss/toasts";
+@import "../../../../../node_modules/bootstrap/scss/tooltip";
 
 @import "~bootstrap-vue/src/components/modal/modal";
 @import "~bootstrap-vue/src/components/toast/index";
