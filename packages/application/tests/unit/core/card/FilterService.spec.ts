@@ -1,21 +1,21 @@
 import "reflect-metadata";
 
-import { createCard } from "../helper/dataFactories";
+import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
 import { anything, when } from "ts-mockito";
-import { bindMock } from "../helper/bindMock";
-import { CardService } from "../../src/card/CardService";
-import type { FilterService } from "../../src/card/FilterService";
-import { baseModule } from "../../src/inversify.modules";
-import { BanlistService } from "../../src/card/banlist/BanlistService";
-import { TYPES } from "../../src/types";
-import { CardTypeCategory } from "../../src/card/type/CardTypeCategory";
-import { DeckPart } from "../../src/deck/DeckPart";
-import { Format } from "../../src/card/format/Format";
-import { DefaultBanState } from "../../src/card/banlist/BanState";
-import type { CardDataLoaderService } from "../../src/card/CardDataLoaderService";
-import { MockDataLoaderService } from "../helper/MockDataLoaderService";
-import type { CardPredicate } from "../../src/card/CardPredicateService";
+import { bindMock } from "../../helper/bindMock";
+import { CardService } from "@yugioh-deck-tool/core";
+import type { FilterService } from "@yugioh-deck-tool/core";
+import { baseModule } from "@yugioh-deck-tool/core";
+import { BanlistService } from "@yugioh-deck-tool/core";
+import { TYPES } from "@yugioh-deck-tool/core";
+import { CardTypeCategory } from "@yugioh-deck-tool/core";
+import { DeckPart } from "@yugioh-deck-tool/core";
+import { Format } from "@yugioh-deck-tool/core";
+import { DefaultBanState } from "@yugioh-deck-tool/core";
+import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
+import type { CardPredicate } from "@yugioh-deck-tool/core";
 
 describe("FilterService", () => {
 	let filterService: FilterService;

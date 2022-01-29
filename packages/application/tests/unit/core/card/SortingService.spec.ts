@@ -1,17 +1,17 @@
 import "reflect-metadata";
 
-import { createCard } from "../helper/dataFactories";
+import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
-import { bindMock } from "../helper/bindMock";
-import { baseModule } from "../../src/inversify.modules";
-import { TYPES } from "../../src/types";
-import type { SortingService } from "../../src/card/SortingService";
-import { SortingOrder, SortingStrategy } from "../../src/card/SortingService";
-import type { CardDatabase } from "../../src/card/CardDatabase";
-import { MemoryCardDatabase } from "../../src/card/MemoryCardDatabase";
-import { Format } from "../../src/card/format/Format";
-import type { CardDataLoaderService } from "../../src/card/CardDataLoaderService";
-import { MockDataLoaderService } from "../helper/MockDataLoaderService";
+import { bindMock } from "../../helper/bindMock";
+import { baseModule } from "@yugioh-deck-tool/core";
+import { TYPES } from "@yugioh-deck-tool/core";
+import type { SortingService } from "@yugioh-deck-tool/core";
+import { SortingOrder, SortingStrategy } from "@yugioh-deck-tool/core";
+import type { CardDatabase } from "@yugioh-deck-tool/core";
+import { MemoryCardDatabase } from "../../../../src/core/card/MemoryCardDatabase";
+import { Format } from "@yugioh-deck-tool/core";
+import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("SortingService", () => {
 	let sortingService: SortingService;

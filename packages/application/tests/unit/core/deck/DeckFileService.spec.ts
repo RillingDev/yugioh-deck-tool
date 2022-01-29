@@ -1,23 +1,23 @@
 import "reflect-metadata";
 
-import { MemoryCardDatabase } from "../../src/card/MemoryCardDatabase";
-import { AxiosHttpService } from "../../src/http/AxiosHttpService";
+import { MemoryCardDatabase } from "../../../../src/core/card/MemoryCardDatabase";
+import { AxiosHttpService } from "../../../../src/core/http/AxiosHttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
 import type {
 	HttpService,
 	HttpRequestConfig,
-} from "../../src/http/HttpService";
-import { createCard } from "../helper/dataFactories";
-import { bindMock } from "../helper/bindMock";
+} from "../../../../src/core/http/HttpService";
+import { createCard } from "../../helper/dataFactories";
+import { bindMock } from "../../helper/bindMock";
 import { Container } from "inversify";
-import type { DeckFileService } from "../../src/deck/DeckFileService";
-import type { CardDatabase } from "../../src/card/CardDatabase";
-import { FindCardBy } from "../../src/card/CardDatabase";
-import { baseModule, deckModule } from "../../src/inversify.modules";
-import { TYPES } from "../../src/types";
-import { DeckPart } from "../../src/deck/DeckPart";
-import type { CardDataLoaderService } from "../../src/card/CardDataLoaderService";
-import { MockDataLoaderService } from "../helper/MockDataLoaderService";
+import type { DeckFileService } from "@yugioh-deck-tool/core";
+import type { CardDatabase } from "@yugioh-deck-tool/core";
+import { FindCardBy } from "@yugioh-deck-tool/core";
+import { baseModule, deckModule } from "@yugioh-deck-tool/core";
+import { TYPES } from "@yugioh-deck-tool/core";
+import { DeckPart } from "@yugioh-deck-tool/core";
+import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("DeckFileService", () => {
 	let deckFileService: DeckFileService;

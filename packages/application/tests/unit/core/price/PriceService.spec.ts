@@ -1,14 +1,14 @@
 import "reflect-metadata";
 import { Container } from "inversify";
-import { TYPES } from "../../src/types";
-import { baseModule } from "../../src/inversify.modules";
-import type { PriceService } from "../../src/price/PriceService";
-import { createCard } from "../helper/dataFactories";
-import type { Vendor } from "../../src/price/Vendor";
-import { DefaultVendor } from "../../src/price/Vendor";
-import { DefaultCurrency } from "../../src/price/Currency";
-import type { CardDataLoaderService } from "../../src/card/CardDataLoaderService";
-import { MockDataLoaderService } from "../helper/MockDataLoaderService";
+import { TYPES } from "@yugioh-deck-tool/core";
+import { baseModule } from "@yugioh-deck-tool/core";
+import type { PriceService } from "@yugioh-deck-tool/core";
+import { createCard } from "../../helper/dataFactories";
+import type { Vendor } from "@yugioh-deck-tool/core";
+import { DefaultVendor } from "@yugioh-deck-tool/core";
+import { DefaultCurrency } from "@yugioh-deck-tool/core";
+import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("PriceService", () => {
 	let priceService: PriceService;

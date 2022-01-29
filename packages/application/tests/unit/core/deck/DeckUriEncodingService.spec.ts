@@ -1,18 +1,18 @@
 import "reflect-metadata";
 
-import { MemoryCardDatabase } from "../../src/card/MemoryCardDatabase";
-import { createCard } from "../helper/dataFactories";
-import { bindMock } from "../helper/bindMock";
+import { MemoryCardDatabase } from "../../../../src/core/card/MemoryCardDatabase";
+import { createCard } from "../../helper/dataFactories";
+import { bindMock } from "../../helper/bindMock";
 import { when } from "ts-mockito";
 import { Container } from "inversify";
-import type { DeckUriEncodingService } from "../../src/deck/DeckUriEncodingService";
-import type { CardDatabase } from "../../src/card/CardDatabase";
-import { FindCardBy } from "../../src/card/CardDatabase";
-import { baseModule, deckModule } from "../../src/inversify.modules";
-import { TYPES } from "../../src/types";
-import { DeckPart } from "../../src/deck/DeckPart";
-import type { CardDataLoaderService } from "../../src/card/CardDataLoaderService";
-import { MockDataLoaderService } from "../helper/MockDataLoaderService";
+import type { DeckUriEncodingService } from "@yugioh-deck-tool/core";
+import type { CardDatabase } from "@yugioh-deck-tool/core";
+import { FindCardBy } from "@yugioh-deck-tool/core";
+import { baseModule, deckModule } from "@yugioh-deck-tool/core";
+import { TYPES } from "@yugioh-deck-tool/core";
+import { DeckPart } from "@yugioh-deck-tool/core";
+import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;

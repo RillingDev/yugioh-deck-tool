@@ -1,15 +1,15 @@
-import type { Card } from "../../src/card/Card";
-import { Format } from "../../src/card/format/Format";
-import type { CardImage } from "../../src/card/CardImage";
-import type { CardPrices } from "../../src/card/CardPrices";
-import type { ReleaseInfo } from "../../src/card/ReleaseInfo";
-import type { BanlistInfo } from "../../src/card/banlist/BanlistInfo";
-import type { CardType } from "../../src/card/type/CardType";
-import type { CardSet } from "../../src/card/set/CardSet";
-import { CardTypeCategory } from "../../src/card/type/CardTypeCategory";
-import { DefaultBanState } from "../../src/card/banlist/BanState";
-import type { Vendor } from "../../src/price/Vendor";
-import { DeckPart } from "../../src/deck/DeckPart";
+import type { Card } from "@yugioh-deck-tool/core";
+import { Format } from "@yugioh-deck-tool/core";
+import type { CardImage } from "@yugioh-deck-tool/core";
+import type { CardPrices } from "@yugioh-deck-tool/core";
+import type { ReleaseInfo } from "@yugioh-deck-tool/core";
+import type { BanlistInfo } from "@yugioh-deck-tool/core";
+import type { CardType } from "@yugioh-deck-tool/core";
+import type { CardSet } from "@yugioh-deck-tool/core";
+import { CardTypeCategory } from "@yugioh-deck-tool/core";
+import { DefaultBanState } from "@yugioh-deck-tool/core";
+import type { Vendor } from "@yugioh-deck-tool/core";
+import { DeckPart } from "@yugioh-deck-tool/core";
 
 export const createCardType = (data: {
 	name?: string;

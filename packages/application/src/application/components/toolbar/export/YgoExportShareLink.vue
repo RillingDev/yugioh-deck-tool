@@ -15,7 +15,7 @@ import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { showError, showSuccess } from "../../../composition/feedback";
 import type { DeckUrlController } from "../../../controller/DeckUrlController";
-import { getLogger } from "@yugioh-deck-tool/core/src/logger";
+import { getLogger } from "@yugioh-deck-tool/core";
 import { useStore } from "../../../store/store";
 
 const deckUrlController = applicationContainer.get<DeckUrlController>(

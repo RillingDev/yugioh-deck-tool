@@ -1,17 +1,17 @@
 import "reflect-metadata";
 
-import { createCard, createCardType } from "../helper/dataFactories";
+import { createCard, createCardType } from "../../helper/dataFactories";
 import { Container } from "inversify";
-import { TYPES } from "../../src/types";
-import { baseModule, deckModule } from "../../src/inversify.modules";
-import type { DeckService } from "../../src/deck/DeckService";
-import { DeckPart } from "../../src/deck/DeckPart";
-import { Format } from "../../src/card/format/Format";
-import { CardTypeCategory } from "../../src/card/type/CardTypeCategory";
-import { DefaultBanState } from "../../src/card/banlist/BanState";
-import type { Deck } from "../../src/deck/Deck";
-import type { CardDataLoaderService } from "../../src/card/CardDataLoaderService";
-import { MockDataLoaderService } from "../helper/MockDataLoaderService";
+import { TYPES } from "@yugioh-deck-tool/core";
+import { baseModule, deckModule } from "@yugioh-deck-tool/core";
+import type { DeckService } from "@yugioh-deck-tool/core";
+import { DeckPart } from "@yugioh-deck-tool/core";
+import { Format } from "@yugioh-deck-tool/core";
+import { CardTypeCategory } from "@yugioh-deck-tool/core";
+import { DefaultBanState } from "@yugioh-deck-tool/core";
+import type { Deck } from "@yugioh-deck-tool/core";
+import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("DeckService", () => {
 	let deckService: DeckService;
