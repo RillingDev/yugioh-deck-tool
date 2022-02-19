@@ -45,7 +45,6 @@ import { applicationContainer } from "../inversify.config";
 import type {
 	Card,
 	CardService,
-	Currency,
 	PriceLookupResult,
 	PriceService,
 	Vendor,
@@ -54,7 +53,6 @@ import { DEFAULT_VENDOR_ARR, TYPES } from "@yugioh-deck-tool/core";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { BTooltip } from "bootstrap-vue";
-import { useStore } from "../store/store";
 
 const priceService = applicationContainer.get<PriceService>(TYPES.PriceService);
 const cardService = applicationContainer.get<CardService>(TYPES.CardService);

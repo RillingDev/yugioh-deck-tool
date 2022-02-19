@@ -1,23 +1,16 @@
 module.exports = {
-	root: true, parser: "vue-eslint-parser",
-
+	root: true,
+	parser: "@typescript-eslint/parser",
 	parserOptions: {
-		tsconfigRootDir: __dirname,
 		project: ["./tsconfig.json"],
 	},
-	plugins: ["@typescript-eslint", "prettier", "import", "vue"],
+	plugins: ["@typescript-eslint", "prettier", "import"],
 	extends: [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		"prettier",
-
-		"plugin:vue/recommended",
-		"@vue/typescript/recommended",
-		"@vue/prettier",
-		"@vue/prettier/@typescript-eslint",
 	],
-
 	rules: {
 		/*
 		 * ESLint
@@ -122,7 +115,14 @@ module.exports = {
 			},
 		},
 		{
-			files: ["**/src/application/unit/**/*"],
+			files: ["**/src/application/**/*", "**/tests/unit/application/**/*"],
+			parser: "vue-eslint-parser",
+			extends: [
+				"plugin:vue/recommended",
+				"@vue/typescript/recommended",
+				"@vue/prettier",
+				"@vue/prettier/@typescript-eslint",
+			],
 			rules: {
 				"import/no-default-export": "off", // Causes Issues with Vue
 
@@ -142,6 +142,9 @@ module.exports = {
 						format: ["strictCamelCase", "PascalCase", "UPPER_CASE"], // Many 3rd party components have a non-strict pascal case name
 					},
 				],
+
+				// Re-apply as it is overridden by new extends bases.
+				"@typescript-eslint/no-non-null-assertion": "off", // Essential when working with maps
 			},
 		},
 	],

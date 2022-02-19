@@ -10,12 +10,7 @@ import type {
 	UnlinkedCard,
 	Vendor,
 } from "@yugioh-deck-tool/core";
-import {
-	DefaultBanState,
-	DefaultVendor,
-	Environment,
-	Format,
-} from "@yugioh-deck-tool/core";
+import { DefaultBanState, DefaultVendor, Format } from "@yugioh-deck-tool/core";
 import type { ResourceService } from "../ResourceService";
 
 // https://jvilk.com/MakeTypes/
@@ -127,12 +122,6 @@ const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
 	});
 };
 
-// Map back against main source instead of Google's CDN.
-const convertToNonCdnImageUrl = (imageUrl: string): string =>
-	imageUrl.replace(
-		"https://storage.googleapis.com/ygoprodeck.com/",
-		"https://ygoprodeck.com/"
-	);
 const mapImage = (
 	rawCard: RawCard,
 	resourceService: ResourceService
