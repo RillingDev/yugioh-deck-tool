@@ -19,7 +19,7 @@ import {
 } from "./store/modules/deck";
 import { useStore } from "./store/store";
 
-const logger = getLogger("tooltip");
+const logger = getLogger("bridge");
 
 /**
  * Minimal event emitter.
