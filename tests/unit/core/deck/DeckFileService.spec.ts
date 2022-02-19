@@ -1,12 +1,9 @@
 import "reflect-metadata";
 
-import { MemoryCardDatabase } from "../../../../src/core/card/MemoryCardDatabase";
-import { AxiosHttpService } from "../../../../src/core/http/AxiosHttpService";
+import { MemoryCardDatabase } from "@/core/card/MemoryCardDatabase";
+import { AxiosHttpService } from "@/core/http/AxiosHttpService";
 import { anyString, anything, verify, when } from "ts-mockito";
-import type {
-	HttpService,
-	HttpRequestConfig,
-} from "../../../../src/core/http/HttpService";
+import type { HttpService, HttpRequestConfig } from "@/core/http/HttpService";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { Container } from "inversify";

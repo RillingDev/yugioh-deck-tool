@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { MemoryCardDatabase } from "../../../../src/core/card/MemoryCardDatabase";
+import { MemoryCardDatabase } from "@/core/card/MemoryCardDatabase";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { when } from "ts-mockito";

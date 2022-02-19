@@ -8,7 +8,7 @@ import { TYPES } from "@/core/main";
 import type { SortingService } from "@/core/main";
 import { SortingOrder, SortingStrategy } from "@/core/main";
 import type { CardDatabase } from "@/core/main";
-import { MemoryCardDatabase } from "../../../../src/core/card/MemoryCardDatabase";
+import { MemoryCardDatabase } from "@/core/card/MemoryCardDatabase";
 import { Format } from "@/core/main";
 import type { CardDataLoaderService } from "@/core/main";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
