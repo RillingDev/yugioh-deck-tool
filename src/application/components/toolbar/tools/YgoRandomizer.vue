@@ -38,12 +38,8 @@
 </template>
 
 <script lang="ts">
-import type {
-	CardFilter,
-	DeckRandomizationService,
-	Format,
-} from "@yugioh-deck-tool/core";
-import { RandomizationStrategy, TYPES } from "@yugioh-deck-tool/core";
+import type { CardFilter, DeckRandomizationService, Format } from "@/core/main";
+import { RandomizationStrategy, TYPES } from "@/core/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";

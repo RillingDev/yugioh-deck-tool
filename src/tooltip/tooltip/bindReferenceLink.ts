@@ -1,7 +1,7 @@
 import { tooltipContainer } from "../inversify.config";
-import type { Card, CardService } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
-import { browserSupportsTouch } from "@yugioh-deck-tool/browser-common";
+import type { Card, CardService } from "@/core/main";
+import { TYPES } from "@/core/main";
+import { browserSupportsTouch } from "@/browser-common/main";
 
 const cardService = tooltipContainer.get<CardService>(TYPES.CardService);
 

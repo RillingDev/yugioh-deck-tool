@@ -1,4 +1,4 @@
-import { getLogger } from "@yugioh-deck-tool/core";
+import { getLogger } from "@/core/main";
 import { bindTooltipHandlers } from "./tooltip/bindTooltip";
 
 const logger = getLogger("tooltip");

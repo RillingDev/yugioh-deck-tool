@@ -10,8 +10,8 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import type { DeckUriEncodingService } from "@yugioh-deck-tool/core";
-import { getLogger, TYPES } from "@yugioh-deck-tool/core";
+import type { DeckUriEncodingService } from "@/core/main";
+import { getLogger, TYPES } from "@/core/main";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { showError, showSuccess } from "../../../composition/feedback";

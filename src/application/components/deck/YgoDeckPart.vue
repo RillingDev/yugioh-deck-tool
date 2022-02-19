@@ -44,17 +44,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
-import type {
-	Card,
-	DeckPart,
-	DeckPartConfig,
-	DeckService,
-} from "@yugioh-deck-tool/core";
-import {
-	DefaultDeckPartConfig,
-	getLogger,
-	TYPES,
-} from "@yugioh-deck-tool/core";
+import type { Card, DeckPart, DeckPartConfig, DeckService } from "@/core/main";
+import { DefaultDeckPartConfig, getLogger, TYPES } from "@/core/main";
 import Draggable from "vuedraggable";
 import type {
 	DraggableChangeEventData,

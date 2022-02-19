@@ -6,8 +6,8 @@ import type {
 	CardSet,
 	CardValues,
 	UnlinkedCard,
-} from "@yugioh-deck-tool/core";
-import { FindCardBy } from "@yugioh-deck-tool/core";
+} from "@/core/main";
+import { FindCardBy } from "@/core/main";
 
 /**
  * Implementation of {@link CardDataLoaderService} using {@link YgoprodeckApiService}.

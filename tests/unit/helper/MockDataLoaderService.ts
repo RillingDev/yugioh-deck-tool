@@ -1,9 +1,9 @@
-import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
-import type { CardSet } from "@yugioh-deck-tool/core";
-import type { UnlinkedCard } from "@yugioh-deck-tool/core";
-import type { CardValues } from "@yugioh-deck-tool/core";
+import type { CardDataLoaderService } from "@/core/main";
+import type { CardSet } from "@/core/main";
+import type { UnlinkedCard } from "@/core/main";
+import type { CardValues } from "@/core/main";
 import { injectable } from "inversify";
-import { CardTypeCategory } from "@yugioh-deck-tool/core";
+import { CardTypeCategory } from "@/core/main";
 
 @injectable()
 export class MockDataLoaderService implements CardDataLoaderService {

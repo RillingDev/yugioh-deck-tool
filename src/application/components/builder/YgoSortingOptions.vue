@@ -25,8 +25,8 @@
 <script lang="ts">
 import type { PropType } from "@vue/composition-api";
 import { defineComponent, reactive } from "@vue/composition-api";
-import type { SortingOptions } from "@yugioh-deck-tool/core";
-import { SortingOrder, SortingStrategy } from "@yugioh-deck-tool/core";
+import type { SortingOptions } from "@/core/main";
+import { SortingOrder, SortingStrategy } from "@/core/main";
 import { clone } from "lodash";
 import VSelect from "vue-select";
 

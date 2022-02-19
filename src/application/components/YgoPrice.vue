@@ -48,8 +48,8 @@ import type {
 	PriceLookupResult,
 	PriceService,
 	Vendor,
-} from "@yugioh-deck-tool/core";
-import { DEFAULT_VENDOR_ARR, TYPES } from "@yugioh-deck-tool/core";
+} from "@/core/main";
+import { DEFAULT_VENDOR_ARR, TYPES } from "@/core/main";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { BTooltip } from "bootstrap-vue";

@@ -45,8 +45,8 @@
 
 <script lang="ts">
 import YgoCard from "../../YgoCard.vue";
-import type { Card, Deck, DeckService } from "@yugioh-deck-tool/core";
-import { DeckPart, TYPES } from "@yugioh-deck-tool/core";
+import type { Card, Deck, DeckService } from "@/core/main";
+import { DeckPart, TYPES } from "@/core/main";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { computed, defineComponent, ref } from "@vue/composition-api";

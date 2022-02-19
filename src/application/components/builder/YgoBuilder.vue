@@ -34,8 +34,8 @@ import type {
 	Format,
 	SortingOptions,
 	SortingService,
-} from "@yugioh-deck-tool/core";
-import { SortingOrder, SortingStrategy, TYPES } from "@yugioh-deck-tool/core";
+} from "@/core/main";
+import { SortingOrder, SortingStrategy, TYPES } from "@/core/main";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";

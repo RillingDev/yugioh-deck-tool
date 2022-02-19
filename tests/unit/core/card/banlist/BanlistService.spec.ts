@@ -2,12 +2,12 @@ import "reflect-metadata";
 
 import { createCard } from "../../../helper/dataFactories";
 import { Container } from "inversify";
-import type { BanlistService } from "@yugioh-deck-tool/core";
-import { baseModule } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
-import { Format } from "@yugioh-deck-tool/core";
-import { DefaultBanState } from "@yugioh-deck-tool/core";
-import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import type { BanlistService } from "@/core/main";
+import { baseModule } from "@/core/main";
+import { TYPES } from "@/core/main";
+import { Format } from "@/core/main";
+import { DefaultBanState } from "@/core/main";
+import type { CardDataLoaderService } from "@/core/main";
 import { MockDataLoaderService } from "../../../helper/MockDataLoaderService";
 
 describe("BanlistService", () => {

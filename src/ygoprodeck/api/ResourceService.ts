@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-import type { BanlistInfo, Card } from "@yugioh-deck-tool/core";
-import { Environment, EnvironmentConfig, TYPES } from "@yugioh-deck-tool/core";
+import type { BanlistInfo, Card } from "@/core/main";
+import { Environment, EnvironmentConfig, TYPES } from "@/core/main";
 
 @injectable()
 export class ResourceService {

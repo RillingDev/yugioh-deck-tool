@@ -16,16 +16,16 @@
 </template>
 
 <script lang="ts">
-import type { CardCountFunction } from "@yugioh-deck-tool/core";
-import { getLogger } from "@yugioh-deck-tool/core";
+import type { CardCountFunction } from "@/core/main";
+import { getLogger } from "@/core/main";
 import { computed, defineComponent, ref, watch } from "@vue/composition-api";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError } from "../../composition/feedback";
 import { APPLICATION_TYPES } from "../../types";
 import type { YgoprodeckController } from "../../controller/YgoprodeckController";
-import type { YgoprodeckService } from "@yugioh-deck-tool/ygoprodeck";
-import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
+import type { YgoprodeckService } from "@/ygoprodeck/main";
+import { YGOPRODECK_TYPES } from "@/ygoprodeck/main";
 import { SET_CARD_COUNT_FUNCTION } from "../../store/modules/collection";
 import { useStore } from "../../store/store";
 import { SET_LOADING } from "../../store/modules/data";

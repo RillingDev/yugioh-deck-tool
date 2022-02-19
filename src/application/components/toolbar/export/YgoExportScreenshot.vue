@@ -11,12 +11,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import { getLogger } from "@yugioh-deck-tool/core";
+import { getLogger } from "@/core/main";
 import { BDropdownItemButton } from "bootstrap-vue";
-import {
-	createScreenshot,
-	downloadFile,
-} from "@yugioh-deck-tool/browser-common";
+import { createScreenshot, downloadFile } from "@/browser-common/main";
 import {
 	showError,
 	showInfo,

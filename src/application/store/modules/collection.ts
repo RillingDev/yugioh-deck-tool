@@ -1,4 +1,4 @@
-import type { CardCountFunction } from "@yugioh-deck-tool/core";
+import type { CardCountFunction } from "@/core/main";
 import type { Module } from "vuex";
 import type { AppState } from "../AppState";
 

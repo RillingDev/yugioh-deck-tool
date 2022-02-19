@@ -1,4 +1,4 @@
-import { getLogger } from "@yugioh-deck-tool/core";
+import { getLogger } from "@/core/main";
 import { createApplicationBridge } from "./bridge";
 
 const logger = getLogger("tooltip");

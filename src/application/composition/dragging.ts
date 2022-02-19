@@ -1,4 +1,4 @@
-import type { Card, DeckPart } from "@yugioh-deck-tool/core";
+import type { Card, DeckPart } from "@/core/main";
 
 // TODO: Replace with real types
 export type DraggableChangeEventData = any;

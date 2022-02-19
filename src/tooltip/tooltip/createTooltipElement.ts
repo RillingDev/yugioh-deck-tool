@@ -1,10 +1,10 @@
-import type { Card, PriceService } from "@yugioh-deck-tool/core";
+import type { Card, PriceService } from "@/core/main";
 import {
 	CardTypeCategory,
 	DEFAULT_VENDOR_ARR,
 	Format,
 	TYPES,
-} from "@yugioh-deck-tool/core";
+} from "@/core/main";
 import { tooltipContainer } from "../inversify.config";
 import {
 	createDiv,
@@ -14,8 +14,8 @@ import {
 	createSpan,
 	createUl,
 } from "./domHelper";
-import type { ResourceService } from "@yugioh-deck-tool/ygoprodeck";
-import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
+import type { ResourceService } from "@/ygoprodeck/main";
+import { YGOPRODECK_TYPES } from "@/ygoprodeck/main";
 
 const priceService = tooltipContainer.get<PriceService>(TYPES.PriceService);
 const resourceService = tooltipContainer.get<ResourceService>(

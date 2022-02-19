@@ -2,10 +2,10 @@ import "reflect-metadata";
 
 import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
-import { baseModule } from "@yugioh-deck-tool/core";
-import type { CardService } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
-import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { baseModule } from "@/core/main";
+import type { CardService } from "@/core/main";
+import { TYPES } from "@/core/main";
+import type { CardDataLoaderService } from "@/core/main";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("CardService", () => {

@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import YgoCard from "../../../../src/application/components/YgoCard.vue";
-import type { Card } from "@yugioh-deck-tool/core";
+import type { Card } from "@/core/main";
 import { createCard } from "../../helper/dataFactories";
 import VueCompositionApi from "@vue/composition-api";
 

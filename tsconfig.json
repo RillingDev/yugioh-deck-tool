@@ -11,20 +11,8 @@
 			"ScriptHost"
 		],
 		"paths": {
-			"@yugioh-deck-tool/core": [
-				"./src/core/main.ts"
-			],
-			"@yugioh-deck-tool/ygoprodeck": [
-				"./src/ygoprodeck/main.ts"
-			],
-			"@yugioh-deck-tool/browser-common": [
-				"./src/browser-common/main.ts"
-			],
-			"@yugioh-deck-tool/tooltip": [
-				"./src/tooltip/main.ts"
-			],
-			"@yugioh-deck-tool/application": [
-				"./src/application/main.ts"
+			"@/*": [
+				"src/*"
 			]
 		}
 	},

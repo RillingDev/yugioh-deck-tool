@@ -1,6 +1,6 @@
 import type { Module } from "vuex";
-import type { Card, Deck, DeckPart, DeckService } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
+import type { Card, Deck, DeckPart, DeckService } from "@/core/main";
+import { TYPES } from "@/core/main";
 import { applicationContainer } from "../../inversify.config";
 import type { AppState } from "../AppState";
 

@@ -9,8 +9,8 @@ import type {
 	ReleaseInfo,
 	UnlinkedCard,
 	Vendor,
-} from "@yugioh-deck-tool/core";
-import { DefaultBanState, DefaultVendor, Format } from "@yugioh-deck-tool/core";
+} from "@/core/main";
+import { DefaultBanState, DefaultVendor, Format } from "@/core/main";
 import type { ResourceService } from "../ResourceService";
 
 // https://jvilk.com/MakeTypes/

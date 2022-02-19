@@ -15,14 +15,14 @@ import type {
 	CardValues,
 	Format,
 	UnlinkedCard,
-} from "@yugioh-deck-tool/core";
+} from "@/core/main";
 import {
 	EncodingService,
 	Environment,
 	EnvironmentConfig,
 	HttpService,
 	TYPES,
-} from "@yugioh-deck-tool/core";
+} from "@/core/main";
 import { ResourceService } from "./ResourceService";
 import { YGOPRODECK_TYPES } from "../types";
 

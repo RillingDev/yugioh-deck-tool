@@ -64,13 +64,9 @@
 <script lang="ts">
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
-import { browserSupportsTouch } from "@yugioh-deck-tool/browser-common";
-import type {
-	Card,
-	CardCountFunction,
-	DeckService,
-} from "@yugioh-deck-tool/core";
-import { CardTypeCategory, TYPES } from "@yugioh-deck-tool/core";
+import { browserSupportsTouch } from "@/browser-common/main";
+import type { Card, CardCountFunction, DeckService } from "@/core/main";
+import { CardTypeCategory, TYPES } from "@/core/main";
 import Draggable from "vuedraggable";
 import type { DraggableMoveValidatorData } from "../../composition/dragging";
 import {

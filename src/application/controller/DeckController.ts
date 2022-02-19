@@ -1,12 +1,12 @@
 import { removeEnd } from "lightdash";
-import type { Card } from "@yugioh-deck-tool/core";
+import type { Card } from "@/core/main";
 import {
 	CardDatabase,
 	CardService,
 	CardTypeCategory,
 	DeckPart,
 	TYPES,
-} from "@yugioh-deck-tool/core";
+} from "@/core/main";
 import { inject, injectable } from "inversify";
 
 @injectable()

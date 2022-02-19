@@ -184,13 +184,13 @@ import type {
 	CardType,
 	EnvironmentConfig,
 	FilterService,
-} from "@yugioh-deck-tool/core";
+} from "@/core/main";
 import {
 	CardTypeCategory,
 	DEFAULT_BAN_STATE_ARR,
 	Environment,
 	TYPES,
-} from "@yugioh-deck-tool/core";
+} from "@/core/main";
 import type { PropType } from "@vue/composition-api";
 import {
 	computed,

@@ -1,4 +1,4 @@
-import { getTooltipApi } from "@yugioh-deck-tool/tooltip";
+import { getTooltipApi } from "@/tooltip/main";
 
 /**
  * Tooltip API wrapped for better usage with composition API.

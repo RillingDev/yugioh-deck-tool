@@ -4,18 +4,18 @@ import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
 import { anything, when } from "ts-mockito";
 import { bindMock } from "../../helper/bindMock";
-import { CardService } from "@yugioh-deck-tool/core";
-import type { FilterService } from "@yugioh-deck-tool/core";
-import { baseModule } from "@yugioh-deck-tool/core";
-import { BanlistService } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
-import { CardTypeCategory } from "@yugioh-deck-tool/core";
-import { DeckPart } from "@yugioh-deck-tool/core";
-import { Format } from "@yugioh-deck-tool/core";
-import { DefaultBanState } from "@yugioh-deck-tool/core";
-import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { CardService } from "@/core/main";
+import type { FilterService } from "@/core/main";
+import { baseModule } from "@/core/main";
+import { BanlistService } from "@/core/main";
+import { TYPES } from "@/core/main";
+import { CardTypeCategory } from "@/core/main";
+import { DeckPart } from "@/core/main";
+import { Format } from "@/core/main";
+import { DefaultBanState } from "@/core/main";
+import type { CardDataLoaderService } from "@/core/main";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
-import type { CardPredicate } from "@yugioh-deck-tool/core";
+import type { CardPredicate } from "@/core/main";
 
 describe("FilterService", () => {
 	let filterService: FilterService;
@@ -379,16 +379,10 @@ describe("FilterService", () => {
 				});
 
 				when(
-					mockBanlistService.getBanStateByFormat(
-						card1,
-						anything() as Format | null
-					)
+					mockBanlistService.getBanStateByFormat(card1, anything())
 				).thenReturn(DefaultBanState.LIMITED);
 				when(
-					mockBanlistService.getBanStateByFormat(
-						card2,
-						anything() as Format | null
-					)
+					mockBanlistService.getBanStateByFormat(card2, anything())
 				).thenReturn(DefaultBanState.BANNED);
 
 				expect(

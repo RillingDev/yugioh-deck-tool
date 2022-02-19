@@ -3,14 +3,14 @@ import "reflect-metadata";
 import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
 import { bindMock } from "../../helper/bindMock";
-import { baseModule } from "@yugioh-deck-tool/core";
-import { TYPES } from "@yugioh-deck-tool/core";
-import type { SortingService } from "@yugioh-deck-tool/core";
-import { SortingOrder, SortingStrategy } from "@yugioh-deck-tool/core";
-import type { CardDatabase } from "@yugioh-deck-tool/core";
+import { baseModule } from "@/core/main";
+import { TYPES } from "@/core/main";
+import type { SortingService } from "@/core/main";
+import { SortingOrder, SortingStrategy } from "@/core/main";
+import type { CardDatabase } from "@/core/main";
 import { MemoryCardDatabase } from "../../../../src/core/card/MemoryCardDatabase";
-import { Format } from "@yugioh-deck-tool/core";
-import type { CardDataLoaderService } from "@yugioh-deck-tool/core";
+import { Format } from "@/core/main";
+import type { CardDataLoaderService } from "@/core/main";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("SortingService", () => {

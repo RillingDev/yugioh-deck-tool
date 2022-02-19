@@ -12,9 +12,9 @@
 <script lang="ts">
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent } from "@vue/composition-api";
-import type { Card } from "@yugioh-deck-tool/core";
-import type { ResourceService } from "@yugioh-deck-tool/ygoprodeck";
-import { YGOPRODECK_TYPES } from "@yugioh-deck-tool/ygoprodeck";
+import type { Card } from "@/core/main";
+import type { ResourceService } from "@/ygoprodeck/main";
+import { YGOPRODECK_TYPES } from "@/ygoprodeck/main";
 import { applicationContainer } from "../inversify.config";
 
 const resourceService = applicationContainer.get<ResourceService>(

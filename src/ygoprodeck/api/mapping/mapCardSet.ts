@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import type { CardSet } from "@yugioh-deck-tool/core";
+import type { CardSet } from "@/core/main";
 
 // https://jvilk.com/MakeTypes/
 export interface RawCardSet {

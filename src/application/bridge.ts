@@ -1,5 +1,5 @@
-import type { Card, Deck } from "@yugioh-deck-tool/core";
-import { DeckPart, getLogger } from "@yugioh-deck-tool/core";
+import type { Card, Deck } from "@/core/main";
+import { DeckPart, getLogger } from "@/core/main";
 import { getExistingElseThrow } from "lightdash";
 import type {
 	ApplicationInstance,
