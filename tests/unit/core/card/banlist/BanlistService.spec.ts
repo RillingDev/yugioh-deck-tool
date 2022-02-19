@@ -2,12 +2,12 @@ import "reflect-metadata";
 
 import { createCard } from "../../../helper/dataFactories";
 import { Container } from "inversify";
-import type { BanlistService } from "@/core/main";
-import { baseModule } from "@/core/main";
-import { TYPES } from "@/core/main";
-import { Format } from "@/core/main";
-import { DefaultBanState } from "@/core/main";
-import type { CardDataLoaderService } from "@/core/main";
+import type { BanlistService } from "@/core/lib";
+import { baseModule } from "@/core/lib";
+import { TYPES } from "@/core/lib";
+import { Format } from "@/core/lib";
+import { DefaultBanState } from "@/core/lib";
+import type { CardDataLoaderService } from "@/core/lib";
 import { MockDataLoaderService } from "../../../helper/MockDataLoaderService";
 
 describe("BanlistService", () => {

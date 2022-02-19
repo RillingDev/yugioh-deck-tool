@@ -2,10 +2,10 @@ import "reflect-metadata";
 
 import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
-import { baseModule } from "@/core/main";
-import type { CardService } from "@/core/main";
-import { TYPES } from "@/core/main";
-import type { CardDataLoaderService } from "@/core/main";
+import { baseModule } from "@/core/lib";
+import type { CardService } from "@/core/lib";
+import { TYPES } from "@/core/lib";
+import type { CardDataLoaderService } from "@/core/lib";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("CardService", () => {

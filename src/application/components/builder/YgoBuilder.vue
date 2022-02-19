@@ -34,8 +34,8 @@ import type {
 	Format,
 	SortingOptions,
 	SortingService,
-} from "@/core/main";
-import { SortingOrder, SortingStrategy, TYPES } from "@/core/main";
+} from "@/core/lib";
+import { SortingOrder, SortingStrategy, TYPES } from "@/core/lib";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";

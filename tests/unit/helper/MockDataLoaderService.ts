@@ -1,9 +1,9 @@
-import type { CardDataLoaderService } from "@/core/main";
-import type { CardSet } from "@/core/main";
-import type { UnlinkedCard } from "@/core/main";
-import type { CardValues } from "@/core/main";
+import type { CardDataLoaderService } from "@/core/lib";
+import type { CardSet } from "@/core/lib";
+import type { UnlinkedCard } from "@/core/lib";
+import type { CardValues } from "@/core/lib";
 import { injectable } from "inversify";
-import { CardTypeCategory } from "@/core/main";
+import { CardTypeCategory } from "@/core/lib";
 
 @injectable()
 export class MockDataLoaderService implements CardDataLoaderService {

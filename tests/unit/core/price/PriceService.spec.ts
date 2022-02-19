@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import { Container } from "inversify";
-import { TYPES } from "@/core/main";
-import { baseModule } from "@/core/main";
-import type { PriceService } from "@/core/main";
+import { TYPES } from "@/core/lib";
+import { baseModule } from "@/core/lib";
+import type { PriceService } from "@/core/lib";
 import { createCard } from "../../helper/dataFactories";
-import type { Vendor } from "@/core/main";
-import { DefaultVendor } from "@/core/main";
-import { DefaultCurrency } from "@/core/main";
-import type { CardDataLoaderService } from "@/core/main";
+import type { Vendor } from "@/core/lib";
+import { DefaultVendor } from "@/core/lib";
+import { DefaultCurrency } from "@/core/lib";
+import type { CardDataLoaderService } from "@/core/lib";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("PriceService", () => {

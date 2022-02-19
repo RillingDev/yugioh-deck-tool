@@ -4,8 +4,8 @@ import { YGOPRODECK_INTERNAL_TYPES, YGOPRODECK_TYPES } from "./types";
 import { YgoprodeckCardDataLoaderService } from "./api/YgoprodeckCardDataLoaderService";
 import { YgoprodeckApiService } from "./api/YgoprodeckApiService";
 import { YgoprodeckService } from "./api/YgoprodeckService";
-import type { CardDataLoaderService } from "@/core/main";
-import { TYPES } from "@/core/main";
+import type { CardDataLoaderService } from "@/core/lib";
+import { TYPES } from "@/core/lib";
 import { ResourceService } from "./api/ResourceService";
 
 /**

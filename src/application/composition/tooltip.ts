@@ -1,4 +1,4 @@
-import { getTooltipApi } from "@/tooltip/main";
+import { getTooltipApi } from "@/tooltip/lib";
 
 /**
  * Tooltip API wrapped for better usage with composition API.

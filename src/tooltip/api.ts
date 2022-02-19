@@ -1,4 +1,4 @@
-import { getLogger } from "@/core/main";
+import { getLogger } from "@/core/lib";
 import { bindTooltipHandlers } from "./tooltip/bindTooltip";
 
 const logger = getLogger("tooltip");

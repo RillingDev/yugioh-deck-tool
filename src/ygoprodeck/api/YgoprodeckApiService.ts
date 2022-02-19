@@ -15,14 +15,14 @@ import type {
 	CardValues,
 	Format,
 	UnlinkedCard,
-} from "@/core/main";
+} from "@/core/lib";
 import {
 	EncodingService,
 	Environment,
 	EnvironmentConfig,
 	HttpService,
 	TYPES,
-} from "@/core/main";
+} from "@/core/lib";
 import { ResourceService } from "./ResourceService";
 import { YGOPRODECK_TYPES } from "../types";
 

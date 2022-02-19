@@ -48,8 +48,8 @@ import type {
 	PriceLookupResult,
 	PriceService,
 	Vendor,
-} from "@/core/main";
-import { DEFAULT_VENDOR_ARR, TYPES } from "@/core/main";
+} from "@/core/lib";
+import { DEFAULT_VENDOR_ARR, TYPES } from "@/core/lib";
 import type { PropType } from "@vue/composition-api";
 import { computed, defineComponent, ref } from "@vue/composition-api";
 import { BTooltip } from "bootstrap-vue";

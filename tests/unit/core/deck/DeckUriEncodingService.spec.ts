@@ -5,13 +5,13 @@ import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { when } from "ts-mockito";
 import { Container } from "inversify";
-import type { DeckUriEncodingService } from "@/core/main";
-import type { CardDatabase } from "@/core/main";
-import { FindCardBy } from "@/core/main";
-import { baseModule, deckModule } from "@/core/main";
-import { TYPES } from "@/core/main";
-import { DeckPart } from "@/core/main";
-import type { CardDataLoaderService } from "@/core/main";
+import type { DeckUriEncodingService } from "@/core/lib";
+import type { CardDatabase } from "@/core/lib";
+import { FindCardBy } from "@/core/lib";
+import { baseModule, deckModule } from "@/core/lib";
+import { TYPES } from "@/core/lib";
+import { DeckPart } from "@/core/lib";
+import type { CardDataLoaderService } from "@/core/lib";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("DeckUriEncodingService", () => {

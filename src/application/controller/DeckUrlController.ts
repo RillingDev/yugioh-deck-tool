@@ -1,11 +1,11 @@
-import type { Deck } from "@/core/main";
+import type { Deck } from "@/core/lib";
 import {
 	DeckFileService,
 	DeckService,
 	DeckUriEncodingService,
 	getLogger,
 	TYPES,
-} from "@/core/main";
+} from "@/core/lib";
 import { inject, injectable } from "inversify";
 
 @injectable()

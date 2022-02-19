@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
-import { DEVELOPMENT_MODE } from "@/core/main";
+import { DEVELOPMENT_MODE } from "@/core/lib";
 import { deckModule } from "./modules/deck";
 import { formatModule } from "./modules/format";
 import { dataModule } from "./modules/data";

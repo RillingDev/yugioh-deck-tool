@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import type { CardSet } from "@/core/main";
+import type { CardSet } from "@/core/lib";
 
 // https://jvilk.com/MakeTypes/
 export interface RawCardSet {

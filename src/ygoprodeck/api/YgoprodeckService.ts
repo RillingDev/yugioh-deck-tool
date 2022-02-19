@@ -2,8 +2,8 @@ import { inject, injectable } from "inversify";
 import { YGOPRODECK_INTERNAL_TYPES } from "../types";
 import type { Credentials } from "./YgoprodeckApiService";
 import { YgoprodeckApiService } from "./YgoprodeckApiService";
-import type { Card, CardCountFunction, UnlinkedCard } from "@/core/main";
-import { Environment, EnvironmentConfig, TYPES } from "@/core/main";
+import type { Card, CardCountFunction, UnlinkedCard } from "@/core/lib";
+import { Environment, EnvironmentConfig, TYPES } from "@/core/lib";
 import { toMapBy } from "lightdash";
 
 @injectable()

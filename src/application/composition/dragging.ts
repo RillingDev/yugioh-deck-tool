@@ -1,4 +1,4 @@
-import type { Card, DeckPart } from "@/core/main";
+import type { Card, DeckPart } from "@/core/lib";
 
 // TODO: Replace with real types
 export type DraggableChangeEventData = any;

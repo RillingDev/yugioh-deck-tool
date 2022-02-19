@@ -2,15 +2,15 @@ import "reflect-metadata";
 
 import { createCard, createCardType } from "../../helper/dataFactories";
 import { Container } from "inversify";
-import { TYPES } from "@/core/main";
-import { baseModule, deckModule } from "@/core/main";
-import type { DeckService } from "@/core/main";
-import { DeckPart } from "@/core/main";
-import { Format } from "@/core/main";
-import { CardTypeCategory } from "@/core/main";
-import { DefaultBanState } from "@/core/main";
-import type { Deck } from "@/core/main";
-import type { CardDataLoaderService } from "@/core/main";
+import { TYPES } from "@/core/lib";
+import { baseModule, deckModule } from "@/core/lib";
+import type { DeckService } from "@/core/lib";
+import { DeckPart } from "@/core/lib";
+import { Format } from "@/core/lib";
+import { CardTypeCategory } from "@/core/lib";
+import { DefaultBanState } from "@/core/lib";
+import type { Deck } from "@/core/lib";
+import type { CardDataLoaderService } from "@/core/lib";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("DeckService", () => {

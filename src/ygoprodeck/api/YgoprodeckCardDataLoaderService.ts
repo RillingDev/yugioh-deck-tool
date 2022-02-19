@@ -6,8 +6,8 @@ import type {
 	CardSet,
 	CardValues,
 	UnlinkedCard,
-} from "@/core/main";
-import { FindCardBy } from "@/core/main";
+} from "@/core/lib";
+import { FindCardBy } from "@/core/lib";
 
 /**
  * Implementation of {@link CardDataLoaderService} using {@link YgoprodeckApiService}.

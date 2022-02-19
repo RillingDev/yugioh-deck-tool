@@ -9,8 +9,8 @@ import type {
 	ReleaseInfo,
 	UnlinkedCard,
 	Vendor,
-} from "@/core/main";
-import { DefaultBanState, DefaultVendor, Format } from "@/core/main";
+} from "@/core/lib";
+import { DefaultBanState, DefaultVendor, Format } from "@/core/lib";
 import type { ResourceService } from "../ResourceService";
 
 // https://jvilk.com/MakeTypes/

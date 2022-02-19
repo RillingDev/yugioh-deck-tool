@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import type { DeckExportService, EnvironmentConfig } from "@/core/main";
-import { Environment, TYPES } from "@/core/main";
+import type { DeckExportService, EnvironmentConfig } from "@/core/lib";
+import { Environment, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../inversify.config";
 import { useStore } from "../../store/store";
 

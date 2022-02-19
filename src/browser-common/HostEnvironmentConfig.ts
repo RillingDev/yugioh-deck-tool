@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
-import type { EnvironmentConfig } from "@/core/main";
-import { Environment } from "@/core/main";
+import type { EnvironmentConfig } from "@/core/lib";
+import { Environment } from "@/core/lib";
 
 /**
  * EnvironmentConfig using the current browser location host.

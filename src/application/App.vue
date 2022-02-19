@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts">
-import type { CardDatabase } from "@/core/main";
-import { getLogger, TYPES } from "@/core/main";
+import type { CardDatabase } from "@/core/lib";
+import { getLogger, TYPES } from "@/core/lib";
 
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";

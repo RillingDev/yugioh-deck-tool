@@ -1,5 +1,5 @@
-import type { Card, Deck } from "@/core/main";
-import { DeckPart, getLogger } from "@/core/main";
+import type { Card, Deck } from "@/core/lib";
+import { DeckPart, getLogger } from "@/core/lib";
 import { getExistingElseThrow } from "lightdash";
 import type {
 	ApplicationInstance,

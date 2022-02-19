@@ -1,12 +1,12 @@
 import { removeEnd } from "lightdash";
-import type { Card } from "@/core/main";
+import type { Card } from "@/core/lib";
 import {
 	CardDatabase,
 	CardService,
 	CardTypeCategory,
 	DeckPart,
 	TYPES,
-} from "@/core/main";
+} from "@/core/lib";
 import { inject, injectable } from "inversify";
 
 @injectable()

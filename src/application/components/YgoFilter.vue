@@ -184,13 +184,13 @@ import type {
 	CardType,
 	EnvironmentConfig,
 	FilterService,
-} from "@/core/main";
+} from "@/core/lib";
 import {
 	CardTypeCategory,
 	DEFAULT_BAN_STATE_ARR,
 	Environment,
 	TYPES,
-} from "@/core/main";
+} from "@/core/lib";
 import type { PropType } from "@vue/composition-api";
 import {
 	computed,

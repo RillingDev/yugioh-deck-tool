@@ -11,9 +11,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
-import { getLogger } from "@/core/main";
+import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { createScreenshot, downloadFile } from "@/browser-common/main";
+import { createScreenshot, downloadFile } from "@/browser-common/lib";
 import {
 	showError,
 	showInfo,

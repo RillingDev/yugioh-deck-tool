@@ -3,14 +3,14 @@ import "reflect-metadata";
 import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
 import { bindMock } from "../../helper/bindMock";
-import { baseModule } from "@/core/main";
-import { TYPES } from "@/core/main";
-import type { SortingService } from "@/core/main";
-import { SortingOrder, SortingStrategy } from "@/core/main";
-import type { CardDatabase } from "@/core/main";
+import { baseModule } from "@/core/lib";
+import { TYPES } from "@/core/lib";
+import type { SortingService } from "@/core/lib";
+import { SortingOrder, SortingStrategy } from "@/core/lib";
+import type { CardDatabase } from "@/core/lib";
 import { MemoryCardDatabase } from "@/core/card/MemoryCardDatabase";
-import { Format } from "@/core/main";
-import type { CardDataLoaderService } from "@/core/main";
+import { Format } from "@/core/lib";
+import type { CardDataLoaderService } from "@/core/lib";
 import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 
 describe("SortingService", () => {

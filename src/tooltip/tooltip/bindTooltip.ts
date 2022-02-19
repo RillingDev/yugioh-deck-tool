@@ -1,7 +1,7 @@
-import type { EnvironmentConfig } from "@/core/main";
-import { Environment, getLogger, TYPES } from "@/core/main";
-import type { YgoprodeckService } from "@/ygoprodeck/main";
-import { YGOPRODECK_TYPES } from "@/ygoprodeck/main";
+import type { EnvironmentConfig } from "@/core/lib";
+import { Environment, getLogger, TYPES } from "@/core/lib";
+import type { YgoprodeckService } from "@/ygoprodeck/lib";
+import { YGOPRODECK_TYPES } from "@/ygoprodeck/lib";
 import type { Instance } from "tippy.js";
 import { delegate } from "tippy.js";
 import type { TooltipInstance } from "../api";
