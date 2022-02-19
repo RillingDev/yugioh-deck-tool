@@ -18,10 +18,10 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: npm run setup
+            - run: npm ci
             - run: npm run build
             - name: FTP-Deploy-Action
-              uses: SamKirkland/FTP-Deploy-Action@4.0.0
+              uses: SamKirkland/FTP-Deploy-Action@4.2.0
               with:
                   local-dir: ./packages/application/dist/
                   protocol: ${{ secrets.FTP_PROTOCOL }}
