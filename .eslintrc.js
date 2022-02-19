@@ -115,13 +115,15 @@ module.exports = {
 			},
 		},
 		{
-			files: ["**/src/application/**/*", "**/tests/unit/application/**/*"],
+			files: [
+				"**/src/application/**/*",
+				"**/tests/unit/application/**/*",
+			],
 			parser: "vue-eslint-parser",
 			extends: [
 				"plugin:vue/recommended",
 				"@vue/typescript/recommended",
-				"@vue/prettier",
-				"@vue/prettier/@typescript-eslint",
+				"plugin:prettier/recommended",
 			],
 			rules: {
 				"import/no-default-export": "off", // Causes Issues with Vue
