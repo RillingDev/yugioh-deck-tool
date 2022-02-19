@@ -6,7 +6,8 @@ import { TooltipController } from "./controller/TooltipController";
 import { HostEnvironmentConfig } from "@/browser-common/lib";
 import { ygoprodeckModule } from "@/ygoprodeck/lib";
 
-const tooltipContainer = new Container();
+const tooltipContainer = new Container({ defaultScope: "Singleton" });
+
 tooltipContainer.load(baseModule, ygoprodeckModule);
 
 tooltipContainer

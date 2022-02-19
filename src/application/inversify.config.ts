@@ -8,7 +8,7 @@ import { HostEnvironmentConfig } from "@/browser-common/lib";
 import { YgoprodeckController } from "./controller/YgoprodeckController";
 import { ygoprodeckModule } from "@/ygoprodeck/lib";
 
-const applicationContainer = new Container();
+const applicationContainer = new Container({ defaultScope: "Singleton" });
 applicationContainer.load(baseModule, deckModule, ygoprodeckModule);
 
 applicationContainer

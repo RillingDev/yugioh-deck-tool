@@ -3,7 +3,11 @@ module.exports = {
 		{
 			displayName: "browser",
 			preset: "@vue/cli-plugin-unit-jest/presets/typescript-and-babel",
-			testMatch: ["<rootDir>/tests/unit/application/**/*", "<rootDir>/tests/unit/tooltip/**/*"],
+			testMatch: [
+				"<rootDir>/tests/unit/browser-common/**/*",
+				"<rootDir>/tests/unit/tooltip/**/*",
+				"<rootDir>/tests/unit/application/**/*",
+			],
 		},
 		{
 			displayName: "node",
@@ -14,7 +18,10 @@ module.exports = {
 			moduleNameMapper: {
 				"^@/(.*)$": "<rootDir>/src/$1",
 			},
-			testMatch: ["<rootDir>/tests/unit/core/**/*", "<rootDir>/tests/unit/ygoprodeck/**/*", "<rootDir>/tests/unit/browser-common/**/*"],
+			testMatch: [
+				"<rootDir>/tests/unit/core/**/*",
+				"<rootDir>/tests/unit/ygoprodeck/**/*",
+			],
 		},
 	],
 };
