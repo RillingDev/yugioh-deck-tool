@@ -379,10 +379,16 @@ describe("FilterService", () => {
 				});
 
 				when(
-					mockBanlistService.getBanStateByFormat(card1, anything())
+					mockBanlistService.getBanStateByFormat(
+						card1,
+						anything() as Format
+					)
 				).thenReturn(DefaultBanState.LIMITED);
 				when(
-					mockBanlistService.getBanStateByFormat(card2, anything())
+					mockBanlistService.getBanStateByFormat(
+						card2,
+						anything() as Format
+					)
 				).thenReturn(DefaultBanState.BANNED);
 
 				expect(
