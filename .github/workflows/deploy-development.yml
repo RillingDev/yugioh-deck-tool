@@ -23,7 +23,7 @@ jobs:
             - name: FTP-Deploy-Action
               uses: SamKirkland/FTP-Deploy-Action@4.2.0
               with:
-                  local-dir: ./packages/application/dist/
+                  local-dir: ./dist/
                   protocol: ${{ secrets.FTP_PROTOCOL }}
                   server: ${{ secrets.FTP_SERVER }}
                   username: ${{ secrets.FTP_USERNAME }}
