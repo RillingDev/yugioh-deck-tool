@@ -6,10 +6,19 @@
 		"allowSyntheticDefaultImports": true,
 		"sourceMap": true,
 		"baseUrl": ".",
-		"lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"],
+		"types": [
+			"webpack-env",
+			"jest"
+		],
 		"paths": {
 			"@/*": ["src/*"]
-		}
+		},
+		"lib": [
+			"ESNext",
+			"DOM",
+			"DOM.Iterable",
+			"ScriptHost"
+		]
 	},
 	"include": [
 		"src/**/*.ts",

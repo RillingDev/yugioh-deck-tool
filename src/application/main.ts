@@ -7,6 +7,8 @@ import { store } from "./store/store";
 import "./styles/main.scss";
 import { ToastPlugin, VBModalPlugin, VBTogglePlugin } from "bootstrap-vue";
 
+Vue.config.productionTip = false;
+
 Vue.use(VueCompositionApi);
 
 Vue.use(ToastPlugin);

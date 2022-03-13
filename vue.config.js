@@ -29,13 +29,5 @@ module.exports = defineConfig({
 
 		// Always use ESM version as the normal version clutters `window` and causes issues when other JS code brings their own version.
 		config.resolve.alias.set("lodash$", "lodash-es");
-
-		// Unbind unused plugins/rules
-		config.module.rules.delete("tsx");
-		config.module.rules.delete("pug");
-		config.module.rules.delete("sass");
-		config.module.rules.delete("postcss");
-		config.module.rules.delete("less");
-		config.module.rules.delete("stylus");
 	},
 });
