@@ -249,6 +249,7 @@ export class YgoprodeckApiService {
 			false
 		);
 		return {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
 			"X-Authorization": `Basic ${encodedCredentials}`,
 		};
 	}
