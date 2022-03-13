@@ -1,9 +1,15 @@
 {
-	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-		"importHelpers": true,
+		// General
+		"module": "esnext",
+		"strict": true,
+		"jsx": "preserve",
+		"moduleResolution": "node",
 		"skipLibCheck": true,
+		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"useDefineForClassFields": true,
 		"sourceMap": true,
 		"baseUrl": ".",
 		"types": [
@@ -11,14 +17,20 @@
 			"jest"
 		],
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": [
+				"src/*"
+			]
 		},
 		"lib": [
 			"ESNext",
 			"DOM",
 			"DOM.Iterable",
 			"ScriptHost"
-		]
+		],
+		// Per-project
+		"target": "ES2021",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
 	},
 	"include": [
 		"src/**/*.ts",
@@ -27,5 +39,7 @@
 		"tests/**/*.ts",
 		"tests/**/*.tsx"
 	],
-	"exclude": ["node_modules"]
+	"exclude": [
+		"node_modules"
+	]
 }
