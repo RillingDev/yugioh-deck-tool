@@ -1,4 +1,5 @@
 import type { Card, DeckPart } from "@/core/lib";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 // TODO: Replace with real types
 export type DraggableChangeEventData = any;

@@ -1,5 +1,7 @@
 import type { SetupContext } from "@vue/composition-api";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const showFeedback = (
 	context: SetupContext<any>,
 	message: string,

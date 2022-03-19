@@ -66,7 +66,6 @@
 		"babel-jest": "^27.0.6",
 		"eslint": "^8.1.0",
 		"eslint-config-prettier": "^8.3.0",
-		"eslint-plugin-import": "^2.22.3",
 		"eslint-plugin-prettier": "^4.0.0",
 		"eslint-plugin-vue": "^8.0.3",
 		"jest": "^27.0.5",

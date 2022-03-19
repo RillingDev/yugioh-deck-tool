@@ -1,16 +1,18 @@
 module.exports = {
 	root: true,
-	parser: "@typescript-eslint/parser",
+	env: {
+		node: true,
+	},
+	extends: [
+		"plugin:vue/recommended",
+		"eslint:recommended",
+		"@vue/typescript/recommended",
+		"plugin:prettier/recommended",
+	],
 	parserOptions: {
+		ecmaVersion: 2020,
 		project: ["./tsconfig.json"],
 	},
-	plugins: ["@typescript-eslint", "prettier", "import"],
-	extends: [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:@typescript-eslint/recommended-requiring-type-checking",
-		"prettier",
-	],
 	rules: {
 		/*
 		 * ESLint
@@ -25,13 +27,11 @@ module.exports = {
 		"no-undef-init": "error",
 		"no-unreachable-loop": "warn",
 		"require-atomic-updates": "warn",
-		radix: "warn",
-
+		"radix": "warn",
 		/*
 		 * Prettier
 		 */
 		"prettier/prettier": "warn",
-
 		/*
 		 * Typescript
 		 */
@@ -39,7 +39,7 @@ module.exports = {
 		"@typescript-eslint/explicit-function-return-type": [
 			"warn",
 			{
-				allowExpressions: true,
+				"allowExpressions": true,
 			},
 		],
 		"@typescript-eslint/member-delimiter-style": "warn",
@@ -47,40 +47,76 @@ module.exports = {
 		"@typescript-eslint/naming-convention": [
 			"warn",
 			{
-				selector: "default",
-				format: ["strictCamelCase"],
-				leadingUnderscore: "allow",
-				trailingUnderscore: "forbid",
+				"selector": "default",
+				"format": [
+					"strictCamelCase",
+				],
+				"leadingUnderscore": "allow",
+				"trailingUnderscore": "forbid",
 			},
 			{
-				selector: "variable",
-				format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
+				"selector": "variable",
+				"format": [
+					"camelCase",
+					"PascalCase",
+					"UPPER_CASE",
+				],
 			},
 			{
-				selector: "property",
-				format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
+				"selector": "property",
+				"format": [
+					"camelCase",
+					"PascalCase",
+					"UPPER_CASE",
+				],
 			},
-			{selector: "typeAlias", format: ["StrictPascalCase"]},
 			{
-				selector: "typeParameter",
-				format: ["PascalCase"], // Allow "T", "TValue", "Value" and such
+				"selector": "typeAlias",
+				"format": [
+					"StrictPascalCase",
+				],
 			},
 			{
-				selector: "interface",
-				format: ["StrictPascalCase"],
-				custom: {
-					regex: "^I[A-Z]",
-					match: false,
+				"selector": "typeParameter",
+				"format": [
+					"PascalCase",
+				],
+				// Allow "T", "TValue", "Value" and such
+			},
+			{
+				"selector": "interface",
+				"format": [
+					"StrictPascalCase",
+				],
+				"custom": {
+					"regex": "^I[A-Z]",
+					"match": false,
 				},
 			},
-			{selector: "class", format: ["StrictPascalCase"]},
-			{selector: "enum", format: ["StrictPascalCase"]},
-			{selector: "enumMember", format: ["UPPER_CASE"]},
+			{
+				"selector": "class",
+				"format": [
+					"StrictPascalCase",
+				],
+			},
+			{
+				"selector": "enum",
+				"format": [
+					"StrictPascalCase",
+				],
+			},
+			{
+				"selector": "enumMember",
+				"format": [
+					"UPPER_CASE",
+				],
+			},
 		],
 		"@typescript-eslint/no-base-to-string": "error",
 		"@typescript-eslint/no-confusing-non-null-assertion": "warn",
 		"@typescript-eslint/no-dynamic-delete": "error",
-		"@typescript-eslint/no-non-null-assertion": "off", // Essential when working with maps
+		"@typescript-eslint/no-non-null-assertion": "off",
+		// Essential when working with maps
 		"@typescript-eslint/no-redeclare": "error",
 		"@typescript-eslint/no-shadow": "error",
 		"@typescript-eslint/no-throw-literal": "error",
@@ -95,16 +131,6 @@ module.exports = {
 		"@typescript-eslint/prefer-string-starts-ends-with": "warn",
 		"@typescript-eslint/require-array-sort-compare": "warn",
 		"@typescript-eslint/strict-boolean-expressions": "warn",
-
-		/*
-		 * Imports
-		 */
-		"import/no-absolute-path": "error",
-		"import/no-cycle": "warn",
-		"import/no-default-export": "warn",
-		"import/no-mutable-exports": "warn",
-		"import/no-useless-path-segments": "warn",
-		"import/no-webpack-loader-syntax": "warn",
 	},
 
 	overrides: [
@@ -112,41 +138,6 @@ module.exports = {
 			files: ["**/tests/unit/**/*.spec.{j,t}s?(x)"],
 			env: {
 				jest: true,
-			},
-		},
-		{
-			files: [
-				"**/src/application/**/*",
-				"**/tests/unit/application/**/*",
-			],
-			parser: "vue-eslint-parser",
-			extends: [
-				"plugin:vue/recommended",
-				"@vue/typescript/recommended",
-				"plugin:prettier/recommended",
-			],
-			rules: {
-				"import/no-default-export": "off", // Causes Issues with Vue
-
-				// Not all 3rd party libs provide typings.
-				"@typescript-eslint/no-unsafe-return": "off",
-				"@typescript-eslint/no-unsafe-member-access": "off",
-				"@typescript-eslint/no-unsafe-assignment": "off",
-				"@typescript-eslint/no-unsafe-call": "off",
-				"@typescript-eslint/no-explicit-any": "off",
-				"@typescript-eslint/explicit-module-boundary-types": "off",
-
-				"@typescript-eslint/naming-convention": [
-					"warn",
-
-					{
-						selector: "variable",
-						format: ["strictCamelCase", "PascalCase", "UPPER_CASE"], // Many 3rd party components have a non-strict pascal case name
-					},
-				],
-
-				// Re-apply as it is overridden by new extends bases.
-				"@typescript-eslint/no-non-null-assertion": "off", // Essential when working with maps
 			},
 		},
 	],
