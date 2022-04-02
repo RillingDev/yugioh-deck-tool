@@ -48,17 +48,17 @@ export class MemoryCardDatabase implements CardDatabase {
 		this.#loadingCardValues = null;
 		this.#loadingAllCards = null;
 
-		this.#cardsByPasscode = new Map<string, Card>();
-		this.#cardsByName = new Map<string, Card>();
+		this.#cardsByPasscode = new Map();
+		this.#cardsByName = new Map();
 		this.#sets = [];
 		this.#archetypes = [];
-		this.#types = new Map<CardTypeCategory, CardType[]>(
+		this.#types = new Map(
 			Object.values(CardTypeCategory).map((typeCategory) => [
 				typeCategory,
 				[],
 			])
 		);
-		this.#subTypes = new Map<CardTypeCategory, string[]>(
+		this.#subTypes = new Map(
 			Object.values(CardTypeCategory).map((typeCategory) => [
 				typeCategory,
 				[],

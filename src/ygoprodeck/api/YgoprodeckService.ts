@@ -41,7 +41,7 @@ export class YgoprodeckService {
 			auth: credentials,
 		});
 		return this.#createCardCountFunction(
-			toMapBy<number, string, UnlinkedCard>(
+			toMapBy(
 				unlinkedCards,
 				(_key, unlinkedCard) => unlinkedCard.passcode,
 				(_key, unlinkedCard) => unlinkedCard.quantity!
