@@ -41,7 +41,7 @@
 		"vue-select": "^3.18.3",
 		"vuedraggable": "github:FelixRilling/Vue.Draggable#fb1243deb651bc3d97f9df71834d0aeab98e4dd2",
 		"vuex": "^3.6.2",
-		"axios": "^0.26.1",
+		"axios": "^0.27.2",
 		"base64-js": "^1.5.1",
 		"loglevel": "^1.8.0",
 		"pako": "^2.0.4"
