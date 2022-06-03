@@ -14,12 +14,13 @@
 			@hide="() => onHide()"
 		>
 			<div class="form-group">
+				<label :for="ydkeUrlId">YDKe URL</label>
 				<input
+					:id="ydkeUrlId"
 					v-model="ydkeUrl"
 					autofocus
 					type="text"
 					class="form-control"
-					title="YDKe URL"
 					placeholder="YDKe URL"
 					@input="() => onInput()"
 				/>
@@ -37,6 +38,7 @@ import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import { showError, showSuccess } from "../../../composition/feedback";
 import { useStore } from "../../../store/store";
+import { useId } from "@/application/composition/id";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 	TYPES.DeckUriEncodingService
@@ -81,7 +83,16 @@ export default defineComponent({
 			ydkeUrl.value = "";
 		};
 
-		return { ydkeUrl, modal, onInput, onHide };
+		return {
+			ydkeUrlId: useId(),
+
+			ydkeUrl,
+
+			modal,
+
+			onInput,
+			onHide,
+		};
 	},
 });
 </script>

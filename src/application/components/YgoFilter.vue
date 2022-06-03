@@ -1,22 +1,24 @@
 <template>
 	<form @submit.prevent="() => {}">
 		<div v-if="isFieldVisible('search')" class="form-group">
+			<label :for="nameId">Name</label>
 			<input
+				:id="nameId"
 				v-model="internalFilter.name"
 				class="form-control"
 				placeholder="Card Name"
-				title="Name"
 				type="search"
 				@input="() => onFilterChanged()"
 			/>
 		</div>
 
 		<div v-if="isFieldVisible('description')" class="form-group">
+			<label :for="descriptionId">Description/Effect</label>
 			<input
+				:id="descriptionId"
 				v-model="internalFilter.description"
-				class="form-control"
 				placeholder="Card Description/Effect"
-				title="Description/Effect"
+				class="form-control"
 				type="search"
 				@input="() => onFilterChanged()"
 			/>
@@ -29,11 +31,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.banState"
-				:get-option-key="(banState) => banState.name"
-				:get-option-label="(banState) => banState.name"
-				:options="banStates"
-				:searchable="false"
-				title="Limit"
 				placeholder="Limit"
 				@input="() => onFilterChanged()"
 			/>
@@ -208,6 +205,7 @@ import type { YgoprodeckController } from "../controller/YgoprodeckController";
 import { APPLICATION_TYPES } from "../types";
 import { SET_CARD_COUNT_FUNCTION } from "../store/modules/collection";
 import { useStore } from "../store/store";
+import { useId } from "@/application/composition/id";
 
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
 	TYPES.CardPredicateService
@@ -354,6 +352,9 @@ export default defineComponent({
 		);
 
 		return {
+			nameId: useId(),
+			descriptionId: useId(),
+
 			banStates,
 			sets,
 			archetypes,

@@ -1,17 +1,21 @@
 <template>
-	<input
-		v-model="deckName"
-		class="form-control"
-		title="Deck Name"
-		placeholder="Deck Name"
-		type="text"
-	/>
+	<div class="form-group">
+		<label :for="deckNameId">Deck Name</label>
+		<input
+			:id="deckNameId"
+			v-model="deckName"
+			class="form-control"
+			placeholder="Deck Name"
+			type="text"
+		/>
+	</div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "@vue/composition-api";
 import { DECK_NAME_UPDATE } from "../../store/modules/deck";
 import { useStore } from "../../store/store";
+import { useId } from "@/application/composition/id";
 
 export default defineComponent({
 	components: {},
@@ -28,7 +32,7 @@ export default defineComponent({
 				}),
 		});
 
-		return { deckName };
+		return { deckNameId: useId(), deckName };
 	},
 });
 </script>
