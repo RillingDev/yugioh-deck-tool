@@ -1,12 +1,17 @@
 <template>
-	<VSelect
-		v-model="format"
-		:options="formats"
-		:clearable="true"
-		:searchable="false"
-		title="Format"
-		placeholder="Format"
-	/>
+	<div class="form-group">
+		<VSelect
+			v-model="format"
+			:options="formats"
+			:clearable="true"
+			:searchable="false"
+			placeholder="Format"
+		>
+			<template #header>
+				<label>Format</label>
+			</template>
+		</VSelect>
+	</div>
 </template>
 
 <script lang="ts">

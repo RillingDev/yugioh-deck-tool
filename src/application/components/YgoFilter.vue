@@ -33,7 +33,11 @@
 				v-model="internalFilter.banState"
 				placeholder="Limit"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Format</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div
@@ -46,10 +50,13 @@
 				:get-option-label="(set) => set.name"
 				multiple
 				:options="sets"
-				title="Set"
 				placeholder="Set"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Sets</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div
@@ -58,22 +65,28 @@
 		>
 			<VSelect
 				v-model="internalFilter.archetype"
-				title="Archetype"
 				placeholder="Archetype"
 				:options="archetypes"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Archetype</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div v-if="isFieldVisible('typeCategory')" class="form-group">
 			<VSelect
 				v-model="internalFilter.typeCategory"
-				title="Type"
 				placeholder="Type"
 				:options="cardTypeCategories"
 				:searchable="false"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Type</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div
@@ -83,13 +96,16 @@
 		>
 			<VSelect
 				v-model="internalFilter.type"
-				title="Monster Type"
 				placeholder="Monster Type"
 				:get-option-key="(type) => type.name"
 				:get-option-label="(type) => type.name.replace(' Monster', '')"
 				:options="types"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Monster Type</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div
@@ -99,11 +115,14 @@
 		>
 			<VSelect
 				v-model="internalFilter.subType"
-				:title="`${internalFilter.typeCategory} Subtype`"
 				:placeholder="`${internalFilter.typeCategory} Subtype`"
 				:options="subTypes"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>{{ internalFilter.typeCategory }} Subtype</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div
@@ -113,11 +132,14 @@
 		>
 			<VSelect
 				v-model="internalFilter.attribute"
-				title="Attribute"
 				placeholder="Attribute"
 				:options="attributes"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Attribute</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div
@@ -127,12 +149,15 @@
 		>
 			<VSelect
 				v-model="internalFilter.level"
-				title="Level/Rank"
 				placeholder="Level/Rank"
 				:options="levels"
 				:searchable="false"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Level/Rank</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<div
@@ -142,12 +167,15 @@
 		>
 			<VSelect
 				v-model="internalFilter.linkMarkers"
-				title="Link Markers"
 				placeholder="Link Markers"
 				multiple
 				:options="linkMarkers"
 				@input="() => onFilterChanged()"
-			/>
+			>
+				<template #header>
+					<label>Link Markers</label>
+				</template>
+			</VSelect>
 		</div>
 
 		<template v-if="showCollectionFilter && isFieldVisible('collection')">
