@@ -40,7 +40,7 @@ const createMonsterStats = (card: Card): HTMLElement => {
 	const statsChildren: HTMLElement[] = [];
 	const statImage = createImg([], resourceService.getAtkImageUrl(), {
 		hidden: true,
-		alt: "ATK",
+		alt: "",
 	});
 	statsChildren.push(statImage);
 	if (card.atk != null) {
@@ -61,7 +61,7 @@ const createSubType = (card: Card): HTMLElement => {
 		subTypeChildren.push(
 			createImg([], resourceService.getAttributeImageUrl(card), {
 				hidden: true,
-				alt: "Attribute",
+				alt: "",
 			})
 		);
 		subTypeChildren.push(createSpan([], `Attribute: ${card.attribute!}`));
@@ -69,7 +69,7 @@ const createSubType = (card: Card): HTMLElement => {
 	subTypeChildren.push(
 		createImg([], resourceService.getSubTypeImageUrl(card), {
 			hidden: true,
-			alt: "type",
+			alt: "",
 		})
 	);
 	subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
@@ -140,7 +140,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 				[
 					createImg([], resourceService.getLevelImageUrl(), {
 						hidden: true,
-						alt: "level",
+						alt: "",
 					}),
 					createSpan([], `Level/Rank: ${card.level}`),
 				]
@@ -152,7 +152,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 				[
 					createImg([], resourceService.getLinkMarkerImageUrl(), {
 						hidden: true,
-						alt: "Link Markers",
+						alt: "",
 					}),
 					createSpan(
 						[],
@@ -175,7 +175,7 @@ const createCardImageCol = (card: Card): HTMLElement => {
 	const cardImage = createImg(
 		["card-tooltip__image"],
 		card.image?.url ?? "#",
-		{ hidden: false, alt: "Card Artwork" }
+		{ hidden: true, alt: "" }
 	);
 	return createDiv(["card-tooltip__image__col"], [cardImage]);
 };

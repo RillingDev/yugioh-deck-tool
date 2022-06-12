@@ -4,7 +4,9 @@ const createElement = (
 	children: HTMLElement[]
 ): HTMLElement => {
 	const element = document.createElement(type);
-	element.classList.add(...classes);
+	if (classes.length > 0) {
+		element.classList.add(...classes);
+	}
 	element.append(...children);
 	return element;
 };
