@@ -29,10 +29,14 @@
 		>
 			<VSelect
 				v-model="internalFilter.banState"
+				:get-option-key="(banState) => banState.name"
+				:get-option-label="(banState) => banState.name"
+				:options="banStates"
+				:searchable="false"
 				@input="() => onFilterChanged()"
 			>
 				<template #header>
-					<label>Format</label>
+					<label>Limit</label>
 				</template>
 			</VSelect>
 		</div>
