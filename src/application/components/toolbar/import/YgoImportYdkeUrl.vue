@@ -21,7 +21,7 @@
 					autofocus
 					type="text"
 					class="form-control"
-					placeholder="YDKe URL"
+					placeholder="ydke://o6lXBQ==!d5uTAg==!!"
 					@input="() => onInput()"
 				/>
 			</div>

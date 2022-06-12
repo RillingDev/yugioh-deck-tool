@@ -5,7 +5,7 @@
 			:id="deckNameId"
 			v-model="deckName"
 			class="form-control"
-			placeholder="Deck Name"
+			placeholder="My Awesome Deck"
 			type="text"
 		/>
 	</div>

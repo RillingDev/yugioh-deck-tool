@@ -5,7 +5,6 @@
 			:options="formats"
 			:clearable="true"
 			:searchable="false"
-			placeholder="Format"
 		>
 			<template #header>
 				<label>Format</label>

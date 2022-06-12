@@ -6,7 +6,6 @@
 				:id="nameId"
 				v-model="internalFilter.name"
 				class="form-control"
-				placeholder="Card Name"
 				type="search"
 				@input="() => onFilterChanged()"
 			/>
@@ -17,7 +16,6 @@
 			<input
 				:id="descriptionId"
 				v-model="internalFilter.description"
-				placeholder="Card Description/Effect"
 				class="form-control"
 				type="search"
 				@input="() => onFilterChanged()"
@@ -31,7 +29,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.banState"
-				placeholder="Limit"
 				@input="() => onFilterChanged()"
 			>
 				<template #header>
@@ -50,7 +47,6 @@
 				:get-option-label="(set) => set.name"
 				multiple
 				:options="sets"
-				placeholder="Set"
 				@input="() => onFilterChanged()"
 			>
 				<template #header>
@@ -65,7 +61,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.archetype"
-				placeholder="Archetype"
 				:options="archetypes"
 				@input="() => onFilterChanged()"
 			>
@@ -78,7 +73,6 @@
 		<div v-if="isFieldVisible('typeCategory')" class="form-group">
 			<VSelect
 				v-model="internalFilter.typeCategory"
-				placeholder="Type"
 				:options="cardTypeCategories"
 				:searchable="false"
 				@input="() => onFilterChanged()"
@@ -96,7 +90,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.type"
-				placeholder="Monster Type"
 				:get-option-key="(type) => type.name"
 				:get-option-label="(type) => type.name.replace(' Monster', '')"
 				:options="types"
@@ -115,7 +108,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.subType"
-				:placeholder="`${internalFilter.typeCategory} Subtype`"
 				:options="subTypes"
 				@input="() => onFilterChanged()"
 			>
@@ -132,7 +124,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.attribute"
-				placeholder="Attribute"
 				:options="attributes"
 				@input="() => onFilterChanged()"
 			>
@@ -149,7 +140,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.level"
-				placeholder="Level/Rank"
 				:options="levels"
 				:searchable="false"
 				@input="() => onFilterChanged()"
@@ -167,7 +157,6 @@
 		>
 			<VSelect
 				v-model="internalFilter.linkMarkers"
-				placeholder="Link Markers"
 				multiple
 				:options="linkMarkers"
 				@input="() => onFilterChanged()"
