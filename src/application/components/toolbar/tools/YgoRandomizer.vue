@@ -20,18 +20,17 @@
 				title="Randomizer Settings"
 			>
 				<div class="form-group">
-					<h6>Randomization Strategy</h6>
 					<VSelect
 						v-model="strategy"
 						:options="strategies"
 						:clearable="false"
-						title="Randomization Strategy"
-					/>
+					>
+						<template #header>
+							<label>Randomization Strategy</label>
+						</template>
+					</VSelect>
 				</div>
-				<div class="form-group">
-					<h6>Filter Cards</h6>
-					<YgoFilter v-model="filter" :show-only="['sets']" />
-				</div>
+				<YgoFilter v-model="filter" :show-only="['sets']" />
 			</BModal>
 		</BDropdownItemButton>
 	</BDropdownGroup>
