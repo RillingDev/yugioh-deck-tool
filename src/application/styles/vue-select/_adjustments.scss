@@ -1,12 +1,13 @@
+// Unify size with bootstrap input
+.vs__dropdown-toggle, .vs__dropdown-menu {
+	font-size: 0.9rem;
+}
+.vs__dropdown-toggle {
+	padding: 1px 0 5px 0;
+}
+
 // Fix icon offset
 .vs__clear > svg {
 	position: relative;
-	top: -1px;
-}
-
-.vs__open-indicator {
-	position: relative;
-	top: 1px;
-	margin-left: 2px;
-	margin-right: 2px;
+	top: -2px;
 }

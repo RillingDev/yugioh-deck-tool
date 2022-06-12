@@ -8,8 +8,8 @@ $vs-colors: (
 );
 
 //  Global Component Variables
-$vs-component-line-height: inherit;
-$vs-component-placeholder-color: inherit;
+$vs-component-bg: $white;
+$vs-component-line-height: 1.5;
 
 //  Active State
 $vs-state-active-bg: $primary;
@@ -17,30 +17,20 @@ $vs-state-active-color: $white;
 
 //  Disabled State
 $vs-state-disabled-bg: $gray-100;
-$vs-state-disabled-color: map_get($vs-colors, "light");
-$vs-state-disabled-controls-color: map_get($vs-colors, "light");
-$vs-state-disabled-cursor: not-allowed;
+$vs-state-disabled-color: $gray-500;
+$vs-state-disabled-controls-color: $gray-500;
 
 //  Borders
-$vs-border-width: 1px;
-$vs-border-style: solid;
 $vs-border-radius: 0;
-$vs-border-color: map_get($vs-colors, "lightest");
+$vs-border-color: $gray-400;
 
 //  Component Controls: Clear, Open Indicator
-$vs-controls-color: map_get($vs-colors, "light");
-$vs-controls-size: 1;
-$vs-controls-deselect-text-shadow: none;
+$vs-controls-color: $gray-500;
 
 //  Selected
 $vs-selected-bg: $gray-100;
-$vs-selected-border-color: $vs-border-color;
-$vs-selected-border-style: $vs-border-style;
-$vs-selected-border-width: $vs-border-width;
 
 //  Dropdown
 $vs-dropdown-z-index: 1000;
-$vs-dropdown-min-width: 160px;
-$vs-dropdown-max-height: 350px;
-$vs-dropdown-box-shadow: none;
+$vs-dropdown-box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
 $vs-dropdown-bg: $white;
