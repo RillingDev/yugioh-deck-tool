@@ -52,17 +52,10 @@ export const createP = (
 export const createImg = (
 	classes: string[],
 	src: string,
-	aria: {
-		hidden: boolean;
-		alt: string;
-	}
+	alt: string
 ): HTMLImageElement => {
 	const element = createElement("img", classes, []) as HTMLImageElement;
 	element.src = src;
-	element.alt = aria.alt;
-	if (aria.hidden) {
-		element.setAttribute("aria-hidden", "true");
-	}
-
+	element.alt = alt;
 	return element;
 };
