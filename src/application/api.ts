@@ -22,15 +22,15 @@ export interface ApplicationInstance {
 	readonly setDeck: (newDeck: ExternalDeck) => void;
 
 	/**
-	 * Shuffles the current deck
+	 * Shuffles the current deck.
 	 */
 	readonly shuffleDeck: () => void;
 	/**
-	 * Sorts the current deck
+	 * Sorts the current deck.
 	 */
 	readonly sortDeck: () => void;
 	/**
-	 * Clears the current deck
+	 * Clears the current deck.
 	 */
 	readonly clearDeck: () => void;
 
@@ -38,8 +38,8 @@ export interface ApplicationInstance {
 	 * Registers an event handler.
 	 *
 	 * Supported events:
-	 * - `ready` - Fired if application has loaded all required data.
-	 * - `change` - Fired if the current deck changes in any way.
+	 * - `ready` - Fired when the application has loaded all required data.
+	 * - `change` - Fired when the current deck changes in any way.
 	 */
 	readonly on: (event: ApplicationEvent, callback: Callback) => void;
 }
