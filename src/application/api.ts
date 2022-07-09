@@ -3,6 +3,8 @@ import { createApplicationBridge } from "./bridge";
 
 const logger = getLogger("tooltip");
 
+type Event = "ready" | "change";
+
 /**
  * Public interface used to interact with application.
  */
@@ -13,12 +15,20 @@ export interface ApplicationInstance {
 	readonly getDeck: () => ExternalDeck;
 
 	/**
+	 * Replaces the currently loaded deck.
+	 *
+	 * May only be called after `ready` event was emitted.
+	 */
+	readonly setDeck: (newDeck: ExternalDeck) => void;
+
+	/**
 	 * Registers an event handler.
 	 *
 	 * Supported events:
+	 * - `ready` - Fired if application has loaded all required data.
 	 * - `change` - Fired if the current deck changes in any way.
 	 */
-	readonly on: (event: string, callback: Callback) => void;
+	readonly on: (event: Event, callback: Callback) => void;
 }
 
 /**

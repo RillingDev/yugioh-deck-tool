@@ -1,5 +1,5 @@
-import type { Card, Deck } from "@/core/lib";
-import { DeckPart, getLogger } from "@/core/lib";
+import type { Card, CardDatabase, Deck } from "@/core/lib";
+import { DeckPart, FindCardBy, getLogger, TYPES } from "@/core/lib";
 import { getExistingElseThrow } from "lightdash";
 import type {
 	ApplicationInstance,
@@ -18,8 +18,12 @@ import {
 	DECK_SORT,
 } from "./store/modules/deck";
 import { useStore } from "./store/store";
+import { applicationContainer } from "@/application/inversify.config";
+import { ESSENTIAL_DATA_LOADED } from "@/application/store/modules/data";
 
 const logger = getLogger("bridge");
+
+const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 
 /**
  * Minimal event emitter.
@@ -34,10 +38,12 @@ class EventEmitter {
 	}
 
 	on(event: string, callback: () => void): void {
+		logger.trace(`Registering '${event}' event.`);
 		getExistingElseThrow(this.#eventCallbacks, event).push(callback);
 	}
 
 	emit(event: string): void {
+		logger.trace(`Emitting '${event}' event.`);
 		getExistingElseThrow(this.#eventCallbacks, event).forEach((callback) =>
 			callback()
 		);
@@ -61,11 +67,12 @@ const CHANGE_EVENT_MUTATIONS = new Set([
 export const createApplicationBridge = (): ApplicationInstance => {
 	const store = useStore();
 
-	const eventEmitter = new EventEmitter(new Set<string>(["change"]));
+	const eventEmitter = new EventEmitter(new Set<string>(["change", "ready"]));
 
 	store.subscribe((mutation) => {
-		if (CHANGE_EVENT_MUTATIONS.has(mutation.type)) {
-			logger.trace("Emitting 'change' event.");
+		if (mutation.type == ESSENTIAL_DATA_LOADED) {
+			eventEmitter.emit("ready");
+		} else if (CHANGE_EVENT_MUTATIONS.has(mutation.type)) {
 			eventEmitter.emit("change");
 		}
 	});
@@ -73,7 +80,11 @@ export const createApplicationBridge = (): ApplicationInstance => {
 	return {
 		getDeck: () => {
 			logger.debug("Exporting current deck state...");
-			return createExternalDeck(store.state.deck.active);
+			return toExternalDeck(store.state.deck.active);
+		},
+		setDeck: (newDeck: ExternalDeck): void => {
+			logger.debug("Replacing current deck state...");
+			store.commit(DECK_REPLACE, { deck: fromExternalDeck(newDeck) });
 		},
 		on(event: string, callback: Callback): void {
 			logger.debug(
@@ -84,17 +95,35 @@ export const createApplicationBridge = (): ApplicationInstance => {
 	};
 };
 
-const createExternalDeck = ({ name, parts }: Deck): ExternalDeck => {
+const toExternalDeck = ({ name, parts }: Deck): ExternalDeck => {
 	return {
 		name,
 		parts: {
-			main: parts[DeckPart.MAIN].map(createExternalCard),
-			extra: parts[DeckPart.EXTRA].map(createExternalCard),
-			side: parts[DeckPart.SIDE].map(createExternalCard),
+			main: parts[DeckPart.MAIN].map(toExternalCard),
+			extra: parts[DeckPart.EXTRA].map(toExternalCard),
+			side: parts[DeckPart.SIDE].map(toExternalCard),
 		},
 	};
 };
 
-const createExternalCard = ({ passcode, name }: Card): ExternalCard => {
+const toExternalCard = ({ passcode, name }: Card): ExternalCard => {
 	return { passcode, name };
+};
+
+const fromExternalDeck = ({ name, parts }: ExternalDeck): Deck => {
+	return {
+		name,
+		parts: {
+			[DeckPart.MAIN]: parts.main.map(fromExternalCard),
+			[DeckPart.EXTRA]: parts.extra.map(fromExternalCard),
+			[DeckPart.SIDE]: parts.side.map(fromExternalCard),
+		},
+	};
+};
+
+const fromExternalCard = ({ passcode }: ExternalCard): Card => {
+	if (!cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
+		throw new TypeError(`Card with passcode '${passcode}' not found.`);
+	}
+	return cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!;
 };
