@@ -20,6 +20,7 @@ import {
 import { useStore } from "./store/store";
 import { applicationContainer } from "@/application/inversify.config";
 import { ESSENTIAL_DATA_LOADED } from "@/application/store/modules/data";
+import type { ApplicationEvent } from "./api";
 
 const logger = getLogger("bridge");
 
@@ -67,7 +68,9 @@ const CHANGE_EVENT_MUTATIONS = new Set([
 export const createApplicationBridge = (): ApplicationInstance => {
 	const store = useStore();
 
-	const eventEmitter = new EventEmitter(new Set<string>(["change", "ready"]));
+	const eventEmitter = new EventEmitter(
+		new Set<ApplicationEvent>(["change", "ready"])
+	);
 
 	store.subscribe((mutation) => {
 		if (mutation.type == ESSENTIAL_DATA_LOADED) {
@@ -85,6 +88,15 @@ export const createApplicationBridge = (): ApplicationInstance => {
 		setDeck: (newDeck: ExternalDeck): void => {
 			logger.debug("Replacing current deck state...");
 			store.commit(DECK_REPLACE, { deck: fromExternalDeck(newDeck) });
+		},
+		shuffleDeck: (): void => {
+			store.commit(DECK_SHUFFLE);
+		},
+		sortDeck: (): void => {
+			store.commit(DECK_SORT);
+		},
+		clearDeck: (): void => {
+			store.commit(DECK_CLEAR);
 		},
 		on(event: string, callback: Callback): void {
 			logger.debug(
