@@ -1,7 +1,7 @@
 import type { Card, CardDatabase, Deck } from "@/core/lib";
 import { DeckPart, FindCardBy, getLogger, TYPES } from "@/core/lib";
-import { getExistingElseThrow } from "lightdash";
 import type {
+	ApplicationEvent,
 	ApplicationInstance,
 	Callback,
 	ExternalCard,
@@ -20,7 +20,7 @@ import {
 import { useStore } from "./store/store";
 import { applicationContainer } from "@/application/inversify.config";
 import { ESSENTIAL_DATA_LOADED } from "@/application/store/modules/data";
-import type { ApplicationEvent } from "./api";
+import { getExistingElseThrow } from "lightdash";
 
 const logger = getLogger("bridge");
 
@@ -29,22 +29,24 @@ const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 /**
  * Minimal event emitter.
  */
-class EventEmitter {
-	#eventCallbacks: Map<string, Callback[]>;
+class EventEmitter<TEvent> {
+	#logger = getLogger(EventEmitter);
 
-	constructor(events: Set<string>) {
+	#eventCallbacks: Map<TEvent, Callback[]>;
+
+	constructor(events: Set<TEvent>) {
 		this.#eventCallbacks = new Map(
 			Array.from(events.values()).map((event) => [event, []])
 		);
 	}
 
-	on(event: string, callback: () => void): void {
-		logger.trace(`Registering '${event}' event.`);
+	on(event: TEvent, callback: () => void): void {
+		this.#logger.trace(`Registering '${event}' event.`);
 		getExistingElseThrow(this.#eventCallbacks, event).push(callback);
 	}
 
-	emit(event: string): void {
-		logger.trace(`Emitting '${event}' event.`);
+	emit(event: TEvent): void {
+		this.#logger.trace(`Emitting '${event}' event.`);
 		getExistingElseThrow(this.#eventCallbacks, event).forEach((callback) =>
 			callback()
 		);
@@ -68,8 +70,8 @@ const CHANGE_EVENT_MUTATIONS = new Set([
 export const createApplicationBridge = (): ApplicationInstance => {
 	const store = useStore();
 
-	const eventEmitter = new EventEmitter(
-		new Set<ApplicationEvent>(["change", "ready"])
+	const eventEmitter = new EventEmitter<ApplicationEvent>(
+		new Set(["change", "ready"])
 	);
 
 	store.subscribe((mutation) => {
@@ -98,7 +100,7 @@ export const createApplicationBridge = (): ApplicationInstance => {
 		clearDeck: (): void => {
 			store.commit(DECK_CLEAR);
 		},
-		on(event: string, callback: Callback): void {
+		on(event: ApplicationEvent, callback: Callback): void {
 			logger.debug(
 				`Registering event subscription for event '${event}'...`
 			);
