@@ -8,7 +8,7 @@ export type ApplicationEvent = "ready" | "change";
 /**
  * Public interface used to interact with application.
  */
-export interface ApplicationInstance {
+export interface Application {
 	/**
 	 * Get a copy of the current deck.
 	 */
@@ -57,18 +57,15 @@ export interface ExternalDeck {
 }
 
 /**
- * Version of {@link Card} modified to only export required data with a stable interface.
+ * An external card is just the passcode of said card.
  */
-export interface ExternalCard {
-	readonly passcode: string;
-	readonly name: string;
-}
+export type ExternalCard = string;
 
 export type Callback = () => void;
 
 declare global {
 	interface Window {
-		yugiohDeckToolApplication?: ApplicationInstance;
+		yugiohDeckToolApplication?: Application;
 	}
 }
 
