@@ -2,10 +2,11 @@ import type { Card, CardDatabase, Deck } from "@/core/lib";
 import { DeckPart, FindCardBy, getLogger, TYPES } from "@/core/lib";
 import type {
 	ApplicationEvent,
-	ApplicationInstance,
+	ApplicationApi,
 	Callback,
 	ExternalCard,
 	ExternalDeck,
+	SlimExternalCard,
 } from "./api";
 import {
 	DECK_CLEAR,
@@ -65,9 +66,9 @@ const CHANGE_EVENT_MUTATIONS = new Set([
 ]);
 
 /**
- * Creates implementation of {@link ApplicationInstance} which is bridged to Vue.
+ * Creates implementation of {@link ApplicationApi} which is bridged to Vue.
  */
-export const createApplicationBridge = (): ApplicationInstance => {
+export const createApplicationBridge = (): ApplicationApi => {
 	const store = useStore();
 
 	const eventEmitter = new EventEmitter<ApplicationEvent>(
@@ -87,7 +88,7 @@ export const createApplicationBridge = (): ApplicationInstance => {
 			logger.debug("Exporting current deck state...");
 			return toExternalDeck(store.state.deck.active);
 		},
-		setDeck: (newDeck: ExternalDeck): void => {
+		setDeck: (newDeck: ExternalDeck<SlimExternalCard>): void => {
 			logger.debug("Replacing current deck state...");
 			store.commit(DECK_REPLACE, { deck: fromExternalDeck(newDeck) });
 		},
@@ -109,7 +110,7 @@ export const createApplicationBridge = (): ApplicationInstance => {
 	};
 };
 
-const toExternalDeck = ({ name, parts }: Deck): ExternalDeck => {
+const toExternalDeck = ({ name, parts }: Deck): ExternalDeck<ExternalCard> => {
 	return {
 		name,
 		parts: {
@@ -124,7 +125,10 @@ const toExternalCard = ({ passcode, name }: Card): ExternalCard => {
 	return { passcode, name };
 };
 
-const fromExternalDeck = ({ name, parts }: ExternalDeck): Deck => {
+const fromExternalDeck = ({
+	name,
+	parts,
+}: ExternalDeck<SlimExternalCard>): Deck => {
 	return {
 		name,
 		parts: {
@@ -135,7 +139,7 @@ const fromExternalDeck = ({ name, parts }: ExternalDeck): Deck => {
 	};
 };
 
-const fromExternalCard = ({ passcode }: ExternalCard): Card => {
+const fromExternalCard = ({ passcode }: SlimExternalCard): Card => {
 	if (!cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
 		throw new TypeError(`Card with passcode '${passcode}' not found.`);
 	}

@@ -8,18 +8,18 @@ export type ApplicationEvent = "ready" | "change";
 /**
  * Public interface used to interact with application.
  */
-export interface ApplicationInstance {
+export interface ApplicationApi {
 	/**
 	 * Get a copy of the current deck.
 	 */
-	readonly getDeck: () => ExternalDeck;
+	readonly getDeck: () => ExternalDeck<ExternalCard>;
 
 	/**
 	 * Replaces the currently loaded deck.
 	 *
 	 * May only be called after `ready` event was emitted.
 	 */
-	readonly setDeck: (newDeck: ExternalDeck) => void;
+	readonly setDeck: (newDeck: ExternalDeck<SlimExternalCard>) => void;
 
 	/**
 	 * Shuffles the current deck.
@@ -47,12 +47,12 @@ export interface ApplicationInstance {
 /**
  * Version of {@link Deck} modified to only export required data with a stable interface.
  */
-export interface ExternalDeck {
+export interface ExternalDeck<TCard> {
 	readonly name: string | null;
 	readonly parts: {
-		readonly main: ReadonlyArray<ExternalCard>;
-		readonly extra: ReadonlyArray<ExternalCard>;
-		readonly side: ReadonlyArray<ExternalCard>;
+		readonly main: ReadonlyArray<TCard>;
+		readonly extra: ReadonlyArray<TCard>;
+		readonly side: ReadonlyArray<TCard>;
 	};
 }
 
@@ -64,11 +64,16 @@ export interface ExternalCard {
 	readonly name: string;
 }
 
+/**
+ * Simplified {@link ExternalCard} used during imports.
+ */
+export type SlimExternalCard = Pick<ExternalCard, "passcode">;
+
 export type Callback = () => void;
 
 declare global {
 	interface Window {
-		yugiohDeckToolApplication?: ApplicationInstance;
+		yugiohDeckToolApplication?: ApplicationApi;
 	}
 }
 
