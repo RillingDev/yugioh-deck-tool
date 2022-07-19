@@ -2,7 +2,7 @@ import type { Card, CardDatabase, Deck } from "@/core/lib";
 import { DeckPart, FindCardBy, getLogger, TYPES } from "@/core/lib";
 import type {
 	ApplicationEvent,
-	Application,
+	ApplicationInstance,
 	Callback,
 	ExternalCard,
 	ExternalDeck,
@@ -65,9 +65,9 @@ const CHANGE_EVENT_MUTATIONS = new Set([
 ]);
 
 /**
- * Creates implementation of {@link Application} which is bridged to Vue.
+ * Creates implementation of {@link ApplicationInstance} which is bridged to Vue.
  */
-export const createApplicationBridge = (): Application => {
+export const createApplicationBridge = (): ApplicationInstance => {
 	const store = useStore();
 
 	const eventEmitter = new EventEmitter<ApplicationEvent>(
@@ -120,7 +120,9 @@ const toExternalDeck = ({ name, parts }: Deck): ExternalDeck => {
 	};
 };
 
-const toExternalCard = (card: Card): ExternalCard => card.passcode;
+const toExternalCard = ({ passcode, name }: Card): ExternalCard => {
+	return { passcode, name };
+};
 
 const fromExternalDeck = ({ name, parts }: ExternalDeck): Deck => {
 	return {
@@ -133,9 +135,9 @@ const fromExternalDeck = ({ name, parts }: ExternalDeck): Deck => {
 	};
 };
 
-const fromExternalCard = (externalCard: ExternalCard): Card => {
-	if (!cardDatabase.hasCard(externalCard, FindCardBy.PASSCODE)) {
-		throw new TypeError(`Card with passcode '${externalCard}' not found.`);
+const fromExternalCard = ({ passcode }: ExternalCard): Card => {
+	if (!cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
+		throw new TypeError(`Card with passcode '${passcode}' not found.`);
 	}
-	return cardDatabase.getCard(externalCard, FindCardBy.PASSCODE)!;
+	return cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!;
 };
