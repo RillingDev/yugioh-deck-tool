@@ -16,6 +16,7 @@ import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
 describe("SortingService", () => {
 	let sortingService: SortingService;
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	let mockCardDatabase: CardDatabase;
 
 	beforeEach(() => {
@@ -25,7 +26,6 @@ describe("SortingService", () => {
 			.bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
 			.to(MockDataLoaderService);
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		mockCardDatabase = bindMock<CardDatabase>(
 			container,
 			TYPES.CardDatabase,
