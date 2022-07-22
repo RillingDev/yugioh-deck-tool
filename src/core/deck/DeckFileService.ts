@@ -47,24 +47,27 @@ export class DeckFileService {
 	/**
 	 * Loads a deck from a remote .ydk file URL. The name is inferred from the URL.
 	 *
-	 * @param currentUrl The current origin to ensure same-site loading will take place.
+	 * @param currentUrl The current URL to ensure same-site loading will take place.
 	 * @param remoteUrl URL to load from, MUST be the same origin as currentOrigin.
 	 * @throws Error if origins do not match.
 	 * @return Loaded deck.
 	 */
 	async fromRemoteFile(
-		currentUrl: string,
-		remoteUrl: string
+		currentUrl: URL,
+		remoteUrl: URL
 	): Promise<ImportResult> {
-		if (!this.#urlService.hasSameOrigin(currentUrl, remoteUrl)) {
+		if (currentUrl.origin !== remoteUrl.origin) {
 			throw new Error("Decks can only be loaded from the same origin.");
 		}
 
 		const fileName = this.#urlService.getFileName(remoteUrl);
-		const response = await this.#httpService.get<string>(remoteUrl, {
-			responseType: "text",
-			timeout: 5000,
-		});
+		const response = await this.#httpService.get<string>(
+			remoteUrl.toString(),
+			{
+				responseType: "text",
+				timeout: 5000,
+			}
+		);
 		return this.fromFile({
 			fileName,
 			fileContent: response.data,

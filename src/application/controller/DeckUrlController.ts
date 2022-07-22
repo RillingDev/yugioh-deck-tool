@@ -45,8 +45,8 @@ export class DeckUrlController {
 		);
 		if (remoteUrlValue != null) {
 			const importResult = await this.#deckFileService.fromRemoteFile(
-				location.origin,
-				remoteUrlValue
+				new URL(location.toString()),
+				new URL(remoteUrlValue)
 			);
 			if (importResult.missing.length > 0) {
 				DeckUrlController.logger.warn(

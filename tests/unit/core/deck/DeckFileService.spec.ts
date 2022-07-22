@@ -208,8 +208,8 @@ describe("DeckFileService", () => {
 		it("errors for different origin", async () => {
 			try {
 				await deckFileService.fromRemoteFile(
-					"https://example.com",
-					"https://attacker.website.hax/foo/bar.ydk"
+					new URL("https://example.com"),
+					new URL("https://attacker.website.hax/foo/bar.ydk")
 				);
 				fail("Promise did not reject.");
 			} catch (e) {
@@ -240,8 +240,8 @@ describe("DeckFileService", () => {
 			});
 
 			const result = await deckFileService.fromRemoteFile(
-				"https://example.com",
-				"https://example.com/foo/bar.ydk"
+				new URL("https://example.com"),
+				new URL("https://example.com/foo/bar.ydk")
 			);
 			expect(result.deck.name).toBe("bar");
 		});
@@ -270,8 +270,8 @@ describe("DeckFileService", () => {
 			});
 
 			const result = await deckFileService.fromRemoteFile(
-				"https://example.com",
-				"https://example.com/foo/bar.ydk"
+				new URL("https://example.com"),
+				new URL("https://example.com/foo/bar.ydk")
 			);
 			expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
 			expect(result.deck.parts[DeckPart.MAIN]).toContain(card);
