@@ -6,7 +6,6 @@ import { CardDatabase, FindCardBy } from "../card/CardDatabase";
 import { DeckService } from "./DeckService";
 import { DECK_PART_ARR } from "./DeckPart";
 import { HttpService } from "../http/HttpService";
-import { UrlService } from "../http/UrlService";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 
 export interface ImportResult {
@@ -24,7 +23,6 @@ export class DeckFileService {
 	readonly #httpService: HttpService;
 	readonly #cardDatabase: CardDatabase;
 	readonly #deckService: DeckService;
-	readonly #urlService: UrlService;
 
 	public static readonly DECK_FILE_MIME_TYPE = "text/ydk";
 
@@ -34,14 +32,11 @@ export class DeckFileService {
 		@inject(TYPES.CardDatabase)
 		cardDatabase: CardDatabase,
 		@inject(TYPES.DeckService)
-		deckService: DeckService,
-		@inject(TYPES.UrlService)
-		urlService: UrlService
+		deckService: DeckService
 	) {
 		this.#httpService = httpService;
 		this.#deckService = deckService;
 		this.#cardDatabase = cardDatabase;
-		this.#urlService = urlService;
 	}
 
 	/**
@@ -60,7 +55,7 @@ export class DeckFileService {
 			throw new Error("Decks can only be loaded from the same origin.");
 		}
 
-		const fileName = this.#urlService.getFileName(remoteUrl);
+		const fileName = this.#getFileNameFromUrl(remoteUrl);
 		const response = await this.#httpService.get<string>(
 			remoteUrl.toString(),
 			{
@@ -72,6 +67,20 @@ export class DeckFileService {
 			fileName,
 			fileContent: response.data,
 		});
+	}
+
+	/**
+	 * Gets the file name of a request to a file, or an empty is string if none is found.
+	 *
+	 * @param url URL to check.
+	 * @return File name or empty string.
+	 */
+	#getFileNameFromUrl(url: URL): string {
+		const pathname = url.pathname;
+		if (!pathname.includes("/")) {
+			return "";
+		}
+		return pathname.substring(pathname.lastIndexOf("/") + 1);
 	}
 
 	/**

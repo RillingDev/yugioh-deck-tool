@@ -14,7 +14,6 @@ import type { HttpService } from "./http/HttpService";
 import { DeckRandomizationService } from "./deck/DeckRandomizationService";
 import { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 import { DeckFileService } from "./deck/DeckFileService";
-import { UrlService } from "./http/UrlService";
 import { CardLinkingService } from "./card/CardLinkingService";
 import { BanlistService } from "./card/banlist/BanlistService";
 import type { EnvironmentConfig } from "./EnvironmentConfig";
@@ -32,7 +31,6 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
 
 	bind<EncodingService>(TYPES.EncodingService).to(EncodingService);
 	bind<HttpService>(TYPES.HttpService).to(AxiosHttpService);
-	bind<UrlService>(TYPES.UrlService).to(UrlService);
 
 	bind<CardLinkingService>(INTERNAL_TYPES.CardLinkingService).to(
 		CardLinkingService
