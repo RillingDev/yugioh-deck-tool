@@ -35,9 +35,15 @@ The `.map` files are optional and only used for debugging.
 
 See [Architecture.md](./ARCHITECTURE.md).
 
-## JS API
+## JavaScript API
 
 Both tooltip and application instances expose an API that can be interacted with via JavaScript. See `./src/tooltip/api.ts` and `./src/application/api.ts` for their documentation.
+
+## YGOPRODeck Exclusive Features
+
+The following features are only available when the tool is running on <https://ygoprodeck.com/>.
+
+-   Showing only cards in your collection
 
 ## Credits
 
