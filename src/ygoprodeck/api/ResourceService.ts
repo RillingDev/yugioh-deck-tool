@@ -6,12 +6,10 @@ import { Environment, EnvironmentConfig, TYPES } from "@/core/lib";
 export class ResourceService {
 	readonly #environmentConfig: EnvironmentConfig;
 
-	private static readonly YGOPRODECK_BASE_URL = "https://ygoprodeck.com";
+	private static readonly YGOPRODECK_IMAGE_BASE_URL =
+		"https://images.ygoprodeck.com/images";
 	private static readonly CDN_BASE_URL =
 		"https://storage.googleapis.com/ygoprodeck.com";
-
-	private static readonly YGOPRODECK_ASSET_BASE_URL = `${ResourceService.YGOPRODECK_BASE_URL}/pics/icons`;
-	private static readonly CDN_ASSET_BASE_URL = `${ResourceService.CDN_BASE_URL}/assets`;
 
 	constructor(
 		@inject(TYPES.EnvironmentConfig)
@@ -32,8 +30,8 @@ export class ResourceService {
 			this.#environmentConfig.getEnvironment() == Environment.YGOPRODECK
 		) {
 			return initialCardImageUrl.replace(
-				ResourceService.CDN_BASE_URL,
-				ResourceService.YGOPRODECK_BASE_URL
+				ResourceService.CDN_BASE_URL + "/pics_small",
+				ResourceService.YGOPRODECK_IMAGE_BASE_URL + "/cards_small"
 			);
 		}
 		return initialCardImageUrl;
@@ -84,7 +82,7 @@ export class ResourceService {
 	#getAssetBaseUrl(): string {
 		return this.#environmentConfig.getEnvironment() ==
 			Environment.YGOPRODECK
-			? ResourceService.YGOPRODECK_ASSET_BASE_URL
-			: ResourceService.CDN_ASSET_BASE_URL;
+			? `${ResourceService.YGOPRODECK_IMAGE_BASE_URL}/cards/icons`
+			: `${ResourceService.CDN_BASE_URL}/assets`;
 	}
 }
