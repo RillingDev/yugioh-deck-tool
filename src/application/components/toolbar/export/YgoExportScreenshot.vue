@@ -50,9 +50,10 @@ export default defineComponent({
 				store.state.deck.active.name ?? "Deck Screenshot",
 				{
 					scale: 2,
-					onClone: (doc) => {
+					onclone: (doc) => {
 						doc.body.classList.add("deck-tool__screenshot-context");
 					},
+					useCORS: true, // Image resources are hosted on separate origin.
 				}
 			)
 				.then((file) => {
