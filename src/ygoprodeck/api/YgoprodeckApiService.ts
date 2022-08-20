@@ -198,12 +198,12 @@ export class YgoprodeckApiService {
 	}
 
 	async updateViews(card: Card): Promise<void> {
-		await this.#httpService.get<void>("updateViews.php", {
-			baseUrl: this.#getBaseUrl(),
+		await this.#httpService.get<void>("card/updateViews.php", {
+			baseUrl: "https://ygoprodeck.com/api/", // Special internal endpoint
 			timeout: 3000,
 			responseType: "text",
 			params: {
-				name: card.name,
+				card: card.passcode,
 			},
 		});
 	}
