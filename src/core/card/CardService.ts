@@ -89,7 +89,7 @@ export class CardService {
 	 * @return Link.
 	 */
 	getReferenceLink(card: Card): URL {
-		const url = new URL("https://db.ygoprodeck.com/card/");
+		const url = new URL("https://ygoprodeck.com/card/");
 		url.searchParams.append("search", card.name);
 		return url;
 	}
