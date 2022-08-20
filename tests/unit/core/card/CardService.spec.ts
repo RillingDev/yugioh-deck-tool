@@ -109,7 +109,7 @@ describe("CardService", () => {
 			const card1 = createCard({ passcode: "123", name: "Foo Bar" });
 
 			expect(cardService.getReferenceLink(card1)).toEqual(
-				new URL("https://db.ygoprodeck.com/card/?search=Foo+Bar")
+				new URL("https://ygoprodeck.com/card/?search=Foo+Bar")
 			);
 		});
 	});
