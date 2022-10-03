@@ -13,7 +13,8 @@
 import { computed, defineComponent } from "@vue/composition-api";
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { createScreenshot, downloadFile } from "@/browser-common/lib";
+import { downloadFile } from "../../../composition/io/downloadFile";
+import { createScreenshot } from "../../../composition/io/createScreenshot";
 import {
 	showError,
 	showInfo,

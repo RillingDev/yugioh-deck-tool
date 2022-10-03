@@ -10,7 +10,7 @@ import { defineComponent } from "@vue/composition-api";
 import { DeckFileService, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { downloadFile } from "@/browser-common/lib";
+import { downloadFile } from "../../../composition/io/downloadFile";
 import { showSuccess } from "../../../composition/feedback";
 import { useStore } from "../../../store/store";
 

@@ -11,7 +11,8 @@ import type { DeckFileService, ImportResult } from "@/core/lib";
 import { getLogger, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { readFile, uploadFile } from "@/browser-common/lib";
+import { readFile } from "../../../composition/io/readFile";
+import { uploadFile } from "../../../composition/io/uploadFile";
 import { DECK_REPLACE } from "../../../store/modules/deck";
 import {
 	showError,
