@@ -21,8 +21,6 @@ export class PriceService {
 		return new Intl.NumberFormat("en-US", {
 			style: "currency",
 			currency: currency.id,
-			minimumFractionDigits: currency.fractionDigits,
-			maximumFractionDigits: currency.fractionDigits,
 		}).format(value);
 	}
 
