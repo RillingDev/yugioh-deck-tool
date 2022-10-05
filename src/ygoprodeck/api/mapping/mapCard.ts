@@ -100,6 +100,7 @@ const formatMap = new Map<string, Format>([
 	["Speed Duel", Format.SPEED_DUEL],
 	["Rush Duel", Format.RUSH_DUEL],
 	["Duel Links", Format.DUEL_LINKS],
+	["Common Charity", Format.COMMON_CHARITY],
 ]);
 const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
 	if (rawMiscInfo == null || rawMiscInfo.formats == null) {
