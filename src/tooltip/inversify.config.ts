@@ -11,7 +11,7 @@ const tooltipContainer = new Container({ defaultScope: "Singleton" });
 tooltipContainer.load(baseModule, ygoprodeckModule);
 
 tooltipContainer
-	.rebind<EnvironmentConfig>(TYPES.EnvironmentConfig)
+	.bind<EnvironmentConfig>(TYPES.EnvironmentConfig)
 	.to(HostEnvironmentConfig);
 
 tooltipContainer

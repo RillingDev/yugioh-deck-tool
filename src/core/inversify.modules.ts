@@ -15,8 +15,6 @@ import { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 import { DeckFileService } from "./deck/DeckFileService";
 import { CardLinkingService } from "./card/CardLinkingService";
 import { BanlistService } from "./card/banlist/BanlistService";
-import type { EnvironmentConfig } from "./EnvironmentConfig";
-import { DefaultEnvironmentConfig } from "./DefaultEnvironmentConfig";
 import { CardPredicateService } from "./card/CardPredicateService";
 import { EncodingService } from "./util/EncodingService";
 
@@ -24,10 +22,6 @@ import { EncodingService } from "./util/EncodingService";
  * Module containing card database access and basic domain services.
  */
 export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
-	bind<EnvironmentConfig>(TYPES.EnvironmentConfig).to(
-		DefaultEnvironmentConfig
-	);
-
 	bind<EncodingService>(TYPES.EncodingService).to(EncodingService);
 	bind<HttpService>(TYPES.HttpService).to(HttpService);
 

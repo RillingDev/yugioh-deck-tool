@@ -12,7 +12,7 @@ const applicationContainer = new Container({ defaultScope: "Singleton" });
 applicationContainer.load(baseModule, deckModule, ygoprodeckModule);
 
 applicationContainer
-	.rebind<EnvironmentConfig>(TYPES.EnvironmentConfig)
+	.bind<EnvironmentConfig>(TYPES.EnvironmentConfig)
 	.to(HostEnvironmentConfig);
 
 applicationContainer
