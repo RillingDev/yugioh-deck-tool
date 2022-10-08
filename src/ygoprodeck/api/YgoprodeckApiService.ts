@@ -82,7 +82,7 @@ export class YgoprodeckApiService {
 		const response = await this.#httpService.get<{ data: RawCard[] }>(
 			"cardinfo.php",
 			{
-				baseUrl: this.#getBaseUrl(),
+				baseURL: this.#getBaseUrl(),
 				params: this.#createCardInfoParams(options),
 				headers: this.#createAuthHeaders(options),
 				timeout: 5000,
@@ -107,7 +107,7 @@ export class YgoprodeckApiService {
 				const response = await this.#httpService.get<
 					PaginatedResponse<RawCard[]>
 				>("cardinfo.php", {
-					baseUrl: this.#getBaseUrl(),
+					baseURL: this.#getBaseUrl(),
 					params: {
 						...params,
 						num: YgoprodeckApiService.CHUNK_SIZE,
@@ -165,7 +165,7 @@ export class YgoprodeckApiService {
 			"cardsets.php",
 
 			{
-				baseUrl: this.#getBaseUrl(),
+				baseURL: this.#getBaseUrl(),
 				timeout: 10000,
 				responseType: "json",
 			}
@@ -177,7 +177,7 @@ export class YgoprodeckApiService {
 		const response = await this.#httpService.get<RawCardValues>(
 			"cardvalues.php",
 			{
-				baseUrl: this.#getBaseUrl(),
+				baseURL: this.#getBaseUrl(),
 				timeout: 10000,
 				responseType: "json",
 			}
@@ -189,7 +189,7 @@ export class YgoprodeckApiService {
 		const response = await this.#httpService.get<RawArchetype[]>(
 			"archetypes.php",
 			{
-				baseUrl: this.#getBaseUrl(),
+				baseURL: this.#getBaseUrl(),
 				timeout: 10000,
 				responseType: "json",
 			}
@@ -199,7 +199,7 @@ export class YgoprodeckApiService {
 
 	async updateViews(card: Card): Promise<void> {
 		await this.#httpService.get<void>("card/updateViews.php", {
-			baseUrl: "https://ygoprodeck.com/api/", // Special internal endpoint
+			baseURL: "https://ygoprodeck.com/api/", // Special internal endpoint
 			timeout: 3000,
 			responseType: "text",
 			params: {

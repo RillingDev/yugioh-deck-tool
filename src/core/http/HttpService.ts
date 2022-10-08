@@ -1,33 +1,27 @@
-export interface HttpRequestConfig<TData> {
-	readonly baseUrl?: string;
-
-	readonly data?: TData;
-	readonly headers?: Record<string, string>;
-	readonly params?: Record<string, string | number | boolean | null>;
-
-	readonly responseType: "json" | "text";
-	readonly timeout: number;
-	readonly validateStatus?: (status: number) => boolean;
-	readonly auth?: {
-		readonly username: string;
-		readonly password: string;
-	};
-}
-
-export interface HttpResponse<TData> {
-	readonly status: number;
-	readonly statusText: string;
-
-	readonly data: TData;
-	readonly headers: Record<string, string>;
-}
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
+import { injectable } from "inversify";
 
 /**
  * HTTP client abstraction allowing for simple GET requests.
  */
-export interface HttpService {
-	get: <TResponse>(
+@injectable()
+export class HttpService {
+	readonly #httpClient: AxiosInstance;
+
+	constructor() {
+		this.#httpClient = axios.create({
+			validateStatus: (status) => status === 200,
+		});
+	}
+
+	get<TResponse>(
 		url: string,
-		requestConfig: HttpRequestConfig<void>
-	) => Promise<HttpResponse<TResponse>>;
+		requestConfig: AxiosRequestConfig<void>
+	): Promise<AxiosResponse<TResponse>> {
+		return this.#httpClient.get<void, AxiosResponse<TResponse>>(
+			url,
+			requestConfig
+		);
+	}
 }

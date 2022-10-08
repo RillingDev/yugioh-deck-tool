@@ -9,8 +9,7 @@ import { DeckExportService } from "./deck/DeckExportService";
 import { DeckService } from "./deck/DeckService";
 import { SortingService } from "./card/SortingService";
 import { FilterService } from "./card/FilterService";
-import { AxiosHttpService } from "./http/AxiosHttpService";
-import type { HttpService } from "./http/HttpService";
+import { HttpService } from "./http/HttpService";
 import { DeckRandomizationService } from "./deck/DeckRandomizationService";
 import { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 import { DeckFileService } from "./deck/DeckFileService";
@@ -30,7 +29,7 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
 	);
 
 	bind<EncodingService>(TYPES.EncodingService).to(EncodingService);
-	bind<HttpService>(TYPES.HttpService).to(AxiosHttpService);
+	bind<HttpService>(TYPES.HttpService).to(HttpService);
 
 	bind<CardLinkingService>(INTERNAL_TYPES.CardLinkingService).to(
 		CardLinkingService
