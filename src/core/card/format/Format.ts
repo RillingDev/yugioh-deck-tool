@@ -8,4 +8,5 @@ export enum Format {
 	RUSH_DUEL = "Rush Duel",
 	DUEL_LINKS = "Duel Links",
 	COMMON_CHARITY = "Common Charity",
+	EDISON = "Edison",
 }
