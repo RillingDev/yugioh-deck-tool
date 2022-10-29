@@ -2,7 +2,7 @@ module.exports = {
 	projects: [
 		{
 			displayName: "browser",
-			preset: "@vue/cli-plugin-unit-jest/presets/typescript-and-babel",
+			preset: "@vue/cli-plugin-unit-jest/presets/typescript",
 			testMatch: [
 				"<rootDir>/tests/unit/browser-common/**/*",
 				"<rootDir>/tests/unit/tooltip/**/*",
