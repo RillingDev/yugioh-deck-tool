@@ -68,7 +68,6 @@ export const bindTooltipHandlers = (context: HTMLElement): TooltipInstance => {
 		delay: [500, 0],
 		placement: "auto",
 		maxWidth: "none",
-		// eslint-disable-next-line @typescript-eslint/naming-convention
 		allowHTML: true,
 		content: () => createLoadingTooltip(),
 		onShow: (instance) => {

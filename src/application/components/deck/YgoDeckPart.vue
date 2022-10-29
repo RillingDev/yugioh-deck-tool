@@ -41,7 +41,6 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import type { PropType } from "vue";
 import { computed, defineComponent } from "vue";
 import type { Card, DeckPart, DeckPartConfig, DeckService } from "@/core/lib";

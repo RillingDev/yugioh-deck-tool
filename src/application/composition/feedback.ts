@@ -1,8 +1,6 @@
 import { getCurrentInstance } from "vue";
 import type { BvToast } from "bootstrap-vue";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 // https://github.com/bootstrap-vue/bootstrap-vue/issues/7005#issuecomment-1245836595
 export const useToast = (): BvToast => {
 	const app = getCurrentInstance();
