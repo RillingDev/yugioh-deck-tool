@@ -1,6 +1,6 @@
 import type { interfaces } from "inversify";
 import { ContainerModule } from "inversify";
-import { INTERNAL_TYPES, TYPES } from "./types";
+import { TYPES } from "./types";
 import type { CardDatabase } from "./card/CardDatabase";
 import { MemoryCardDatabase } from "./card/MemoryCardDatabase";
 import { CardService } from "./card/CardService";
@@ -13,7 +13,6 @@ import { HttpService } from "./http/HttpService";
 import { DeckRandomizationService } from "./deck/DeckRandomizationService";
 import { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 import { DeckFileService } from "./deck/DeckFileService";
-import { CardLinkingService } from "./card/CardLinkingService";
 import { BanlistService } from "./card/banlist/BanlistService";
 import { CardPredicateService } from "./card/CardPredicateService";
 import { EncodingService } from "./util/EncodingService";
@@ -25,9 +24,6 @@ export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
 	bind<EncodingService>(TYPES.EncodingService).to(EncodingService);
 	bind<HttpService>(TYPES.HttpService).to(HttpService);
 
-	bind<CardLinkingService>(INTERNAL_TYPES.CardLinkingService).to(
-		CardLinkingService
-	);
 	bind<CardDatabase>(TYPES.CardDatabase)
 		.to(MemoryCardDatabase)
 		.inSingletonScope();

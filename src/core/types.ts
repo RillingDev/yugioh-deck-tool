@@ -1,7 +1,3 @@
-export const INTERNAL_TYPES = {
-	CardLinkingService: Symbol.for("CardLinkingService"),
-} as const;
-
 export const TYPES = {
 	EnvironmentConfig: Symbol.for("EnvironmentConfig"),
 
