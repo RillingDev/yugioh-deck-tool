@@ -21,7 +21,7 @@ import { getLogger } from "@/core/lib";
 import { computed, defineComponent, ref, watch } from "vue";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
-import { showError } from "../../composition/feedback";
+import { showError, useToast } from "../../composition/feedback";
 import { APPLICATION_TYPES } from "../../types";
 import type { YgoprodeckController } from "../../controller/YgoprodeckController";
 import type { YgoprodeckService } from "@/ygoprodeck/lib";
@@ -48,6 +48,7 @@ export default defineComponent({
 	emits: ["change"],
 	setup(props, context) {
 		const store = useStore();
+		const toast = useToast();
 
 		const cardCountFunction = computed<CardCountFunction | null>({
 			get: () => store.state.collection.cardCountFunction,
@@ -86,7 +87,7 @@ export default defineComponent({
 				.catch((err) => {
 					logger.error("Could not load user collection!", err);
 					showError(
-						context,
+						toast,
 						"Could not load user collection!",
 						"deck-tool__portal"
 					);

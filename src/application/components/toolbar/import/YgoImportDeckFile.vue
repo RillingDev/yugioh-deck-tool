@@ -18,6 +18,7 @@ import {
 	showError,
 	showSuccess,
 	showWarning,
+	useToast,
 } from "../../../composition/feedback";
 import { useStore } from "../../../store/store";
 
@@ -33,6 +34,7 @@ export default defineComponent({
 	emits: [],
 	setup(props, context) {
 		const store = useStore();
+		const toast = useToast();
 
 		const importDeckFile = async (file: File): Promise<ImportResult> => {
 			const fileContent = await readFile(file);
@@ -52,13 +54,13 @@ export default defineComponent({
 				.then((result: ImportResult) => {
 					if (result.missing.length > 0) {
 						showWarning(
-							context,
+							toast,
 							`${result.missing.length} cards could not be imported!`,
 							"deck-tool__portal"
 						);
 					} else {
 						showSuccess(
-							context,
+							toast,
 							"Successfully imported deck file.",
 							"deck-tool__portal"
 						);
@@ -67,7 +69,7 @@ export default defineComponent({
 				.catch((e) => {
 					logger.error("Could not read deck file!", e);
 					showError(
-						context,
+						toast,
 						"Could not read deck file.",
 						"deck-tool__portal"
 					);

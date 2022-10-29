@@ -1,42 +1,58 @@
-import type { SetupContext } from "vue";
+import { getCurrentInstance } from "vue";
+import type { BvToast } from "bootstrap-vue";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const showFeedback = (
-	context: SetupContext<any>,
-	message: string,
-	cssClass: string,
-	variant: string
-): void => {
-	// TODO
-	// context.root.$bvToast.toast(message, {
-	// 	variant: variant,
-	// 	noCloseButton: true,
-	// 	solid: true,
-	// 	toastClass: cssClass,
-	// });
+// https://github.com/bootstrap-vue/bootstrap-vue/issues/7005#issuecomment-1245836595
+export const useToast = (): BvToast => {
+	const app = getCurrentInstance();
+
+	if (!app) {
+		throw new TypeError("Could not find app.");
+	}
+	return app.proxy.$root.$bvToast;
 };
 
+const showToast = (
+	$bvToast: BvToast,
+	message: string,
+	cssClass: string,
+	variant: Variant
+): void => {
+	$bvToast.toast(message, {
+		variant: variant,
+		noCloseButton: true,
+		solid: true,
+		toastClass: cssClass,
+	});
+};
+enum Variant {
+	INFO = "info",
+	SUCCESS = "success",
+	WARNING = "warning",
+	DANGER = "danger",
+}
+
 export const showInfo = (
-	context: SetupContext<any>,
+	$bvToast: BvToast,
 	message: string,
 	cssClass: string
-): void => showFeedback(context, message, cssClass, "info");
+): void => showToast($bvToast, message, cssClass, Variant.INFO);
 
 export const showSuccess = (
-	context: SetupContext<any>,
+	$bvToast: BvToast,
 	message: string,
 	cssClass: string
-): void => showFeedback(context, message, cssClass, "success");
+): void => showToast($bvToast, message, cssClass, Variant.SUCCESS);
 
 export const showWarning = (
-	context: SetupContext<any>,
+	$bvToast: BvToast,
 	message: string,
 	cssClass: string
-): void => showFeedback(context, message, cssClass, "warning");
+): void => showToast($bvToast, message, cssClass, Variant.WARNING);
 
 export const showError = (
-	context: SetupContext<any>,
+	$bvToast: BvToast,
 	message: string,
 	cssClass: string
-): void => showFeedback(context, message, cssClass, "danger");
+): void => showToast($bvToast, message, cssClass, Variant.DANGER);

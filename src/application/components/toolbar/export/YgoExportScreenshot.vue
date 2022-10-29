@@ -19,6 +19,7 @@ import {
 	showError,
 	showInfo,
 	showSuccess,
+	useToast,
 } from "../../../composition/feedback";
 import { useStore } from "../../../store/store";
 
@@ -28,8 +29,9 @@ export default defineComponent({
 	components: { BDropdownItemButton },
 	props: {},
 	emits: [],
-	setup(props, context) {
+	setup() {
 		const store = useStore();
+		const toast = useToast();
 
 		const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
 
@@ -42,7 +44,7 @@ export default defineComponent({
 			window.scrollTo(0, 0); // Reset scroll position as this may affect the screenshot rendering.
 
 			showInfo(
-				context,
+				toast,
 				"Creating screenshot, please wait.",
 				"deck-tool__portal"
 			);
@@ -59,7 +61,7 @@ export default defineComponent({
 			)
 				.then((file) => {
 					showSuccess(
-						context,
+						toast,
 						"Screenshot created.",
 						"deck-tool__portal"
 					);
@@ -68,7 +70,7 @@ export default defineComponent({
 				.catch((err) => {
 					logger.error("Could not create screenshot!", err);
 					showError(
-						context,
+						toast,
 						"Could not create screenshot.",
 						"deck-tool__portal"
 					);

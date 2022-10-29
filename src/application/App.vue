@@ -22,7 +22,7 @@ import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
 import { computed, defineComponent, onMounted } from "vue";
 import { BOverlay } from "bootstrap-vue";
-import { showError } from "./composition/feedback";
+import { showError, useToast } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
@@ -46,8 +46,9 @@ export default defineComponent({
 	},
 	props: {},
 	emits: [],
-	setup(props, context) {
+	setup() {
 		const store = useStore();
+		const toast = useToast();
 
 		const loading = computed<boolean>(() => store.state.data.loading);
 
@@ -77,7 +78,7 @@ export default defineComponent({
 				.catch((err) => {
 					logger.error("Could not start the application!", err);
 					showError(
-						context,
+						toast,
 						"Could not start the application!",
 						"deck-tool__portal"
 					);

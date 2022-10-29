@@ -14,7 +14,11 @@ import type { DeckUriEncodingService } from "@/core/lib";
 import { getLogger, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { showError, showSuccess } from "../../../composition/feedback";
+import {
+	showError,
+	showSuccess,
+	useToast,
+} from "../../../composition/feedback";
 import { useStore } from "../../../store/store";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
@@ -27,8 +31,9 @@ export default defineComponent({
 	components: { BDropdownItemButton },
 	props: {},
 	emits: [],
-	setup(props, context) {
+	setup() {
 		const store = useStore();
+		const toast = useToast();
 
 		const copyYdke = (): void => {
 			const deck = store.state.deck.active;
@@ -38,7 +43,7 @@ export default defineComponent({
 				.writeText(ydke.toString())
 				.then(() =>
 					showSuccess(
-						context,
+						toast,
 						"Successfully copied YDKe to clipboard.",
 						"deck-tool__portal"
 					)
@@ -46,7 +51,7 @@ export default defineComponent({
 				.catch((err) => {
 					logger.error("Could not copy YDKe!", err);
 					showError(
-						context,
+						toast,
 						"Could not copy YDKe.",
 						"deck-tool__portal"
 					);

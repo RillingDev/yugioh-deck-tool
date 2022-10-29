@@ -11,7 +11,7 @@ import { DeckFileService, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../composition/io/downloadFile";
-import { showSuccess } from "../../../composition/feedback";
+import { showSuccess, useToast } from "../../../composition/feedback";
 import { useStore } from "../../../store/store";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
@@ -22,7 +22,8 @@ export default defineComponent({
 	components: { BDropdownItemButton },
 	props: {},
 	emits: [],
-	setup(props, context) {
+	setup() {
+		const toast = useToast();
 		const store = useStore();
 
 		const downloadDeck = (): void => {
@@ -33,7 +34,7 @@ export default defineComponent({
 			});
 			downloadFile(file, document);
 			showSuccess(
-				context,
+				toast,
 				"Successfully exported deck file.",
 				"deck-tool__portal"
 			);

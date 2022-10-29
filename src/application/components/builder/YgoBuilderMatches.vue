@@ -73,7 +73,7 @@ import {
 	findCardForDraggableValidatorData,
 	findDeckPartForDraggableValidatorData,
 } from "../../composition/dragging";
-import { showSuccess } from "../../composition/feedback";
+import { showSuccess, useToast } from "../../composition/feedback";
 import { useInfiniteScrolling } from "../../composition/infiniteScrolling";
 import { useTooltip } from "../../composition/tooltip";
 import { applicationContainer } from "../../inversify.config";
@@ -99,8 +99,9 @@ export default defineComponent({
 		},
 	},
 	emits: [],
-	setup(props, context) {
+	setup(props) {
 		const store = useStore();
+		const toast = useToast();
 
 		const { limitedArr: limitedMatches, scrollHandler } =
 			useInfiniteScrolling(
@@ -135,7 +136,7 @@ export default defineComponent({
 			if (deckPart != null) {
 				store.commit(DECK_PART_CARDS_ADD, { card, deckPart });
 				showSuccess(
-					context,
+					toast,
 					"Successfully added card to deck.",
 					"deck-tool__portal"
 				);

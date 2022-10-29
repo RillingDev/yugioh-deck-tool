@@ -13,7 +13,11 @@ import { defineComponent } from "vue";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { showError, showSuccess } from "../../../composition/feedback";
+import {
+	showError,
+	showSuccess,
+	useToast,
+} from "../../../composition/feedback";
 import type { DeckUrlController } from "../../../controller/DeckUrlController";
 import { getLogger } from "@/core/lib";
 import { useStore } from "../../../store/store";
@@ -29,6 +33,7 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup(props, context) {
+		const toast = useToast();
 		const store = useStore();
 
 		const copyLink = (): void => {
@@ -39,7 +44,7 @@ export default defineComponent({
 				.writeText(shareLink.toString())
 				.then(() =>
 					showSuccess(
-						context,
+						toast,
 						"Successfully copied share link to clipboard.",
 						"deck-tool__portal"
 					)
@@ -47,7 +52,7 @@ export default defineComponent({
 				.catch((err) => {
 					logger.error("Could not copy share link!", err);
 					showError(
-						context,
+						toast,
 						"Could not copy share link.",
 						"deck-tool__portal"
 					);

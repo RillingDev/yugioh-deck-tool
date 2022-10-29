@@ -36,7 +36,11 @@ import { getLogger, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { showError, showSuccess } from "../../../composition/feedback";
+import {
+	showError,
+	showSuccess,
+	useToast,
+} from "../../../composition/feedback";
 import { useStore } from "../../../store/store";
 import { useId } from "@/application/composition/id";
 
@@ -51,6 +55,7 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup(props, context) {
+		const toast = useToast();
 		const modal = ref<BModal>();
 		const ydkeUrl = ref<string>("");
 
@@ -63,7 +68,7 @@ export default defineComponent({
 			} catch (e) {
 				logger.error("Could not read YDKe URL!", e);
 				showError(
-					context,
+					toast,
 					"Could not read YDKe URL.",
 					"deck-tool__portal"
 				);
@@ -73,7 +78,7 @@ export default defineComponent({
 				deck,
 			});
 			showSuccess(
-				context,
+				toast,
 				"Successfully imported YDKe URL.",
 				"deck-tool__portal"
 			);
