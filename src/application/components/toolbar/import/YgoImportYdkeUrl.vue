@@ -54,7 +54,7 @@ export default defineComponent({
 	components: { BDropdownItemButton, BModal },
 	props: {},
 	emits: [],
-	setup(props, context) {
+	setup() {
 		const toast = useToast();
 		const modal = ref<BModal>();
 		const ydkeUrl = ref<string>("");

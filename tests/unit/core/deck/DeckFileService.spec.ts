@@ -23,10 +23,12 @@ describe("DeckFileService", () => {
 	beforeEach(() => {
 		const container = new Container();
 		container.load(baseModule, deckModule);
-		container
-			.bind<MockCardDatabase>(TYPES.CardDatabase)
-			.to(MockCardDatabase);
 
+		mockCardDatabase = bindMock<CardDatabase>(
+			container,
+			TYPES.CardDatabase,
+			MockCardDatabase
+		);
 		mockHttpService = bindMock<HttpService>(
 			container,
 			TYPES.HttpService,

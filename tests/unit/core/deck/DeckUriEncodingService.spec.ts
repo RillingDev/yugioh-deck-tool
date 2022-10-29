@@ -11,6 +11,7 @@ import {
 	TYPES,
 } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
+import { bindMock } from "../../helper/bindMock";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;
@@ -20,9 +21,12 @@ describe("DeckUriEncodingService", () => {
 	beforeEach(() => {
 		const container = new Container();
 		container.load(baseModule, deckModule);
-		container
-			.bind<MockCardDatabase>(TYPES.CardDatabase)
-			.to(MockCardDatabase);
+
+		mockCardDatabase = bindMock<CardDatabase>(
+			container,
+			TYPES.CardDatabase,
+			MockCardDatabase
+		);
 
 		deckUriEncodingService = container.get<DeckUriEncodingService>(
 			TYPES.DeckUriEncodingService

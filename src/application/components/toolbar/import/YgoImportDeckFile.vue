@@ -32,7 +32,7 @@ export default defineComponent({
 	components: { BDropdownItemButton },
 	props: {},
 	emits: [],
-	setup(props, context) {
+	setup() {
 		const store = useStore();
 		const toast = useToast();
 
