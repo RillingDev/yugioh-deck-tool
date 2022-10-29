@@ -62,8 +62,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent } from "@vue/composition-api";
+import type { PropType } from "vue";
+import { computed, defineComponent } from "vue";
 import { browserSupportsTouch } from "@/browser-common/lib";
 import type { Card, CardCountFunction, DeckService } from "@/core/lib";
 import { CardTypeCategory, TYPES } from "@/core/lib";

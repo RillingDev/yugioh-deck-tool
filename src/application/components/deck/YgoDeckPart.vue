@@ -42,8 +42,8 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent } from "@vue/composition-api";
+import type { PropType } from "vue";
+import { computed, defineComponent } from "vue";
 import type { Card, DeckPart, DeckPartConfig, DeckService } from "@/core/lib";
 import { DefaultDeckPartConfig, getLogger, TYPES } from "@/core/lib";
 import Draggable from "vuedraggable";

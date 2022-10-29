@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
+import { defineComponent, ref } from "vue";
 import type { Deck, DeckUriEncodingService } from "@/core/lib";
 import { getLogger, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";

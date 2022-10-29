@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from "@vue/composition-api";
-import { defineComponent, reactive } from "@vue/composition-api";
+import type { PropType } from "vue";
+import { defineComponent, reactive } from "vue";
 import type { SortingOptions } from "@/core/lib";
 import { SortingOrder, SortingStrategy } from "@/core/lib";
 import { clone } from "lodash";

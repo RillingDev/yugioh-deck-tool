@@ -1,6 +1,6 @@
 import { throttle } from "lodash";
-import type { Ref } from "@vue/composition-api";
-import { computed, ref, watch } from "@vue/composition-api";
+import type { Ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 const SCROLL_THROTTLE_TIMEOUT = 100;
 

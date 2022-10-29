@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, readonly } from "@vue/composition-api";
+import { computed, defineComponent, readonly } from "vue";
 
 import VSelect from "vue-select";
 import { FORMAT_UPDATE } from "../../store/modules/format";

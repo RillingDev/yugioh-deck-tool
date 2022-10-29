@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "vue";
 import { DECK_CLEAR } from "../../../store/modules/deck";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { useStore } from "../../../store/store";

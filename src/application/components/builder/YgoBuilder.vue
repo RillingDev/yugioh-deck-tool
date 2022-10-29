@@ -39,8 +39,8 @@ import { SortingOrder, SortingStrategy, TYPES } from "@/core/lib";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
-import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent, ref } from "@vue/composition-api";
+import type { PropType } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { BSidebar } from "bootstrap-vue";
 import { useStore } from "../../store/store";
 

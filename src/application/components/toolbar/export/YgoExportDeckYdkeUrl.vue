@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent } from "vue";
 import type { DeckUriEncodingService } from "@/core/lib";
 import { getLogger, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";

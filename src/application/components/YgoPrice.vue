@@ -50,8 +50,8 @@ import type {
 	Vendor,
 } from "@/core/lib";
 import { DEFAULT_VENDOR_ARR, TYPES } from "@/core/lib";
-import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent, ref } from "@vue/composition-api";
+import type { PropType } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { BTooltip } from "bootstrap-vue";
 
 const priceService = applicationContainer.get<PriceService>(TYPES.PriceService);

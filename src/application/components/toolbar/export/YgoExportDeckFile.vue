@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent } from "vue";
 import { DeckFileService, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";

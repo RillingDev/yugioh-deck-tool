@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from "@vue/composition-api";
-import { computed, defineComponent } from "@vue/composition-api";
+import type { PropType } from "vue";
+import { computed, defineComponent } from "vue";
 import type { Card } from "@/core/lib";
 import type { ResourceService } from "@/ygoprodeck/lib";
 import { YGOPRODECK_TYPES } from "@/ygoprodeck/lib";

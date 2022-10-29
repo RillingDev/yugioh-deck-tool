@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent } from "vue";
 import { applicationContainer } from "../../../inversify.config";
 import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";

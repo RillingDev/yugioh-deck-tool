@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "vue";
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../composition/io/downloadFile";

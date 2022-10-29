@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "vue";
 import { DECK_SHUFFLE } from "../../../store/modules/deck";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { useStore } from "../../../store/store";

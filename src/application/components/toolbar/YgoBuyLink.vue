@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "vue";
 import type { DeckExportService, EnvironmentConfig } from "@/core/lib";
 import { Environment, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../inversify.config";

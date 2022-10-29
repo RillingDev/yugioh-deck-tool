@@ -1,4 +1,4 @@
-import type { SetupContext } from "@vue/composition-api";
+import type { SetupContext } from "vue";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -7,13 +7,15 @@ const showFeedback = (
 	message: string,
 	cssClass: string,
 	variant: string
-): void =>
-	context.root.$bvToast.toast(message, {
-		variant: variant,
-		noCloseButton: true,
-		solid: true,
-		toastClass: cssClass,
-	});
+): void => {
+	// TODO
+	// context.root.$bvToast.toast(message, {
+	// 	variant: variant,
+	// 	noCloseButton: true,
+	// 	solid: true,
+	// 	toastClass: cssClass,
+	// });
+};
 
 export const showInfo = (
 	context: SetupContext<any>,

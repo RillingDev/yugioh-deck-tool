@@ -18,7 +18,7 @@
 <script lang="ts">
 import type { CardCountFunction } from "@/core/lib";
 import { getLogger } from "@/core/lib";
-import { computed, defineComponent, ref, watch } from "@vue/composition-api";
+import { computed, defineComponent, ref, watch } from "vue";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError } from "../../composition/feedback";

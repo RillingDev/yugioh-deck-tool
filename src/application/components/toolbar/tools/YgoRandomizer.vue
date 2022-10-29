@@ -42,7 +42,7 @@ import { RandomizationStrategy, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
 import { DECK_REPLACE } from "../../../store/modules/deck";
-import { computed, defineComponent, readonly, ref } from "@vue/composition-api";
+import { computed, defineComponent, readonly, ref } from "vue";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
 import { useStore } from "../../../store/store";

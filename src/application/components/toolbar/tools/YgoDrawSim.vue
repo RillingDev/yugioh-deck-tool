@@ -49,7 +49,7 @@ import type { Card, Deck, DeckService } from "@/core/lib";
 import { DeckPart, TYPES } from "@/core/lib";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
-import { computed, defineComponent, ref } from "@vue/composition-api";
+import { computed, defineComponent, ref } from "vue";
 import { useStore } from "../../../store/store";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);

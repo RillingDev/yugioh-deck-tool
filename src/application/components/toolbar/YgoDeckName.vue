@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "vue";
 import { DECK_NAME_UPDATE } from "../../store/modules/deck";
 import { useStore } from "../../store/store";
 import { useId } from "@/application/composition/id";

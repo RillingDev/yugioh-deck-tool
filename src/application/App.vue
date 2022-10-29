@@ -20,7 +20,7 @@ import { getLogger, TYPES } from "@/core/lib";
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
 import { DECK_REPLACE } from "./store/modules/deck";
-import { computed, defineComponent, onMounted } from "@vue/composition-api";
+import { computed, defineComponent, onMounted } from "vue";
 import { BOverlay } from "bootstrap-vue";
 import { showError } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";

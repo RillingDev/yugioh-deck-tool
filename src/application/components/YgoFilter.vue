@@ -209,14 +209,8 @@ import {
 	Environment,
 	TYPES,
 } from "@/core/lib";
-import type { PropType } from "@vue/composition-api";
-import {
-	computed,
-	defineComponent,
-	reactive,
-	readonly,
-	watch,
-} from "@vue/composition-api";
+import type { PropType } from "vue";
+import { computed, defineComponent, reactive, readonly, watch } from "vue";
 import { clone } from "lodash";
 
 import VSelect from "vue-select";

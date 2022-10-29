@@ -26,7 +26,6 @@
 		"test": "vue-cli-service test:unit"
 	},
 	"dependencies": {
-		"@vue/composition-api": "^1.7.0",
 		"axios": "^0.27.2",
 		"base64-js": "^1.5.1",
 		"bootstrap": "^4.6.1",
@@ -41,7 +40,7 @@
 		"pako": "^2.0.4",
 		"reflect-metadata": "^0.1.13",
 		"tippy.js": "^6.3.7",
-		"vue": "~2.6.14",
+		"vue": "^2.7.13",
 		"vue-select": "^3.18.3",
 		"vuedraggable": "github:FelixRilling/Vue.Draggable#fb1243deb651bc3d97f9df71834d0aeab98e4dd2",
 		"vuex": "^3.6.2"
@@ -76,6 +75,6 @@
 		"ts-jest": "^27.0.4",
 		"ts-mockito": "^2.6.1",
 		"typescript": "~4.7.4",
-		"vue-template-compiler": "~2.6.14"
+		"vue-template-compiler": "^2.7.13"
 	}
 }
