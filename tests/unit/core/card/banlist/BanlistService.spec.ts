@@ -3,12 +3,8 @@ import "reflect-metadata";
 import { createCard } from "../../../helper/dataFactories";
 import { Container } from "inversify";
 import type { BanlistService } from "@/core/lib";
-import { baseModule } from "@/core/lib";
-import { TYPES } from "@/core/lib";
-import { Format } from "@/core/lib";
-import { DefaultBanState } from "@/core/lib";
-import type { CardDataLoaderService } from "@/core/lib";
-import { MockDataLoaderService } from "../../../helper/MockDataLoaderService";
+import { baseModule, DefaultBanState, Format, TYPES } from "@/core/lib";
+import { MockCardDatabase } from "../../../helper/MockCardDatabase";
 
 describe("BanlistService", () => {
 	let banlistService: BanlistService;
@@ -17,8 +13,8 @@ describe("BanlistService", () => {
 		const container = new Container();
 		container.load(baseModule);
 		container
-			.bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
-			.to(MockDataLoaderService);
+			.bind<MockCardDatabase>(TYPES.CardDatabase)
+			.to(MockCardDatabase);
 
 		banlistService = container.get<BanlistService>(TYPES.BanlistService);
 	});

@@ -1,22 +1,16 @@
 import { inject, injectable } from "inversify";
-import { TYPES } from "../types";
-import { CardDataLoaderService } from "./CardDataLoaderService";
-import type { Card } from "./Card";
-import type { CardSet } from "./set/CardSet";
-import type { CardDatabase } from "./CardDatabase";
-import { FindCardBy } from "./CardDatabase";
-import type { CardType } from "./type/CardType";
-import { CardTypeCategory } from "./type/CardTypeCategory";
-import type { UnlinkedCard } from "./UnlinkedCard";
+import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
+import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
+import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
 import { deepFreeze } from "lightdash";
-import { getLogger } from "../logger";
-import type { CardSetAppearance } from "./UnlinkedCard";
+import { YGOPRODECK_INTERNAL_TYPES } from "@/ygoprodeck/types";
+import { YgoprodeckCardDataLoaderService } from "@/ygoprodeck/api/YgoprodeckCardDataLoaderService";
 
 @injectable()
-export class MemoryCardDatabase implements CardDatabase {
-	private static readonly logger = getLogger(MemoryCardDatabase);
+export class YgoprodeckCardDatabase implements CardDatabase {
+	private static readonly logger = getLogger(YgoprodeckCardDatabase);
 
-	readonly #cardDataLoaderService: CardDataLoaderService;
+	readonly #cardDataLoaderService: YgoprodeckCardDataLoaderService;
 
 	#loadingSets: Promise<void> | null;
 	#loadingArchetypes: Promise<void> | null;
@@ -34,8 +28,8 @@ export class MemoryCardDatabase implements CardDatabase {
 	readonly #levels: number[];
 
 	constructor(
-		@inject(TYPES.CardDataLoaderService)
-		cardDataLoaderService: CardDataLoaderService
+		@inject(YGOPRODECK_INTERNAL_TYPES.CardDataLoaderService)
+		cardDataLoaderService: YgoprodeckCardDataLoaderService
 	) {
 		this.#cardDataLoaderService = cardDataLoaderService;
 
@@ -167,7 +161,7 @@ export class MemoryCardDatabase implements CardDatabase {
 				.then((archetypes) => {
 					this.#archetypes.push(...archetypes);
 					deepFreeze(this.#archetypes);
-					MemoryCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.logger.debug(
 						"Registered archetypes.",
 						this.#archetypes
 					);
@@ -183,7 +177,7 @@ export class MemoryCardDatabase implements CardDatabase {
 				.then((cardSets) => {
 					this.#sets.push(...cardSets);
 					deepFreeze(this.#sets);
-					MemoryCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.logger.debug(
 						"Registered sets.",
 						this.#sets
 					);
@@ -208,7 +202,7 @@ export class MemoryCardDatabase implements CardDatabase {
 						cardSubTypes.push(...cardValues[typeCategory].subTypes);
 						deepFreeze(cardSubTypes);
 					}
-					MemoryCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.logger.debug(
 						"Registered types and sub-types.",
 						this.#types,
 						this.#subTypes
@@ -228,7 +222,7 @@ export class MemoryCardDatabase implements CardDatabase {
 						...cardValues[CardTypeCategory.MONSTER].linkMarkers
 					);
 					deepFreeze(this.#linkMarkers);
-					MemoryCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.logger.debug(
 						"Registered monster values.",
 						this.#attributes,
 						this.#levels,
@@ -257,7 +251,7 @@ export class MemoryCardDatabase implements CardDatabase {
 			deepFreeze(card);
 			this.#cardsByPasscode.set(card.passcode, card);
 			this.#cardsByName.set(card.name, card);
-			MemoryCardDatabase.logger.trace(
+			YgoprodeckCardDatabase.logger.trace(
 				`Registered card '${card.passcode}'.`
 			);
 		}
@@ -296,13 +290,13 @@ export class MemoryCardDatabase implements CardDatabase {
 		return setAppearances
 			.map((setAppearance) => {
 				if (!setCache.has(setAppearance.name)) {
-					MemoryCardDatabase.logger.warn(
+					YgoprodeckCardDatabase.logger.warn(
 						`Could not find set '${setAppearance.name}'.`
 					);
 					return null;
 				}
 				const matchingSet = setCache.get(setAppearance.name)!;
-				MemoryCardDatabase.logger.trace(
+				YgoprodeckCardDatabase.logger.trace(
 					`Matched set ${setAppearance.name} to ${matchingSet.name}.`
 				);
 				return matchingSet;
@@ -315,7 +309,7 @@ export class MemoryCardDatabase implements CardDatabase {
 			throw new TypeError(`Could not find type '${typeName}'.`);
 		}
 		const matchingType = typeCache.get(typeName)!;
-		MemoryCardDatabase.logger.trace(
+		YgoprodeckCardDatabase.logger.trace(
 			`Matched type ${typeName} to ${matchingType.name}.`
 		);
 		return matchingType;

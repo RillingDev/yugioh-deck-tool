@@ -1,18 +1,16 @@
 import "reflect-metadata";
-
-import { MemoryCardDatabase } from "@/core/card/MemoryCardDatabase";
 import { createCard } from "../../helper/dataFactories";
-import { bindMock } from "../../helper/bindMock";
 import { when } from "ts-mockito";
 import { Container } from "inversify";
-import type { DeckUriEncodingService } from "@/core/lib";
-import type { CardDatabase } from "@/core/lib";
-import { FindCardBy } from "@/core/lib";
-import { baseModule, deckModule } from "@/core/lib";
-import { TYPES } from "@/core/lib";
-import { DeckPart } from "@/core/lib";
-import type { CardDataLoaderService } from "@/core/lib";
-import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
+import type { CardDatabase, DeckUriEncodingService } from "@/core/lib";
+import {
+	baseModule,
+	deckModule,
+	DeckPart,
+	FindCardBy,
+	TYPES,
+} from "@/core/lib";
+import { MockCardDatabase } from "../../helper/MockCardDatabase";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;
@@ -23,14 +21,8 @@ describe("DeckUriEncodingService", () => {
 		const container = new Container();
 		container.load(baseModule, deckModule);
 		container
-			.bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
-			.to(MockDataLoaderService);
-
-		mockCardDatabase = bindMock<CardDatabase>(
-			container,
-			TYPES.CardDatabase,
-			MemoryCardDatabase
-		);
+			.bind<MockCardDatabase>(TYPES.CardDatabase)
+			.to(MockCardDatabase);
 
 		deckUriEncodingService = container.get<DeckUriEncodingService>(
 			TYPES.DeckUriEncodingService

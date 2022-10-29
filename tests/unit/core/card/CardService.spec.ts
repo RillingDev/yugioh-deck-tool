@@ -2,11 +2,9 @@ import "reflect-metadata";
 
 import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
-import { baseModule } from "@/core/lib";
 import type { CardService } from "@/core/lib";
-import { TYPES } from "@/core/lib";
-import type { CardDataLoaderService } from "@/core/lib";
-import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
+import { baseModule, TYPES } from "@/core/lib";
+import { MockCardDatabase } from "../../helper/MockCardDatabase";
 
 describe("CardService", () => {
 	let cardService: CardService;
@@ -15,8 +13,8 @@ describe("CardService", () => {
 		const container = new Container();
 		container.load(baseModule);
 		container
-			.bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
-			.to(MockDataLoaderService);
+			.bind<MockCardDatabase>(TYPES.CardDatabase)
+			.to(MockCardDatabase);
 
 		cardService = container.get<CardService>(TYPES.CardService);
 	});

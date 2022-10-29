@@ -9,7 +9,6 @@ export { EnvironmentConfig } from "./EnvironmentConfig";
 export type { Card } from "./card/Card";
 export type { CardImage } from "./card/CardImage";
 export type { CardPrices } from "./card/CardPrices";
-export type { UnlinkedCard, CardSetAppearance } from "./card/UnlinkedCard";
 export type { BanlistInfo } from "./card/banlist/BanlistInfo";
 export type { BanState } from "./card/banlist/BanState";
 export {
@@ -33,7 +32,6 @@ export { DefaultVendor, DEFAULT_VENDOR_ARR } from "./price/Vendor";
 
 export { HttpService } from "./http/HttpService";
 export { CardDatabase } from "./card/CardDatabase";
-export { CardDataLoaderService } from "./card/CardDataLoaderService";
 export { FindCardBy } from "./card/CardDatabase";
 export { CardService } from "./card/CardService";
 export type { PriceLookupResult } from "./price/PriceService";

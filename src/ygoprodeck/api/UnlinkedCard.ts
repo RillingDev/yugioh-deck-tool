@@ -1,8 +1,10 @@
-import type { CardImage } from "./CardImage";
-import type { CardPrices } from "./CardPrices";
-import type { Format } from "./format/Format";
-import type { ReleaseInfo } from "./ReleaseInfo";
-import type { BanlistInfo } from "./banlist/BanlistInfo";
+import type {
+	CardImage,
+	CardPrices,
+	Format,
+	ReleaseInfo,
+	BanlistInfo,
+} from "@/core/lib";
 
 /**
  * @see CardLinkingService

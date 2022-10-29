@@ -2,35 +2,25 @@ import "reflect-metadata";
 
 import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
-import { bindMock } from "../../helper/bindMock";
-import { baseModule } from "@/core/lib";
-import { TYPES } from "@/core/lib";
 import type { SortingService } from "@/core/lib";
-import { SortingOrder, SortingStrategy } from "@/core/lib";
-import type { CardDatabase } from "@/core/lib";
-import { MemoryCardDatabase } from "@/core/card/MemoryCardDatabase";
-import { Format } from "@/core/lib";
-import type { CardDataLoaderService } from "@/core/lib";
-import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
+import {
+	baseModule,
+	Format,
+	SortingOrder,
+	SortingStrategy,
+	TYPES,
+} from "@/core/lib";
+import { MockCardDatabase } from "../../helper/MockCardDatabase";
 
 describe("SortingService", () => {
 	let sortingService: SortingService;
-
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	let mockCardDatabase: CardDatabase;
 
 	beforeEach(() => {
 		const container = new Container();
 		container.load(baseModule);
 		container
-			.bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
-			.to(MockDataLoaderService);
-
-		mockCardDatabase = bindMock<CardDatabase>(
-			container,
-			TYPES.CardDatabase,
-			MemoryCardDatabase
-		);
+			.bind<MockCardDatabase>(TYPES.CardDatabase)
+			.to(MockCardDatabase);
 
 		sortingService = container.get<SortingService>(TYPES.SortingService);
 	});

@@ -4,18 +4,18 @@ import { createCard } from "../../helper/dataFactories";
 import { Container } from "inversify";
 import { anything, when } from "ts-mockito";
 import { bindMock } from "../../helper/bindMock";
-import { CardService } from "@/core/lib";
-import type { FilterService } from "@/core/lib";
-import { baseModule } from "@/core/lib";
-import { BanlistService } from "@/core/lib";
-import { TYPES } from "@/core/lib";
-import { CardTypeCategory } from "@/core/lib";
-import { DeckPart } from "@/core/lib";
-import { Format } from "@/core/lib";
-import { DefaultBanState } from "@/core/lib";
-import type { CardDataLoaderService } from "@/core/lib";
-import { MockDataLoaderService } from "../../helper/MockDataLoaderService";
-import type { CardPredicate } from "@/core/lib";
+import type { CardPredicate, FilterService } from "@/core/lib";
+import {
+	BanlistService,
+	baseModule,
+	CardService,
+	CardTypeCategory,
+	DeckPart,
+	DefaultBanState,
+	Format,
+	TYPES,
+} from "@/core/lib";
+import { MockCardDatabase } from "../../helper/MockCardDatabase";
 
 describe("FilterService", () => {
 	let filterService: FilterService;
@@ -27,8 +27,8 @@ describe("FilterService", () => {
 		const container = new Container();
 		container.load(baseModule);
 		container
-			.bind<CardDataLoaderService>(TYPES.CardDataLoaderService)
-			.to(MockDataLoaderService);
+			.bind<MockCardDatabase>(TYPES.CardDatabase)
+			.to(MockCardDatabase);
 
 		mockCardService = bindMock<CardService>(
 			container,

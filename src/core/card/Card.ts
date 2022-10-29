@@ -7,7 +7,7 @@ import type { CardSet } from "./set/CardSet";
 import type { CardType } from "./type/CardType";
 
 /**
- * Regular card. Also see {@link UnlinkedCard}.
+ * Regular card.
  */
 export interface Card {
 	/**

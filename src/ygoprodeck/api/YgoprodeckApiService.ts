@@ -9,13 +9,7 @@ import type { RawCardValues } from "./mapping/mapCardValues";
 import { mapCardValues } from "./mapping/mapCardValues";
 import type { RawArchetype } from "./mapping/mapArchetype";
 import { mapArchetype } from "./mapping/mapArchetype";
-import type {
-	Card,
-	CardSet,
-	CardValues,
-	Format,
-	UnlinkedCard,
-} from "@/core/lib";
+import type { Card, CardSet, CardValues, Format } from "@/core/lib";
 import {
 	EncodingService,
 	Environment,
@@ -25,6 +19,7 @@ import {
 } from "@/core/lib";
 import { ResourceService } from "./ResourceService";
 import { YGOPRODECK_TYPES } from "../types";
+import type { UnlinkedCard } from "@/ygoprodeck/api/UnlinkedCard";
 
 interface CardInfoOptions {
 	readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)

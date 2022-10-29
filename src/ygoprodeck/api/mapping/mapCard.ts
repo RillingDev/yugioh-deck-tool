@@ -5,13 +5,15 @@ import type {
 	BanState,
 	CardImage,
 	CardPrices,
-	CardSetAppearance,
 	ReleaseInfo,
-	UnlinkedCard,
 	Vendor,
 } from "@/core/lib";
 import { DefaultBanState, DefaultVendor, Format } from "@/core/lib";
 import type { ResourceService } from "../ResourceService";
+import type {
+	CardSetAppearance,
+	UnlinkedCard,
+} from "@/ygoprodeck/api/UnlinkedCard";
 
 // https://jvilk.com/MakeTypes/
 export interface RawCard {

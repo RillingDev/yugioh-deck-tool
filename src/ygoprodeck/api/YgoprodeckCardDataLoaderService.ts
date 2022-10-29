@@ -1,20 +1,16 @@
 import { inject, injectable } from "inversify";
 import { YgoprodeckApiService } from "./YgoprodeckApiService";
 import { YGOPRODECK_INTERNAL_TYPES } from "../types";
-import type {
-	CardDataLoaderService,
-	CardSet,
-	CardValues,
-	UnlinkedCard,
-} from "@/core/lib";
+import type { CardSet, CardValues } from "@/core/lib";
 import { FindCardBy } from "@/core/lib";
+import type { UnlinkedCard } from "@/ygoprodeck/api/UnlinkedCard";
 
 /**
- * Implementation of {@link CardDataLoaderService} using {@link YgoprodeckApiService}.
+ * Implementation of a service loading data using {@link YgoprodeckApiService}.
  * Can be used outside ygoprodeck.com.
  */
 @injectable()
-export class YgoprodeckCardDataLoaderService implements CardDataLoaderService {
+export class YgoprodeckCardDataLoaderService {
 	readonly #ygoprodeckApiService: YgoprodeckApiService;
 
 	constructor(

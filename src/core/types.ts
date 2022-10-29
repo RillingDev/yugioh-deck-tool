@@ -4,7 +4,6 @@ export const TYPES = {
 	EncodingService: Symbol.for("EncodingService"),
 	HttpService: Symbol.for("HttpService"),
 
-	CardDataLoaderService: Symbol.for("CardDataLoaderService"),
 	CardDatabase: Symbol.for("CardDatabase"),
 	CardService: Symbol.for("CardService"),
 	CardPredicateService: Symbol.for("CardPredicateService"),
