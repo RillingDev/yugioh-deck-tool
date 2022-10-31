@@ -2,7 +2,6 @@ export const TYPES = {
 	EnvironmentConfig: Symbol.for("EnvironmentConfig"),
 
 	EncodingService: Symbol.for("EncodingService"),
-	HttpService: Symbol.for("HttpService"),
 
 	CardDatabase: Symbol.for("CardDatabase"),
 	CardService: Symbol.for("CardService"),

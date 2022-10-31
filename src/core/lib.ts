@@ -30,7 +30,6 @@ export { CardTypeCategory } from "./card/type/CardTypeCategory";
 export type { Vendor } from "./price/Vendor";
 export { DefaultVendor, DEFAULT_VENDOR_ARR } from "./price/Vendor";
 
-export { HttpService } from "./http/HttpService";
 export { CardDatabase } from "./card/CardDatabase";
 export { FindCardBy } from "./card/CardDatabase";
 export { CardService } from "./card/CardService";

@@ -7,7 +7,6 @@ import { DeckExportService } from "./deck/DeckExportService";
 import { DeckService } from "./deck/DeckService";
 import { SortingService } from "./card/SortingService";
 import { FilterService } from "./card/FilterService";
-import { HttpService } from "./http/HttpService";
 import { DeckRandomizationService } from "./deck/DeckRandomizationService";
 import { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 import { DeckFileService } from "./deck/DeckFileService";
@@ -20,7 +19,6 @@ import { EncodingService } from "./util/EncodingService";
  */
 export const baseModule = new ContainerModule((bind: interfaces.Bind) => {
 	bind<EncodingService>(TYPES.EncodingService).to(EncodingService);
-	bind<HttpService>(TYPES.HttpService).to(HttpService);
 
 	bind<CardService>(TYPES.CardService).to(CardService);
 	bind<CardPredicateService>(TYPES.CardPredicateService).to(

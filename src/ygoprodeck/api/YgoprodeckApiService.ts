@@ -14,7 +14,6 @@ import {
 	EncodingService,
 	Environment,
 	EnvironmentConfig,
-	HttpService,
 	TYPES,
 } from "@/core/lib";
 import { ResourceService } from "./ResourceService";
@@ -39,6 +38,15 @@ export interface Credentials {
 	readonly token: string;
 }
 
+type StatusValidator = (status: number) => boolean;
+
+const okStatusValidator: StatusValidator = (status) =>
+	status >= 200 && status <= 299;
+
+const cardInfoStatusValidator: StatusValidator = (status) =>
+	okStatusValidator(status) ||
+	status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES;
+
 /**
  * See YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
  */
@@ -48,16 +56,13 @@ export class YgoprodeckApiService {
 
 	// Is returned if no matching cards or an empty list should be returned.
 	// While not technically an error, the API treats it as such.
-	private static readonly HTTP_STATUS_NO_MATCHES = 400;
+	static readonly HTTP_STATUS_NO_MATCHES = 400;
 
 	readonly #environmentConfig: EnvironmentConfig;
-	readonly #httpService: HttpService;
 	readonly #encodingService: EncodingService;
 	readonly #resourceService: ResourceService;
 
 	constructor(
-		@inject(TYPES.HttpService)
-		httpService: HttpService,
 		@inject(TYPES.EnvironmentConfig)
 		environmentConfig: EnvironmentConfig,
 		@inject(TYPES.EncodingService)
@@ -66,7 +71,6 @@ export class YgoprodeckApiService {
 		resourceService: ResourceService
 	) {
 		this.#environmentConfig = environmentConfig;
-		this.#httpService = httpService;
 		this.#encodingService = encodingService;
 		this.#resourceService = resourceService;
 	}
@@ -74,17 +78,13 @@ export class YgoprodeckApiService {
 	async getSingleCard(
 		options: CardInfoOptions
 	): Promise<UnlinkedCard | null> {
-		const response = await this.#httpService.get<{ data: RawCard[] }>(
-			"cardinfo.php",
-			{
-				baseURL: this.#getBaseUrl(),
-				params: this.#createCardInfoParams(options),
-				headers: this.#createAuthHeaders(options),
-				timeout: 5000,
-				responseType: "json",
-				validateStatus: this.#createCardInfoStatusValidator(),
-			}
-		);
+		const url = new URL("cardinfo.php", this.#getBaseUrl());
+		this.#putCardInfoParams(url.searchParams, options);
+
+		const response = await this.#get<{ data: RawCard[] }>(url, {
+			headers: this.#createAuthHeaders(options),
+			validateStatus: cardInfoStatusValidator,
+		});
 		if (response.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES) {
 			return null;
 		}
@@ -94,25 +94,27 @@ export class YgoprodeckApiService {
 	}
 
 	async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
-		const params = this.#createCardInfoParams(options);
+		const urlBase = new URL("cardinfo.php", this.#getBaseUrl());
+		this.#putCardInfoParams(urlBase.searchParams, options);
+		urlBase.searchParams.set(
+			"num",
+			YgoprodeckApiService.CHUNK_SIZE.toString()
+		);
+
 		const authHeaders = this.#createAuthHeaders(options);
 
 		const responseData = await this.#loadPaginated<RawCard>(
 			async (offset) => {
-				const response = await this.#httpService.get<
-					PaginatedResponse<RawCard[]>
-				>("cardinfo.php", {
-					baseURL: this.#getBaseUrl(),
-					params: {
-						...params,
-						num: YgoprodeckApiService.CHUNK_SIZE,
-						offset,
-					},
-					headers: authHeaders,
-					timeout: 10000,
-					responseType: "json",
-					validateStatus: this.#createCardInfoStatusValidator(),
-				});
+				const url = new URL(urlBase);
+				url.searchParams.set("offset", offset.toString());
+
+				const response = await this.#get<PaginatedResponse<RawCard[]>>(
+					url,
+					{
+						headers: authHeaders,
+						validateStatus: cardInfoStatusValidator,
+					}
+				);
 				if (
 					response.status ===
 					YgoprodeckApiService.HTTP_STATUS_NO_MATCHES
@@ -128,88 +130,79 @@ export class YgoprodeckApiService {
 		);
 	}
 
-	#createCardInfoParams(options: CardInfoOptions): Record<string, string> {
-		const params: Record<string, string> = {};
-		params.misc = "yes"; // Always needed
+	#putCardInfoParams(
+		params: URLSearchParams,
+		options: CardInfoOptions
+	): void {
+		params.set("misc", "yes"); // Always needed
 		if (options.includeAliased) {
-			params.includeAliased = "yes";
+			params.set("includeAliased", "yes");
 		}
-		if (options.format != null) {
-			params.format = String(options.format).toLowerCase();
-		} else {
-			params.format = "all";
-		}
+		const format =
+			options.format != null
+				? String(options.format).toLowerCase()
+				: "all";
+		params.set("format", format);
 		if (options.passcode != null) {
-			params.id = options.passcode;
+			params.set("id", options.passcode);
 		}
 		if (options.fuzzyName != null) {
-			params.fname = options.fuzzyName;
+			params.set("fname", options.fuzzyName);
 		}
 		if (options.sorting != null) {
-			params.sort = options.sorting;
+			params.set("sort", options.sorting);
 		}
 		if (options.auth != null) {
 			// If authorization is used, a somewhat unique value is required to ensure no caching is done server-side
-			params.cachebust = String(Date.now());
+			params.set("cachebust", String(Date.now()));
 		}
-		return params;
 	}
 
 	async getCardSets(): Promise<CardSet[]> {
-		const response = await this.#httpService.get<RawCardSet[]>(
-			"cardsets.php",
-
+		const response = await this.#get<RawCardSet[]>(
+			new URL("cardsets.php", this.#getBaseUrl()),
 			{
-				baseURL: this.#getBaseUrl(),
-				timeout: 10000,
-				responseType: "json",
+				headers: {},
+				validateStatus: okStatusValidator,
 			}
 		);
 		return response.data.map(mapCardSet);
 	}
 
 	async getCardValues(): Promise<CardValues> {
-		const response = await this.#httpService.get<RawCardValues>(
-			"cardvalues.php",
+		const response = await this.#get<RawCardValues>(
+			new URL("cardvalues.php", this.#getBaseUrl()),
 			{
-				baseURL: this.#getBaseUrl(),
-				timeout: 10000,
-				responseType: "json",
+				headers: {},
+				validateStatus: okStatusValidator,
 			}
 		);
 		return mapCardValues(response.data);
 	}
 
 	async getArchetypes(): Promise<string[]> {
-		const response = await this.#httpService.get<RawArchetype[]>(
-			"archetypes.php",
+		const response = await this.#get<RawArchetype[]>(
+			new URL("archetypes.php", this.#getBaseUrl()),
 			{
-				baseURL: this.#getBaseUrl(),
-				timeout: 10000,
-				responseType: "json",
+				headers: {},
+				validateStatus: okStatusValidator,
 			}
 		);
 		return response.data.map(mapArchetype);
 	}
 
 	async updateViews(card: Card): Promise<void> {
-		await this.#httpService.get<void>("card/updateViews.php", {
-			baseURL: "https://ygoprodeck.com/api/", // Special internal endpoint
-			timeout: 3000,
-			responseType: "text",
-			params: {
-				card: card.passcode,
-			},
-		});
-	}
+		// Special internal endpoint
+		const url = new URL(
+			"card/updateViews.php",
+			"https://ygoprodeck.com/api/"
+		);
+		url.searchParams.set("card", card.passcode);
 
-	#getBaseUrl(): string {
-		if (
-			this.#environmentConfig.getEnvironment() == Environment.YGOPRODECK
-		) {
-			return "https://db.ygoprodeck.com/api_internal/v7/";
-		}
-		return "https://db.ygoprodeck.com/api/v7/";
+		await this.#get<void>(url, {
+			headers: {},
+			validateStatus: okStatusValidator,
+		});
 	}
 
 	async #loadPaginated<T>(
@@ -249,9 +242,35 @@ export class YgoprodeckApiService {
 		};
 	}
 
-	#createCardInfoStatusValidator(): (status: number) => boolean {
-		return (status) =>
-			(status >= 200 && status <= 299) ||
-			status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES;
+	#getBaseUrl(): string {
+		if (
+			this.#environmentConfig.getEnvironment() == Environment.YGOPRODECK
+		) {
+			return "https://db.ygoprodeck.com/api_internal/v7/";
+		}
+		return "https://db.ygoprodeck.com/api/v7/";
+	}
+
+	async #get<T>(
+		url: URL,
+		config: {
+			headers: Record<string, string>;
+			validateStatus: (status: number) => boolean;
+		}
+	): Promise<{
+		data: T;
+		status: number;
+	}> {
+		const res = await fetch(url, {
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				...config.headers,
+			},
+		});
+		if (!config.validateStatus(res.status)) {
+			throw new Error(`Unexpected status code: ${res.status}`);
+		}
+		return { data: await res.json(), status: res.status };
 	}
 }
