@@ -1,6 +1,5 @@
 import "reflect-metadata";
-import { HttpService } from "@/core/http/HttpService";
-import { anyString, anything, verify, when } from "ts-mockito";
+import { when } from "ts-mockito";
 import { createCard } from "../../helper/dataFactories";
 import { bindMock } from "../../helper/bindMock";
 import { Container } from "inversify";
@@ -18,7 +17,6 @@ describe("DeckFileService", () => {
 	let deckFileService: DeckFileService;
 
 	let mockCardDatabase: CardDatabase;
-	let mockHttpService: HttpService;
 
 	beforeEach(() => {
 		const container = new Container();
@@ -28,11 +26,6 @@ describe("DeckFileService", () => {
 			container,
 			TYPES.CardDatabase,
 			MockCardDatabase
-		);
-		mockHttpService = bindMock<HttpService>(
-			container,
-			TYPES.HttpService,
-			HttpService
 		);
 
 		deckFileService = container.get<DeckFileService>(TYPES.DeckFileService);
@@ -196,68 +189,6 @@ describe("DeckFileService", () => {
 			});
 			expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
 			expect(result.deck.parts[DeckPart.MAIN]).toContain(card);
-		});
-	});
-
-	describe("fromRemoteFile", () => {
-		it("errors for different origin", async () => {
-			try {
-				await deckFileService.fromRemoteFile(
-					new URL("https://example.com"),
-					new URL("https://attacker.website.hax/foo/bar.ydk")
-				);
-				fail("Promise did not reject.");
-			} catch (e) {
-				expect((e as Error).message).toBe(
-					"Decks can only be loaded from the same origin."
-				);
-			}
-
-			verify(mockHttpService.get(anyString(), anything())).never();
-		});
-
-		it("loads name from path", async () => {
-			when(mockHttpService.get(anyString(), anything())).thenResolve({
-				config: {},
-				data: "deck file content",
-				status: 200,
-				statusText: "status",
-				headers: {},
-			});
-
-			const result = await deckFileService.fromRemoteFile(
-				new URL("https://example.com"),
-				new URL("https://example.com/foo/bar.ydk")
-			);
-			expect(result.deck.name).toBe("bar");
-		});
-
-		it("loads deck", async () => {
-			const fileContent = `
-#main
-123`;
-			const card = createCard({ passcode: "123" });
-			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card);
-			when(mockHttpService.get(anyString(), anything())).thenResolve({
-				config: {},
-				data: fileContent,
-				status: 200,
-				statusText: "status",
-				headers: {},
-			});
-
-			const result = await deckFileService.fromRemoteFile(
-				new URL("https://example.com"),
-				new URL("https://example.com/foo/bar.ydk")
-			);
-			expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
-			expect(result.deck.parts[DeckPart.MAIN]).toContain(card);
-			expect(result.missing.length).toBe(0);
 		});
 	});
 

@@ -5,7 +5,6 @@ import { CardDatabase, FindCardBy } from "../card/CardDatabase";
 
 import { DeckService } from "./DeckService";
 import { DECK_PART_ARR } from "./DeckPart";
-import { HttpService } from "../http/HttpService";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 
 export interface ImportResult {
@@ -20,21 +19,17 @@ interface DeckFile {
 
 @injectable()
 export class DeckFileService {
-	readonly #httpService: HttpService;
 	readonly #cardDatabase: CardDatabase;
 	readonly #deckService: DeckService;
 
 	public static readonly DECK_FILE_MIME_TYPE = "text/ydk";
 
 	constructor(
-		@inject(TYPES.HttpService)
-		httpService: HttpService,
 		@inject(TYPES.CardDatabase)
 		cardDatabase: CardDatabase,
 		@inject(TYPES.DeckService)
 		deckService: DeckService
 	) {
-		this.#httpService = httpService;
 		this.#deckService = deckService;
 		this.#cardDatabase = cardDatabase;
 	}
@@ -46,6 +41,7 @@ export class DeckFileService {
 	 * @param remoteUrl URL to load from, MUST be the same origin as currentOrigin.
 	 * @throws Error if origins do not match.
 	 * @return Loaded deck.
+	 * @deprecated
 	 */
 	async fromRemoteFile(
 		currentUrl: URL,
@@ -56,16 +52,17 @@ export class DeckFileService {
 		}
 
 		const fileName = this.#getFileNameFromUrl(remoteUrl);
-		const response = await this.#httpService.get<string>(
-			remoteUrl.toString(),
-			{
-				responseType: "text",
-				timeout: 5000,
+		const fileContent = await fetch(remoteUrl, {
+			method: "GET",
+		}).then((res) => {
+			if (res.status != 200) {
+				throw new Error(`Unexpected status code: ${res.status}`);
 			}
-		);
+			return res.text();
+		});
 		return this.fromFile({
 			fileName,
-			fileContent: response.data,
+			fileContent,
 		});
 	}
 
