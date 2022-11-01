@@ -43,10 +43,6 @@ type StatusValidator = (status: number) => boolean;
 const okStatusValidator: StatusValidator = (status) =>
 	status >= 200 && status <= 299;
 
-const cardInfoStatusValidator: StatusValidator = (status) =>
-	okStatusValidator(status) ||
-	status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES;
-
 /**
  * See YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
  */
@@ -56,7 +52,7 @@ export class YgoprodeckApiService {
 
 	// Is returned if no matching cards or an empty list should be returned.
 	// While not technically an error, the API treats it as such.
-	static readonly HTTP_STATUS_NO_MATCHES = 400;
+	private static readonly HTTP_STATUS_NO_MATCHES = 400;
 
 	readonly #environmentConfig: EnvironmentConfig;
 	readonly #encodingService: EncodingService;
@@ -83,7 +79,9 @@ export class YgoprodeckApiService {
 
 		const response = await this.#get<{ data: RawCard[] }>(url, {
 			headers: this.#createAuthHeaders(options),
-			validateStatus: cardInfoStatusValidator,
+			validateStatus: (status) =>
+				okStatusValidator(status) ||
+				status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES,
 		});
 		if (response.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES) {
 			return null;
@@ -112,7 +110,10 @@ export class YgoprodeckApiService {
 					url,
 					{
 						headers: authHeaders,
-						validateStatus: cardInfoStatusValidator,
+						validateStatus: (status) =>
+							okStatusValidator(status) ||
+							status ===
+								YgoprodeckApiService.HTTP_STATUS_NO_MATCHES,
 					}
 				);
 				if (
@@ -193,16 +194,15 @@ export class YgoprodeckApiService {
 
 	async updateViews(card: Card): Promise<void> {
 		// Special internal endpoint
-		const url = new URL(
-			"card/updateViews.php",
-			"https://ygoprodeck.com/api/"
-		);
+		const url = new URL("https://ygoprodeck.com/api/card/updateViews.php");
 		url.searchParams.set("card", card.passcode);
 
-		await this.#get<void>(url, {
-			headers: {},
-			validateStatus: okStatusValidator,
+		const res = await fetch(url, {
+			method: "GET",
 		});
+		if (!okStatusValidator(res.status)) {
+			throw new Error(`Unexpected status code: ${res.status}`);
+		}
 	}
 
 	async #loadPaginated<T>(
