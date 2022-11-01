@@ -65,6 +65,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			this.#loadCardValues(),
 			this.#loadArchetypes(),
 		]);
+
 		await this.#loadAllCards();
 	}
 
@@ -73,7 +74,12 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		findCardBy: FindCardBy
 	): Promise<string | null> {
 		await Promise.all([this.#loadSets(), this.#loadCardValues()]);
-		return await this.#loadCard(cardKey, findCardBy);
+
+		const card = await this.#loadCard(cardKey, findCardBy);
+		if (card == null) {
+			return null;
+		}
+		return findCardBy == FindCardBy.NAME ? card.name : card.passcode;
 	}
 
 	hasCard(cardKey: string, findCardBy: FindCardBy): boolean {
@@ -116,46 +122,30 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return this.#linkMarkers;
 	}
 
-	/**
-	 * Loads a single card.
-	 *
-	 * @return The resolved version of the card key to be used for further lookups.
-	 */
 	async #loadCard(
 		cardKey: string,
 		findCardBy: FindCardBy
-	): Promise<string | null> {
-		let card: UnlinkedCard | Card | null;
-		if (this.hasCard(cardKey, findCardBy)) {
-			card = this.getCard(cardKey, findCardBy)!;
-		} else {
-			card = await this.#loadCardImpl(cardKey, findCardBy);
-			if (card != null) {
-				this.#registerCards([card]);
+	): Promise<Card | null> {
+		if (!this.hasCard(cardKey, findCardBy)) {
+			let loadedCard;
+			if (findCardBy == FindCardBy.PASSCODE) {
+				loadedCard = await this.#ygoprodeckApiService.getSingleCard({
+					passcode: cardKey,
+					includeAliased: true, // Include alternate artworks IDs as well.
+				});
+			} else {
+				loadedCard = await this.#ygoprodeckApiService.getSingleCard({
+					fuzzyName: cardKey, // fuzzy name matching, so we get the most similar match instead of an exact match.
+					sorting: "relevance",
+					includeAliased: false,
+				});
+			}
+
+			if (loadedCard != null) {
+				this.#registerCards([loadedCard]);
 			}
 		}
-		if (card == null) {
-			return null;
-		}
-		return findCardBy == FindCardBy.NAME ? card.name : card.passcode;
-	}
-
-	async #loadCardImpl(
-		cardKey: string,
-		findCardBy: FindCardBy
-	): Promise<UnlinkedCard | null> {
-		if (findCardBy == FindCardBy.PASSCODE) {
-			return this.#ygoprodeckApiService.getSingleCard({
-				passcode: cardKey,
-				includeAliased: true, // Include alternate artworks IDs as well.
-			});
-		} else {
-			return this.#ygoprodeckApiService.getSingleCard({
-				fuzzyName: cardKey, // fuzzy name matching, so we get the most similar match instead of an exact match.
-				sorting: "relevance",
-				includeAliased: false,
-			});
-		}
+		return this.getCard(cardKey, findCardBy)!;
 	}
 
 	async #loadAllCards(): Promise<void> {
