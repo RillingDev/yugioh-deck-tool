@@ -4,13 +4,13 @@ import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
 import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
 import { deepFreeze } from "lightdash";
 import { YGOPRODECK_INTERNAL_TYPES } from "@/ygoprodeck/types";
-import { YgoprodeckCardDataLoaderService } from "@/ygoprodeck/api/YgoprodeckCardDataLoaderService";
+import { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
 
 @injectable()
 export class YgoprodeckCardDatabase implements CardDatabase {
 	private static readonly logger = getLogger(YgoprodeckCardDatabase);
 
-	readonly #cardDataLoaderService: YgoprodeckCardDataLoaderService;
+	readonly #ygoprodeckApiService: YgoprodeckApiService;
 
 	#loadingSets: Promise<void> | null;
 	#loadingArchetypes: Promise<void> | null;
@@ -28,10 +28,10 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 	readonly #levels: number[];
 
 	constructor(
-		@inject(YGOPRODECK_INTERNAL_TYPES.CardDataLoaderService)
-		cardDataLoaderService: YgoprodeckCardDataLoaderService
+		@inject(YGOPRODECK_INTERNAL_TYPES.YgoprodeckApiService)
+		ygoprodeckApiService: YgoprodeckApiService
 	) {
-		this.#cardDataLoaderService = cardDataLoaderService;
+		this.#ygoprodeckApiService = ygoprodeckApiService;
 
 		this.#loadingSets = null;
 		this.#loadingArchetypes = null;
@@ -129,10 +129,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		if (this.hasCard(cardKey, findCardBy)) {
 			card = this.getCard(cardKey, findCardBy)!;
 		} else {
-			card = await this.#cardDataLoaderService.getCard(
-				cardKey,
-				findCardBy
-			);
+			card = await this.#loadCardImpl(cardKey, findCardBy);
 			if (card != null) {
 				this.#registerCards([card]);
 			}
@@ -143,10 +140,30 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return findCardBy == FindCardBy.NAME ? card.name : card.passcode;
 	}
 
+	async #loadCardImpl(
+		cardKey: string,
+		findCardBy: FindCardBy
+	): Promise<UnlinkedCard | null> {
+		if (findCardBy == FindCardBy.PASSCODE) {
+			return this.#ygoprodeckApiService.getSingleCard({
+				passcode: cardKey,
+				includeAliased: true, // Include alternate artworks IDs as well.
+			});
+		} else {
+			return this.#ygoprodeckApiService.getSingleCard({
+				fuzzyName: cardKey, // fuzzy name matching, so we get the most similar match instead of an exact match.
+				sorting: "relevance",
+				includeAliased: false,
+			});
+		}
+	}
+
 	async #loadAllCards(): Promise<void> {
 		if (this.#loadingAllCards == null) {
-			this.#loadingAllCards = this.#cardDataLoaderService
-				.getAllCards()
+			this.#loadingAllCards = this.#ygoprodeckApiService
+				.getCards({
+					includeAliased: true,
+				})
 				.then((cards) => this.#registerCards(cards));
 		}
 		return this.#loadingAllCards;
@@ -154,7 +171,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 	#loadArchetypes(): Promise<void> {
 		if (this.#loadingArchetypes == null) {
-			this.#loadingArchetypes = this.#cardDataLoaderService
+			this.#loadingArchetypes = this.#ygoprodeckApiService
 				.getArchetypes()
 				.then((archetypes) => {
 					this.#archetypes.push(...archetypes);
@@ -170,8 +187,8 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 	#loadSets(): Promise<void> {
 		if (this.#loadingSets == null) {
-			this.#loadingSets = this.#cardDataLoaderService
-				.getAllCardSets()
+			this.#loadingSets = this.#ygoprodeckApiService
+				.getCardSets()
 				.then((cardSets) => {
 					this.#sets.push(...cardSets);
 					deepFreeze(this.#sets);
@@ -186,7 +203,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 	async #loadCardValues(): Promise<void> {
 		if (this.#loadingCardValues == null) {
-			this.#loadingCardValues = this.#cardDataLoaderService
+			this.#loadingCardValues = this.#ygoprodeckApiService
 				.getCardValues()
 				.then((cardValues) => {
 					for (const typeCategory of Object.values(

@@ -1,6 +1,5 @@
 export const YGOPRODECK_INTERNAL_TYPES = {
 	YgoprodeckApiService: Symbol.for("YgoprodeckApiService"),
-	CardDataLoaderService: Symbol.for("CardDataLoaderService"),
 } as const;
 
 export const YGOPRODECK_TYPES = {
