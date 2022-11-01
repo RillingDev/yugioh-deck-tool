@@ -38,10 +38,14 @@ export interface Credentials {
 	readonly token: string;
 }
 
-type StatusValidator = (status: number) => boolean;
-
-const okStatusValidator: StatusValidator = (status) =>
-	status >= 200 && status <= 299;
+const assertStatusOk = (res: Response): Response => {
+	if (res.status >= 200 && res.status <= 299) {
+		return res;
+	}
+	throw new Error(
+		`Unexpected status code: ${res.status} - ${res.statusText}.`
+	);
+};
 
 /**
  * See YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
@@ -77,18 +81,22 @@ export class YgoprodeckApiService {
 		const url = new URL("cardinfo.php", this.#getBaseUrl());
 		this.#putCardInfoParams(url.searchParams, options);
 
-		const response = await this.#get<{ data: RawCard[] }>(url, {
-			headers: this.#createAuthHeaders(options),
-			validateStatus: (status) =>
-				okStatusValidator(status) ||
-				status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES,
+		const data = await this.#getJsonResponse(
+			url,
+			this.#createAuthHeaders(options)
+		).then((res) => {
+			if (res.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES) {
+				return null;
+			}
+			assertStatusOk(res);
+			return res.json() as Promise<{ data: RawCard[] }>;
 		});
-		if (response.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES) {
+
+		if (data == null) {
 			return null;
 		}
-		const responseData = response.data;
 		// If a match is found, we take the very first item (best match).
-		return mapCard(responseData.data[0], this.#resourceService);
+		return mapCard(data.data[0], this.#resourceService);
 	}
 
 	async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
@@ -101,33 +109,21 @@ export class YgoprodeckApiService {
 
 		const authHeaders = this.#createAuthHeaders(options);
 
-		const responseData = await this.#loadPaginated<RawCard>(
-			async (offset) => {
-				const url = new URL(urlBase);
-				url.searchParams.set("offset", offset.toString());
+		return this.#loadPaginated<RawCard>(async (offset) => {
+			const url = new URL(urlBase);
+			url.searchParams.set("offset", offset.toString());
 
-				const response = await this.#get<PaginatedResponse<RawCard[]>>(
-					url,
-					{
-						headers: authHeaders,
-						validateStatus: (status) =>
-							okStatusValidator(status) ||
-							status ===
-								YgoprodeckApiService.HTTP_STATUS_NO_MATCHES,
-					}
-				);
+			return this.#getJsonResponse(url, authHeaders).then((res) => {
 				if (
-					response.status ===
-					YgoprodeckApiService.HTTP_STATUS_NO_MATCHES
+					res.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES
 				) {
-					return createEmptyPaginatedResponse([]);
+					return Promise.resolve(createEmptyPaginatedResponse([]));
 				}
-				return response.data;
-			}
-		);
-
-		return responseData.map((rawCard) =>
-			mapCard(rawCard, this.#resourceService)
+				assertStatusOk(res);
+				return res.json() as Promise<PaginatedResponse<RawCard[]>>;
+			});
+		}).then((data) =>
+			data.map((rawCard) => mapCard(rawCard, this.#resourceService))
 		);
 	}
 
@@ -160,36 +156,30 @@ export class YgoprodeckApiService {
 	}
 
 	async getCardSets(): Promise<CardSet[]> {
-		const response = await this.#get<RawCardSet[]>(
-			new URL("cardsets.php", this.#getBaseUrl()),
-			{
-				headers: {},
-				validateStatus: okStatusValidator,
-			}
-		);
-		return response.data.map(mapCardSet);
+		return this.#getJsonResponse(
+			new URL("cardsets.php", this.#getBaseUrl())
+		)
+			.then(assertStatusOk)
+			.then((res) => res.json() as Promise<RawCardSet[]>)
+			.then((data) => data.map(mapCardSet));
 	}
 
-	async getCardValues(): Promise<CardValues> {
-		const response = await this.#get<RawCardValues>(
-			new URL("cardvalues.php", this.#getBaseUrl()),
-			{
-				headers: {},
-				validateStatus: okStatusValidator,
-			}
-		);
-		return mapCardValues(response.data);
+	getCardValues(): Promise<CardValues> {
+		return this.#getJsonResponse(
+			new URL("cardvalues.php", this.#getBaseUrl())
+		)
+			.then(assertStatusOk)
+			.then((res) => res.json() as Promise<RawCardValues>)
+			.then((data) => mapCardValues(data));
 	}
 
 	async getArchetypes(): Promise<string[]> {
-		const response = await this.#get<RawArchetype[]>(
-			new URL("archetypes.php", this.#getBaseUrl()),
-			{
-				headers: {},
-				validateStatus: okStatusValidator,
-			}
-		);
-		return response.data.map(mapArchetype);
+		return this.#getJsonResponse(
+			new URL("archetypes.php", this.#getBaseUrl())
+		)
+			.then(assertStatusOk)
+			.then((res) => res.json() as Promise<RawArchetype[]>)
+			.then((data) => data.map(mapArchetype));
 	}
 
 	async updateViews(card: Card): Promise<void> {
@@ -197,12 +187,11 @@ export class YgoprodeckApiService {
 		const url = new URL("https://ygoprodeck.com/api/card/updateViews.php");
 		url.searchParams.set("card", card.passcode);
 
-		const res = await fetch(url, {
+		return fetch(url, {
 			method: "GET",
+		}).then((res) => {
+			assertStatusOk(res);
 		});
-		if (!okStatusValidator(res.status)) {
-			throw new Error(`Unexpected status code: ${res.status}`);
-		}
 	}
 
 	async #loadPaginated<T>(
@@ -251,26 +240,16 @@ export class YgoprodeckApiService {
 		return "https://db.ygoprodeck.com/api/v7/";
 	}
 
-	async #get<T>(
+	async #getJsonResponse(
 		url: URL,
-		config: {
-			headers: Record<string, string>;
-			validateStatus: (status: number) => boolean;
-		}
-	): Promise<{
-		data: T;
-		status: number;
-	}> {
-		const res = await fetch(url, {
+		headers: Record<string, string> = {}
+	): Promise<Response> {
+		return fetch(url, {
 			method: "GET",
 			headers: {
 				Accept: "application/json",
-				...config.headers,
+				...headers,
 			},
 		});
-		if (!config.validateStatus(res.status)) {
-			throw new Error(`Unexpected status code: ${res.status}`);
-		}
-		return { data: await res.json(), status: res.status };
 	}
 }
