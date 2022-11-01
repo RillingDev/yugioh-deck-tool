@@ -117,7 +117,7 @@ export class YgoprodeckApiService {
 				if (
 					res.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES
 				) {
-					return Promise.resolve(createEmptyPaginatedResponse([]));
+					return createEmptyPaginatedResponse([]);
 				}
 				assertStatusOk(res);
 				return res.json() as Promise<PaginatedResponse<RawCard[]>>;

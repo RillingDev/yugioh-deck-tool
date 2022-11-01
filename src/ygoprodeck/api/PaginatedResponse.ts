@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export interface PaginatedResponse<T> {
-	data: T;
-	meta: {
-		current_rows: number;
-		total_rows: number;
-		rows_remaining: number;
-		total_pages: number;
-		pages_remaining: number;
-		previous_page?: string;
-		previous_page_offset?: number;
-		next_page?: string;
-		next_page_offset?: number;
+	readonly data: T;
+	readonly meta: {
+		readonly current_rows: number;
+		readonly total_rows: number;
+		readonly rows_remaining: number;
+		readonly total_pages: number;
+		readonly pages_remaining: number;
+		readonly previous_page?: string;
+		readonly previous_page_offset?: number;
+		readonly next_page?: string;
+		readonly next_page_offset?: number;
 	};
 }
 
