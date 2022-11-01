@@ -2,7 +2,6 @@ import { inject, injectable } from "inversify";
 import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
 import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
 import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
-import { deepFreeze } from "lightdash";
 import { YGOPRODECK_INTERNAL_TYPES } from "@/ygoprodeck/types";
 import { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
 
@@ -183,7 +182,6 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.getArchetypes()
 				.then((archetypes) => {
 					this.#archetypes.push(...archetypes);
-					deepFreeze(this.#archetypes);
 					YgoprodeckCardDatabase.logger.debug(
 						"Registered archetypes.",
 						this.#archetypes
@@ -199,7 +197,6 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.getCardSets()
 				.then((cardSets) => {
 					this.#sets.push(...cardSets);
-					deepFreeze(this.#sets);
 
 					cardSets.forEach((set) =>
 						this.#setsByName.set(set.name, set)
@@ -224,11 +221,9 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 					)) {
 						const cardTypes = this.#types.get(typeCategory)!;
 						cardTypes.push(...cardValues[typeCategory].types);
-						deepFreeze(cardTypes);
 
 						const cardSubTypes = this.#subTypes.get(typeCategory)!;
 						cardSubTypes.push(...cardValues[typeCategory].subTypes);
-						deepFreeze(cardSubTypes);
 					}
 
 					Array.from(this.#types.values())
@@ -246,17 +241,12 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 					this.#attributes.push(
 						...cardValues[CardTypeCategory.MONSTER].attributes
 					);
-					deepFreeze(this.#attributes);
-
 					this.#levels.push(
 						...cardValues[CardTypeCategory.MONSTER].levels
 					);
-					deepFreeze(this.#levels);
-
 					this.#linkMarkers.push(
 						...cardValues[CardTypeCategory.MONSTER].linkMarkers
 					);
-					deepFreeze(this.#linkMarkers);
 					YgoprodeckCardDatabase.logger.debug(
 						"Registered monster values.",
 						this.#attributes,
@@ -275,7 +265,6 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			}
 			const card = this.#linkCard(unlinkedCard);
 
-			deepFreeze(card);
 			this.#cardsByPasscode.set(card.passcode, card);
 			this.#cardsByName.set(card.name, card);
 			YgoprodeckCardDatabase.logger.trace(

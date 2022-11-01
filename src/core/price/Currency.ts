@@ -1,5 +1,3 @@
-import { deepFreeze } from "lightdash";
-
 export interface Currency {
 	/**
 	 * See {@link Intl.NumberFormatOptions#currency}.
@@ -7,7 +5,7 @@ export interface Currency {
 	readonly id: string;
 }
 
-const DefaultCurrency: Record<string, Currency> = {
+export const DefaultCurrency: Record<string, Currency> = {
 	USD: {
 		id: "USD",
 	},
@@ -15,5 +13,3 @@ const DefaultCurrency: Record<string, Currency> = {
 		id: "EUR",
 	},
 } as const;
-deepFreeze(DefaultCurrency);
-export { DefaultCurrency };

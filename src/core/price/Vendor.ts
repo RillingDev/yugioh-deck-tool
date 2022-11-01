@@ -1,4 +1,3 @@
-import { deepFreeze } from "lightdash";
 import type { Currency } from "./Currency";
 import { DefaultCurrency } from "./Currency";
 
@@ -8,7 +7,7 @@ export interface Vendor {
 	readonly currency: Currency;
 }
 
-const DefaultVendor = {
+export const DefaultVendor = {
 	CARD_MARKET: {
 		name: "Cardmarket",
 		id: "cardmarket",
@@ -25,13 +24,9 @@ const DefaultVendor = {
 		currency: DefaultCurrency.USD,
 	},
 } as const;
-deepFreeze(DefaultVendor);
-export { DefaultVendor };
 
-const DEFAULT_VENDOR_ARR = [
+export const DEFAULT_VENDOR_ARR = [
 	DefaultVendor.CARD_MARKET,
 	DefaultVendor.TCG_PLAYER,
 	DefaultVendor.COOL_STUFF_INC,
 ];
-deepFreeze(DEFAULT_VENDOR_ARR);
-export { DEFAULT_VENDOR_ARR };
