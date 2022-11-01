@@ -12,10 +12,25 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 	readonly #ygoprodeckApiService: YgoprodeckApiService;
 
+	// Fetching
+
 	#loadingSets: Promise<void> | null;
 	#loadingArchetypes: Promise<void> | null;
 	#loadingCardValues: Promise<void> | null;
 	#loadingAllCards: Promise<void> | null;
+
+	// Indexes for mapping
+
+	/**
+	 * Sets by name
+	 */
+	readonly #setsByName: Map<string, CardSet>;
+	/**
+	 * Card types by name
+	 */
+	readonly #typesByName: Map<string, CardType>;
+
+	// Data
 
 	readonly #cardsByPasscode: Map<string, Card>;
 	readonly #cardsByName: Map<string, Card>;
@@ -37,6 +52,9 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		this.#loadingArchetypes = null;
 		this.#loadingCardValues = null;
 		this.#loadingAllCards = null;
+
+		this.#setsByName = new Map();
+		this.#typesByName = new Map();
 
 		this.#cardsByPasscode = new Map();
 		this.#cardsByName = new Map();
@@ -159,7 +177,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return this.#loadingAllCards;
 	}
 
-	#loadArchetypes(): Promise<void> {
+	async #loadArchetypes(): Promise<void> {
 		if (this.#loadingArchetypes == null) {
 			this.#loadingArchetypes = this.#ygoprodeckApiService
 				.getArchetypes()
@@ -175,13 +193,18 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return this.#loadingArchetypes;
 	}
 
-	#loadSets(): Promise<void> {
+	async #loadSets(): Promise<void> {
 		if (this.#loadingSets == null) {
 			this.#loadingSets = this.#ygoprodeckApiService
 				.getCardSets()
 				.then((cardSets) => {
 					this.#sets.push(...cardSets);
 					deepFreeze(this.#sets);
+
+					cardSets.forEach((set) =>
+						this.#setsByName.set(set.name, set)
+					);
+
 					YgoprodeckCardDatabase.logger.debug(
 						"Registered sets.",
 						this.#sets
@@ -207,6 +230,13 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 						cardSubTypes.push(...cardValues[typeCategory].subTypes);
 						deepFreeze(cardSubTypes);
 					}
+
+					Array.from(this.#types.values())
+						.flat()
+						.forEach((type) =>
+							this.#typesByName.set(type.name, type)
+						);
+
 					YgoprodeckCardDatabase.logger.debug(
 						"Registered types and sub-types.",
 						this.#types,
@@ -239,19 +269,11 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 	}
 
 	#registerCards(unlinkedCards: UnlinkedCard[]): void {
-		const setMap = new Map<string, CardSet>(
-			this.#sets.map((set) => [set.name, set])
-		);
-		const types = Array.from(this.#types.values()).flat();
-		const typeMap = new Map<string, CardType>(
-			types.map((type) => [type.name, type])
-		);
-
 		for (const unlinkedCard of unlinkedCards) {
 			if (this.#cardsByPasscode.has(unlinkedCard.passcode)) {
 				continue;
 			}
-			const card = this.#linkCard(unlinkedCard, setMap, typeMap);
+			const card = this.#linkCard(unlinkedCard);
 
 			deepFreeze(card);
 			this.#cardsByPasscode.set(card.passcode, card);
@@ -272,51 +294,34 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 	 * Links an unlinked card.
 	 *
 	 * @param unlinkedCard Unlinked card.
-	 * @param setMap Set data to link against.
-	 * @param typeMap Type data to link against.
 	 * @return linked card.
 	 */
-	#linkCard(
-		unlinkedCard: UnlinkedCard,
-		setMap: Map<string, CardSet>,
-		typeMap: Map<string, CardType>
-	): Card {
+	#linkCard(unlinkedCard: UnlinkedCard): Card {
 		return {
 			...unlinkedCard,
-			type: this.#linkType(unlinkedCard.type, typeMap),
-			sets: this.#linkSets(unlinkedCard.sets, setMap),
+			type: this.#linkType(unlinkedCard.type),
+			sets: this.#linkSets(unlinkedCard.sets),
 		};
 	}
 
-	#linkSets(
-		setAppearances: CardSetAppearance[],
-		setCache: Map<string, CardSet>
-	): CardSet[] {
+	#linkSets(setAppearances: CardSetAppearance[]): CardSet[] {
 		return setAppearances
 			.map((setAppearance) => {
-				if (!setCache.has(setAppearance.name)) {
+				if (!this.#setsByName.has(setAppearance.name)) {
 					YgoprodeckCardDatabase.logger.warn(
 						`Could not find set '${setAppearance.name}'.`
 					);
 					return null;
 				}
-				const matchingSet = setCache.get(setAppearance.name)!;
-				YgoprodeckCardDatabase.logger.trace(
-					`Matched set ${setAppearance.name} to ${matchingSet.name}.`
-				);
-				return matchingSet;
+				return this.#setsByName.get(setAppearance.name)!;
 			})
 			.filter((set) => set != null) as CardSet[];
 	}
 
-	#linkType(typeName: string, typeCache: Map<string, CardType>): CardType {
-		if (!typeCache.has(typeName)) {
+	#linkType(typeName: string): CardType {
+		if (!this.#typesByName.has(typeName)) {
 			throw new TypeError(`Could not find type '${typeName}'.`);
 		}
-		const matchingType = typeCache.get(typeName)!;
-		YgoprodeckCardDatabase.logger.trace(
-			`Matched type ${typeName} to ${matchingType.name}.`
-		);
-		return matchingType;
+		return this.#typesByName.get(typeName)!;
 	}
 }
