@@ -9,7 +9,7 @@ import type { RawCardValues } from "./mapping/mapCardValues";
 import { mapCardValues } from "./mapping/mapCardValues";
 import type { RawArchetype } from "./mapping/mapArchetype";
 import { mapArchetype } from "./mapping/mapArchetype";
-import type { Card, CardSet, CardValues, Format } from "@/core/lib";
+import type { Card, CardSet, CardValues } from "@/core/lib";
 import {
 	EncodingService,
 	Environment,
@@ -23,7 +23,6 @@ import type { UnlinkedCard } from "@/ygoprodeck/api/UnlinkedCard";
 interface CardInfoOptions {
 	readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
 
-	readonly format?: Format | null;
 	readonly passcode?: string | null;
 	readonly fuzzyName?: string | null;
 
@@ -135,11 +134,7 @@ export class YgoprodeckApiService {
 		if (options.includeAliased) {
 			params.set("includeAliased", "yes");
 		}
-		const format =
-			options.format != null
-				? String(options.format).toLowerCase()
-				: "all";
-		params.set("format", format);
+		params.set("format", "all");
 		if (options.passcode != null) {
 			params.set("id", options.passcode);
 		}

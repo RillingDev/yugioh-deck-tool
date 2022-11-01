@@ -36,7 +36,6 @@ export class YgoprodeckService {
 	): Promise<CardCountFunction> {
 		this.validateEnv();
 		const unlinkedCards = await this.#ygoprodeckApiService.getCards({
-			format: null,
 			includeAliased: true,
 			auth: credentials,
 		});

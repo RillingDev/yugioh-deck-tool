@@ -27,14 +27,12 @@ export class YgoprodeckCardDataLoaderService {
 		if (findCardBy == FindCardBy.PASSCODE) {
 			return this.#ygoprodeckApiService.getSingleCard({
 				passcode: cardKey,
-				format: null,
 				includeAliased: true, // Include alternate artworks IDs as well.
 			});
 		} else {
 			return this.#ygoprodeckApiService.getSingleCard({
 				fuzzyName: cardKey, // fuzzy name matching, so we get the most similar match instead of an exact match.
 				sorting: "relevance",
-				format: null,
 				includeAliased: false,
 			});
 		}
@@ -42,7 +40,6 @@ export class YgoprodeckCardDataLoaderService {
 
 	async getAllCards(): Promise<UnlinkedCard[]> {
 		return this.#ygoprodeckApiService.getCards({
-			format: null,
 			includeAliased: true,
 		});
 	}
