@@ -17,9 +17,8 @@
 import { computed, defineComponent, readonly } from "vue";
 
 import VSelect from "vue-select";
-import { FORMAT_UPDATE } from "../../store/modules/format";
 import { Format } from "@/core/lib";
-import { useStore } from "../../store/store";
+import { useFormatStore } from "@/application/store/format";
 
 export default defineComponent({
 	components: { VSelect },
@@ -28,12 +27,12 @@ export default defineComponent({
 	setup() {
 		const formats = readonly<Format[]>(Object.values(Format));
 
-		const store = useStore();
+		const formatStore = useFormatStore();
 
-		const format = computed<Format | null>({
-			get: () => store.state.format.active,
+		const format = computed({
+			get: () => formatStore.active,
 			set: (newFormat) =>
-				store.commit(FORMAT_UPDATE, {
+				formatStore.setFormat({
 					format: newFormat,
 				}),
 		});

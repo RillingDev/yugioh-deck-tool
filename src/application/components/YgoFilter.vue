@@ -193,7 +193,6 @@
 import type {
 	BanlistService,
 	BanState,
-	CardCountFunction,
 	CardDatabase,
 	CardFilter,
 	CardPredicate,
@@ -218,9 +217,10 @@ import { applicationContainer } from "../inversify.config";
 import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
 import type { YgoprodeckController } from "../controller/YgoprodeckController";
 import { APPLICATION_TYPES } from "../types";
-import { SET_CARD_COUNT_FUNCTION } from "../store/modules/collection";
-import { useStore } from "../store/store";
 import { useId } from "@/application/composition/id";
+import { useDataStore } from "@/application/store/data";
+import { useFormatStore } from "@/application/store/format";
+import { useCollectionStore } from "@/application/store/collection";
 
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
 	TYPES.CardPredicateService
@@ -261,10 +261,12 @@ export default defineComponent({
 	},
 	emits: ["change"],
 	setup: function (props, context) {
-		const store = useStore();
+		const dataStore = useDataStore();
+		const formatStore = useFormatStore();
+		const collectionStore = useCollectionStore();
 
-		const essentialDataLoaded = computed<boolean>(
-			() => store.state.data.essentialDataLoaded
+		const essentialDataLoaded = computed(
+			() => dataStore.essentialDataLoaded
 		);
 
 		const banStates = readonly<BanState[]>(DEFAULT_BAN_STATE_ARR);
@@ -297,7 +299,7 @@ export default defineComponent({
 		);
 
 		const hasBanStates = computed<boolean>(() => {
-			const format = store.state.format.active;
+			const format = formatStore.active;
 			if (format == null) {
 				return false;
 			}
@@ -312,10 +314,10 @@ export default defineComponent({
 				ygoprodeckController.hasCredentials()
 		);
 
-		const cardCountFunction = computed<CardCountFunction | null>({
-			get: () => store.state.collection.cardCountFunction,
+		const cardCountFunction = computed({
+			get: () => collectionStore.cardCountFunction,
 			set: (value) =>
-				store.commit(SET_CARD_COUNT_FUNCTION, {
+				collectionStore.setCardCountFunction({
 					cardCountFunction: value,
 				}),
 		});

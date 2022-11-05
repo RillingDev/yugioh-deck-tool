@@ -13,21 +13,20 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { DECK_NAME_UPDATE } from "../../store/modules/deck";
-import { useStore } from "../../store/store";
 import { useId } from "@/application/composition/id";
+import { useDeckStore } from "@/application/store/deck";
 
 export default defineComponent({
 	components: {},
 	props: {},
 	emits: [],
 	setup() {
-		const store = useStore();
+		const deckStore = useDeckStore();
 
-		const deckName = computed<string | null>({
-			get: () => store.state.deck.active.name,
+		const deckName = computed({
+			get: () => deckStore.active.name,
 			set: (newName) =>
-				store.commit(DECK_NAME_UPDATE, {
+				deckStore.setName({
 					name: newName,
 				}),
 		});

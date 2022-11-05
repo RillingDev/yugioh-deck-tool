@@ -19,7 +19,7 @@ import {
 	showSuccess,
 	useToast,
 } from "../../../composition/feedback";
-import { useStore } from "../../../store/store";
+import { useDeckStore } from "@/application/store/deck";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 	TYPES.DeckUriEncodingService
@@ -32,12 +32,11 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const store = useStore();
+		const deckStore = useDeckStore();
 		const toast = useToast();
 
 		const copyYdke = (): void => {
-			const deck = store.state.deck.active;
-			const ydke = deckUriEncodingService.toUri(deck);
+			const ydke = deckUriEncodingService.toUri(deckStore.active);
 
 			navigator.clipboard
 				.writeText(ydke.toString())

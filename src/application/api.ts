@@ -1,8 +1,3 @@
-import { getLogger } from "@/core/lib";
-import { createApplicationBridge } from "./bridge";
-
-const logger = getLogger("tooltip");
-
 export type ApplicationEvent = "ready" | "change";
 
 /**
@@ -70,17 +65,3 @@ export interface ExternalCard {
 export type SlimExternalCard = Pick<ExternalCard, "passcode">;
 
 export type Callback = () => void;
-
-declare global {
-	interface Window {
-		yugiohDeckToolApplication?: ApplicationApi;
-	}
-}
-
-export const bindApplicationApi = (): void => {
-	if (window.yugiohDeckToolApplication != null) {
-		throw new TypeError("Application already exists.");
-	}
-	logger.debug("Setting up application.");
-	window.yugiohDeckToolApplication = createApplicationBridge();
-};

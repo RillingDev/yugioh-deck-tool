@@ -35,14 +35,13 @@ import type { Deck, DeckUriEncodingService } from "@/core/lib";
 import { getLogger, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
-import { DECK_REPLACE } from "../../../store/modules/deck";
 import {
 	showError,
 	showSuccess,
 	useToast,
 } from "../../../composition/feedback";
-import { useStore } from "../../../store/store";
 import { useId } from "@/application/composition/id";
+import { useDeckStore } from "@/application/store/deck";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 	TYPES.DeckUriEncodingService
@@ -59,7 +58,7 @@ export default defineComponent({
 		const modal = ref<BModal>();
 		const ydkeUrl = ref<string>("");
 
-		const store = useStore();
+		const deckStore = useDeckStore();
 
 		const onInput = (): void => {
 			let deck: Deck;
@@ -74,7 +73,7 @@ export default defineComponent({
 				);
 				return;
 			}
-			store.commit(DECK_REPLACE, {
+			deckStore.replace({
 				deck,
 			});
 			showSuccess(

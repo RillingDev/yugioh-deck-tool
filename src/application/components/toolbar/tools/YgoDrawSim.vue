@@ -45,12 +45,12 @@
 
 <script lang="ts">
 import YgoCard from "../../YgoCard.vue";
-import type { Card, Deck, DeckService } from "@/core/lib";
+import type { Card, DeckService } from "@/core/lib";
 import { DeckPart, TYPES } from "@/core/lib";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { computed, defineComponent, ref } from "vue";
-import { useStore } from "../../../store/store";
+import { useDeckStore } from "@/application/store/deck";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -66,8 +66,8 @@ export default defineComponent({
 		const goingFirst = ref<boolean>(true);
 		const drawnCards = ref<Card[]>([]);
 
-		const store = useStore();
-		const deck = computed<Deck>(() => store.state.deck.active);
+		const deckStore = useDeckStore();
+		const deck = computed(() => deckStore.active);
 		const hasMainDeckCards = computed<boolean>(
 			() => deck.value.parts[DeckPart.MAIN].length > 0
 		);

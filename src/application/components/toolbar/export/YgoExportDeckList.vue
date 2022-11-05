@@ -16,7 +16,7 @@ import {
 	showSuccess,
 	useToast,
 } from "../../../composition/feedback";
-import { useStore } from "../../../store/store";
+import { useDeckStore } from "@/application/store/deck";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
 	TYPES.DeckExportService
@@ -29,12 +29,13 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const store = useStore();
+		const deckStore = useDeckStore();
 		const toast = useToast();
 
 		const copyList = (): void => {
-			const deck = store.state.deck.active;
-			const deckList = deckExportService.toShareableText(deck);
+			const deckList = deckExportService.toShareableText(
+				deckStore.active
+			);
 
 			navigator.clipboard
 				.writeText(deckList)

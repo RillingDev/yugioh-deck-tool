@@ -57,15 +57,11 @@ import {
 import { useTooltip } from "../../composition/tooltip";
 import type { DeckController } from "../../controller/DeckController";
 import { applicationContainer } from "../../inversify.config";
-import {
-	DECK_PART_CARDS_ADD,
-	DECK_PART_CARDS_REMOVE,
-	DECK_PART_CARDS_REORDER,
-} from "../../store/modules/deck";
-import { useStore } from "../../store/store";
 import { APPLICATION_TYPES } from "../../types";
 import YgoCard from "../YgoCard.vue";
 import YgoPrice from "../YgoPrice.vue";
+import { useDeckStore } from "@/application/store/deck";
+import { useFormatStore } from "@/application/store/format";
 
 const deckController = applicationContainer.get<DeckController>(
 	APPLICATION_TYPES.DeckController
@@ -96,9 +92,11 @@ export default defineComponent({
 			() => DefaultDeckPartConfig[props.deckPart]
 		);
 
-		const store = useStore();
+		const deckStore = useDeckStore();
+		const formatStore = useFormatStore();
+
 		const cards = computed<Card[]>(
-			() => store.state.deck.active.parts[props.deckPart]
+			() => deckStore.active.parts[props.deckPart]
 		);
 		const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
 		const deckPartStats = computed<string>(() => {
@@ -114,13 +112,13 @@ export default defineComponent({
 		});
 
 		const addCard = (card: Card, newIndex: number): void =>
-			store.commit(DECK_PART_CARDS_ADD, {
+			deckStore.addCard({
 				deckPart: props.deckPart,
 				card,
 				newIndex,
 			});
 		const removeCard = (card: Card, oldIndex: number): void =>
-			store.commit(DECK_PART_CARDS_REMOVE, {
+			deckStore.removeCard({
 				deckPart: props.deckPart,
 				card,
 				oldIndex,
@@ -130,7 +128,7 @@ export default defineComponent({
 			oldIndex: number,
 			newIndex: number
 		): void =>
-			store.commit(DECK_PART_CARDS_REORDER, {
+			deckStore.reorderCard({
 				deckPart: props.deckPart,
 				card,
 				oldIndex,
@@ -158,15 +156,13 @@ export default defineComponent({
 				return false;
 			}
 			const oldDeckPart = props.deckPart;
-			const deck = store.state.deck.active;
-			const format = store.state.format.active;
 
 			return deckService.canMove(
-				deck,
+				deckStore.active,
 				card,
 				oldDeckPart,
 				newDeckPart,
-				format
+				formatStore.active
 			);
 		};
 

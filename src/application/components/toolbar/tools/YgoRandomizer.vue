@@ -37,15 +37,16 @@
 </template>
 
 <script lang="ts">
-import type { CardFilter, DeckRandomizationService, Format } from "@/core/lib";
+import type { CardFilter, DeckRandomizationService } from "@/core/lib";
 import { RandomizationStrategy, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
-import { DECK_REPLACE } from "../../../store/modules/deck";
 import { computed, defineComponent, readonly, ref } from "vue";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
-import { useStore } from "../../../store/store";
+import { useDataStore } from "@/application/store/data";
+import { useFormatStore } from "@/application/store/format";
+import { useDeckStore } from "@/application/store/deck";
 
 const deckRandomizationService =
 	applicationContainer.get<DeckRandomizationService>(
@@ -74,9 +75,11 @@ export default defineComponent({
 			sets: [],
 		});
 
-		const store = useStore();
+		const dataStore = useDataStore();
+		const formatStore = useFormatStore();
+		const deckStore = useDeckStore();
 
-		const format = computed<Format | null>(() => store.state.format.active);
+		const format = computed(() => formatStore.active);
 
 		const randomize = (): void => {
 			const randomizedDeck = deckRandomizationService.randomize(
@@ -88,11 +91,11 @@ export default defineComponent({
 					},
 				}
 			);
-			store.commit(DECK_REPLACE, { deck: randomizedDeck });
+			deckStore.replace({ deck: randomizedDeck });
 		};
 
-		const essentialDataLoaded = computed<boolean>(
-			() => store.state.data.essentialDataLoaded
+		const essentialDataLoaded = computed(
+			() => dataStore.essentialDataLoaded
 		);
 
 		return {

@@ -31,7 +31,6 @@ import type {
 	CardFilter,
 	CardPredicateService,
 	FilterService,
-	Format,
 	SortingOptions,
 	SortingService,
 } from "@/core/lib";
@@ -42,7 +41,8 @@ import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import type { PropType } from "vue";
 import { computed, defineComponent, ref } from "vue";
 import { BSidebar } from "bootstrap-vue";
-import { useStore } from "../../store/store";
+import { useDataStore } from "@/application/store/data";
+import { useFormatStore } from "@/application/store/format";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const sortingService = applicationContainer.get<SortingService>(
@@ -77,13 +77,14 @@ export default defineComponent({
 			order: SortingOrder.DESC,
 		});
 
-		const store = useStore();
+		const dataStore = useDataStore();
+		const formatStore = useFormatStore();
 
-		const essentialDataLoaded = computed<boolean>(
-			() => store.state.data.essentialDataLoaded
+		const essentialDataLoaded = computed(
+			() => dataStore.essentialDataLoaded
 		);
 
-		const format = computed<Format | null>(() => store.state.format.active);
+		const format = computed(() => formatStore.active);
 
 		const formatCards = computed<Card[]>(() => {
 			// Required to ensure render after loading.

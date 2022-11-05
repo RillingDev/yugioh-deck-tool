@@ -7,20 +7,19 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { DECK_SHUFFLE } from "../../../store/modules/deck";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { useStore } from "../../../store/store";
+import { useDeckStore } from "@/application/store/deck";
 
 export default defineComponent({
 	components: { BDropdownItemButton },
 	props: {},
 	emits: [],
 	setup() {
-		const store = useStore();
+		const deckStore = useDeckStore();
 
-		const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
+		const deckEmpty = computed(() => deckStore.isDeckEmpty);
 
-		const shuffle = (): void => store.commit(DECK_SHUFFLE);
+		const shuffle = (): void => deckStore.shuffle();
 
 		return { deckEmpty, shuffle };
 	},

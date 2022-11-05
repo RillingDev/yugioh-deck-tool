@@ -26,9 +26,8 @@ import { APPLICATION_TYPES } from "../../types";
 import type { YgoprodeckController } from "../../controller/YgoprodeckController";
 import type { YgoprodeckService } from "@/ygoprodeck/lib";
 import { YGOPRODECK_TYPES } from "@/ygoprodeck/lib";
-import { SET_CARD_COUNT_FUNCTION } from "../../store/modules/collection";
-import { useStore } from "../../store/store";
-import { SET_LOADING } from "../../store/modules/data";
+import { useCollectionStore } from "@/application/store/collection";
+import { useDataStore } from "@/application/store/data";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
 	YGOPRODECK_TYPES.YgoprodeckService
@@ -47,13 +46,15 @@ export default defineComponent({
 	props: {},
 	emits: ["change"],
 	setup(props, context) {
-		const store = useStore();
+		const collectionStore = useCollectionStore();
+		const dataStore = useDataStore();
+
 		const toast = useToast();
 
-		const cardCountFunction = computed<CardCountFunction | null>({
-			get: () => store.state.collection.cardCountFunction,
+		const cardCountFunction = computed({
+			get: () => collectionStore.cardCountFunction,
 			set: (newCardCountFunction) =>
-				store.commit(SET_CARD_COUNT_FUNCTION, {
+				collectionStore.setCardCountFunction({
 					cardCountFunction: newCardCountFunction,
 				}),
 		});
@@ -78,7 +79,7 @@ export default defineComponent({
 		};
 		const reload = (): void => {
 			Promise.resolve()
-				.then(() => store.commit(SET_LOADING, { loading: true }))
+				.then(() => dataStore.setLoading({ loading: true }))
 				.then(() => loadCollection())
 				.then((loadedCollectionCardCountFunction) => {
 					cardCountFunction.value = loadedCollectionCardCountFunction;
@@ -92,7 +93,7 @@ export default defineComponent({
 						"deck-tool__portal"
 					);
 				})
-				.finally(() => store.commit(SET_LOADING, { loading: false }));
+				.finally(() => dataStore.setLoading({ loading: false }));
 		};
 
 		return { checked, reload };

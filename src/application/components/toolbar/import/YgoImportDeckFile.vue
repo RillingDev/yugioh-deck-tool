@@ -13,14 +13,13 @@ import { applicationContainer } from "../../../inversify.config";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { readFile } from "../../../composition/io/readFile";
 import { uploadFile } from "../../../composition/io/uploadFile";
-import { DECK_REPLACE } from "../../../store/modules/deck";
 import {
 	showError,
 	showSuccess,
 	showWarning,
 	useToast,
 } from "../../../composition/feedback";
-import { useStore } from "../../../store/store";
+import { useDeckStore } from "@/application/store/deck";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
 	TYPES.DeckFileService
@@ -33,7 +32,7 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const store = useStore();
+		const deckStore = useDeckStore();
 		const toast = useToast();
 
 		const importDeckFile = async (file: File): Promise<ImportResult> => {
@@ -42,7 +41,7 @@ export default defineComponent({
 				fileContent,
 				fileName: file.name,
 			});
-			store.commit(DECK_REPLACE, {
+			deckStore.replace({
 				deck: result.deck,
 			});
 

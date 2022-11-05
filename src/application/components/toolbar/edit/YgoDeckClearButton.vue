@@ -15,9 +15,8 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { DECK_CLEAR } from "../../../store/modules/deck";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
-import { useStore } from "../../../store/store";
+import { useDeckStore } from "@/application/store/deck";
 
 export default defineComponent({
 	components: {
@@ -27,11 +26,11 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const store = useStore();
+		const deckStore = useDeckStore();
 
-		const deckEmpty = computed<boolean>(() => store.getters.isDeckEmpty);
+		const deckEmpty = computed(() => deckStore.isDeckEmpty);
 
-		const clear = (): void => store.commit(DECK_CLEAR);
+		const clear = (): void => deckStore.clear();
 
 		return { deckEmpty, clear };
 	},

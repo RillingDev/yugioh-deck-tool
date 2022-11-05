@@ -20,7 +20,7 @@ import {
 } from "../../../composition/feedback";
 import type { DeckUrlController } from "../../../controller/DeckUrlController";
 import { getLogger } from "@/core/lib";
-import { useStore } from "../../../store/store";
+import { useDeckStore } from "@/application/store/deck";
 
 const deckUrlController = applicationContainer.get<DeckUrlController>(
 	APPLICATION_TYPES.DeckUrlController
@@ -34,11 +34,10 @@ export default defineComponent({
 	emits: [],
 	setup() {
 		const toast = useToast();
-		const store = useStore();
+		const deckStore = useDeckStore();
 
 		const copyLink = (): void => {
-			const deck = store.state.deck.active;
-			const shareLink = deckUrlController.getShareLink(deck);
+			const shareLink = deckUrlController.getShareLink(deckStore.active);
 
 			navigator.clipboard
 				.writeText(shareLink.toString())

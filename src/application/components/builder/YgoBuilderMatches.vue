@@ -65,7 +65,7 @@
 import type { PropType } from "vue";
 import { computed, defineComponent } from "vue";
 import { browserSupportsTouch } from "@/browser-common/lib";
-import type { Card, CardCountFunction, DeckService } from "@/core/lib";
+import type { Card, DeckService } from "@/core/lib";
 import { CardTypeCategory, TYPES } from "@/core/lib";
 import Draggable from "vuedraggable";
 import type { DraggableMoveValidatorData } from "../../composition/dragging";
@@ -77,9 +77,10 @@ import { showSuccess, useToast } from "../../composition/feedback";
 import { useInfiniteScrolling } from "../../composition/infiniteScrolling";
 import { useTooltip } from "../../composition/tooltip";
 import { applicationContainer } from "../../inversify.config";
-import { DECK_PART_CARDS_ADD } from "../../store/modules/deck";
-import { useStore } from "../../store/store";
 import YgoCard from "../YgoCard.vue";
+import { useDeckStore } from "@/application/store/deck";
+import { useCollectionStore } from "@/application/store/collection";
+import { useFormatStore } from "@/application/store/format";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -100,7 +101,10 @@ export default defineComponent({
 	},
 	emits: [],
 	setup(props) {
-		const store = useStore();
+		const deckStore = useDeckStore();
+		const collectionStore = useCollectionStore();
+		const formatStore = useFormatStore();
+
 		const toast = useToast();
 
 		const { limitedArr: limitedMatches, scrollHandler } =
@@ -110,8 +114,8 @@ export default defineComponent({
 				25
 			);
 
-		const cardCountFunction = computed<CardCountFunction | null>(
-			() => store.state.collection.cardCountFunction
+		const cardCountFunction = computed(
+			() => collectionStore.cardCountFunction
 		);
 
 		const getTypeText = (card: Card): string =>
@@ -125,16 +129,16 @@ export default defineComponent({
 		const getCardCount = (card: Card): number | null =>
 			cardCountFunction.value?.(card) ?? null;
 
-		const isTouchDevice = computed<boolean>(browserSupportsTouch);
+		const isTouchDevice = computed(browserSupportsTouch);
 
 		const addCard = (card: Card): void => {
 			const deckPart = deckService.findAvailableDeckPart(
-				store.state.deck.active,
+				deckStore.active,
 				card,
-				store.state.format.active
+				formatStore.active
 			);
 			if (deckPart != null) {
-				store.commit(DECK_PART_CARDS_ADD, { card, deckPart });
+				deckStore.addCard({ card, deckPart });
 				showSuccess(
 					toast,
 					"Successfully added card to deck.",
@@ -149,10 +153,12 @@ export default defineComponent({
 			if (newDeckPart == null) {
 				return false;
 			}
-			const deck = store.state.deck.active;
-			const format = store.state.format.active;
-
-			return deckService.canAdd(deck, card, newDeckPart, format);
+			return deckService.canAdd(
+				deckStore.active,
+				card,
+				newDeckPart,
+				formatStore.active
+			);
 		};
 
 		const { disableTooltip, enableTooltip } = useTooltip();
