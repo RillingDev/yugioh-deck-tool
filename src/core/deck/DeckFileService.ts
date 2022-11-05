@@ -1,7 +1,8 @@
 import { inject, injectable } from "inversify";
 import type { Deck } from "./Deck";
 import { TYPES } from "../types";
-import { CardDatabase, FindCardBy } from "../card/CardDatabase";
+import type { CardDatabase } from "../card/CardDatabase";
+import { FindCardBy } from "../card/CardDatabase";
 
 import { DeckService } from "./DeckService";
 import { DECK_PART_ARR } from "./DeckPart";

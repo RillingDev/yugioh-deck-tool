@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { random, sampleSize, shuffle, words } from "lodash";
 import type { Card } from "../card/Card";
-import { CardDatabase } from "../card/CardDatabase";
+import type { CardDatabase } from "../card/CardDatabase";
 import { CardService } from "../card/CardService";
 import type { CardFilter } from "../card/FilterService";
 import { FilterService } from "../card/FilterService";

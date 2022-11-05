@@ -4,7 +4,7 @@ export { TYPES } from "./types";
 export { baseModule, deckModule } from "./inversify.modules";
 
 export { Environment } from "./EnvironmentConfig";
-export { EnvironmentConfig } from "./EnvironmentConfig";
+export type { EnvironmentConfig } from "./EnvironmentConfig";
 
 export type { Card } from "./card/Card";
 export type { CardImage } from "./card/CardImage";
@@ -30,7 +30,7 @@ export { CardTypeCategory } from "./card/type/CardTypeCategory";
 export type { Vendor } from "./price/Vendor";
 export { DefaultVendor, DEFAULT_VENDOR_ARR } from "./price/Vendor";
 
-export { CardDatabase } from "./card/CardDatabase";
+export type { CardDatabase } from "./card/CardDatabase";
 export { FindCardBy } from "./card/CardDatabase";
 export { CardService } from "./card/CardService";
 export type { PriceLookupResult } from "./price/PriceService";
