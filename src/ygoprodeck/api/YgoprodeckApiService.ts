@@ -9,8 +9,13 @@ import type { RawCardValues } from "./mapping/mapCardValues";
 import { mapCardValues } from "./mapping/mapCardValues";
 import type { RawArchetype } from "./mapping/mapArchetype";
 import { mapArchetype } from "./mapping/mapArchetype";
-import type { Card, CardSet, CardValues, EnvironmentConfig } from "@/core/lib";
-import { EncodingService, Environment, TYPES } from "@/core/lib";
+import type { Card, CardSet, CardValues } from "@/core/lib";
+import {
+	EncodingService,
+	Environment,
+	EnvironmentConfig,
+	TYPES,
+} from "@/core/lib";
 import { ResourceService } from "./ResourceService";
 import { YGOPRODECK_TYPES } from "../types";
 import type { UnlinkedCard } from "@/ygoprodeck/api/UnlinkedCard";

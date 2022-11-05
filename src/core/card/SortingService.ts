@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import type { Card } from "./Card";
 import { CardTypeCategory } from "./type/CardTypeCategory";
-import type { CardDatabase } from "./CardDatabase";
+import { CardDatabase } from "./CardDatabase";
 import { TYPES } from "../types";
 import { Format } from "./format/Format";
 

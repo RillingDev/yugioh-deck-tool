@@ -3,7 +3,7 @@ import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
 import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
 import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
 import { YGOPRODECK_INTERNAL_TYPES } from "@/ygoprodeck/types";
-import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
+import { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
 
 @injectable()
 export class YgoprodeckCardDatabase implements CardDatabase {

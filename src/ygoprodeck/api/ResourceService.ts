@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-import type { BanlistInfo, Card, EnvironmentConfig } from "@/core/lib";
-import { Environment, TYPES } from "@/core/lib";
+import type { BanlistInfo, Card } from "@/core/lib";
+import { Environment, EnvironmentConfig, TYPES } from "@/core/lib";
 
 @injectable()
 export class ResourceService {
