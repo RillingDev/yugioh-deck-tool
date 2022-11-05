@@ -12,12 +12,4 @@ export const useDataStore = defineStore("data", {
 			loading: true,
 		};
 	},
-	actions: {
-		setEssentialDataLoaded() {
-			this.essentialDataLoaded = true;
-		},
-		setLoading(payload: { loading: boolean }) {
-			this.loading = payload.loading;
-		},
-	},
 });

@@ -96,6 +96,7 @@ import YgoExportShareLink from "./export/YgoExportShareLink.vue";
 import YgoExportScreenshot from "./export/YgoExportScreenshot.vue";
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
 	components: {
@@ -120,12 +121,9 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const dataStore = useDataStore();
 		const deckStore = useDeckStore();
 
-		const essentialDataLoaded = computed(
-			() => dataStore.essentialDataLoaded
-		);
+		const { essentialDataLoaded } = storeToRefs(useDataStore());
 
 		const deckEmpty = computed(() => deckStore.isDeckEmpty);
 

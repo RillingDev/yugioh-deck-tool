@@ -47,6 +47,7 @@ import VSelect from "vue-select";
 import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckRandomizationService =
 	applicationContainer.get<DeckRandomizationService>(
@@ -75,7 +76,6 @@ export default defineComponent({
 			sets: [],
 		});
 
-		const dataStore = useDataStore();
 		const formatStore = useFormatStore();
 		const deckStore = useDeckStore();
 
@@ -94,9 +94,7 @@ export default defineComponent({
 			deckStore.replace({ deck: randomizedDeck });
 		};
 
-		const essentialDataLoaded = computed(
-			() => dataStore.essentialDataLoaded
-		);
+		const { essentialDataLoaded } = storeToRefs(useDataStore());
 
 		return {
 			strategy,

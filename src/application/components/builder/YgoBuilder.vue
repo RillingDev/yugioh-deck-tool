@@ -43,6 +43,7 @@ import { computed, defineComponent, ref } from "vue";
 import { BSidebar } from "bootstrap-vue";
 import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
+import { storeToRefs } from "pinia";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const sortingService = applicationContainer.get<SortingService>(
@@ -77,12 +78,9 @@ export default defineComponent({
 			order: SortingOrder.DESC,
 		});
 
-		const dataStore = useDataStore();
 		const formatStore = useFormatStore();
 
-		const essentialDataLoaded = computed(
-			() => dataStore.essentialDataLoaded
-		);
+		const { essentialDataLoaded } = storeToRefs(useDataStore());
 
 		const format = computed(() => formatStore.active);
 

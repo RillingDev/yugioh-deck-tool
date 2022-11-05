@@ -28,6 +28,7 @@ import type { YgoprodeckService } from "@/ygoprodeck/lib";
 import { YGOPRODECK_TYPES } from "@/ygoprodeck/lib";
 import { useCollectionStore } from "@/application/store/collection";
 import { useDataStore } from "@/application/store/data";
+import { storeToRefs } from "pinia";
 
 const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
 	YGOPRODECK_TYPES.YgoprodeckService
@@ -47,7 +48,7 @@ export default defineComponent({
 	emits: ["change"],
 	setup(props, context) {
 		const collectionStore = useCollectionStore();
-		const dataStore = useDataStore();
+		const { loading } = storeToRefs(useDataStore());
 
 		const toast = useToast();
 
@@ -79,7 +80,7 @@ export default defineComponent({
 		};
 		const reload = (): void => {
 			Promise.resolve()
-				.then(() => dataStore.setLoading({ loading: true }))
+				.then(() => (loading.value = true))
 				.then(() => loadCollection())
 				.then((loadedCollectionCardCountFunction) => {
 					cardCountFunction.value = loadedCollectionCardCountFunction;
@@ -93,7 +94,7 @@ export default defineComponent({
 						"deck-tool__portal"
 					);
 				})
-				.finally(() => dataStore.setLoading({ loading: false }));
+				.finally(() => (loading.value = false));
 		};
 
 		return { checked, reload };

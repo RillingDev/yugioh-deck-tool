@@ -221,6 +221,7 @@ import { useId } from "@/application/composition/id";
 import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
 import { useCollectionStore } from "@/application/store/collection";
+import { storeToRefs } from "pinia";
 
 const cardPredicateService = applicationContainer.get<CardPredicateService>(
 	TYPES.CardPredicateService
@@ -261,13 +262,10 @@ export default defineComponent({
 	},
 	emits: ["change"],
 	setup: function (props, context) {
-		const dataStore = useDataStore();
 		const formatStore = useFormatStore();
 		const collectionStore = useCollectionStore();
 
-		const essentialDataLoaded = computed(
-			() => dataStore.essentialDataLoaded
-		);
+		const { essentialDataLoaded } = storeToRefs(useDataStore());
 
 		const banStates = readonly<BanState[]>(DEFAULT_BAN_STATE_ARR);
 		const cardTypeCategories = readonly<CardTypeCategory[]>(

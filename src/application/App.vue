@@ -19,7 +19,7 @@ import { getLogger, TYPES } from "@/core/lib";
 
 import { applicationContainer } from "./inversify.config";
 import { APPLICATION_TYPES } from "./types";
-import { computed, defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted } from "vue";
 import { BOverlay } from "bootstrap-vue";
 import { showError, useToast } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
@@ -28,6 +28,7 @@ import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import type { DeckUrlController } from "./controller/DeckUrlController";
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 const deckUrlController = applicationContainer.get<DeckUrlController>(
@@ -46,20 +47,18 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const dataStore = useDataStore();
+		const { loading, essentialDataLoaded } = storeToRefs(useDataStore());
 		const deckStore = useDeckStore();
 
 		const toast = useToast();
-
-		const loading = computed(() => dataStore.loading);
 
 		const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
 		onMounted(() => {
 			Promise.resolve()
-				.then(() => dataStore.setLoading({ loading: true }))
+				.then(() => (loading.value = true))
 				.then(() => cardDatabase.prepareAll())
-				.then(() => dataStore.setEssentialDataLoaded())
+				.then(() => (essentialDataLoaded.value = true))
 				.then(() => {
 					logger.info("Loaded data.");
 					return deckUrlController.loadUriDeck(
@@ -84,7 +83,7 @@ export default defineComponent({
 						"deck-tool__portal"
 					);
 				})
-				.finally(() => dataStore.setLoading({ loading: false }));
+				.finally(() => (loading.value = false));
 		});
 
 		return {
