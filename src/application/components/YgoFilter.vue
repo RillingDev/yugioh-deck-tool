@@ -263,7 +263,6 @@ export default defineComponent({
 	emits: ["change"],
 	setup: function (props, context) {
 		const { format } = storeToRefs(useFormatStore());
-		const collectionStore = useCollectionStore();
 
 		const { essentialDataLoaded } = storeToRefs(useDataStore());
 
@@ -311,13 +310,7 @@ export default defineComponent({
 				ygoprodeckController.hasCredentials()
 		);
 
-		const cardCountFunction = computed({
-			get: () => collectionStore.cardCountFunction,
-			set: (value) =>
-				collectionStore.setCardCountFunction({
-					cardCountFunction: value,
-				}),
-		});
+		const { cardCountFunction } = storeToRefs(useCollectionStore());
 		const collectionPredicate = computed<CardPredicate | null>(() => {
 			return cardCountFunction.value == null
 				? null

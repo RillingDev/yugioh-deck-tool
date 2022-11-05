@@ -18,7 +18,7 @@
 <script lang="ts">
 import type { CardCountFunction } from "@/core/lib";
 import { getLogger } from "@/core/lib";
-import { computed, defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError, useToast } from "../../composition/feedback";
@@ -47,18 +47,11 @@ export default defineComponent({
 	props: {},
 	emits: ["change"],
 	setup(props, context) {
-		const collectionStore = useCollectionStore();
 		const { loading } = storeToRefs(useDataStore());
 
-		const toast = useToast();
+		const { cardCountFunction } = storeToRefs(useCollectionStore());
 
-		const cardCountFunction = computed({
-			get: () => collectionStore.cardCountFunction,
-			set: (newCardCountFunction) =>
-				collectionStore.setCardCountFunction({
-					cardCountFunction: newCardCountFunction,
-				}),
-		});
+		const toast = useToast();
 
 		const checked = ref<boolean>(cardCountFunction.value != null);
 

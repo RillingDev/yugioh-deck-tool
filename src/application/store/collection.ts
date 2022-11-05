@@ -11,11 +11,4 @@ export const useCollectionStore = defineStore("collection", {
 			cardCountFunction: null,
 		};
 	},
-	actions: {
-		setCardCountFunction(payload: {
-			cardCountFunction: CardCountFunction | null;
-		}) {
-			this.cardCountFunction = payload.cardCountFunction;
-		},
-	},
 });

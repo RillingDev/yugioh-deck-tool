@@ -103,7 +103,8 @@ export default defineComponent({
 	emits: [],
 	setup(props) {
 		const deckStore = useDeckStore();
-		const collectionStore = useCollectionStore();
+
+		const { cardCountFunction } = storeToRefs(useCollectionStore());
 
 		const { format } = storeToRefs(useFormatStore());
 
@@ -115,10 +116,6 @@ export default defineComponent({
 				50,
 				25
 			);
-
-		const cardCountFunction = computed(
-			() => collectionStore.cardCountFunction
-		);
 
 		const getTypeText = (card: Card): string =>
 			card.type.category === CardTypeCategory.MONSTER
