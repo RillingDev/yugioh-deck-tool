@@ -103,7 +103,7 @@ export const useBridge = (): ApplicationApi => {
 	return {
 		getDeck(): ExternalDeck<ExternalCard> {
 			logger.debug("Exporting current deck state...");
-			return toExternalDeck(deckStore.active);
+			return toExternalDeck(deckStore.deck);
 		},
 		setDeck(newDeck: ExternalDeck<SlimExternalCard>): void {
 			logger.debug("Replacing current deck state...");

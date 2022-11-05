@@ -21,6 +21,7 @@ import {
 import type { DeckUrlController } from "../../../controller/DeckUrlController";
 import { getLogger } from "@/core/lib";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckUrlController = applicationContainer.get<DeckUrlController>(
 	APPLICATION_TYPES.DeckUrlController
@@ -33,11 +34,12 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
+		const { deck } = storeToRefs(useDeckStore());
+
 		const toast = useToast();
-		const deckStore = useDeckStore();
 
 		const copyLink = (): void => {
-			const shareLink = deckUrlController.getShareLink(deckStore.active);
+			const shareLink = deckUrlController.getShareLink(deck.value);
 
 			navigator.clipboard
 				.writeText(shareLink.toString())

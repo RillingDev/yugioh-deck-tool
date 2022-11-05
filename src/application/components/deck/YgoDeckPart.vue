@@ -94,10 +94,11 @@ export default defineComponent({
 		);
 
 		const deckStore = useDeckStore();
+
 		const { format } = storeToRefs(useFormatStore());
 
 		const cards = computed<Card[]>(
-			() => deckStore.active.parts[props.deckPart]
+			() => deckStore.deck.parts[props.deckPart]
 		);
 		const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
 		const deckPartStats = computed<string>(() => {
@@ -159,7 +160,7 @@ export default defineComponent({
 			const oldDeckPart = props.deckPart;
 
 			return deckService.canMove(
-				deckStore.active,
+				deckStore.deck,
 				card,
 				oldDeckPart,
 				newDeckPart,

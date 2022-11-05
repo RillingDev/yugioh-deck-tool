@@ -65,6 +65,8 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
+		const deckStore = useDeckStore();
+
 		const strategies = readonly<RandomizationStrategy[]>(
 			Object.values(RandomizationStrategy)
 		);
@@ -75,8 +77,6 @@ export default defineComponent({
 		const filter = ref<CardFilter>({
 			sets: [],
 		});
-
-		const deckStore = useDeckStore();
 
 		const { format } = storeToRefs(useFormatStore());
 

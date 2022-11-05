@@ -135,7 +135,7 @@ export default defineComponent({
 
 		const addCard = (card: Card): void => {
 			const deckPart = deckService.findAvailableDeckPart(
-				deckStore.active,
+				deckStore.deck,
 				card,
 				format.value
 			);
@@ -156,7 +156,7 @@ export default defineComponent({
 				return false;
 			}
 			return deckService.canAdd(
-				deckStore.active,
+				deckStore.deck,
 				card,
 				newDeckPart,
 				format.value

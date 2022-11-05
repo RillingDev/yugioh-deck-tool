@@ -17,6 +17,7 @@ import {
 	useToast,
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
 	TYPES.DeckExportService
@@ -29,13 +30,12 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const deckStore = useDeckStore();
+		const { deck } = storeToRefs(useDeckStore());
+
 		const toast = useToast();
 
 		const copyList = (): void => {
-			const deckList = deckExportService.toShareableText(
-				deckStore.active
-			);
+			const deckList = deckExportService.toShareableText(deck.value);
 
 			navigator.clipboard
 				.writeText(deckList)

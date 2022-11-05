@@ -6,35 +6,30 @@ import { defineStore } from "pinia";
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
 interface DeckState {
-	active: Deck;
+	deck: Deck;
 }
 
 export const useDeckStore = defineStore("deck", {
 	state(): DeckState {
 		return {
-			active: deckService.createEmptyDeck(),
+			deck: deckService.createEmptyDeck(),
 		};
 	},
 	getters: {
-		isDeckEmpty: (state) =>
-			deckService.getAllCards(state.active).length === 0,
+		deckEmpty: (state) => deckService.getAllCards(state.deck).length === 0,
 	},
 	actions: {
-		setName(payload: { name: string | null }) {
-			this.active.name = payload.name;
-		},
-
 		replace(payload: { deck: Deck }) {
-			this.active = payload.deck;
+			this.deck = payload.deck;
 		},
 		sort() {
-			this.active.parts = deckService.sort(this.active).parts;
+			this.deck.parts = deckService.sort(this.deck).parts;
 		},
 		shuffle() {
-			this.active.parts = deckService.shuffle(this.active).parts;
+			this.deck.parts = deckService.shuffle(this.deck).parts;
 		},
 		clear() {
-			this.active = deckService.createEmptyDeck();
+			this.deck = deckService.createEmptyDeck();
 		},
 
 		addCard(payload: {
@@ -43,7 +38,7 @@ export const useDeckStore = defineStore("deck", {
 			newIndex?: number;
 		}) {
 			deckService.addCard(
-				this.active,
+				this.deck,
 				payload.card,
 				payload.deckPart,
 				payload.newIndex
@@ -55,7 +50,7 @@ export const useDeckStore = defineStore("deck", {
 			oldIndex?: number;
 		}) {
 			deckService.removeCard(
-				this.active,
+				this.deck,
 				payload.card,
 				payload.deckPart,
 				payload.oldIndex
@@ -68,7 +63,7 @@ export const useDeckStore = defineStore("deck", {
 			newIndex: number;
 		}) {
 			deckService.reorderCard(
-				this.active,
+				this.deck,
 				payload.card,
 				payload.deckPart,
 				payload.oldIndex,

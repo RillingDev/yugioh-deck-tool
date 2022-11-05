@@ -21,6 +21,7 @@ import type { DeckExportService, EnvironmentConfig } from "@/core/lib";
 import { Environment, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../inversify.config";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckExportService = applicationContainer.get<DeckExportService>(
 	TYPES.DeckExportService
@@ -34,12 +35,9 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const deckStore = useDeckStore();
-
-		const deckEmpty = computed(() => deckStore.isDeckEmpty);
+		const { deck, deckEmpty } = storeToRefs(useDeckStore());
 
 		const buyLink = computed<string>(() => {
-			const deck = deckStore.active;
 			const affiliate =
 				environmentConfig.getEnvironment() == Environment.YGOPRODECK
 					? {
@@ -47,7 +45,9 @@ export default defineComponent({
 							source: "YGOPRODeck",
 					  }
 					: null;
-			return deckExportService.toBuyLink(deck, affiliate).toString();
+			return deckExportService
+				.toBuyLink(deck.value, affiliate)
+				.toString();
 		});
 
 		return { deckEmpty, buyLink };

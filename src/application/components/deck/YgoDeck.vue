@@ -14,7 +14,7 @@
 	</div>
 </template>
 <script lang="ts">
-import type { Card, DeckPart, DeckService } from "@/core/lib";
+import type { DeckPart, DeckService } from "@/core/lib";
 import { DECK_PART_ARR, TYPES } from "@/core/lib";
 import type { PropType } from "vue";
 import { computed, defineComponent, readonly } from "vue";
@@ -22,6 +22,7 @@ import YgoPrice from "../YgoPrice.vue";
 import { applicationContainer } from "../../inversify.config";
 import YgoDeckPart from "./YgoDeckPart.vue";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -40,11 +41,8 @@ export default defineComponent({
 	setup() {
 		const deckParts = readonly<DeckPart[]>(DECK_PART_ARR);
 
-		const deckStore = useDeckStore();
-
-		const allCards = computed<Card[]>(() =>
-			deckService.getAllCards(deckStore.active)
-		);
+		const { deck } = storeToRefs(useDeckStore());
+		const allCards = computed(() => deckService.getAllCards(deck.value));
 
 		return {
 			deckParts,

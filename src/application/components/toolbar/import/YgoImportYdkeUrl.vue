@@ -54,11 +54,12 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
+		const deckStore = useDeckStore();
+
 		const toast = useToast();
+
 		const modal = ref<BModal>();
 		const ydkeUrl = ref<string>("");
-
-		const deckStore = useDeckStore();
 
 		const onInput = (): void => {
 			let deck: Deck;

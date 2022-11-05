@@ -20,6 +20,7 @@ import {
 	useToast,
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
 	TYPES.DeckUriEncodingService
@@ -32,11 +33,12 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const deckStore = useDeckStore();
+		const { deck } = storeToRefs(useDeckStore());
+
 		const toast = useToast();
 
 		const copyYdke = (): void => {
-			const ydke = deckUriEncodingService.toUri(deckStore.active);
+			const ydke = deckUriEncodingService.toUri(deck.value);
 
 			navigator.clipboard
 				.writeText(ydke.toString())

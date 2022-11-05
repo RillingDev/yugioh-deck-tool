@@ -17,7 +17,7 @@ export default defineComponent({
 	setup() {
 		const deckStore = useDeckStore();
 
-		const deckEmpty = computed(() => deckStore.isDeckEmpty);
+		const deckEmpty = computed(() => deckStore.deckEmpty);
 
 		const sort = (): void => deckStore.sort();
 

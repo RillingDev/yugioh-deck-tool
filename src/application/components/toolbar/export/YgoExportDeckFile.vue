@@ -13,6 +13,7 @@ import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../composition/io/downloadFile";
 import { showSuccess, useToast } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckFileService = applicationContainer.get<DeckFileService>(
 	TYPES.DeckFileService
@@ -24,11 +25,11 @@ export default defineComponent({
 	emits: [],
 	setup() {
 		const toast = useToast();
-		const deckStore = useDeckStore();
+		const { deck } = storeToRefs(useDeckStore());
 
 		const downloadDeck = (): void => {
 			const { fileContent, fileName } = deckFileService.toFile(
-				deckStore.active
+				deck.value
 			);
 			const file = new File([fileContent], fileName, {
 				type: DeckFileService.DECK_FILE_MIME_TYPE,

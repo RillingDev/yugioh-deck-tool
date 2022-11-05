@@ -22,13 +22,9 @@ export default defineComponent({
 	emits: [],
 	setup() {
 		const deckStore = useDeckStore();
-
 		const deckName = computed({
-			get: () => deckStore.active.name,
-			set: (newName) =>
-				deckStore.setName({
-					name: newName,
-				}),
+			get: () => deckStore.deck.name,
+			set: (newName) => (deckStore.deck.name = newName),
 		});
 
 		return { deckNameId: useId(), deckName };

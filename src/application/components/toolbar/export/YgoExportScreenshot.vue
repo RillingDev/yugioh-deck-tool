@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../composition/io/downloadFile";
@@ -22,6 +22,7 @@ import {
 	useToast,
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const logger = getLogger("YgoExportScreenshot");
 
@@ -30,10 +31,9 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const deckStore = useDeckStore();
-		const toast = useToast();
+		const { deck, deckEmpty } = storeToRefs(useDeckStore());
 
-		const deckEmpty = computed(() => deckStore.isDeckEmpty);
+		const toast = useToast();
 
 		const screenshot = (): void => {
 			const deckEl = document.getElementById("deckToolDeck");
@@ -48,17 +48,13 @@ export default defineComponent({
 				"Creating screenshot, please wait.",
 				"deck-tool__portal"
 			);
-			createScreenshot(
-				deckEl,
-				deckStore.active.name ?? "Deck Screenshot",
-				{
-					scale: 2,
-					onclone: (doc) => {
-						doc.body.classList.add("deck-tool__screenshot-context");
-					},
-					useCORS: true, // Image resources are hosted on separate origin.
-				}
-			)
+			createScreenshot(deckEl, deck.value.name ?? "Deck Screenshot", {
+				scale: 2,
+				onclone: (doc) => {
+					doc.body.classList.add("deck-tool__screenshot-context");
+				},
+				useCORS: true, // Image resources are hosted on separate origin.
+			})
 				.then((file) => {
 					showSuccess(
 						toast,

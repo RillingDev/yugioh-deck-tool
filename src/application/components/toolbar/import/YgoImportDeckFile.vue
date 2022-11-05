@@ -33,6 +33,7 @@ export default defineComponent({
 	emits: [],
 	setup() {
 		const deckStore = useDeckStore();
+
 		const toast = useToast();
 
 		const importDeckFile = async (file: File): Promise<ImportResult> => {

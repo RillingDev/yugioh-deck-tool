@@ -51,6 +51,7 @@ import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { applicationContainer } from "../../../inversify.config";
 import { computed, defineComponent, ref } from "vue";
 import { useDeckStore } from "@/application/store/deck";
+import { storeToRefs } from "pinia";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -63,11 +64,11 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
+		const { deck } = storeToRefs(useDeckStore());
+
 		const goingFirst = ref<boolean>(true);
 		const drawnCards = ref<Card[]>([]);
 
-		const deckStore = useDeckStore();
-		const deck = computed(() => deckStore.active);
 		const hasMainDeckCards = computed<boolean>(
 			() => deck.value.parts[DeckPart.MAIN].length > 0
 		);

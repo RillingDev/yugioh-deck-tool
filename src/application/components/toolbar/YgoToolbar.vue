@@ -77,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { BDropdown, BDropdownDivider } from "bootstrap-vue";
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
@@ -121,11 +121,9 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const deckStore = useDeckStore();
+		const { deckEmpty } = storeToRefs(useDeckStore());
 
 		const { essentialDataLoaded } = storeToRefs(useDataStore());
-
-		const deckEmpty = computed(() => deckStore.isDeckEmpty);
 
 		return { essentialDataLoaded, deckEmpty };
 	},

@@ -28,7 +28,7 @@ export default defineComponent({
 	setup() {
 		const deckStore = useDeckStore();
 
-		const deckEmpty = computed(() => deckStore.isDeckEmpty);
+		const deckEmpty = computed(() => deckStore.deckEmpty);
 
 		const clear = (): void => deckStore.clear();
 
