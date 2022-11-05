@@ -81,6 +81,7 @@ import YgoCard from "../YgoCard.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { useCollectionStore } from "@/application/store/collection";
 import { useFormatStore } from "@/application/store/format";
+import { storeToRefs } from "pinia";
 
 const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
 
@@ -103,7 +104,8 @@ export default defineComponent({
 	setup(props) {
 		const deckStore = useDeckStore();
 		const collectionStore = useCollectionStore();
-		const formatStore = useFormatStore();
+
+		const { format } = storeToRefs(useFormatStore());
 
 		const toast = useToast();
 
@@ -135,7 +137,7 @@ export default defineComponent({
 			const deckPart = deckService.findAvailableDeckPart(
 				deckStore.active,
 				card,
-				formatStore.active
+				format.value
 			);
 			if (deckPart != null) {
 				deckStore.addCard({ card, deckPart });
@@ -157,7 +159,7 @@ export default defineComponent({
 				deckStore.active,
 				card,
 				newDeckPart,
-				formatStore.active
+				format.value
 			);
 		};
 

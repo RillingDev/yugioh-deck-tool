@@ -78,11 +78,8 @@ export default defineComponent({
 			order: SortingOrder.DESC,
 		});
 
-		const formatStore = useFormatStore();
-
 		const { essentialDataLoaded } = storeToRefs(useDataStore());
-
-		const format = computed(() => formatStore.active);
+		const { format } = storeToRefs(useFormatStore());
 
 		const formatCards = computed<Card[]>(() => {
 			// Required to ensure render after loading.

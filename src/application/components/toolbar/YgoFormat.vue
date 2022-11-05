@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, readonly } from "vue";
+import { defineComponent, readonly } from "vue";
 
 import VSelect from "vue-select";
 import { Format } from "@/core/lib";
 import { useFormatStore } from "@/application/store/format";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
 	components: { VSelect },
@@ -27,15 +28,7 @@ export default defineComponent({
 	setup() {
 		const formats = readonly<Format[]>(Object.values(Format));
 
-		const formatStore = useFormatStore();
-
-		const format = computed({
-			get: () => formatStore.active,
-			set: (newFormat) =>
-				formatStore.setFormat({
-					format: newFormat,
-				}),
-		});
+		const { format } = storeToRefs(useFormatStore());
 
 		return { formats, format };
 	},

@@ -262,7 +262,7 @@ export default defineComponent({
 	},
 	emits: ["change"],
 	setup: function (props, context) {
-		const formatStore = useFormatStore();
+		const { format } = storeToRefs(useFormatStore());
 		const collectionStore = useCollectionStore();
 
 		const { essentialDataLoaded } = storeToRefs(useDataStore());
@@ -297,11 +297,10 @@ export default defineComponent({
 		);
 
 		const hasBanStates = computed<boolean>(() => {
-			const format = formatStore.active;
-			if (format == null) {
+			if (format.value == null) {
 				return false;
 			}
-			return banlistService.hasBanlist(format);
+			return banlistService.hasBanlist(format.value);
 		});
 		const isMonster = computed<boolean>(
 			() => internalFilter.typeCategory === CardTypeCategory.MONSTER

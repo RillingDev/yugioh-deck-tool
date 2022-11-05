@@ -62,6 +62,7 @@ import YgoCard from "../YgoCard.vue";
 import YgoPrice from "../YgoPrice.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { useFormatStore } from "@/application/store/format";
+import { storeToRefs } from "pinia";
 
 const deckController = applicationContainer.get<DeckController>(
 	APPLICATION_TYPES.DeckController
@@ -93,7 +94,7 @@ export default defineComponent({
 		);
 
 		const deckStore = useDeckStore();
-		const formatStore = useFormatStore();
+		const { format } = storeToRefs(useFormatStore());
 
 		const cards = computed<Card[]>(
 			() => deckStore.active.parts[props.deckPart]
@@ -162,7 +163,7 @@ export default defineComponent({
 				card,
 				oldDeckPart,
 				newDeckPart,
-				formatStore.active
+				format.value
 			);
 		};
 

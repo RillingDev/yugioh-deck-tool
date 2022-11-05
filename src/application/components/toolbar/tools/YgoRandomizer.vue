@@ -41,7 +41,7 @@ import type { CardFilter, DeckRandomizationService } from "@/core/lib";
 import { RandomizationStrategy, TYPES } from "@/core/lib";
 import { applicationContainer } from "../../../inversify.config";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
-import { computed, defineComponent, readonly, ref } from "vue";
+import { defineComponent, readonly, ref } from "vue";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
 import { useDataStore } from "@/application/store/data";
@@ -76,10 +76,9 @@ export default defineComponent({
 			sets: [],
 		});
 
-		const formatStore = useFormatStore();
 		const deckStore = useDeckStore();
 
-		const format = computed(() => formatStore.active);
+		const { format } = storeToRefs(useFormatStore());
 
 		const randomize = (): void => {
 			const randomizedDeck = deckRandomizationService.randomize(
