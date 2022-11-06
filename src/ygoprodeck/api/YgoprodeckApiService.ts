@@ -43,11 +43,11 @@ const assertStatusOk = (res: Response): Response => {
  * See YGOPRODECK API (https://db.ygoprodeck.com/api-guide/).
  */
 export class YgoprodeckApiService {
-	private static readonly CHUNK_SIZE = 2000;
+	static readonly #CHUNK_SIZE = 2000;
 
 	// Is returned if no matching cards or an empty list should be returned.
 	// While not technically an error, the API treats it as such.
-	private static readonly HTTP_STATUS_NO_MATCHES = 400;
+	static readonly #HTTP_STATUS_NO_MATCHES = 400;
 
 	readonly #environmentConfig: EnvironmentConfig;
 	readonly #resourceService: ResourceService;
@@ -70,7 +70,7 @@ export class YgoprodeckApiService {
 			url,
 			this.#createAuthHeaders(options)
 		).then((res) => {
-			if (res.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES) {
+			if (res.status === YgoprodeckApiService.#HTTP_STATUS_NO_MATCHES) {
 				return null;
 			}
 			assertStatusOk(res);
@@ -89,7 +89,7 @@ export class YgoprodeckApiService {
 		this.#putCardInfoParams(urlBase.searchParams, options);
 		urlBase.searchParams.set(
 			"num",
-			YgoprodeckApiService.CHUNK_SIZE.toString()
+			YgoprodeckApiService.#CHUNK_SIZE.toString()
 		);
 
 		const authHeaders = this.#createAuthHeaders(options);
@@ -100,7 +100,7 @@ export class YgoprodeckApiService {
 
 			return this.#getJsonResponse(url, authHeaders).then((res) => {
 				if (
-					res.status === YgoprodeckApiService.HTTP_STATUS_NO_MATCHES
+					res.status === YgoprodeckApiService.#HTTP_STATUS_NO_MATCHES
 				) {
 					return createEmptyPaginatedResponse([]);
 				}

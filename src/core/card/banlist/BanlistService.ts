@@ -8,7 +8,7 @@ export class BanlistService {
 	/**
 	 * Formats which have a banlist. See {@link BanlistInfo}.
 	 */
-	private static readonly BANLIST_FORMATS: Set<Format> = new Set([
+	static readonly #BANLIST_FORMATS: Set<Format> = new Set([
 		Format.OCG,
 		Format.TCG,
 		Format.GOAT,
@@ -21,7 +21,7 @@ export class BanlistService {
 	 * @return if the format has a banlist.
 	 */
 	hasBanlist(format: Format): boolean {
-		return BanlistService.BANLIST_FORMATS.has(format);
+		return BanlistService.#BANLIST_FORMATS.has(format);
 	}
 
 	/**

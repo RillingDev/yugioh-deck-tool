@@ -4,7 +4,7 @@ import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
 import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
 
 export class YgoprodeckCardDatabase implements CardDatabase {
-	private static readonly logger = getLogger(YgoprodeckCardDatabase);
+	static readonly #logger = getLogger(YgoprodeckCardDatabase);
 
 	readonly #ygoprodeckApiService: YgoprodeckApiService;
 
@@ -176,7 +176,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.getArchetypes()
 				.then((archetypes) => {
 					this.#archetypes.push(...archetypes);
-					YgoprodeckCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.#logger.debug(
 						"Registered archetypes.",
 						this.#archetypes
 					);
@@ -196,7 +196,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 						this.#setsByName.set(set.name, set)
 					);
 
-					YgoprodeckCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.#logger.debug(
 						"Registered sets.",
 						this.#sets
 					);
@@ -226,7 +226,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 							this.#typesByName.set(type.name, type)
 						);
 
-					YgoprodeckCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.#logger.debug(
 						"Registered types and sub-types.",
 						this.#types,
 						this.#subTypes
@@ -241,7 +241,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 					this.#linkMarkers.push(
 						...cardValues[CardTypeCategory.MONSTER].linkMarkers
 					);
-					YgoprodeckCardDatabase.logger.debug(
+					YgoprodeckCardDatabase.#logger.debug(
 						"Registered monster values.",
 						this.#attributes,
 						this.#levels,
@@ -261,7 +261,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 			this.#cardsByPasscode.set(card.passcode, card);
 			this.#cardsByName.set(card.name, card);
-			YgoprodeckCardDatabase.logger.trace(
+			YgoprodeckCardDatabase.#logger.trace(
 				`Registered card '${card.passcode}'.`
 			);
 		}
@@ -291,7 +291,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return setAppearances
 			.map((setAppearance) => {
 				if (!this.#setsByName.has(setAppearance.name)) {
-					YgoprodeckCardDatabase.logger.warn(
+					YgoprodeckCardDatabase.#logger.warn(
 						`Could not find set '${setAppearance.name}'.`
 					);
 					return null;

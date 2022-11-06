@@ -47,7 +47,7 @@ export const createDefaultTypeCategoryWeighting = (): TypeCategoryWeighting =>
 	]);
 
 export class DeckRandomizationService {
-	private static readonly IGNORED_WORDS = new Set([
+	static readonly #IGNORED_WORDS = new Set([
 		// Articles
 		"the",
 		"a",
@@ -337,7 +337,7 @@ export class DeckRandomizationService {
 			if (count >= countRequiredForPlaySet) {
 				for (const word of words(card.name)) {
 					if (
-						!DeckRandomizationService.IGNORED_WORDS.has(
+						!DeckRandomizationService.#IGNORED_WORDS.has(
 							word.toLowerCase()
 						)
 					) {

@@ -7,10 +7,10 @@ import type {
 import { getLogger } from "@/core/lib";
 
 export class DeckUrlController {
-	private static readonly logger = getLogger(DeckUrlController);
+	static readonly #logger = getLogger(DeckUrlController);
 
-	private static readonly PARAM_ENCODED_URI_DECK = "e";
-	private static readonly PARAM_REMOTE_DECK = "u";
+	static readonly #PARAM_ENCODED_URI_DECK = "e";
+	static readonly #PARAM_REMOTE_DECK = "u";
 
 	readonly #deckService: DeckService;
 	readonly #deckUriEncodingService: DeckUriEncodingService;
@@ -35,7 +35,7 @@ export class DeckUrlController {
 	async loadUriDeck(url: URL): Promise<Deck | null> {
 		// Load deck file from a remote URL
 		const remoteUrlValue = url.searchParams.get(
-			DeckUrlController.PARAM_REMOTE_DECK
+			DeckUrlController.#PARAM_REMOTE_DECK
 		);
 		if (remoteUrlValue != null) {
 			const importResult = await this.#deckFileService.fromRemoteFile(
@@ -43,7 +43,7 @@ export class DeckUrlController {
 				new URL(remoteUrlValue)
 			);
 			if (importResult.missing.length > 0) {
-				DeckUrlController.logger.warn(
+				DeckUrlController.#logger.warn(
 					`Could not read ${importResult.missing.length} cards in remote deck.`
 				);
 			}
@@ -52,7 +52,7 @@ export class DeckUrlController {
 
 		// Load encoded uri deck
 		const uriEncodedDeck = url.searchParams.get(
-			DeckUrlController.PARAM_ENCODED_URI_DECK
+			DeckUrlController.#PARAM_ENCODED_URI_DECK
 		);
 		if (uriEncodedDeck != null) {
 			return this.#deckUriEncodingService.fromUrlQueryParamValue(
@@ -74,7 +74,7 @@ export class DeckUrlController {
 		url.search = "";
 		if (this.#deckService.getAllCards(deck).length > 0) {
 			url.searchParams.append(
-				DeckUrlController.PARAM_ENCODED_URI_DECK,
+				DeckUrlController.#PARAM_ENCODED_URI_DECK,
 				this.#deckUriEncodingService.toUrlQueryParamValue(deck)
 			);
 		}

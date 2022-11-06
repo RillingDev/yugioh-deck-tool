@@ -12,16 +12,15 @@ import type { EncodingService } from "../util/EncodingService";
 export class DeckUriEncodingService {
 	// A 32-bit integer is able to store all 8 digit passcodes
 	// Note that currently we assume only little endian systems are used.
-	private static readonly BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
-	private static readonly LIMIT =
-		2 ** (DeckUriEncodingService.BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.
+	static readonly #BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
+	static readonly #LIMIT = 2 ** (DeckUriEncodingService.#BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.
 
-	private static readonly URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK: Uint8Array =
-		new Uint8Array(DeckUriEncodingService.BLOCK_BYTE_SIZE).fill(0);
-	private static readonly URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN = true;
+	static readonly #URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK: Uint8Array =
+		new Uint8Array(DeckUriEncodingService.#BLOCK_BYTE_SIZE).fill(0);
+	static readonly #URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN = true;
 
-	private static readonly YDKE_URI_PROTOCOL = "ydke://";
-	private static readonly YDKE_DELIMITER = "!";
+	static readonly #YDKE_URI_PROTOCOL = "ydke://";
+	static readonly #YDKE_DELIMITER = "!";
 
 	readonly #cardDatabase: CardDatabase;
 	readonly #deckService: DeckService;
@@ -61,9 +60,9 @@ export class DeckUriEncodingService {
 			);
 		}
 		return new URL(
-			DeckUriEncodingService.YDKE_URI_PROTOCOL +
-				encodedDeckParts.join(DeckUriEncodingService.YDKE_DELIMITER) +
-				DeckUriEncodingService.YDKE_DELIMITER
+			DeckUriEncodingService.#YDKE_URI_PROTOCOL +
+				encodedDeckParts.join(DeckUriEncodingService.#YDKE_DELIMITER) +
+				DeckUriEncodingService.#YDKE_DELIMITER
 		);
 	}
 
@@ -78,8 +77,8 @@ export class DeckUriEncodingService {
 	 */
 	fromUri(uri: string): Deck {
 		const uriParts = uri
-			.slice(DeckUriEncodingService.YDKE_URI_PROTOCOL.length)
-			.split(DeckUriEncodingService.YDKE_DELIMITER);
+			.slice(DeckUriEncodingService.#YDKE_URI_PROTOCOL.length)
+			.split(DeckUriEncodingService.#YDKE_DELIMITER);
 		uriParts.pop(); // uriParts is always one longer than there are deck parts due to trailing delimiter.
 
 		if (uriParts.length !== DECK_PART_ARR.length) {
@@ -103,11 +102,11 @@ export class DeckUriEncodingService {
 			for (
 				let blockStart = 0;
 				blockStart < decodedDeckPartCards.length;
-				blockStart += DeckUriEncodingService.BLOCK_BYTE_SIZE
+				blockStart += DeckUriEncodingService.#BLOCK_BYTE_SIZE
 			) {
 				const block = decodedDeckPartCards.slice(
 					blockStart,
-					blockStart + DeckUriEncodingService.BLOCK_BYTE_SIZE
+					blockStart + DeckUriEncodingService.#BLOCK_BYTE_SIZE
 				);
 				deckPartCards.push(this.#decodeCardBlock(block));
 			}
@@ -142,7 +141,7 @@ export class DeckUriEncodingService {
 				result.push(...this.#encodeCardBlock(card));
 			}
 			result.push(
-				...DeckUriEncodingService.URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
+				...DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
 			);
 		}
 		if (deck.name != null && deck.name !== "") {
@@ -173,16 +172,17 @@ export class DeckUriEncodingService {
 		for (
 			let blockStart = 0;
 			blockStart < inflated.length;
-			blockStart += DeckUriEncodingService.BLOCK_BYTE_SIZE
+			blockStart += DeckUriEncodingService.#BLOCK_BYTE_SIZE
 		) {
 			const blockEnd =
-				blockStart + DeckUriEncodingService.BLOCK_BYTE_SIZE;
+				blockStart + DeckUriEncodingService.#BLOCK_BYTE_SIZE;
 			const block = inflated.slice(blockStart, blockEnd);
 
 			if (
 				isEqual(
 					block,
-					DeckUriEncodingService.URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
+					DeckUriEncodingService
+						.#URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
 				)
 			) {
 				// After the last deck part, metadata starts
@@ -220,17 +220,19 @@ export class DeckUriEncodingService {
 	}
 
 	#encodeNumber(number: number): Uint8Array {
-		if (number <= 0 || number >= DeckUriEncodingService.LIMIT) {
+		if (number <= 0 || number >= DeckUriEncodingService.#LIMIT) {
 			throw new TypeError(
-				`Number '${number} is of range (has to be > 0 and < ${DeckUriEncodingService.LIMIT})'.`
+				`Number '${number} is of range (has to be > 0 and < ${
+					DeckUriEncodingService.#LIMIT
+				})'.`
 			);
 		}
 		// Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
-		const buffer = new ArrayBuffer(DeckUriEncodingService.BLOCK_BYTE_SIZE);
+		const buffer = new ArrayBuffer(DeckUriEncodingService.#BLOCK_BYTE_SIZE);
 		new DataView(buffer).setUint32(
 			0,
 			number,
-			DeckUriEncodingService.URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
+			DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
 		);
 		return new Uint8Array(buffer);
 	}
@@ -239,7 +241,7 @@ export class DeckUriEncodingService {
 		// See #encodeNumber for details
 		return new DataView(block.buffer).getUint32(
 			0,
-			DeckUriEncodingService.URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
+			DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
 		);
 	}
 }
