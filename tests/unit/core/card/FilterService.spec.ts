@@ -1,5 +1,5 @@
 import { createCard } from "../../helper/dataFactories";
-import { anything, mock, when } from "ts-mockito";
+import { anything, instance, mock, when } from "ts-mockito";
 import type { CardPredicate } from "@/core/lib";
 import {
 	BanlistService,
@@ -14,14 +14,17 @@ import {
 describe("FilterService", () => {
 	let filterService: FilterService;
 
-	let mockCardService: CardService;
-	let mockBanlistService: BanlistService;
+	let cardServiceMock: CardService;
+	let banlistServiceMock: BanlistService;
 
 	beforeEach(() => {
-		mockCardService = mock(CardService);
-		mockBanlistService = mock(BanlistService);
+		cardServiceMock = mock(CardService);
+		banlistServiceMock = mock(BanlistService);
 
-		filterService = new FilterService(mockCardService, mockBanlistService);
+		filterService = new FilterService(
+			instance(cardServiceMock),
+			instance(banlistServiceMock)
+		);
 	});
 
 	describe("filter", () => {
@@ -52,8 +55,8 @@ describe("FilterService", () => {
 					name: "bar",
 				});
 
-				when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
-				when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
+				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
 
 				expect(
 					filterService.filter([card1, card2], {
@@ -72,8 +75,8 @@ describe("FilterService", () => {
 					name: "bar",
 				});
 
-				when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
-				when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
+				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
 
 				expect(
 					filterService.filter([card1, card2], {
@@ -92,11 +95,11 @@ describe("FilterService", () => {
 					name: "bar",
 				});
 
-				when(mockCardService.getAllNames(card1)).thenReturn([
+				when(cardServiceMock.getAllNames(card1)).thenReturn([
 					"foo",
 					"föö",
 				]);
-				when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
 
 				expect(
 					filterService.filter([card1, card2], {
@@ -117,8 +120,8 @@ describe("FilterService", () => {
 					description: "bar",
 				});
 
-				when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
-				when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
+				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
 
 				expect(
 					filterService.filter([card1, card2], {
@@ -137,8 +140,8 @@ describe("FilterService", () => {
 					description: "bar",
 				});
 
-				when(mockCardService.getAllNames(card1)).thenReturn(["foo"]);
-				when(mockCardService.getAllNames(card2)).thenReturn(["bar"]);
+				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
+				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
 
 				expect(
 					filterService.filter([card1, card2], {
@@ -336,10 +339,10 @@ describe("FilterService", () => {
 				});
 
 				when(
-					mockBanlistService.getBanStateByFormat(card1, Format.TCG)
+					banlistServiceMock.getBanStateByFormat(card1, Format.TCG)
 				).thenReturn(DefaultBanState.LIMITED);
 				when(
-					mockBanlistService.getBanStateByFormat(card2, Format.TCG)
+					banlistServiceMock.getBanStateByFormat(card2, Format.TCG)
 				).thenReturn(DefaultBanState.BANNED);
 
 				expect(
@@ -359,13 +362,13 @@ describe("FilterService", () => {
 				});
 
 				when(
-					mockBanlistService.getBanStateByFormat(
+					banlistServiceMock.getBanStateByFormat(
 						card1,
 						anything() as Format
 					)
 				).thenReturn(DefaultBanState.LIMITED);
 				when(
-					mockBanlistService.getBanStateByFormat(
+					banlistServiceMock.getBanStateByFormat(
 						card2,
 						anything() as Format
 					)

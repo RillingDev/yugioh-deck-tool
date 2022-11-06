@@ -1,5 +1,5 @@
 import { createCard } from "../../helper/dataFactories";
-import { when } from "ts-mockito";
+import { instance, mock, when } from "ts-mockito";
 import type { CardDatabase } from "@/core/lib";
 import {
 	createBaseModule,
@@ -14,15 +14,17 @@ import { MockCardDatabase } from "../../helper/MockCardDatabase";
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;
 
-	let mockCardDatabase: CardDatabase;
+	let cardDatabaseMock: CardDatabase;
 
 	beforeEach(() => {
-		mockCardDatabase = new MockCardDatabase();
+		cardDatabaseMock = mock(MockCardDatabase);
+		const cardDatabase = instance(cardDatabaseMock);
+
 		const { cardService, banlistService, sortingService } =
-			createBaseModule(mockCardDatabase);
+			createBaseModule(cardDatabase);
 
 		deckUriEncodingService = new DeckUriEncodingService(
-			mockCardDatabase,
+			cardDatabase,
 			new DeckService(cardService, sortingService, banlistService),
 			new EncodingService()
 		);
@@ -67,34 +69,34 @@ describe("DeckUriEncodingService", () => {
 		it("reads value", () => {
 			const card1 = createCard({ passcode: "123" });
 			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card1);
 
 			const card2 = createCard({ passcode: "456" });
 			when(
-				mockCardDatabase.hasCard("456", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("456", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
 			).thenReturn(card2);
 
 			const card3 = createCard({ passcode: "789" });
 			when(
-				mockCardDatabase.hasCard("789", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("789", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
 			).thenReturn(card3);
 
 			const card4 = createCard({ passcode: "999999999" });
 			when(
-				mockCardDatabase.hasCard("999999999", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("999999999", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("999999999", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("999999999", FindCardBy.PASSCODE)
 			).thenReturn(card4);
 
 			const result = deckUriEncodingService.fromUrlQueryParamValue(
@@ -114,26 +116,26 @@ describe("DeckUriEncodingService", () => {
 		it("works with null name", () => {
 			const card1 = createCard({ passcode: "123" });
 			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card1);
 
 			const card2 = createCard({ passcode: "456" });
 			when(
-				mockCardDatabase.hasCard("456", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("456", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
 			).thenReturn(card2);
 
 			const card3 = createCard({ passcode: "789" });
 			when(
-				mockCardDatabase.hasCard("789", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("789", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
 			).thenReturn(card3);
 
 			const result = deckUriEncodingService.fromUrlQueryParamValue(
@@ -175,26 +177,26 @@ describe("DeckUriEncodingService", () => {
 		it("reads value", () => {
 			const card1 = createCard({ passcode: "5050644" });
 			when(
-				mockCardDatabase.hasCard("5050644", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("5050644", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("5050644", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("5050644", FindCardBy.PASSCODE)
 			).thenReturn(card1);
 
 			const card2 = createCard({ passcode: "29189613" });
 			when(
-				mockCardDatabase.hasCard("29189613", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("29189613", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("29189613", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("29189613", FindCardBy.PASSCODE)
 			).thenReturn(card2);
 
 			const card3 = createCard({ passcode: "38148100" });
 			when(
-				mockCardDatabase.hasCard("38148100", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("38148100", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("38148100", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("38148100", FindCardBy.PASSCODE)
 			).thenReturn(card3);
 
 			const result = deckUriEncodingService.fromUri(

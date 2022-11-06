@@ -1,4 +1,4 @@
-import { when } from "ts-mockito";
+import { instance, mock, when } from "ts-mockito";
 import { createCard } from "../../helper/dataFactories";
 import type { CardDatabase } from "@/core/lib";
 import {
@@ -13,10 +13,12 @@ import { MockCardDatabase } from "../../helper/MockCardDatabase";
 describe("DeckFileService", () => {
 	let deckFileService: DeckFileService;
 
-	let mockCardDatabase: CardDatabase;
+	let cardDatabaseMock: CardDatabase;
 
 	beforeEach(() => {
-		const cardDatabase = new MockCardDatabase();
+		cardDatabaseMock = mock(MockCardDatabase);
+		const cardDatabase = instance(cardDatabaseMock);
+
 		const { cardService, banlistService, sortingService } =
 			createBaseModule(cardDatabase);
 
@@ -54,10 +56,10 @@ describe("DeckFileService", () => {
 123`;
 			const card = createCard({ passcode: "123" });
 			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card);
 
 			const result = deckFileService.fromFile({
@@ -77,10 +79,10 @@ describe("DeckFileService", () => {
 123`;
 			const card = createCard({ passcode: "123" });
 			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card);
 
 			const result = deckFileService.fromFile({
@@ -109,26 +111,26 @@ describe("DeckFileService", () => {
 
 			const card1 = createCard({ passcode: "123" });
 			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card1);
 
 			const card2 = createCard({ passcode: "456" });
 			when(
-				mockCardDatabase.hasCard("456", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("456", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
 			).thenReturn(card2);
 
 			const card3 = createCard({ passcode: "789" });
 			when(
-				mockCardDatabase.hasCard("789", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("789", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
 			).thenReturn(card3);
 
 			const result = deckFileService.fromFile({
@@ -151,10 +153,10 @@ describe("DeckFileService", () => {
 123`;
 			const card = createCard({ passcode: "123" });
 			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card);
 
 			const result = deckFileService.fromFile({
@@ -172,10 +174,10 @@ describe("DeckFileService", () => {
 0000123`;
 			const card = createCard({ passcode: "123" });
 			when(
-				mockCardDatabase.hasCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
 			).thenReturn(true);
 			when(
-				mockCardDatabase.getCard("123", FindCardBy.PASSCODE)
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
 			).thenReturn(card);
 
 			const result = deckFileService.fromFile({
