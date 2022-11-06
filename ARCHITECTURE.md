@@ -11,7 +11,3 @@
 #### Dependency Tree
 
 ![Dependency Tree!](./architecture.svg)
-
-### IoC
-
-Dependency injection is done via [InversifyJS](https://github.com/inversify/InversifyJS). Non-entry point packages provide modules with dependency configuration. Entry-point packages use these to create containers.
