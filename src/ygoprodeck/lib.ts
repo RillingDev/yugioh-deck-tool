@@ -1,5 +1,4 @@
-export { YGOPRODECK_TYPES } from "./types";
-export { ygoprodeckModule } from "./inversify.modules";
+export { createYgoprodeckModule } from "./modules";
 
 export type { Credentials } from "./api/YgoprodeckApiService";
 export { YgoprodeckService } from "./api/YgoprodeckService";

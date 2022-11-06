@@ -14,26 +14,18 @@
 </template>
 
 <script lang="ts">
-import type { CardDatabase } from "@/core/lib";
-import { getLogger, TYPES } from "@/core/lib";
+import { getLogger } from "@/core/lib";
 
-import { applicationContainer } from "./inversify.config";
-import { APPLICATION_TYPES } from "./types";
 import { defineComponent, onMounted } from "vue";
 import { BOverlay } from "bootstrap-vue";
 import { showError, useToast } from "./composition/feedback";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
-import type { DeckUrlController } from "./controller/DeckUrlController";
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
-const deckUrlController = applicationContainer.get<DeckUrlController>(
-	APPLICATION_TYPES.DeckUrlController
-);
+import { cardDatabase, deckUrlController } from "@/application/container";
 
 const logger = getLogger("App");
 

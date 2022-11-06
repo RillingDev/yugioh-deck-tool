@@ -13,13 +13,7 @@
 import type { PropType } from "vue";
 import { computed, defineComponent } from "vue";
 import type { Card } from "@/core/lib";
-import type { ResourceService } from "@/ygoprodeck/lib";
-import { YGOPRODECK_TYPES } from "@/ygoprodeck/lib";
-import { applicationContainer } from "../inversify.config";
-
-const resourceService = applicationContainer.get<ResourceService>(
-	YGOPRODECK_TYPES.ResourceService
-);
+import { resourceService } from "@/application/container";
 
 export default defineComponent({
 	components: {},

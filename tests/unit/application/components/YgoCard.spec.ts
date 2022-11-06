@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { mount } from "@vue/test-utils";
 import YgoCard from "../../../../src/application/components/YgoCard.vue";
 import type { Card } from "@/core/lib";

@@ -1,4 +1,3 @@
-import { injectable } from "inversify";
 import type { Card } from "./Card";
 import { intersection } from "lodash";
 import { countMapBy } from "lightdash";
@@ -7,7 +6,6 @@ import type { CardType } from "./type/CardType";
 
 export type Counted<T> = Map<T, number>;
 
-@injectable()
 export class CardService {
 	/**
 	 * Gets all names of a card, including the official name, the beta name, and the "treated as" name.

@@ -37,9 +37,8 @@
 </template>
 
 <script lang="ts">
-import type { CardFilter, DeckRandomizationService } from "@/core/lib";
-import { RandomizationStrategy, TYPES } from "@/core/lib";
-import { applicationContainer } from "../../../inversify.config";
+import type { CardFilter } from "@/core/lib";
+import { RandomizationStrategy } from "@/core/lib";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
 import { defineComponent, readonly, ref } from "vue";
 import YgoFilter from "../../YgoFilter.vue";
@@ -48,11 +47,7 @@ import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const deckRandomizationService =
-	applicationContainer.get<DeckRandomizationService>(
-		TYPES.DeckRandomizationService
-	);
+import { deckRandomizationService } from "@/application/container";
 
 export default defineComponent({
 	components: {

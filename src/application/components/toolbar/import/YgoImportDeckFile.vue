@@ -7,9 +7,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { DeckFileService, ImportResult } from "@/core/lib";
-import { getLogger, TYPES } from "@/core/lib";
-import { applicationContainer } from "../../../inversify.config";
+import type { ImportResult } from "@/core/lib";
+import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { readFile } from "../../../composition/io/readFile";
 import { uploadFile } from "../../../composition/io/uploadFile";
@@ -20,10 +19,7 @@ import {
 	useToast,
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
-
-const deckFileService = applicationContainer.get<DeckFileService>(
-	TYPES.DeckFileService
-);
+import { deckFileService } from "@/application/container";
 
 const logger = getLogger("YgoImportDeckFile");
 

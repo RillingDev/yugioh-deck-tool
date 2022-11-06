@@ -19,23 +19,15 @@
 import type { CardCountFunction } from "@/core/lib";
 import { getLogger } from "@/core/lib";
 import { defineComponent, ref, watch } from "vue";
-import { applicationContainer } from "../../inversify.config";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError, useToast } from "../../composition/feedback";
-import { APPLICATION_TYPES } from "../../types";
-import type { YgoprodeckController } from "../../controller/YgoprodeckController";
-import type { YgoprodeckService } from "@/ygoprodeck/lib";
-import { YGOPRODECK_TYPES } from "@/ygoprodeck/lib";
+import {
+	ygoprodeckController,
+	ygoprodeckService,
+} from "@/application/container";
 import { useCollectionStore } from "@/application/store/collection";
 import { useDataStore } from "@/application/store/data";
 import { storeToRefs } from "pinia";
-
-const ygoprodeckService = applicationContainer.get<YgoprodeckService>(
-	YGOPRODECK_TYPES.YgoprodeckService
-);
-const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
-	APPLICATION_TYPES.YgoprodeckController
-);
 
 const logger = getLogger("YgoCollectionFilter");
 

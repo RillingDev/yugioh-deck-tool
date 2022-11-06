@@ -1,15 +1,12 @@
-import "reflect-metadata";
 import { when } from "ts-mockito";
 import { createCard } from "../../helper/dataFactories";
-import { bindMock } from "../../helper/bindMock";
-import { Container } from "inversify";
-import type { CardDatabase, DeckFileService } from "@/core/lib";
+import type { CardDatabase } from "@/core/lib";
 import {
-	baseModule,
-	deckModule,
+	createBaseModule,
+	DeckFileService,
 	DeckPart,
+	DeckService,
 	FindCardBy,
-	TYPES,
 } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 
@@ -19,16 +16,14 @@ describe("DeckFileService", () => {
 	let mockCardDatabase: CardDatabase;
 
 	beforeEach(() => {
-		const container = new Container();
-		container.load(baseModule, deckModule);
+		const cardDatabase = new MockCardDatabase();
+		const { cardService, banlistService, sortingService } =
+			createBaseModule(cardDatabase);
 
-		mockCardDatabase = bindMock<CardDatabase>(
-			container,
-			TYPES.CardDatabase,
-			MockCardDatabase
+		deckFileService = new DeckFileService(
+			cardDatabase,
+			new DeckService(cardService, sortingService, banlistService)
 		);
-
-		deckFileService = container.get<DeckFileService>(TYPES.DeckFileService);
 	});
 
 	describe("fromFile", () => {

@@ -1,22 +1,11 @@
-import "reflect-metadata";
-
 import { createCard } from "../../helper/dataFactories";
-import { Container } from "inversify";
-import type { CardService } from "@/core/lib";
-import { baseModule, TYPES } from "@/core/lib";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
+import { CardService } from "@/core/lib";
 
 describe("CardService", () => {
 	let cardService: CardService;
 
 	beforeEach(() => {
-		const container = new Container();
-		container.load(baseModule);
-		container
-			.bind<MockCardDatabase>(TYPES.CardDatabase)
-			.to(MockCardDatabase);
-
-		cardService = container.get<CardService>(TYPES.CardService);
+		cardService = new CardService();
 	});
 
 	describe("getAllNames", () => {

@@ -1,10 +1,8 @@
-import { injectable } from "inversify";
 import { fromByteArray, toByteArray } from "base64-js";
 
 /**
  * Service handling text/byte array en-/decoding.
  */
-@injectable()
 export class EncodingService {
 	readonly #textEncoder: TextEncoder = new TextEncoder();
 	readonly #textDecoder: TextDecoder = new TextDecoder();

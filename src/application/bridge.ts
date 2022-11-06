@@ -1,5 +1,5 @@
-import type { Card, CardDatabase, Deck } from "@/core/lib";
-import { DeckPart, FindCardBy, getLogger, TYPES } from "@/core/lib";
+import type { Card, Deck } from "@/core/lib";
+import { DeckPart, FindCardBy, getLogger } from "@/core/lib";
 import type {
 	ApplicationApi,
 	ApplicationEvent,
@@ -8,14 +8,12 @@ import type {
 	ExternalDeck,
 	SlimExternalCard,
 } from "./api";
-import { applicationContainer } from "@/application/inversify.config";
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
 import { getExistingElseThrow } from "lightdash";
+import { cardDatabase } from "@/application/container";
 
 const logger = getLogger("bridge");
-
-const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
 
 const toExternalDeck = ({ name, parts }: Deck): ExternalDeck<ExternalCard> => {
 	return {

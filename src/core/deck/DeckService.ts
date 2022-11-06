@@ -1,28 +1,26 @@
-import { inject, injectable } from "inversify";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 import type { Card } from "../card/Card";
 import type { Deck } from "./Deck";
-import { TYPES } from "../types";
-import { CardService } from "../card/CardService";
+import type { CardService } from "../card/CardService";
 import type { Format } from "../card/format/Format";
 import { insertAt, pullFirst } from "lightdash";
 import { sampleSize, shuffle } from "lodash";
-import { SortingService, SortingStrategy } from "../card/SortingService";
+import type { SortingService } from "../card/SortingService";
+import { SortingStrategy } from "../card/SortingService";
 
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import { BanlistService } from "../card/banlist/BanlistService";
+import type { BanlistService } from "../card/banlist/BanlistService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
-@injectable()
 export class DeckService {
 	readonly #cardService: CardService;
 	readonly #sortingService: SortingService;
 	readonly #banlistService: BanlistService;
 
 	constructor(
-		@inject(TYPES.CardService) cardService: CardService,
-		@inject(TYPES.SortingService) sortingService: SortingService,
-		@inject(TYPES.BanlistService) banlistService: BanlistService
+		cardService: CardService,
+		sortingService: SortingService,
+		banlistService: BanlistService
 	) {
 		this.#cardService = cardService;
 		this.#sortingService = sortingService;

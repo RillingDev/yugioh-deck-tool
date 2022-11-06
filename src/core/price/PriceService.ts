@@ -1,4 +1,3 @@
-import { injectable } from "inversify";
 import type { Card } from "../card/Card";
 import type { Vendor } from "./Vendor";
 import type { Currency } from "./Currency";
@@ -8,7 +7,6 @@ export interface PriceLookupResult {
 	readonly missing: ReadonlyArray<Card>;
 }
 
-@injectable()
 export class PriceService {
 	/**
 	 * Formats a price for its currency.

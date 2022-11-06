@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import Vue from "vue";
 import type { ApplicationApi } from "./api";
 import App from "./App.vue";

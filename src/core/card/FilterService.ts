@@ -1,11 +1,9 @@
-import { inject, injectable } from "inversify";
 import { intersection, isEmpty } from "lodash";
-import { TYPES } from "../types";
-import { BanlistService } from "./banlist/BanlistService";
+import type { BanlistService } from "./banlist/BanlistService";
 import type { BanState } from "./banlist/BanState";
 import type { Card } from "./Card";
 import type { CardPredicate } from "./CardPredicateService";
-import { CardService } from "./CardService";
+import type { CardService } from "./CardService";
 import type { Format } from "./format/Format";
 import type { CardSet } from "./set/CardSet";
 import type { CardType } from "./type/CardType";
@@ -57,15 +55,11 @@ export type CardFilter = Partial<{
 	sets: CardSet[];
 }>;
 
-@injectable()
 export class FilterService {
 	readonly #cardService: CardService;
 	readonly #banlistService: BanlistService;
 
-	constructor(
-		@inject(TYPES.CardService) cardService: CardService,
-		@inject(TYPES.BanlistService) banlistService: BanlistService
-	) {
+	constructor(cardService: CardService, banlistService: BanlistService) {
 		this.#cardService = cardService;
 		this.#banlistService = banlistService;
 	}

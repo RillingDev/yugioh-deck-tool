@@ -1,17 +1,14 @@
-import "reflect-metadata";
 import { createCard } from "../../helper/dataFactories";
 import { when } from "ts-mockito";
-import { Container } from "inversify";
-import type { CardDatabase, DeckUriEncodingService } from "@/core/lib";
+import type { CardDatabase } from "@/core/lib";
 import {
-	baseModule,
-	deckModule,
+	createBaseModule,
 	DeckPart,
+	DeckService,
+	DeckUriEncodingService,
 	FindCardBy,
-	TYPES,
 } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { bindMock } from "../../helper/bindMock";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;
@@ -19,17 +16,14 @@ describe("DeckUriEncodingService", () => {
 	let mockCardDatabase: CardDatabase;
 
 	beforeEach(() => {
-		const container = new Container();
-		container.load(baseModule, deckModule);
+		mockCardDatabase = new MockCardDatabase();
+		const { cardService, banlistService, sortingService, encodingService } =
+			createBaseModule(mockCardDatabase);
 
-		mockCardDatabase = bindMock<CardDatabase>(
-			container,
-			TYPES.CardDatabase,
-			MockCardDatabase
-		);
-
-		deckUriEncodingService = container.get<DeckUriEncodingService>(
-			TYPES.DeckUriEncodingService
+		deckUriEncodingService = new DeckUriEncodingService(
+			mockCardDatabase,
+			new DeckService(cardService, sortingService, banlistService),
+			encodingService
 		);
 	});
 

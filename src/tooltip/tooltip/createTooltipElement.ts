@@ -1,11 +1,6 @@
-import type { Card, PriceService } from "@/core/lib";
-import {
-	CardTypeCategory,
-	DEFAULT_VENDOR_ARR,
-	Format,
-	TYPES,
-} from "@/core/lib";
-import { tooltipContainer } from "../inversify.config";
+import type { Card } from "@/core/lib";
+import { CardTypeCategory, DEFAULT_VENDOR_ARR, Format } from "@/core/lib";
+import { priceService, resourceService } from "../container";
 import {
 	createDiv,
 	createImg,
@@ -14,13 +9,6 @@ import {
 	createSpan,
 	createUl,
 } from "./domHelper";
-import type { ResourceService } from "@/ygoprodeck/lib";
-import { YGOPRODECK_TYPES } from "@/ygoprodeck/lib";
-
-const priceService = tooltipContainer.get<PriceService>(TYPES.PriceService);
-const resourceService = tooltipContainer.get<ResourceService>(
-	YGOPRODECK_TYPES.ResourceService
-);
 
 export const createLoadingTooltip = (): HTMLElement =>
 	createDiv(

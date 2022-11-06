@@ -14,17 +14,15 @@
 	</div>
 </template>
 <script lang="ts">
-import type { DeckPart, DeckService } from "@/core/lib";
-import { DECK_PART_ARR, TYPES } from "@/core/lib";
+import type { DeckPart } from "@/core/lib";
+import { DECK_PART_ARR } from "@/core/lib";
 import type { PropType } from "vue";
 import { computed, defineComponent, readonly } from "vue";
 import YgoPrice from "../YgoPrice.vue";
-import { applicationContainer } from "../../inversify.config";
 import YgoDeckPart from "./YgoDeckPart.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
+import { deckService } from "@/application/container";
 
 export default defineComponent({
 	components: {

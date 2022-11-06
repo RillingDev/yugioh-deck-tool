@@ -45,15 +45,13 @@
 
 <script lang="ts">
 import YgoCard from "../../YgoCard.vue";
-import type { Card, DeckService } from "@/core/lib";
-import { DeckPart, TYPES } from "@/core/lib";
+import type { Card } from "@/core/lib";
+import { DeckPart } from "@/core/lib";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
-import { applicationContainer } from "../../../inversify.config";
 import { computed, defineComponent, ref } from "vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
+import { deckService } from "@/application/container";
 
 export default defineComponent({
 	components: {

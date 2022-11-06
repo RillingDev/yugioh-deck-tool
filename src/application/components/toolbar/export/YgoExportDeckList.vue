@@ -7,9 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { DeckExportService } from "@/core/lib";
-import { getLogger, TYPES } from "@/core/lib";
-import { applicationContainer } from "../../../inversify.config";
+import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
 	showError,
@@ -18,10 +16,7 @@ import {
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const deckExportService = applicationContainer.get<DeckExportService>(
-	TYPES.DeckExportService
-);
+import { deckExportService } from "@/application/container";
 
 const logger = getLogger("YgoExportDeckList");
 

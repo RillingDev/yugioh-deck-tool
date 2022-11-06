@@ -1,9 +1,6 @@
-import type { Card, Deck, DeckPart, DeckService } from "@/core/lib";
-import { TYPES } from "@/core/lib";
-import { applicationContainer } from "../inversify.config";
+import type { Card, Deck, DeckPart } from "@/core/lib";
 import { defineStore } from "pinia";
-
-const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
+import { deckService } from "@/application/container";
 
 interface DeckState {
 	deck: Deck;

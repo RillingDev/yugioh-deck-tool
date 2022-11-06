@@ -10,22 +10,16 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { applicationContainer } from "../../../inversify.config";
-import { APPLICATION_TYPES } from "../../../types";
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
 	showError,
 	showSuccess,
 	useToast,
 } from "../../../composition/feedback";
-import type { DeckUrlController } from "../../../controller/DeckUrlController";
 import { getLogger } from "@/core/lib";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const deckUrlController = applicationContainer.get<DeckUrlController>(
-	APPLICATION_TYPES.DeckUrlController
-);
+import { deckUrlController } from "@/application/container";
 
 const logger = getLogger("YgoExportShareLink");
 

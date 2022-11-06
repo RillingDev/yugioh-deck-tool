@@ -24,17 +24,8 @@
 </template>
 
 <script lang="ts">
-import { applicationContainer } from "../../inversify.config";
-import type {
-	Card,
-	CardDatabase,
-	CardFilter,
-	CardPredicateService,
-	FilterService,
-	SortingOptions,
-	SortingService,
-} from "@/core/lib";
-import { SortingOrder, SortingStrategy, TYPES } from "@/core/lib";
+import type { Card, CardFilter, SortingOptions } from "@/core/lib";
+import { SortingOrder, SortingStrategy } from "@/core/lib";
 import YgoFilter from "../YgoFilter.vue";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
@@ -44,17 +35,12 @@ import { BSidebar } from "bootstrap-vue";
 import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
-
-const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
-const sortingService = applicationContainer.get<SortingService>(
-	TYPES.SortingService
-);
-const filterService = applicationContainer.get<FilterService>(
-	TYPES.FilterService
-);
-const cardPredicateService = applicationContainer.get<CardPredicateService>(
-	TYPES.CardPredicateService
-);
+import {
+	cardDatabase,
+	cardPredicateService,
+	filterService,
+	sortingService,
+} from "@/application/container";
 
 export default defineComponent({
 	components: {

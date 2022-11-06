@@ -43,8 +43,8 @@
 <script lang="ts">
 import type { PropType } from "vue";
 import { computed, defineComponent } from "vue";
-import type { Card, DeckPart, DeckPartConfig, DeckService } from "@/core/lib";
-import { DefaultDeckPartConfig, getLogger, TYPES } from "@/core/lib";
+import type { Card, DeckPart, DeckPartConfig } from "@/core/lib";
+import { DefaultDeckPartConfig, getLogger } from "@/core/lib";
 import Draggable from "vuedraggable";
 import type {
 	DraggableChangeEventData,
@@ -55,19 +55,12 @@ import {
 	findDeckPartForDraggableValidatorData,
 } from "../../composition/dragging";
 import { useTooltip } from "../../composition/tooltip";
-import type { DeckController } from "../../controller/DeckController";
-import { applicationContainer } from "../../inversify.config";
-import { APPLICATION_TYPES } from "../../types";
 import YgoCard from "../YgoCard.vue";
 import YgoPrice from "../YgoPrice.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
-
-const deckController = applicationContainer.get<DeckController>(
-	APPLICATION_TYPES.DeckController
-);
-const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
+import { deckController, deckService } from "@/application/container";
 
 const logger = getLogger("YgoDeckPart");
 

@@ -1,16 +1,11 @@
-import { inject, injectable } from "inversify";
-import type { Card } from "@/core/lib";
-import { CardDatabase, FindCardBy, TYPES } from "@/core/lib";
+import type { Card, CardDatabase } from "@/core/lib";
+import { FindCardBy } from "@/core/lib";
 
-@injectable()
 export class TooltipController {
-	private readonly cardDatabase: CardDatabase;
+	readonly #cardDatabase: CardDatabase;
 
-	constructor(
-		@inject(TYPES.CardDatabase)
-		cardDatabase: CardDatabase
-	) {
-		this.cardDatabase = cardDatabase;
+	constructor(cardDatabase: CardDatabase) {
+		this.#cardDatabase = cardDatabase;
 	}
 
 	/**
@@ -20,25 +15,28 @@ export class TooltipController {
 	 * @return Card.
 	 */
 	async loadCard(cardKey: string): Promise<Card> {
-		let resolvedCardKey = await this.cardDatabase.prepareCard(
+		let resolvedCardKey = await this.#cardDatabase.prepareCard(
 			cardKey,
 			FindCardBy.NAME
 		);
 		if (
 			resolvedCardKey != null &&
-			this.cardDatabase.hasCard(resolvedCardKey, FindCardBy.NAME)
+			this.#cardDatabase.hasCard(resolvedCardKey, FindCardBy.NAME)
 		) {
-			return this.cardDatabase.getCard(resolvedCardKey, FindCardBy.NAME)!;
+			return this.#cardDatabase.getCard(
+				resolvedCardKey,
+				FindCardBy.NAME
+			)!;
 		}
-		resolvedCardKey = await this.cardDatabase.prepareCard(
+		resolvedCardKey = await this.#cardDatabase.prepareCard(
 			cardKey,
 			FindCardBy.PASSCODE
 		);
 		if (
 			resolvedCardKey != null &&
-			this.cardDatabase.hasCard(resolvedCardKey, FindCardBy.PASSCODE)
+			this.#cardDatabase.hasCard(resolvedCardKey, FindCardBy.PASSCODE)
 		) {
-			return this.cardDatabase.getCard(
+			return this.#cardDatabase.getCard(
 				resolvedCardKey,
 				FindCardBy.PASSCODE
 			)!;

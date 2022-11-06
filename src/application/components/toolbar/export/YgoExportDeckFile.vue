@@ -7,17 +7,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { DeckFileService, TYPES } from "@/core/lib";
-import { applicationContainer } from "../../../inversify.config";
+import { DeckFileService } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { downloadFile } from "../../../composition/io/downloadFile";
 import { showSuccess, useToast } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const deckFileService = applicationContainer.get<DeckFileService>(
-	TYPES.DeckFileService
-);
+import { deckFileService } from "@/application/container";
 
 export default defineComponent({
 	components: { BDropdownItemButton },

@@ -1,22 +1,11 @@
-import "reflect-metadata";
-
 import { createCard } from "../../../helper/dataFactories";
-import { Container } from "inversify";
-import type { BanlistService } from "@/core/lib";
-import { baseModule, DefaultBanState, Format, TYPES } from "@/core/lib";
-import { MockCardDatabase } from "../../../helper/MockCardDatabase";
+import { BanlistService, DefaultBanState, Format } from "@/core/lib";
 
 describe("BanlistService", () => {
 	let banlistService: BanlistService;
 
 	beforeEach(() => {
-		const container = new Container();
-		container.load(baseModule);
-		container
-			.bind<MockCardDatabase>(TYPES.CardDatabase)
-			.to(MockCardDatabase);
-
-		banlistService = container.get<BanlistService>(TYPES.BanlistService);
+		banlistService = new BanlistService();
 	});
 
 	describe("hasBanlist", () => {

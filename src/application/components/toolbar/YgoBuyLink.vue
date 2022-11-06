@@ -17,18 +17,10 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import type { DeckExportService, EnvironmentConfig } from "@/core/lib";
-import { Environment, TYPES } from "@/core/lib";
-import { applicationContainer } from "../../inversify.config";
+import { Environment } from "@/core/lib";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-
-const deckExportService = applicationContainer.get<DeckExportService>(
-	TYPES.DeckExportService
-);
-const environmentConfig = applicationContainer.get<EnvironmentConfig>(
-	TYPES.EnvironmentConfig
-);
+import { deckExportService, environmentConfig } from "@/application/container";
 
 export default defineComponent({
 	components: {},

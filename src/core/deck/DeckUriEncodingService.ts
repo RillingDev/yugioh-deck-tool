@@ -1,16 +1,14 @@
-import { inject, injectable } from "inversify";
 import type { Deck } from "./Deck";
-import { TYPES } from "../types";
-import { CardDatabase, FindCardBy } from "../card/CardDatabase";
+import type { CardDatabase } from "../card/CardDatabase";
+import { FindCardBy } from "../card/CardDatabase";
 
 import type { Card } from "../card/Card";
 import { isEqual } from "lodash";
-import { DeckService } from "./DeckService";
+import type { DeckService } from "./DeckService";
 import { deflateRaw, inflateRaw } from "pako";
 import { DECK_PART_ARR } from "./DeckPart";
-import { EncodingService } from "../util/EncodingService";
+import type { EncodingService } from "../util/EncodingService";
 
-@injectable()
 export class DeckUriEncodingService {
 	// A 32-bit integer is able to store all 8 digit passcodes
 	// Note that currently we assume only little endian systems are used.
@@ -30,11 +28,8 @@ export class DeckUriEncodingService {
 	readonly #encodingService: EncodingService;
 
 	constructor(
-		@inject(TYPES.CardDatabase)
 		cardDatabase: CardDatabase,
-		@inject(TYPES.DeckService)
 		deckService: DeckService,
-		@inject(TYPES.EncodingService)
 		encodingService: EncodingService
 	) {
 		this.#deckService = deckService;

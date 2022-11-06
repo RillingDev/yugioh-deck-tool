@@ -1,8 +1,6 @@
-import { inject, injectable } from "inversify";
 import type { Card } from "./Card";
 import { CardTypeCategory } from "./type/CardTypeCategory";
-import { CardDatabase } from "./CardDatabase";
-import { TYPES } from "../types";
+import type { CardDatabase } from "./CardDatabase";
 import { Format } from "./format/Format";
 
 export enum SortingStrategy {
@@ -35,14 +33,10 @@ export interface SortingOptions {
 
 type Comparator<T> = (a: T, b: T) => number;
 
-@injectable()
 export class SortingService {
 	readonly #cardDatabase: CardDatabase;
 
-	constructor(
-		@inject(TYPES.CardDatabase)
-		cardDatabase: CardDatabase
-	) {
+	constructor(cardDatabase: CardDatabase) {
 		this.#cardDatabase = cardDatabase;
 	}
 

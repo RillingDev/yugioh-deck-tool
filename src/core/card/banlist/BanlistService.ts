@@ -1,11 +1,9 @@
-import { injectable } from "inversify";
 import type { Card } from "../Card";
 import { Format } from "../format/Format";
 import type { BanState } from "./BanState";
 import { DefaultBanState } from "./BanState";
 import type { BanlistInfo } from "./BanlistInfo";
 
-@injectable()
 export class BanlistService {
 	/**
 	 * Formats which have a banlist. See {@link BanlistInfo}.

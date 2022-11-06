@@ -1,8 +1,6 @@
-import { inject, injectable } from "inversify";
-import type { BanlistInfo, Card } from "@/core/lib";
-import { Environment, EnvironmentConfig, TYPES } from "@/core/lib";
+import type { BanlistInfo, Card, EnvironmentConfig } from "@/core/lib";
+import { Environment } from "@/core/lib";
 
-@injectable()
 export class ResourceService {
 	readonly #environmentConfig: EnvironmentConfig;
 
@@ -11,10 +9,7 @@ export class ResourceService {
 	private static readonly CDN_BASE_URL =
 		"https://storage.googleapis.com/ygoprodeck.com";
 
-	constructor(
-		@inject(TYPES.EnvironmentConfig)
-		environmentConfig: EnvironmentConfig
-	) {
+	constructor(environmentConfig: EnvironmentConfig) {
 		this.#environmentConfig = environmentConfig;
 	}
 

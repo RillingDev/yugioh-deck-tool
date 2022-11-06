@@ -1,7 +1,6 @@
 export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";
-export { TYPES } from "./types";
-export { baseModule, deckModule } from "./inversify.modules";
+export { createBaseModule, createDeckModule } from "./modules";
 
 export { Environment } from "./EnvironmentConfig";
 export { EnvironmentConfig } from "./EnvironmentConfig";

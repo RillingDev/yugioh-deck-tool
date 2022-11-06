@@ -31,9 +31,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import type { Deck, DeckUriEncodingService } from "@/core/lib";
-import { getLogger, TYPES } from "@/core/lib";
-import { applicationContainer } from "../../../inversify.config";
+import type { Deck } from "@/core/lib";
+import { getLogger } from "@/core/lib";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import {
 	showError,
@@ -42,10 +41,7 @@ import {
 } from "../../../composition/feedback";
 import { useId } from "@/application/composition/id";
 import { useDeckStore } from "@/application/store/deck";
-
-const deckUriEncodingService = applicationContainer.get<DeckUriEncodingService>(
-	TYPES.DeckUriEncodingService
-);
+import { deckUriEncodingService } from "@/application/container";
 
 const logger = getLogger("YgoImportYdkeUrl");
 

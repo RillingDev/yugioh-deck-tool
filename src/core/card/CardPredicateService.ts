@@ -1,11 +1,9 @@
-import { injectable } from "inversify";
 import type { Card } from "./Card";
 
 export type CardPredicate = (card: Card) => boolean;
 
 export type CardCountFunction = (card: Card) => number;
 
-@injectable()
 export class CardPredicateService {
 	/**
 	 * Creates a predicate based on a CardCountFunction. If at least one exists, predicate is true.

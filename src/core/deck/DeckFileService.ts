@@ -1,9 +1,8 @@
-import { inject, injectable } from "inversify";
 import type { Deck } from "./Deck";
-import { TYPES } from "../types";
-import { CardDatabase, FindCardBy } from "../card/CardDatabase";
+import type { CardDatabase } from "../card/CardDatabase";
+import { FindCardBy } from "../card/CardDatabase";
 
-import { DeckService } from "./DeckService";
+import type { DeckService } from "./DeckService";
 import { DECK_PART_ARR } from "./DeckPart";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 
@@ -17,19 +16,13 @@ interface DeckFile {
 	readonly fileContent: string;
 }
 
-@injectable()
 export class DeckFileService {
 	readonly #cardDatabase: CardDatabase;
 	readonly #deckService: DeckService;
 
 	public static readonly DECK_FILE_MIME_TYPE = "text/ydk";
 
-	constructor(
-		@inject(TYPES.CardDatabase)
-		cardDatabase: CardDatabase,
-		@inject(TYPES.DeckService)
-		deckService: DeckService
-	) {
+	constructor(cardDatabase: CardDatabase, deckService: DeckService) {
 		this.#deckService = deckService;
 		this.#cardDatabase = cardDatabase;
 	}

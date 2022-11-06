@@ -191,54 +191,36 @@
 
 <script lang="ts">
 import type {
-	BanlistService,
 	BanState,
-	CardDatabase,
 	CardFilter,
 	CardPredicate,
-	CardPredicateService,
 	CardSet,
 	CardType,
-	EnvironmentConfig,
-	FilterService,
 } from "@/core/lib";
 import {
 	CardTypeCategory,
 	DEFAULT_BAN_STATE_ARR,
 	Environment,
-	TYPES,
 } from "@/core/lib";
 import type { PropType } from "vue";
 import { computed, defineComponent, reactive, readonly, watch } from "vue";
 import { clone } from "lodash";
 
 import VSelect from "vue-select";
-import { applicationContainer } from "../inversify.config";
 import YgoCollectionFilter from "./yugiohprodeck/YgoCollectionFilter.vue";
-import type { YgoprodeckController } from "../controller/YgoprodeckController";
-import { APPLICATION_TYPES } from "../types";
 import { useId } from "@/application/composition/id";
 import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
 import { useCollectionStore } from "@/application/store/collection";
 import { storeToRefs } from "pinia";
-
-const cardPredicateService = applicationContainer.get<CardPredicateService>(
-	TYPES.CardPredicateService
-);
-const cardDatabase = applicationContainer.get<CardDatabase>(TYPES.CardDatabase);
-const banlistService = applicationContainer.get<BanlistService>(
-	TYPES.BanlistService
-);
-const filterService = applicationContainer.get<FilterService>(
-	TYPES.FilterService
-);
-const environmentConfig = applicationContainer.get<EnvironmentConfig>(
-	TYPES.EnvironmentConfig
-);
-const ygoprodeckController = applicationContainer.get<YgoprodeckController>(
-	APPLICATION_TYPES.YgoprodeckController
-);
+import {
+	banlistService,
+	cardDatabase,
+	cardPredicateService,
+	environmentConfig,
+	filterService,
+	ygoprodeckController,
+} from "@/application/container";
 
 export default defineComponent({
 	components: {

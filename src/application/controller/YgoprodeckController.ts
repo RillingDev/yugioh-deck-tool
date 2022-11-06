@@ -1,6 +1,4 @@
-import { inject, injectable } from "inversify";
-import type { Credentials } from "@/ygoprodeck/lib";
-import { YgoprodeckService, YGOPRODECK_TYPES } from "@/ygoprodeck/lib";
+import type { Credentials, YgoprodeckService } from "@/ygoprodeck/lib";
 
 declare global {
 	interface Window {
@@ -9,14 +7,10 @@ declare global {
 	}
 }
 
-@injectable()
 export class YgoprodeckController {
 	readonly #ygoprodeckService: YgoprodeckService;
 
-	constructor(
-		@inject(YGOPRODECK_TYPES.YgoprodeckService)
-		ygoprodeckService: YgoprodeckService
-	) {
+	constructor(ygoprodeckService: YgoprodeckService) {
 		this.#ygoprodeckService = ygoprodeckService;
 	}
 

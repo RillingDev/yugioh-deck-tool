@@ -1,7 +1,5 @@
 import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
-import { injectable } from "inversify";
 
-@injectable()
 export class MockCardDatabase implements CardDatabase {
 	getArchetypes(): string[] {
 		return [];

@@ -1,21 +1,12 @@
-import "reflect-metadata";
-import { Container } from "inversify";
-import type { PriceService, Vendor } from "@/core/lib";
-import { baseModule, DefaultCurrency, DefaultVendor, TYPES } from "@/core/lib";
+import type { Vendor } from "@/core/lib";
+import { DefaultCurrency, DefaultVendor, PriceService } from "@/core/lib";
 import { createCard } from "../../helper/dataFactories";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
 
 describe("PriceService", () => {
 	let priceService: PriceService;
 
 	beforeEach(() => {
-		const container = new Container();
-		container.load(baseModule);
-		container
-			.bind<MockCardDatabase>(TYPES.CardDatabase)
-			.to(MockCardDatabase);
-
-		priceService = container.get<PriceService>(TYPES.PriceService);
+		priceService = new PriceService();
 	});
 
 	describe("formatPrice", () => {

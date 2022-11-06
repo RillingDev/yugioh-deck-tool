@@ -1,21 +1,15 @@
-import "reflect-metadata";
-
 import { createCard } from "../../helper/dataFactories";
-import { Container } from "inversify";
-import { anything, when } from "ts-mockito";
-import { bindMock } from "../../helper/bindMock";
-import type { CardPredicate, FilterService } from "@/core/lib";
+import { anything, mock, when } from "ts-mockito";
+import type { CardPredicate } from "@/core/lib";
 import {
 	BanlistService,
-	baseModule,
 	CardService,
 	CardTypeCategory,
 	DeckPart,
 	DefaultBanState,
+	FilterService,
 	Format,
-	TYPES,
 } from "@/core/lib";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
 
 describe("FilterService", () => {
 	let filterService: FilterService;
@@ -24,24 +18,10 @@ describe("FilterService", () => {
 	let mockBanlistService: BanlistService;
 
 	beforeEach(() => {
-		const container = new Container();
-		container.load(baseModule);
-		container
-			.bind<MockCardDatabase>(TYPES.CardDatabase)
-			.to(MockCardDatabase);
+		mockCardService = mock(CardService);
+		mockBanlistService = mock(BanlistService);
 
-		mockCardService = bindMock<CardService>(
-			container,
-			TYPES.CardService,
-			CardService
-		);
-		mockBanlistService = bindMock<BanlistService>(
-			container,
-			TYPES.BanlistService,
-			BanlistService
-		);
-
-		filterService = container.get<FilterService>(TYPES.FilterService);
+		filterService = new FilterService(mockCardService, mockBanlistService);
 	});
 
 	describe("filter", () => {

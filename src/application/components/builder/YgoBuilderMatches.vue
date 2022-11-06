@@ -65,8 +65,8 @@
 import type { PropType } from "vue";
 import { computed, defineComponent } from "vue";
 import { browserSupportsTouch } from "@/browser-common/lib";
-import type { Card, DeckService } from "@/core/lib";
-import { CardTypeCategory, TYPES } from "@/core/lib";
+import type { Card } from "@/core/lib";
+import { CardTypeCategory } from "@/core/lib";
 import Draggable from "vuedraggable";
 import type { DraggableMoveValidatorData } from "../../composition/dragging";
 import {
@@ -76,14 +76,12 @@ import {
 import { showSuccess, useToast } from "../../composition/feedback";
 import { useInfiniteScrolling } from "../../composition/infiniteScrolling";
 import { useTooltip } from "../../composition/tooltip";
-import { applicationContainer } from "../../inversify.config";
 import YgoCard from "../YgoCard.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { useCollectionStore } from "@/application/store/collection";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
-
-const deckService = applicationContainer.get<DeckService>(TYPES.DeckService);
+import { deckService } from "@/application/container";
 
 export default defineComponent({
 	components: {

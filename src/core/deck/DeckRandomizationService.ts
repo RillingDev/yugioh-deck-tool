@@ -1,18 +1,15 @@
-import { inject, injectable } from "inversify";
 import { random, sampleSize, shuffle, words } from "lodash";
 import type { Card } from "../card/Card";
-import { CardDatabase } from "../card/CardDatabase";
-import { CardService } from "../card/CardService";
-import type { CardFilter } from "../card/FilterService";
-import { FilterService } from "../card/FilterService";
+import type { CardDatabase } from "../card/CardDatabase";
+import type { CardService } from "../card/CardService";
+import type { CardFilter, FilterService } from "../card/FilterService";
 import type { Format } from "../card/format/Format";
-import { SortingService } from "../card/SortingService";
+import type { SortingService } from "../card/SortingService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import { TYPES } from "../types";
 import type { Deck } from "./Deck";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import { DeckService } from "./DeckService";
+import type { DeckService } from "./DeckService";
 
 export enum RandomizationStrategy {
 	NORMAL = "Normal",
@@ -49,7 +46,6 @@ export const createDefaultTypeCategoryWeighting = (): TypeCategoryWeighting =>
 		[CardTypeCategory.SKILL, null],
 	]);
 
-@injectable()
 export class DeckRandomizationService {
 	private static readonly IGNORED_WORDS = new Set([
 		// Articles
@@ -88,15 +84,10 @@ export class DeckRandomizationService {
 	readonly #cardService: CardService;
 
 	constructor(
-		@inject(TYPES.CardDatabase)
 		cardDatabase: CardDatabase,
-		@inject(TYPES.DeckService)
 		deckService: DeckService,
-		@inject(TYPES.FilterService)
 		filterService: FilterService,
-		@inject(TYPES.SortingService)
 		sortingService: SortingService,
-		@inject(TYPES.CardService)
 		cardService: CardService
 	) {
 		this.#deckService = deckService;

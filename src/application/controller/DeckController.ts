@@ -1,25 +1,12 @@
 import { removeEnd } from "lightdash";
-import type { Card } from "@/core/lib";
-import {
-	CardDatabase,
-	CardService,
-	CardTypeCategory,
-	DeckPart,
-	TYPES,
-} from "@/core/lib";
-import { inject, injectable } from "inversify";
+import type { Card, CardDatabase, CardService } from "@/core/lib";
+import { CardTypeCategory, DeckPart } from "@/core/lib";
 
-@injectable()
 export class DeckController {
 	readonly #cardDatabase: CardDatabase;
 	readonly #cardService: CardService;
 
-	constructor(
-		@inject(TYPES.CardDatabase)
-		cardDatabase: CardDatabase,
-		@inject(TYPES.CardService)
-		cardService: CardService
-	) {
+	constructor(cardDatabase: CardDatabase, cardService: CardService) {
 		this.#cardDatabase = cardDatabase;
 		this.#cardService = cardService;
 	}

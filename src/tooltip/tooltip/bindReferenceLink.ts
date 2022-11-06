@@ -1,9 +1,6 @@
-import { tooltipContainer } from "../inversify.config";
-import type { Card, CardService } from "@/core/lib";
-import { TYPES } from "@/core/lib";
+import { cardService } from "../container";
+import type { Card } from "@/core/lib";
 import { browserSupportsTouch } from "@/browser-common/lib";
-
-const cardService = tooltipContainer.get<CardService>(TYPES.CardService);
 
 const isHrefBlank = (target: HTMLAnchorElement): boolean => {
 	// We use this over HTMLAnchorElement.prototype.href as that returns the current URL if the value is empty.

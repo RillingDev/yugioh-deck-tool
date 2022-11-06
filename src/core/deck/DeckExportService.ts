@@ -1,26 +1,20 @@
-import { inject, injectable } from "inversify";
 import type { Deck } from "./Deck";
-import { TYPES } from "../types";
 import type { Card } from "../card/Card";
-import { DeckService } from "./DeckService";
+import type { DeckService } from "./DeckService";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import { CardService } from "../card/CardService";
+import type { CardService } from "../card/CardService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import { FilterService } from "../card/FilterService";
+import type { FilterService } from "../card/FilterService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
-@injectable()
 export class DeckExportService {
 	readonly #deckService: DeckService;
 	readonly #cardService: CardService;
 	readonly #filterService: FilterService;
 
 	constructor(
-		@inject(TYPES.DeckService)
 		deckService: DeckService,
-		@inject(TYPES.CardService)
 		cardService: CardService,
-		@inject(TYPES.FilterService)
 		filterService: FilterService
 	) {
 		this.#deckService = deckService;
