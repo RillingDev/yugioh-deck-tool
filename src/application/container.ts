@@ -15,7 +15,6 @@ const {
 	sortingService,
 	banlistService,
 	filterService,
-	encodingService,
 	cardPredicateService,
 } = createBaseModule(cardDatabase);
 
@@ -30,7 +29,6 @@ const {
 	sortingService,
 	banlistService,
 	filterService,
-	encodingService,
 	cardDatabase
 );
 

@@ -6,6 +6,7 @@ import {
 	DeckPart,
 	DeckService,
 	DeckUriEncodingService,
+	EncodingService,
 	FindCardBy,
 } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
@@ -17,13 +18,13 @@ describe("DeckUriEncodingService", () => {
 
 	beforeEach(() => {
 		mockCardDatabase = new MockCardDatabase();
-		const { cardService, banlistService, sortingService, encodingService } =
+		const { cardService, banlistService, sortingService } =
 			createBaseModule(mockCardDatabase);
 
 		deckUriEncodingService = new DeckUriEncodingService(
 			mockCardDatabase,
 			new DeckService(cardService, sortingService, banlistService),
-			encodingService
+			new EncodingService()
 		);
 	});
 

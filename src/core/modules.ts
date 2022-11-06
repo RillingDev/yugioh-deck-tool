@@ -13,7 +13,6 @@ import { SortingService } from "@/core/card/SortingService";
 import type { CardDatabase } from "@/core/card/CardDatabase";
 
 interface BaseModule {
-	encodingService: EncodingService;
 	cardService: CardService;
 	priceService: PriceService;
 	banlistService: BanlistService;
@@ -26,7 +25,6 @@ interface BaseModule {
  * Module containing card database access and basic domain services.
  */
 export const createBaseModule = (cardDatabase: CardDatabase): BaseModule => {
-	const encodingService = new EncodingService();
 	const cardService = new CardService();
 	const cardPredicateService = new CardPredicateService();
 	const banlistService = new BanlistService();
@@ -35,7 +33,6 @@ export const createBaseModule = (cardDatabase: CardDatabase): BaseModule => {
 	const filterService = new FilterService(cardService, banlistService);
 
 	return {
-		encodingService,
 		cardService,
 		cardPredicateService,
 		banlistService,
@@ -61,9 +58,9 @@ export const createDeckModule = (
 	sortingService: SortingService,
 	banlistService: BanlistService,
 	filterService: FilterService,
-	encodingService: EncodingService,
 	cardDatabase: CardDatabase
 ): DeckModule => {
+	const encodingService = new EncodingService();
 	const deckService = new DeckService(
 		cardService,
 		sortingService,
