@@ -6,10 +6,10 @@ import {
 	DeckPart,
 	DeckService,
 	DeckUriEncodingService,
-	EncodingService,
 	FindCardBy,
 } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
+import { EncodingService } from "@/core/util/EncodingService";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;

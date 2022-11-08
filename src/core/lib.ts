@@ -57,7 +57,6 @@ export type {
 export { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 export { DeckFileService } from "./deck/DeckFileService";
 export type { ImportResult } from "./deck/DeckFileService";
-export { EncodingService } from "./util/EncodingService";
 export { CardPredicateService } from "./card/CardPredicateService";
 export type {
 	CardPredicate,
