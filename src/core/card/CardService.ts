@@ -79,16 +79,4 @@ export class CardService {
 			.filter(([, count]) => count > 0)
 			.map(([card, count]) => `${count}x ${card.name}`);
 	}
-
-	/**
-	 * Gets a link to more details about a card.
-	 *
-	 * @param card Card to create a link for.
-	 * @return Link.
-	 */
-	getReferenceLink(card: Card): URL {
-		const url = new URL("https://ygoprodeck.com/card/");
-		url.searchParams.append("search", card.name);
-		return url;
-	}
 }

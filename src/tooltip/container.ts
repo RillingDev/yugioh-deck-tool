@@ -8,13 +8,12 @@ export const environmentConfig = new HostEnvironmentConfig();
 const { cardDatabase, resourceService, ygoprodeckService } =
 	createYgoprodeckModule(environmentConfig);
 
-const { priceService, cardService } = createBaseModule(cardDatabase);
+const { priceService } = createBaseModule(cardDatabase);
 
 const tooltipController = new TooltipController(cardDatabase);
 
 export {
 	// Base
-	cardService,
 	priceService,
 	// Ygoprodeck
 	resourceService,

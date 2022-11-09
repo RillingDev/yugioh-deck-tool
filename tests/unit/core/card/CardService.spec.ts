@@ -90,14 +90,4 @@ describe("CardService", () => {
 			).toEqual(["3x Foo Bar", "1x Fizz"]);
 		});
 	});
-
-	describe("getReferenceLink", () => {
-		it("creates link to ygoprodeck db", () => {
-			const card1 = createCard({ passcode: "123", name: "Foo Bar" });
-
-			expect(cardService.getReferenceLink(card1)).toEqual(
-				new URL("https://ygoprodeck.com/card/?search=Foo+Bar")
-			);
-		});
-	});
 });

@@ -4,6 +4,7 @@ import { DeckUrlController } from "./controller/DeckUrlController";
 import { HostEnvironmentConfig } from "@/browser-common/lib";
 import { YgoprodeckController } from "./controller/YgoprodeckController";
 import { createYgoprodeckModule } from "@/ygoprodeck/lib";
+import { priceService } from "@/tooltip/container";
 
 export const environmentConfig = new HostEnvironmentConfig();
 
@@ -42,6 +43,8 @@ const ygoprodeckController = new YgoprodeckController(ygoprodeckService);
 
 export {
 	// Base
+	cardService,
+	priceService,
 	banlistService,
 	filterService,
 	sortingService,
