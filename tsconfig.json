@@ -22,7 +22,7 @@
 			]
 		},
 		"lib": [
-			"ESNext",
+			"ES2020",
 			"DOM",
 			"DOM.Iterable",
 			"ScriptHost"
