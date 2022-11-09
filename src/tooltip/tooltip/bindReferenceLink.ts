@@ -18,5 +18,6 @@ export const bindReferenceLink = (
 	) {
 		target.href = cardService.getReferenceLink(card).toString();
 		target.target = "_blank";
+		target.relList.add("noopener");
 	}
 };
