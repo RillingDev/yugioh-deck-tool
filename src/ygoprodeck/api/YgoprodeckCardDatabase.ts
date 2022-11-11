@@ -2,6 +2,7 @@ import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
 import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
 import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
 import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
+import type { RawCard } from "@/ygoprodeck/api/mapping/mapCard";
 import { mapCard } from "@/ygoprodeck/api/mapping/mapCard";
 import { mapArchetype } from "@/ygoprodeck/api/mapping/mapArchetype";
 import { mapCardSet } from "@/ygoprodeck/api/mapping/mapCardSet";
@@ -157,7 +158,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			}
 
 			if (loadedCard != null) {
-				this.#registerCards([mapCard(loadedCard)]);
+				this.#registerCards([loadedCard]);
 			}
 		}
 		return this.getCard(cardKey, findCardBy)!;
@@ -169,7 +170,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.getCards({
 					includeAliased: true,
 				})
-				.then((cards) => this.#registerCards(cards.map(mapCard)));
+				.then((cards) => this.#registerCards(cards));
 		}
 		return this.#loadingAllCards;
 	}
@@ -178,8 +179,9 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		if (this.#loadingArchetypes == null) {
 			this.#loadingArchetypes = this.#ygoprodeckApiService
 				.getArchetypes()
-				.then((archetypes) => {
-					this.#archetypes.push(...archetypes.map(mapArchetype));
+				.then((rawArchetypes) => {
+					const archetypes = rawArchetypes.map(mapArchetype);
+					this.#archetypes.push(...archetypes);
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered archetypes.",
 						this.#archetypes
@@ -194,10 +196,13 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			this.#loadingSets = this.#ygoprodeckApiService
 				.getCardSets()
 				.then((rawSets) => {
-					const sets = rawSets.map(mapCardSet);
-					this.#sets.push(...sets);
+					for (const rawSet of rawSets) {
+						const set = mapCardSet(rawSet);
 
-					sets.forEach((set) => this.#setsByName.set(set.name, set));
+						this.#sets.push(set);
+
+						this.#setsByName.set(set.name, set);
+					}
 
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered sets.",
@@ -256,8 +261,9 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return this.#loadingCardValues;
 	}
 
-	#registerCards(unlinkedCards: UnlinkedCard[]): void {
-		for (const unlinkedCard of unlinkedCards) {
+	#registerCards(rawCards: RawCard[]): void {
+		for (const rawCard of rawCards) {
+			const unlinkedCard = mapCard(rawCard);
 			if (this.#cardsByPasscode.has(unlinkedCard.passcode)) {
 				continue;
 			}
