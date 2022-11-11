@@ -1,16 +1,11 @@
 import type { RawCard } from "./mapping/mapCard";
-import { mapCard } from "./mapping/mapCard";
 import type { RawCardSet } from "./mapping/mapCardSet";
-import { mapCardSet } from "./mapping/mapCardSet";
 import type { PaginatedResponse } from "./PaginatedResponse";
 import { createEmptyPaginatedResponse } from "./PaginatedResponse";
 import type { RawCardValues } from "./mapping/mapCardValues";
-import { mapCardValues } from "./mapping/mapCardValues";
 import type { RawArchetype } from "./mapping/mapArchetype";
-import { mapArchetype } from "./mapping/mapArchetype";
-import type { Card, CardSet, CardValues, EnvironmentConfig } from "@/core/lib";
+import type { Card, EnvironmentConfig } from "@/core/lib";
 import { Environment } from "@/core/lib";
-import type { UnlinkedCard } from "@/ygoprodeck/api/UnlinkedCard";
 
 interface CardInfoOptions {
 	readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
@@ -54,9 +49,7 @@ export class YgoprodeckApiService {
 		this.#environmentConfig = environmentConfig;
 	}
 
-	async getSingleCard(
-		options: CardInfoOptions
-	): Promise<UnlinkedCard | null> {
+	async getSingleCard(options: CardInfoOptions): Promise<RawCard | null> {
 		const url = new URL("cardinfo.php", this.#getBaseUrl());
 		this.#putCardInfoParams(url.searchParams, options);
 
@@ -75,10 +68,10 @@ export class YgoprodeckApiService {
 			return null;
 		}
 		// If a match is found, we take the very first item (best match).
-		return mapCard(data.data[0]);
+		return data.data[0];
 	}
 
-	async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
+	async getCards(options: CardInfoOptions): Promise<RawCard[]> {
 		const urlBase = new URL("cardinfo.php", this.#getBaseUrl());
 		this.#putCardInfoParams(urlBase.searchParams, options);
 		urlBase.searchParams.set(
@@ -101,7 +94,7 @@ export class YgoprodeckApiService {
 				assertStatusOk(res);
 				return res.json() as Promise<PaginatedResponse<RawCard[]>>;
 			});
-		}).then((data) => data.map(mapCard));
+		});
 	}
 
 	#putCardInfoParams(
@@ -128,31 +121,28 @@ export class YgoprodeckApiService {
 		}
 	}
 
-	async getCardSets(): Promise<CardSet[]> {
+	async getCardSets(): Promise<RawCardSet[]> {
 		return this.#getJsonResponse(
 			new URL("cardsets.php", this.#getBaseUrl())
 		)
 			.then(assertStatusOk)
-			.then((res) => res.json() as Promise<RawCardSet[]>)
-			.then((data) => data.map(mapCardSet));
+			.then((res) => res.json() as Promise<RawCardSet[]>);
 	}
 
-	getCardValues(): Promise<CardValues> {
+	getCardValues(): Promise<RawCardValues> {
 		return this.#getJsonResponse(
 			new URL("cardvalues.php", this.#getBaseUrl())
 		)
 			.then(assertStatusOk)
-			.then((res) => res.json() as Promise<RawCardValues>)
-			.then((data) => mapCardValues(data));
+			.then((res) => res.json() as Promise<RawCardValues>);
 	}
 
-	async getArchetypes(): Promise<string[]> {
+	async getArchetypes(): Promise<RawArchetype[]> {
 		return this.#getJsonResponse(
 			new URL("archetypes.php", this.#getBaseUrl())
 		)
 			.then(assertStatusOk)
-			.then((res) => res.json() as Promise<RawArchetype[]>)
-			.then((data) => data.map(mapArchetype));
+			.then((res) => res.json() as Promise<RawArchetype[]>);
 	}
 
 	async updateViews(card: Card): Promise<void> {

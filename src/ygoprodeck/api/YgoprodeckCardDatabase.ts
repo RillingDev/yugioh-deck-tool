@@ -2,6 +2,10 @@ import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
 import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
 import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
 import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
+import { mapCard } from "@/ygoprodeck/api/mapping/mapCard";
+import { mapArchetype } from "@/ygoprodeck/api/mapping/mapArchetype";
+import { mapCardSet } from "@/ygoprodeck/api/mapping/mapCardSet";
+import { mapCardValues } from "@/ygoprodeck/api/mapping/mapCardValues";
 
 export class YgoprodeckCardDatabase implements CardDatabase {
 	static readonly #logger = getLogger(YgoprodeckCardDatabase);
@@ -153,7 +157,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			}
 
 			if (loadedCard != null) {
-				this.#registerCards([loadedCard]);
+				this.#registerCards([mapCard(loadedCard)]);
 			}
 		}
 		return this.getCard(cardKey, findCardBy)!;
@@ -165,7 +169,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.getCards({
 					includeAliased: true,
 				})
-				.then((cards) => this.#registerCards(cards));
+				.then((cards) => this.#registerCards(cards.map(mapCard)));
 		}
 		return this.#loadingAllCards;
 	}
@@ -175,7 +179,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			this.#loadingArchetypes = this.#ygoprodeckApiService
 				.getArchetypes()
 				.then((archetypes) => {
-					this.#archetypes.push(...archetypes);
+					this.#archetypes.push(...archetypes.map(mapArchetype));
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered archetypes.",
 						this.#archetypes
@@ -189,12 +193,11 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		if (this.#loadingSets == null) {
 			this.#loadingSets = this.#ygoprodeckApiService
 				.getCardSets()
-				.then((cardSets) => {
-					this.#sets.push(...cardSets);
+				.then((rawSets) => {
+					const sets = rawSets.map(mapCardSet);
+					this.#sets.push(...sets);
 
-					cardSets.forEach((set) =>
-						this.#setsByName.set(set.name, set)
-					);
+					sets.forEach((set) => this.#setsByName.set(set.name, set));
 
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered sets.",
@@ -209,6 +212,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		if (this.#loadingCardValues == null) {
 			this.#loadingCardValues = this.#ygoprodeckApiService
 				.getCardValues()
+				.then(mapCardValues)
 				.then((cardValues) => {
 					for (const typeCategory of Object.values(
 						CardTypeCategory
