@@ -17,10 +17,7 @@ export const createYgoprodeckModule = (
 	environmentConfig: EnvironmentConfig
 ): YgoprodeckModule => {
 	const resourceService = new ResourceService(environmentConfig);
-	const ygoprodeckApiService = new YgoprodeckApiService(
-		environmentConfig,
-		resourceService
-	);
+	const ygoprodeckApiService = new YgoprodeckApiService(environmentConfig);
 	const ygoprodeckService = new YgoprodeckService(
 		ygoprodeckApiService,
 		environmentConfig

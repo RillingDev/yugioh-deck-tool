@@ -9,7 +9,6 @@ import type {
 	Vendor,
 } from "@/core/lib";
 import { DefaultBanState, DefaultVendor, Format } from "@/core/lib";
-import type { ResourceService } from "../ResourceService";
 import type {
 	CardSetAppearance,
 	UnlinkedCard,
@@ -126,19 +125,14 @@ const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
 	});
 };
 
-const mapImage = (
-	rawCard: RawCard,
-	resourceService: ResourceService
-): CardImage | null => {
+const mapImage = (rawCard: RawCard): CardImage | null => {
 	if (rawCard.card_images == null) {
 		return null;
 	}
 	const image = rawCard.card_images[0];
 	return {
-		url: resourceService.getEffectiveCardImageUrl(image.image_url),
-		urlSmall: resourceService.getEffectiveCardImageUrl(
-			image.image_url_small
-		),
+		url: image.image_url,
+		urlSmall: image.image_url_small,
 	};
 };
 
@@ -174,10 +168,7 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => {
 	};
 };
 
-export const mapCard = (
-	rawCard: RawCard,
-	resourceService: ResourceService
-): UnlinkedCard => {
+export const mapCard = (rawCard: RawCard): UnlinkedCard => {
 	const miscInfo: RawMiscInfo | null =
 		rawCard.misc_info != null ? rawCard.misc_info[0] : null;
 	return {
@@ -196,7 +187,7 @@ export const mapCard = (
 		linkMarkers: rawCard.linkmarkers ?? null,
 
 		sets: mapCardSets(rawCard),
-		image: mapImage(rawCard, resourceService),
+		image: mapImage(rawCard),
 		prices: mapPrices(rawCard),
 
 		betaName: miscInfo?.beta_name ?? null,

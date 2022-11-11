@@ -10,7 +10,6 @@ import type { RawArchetype } from "./mapping/mapArchetype";
 import { mapArchetype } from "./mapping/mapArchetype";
 import type { Card, CardSet, CardValues, EnvironmentConfig } from "@/core/lib";
 import { Environment } from "@/core/lib";
-import type { ResourceService } from "./ResourceService";
 import type { UnlinkedCard } from "@/ygoprodeck/api/UnlinkedCard";
 
 interface CardInfoOptions {
@@ -50,14 +49,9 @@ export class YgoprodeckApiService {
 	static readonly #HTTP_STATUS_NO_MATCHES = 400;
 
 	readonly #environmentConfig: EnvironmentConfig;
-	readonly #resourceService: ResourceService;
 
-	constructor(
-		environmentConfig: EnvironmentConfig,
-		resourceService: ResourceService
-	) {
+	constructor(environmentConfig: EnvironmentConfig) {
 		this.#environmentConfig = environmentConfig;
-		this.#resourceService = resourceService;
 	}
 
 	async getSingleCard(
@@ -81,7 +75,7 @@ export class YgoprodeckApiService {
 			return null;
 		}
 		// If a match is found, we take the very first item (best match).
-		return mapCard(data.data[0], this.#resourceService);
+		return mapCard(data.data[0]);
 	}
 
 	async getCards(options: CardInfoOptions): Promise<UnlinkedCard[]> {
@@ -107,9 +101,7 @@ export class YgoprodeckApiService {
 				assertStatusOk(res);
 				return res.json() as Promise<PaginatedResponse<RawCard[]>>;
 			});
-		}).then((data) =>
-			data.map((rawCard) => mapCard(rawCard, this.#resourceService))
-		);
+		}).then((data) => data.map(mapCard));
 	}
 
 	#putCardInfoParams(
