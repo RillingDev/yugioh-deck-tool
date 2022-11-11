@@ -33,15 +33,15 @@ export interface Card {
 	readonly level: number | null;
 	readonly pendulumScale: number | null;
 	readonly linkRating: number | null;
-	readonly linkMarkers: string[] | null;
+	readonly linkMarkers: ReadonlyArray<string> | null;
 
 	readonly betaName: string | null;
 	readonly treatedAs: string | null;
 	readonly archetype: string | null;
 
 	readonly release: ReleaseInfo;
-	readonly sets: CardSet[];
-	readonly formats: Format[];
+	readonly sets: ReadonlyArray<CardSet>;
+	readonly formats: ReadonlyArray<Format>;
 	readonly banlist: BanlistInfo;
 
 	readonly image: CardImage | null;

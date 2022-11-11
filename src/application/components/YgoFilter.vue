@@ -190,20 +190,14 @@
 </template>
 
 <script lang="ts">
-import type {
-	BanState,
-	CardFilter,
-	CardPredicate,
-	CardSet,
-	CardType,
-} from "@/core/lib";
+import type { CardFilter, CardPredicate, CardSet, CardType } from "@/core/lib";
 import {
 	CardTypeCategory,
 	DEFAULT_BAN_STATE_ARR,
 	Environment,
 } from "@/core/lib";
 import type { PropType } from "vue";
-import { computed, defineComponent, reactive, readonly, watch } from "vue";
+import { computed, defineComponent, reactive, watch } from "vue";
 import { clone } from "lodash";
 
 import VSelect from "vue-select";
@@ -248,10 +242,8 @@ export default defineComponent({
 
 		const { essentialDataLoaded } = storeToRefs(useDataStore());
 
-		const banStates = readonly<BanState[]>(DEFAULT_BAN_STATE_ARR);
-		const cardTypeCategories = readonly<CardTypeCategory[]>(
-			Object.values(CardTypeCategory)
-		);
+		const banStates = DEFAULT_BAN_STATE_ARR;
+		const cardTypeCategories = Object.values(CardTypeCategory);
 
 		const internalFilter = reactive<CardFilter>(clone(props.filter));
 

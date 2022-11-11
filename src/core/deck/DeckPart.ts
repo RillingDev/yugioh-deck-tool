@@ -4,4 +4,4 @@ export enum DeckPart {
 	SIDE = "side",
 }
 
-export const DECK_PART_ARR = Object.values(DeckPart);
+export const DECK_PART_ARR: ReadonlyArray<DeckPart> = Object.values(DeckPart);

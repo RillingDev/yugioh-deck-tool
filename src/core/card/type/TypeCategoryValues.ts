@@ -1,6 +1,6 @@
 import type { CardType } from "./CardType";
 
 export interface TypeCategoryValues {
-	readonly subTypes: string[];
-	readonly types: CardType[];
+	readonly subTypes: ReadonlyArray<string>;
+	readonly types: ReadonlyArray<CardType>;
 }

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, readonly } from "vue";
+import { defineComponent } from "vue";
 
 import VSelect from "vue-select";
 import { Format } from "@/core/lib";
@@ -26,7 +26,7 @@ export default defineComponent({
 	props: {},
 	emits: [],
 	setup() {
-		const formats = readonly<Format[]>(Object.values(Format));
+		const formats = Object.values(Format);
 
 		const { format } = storeToRefs(useFormatStore());
 

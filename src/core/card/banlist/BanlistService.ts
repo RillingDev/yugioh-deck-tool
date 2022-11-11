@@ -8,7 +8,7 @@ export class BanlistService {
 	/**
 	 * Formats which have a banlist. See {@link BanlistInfo}.
 	 */
-	static readonly #BANLIST_FORMATS: Set<Format> = new Set([
+	static readonly #BANLIST_FORMATS: ReadonlySet<Format> = new Set([
 		Format.OCG,
 		Format.TCG,
 		Format.GOAT,

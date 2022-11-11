@@ -8,7 +8,7 @@ import { DefaultDeckPartConfig } from "./DeckPartConfig";
 
 export interface ImportResult {
 	readonly deck: Deck;
-	readonly missing: string[];
+	readonly missing: ReadonlyArray<string>;
 }
 
 interface DeckFile {

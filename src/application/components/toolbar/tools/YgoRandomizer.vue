@@ -40,7 +40,7 @@
 import type { CardFilter } from "@/core/lib";
 import { RandomizationStrategy } from "@/core/lib";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
-import { defineComponent, readonly, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
 import { useDataStore } from "@/application/store/data";
@@ -62,9 +62,7 @@ export default defineComponent({
 	setup() {
 		const deckStore = useDeckStore();
 
-		const strategies = readonly<RandomizationStrategy[]>(
-			Object.values(RandomizationStrategy)
-		);
+		const strategies = Object.values(RandomizationStrategy);
 
 		const strategy = ref<RandomizationStrategy>(
 			RandomizationStrategy.ARCHETYPE_2

@@ -14,10 +14,9 @@
 	</div>
 </template>
 <script lang="ts">
-import type { DeckPart } from "@/core/lib";
 import { DECK_PART_ARR } from "@/core/lib";
 import type { PropType } from "vue";
-import { computed, defineComponent, readonly } from "vue";
+import { computed, defineComponent } from "vue";
 import YgoPrice from "../YgoPrice.vue";
 import YgoDeckPart from "./YgoDeckPart.vue";
 import { useDeckStore } from "@/application/store/deck";
@@ -37,7 +36,7 @@ export default defineComponent({
 	},
 	emits: [],
 	setup() {
-		const deckParts = readonly<DeckPart[]>(DECK_PART_ARR);
+		const deckParts = DECK_PART_ARR;
 
 		const { deck } = storeToRefs(useDeckStore());
 		const allCards = computed(() => deckService.getAllCards(deck.value));

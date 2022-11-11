@@ -20,5 +20,5 @@ export interface CardType {
 	/**
 	 * Deck-parts which this type is allowed in.
 	 */
-	readonly deckParts: Set<DeckPart>;
+	readonly deckParts: ReadonlySet<DeckPart>;
 }

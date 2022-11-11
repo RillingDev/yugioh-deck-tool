@@ -25,7 +25,7 @@ export const DefaultVendor = {
 	},
 } as const;
 
-export const DEFAULT_VENDOR_ARR = [
+export const DEFAULT_VENDOR_ARR: ReadonlyArray<Vendor> = [
 	DefaultVendor.CARD_MARKET,
 	DefaultVendor.TCG_PLAYER,
 	DefaultVendor.COOL_STUFF_INC,
