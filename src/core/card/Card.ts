@@ -1,10 +1,22 @@
 import type { ReleaseInfo } from "./ReleaseInfo";
-import type { BanlistInfo } from "./banlist/BanlistInfo";
-import type { CardImage } from "./CardImage";
-import type { CardPrices } from "./CardPrices";
 import type { Format } from "./format/Format";
 import type { CardSet } from "./set/CardSet";
 import type { CardType } from "./type/CardType";
+import type { Vendor } from "@/core/price/Vendor";
+import type { BanState } from "@/core/card/banlist/BanState";
+
+export type CardPrices = ReadonlyMap<Vendor, number>;
+
+export interface CardImage {
+	readonly url: string;
+	readonly urlSmall: string;
+}
+
+export interface BanlistInfo {
+	readonly [Format.OCG]: BanState;
+	readonly [Format.TCG]: BanState;
+	readonly [Format.GOAT]: BanState;
+}
 
 /**
  * Regular card.

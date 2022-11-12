@@ -5,10 +5,7 @@ export { createBaseModule, createDeckModule } from "./modules";
 export { Environment } from "./EnvironmentConfig";
 export type { EnvironmentConfig } from "./EnvironmentConfig";
 
-export type { Card } from "./card/Card";
-export type { CardImage } from "./card/CardImage";
-export type { CardPrices } from "./card/CardPrices";
-export type { BanlistInfo } from "./card/banlist/BanlistInfo";
+export type { Card, CardPrices, CardImage, BanlistInfo } from "./card/Card";
 export type { BanState } from "./card/banlist/BanState";
 export {
 	DefaultBanState,

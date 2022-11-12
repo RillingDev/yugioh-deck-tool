@@ -1,8 +1,7 @@
-import type { Card } from "../Card";
+import type { BanlistInfo, Card } from "../Card";
 import { Format } from "../format/Format";
 import type { BanState } from "./BanState";
 import { DefaultBanState } from "./BanState";
-import type { BanlistInfo } from "./BanlistInfo";
 
 export class BanlistService {
 	/**
