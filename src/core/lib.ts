@@ -5,7 +5,13 @@ export { createBaseModule, createDeckModule } from "./modules";
 export { Environment } from "./EnvironmentConfig";
 export type { EnvironmentConfig } from "./EnvironmentConfig";
 
-export type { Card, CardPrices, CardImage, BanlistInfo } from "./card/Card";
+export type {
+	Card,
+	CardPrices,
+	CardImage,
+	BanlistInfo,
+	ReleaseInfo,
+} from "./card/Card";
 export type { BanState } from "./card/format/BanState";
 export { DefaultBanState, DEFAULT_BAN_STATE_ARR } from "./card/format/BanState";
 export type { CardSet } from "./card/set/CardSet";
@@ -15,7 +21,6 @@ export { DeckPart, DECK_PART_ARR } from "./deck/DeckPart";
 export type { DeckPartConfig } from "./deck/DeckPartConfig";
 export { DefaultDeckPartConfig } from "./deck/DeckPartConfig";
 export { Format } from "./card/format/Format";
-export type { ReleaseInfo } from "./card/ReleaseInfo";
 export type { Currency } from "./price/Currency";
 export { DefaultCurrency } from "./price/Currency";
 export type { CardType } from "./card/type/CardType";

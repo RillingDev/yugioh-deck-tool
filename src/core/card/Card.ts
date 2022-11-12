@@ -1,4 +1,3 @@
-import type { ReleaseInfo } from "./ReleaseInfo";
 import type { Format } from "./format/Format";
 import type { CardSet } from "./set/CardSet";
 import type { CardType } from "./type/CardType";
@@ -16,6 +15,14 @@ export interface BanlistInfo {
 	readonly [Format.OCG]: BanState;
 	readonly [Format.TCG]: BanState;
 	readonly [Format.GOAT]: BanState;
+}
+
+/**
+ * Stores UNIX milliseconds timestamps for when a card was released. May be null if a card was not released in TCG or OCG.
+ */
+export interface ReleaseInfo {
+	readonly [Format.TCG]: number | null;
+	readonly [Format.OCG]: number | null;
 }
 
 /**
