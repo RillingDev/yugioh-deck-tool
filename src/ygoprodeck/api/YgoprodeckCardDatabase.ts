@@ -19,28 +19,23 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 	#loadingCardValues: Promise<void> | null;
 	#loadingAllCards: Promise<void> | null;
 
-	// Indexes for mapping
-
-	/**
-	 * Sets by name
-	 */
-	readonly #setsByName: Map<string, CardSet>;
-	/**
-	 * Card types by name
-	 */
-	readonly #typesByName: Map<string, CardType>;
-
 	// Data
 
 	readonly #cardsByPasscode: Map<string, Card>;
 	readonly #cardsByName: Map<string, Card>;
-	readonly #sets: CardSet[];
-	readonly #archetypes: string[];
+
+	readonly #setsByName: Map<string, CardSet>;
+
+	readonly #typesByName: Map<string, CardType>;
+
 	readonly #types: Map<CardTypeCategory, CardType[]>;
 	readonly #subTypes: Map<CardTypeCategory, string[]>;
+
 	readonly #attributes: string[];
 	readonly #linkMarkers: string[];
 	readonly #levels: number[];
+
+	readonly #archetypes: string[];
 
 	constructor(ygoprodeckApiService: YgoprodeckApiService) {
 		this.#ygoprodeckApiService = ygoprodeckApiService;
@@ -55,7 +50,6 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 		this.#cardsByPasscode = new Map();
 		this.#cardsByName = new Map();
-		this.#sets = [];
 		this.#archetypes = [];
 		this.#types = new Map(
 			Object.values(CardTypeCategory).map((typeCategory) => [
@@ -110,7 +104,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 	}
 
 	getSets(): CardSet[] {
-		return this.#sets;
+		return Array.from(this.#setsByName.values());
 	}
 
 	getArchetypes(): string[] {
@@ -197,15 +191,12 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.then((rawSets) => {
 					for (const rawSet of rawSets) {
 						const set = mapCardSet(rawSet);
-
-						this.#sets.push(set);
-
 						this.#setsByName.set(set.name, set);
 					}
 
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered sets.",
-						this.#sets
+						this.#setsByName
 					);
 				});
 		}
