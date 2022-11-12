@@ -1,6 +1,5 @@
 import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
 import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
-import type { CardSetAppearance, UnlinkedCard } from "./UnlinkedCard";
 import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
 import type { RawCard } from "@/ygoprodeck/api/mapping/mapCard";
 import { mapCard } from "@/ygoprodeck/api/mapping/mapCard";
@@ -263,11 +262,13 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 	#registerCards(rawCards: RawCard[]): void {
 		for (const rawCard of rawCards) {
-			const unlinkedCard = mapCard(rawCard);
-			if (this.#cardsByPasscode.has(unlinkedCard.passcode)) {
+			const card = mapCard(rawCard, this.#setsByName, this.#typesByName);
+			if (this.#cardsByPasscode.has(card.passcode)) {
+				YgoprodeckCardDatabase.#logger.warn(
+					`Refusing to add already registered card '${card.passcode}'.`
+				);
 				continue;
 			}
-			const card = this.#linkCard(unlinkedCard);
 
 			this.#cardsByPasscode.set(card.passcode, card);
 			this.#cardsByName.set(card.name, card);
@@ -281,40 +282,5 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return findCardBy == FindCardBy.PASSCODE
 			? this.#cardsByPasscode
 			: this.#cardsByName;
-	}
-
-	/**
-	 * Links an unlinked card.
-	 *
-	 * @param unlinkedCard Unlinked card.
-	 * @return linked card.
-	 */
-	#linkCard(unlinkedCard: UnlinkedCard): Card {
-		return {
-			...unlinkedCard,
-			type: this.#linkType(unlinkedCard.type),
-			sets: this.#linkSets(unlinkedCard.sets),
-		};
-	}
-
-	#linkSets(setAppearances: CardSetAppearance[]): CardSet[] {
-		return setAppearances
-			.map((setAppearance) => {
-				if (!this.#setsByName.has(setAppearance.name)) {
-					YgoprodeckCardDatabase.#logger.warn(
-						`Could not find set '${setAppearance.name}'.`
-					);
-					return null;
-				}
-				return this.#setsByName.get(setAppearance.name)!;
-			})
-			.filter((set) => set != null) as CardSet[];
-	}
-
-	#linkType(typeName: string): CardType {
-		if (!this.#typesByName.has(typeName)) {
-			throw new TypeError(`Could not find type '${typeName}'.`);
-		}
-		return this.#typesByName.get(typeName)!;
 	}
 }

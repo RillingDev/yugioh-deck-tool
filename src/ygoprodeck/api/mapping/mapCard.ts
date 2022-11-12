@@ -3,16 +3,17 @@
 import { getExistingElseThrow } from "lightdash";
 import type {
 	BanState,
+	Card,
 	CardImage,
 	CardPrices,
+	CardSet,
+	CardType,
 	ReleaseInfo,
 	Vendor,
 } from "@/core/lib";
-import { DefaultBanState, DefaultVendor, Format } from "@/core/lib";
-import type {
-	CardSetAppearance,
-	UnlinkedCard,
-} from "@/ygoprodeck/api/UnlinkedCard";
+import { DefaultBanState, DefaultVendor, Format, getLogger } from "@/core/lib";
+
+const logger = getLogger("mapCard");
 
 // https://jvilk.com/MakeTypes/
 export interface RawCard {
@@ -120,16 +121,22 @@ const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
 	);
 };
 
-const mapCardSets = (rawCard: RawCard): CardSetAppearance[] => {
+const mapCardSets = (
+	rawCard: RawCard,
+	setsByName: ReadonlyMap<string, CardSet>
+): CardSet[] => {
 	if (rawCard.card_sets == null) {
 		return [];
 	}
-	return rawCard.card_sets.map((rawSet) => {
-		return {
-			name: rawSet.set_name,
-			code: rawSet.set_code,
-		};
-	});
+	return rawCard.card_sets
+		.filter((rawSet) => {
+			if (!setsByName.has(rawSet.set_name)) {
+				logger.warn(`Could not find set '${rawSet.set_name}'.`);
+				return false;
+			}
+			return true;
+		})
+		.map((rawSet) => setsByName.get(rawSet.set_name)!);
 };
 
 const mapImage = (rawCard: RawCard): CardImage | null => {
@@ -175,7 +182,21 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => {
 	};
 };
 
-export const mapCard = (rawCard: RawCard): UnlinkedCard => {
+const mapType = (
+	typeName: string,
+	typesByName: ReadonlyMap<string, CardType>
+): CardType => {
+	if (!typesByName.has(typeName)) {
+		throw new TypeError(`Could not find type '${typeName}'.`);
+	}
+	return typesByName.get(typeName)!;
+};
+
+export const mapCard = (
+	rawCard: RawCard,
+	setsByName: ReadonlyMap<string, CardSet>,
+	typesByName: ReadonlyMap<string, CardType>
+): Card => {
 	const miscInfo: RawMiscInfo | null =
 		rawCard.misc_info != null ? rawCard.misc_info[0] : null;
 	return {
@@ -183,7 +204,7 @@ export const mapCard = (rawCard: RawCard): UnlinkedCard => {
 		name: rawCard.name,
 		description: rawCard.desc,
 
-		type: rawCard.type,
+		type: mapType(rawCard.type, typesByName),
 		subType: rawCard.race,
 		attribute: rawCard.attribute ?? null,
 		atk: rawCard.atk ?? null,
@@ -193,7 +214,7 @@ export const mapCard = (rawCard: RawCard): UnlinkedCard => {
 		linkRating: rawCard.linkval ?? null,
 		linkMarkers: rawCard.linkmarkers ?? null,
 
-		sets: mapCardSets(rawCard),
+		sets: mapCardSets(rawCard, setsByName),
 		image: mapImage(rawCard),
 		prices: mapPrices(rawCard),
 
