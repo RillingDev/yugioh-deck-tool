@@ -6,7 +6,7 @@ import { FilterService } from "./card/FilterService";
 import { DeckRandomizationService } from "./deck/DeckRandomizationService";
 import { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 import { DeckFileService } from "./deck/DeckFileService";
-import { BanlistService } from "./card/banlist/BanlistService";
+import { BanlistService } from "./card/format/BanlistService";
 import { CardPredicateService } from "./card/CardPredicateService";
 import { EncodingService } from "./util/EncodingService";
 import { SortingService } from "@/core/card/SortingService";

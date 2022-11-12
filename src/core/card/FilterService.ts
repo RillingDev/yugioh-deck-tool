@@ -1,6 +1,6 @@
 import { intersection, isEmpty } from "lodash";
-import type { BanlistService } from "./banlist/BanlistService";
-import type { BanState } from "./banlist/BanState";
+import type { BanlistService } from "./format/BanlistService";
+import type { BanState } from "./format/BanState";
 import type { Card } from "./Card";
 import type { CardPredicate } from "./CardPredicateService";
 import type { CardService } from "./CardService";

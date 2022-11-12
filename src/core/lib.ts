@@ -6,11 +6,8 @@ export { Environment } from "./EnvironmentConfig";
 export type { EnvironmentConfig } from "./EnvironmentConfig";
 
 export type { Card, CardPrices, CardImage, BanlistInfo } from "./card/Card";
-export type { BanState } from "./card/banlist/BanState";
-export {
-	DefaultBanState,
-	DEFAULT_BAN_STATE_ARR,
-} from "./card/banlist/BanState";
+export type { BanState } from "./card/format/BanState";
+export { DefaultBanState, DEFAULT_BAN_STATE_ARR } from "./card/format/BanState";
 export type { CardSet } from "./card/set/CardSet";
 export type { CardValues } from "./card/type/CardValues";
 export type { Deck } from "./deck/Deck";
@@ -31,7 +28,7 @@ export { FindCardBy } from "./card/CardDatabase";
 export { CardService } from "./card/CardService";
 export type { PriceLookupResult } from "./price/PriceService";
 export { PriceService } from "./price/PriceService";
-export { BanlistService } from "./card/banlist/BanlistService";
+export { BanlistService } from "./card/format/BanlistService";
 export { DeckExportService } from "./deck/DeckExportService";
 export { DeckService } from "./deck/DeckService";
 export type { SortingOptions } from "./card/SortingService";

@@ -1,5 +1,5 @@
 import type { BanlistInfo, Card } from "../Card";
-import { Format } from "../format/Format";
+import { Format } from "./Format";
 import type { BanState } from "./BanState";
 import { DefaultBanState } from "./BanState";
 

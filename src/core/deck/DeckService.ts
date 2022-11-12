@@ -9,7 +9,7 @@ import type { SortingService } from "../card/SortingService";
 import { SortingStrategy } from "../card/SortingService";
 
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import type { BanlistService } from "../card/banlist/BanlistService";
+import type { BanlistService } from "../card/format/BanlistService";
 import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 export class DeckService {
