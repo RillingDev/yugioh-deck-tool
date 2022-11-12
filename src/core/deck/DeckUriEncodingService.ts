@@ -1,4 +1,5 @@
 import type { Deck } from "./Deck";
+import { DECK_PART_ARR } from "./Deck";
 import type { CardDatabase } from "../card/CardDatabase";
 import { FindCardBy } from "../card/CardDatabase";
 
@@ -6,7 +7,6 @@ import type { Card } from "../card/Card";
 import { isEqual } from "lodash";
 import type { DeckService } from "./DeckService";
 import { deflateRaw, inflateRaw } from "pako";
-import { DECK_PART_ARR } from "./DeckPart";
 import type { EncodingService } from "../util/EncodingService";
 
 export class DeckUriEncodingService {

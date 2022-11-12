@@ -7,7 +7,7 @@ import type { Format } from "../card/format/Format";
 import type { SortingService } from "../card/SortingService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import type { Deck } from "./Deck";
-import { DECK_PART_ARR, DeckPart } from "./DeckPart";
+import { DECK_PART_ARR, DeckPart } from "./Deck";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 import type { DeckService } from "./DeckService";
 

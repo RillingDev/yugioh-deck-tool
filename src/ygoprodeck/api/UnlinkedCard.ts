@@ -1,9 +1,9 @@
 import type {
+	BanlistInfo,
 	CardImage,
 	CardPrices,
 	Format,
 	ReleaseInfo,
-	BanlistInfo,
 } from "@/core/lib";
 
 /**
@@ -48,5 +48,4 @@ export interface UnlinkedCard {
 	readonly image: CardImage | null;
 	readonly prices: CardPrices;
 	readonly views: number;
-	readonly quantity: number | null; // Number when querying collection, null otherwise
 }

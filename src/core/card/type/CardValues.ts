@@ -1,5 +1,5 @@
 import type { CardTypeCategory } from "./CardTypeCategory";
-import type { CardType } from "@/core/card/type/CardType";
+import type { CardType } from "./CardType";
 
 interface TypeCategoryValues {
 	readonly subTypes: ReadonlyArray<string>;

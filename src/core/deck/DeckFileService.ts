@@ -1,9 +1,9 @@
 import type { Deck } from "./Deck";
+import { DECK_PART_ARR } from "./Deck";
 import type { CardDatabase } from "../card/CardDatabase";
 import { FindCardBy } from "../card/CardDatabase";
 
 import type { DeckService } from "./DeckService";
-import { DECK_PART_ARR } from "./DeckPart";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 
 export interface ImportResult {

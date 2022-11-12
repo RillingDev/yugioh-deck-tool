@@ -1,6 +1,7 @@
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 import type { Card } from "../card/Card";
 import type { Deck } from "./Deck";
+import { DECK_PART_ARR, DeckPart } from "./Deck";
 import type { CardService } from "../card/CardService";
 import type { Format } from "../card/format/Format";
 import { insertAt, pullFirst } from "lightdash";
@@ -10,7 +11,6 @@ import { SortingStrategy } from "../card/SortingService";
 
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import type { BanlistService } from "../card/format/BanlistService";
-import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 export class DeckService {
 	readonly #cardService: CardService;

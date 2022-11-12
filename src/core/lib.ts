@@ -17,7 +17,7 @@ export { DefaultBanState, DEFAULT_BAN_STATE_ARR } from "./card/format/BanState";
 export type { CardSet } from "./card/set/CardSet";
 export type { CardValues } from "./card/type/CardValues";
 export type { Deck } from "./deck/Deck";
-export { DeckPart, DECK_PART_ARR } from "./deck/DeckPart";
+export { DECK_PART_ARR, DeckPart } from "./deck/Deck";
 export type { DeckPartConfig } from "./deck/DeckPartConfig";
 export { DefaultDeckPartConfig } from "./deck/DeckPartConfig";
 export { Format } from "./card/format/Format";

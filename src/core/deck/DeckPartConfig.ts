@@ -1,4 +1,4 @@
-import { DeckPart } from "./DeckPart";
+import { DeckPart } from "./Deck";
 
 export interface DeckPartConfig {
 	readonly name: string;

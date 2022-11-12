@@ -16,6 +16,9 @@ import type {
 
 // https://jvilk.com/MakeTypes/
 export interface RawCard {
+	/**
+	 * Equals passcode of a card
+	 */
 	id: number;
 	name: string;
 	desc: string;
@@ -38,7 +41,11 @@ export interface RawCard {
 	misc_info?: RawMiscInfo[];
 	banlist_info?: RawBanListInfo;
 
-	cardq?: number; // Only exists when querying collection
+	/**
+	 * card quantity.
+	 * Only exists when querying collection
+	 */
+	cardq?: number;
 }
 
 interface RawCardSetAppearance {
@@ -202,6 +209,5 @@ export const mapCard = (rawCard: RawCard): UnlinkedCard => {
 		},
 
 		views: miscInfo?.views ?? 0,
-		quantity: rawCard.cardq ?? null,
 	};
 };

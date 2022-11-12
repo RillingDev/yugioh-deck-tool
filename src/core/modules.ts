@@ -9,8 +9,8 @@ import { DeckFileService } from "./deck/DeckFileService";
 import { BanlistService } from "./card/format/BanlistService";
 import { CardPredicateService } from "./card/CardPredicateService";
 import { EncodingService } from "./util/EncodingService";
-import { SortingService } from "@/core/card/SortingService";
-import type { CardDatabase } from "@/core/card/CardDatabase";
+import { SortingService } from "./card/SortingService";
+import type { CardDatabase } from "./card/CardDatabase";
 
 interface BaseModule {
 	cardService: CardService;

@@ -1,11 +1,11 @@
 import type { Deck } from "./Deck";
+import { DECK_PART_ARR, DeckPart } from "./Deck";
 import type { Card } from "../card/Card";
 import type { DeckService } from "./DeckService";
 import { DefaultDeckPartConfig } from "./DeckPartConfig";
 import type { CardService } from "../card/CardService";
 import { CardTypeCategory } from "../card/type/CardTypeCategory";
 import type { FilterService } from "../card/FilterService";
-import { DECK_PART_ARR, DeckPart } from "./DeckPart";
 
 export class DeckExportService {
 	readonly #deckService: DeckService;

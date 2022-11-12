@@ -2,7 +2,6 @@ import type { Credentials, YgoprodeckApiService } from "./YgoprodeckApiService";
 import type { Card, CardCountFunction, EnvironmentConfig } from "@/core/lib";
 import { Environment } from "@/core/lib";
 import { toMapBy } from "lightdash";
-import { mapCard } from "@/ygoprodeck/api/mapping/mapCard";
 
 export class YgoprodeckService {
 	readonly #ygoprodeckApiService: YgoprodeckApiService;
@@ -30,17 +29,15 @@ export class YgoprodeckService {
 		credentials: Credentials
 	): Promise<CardCountFunction> {
 		this.validateEnv();
-		const unlinkedCards = await this.#ygoprodeckApiService
-			.getCards({
-				includeAliased: true,
-				auth: credentials,
-			})
-			.then((cards) => cards.map(mapCard));
+		const unlinkedCards = await this.#ygoprodeckApiService.getCards({
+			includeAliased: true,
+			auth: credentials,
+		});
 		return this.#createCardCountFunction(
 			toMapBy(
 				unlinkedCards,
-				(_key, unlinkedCard) => unlinkedCard.passcode,
-				(_key, unlinkedCard) => unlinkedCard.quantity!
+				(_key, unlinkedCard) => String(unlinkedCard.id),
+				(_key, unlinkedCard) => unlinkedCard.cardq!
 			)
 		);
 	}

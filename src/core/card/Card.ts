@@ -1,8 +1,8 @@
 import type { Format } from "./format/Format";
 import type { CardSet } from "./set/CardSet";
 import type { CardType } from "./type/CardType";
-import type { Vendor } from "@/core/price/Vendor";
-import type { BanState } from "@/core/card/format/BanState";
+import type { Vendor } from "../price/Vendor";
+import type { BanState } from "./format/BanState";
 
 export type CardPrices = ReadonlyMap<Vendor, number>;
 
