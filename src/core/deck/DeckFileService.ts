@@ -8,6 +8,9 @@ import { DefaultDeckPartConfig } from "./DeckPartConfig";
 
 export interface ImportResult {
 	readonly deck: Deck;
+	/**
+	 * Missing passcodes.
+	 */
 	readonly missing: ReadonlyArray<string>;
 }
 

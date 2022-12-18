@@ -1,4 +1,4 @@
-import type { Card, Deck } from "@/core/lib";
+import type { Card, Deck, ImportResult } from "@/core/lib";
 import { DeckPart, FindCardBy, getLogger } from "@/core/lib";
 import type {
 	ApplicationApi,
@@ -33,22 +33,37 @@ const toExternalCard = ({ passcode, name }: Card): ExternalCard => {
 const fromExternalDeck = ({
 	name,
 	parts,
-}: ExternalDeck<SlimExternalCard>): Deck => {
-	return {
-		name,
-		parts: {
-			[DeckPart.MAIN]: parts.main.map(fromExternalCard),
-			[DeckPart.EXTRA]: parts.extra.map(fromExternalCard),
-			[DeckPart.SIDE]: parts.side.map(fromExternalCard),
-		},
-	};
-};
+}: ExternalDeck<SlimExternalCard>): ImportResult => {
+	const missing: string[] = [];
 
-const fromExternalCard = ({ passcode }: SlimExternalCard): Card => {
-	if (!cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
-		throw new TypeError(`Card with passcode '${passcode}' not found.`);
-	}
-	return cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!;
+	const fromExternalCards = (
+		externalCards: ReadonlyArray<SlimExternalCard>
+	): Card[] => {
+		return externalCards
+			.filter(({ passcode }) => {
+				if (cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
+					return true;
+				}
+				missing.push(passcode);
+				return false;
+			})
+			.map(
+				({ passcode }) =>
+					cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!
+			);
+	};
+
+	return {
+		deck: {
+			name,
+			parts: {
+				[DeckPart.MAIN]: fromExternalCards(parts.main),
+				[DeckPart.EXTRA]: fromExternalCards(parts.extra),
+				[DeckPart.SIDE]: fromExternalCards(parts.side),
+			},
+		},
+		missing,
+	};
 };
 
 /**
@@ -103,22 +118,24 @@ export const useBridge = (): ApplicationApi => {
 			logger.debug("Exporting current deck state...");
 			return toExternalDeck(deckStore.deck);
 		},
-		setDeck(newDeck: ExternalDeck<SlimExternalCard>): void {
+		setDeck(newDeck: ExternalDeck<SlimExternalCard>) {
 			logger.debug("Replacing current deck state...");
+			const { deck, missing } = fromExternalDeck(newDeck);
 			deckStore.replace({
-				deck: fromExternalDeck(newDeck),
+				deck,
 			});
+			return { deck: toExternalDeck(deck), missing };
 		},
-		shuffleDeck(): void {
+		shuffleDeck() {
 			deckStore.shuffle();
 		},
-		sortDeck(): void {
+		sortDeck() {
 			deckStore.sort();
 		},
-		clearDeck(): void {
+		clearDeck() {
 			deckStore.clear();
 		},
-		on(event: ApplicationEvent, callback: Callback): void {
+		on(event: ApplicationEvent, callback: Callback) {
 			logger.debug(
 				`Registering event subscription for event '${event}'...`
 			);

@@ -14,7 +14,9 @@ export interface ApplicationApi {
 	 *
 	 * May only be called after `ready` event was emitted.
 	 */
-	readonly setDeck: (newDeck: ExternalDeck<SlimExternalCard>) => void;
+	readonly setDeck: (
+		newDeck: ExternalDeck<SlimExternalCard>
+	) => SetDeckResult;
 
 	/**
 	 * Shuffles the current deck.
@@ -65,3 +67,11 @@ export interface ExternalCard {
 export type SlimExternalCard = Pick<ExternalCard, "passcode">;
 
 export type Callback = () => void;
+
+export interface SetDeckResult {
+	readonly deck: ExternalDeck<ExternalCard>;
+	/**
+	 * Missing passcodes.
+	 */
+	readonly missing: ReadonlyArray<string>;
+}
