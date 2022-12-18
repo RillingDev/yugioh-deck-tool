@@ -53,6 +53,7 @@ interface RawCardSetAppearance {
 	set_name: string;
 	set_code: string;
 	set_rarity: string;
+	set_rarity_code: string;
 	set_price: string;
 }
 
@@ -71,15 +72,17 @@ interface RawCardPrices {
 }
 
 interface RawMiscInfo {
+	beta_id?: number;
+	beta_name?: string;
+	downvotes: number;
+	formats?: string[];
+	ocg_date?: string;
+	tcg_date?: string;
+	treated_as?: string;
+	upvotes: number;
 	views: number;
 	viewsweek: number;
-	upvotes: number;
-	downvotes: number;
-	treated_as?: string;
-	beta_name?: string;
-	formats?: string[];
-	tcg_date?: string;
-	ocg_date?: string;
+	has_effect?: number;
 }
 
 interface RawBanListInfo {
@@ -214,21 +217,24 @@ export const mapCard = (
 		linkRating: rawCard.linkval ?? null,
 		linkMarkers: rawCard.linkmarkers ?? null,
 
-		sets: mapCardSets(rawCard, setsByName),
-		image: mapImage(rawCard),
-		prices: mapPrices(rawCard),
-
-		betaName: miscInfo?.beta_name ?? null,
 		treatedAs: miscInfo?.treated_as ?? null,
 		archetype: rawCard.archetype ?? null,
-		formats: mapFormats(miscInfo),
+
+		betaPasscode:
+			miscInfo?.beta_id != null ? String(miscInfo.beta_id) : null,
+		betaName: miscInfo?.beta_name ?? null,
+
 		release: mapRelease(miscInfo),
+		sets: mapCardSets(rawCard, setsByName),
+		formats: mapFormats(miscInfo),
 		banlist: {
 			[Format.TCG]: mapBanState(rawCard.banlist_info?.ban_tcg ?? null),
 			[Format.OCG]: mapBanState(rawCard.banlist_info?.ban_ocg ?? null),
 			[Format.GOAT]: mapBanState(rawCard.banlist_info?.ban_goat ?? null),
 		},
 
+		image: mapImage(rawCard),
+		prices: mapPrices(rawCard),
 		views: miscInfo?.views ?? 0,
 	};
 };

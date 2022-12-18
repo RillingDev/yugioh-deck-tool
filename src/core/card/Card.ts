@@ -54,9 +54,11 @@ export interface Card {
 	readonly linkRating: number | null;
 	readonly linkMarkers: ReadonlyArray<string> | null;
 
-	readonly betaName: string | null;
 	readonly treatedAs: string | null;
 	readonly archetype: string | null;
+
+	readonly betaPasscode: string | null;
+	readonly betaName: string | null;
 
 	readonly release: ReleaseInfo;
 	readonly sets: ReadonlyArray<CardSet>;

@@ -1,15 +1,10 @@
-import type { Card } from "@/core/lib";
-import { Format } from "@/core/lib";
-import type { CardImage } from "@/core/lib";
-import type { CardPrices } from "@/core/lib";
-import type { ReleaseInfo } from "@/core/lib";
-import type { BanlistInfo } from "@/core/lib";
-import type { CardType } from "@/core/lib";
-import type { CardSet } from "@/core/lib";
-import { CardTypeCategory } from "@/core/lib";
-import { DefaultBanState } from "@/core/lib";
-import type { Vendor } from "@/core/lib";
-import { DeckPart } from "@/core/lib";
+import type { Card, CardType, Vendor } from "@/core/lib";
+import {
+	CardTypeCategory,
+	DeckPart,
+	DefaultBanState,
+	Format,
+} from "@/core/lib";
 
 export const createCardType = (data: {
 	name?: string;
@@ -23,34 +18,7 @@ export const createCardType = (data: {
 	deckParts: data.deckPart ?? new Set([DeckPart.MAIN, DeckPart.SIDE]),
 });
 
-export const createCard = (data: {
-	passcode?: string;
-	name?: string;
-	description?: string;
-
-	type?: CardType;
-	subType?: string;
-	attribute?: string | null;
-	atk?: number | null;
-	def?: number | null;
-	level?: number | null;
-	pendulumScale?: number | null;
-	linkRating?: number | null;
-	linkMarkers?: string[] | null;
-
-	sets?: CardSet[];
-	image?: CardImage | null;
-	prices?: CardPrices | null;
-
-	betaName?: string | null;
-	treatedAs?: string | null;
-	archetype?: string | null;
-	formats?: Format[];
-	release?: ReleaseInfo;
-	banlist?: BanlistInfo;
-
-	views?: number;
-}): Card => ({
+export const createCard = (data: Partial<Card>): Card => ({
 	passcode: data.passcode ?? "123",
 	name: data.name ?? "name",
 	description: data.description ?? "desc",
@@ -66,12 +34,15 @@ export const createCard = (data: {
 	linkRating: data.linkRating ?? null,
 	linkMarkers: data.linkMarkers ?? null,
 
+	treatedAs: data.treatedAs ?? null,
+	archetype: data.archetype ?? null,
+
+	betaPasscode: data.betaPasscode ?? null,
+	betaName: data.betaName ?? null,
+
 	sets: data.sets ?? [],
 	image: data.image ?? null,
 	prices: data.prices ?? new Map<Vendor, number>(),
-	betaName: data.betaName ?? null,
-	treatedAs: data.treatedAs ?? null,
-	archetype: data.archetype ?? null,
 
 	formats: data.formats ?? [Format.TCG, Format.OCG],
 	release: {
