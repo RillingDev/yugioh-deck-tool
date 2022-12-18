@@ -151,7 +151,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			}
 
 			if (loadedCard != null) {
-				this.#registerCards([loadedCard]);
+				this.#registerCard(loadedCard);
 			}
 		}
 		return this.getCard(cardKey, findCardBy)!;
@@ -163,7 +163,9 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.getCards({
 					includeAliased: true,
 				})
-				.then((cards) => this.#registerCards(cards));
+				.then((cards) => {
+					cards.forEach((card) => this.#registerCard(card));
+				});
 		}
 		return this.#loadingAllCards;
 	}
@@ -251,22 +253,35 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		return this.#loadingCardValues;
 	}
 
-	#registerCards(rawCards: RawCard[]): void {
-		for (const rawCard of rawCards) {
-			const card = mapCard(rawCard, this.#setsByName, this.#typesByName);
-			if (this.#cardsByPasscode.has(card.passcode)) {
-				YgoprodeckCardDatabase.#logger.warn(
-					`Refusing to add already registered card '${card.passcode}'.`
-				);
-				continue;
-			}
+	#registerCard(rawCard: RawCard): void {
+		const card = mapCard(rawCard, this.#setsByName, this.#typesByName);
 
-			this.#cardsByPasscode.set(card.passcode, card);
-			this.#cardsByName.set(card.name, card);
-			YgoprodeckCardDatabase.#logger.trace(
-				`Registered card '${card.passcode}'.`
+		if (
+			this.#cardsByPasscode.has(card.passcode) ||
+			(card.betaPasscode != null &&
+				this.#cardsByPasscode.has(card.betaPasscode))
+		) {
+			YgoprodeckCardDatabase.#logger.warn(
+				`Refusing to add already registered card passcode.`,
+				card
 			);
+			return;
 		}
+
+		this.#cardsByPasscode.set(card.passcode, card);
+		if (card.betaPasscode != null) {
+			this.#cardsByPasscode.set(card.betaPasscode, card);
+		}
+
+		// Note that the last card of a given name is kept, if any others were set before.
+		this.#cardsByName.set(card.name, card);
+		if (card.betaName != null) {
+			this.#cardsByName.set(card.betaName, card);
+		}
+
+		YgoprodeckCardDatabase.#logger.trace(
+			`Registered card '${card.passcode}'.`
+		);
 	}
 
 	#getCardMap(findCardBy: FindCardBy): Map<string, Card> {
