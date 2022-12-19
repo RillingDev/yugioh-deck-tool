@@ -60,7 +60,7 @@ import YgoPrice from "../YgoPrice.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
-import { deckController, deckService } from "@/application/container";
+import { deckController, deckService } from "@/application/ctx";
 
 const logger = getLogger("YgoDeckPart");
 

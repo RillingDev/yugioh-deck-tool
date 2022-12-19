@@ -13,7 +13,7 @@ import { downloadFile } from "../../../composition/io/downloadFile";
 import { showSuccess, useToast } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckFileService } from "@/application/container";
+import { deckFileService } from "@/application/ctx";
 
 export default defineComponent({
 	components: { BDropdownItemButton },

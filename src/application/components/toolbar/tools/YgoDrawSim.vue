@@ -51,7 +51,7 @@ import { BDropdownItemButton, BModal } from "bootstrap-vue";
 import { computed, defineComponent, ref } from "vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckService } from "@/application/container";
+import { deckService } from "@/application/ctx";
 
 export default defineComponent({
 	components: {

@@ -19,7 +19,7 @@ import {
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckUriEncodingService } from "@/application/container";
+import { deckUriEncodingService } from "@/application/ctx";
 
 const logger = getLogger("YgoExportDeckYdkeUrl");
 

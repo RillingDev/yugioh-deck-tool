@@ -46,7 +46,7 @@ import { DEFAULT_VENDOR_ARR } from "@/core/lib";
 import type { PropType } from "vue";
 import { computed, defineComponent, ref } from "vue";
 import { BTooltip } from "bootstrap-vue";
-import { cardService, priceService } from "@/application/container";
+import { cardService, priceService } from "@/application/ctx";
 
 export default defineComponent({
 	components: { BTooltip },

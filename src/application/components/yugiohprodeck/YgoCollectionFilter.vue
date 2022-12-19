@@ -21,10 +21,7 @@ import { getLogger } from "@/core/lib";
 import { defineComponent, ref, watch } from "vue";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError, useToast } from "../../composition/feedback";
-import {
-	ygoprodeckController,
-	ygoprodeckService,
-} from "@/application/container";
+import { ygoprodeckController, ygoprodeckService } from "@/application/ctx";
 import { useCollectionStore } from "@/application/store/collection";
 import { useDataStore } from "@/application/store/data";
 import { storeToRefs } from "pinia";

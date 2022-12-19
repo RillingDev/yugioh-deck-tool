@@ -11,7 +11,7 @@ import type {
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
 import { getExistingElseThrow } from "lightdash";
-import { cardDatabase } from "@/application/container";
+import { cardDatabase } from "@/application/ctx";
 
 const logger = getLogger("bridge");
 

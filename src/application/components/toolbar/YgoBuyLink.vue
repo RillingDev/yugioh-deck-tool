@@ -20,7 +20,7 @@ import { computed, defineComponent } from "vue";
 import { Environment } from "@/core/lib";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckExportService, environmentConfig } from "@/application/container";
+import { deckExportService, environmentConfig } from "@/application/ctx";
 
 export default defineComponent({
 	components: {},

@@ -40,7 +40,7 @@ import {
 	cardPredicateService,
 	filterService,
 	sortingService,
-} from "@/application/container";
+} from "@/application/ctx";
 
 export default defineComponent({
 	components: {

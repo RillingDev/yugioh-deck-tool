@@ -1,6 +1,6 @@
 import type { Card, Deck, DeckPart } from "@/core/lib";
 import { defineStore } from "pinia";
-import { deckService } from "@/application/container";
+import { deckService } from "@/application/ctx";
 
 interface DeckState {
 	deck: Deck;

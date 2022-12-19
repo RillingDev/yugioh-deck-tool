@@ -13,7 +13,7 @@
 import type { PropType } from "vue";
 import { computed, defineComponent } from "vue";
 import type { Card } from "@/core/lib";
-import { resourceService } from "@/application/container";
+import { resourceService } from "@/application/ctx";
 
 export default defineComponent({
 	components: {},

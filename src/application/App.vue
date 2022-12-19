@@ -25,7 +25,7 @@ import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { cardDatabase, deckUrlController } from "@/application/container";
+import { cardDatabase, deckUrlController } from "@/application/ctx";
 
 const logger = getLogger("App");
 

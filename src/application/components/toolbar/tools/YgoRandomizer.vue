@@ -47,7 +47,7 @@ import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckRandomizationService } from "@/application/container";
+import { deckRandomizationService } from "@/application/ctx";
 
 export default defineComponent({
 	components: {

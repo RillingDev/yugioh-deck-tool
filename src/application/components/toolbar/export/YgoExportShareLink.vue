@@ -19,7 +19,7 @@ import {
 import { getLogger } from "@/core/lib";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckUrlController } from "@/application/container";
+import { deckUrlController } from "@/application/ctx";
 
 const logger = getLogger("YgoExportShareLink");
 

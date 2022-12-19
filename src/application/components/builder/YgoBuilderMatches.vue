@@ -81,7 +81,7 @@ import { useDeckStore } from "@/application/store/deck";
 import { useCollectionStore } from "@/application/store/collection";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
-import { deckService } from "@/application/container";
+import { deckService } from "@/application/ctx";
 
 export default defineComponent({
 	components: {

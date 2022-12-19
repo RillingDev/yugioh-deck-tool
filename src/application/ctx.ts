@@ -41,30 +41,6 @@ const deckUrlController = new DeckUrlController(
 );
 const ygoprodeckController = new YgoprodeckController(ygoprodeckService);
 
-export const container = {
-	// Base
-	cardService,
-	priceService,
-	banlistService,
-	filterService,
-	sortingService,
-	cardPredicateService,
-	cardDatabase,
-	// Deck
-	deckRandomizationService,
-	deckService,
-	deckUriEncodingService,
-	deckFileService,
-	deckExportService,
-	// Ygoprodeck
-	resourceService,
-	ygoprodeckService,
-	// Application
-	deckController,
-	deckUrlController,
-	ygoprodeckController,
-};
-
 export {
 	// Base
 	cardService,

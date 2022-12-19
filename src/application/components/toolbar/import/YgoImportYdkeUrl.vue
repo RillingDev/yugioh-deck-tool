@@ -41,7 +41,7 @@ import {
 } from "../../../composition/feedback";
 import { useId } from "@/application/composition/id";
 import { useDeckStore } from "@/application/store/deck";
-import { deckUriEncodingService } from "@/application/container";
+import { deckUriEncodingService } from "@/application/ctx";
 
 const logger = getLogger("YgoImportYdkeUrl");
 

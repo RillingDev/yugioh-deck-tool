@@ -21,7 +21,7 @@ import YgoPrice from "../YgoPrice.vue";
 import YgoDeckPart from "./YgoDeckPart.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckService } from "@/application/container";
+import { deckService } from "@/application/ctx";
 
 export default defineComponent({
 	components: {

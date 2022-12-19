@@ -16,7 +16,7 @@ import {
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckExportService } from "@/application/container";
+import { deckExportService } from "@/application/ctx";
 
 const logger = getLogger("YgoExportDeckList");
 

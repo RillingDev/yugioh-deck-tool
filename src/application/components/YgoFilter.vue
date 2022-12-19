@@ -214,7 +214,7 @@ import {
 	environmentConfig,
 	filterService,
 	ygoprodeckController,
-} from "@/application/container";
+} from "@/application/ctx";
 
 export default defineComponent({
 	components: {

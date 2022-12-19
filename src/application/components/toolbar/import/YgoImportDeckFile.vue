@@ -19,7 +19,7 @@ import {
 	useToast,
 } from "../../../composition/feedback";
 import { useDeckStore } from "@/application/store/deck";
-import { deckFileService } from "@/application/container";
+import { deckFileService } from "@/application/ctx";
 
 const logger = getLogger("YgoImportDeckFile");
 

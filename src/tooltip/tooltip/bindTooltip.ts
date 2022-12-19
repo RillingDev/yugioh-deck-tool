@@ -6,7 +6,7 @@ import {
 	environmentConfig,
 	tooltipController,
 	ygoprodeckService,
-} from "../container";
+} from "../ctx";
 
 import { bindReferenceLink } from "./bindReferenceLink";
 import {

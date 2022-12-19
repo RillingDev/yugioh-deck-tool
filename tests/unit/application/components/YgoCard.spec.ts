@@ -5,7 +5,7 @@ import { createCard } from "../../helper/dataFactories";
 import type { ComponentOptions } from "vue";
 import type { ResourceService } from "@/ygoprodeck/api/ResourceService";
 
-jest.mock("@/application/container", () => {
+jest.mock("@/application/ctx", () => {
 	return {
 		resourceService: {
 			getPlaceholderCardImageUrl() {
