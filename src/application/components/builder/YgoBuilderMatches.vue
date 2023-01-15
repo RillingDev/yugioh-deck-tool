@@ -26,7 +26,7 @@
 							put: false,
 						}"
 						:value="[card]"
-						:move="(e) => canMove(e)"
+						:move="canMove"
 						:animation="0"
 						@start="() => disableTooltip()"
 						@end="() => enableTooltip()"

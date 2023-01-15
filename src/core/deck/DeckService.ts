@@ -245,7 +245,7 @@ export class DeckService {
 	 * @return All cards of the deck.
 	 */
 	getAllCards(deck: Deck): Card[] {
-		const result = [];
+		const result: Card[] = [];
 		for (const deckPart of DECK_PART_ARR) {
 			result.push(...deck.parts[deckPart]);
 		}

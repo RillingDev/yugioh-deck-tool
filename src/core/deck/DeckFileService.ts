@@ -1,4 +1,4 @@
-import type { Deck } from "./Deck";
+import type { Deck, DeckPart } from "./Deck";
 import { DECK_PART_ARR } from "./Deck";
 import type { CardDatabase } from "../card/CardDatabase";
 import { FindCardBy } from "../card/CardDatabase";
@@ -90,7 +90,7 @@ export class DeckFileService {
 			.split("\n")
 			.map((line) => line.trim())
 			.filter((line) => line.length > 0);
-		let currentDeckPart = null;
+		let currentDeckPart: DeckPart | null = null;
 		for (const line of lines) {
 			const foundDeckPart = DECK_PART_ARR.find(
 				(part) => DefaultDeckPartConfig[part].indicator === line

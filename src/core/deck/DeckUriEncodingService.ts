@@ -48,7 +48,7 @@ export class DeckUriEncodingService {
 	toUri(deck: Deck): URL {
 		const encodedDeckParts: string[] = [];
 		for (const deckPart of DECK_PART_ARR) {
-			const encodedCards = [];
+			const encodedCards: number[] = [];
 			for (const card of deck.parts[deckPart]) {
 				encodedCards.push(...this.#encodeCardBlock(card));
 			}

@@ -29,8 +29,8 @@
 		>
 			<VSelect
 				v-model="internalFilter.banState"
-				:get-option-key="(banState) => banState.name"
-				:get-option-label="(banState) => banState.name"
+				:get-option-key="getBanStateName"
+				:get-option-label="getBanStateName"
 				:options="banStates"
 				:searchable="false"
 				@input="() => onFilterChanged()"
@@ -47,8 +47,8 @@
 		>
 			<VSelect
 				v-model="internalFilter.sets"
-				:get-option-key="(set) => set.name"
-				:get-option-label="(set) => set.name"
+				:get-option-key="getSetName"
+				:get-option-label="getSetName"
 				multiple
 				:options="sets"
 				@input="() => onFilterChanged()"
@@ -94,8 +94,8 @@
 		>
 			<VSelect
 				v-model="internalFilter.type"
-				:get-option-key="(type) => type.name"
-				:get-option-label="(type) => type.name.replace(' Monster', '')"
+				:get-option-key="getTypeName"
+				:get-option-label="getTypeLabel"
 				:options="types"
 				@input="() => onFilterChanged()"
 			>
@@ -190,7 +190,13 @@
 </template>
 
 <script lang="ts">
-import type { CardFilter, CardPredicate, CardSet, CardType } from "@/core/lib";
+import type {
+	BanState,
+	CardFilter,
+	CardPredicate,
+	CardSet,
+	CardType,
+} from "@/core/lib";
 import {
 	CardTypeCategory,
 	DEFAULT_BAN_STATE_ARR,
@@ -315,6 +321,12 @@ export default defineComponent({
 			onFilterChanged();
 		};
 
+		const getBanStateName = (banState: BanState): string => banState.name;
+		const getSetName = (set: CardSet): string => set.name;
+		const getTypeName = (type: CardType): string => type.name;
+		const getTypeLabel = (type: CardType): string =>
+			type.name.replace(" Monster", "");
+
 		watch(
 			() => internalFilter.typeCategory,
 			() => {
@@ -356,6 +368,10 @@ export default defineComponent({
 			onCollectionFilterChange,
 			onFilterChanged,
 			isFieldVisible,
+			getBanStateName,
+			getSetName,
+			getTypeName,
+			getTypeLabel,
 		};
 	},
 });

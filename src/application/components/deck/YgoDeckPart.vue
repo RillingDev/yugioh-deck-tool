@@ -21,11 +21,11 @@
 			tag="div"
 			:group="{ name: dragGroup, pull: true, put: true }"
 			:value="cards"
-			:move="(e) => canMove(e)"
+			:move="canMove"
 			:revert-on-spill="true"
 			:animation="0"
 			:data-deck-part-area="deckPart"
-			@change="(e) => onChange(e)"
+			@change="onChange"
 			@start="() => disableTooltip()"
 			@end="() => enableTooltip()"
 		>
