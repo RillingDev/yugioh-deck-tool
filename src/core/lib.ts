@@ -1,6 +1,6 @@
 export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";
-export { createBaseModule, createDeckModule } from "./modules";
+export { createBaseModule } from "./modules";
 
 export { Environment } from "./EnvironmentConfig";
 export type { EnvironmentConfig } from "./EnvironmentConfig";
@@ -53,7 +53,6 @@ export type {
 	RandomizationOptions,
 	TypeCategoryWeighting,
 } from "./deck/DeckRandomizationService";
-export { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
 export { DeckFileService } from "./deck/DeckFileService";
 export type { ImportResult } from "./deck/DeckFileService";
 export { CardPredicateService } from "./card/CardPredicateService";
