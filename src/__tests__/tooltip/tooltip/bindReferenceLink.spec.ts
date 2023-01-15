@@ -1,5 +1,6 @@
 import { createCard } from "../../helper/dataFactories";
 import { bindReferenceLink } from "@/tooltip/tooltip/bindReferenceLink";
+import { describe, expect, it } from "vitest";
 
 describe("bindReferenceLink", () => {
 	it("creates link to ygoprodeck db", () => {

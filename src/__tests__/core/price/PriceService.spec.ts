@@ -1,6 +1,7 @@
 import type { Vendor } from "@/core/lib";
 import { DefaultCurrency, DefaultVendor, PriceService } from "@/core/lib";
 import { createCard } from "../../helper/dataFactories";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe("PriceService", () => {
 	let priceService: PriceService;

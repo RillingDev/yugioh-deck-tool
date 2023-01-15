@@ -10,6 +10,7 @@ import {
 } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { EncodingService } from "@/core/util/EncodingService";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;

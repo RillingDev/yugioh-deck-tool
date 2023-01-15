@@ -1,5 +1,6 @@
 import { createCard } from "../../helper/dataFactories";
 import { CardService } from "@/core/lib";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe("CardService", () => {
 	let cardService: CardService;
