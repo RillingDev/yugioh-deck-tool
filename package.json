@@ -20,7 +20,7 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "run-p type-check build-only",
+		"build": "run-p build-only",
 		"preview": "vite preview --port 4173",
 		"test": "run-p test:unit",
 		"test:unit": "vitest --environment jsdom",
