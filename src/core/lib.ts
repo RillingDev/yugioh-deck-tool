@@ -1,6 +1,5 @@
 export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";
-export { createBaseModule } from "./modules";
 
 export { Environment } from "./EnvironmentConfig";
 export type { EnvironmentConfig } from "./EnvironmentConfig";
@@ -36,6 +35,8 @@ export { PriceService } from "./price/PriceService";
 export { BanlistService } from "./card/format/BanlistService";
 export { DeckExportService } from "./deck/DeckExportService";
 export { DeckService } from "./deck/DeckService";
+export { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
+export { EncodingService } from "./util/EncodingService";
 export type { SortingOptions } from "./card/SortingService";
 export {
 	SortingService,

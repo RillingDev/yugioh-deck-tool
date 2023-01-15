@@ -1,31 +1,34 @@
 import {
-	createBaseModule,
+	BanlistService,
+	CardPredicateService,
+	CardService,
 	DeckExportService,
 	DeckFileService,
 	DeckRandomizationService,
 	DeckService,
+	DeckUriEncodingService,
+	EncodingService,
+	FilterService,
+	PriceService,
+	SortingService,
 } from "@/core/lib";
 import { DeckController } from "./controller/DeckController";
 import { DeckUrlController } from "./controller/DeckUrlController";
 import { HostEnvironmentConfig } from "@/browser-common/lib";
 import { YgoprodeckController } from "./controller/YgoprodeckController";
 import { createYgoprodeckModule } from "@/ygoprodeck/lib";
-import { EncodingService } from "@/core/util/EncodingService";
-import { DeckUriEncodingService } from "@/core/deck/DeckUriEncodingService";
 
 export const environmentConfig = new HostEnvironmentConfig();
 
 const { cardDatabase, ygoprodeckService, resourceService } =
 	createYgoprodeckModule(environmentConfig);
 
-const {
-	cardService,
-	sortingService,
-	banlistService,
-	filterService,
-	cardPredicateService,
-	priceService,
-} = createBaseModule(cardDatabase);
+const cardService = new CardService();
+const cardPredicateService = new CardPredicateService();
+const banlistService = new BanlistService();
+const priceService = new PriceService();
+const sortingService = new SortingService(cardDatabase);
+const filterService = new FilterService(cardService, banlistService);
 
 const deckService = new DeckService(
 	cardService,

@@ -12,7 +12,8 @@ describe("SortingService", () => {
 	let sortingService: SortingService;
 
 	beforeEach(() => {
-		sortingService = new SortingService(new MockCardDatabase());
+		const cardDatabase = new MockCardDatabase();
+		sortingService = new SortingService(cardDatabase);
 	});
 
 	describe("sort", () => {

@@ -1,16 +1,10 @@
 import { createCard } from "../../helper/dataFactories";
 import { instance, mock, when } from "ts-mockito";
 import type { CardDatabase } from "@/core/lib";
-import {
-	createBaseModule,
-	DeckPart,
-	DeckService,
-	DeckUriEncodingService,
-	FindCardBy,
-} from "@/core/lib";
+import { DeckPart, DeckUriEncodingService, FindCardBy } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { EncodingService } from "@/core/util/EncodingService";
 import { beforeEach, describe, expect, it } from "vitest";
+import { createServices } from "@/__tests__/helper/serviceFactories";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;
@@ -21,13 +15,12 @@ describe("DeckUriEncodingService", () => {
 		cardDatabaseMock = mock(MockCardDatabase);
 		const cardDatabase = instance(cardDatabaseMock);
 
-		const { cardService, banlistService, sortingService } =
-			createBaseModule(cardDatabase);
+		const { encodingService, deckService } = createServices(cardDatabase);
 
 		deckUriEncodingService = new DeckUriEncodingService(
 			cardDatabase,
-			new DeckService(cardService, sortingService, banlistService),
-			new EncodingService()
+			deckService,
+			encodingService
 		);
 	});
 

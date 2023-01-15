@@ -1,15 +1,10 @@
 import { instance, mock, when } from "ts-mockito";
 import { createCard } from "../../helper/dataFactories";
 import type { CardDatabase } from "@/core/lib";
-import {
-	createBaseModule,
-	DeckFileService,
-	DeckPart,
-	DeckService,
-	FindCardBy,
-} from "@/core/lib";
+import { DeckFileService, DeckPart, FindCardBy } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { beforeEach, describe, expect, it } from "vitest";
+import { createServices } from "@/__tests__/helper/serviceFactories";
 
 describe("DeckFileService", () => {
 	let deckFileService: DeckFileService;
@@ -19,14 +14,9 @@ describe("DeckFileService", () => {
 	beforeEach(() => {
 		cardDatabaseMock = mock(MockCardDatabase);
 		const cardDatabase = instance(cardDatabaseMock);
+		const { deckService } = createServices(cardDatabase);
 
-		const { cardService, banlistService, sortingService } =
-			createBaseModule(cardDatabase);
-
-		deckFileService = new DeckFileService(
-			cardDatabase,
-			new DeckService(cardService, sortingService, banlistService)
-		);
+		deckFileService = new DeckFileService(cardDatabase, deckService);
 	});
 
 	describe("fromFile", () => {

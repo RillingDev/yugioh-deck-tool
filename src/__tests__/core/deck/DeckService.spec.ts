@@ -2,7 +2,6 @@ import { createCard, createCardType } from "../../helper/dataFactories";
 import type { Deck } from "@/core/lib";
 import {
 	CardTypeCategory,
-	createBaseModule,
 	DeckPart,
 	DeckService,
 	DefaultBanState,
@@ -10,13 +9,15 @@ import {
 } from "@/core/lib";
 import { MockCardDatabase } from "../../helper/MockCardDatabase";
 import { beforeEach, describe, expect, it } from "vitest";
+import { createServices } from "@/__tests__/helper/serviceFactories";
 
 describe("DeckService", () => {
 	let deckService: DeckService;
 
 	beforeEach(() => {
+		const cardDatabase = new MockCardDatabase();
 		const { cardService, banlistService, sortingService } =
-			createBaseModule(new MockCardDatabase());
+			createServices(cardDatabase);
 
 		deckService = new DeckService(
 			cardService,
