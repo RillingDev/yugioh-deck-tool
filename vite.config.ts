@@ -2,7 +2,6 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import vue2 from "@vitejs/plugin-vue2";
-import alias from "@rollup/plugin-alias";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,10 +21,10 @@ export default defineConfig({
 			"~vue-select": fileURLToPath(
 				new URL("./node_modules/vue-select", import.meta.url)
 			),
+			lodash: "lodash-es",
 		},
 	},
 	build: {
-		//minify: false,
 		rollupOptions: {
 			input: {
 				app: "src/application/main.ts",
@@ -50,14 +49,6 @@ export default defineConfig({
 					return "[name][extname]";
 				},
 			},
-			plugins: [
-				alias({
-					entries: [
-						// Always use ESM version as the normal version clutters `window` and causes issues when other JS code brings their own version.
-						{ find: "lodash", replacement: "lodash-es" },
-					],
-				}),
-			],
 		},
 	},
 });
