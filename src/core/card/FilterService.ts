@@ -1,4 +1,4 @@
-import { intersection, isEmpty } from "lodash";
+import { intersection, isEmpty } from "lodash-es";
 import type { BanlistService } from "./format/BanlistService";
 import type { BanState } from "./format/BanState";
 import type { Card } from "./Card";

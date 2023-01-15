@@ -5,7 +5,7 @@ import { DECK_PART_ARR, DeckPart } from "./Deck";
 import type { CardService } from "../card/CardService";
 import type { Format } from "../card/format/Format";
 import { insertAt, pullFirst } from "lightdash";
-import { sampleSize, shuffle } from "lodash";
+import { sampleSize, shuffle } from "lodash-es";
 import type { SortingService } from "../card/SortingService";
 import { SortingStrategy } from "../card/SortingService";
 

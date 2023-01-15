@@ -1,5 +1,5 @@
 import type { Card } from "./Card";
-import { intersection } from "lodash";
+import { intersection } from "lodash-es";
 import { countMapBy } from "lightdash";
 import type { CardTypeCategory } from "./type/CardTypeCategory";
 import type { CardType } from "./type/CardType";

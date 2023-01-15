@@ -1,4 +1,4 @@
-import { throttle } from "lodash";
+import { throttle } from "lodash-es";
 import type { Ref } from "vue";
 import { computed, ref, watch } from "vue";
 

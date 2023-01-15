@@ -1,4 +1,4 @@
-import { random, sampleSize, shuffle, words } from "lodash";
+import { random, sampleSize, shuffle, words } from "lodash-es";
 import type { Card } from "../card/Card";
 import type { CardDatabase } from "../card/CardDatabase";
 import type { CardService } from "../card/CardService";

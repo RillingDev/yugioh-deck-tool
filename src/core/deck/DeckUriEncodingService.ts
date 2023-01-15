@@ -4,7 +4,7 @@ import type { CardDatabase } from "../card/CardDatabase";
 import { FindCardBy } from "../card/CardDatabase";
 
 import type { Card } from "../card/Card";
-import { isEqual } from "lodash";
+import { isEqual } from "lodash-es";
 import type { DeckService } from "./DeckService";
 import { deflateRaw, inflateRaw } from "pako";
 import type { EncodingService } from "../util/EncodingService";

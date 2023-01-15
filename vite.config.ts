@@ -21,7 +21,6 @@ export default defineConfig({
 			"~vue-select": fileURLToPath(
 				new URL("./node_modules/vue-select", import.meta.url)
 			),
-			lodash: "lodash-es",
 		},
 	},
 	build: {
