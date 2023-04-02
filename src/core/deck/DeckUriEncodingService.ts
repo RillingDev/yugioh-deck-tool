@@ -6,7 +6,7 @@ import { FindCardBy } from "../card/CardDatabase";
 import type { Card } from "../card/Card";
 import { isEqual } from "lodash-es";
 import type { DeckService } from "./DeckService";
-import { deflateRaw, inflateRaw } from "pako";
+import { inflateRaw } from "pako";
 import type { EncodingService } from "../util/EncodingService";
 
 export class DeckUriEncodingService {
@@ -58,7 +58,7 @@ export class DeckUriEncodingService {
 	 * @return Value that can be decoded to yield the same deck.
 	 */
 	toUrlQueryParamValue(deck: Deck): string {
-		return this.#encodeDeck(deck); // TODO deck name
+		return this.#encodeDeck(deck); // TODO deck name, check base64 alphabet in regards to URL safety
 	}
 
 	#encodeDeck(deck: Deck): string {
@@ -144,46 +144,7 @@ export class DeckUriEncodingService {
 	}
 
 	/**
-	 * Encodes a deck to a URI query parameter value safe string.
-	 *
-	 * Encoding steps:
-	 * <ol>
-	 *     <li>Create byte array of deck name and cards (see below)</li>
-	 *     <li>Deflate the byte array to producer shorter results</li>
-	 *     <li>Base64 encode the value with a URI safe alphabet to allow usage in URI query parameter values</li>
-	 * </ol>
-	 *
-	 * Byte Array structure:
-	 * Blocks of {@link #BLOCK_BYTE_SIZE} represent a single card passcode number,
-	 * with a special value {@link #URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK} being used to separate deck-parts.
-	 * After the last card of the last deck part and the delimiter,
-	 * the UTF-8 code-points of the deck name follow, if one is set.
-	 *
-	 * @param deck Deck to encode.
-	 * @return Value that can be decoded to yield the same deck.
-	 * @deprecated
-	 */
-	toLegacyUrlQueryParamValue(deck: Deck): string {
-		const result: number[] = []; // Array of unsigned 8-bit numbers, using this over Uint8Array for convenience.
-
-		for (const deckPart of DECK_PART_ARR) {
-			for (const card of deck.parts[deckPart]) {
-				result.push(...this.#encodeCardBlock(card));
-			}
-			result.push(
-				...DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
-			);
-		}
-		if (deck.name != null && deck.name !== "") {
-			result.push(...this.#encodingService.encodeText(deck.name));
-		}
-
-		const deflated = deflateRaw(Uint8Array.from(result));
-		return this.#encodingService.encodeBase64String(deflated, true);
-	}
-
-	/**
-	 * Creates a deck from a query parameter value created by {@link toLegacyUrlQueryParamValue}.
+	 * Creates a deck from a query parameter value created by the old toLegacyUrlQueryParamValue.
 	 *
 	 * @param queryParamValue query parameter value.
 	 * @return Deck.

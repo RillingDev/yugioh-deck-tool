@@ -24,41 +24,6 @@ describe("DeckUriEncodingService", () => {
 		);
 	});
 
-	describe("toUrlQueryParamValue", () => {
-		it("creates value", () => {
-			const card1 = createCard({ passcode: "123" });
-			const card2 = createCard({ passcode: "456" });
-			const card3 = createCard({ passcode: "789" });
-			const card4 = createCard({ passcode: "999999999" });
-
-			const result = deckUriEncodingService.toLegacyUrlQueryParamValue({
-				name: "foo",
-				parts: {
-					[DeckPart.MAIN]: [card1],
-					[DeckPart.EXTRA]: [card2, card2],
-					[DeckPart.SIDE]: [card3, card4, card1, card1, card1],
-				},
-			});
-			expect(result).toEqual("q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB");
-		});
-
-		it("works with null name", () => {
-			const card1 = createCard({ passcode: "123" });
-			const card2 = createCard({ passcode: "456" });
-			const card3 = createCard({ passcode: "789" });
-
-			const result = deckUriEncodingService.toLegacyUrlQueryParamValue({
-				name: null,
-				parts: {
-					[DeckPart.MAIN]: [card1],
-					[DeckPart.EXTRA]: [card2],
-					[DeckPart.SIDE]: [card3],
-				},
-			});
-			expect(result).toEqual("q2aAgBOMEFqUGUIDAA~~");
-		});
-	});
-
 	describe("fromUrlQueryParamValue", () => {
 		it("reads value", () => {
 			const card1 = createCard({ passcode: "123" });
