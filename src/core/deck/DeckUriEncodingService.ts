@@ -21,6 +21,7 @@ export class DeckUriEncodingService {
 
 	static readonly #YDKE_URI_PROTOCOL = "ydke://";
 	static readonly #YDKE_DELIMITER = "!";
+	static readonly #YDKE_DELIMITER_COUNT = DECK_PART_ARR.length;
 
 	readonly #cardDatabase: CardDatabase;
 	readonly #deckService: DeckService;
@@ -52,13 +53,17 @@ export class DeckUriEncodingService {
 	}
 
 	/**
-	 * Encodes a deck to a URI query parameter value safe string.
+	 * Encodes a deck as a URI query parameter value.
+	 *
+	 * The value contains the deck contents encoded in the same fashion as ydke, plus the deck name it.
+	 *
+	 * Consumer should ensure this value is URL-encoded.
 	 *
 	 * @param deck Deck to encode.
 	 * @return Value that can be decoded to yield the same deck.
 	 */
 	toUrlQueryParamValue(deck: Deck): string {
-		return this.#encodeDeck(deck); // TODO deck name, check base64 alphabet in regards to URL safety
+		return `${this.#encodeDeck(deck)}${deck.name ?? ""}`;
 	}
 
 	#encodeDeck(deck: Deck): string {
@@ -97,22 +102,37 @@ export class DeckUriEncodingService {
 	}
 
 	/**
-	 * Creates a deck from a query parameter value created by {@link toUrlQueryParamValue}.
+	 * Creates a deck from a decoded query parameter value created by {@link toUrlQueryParamValue}.
 	 *
 	 * @param queryParamValue query parameter value.
 	 * @return Deck.
 	 */
 	fromUrlQueryParamValue(queryParamValue: string): Deck {
-		return this.#decodeDeck(queryParamValue); // TODO deck name
+		const additionalDataStartIndex =
+			this.#nthIndexOf(
+				queryParamValue,
+				DeckUriEncodingService.#YDKE_DELIMITER,
+				DeckUriEncodingService.#YDKE_DELIMITER_COUNT
+			) + 1;
+		const ydke = queryParamValue.substring(0, additionalDataStartIndex);
+		const deckName = queryParamValue.substring(additionalDataStartIndex);
+
+		const deck = this.#decodeDeck(ydke);
+		if (deckName.length > 0) {
+			deck.name = deckName;
+		}
+		return deck;
 	}
 
 	#decodeDeck(data: string): Deck {
 		const uriParts = data.split(DeckUriEncodingService.#YDKE_DELIMITER);
 		uriParts.pop(); // uriParts is always one longer than there are deck parts due to trailing delimiter.
 
-		if (uriParts.length !== DECK_PART_ARR.length) {
+		if (uriParts.length !== DeckUriEncodingService.#YDKE_DELIMITER_COUNT) {
 			throw new Error(
-				`Expected URI to have ${DECK_PART_ARR.length} delimiters but found ${uriParts.length}.`
+				`Expected URI to have ${
+					DeckUriEncodingService.#YDKE_DELIMITER_COUNT
+				} delimiters but found ${uriParts.length}.`
 			);
 		}
 
@@ -144,7 +164,24 @@ export class DeckUriEncodingService {
 	}
 
 	/**
-	 * Creates a deck from a query parameter value created by the old toLegacyUrlQueryParamValue.
+	 * Variant of String.prototype.indexOf that returns the index of the nth occurrence of the target string.
+	 */
+	#nthIndexOf(haystack: string, needle: string, n: number): number {
+		let count = 0;
+		for (let i = 0; i < haystack.length; i++) {
+			const char = haystack[i];
+			if (char == needle) {
+				count++;
+			}
+			if (count == n) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * Creates a deck from a query parameter value created by toLegacyUrlQueryParamValue.
 	 *
 	 * @param queryParamValue query parameter value.
 	 * @return Deck.

@@ -24,7 +24,189 @@ describe("DeckUriEncodingService", () => {
 		);
 	});
 
+	describe("toUrlQueryParamValue", () => {
+		it("creates value", () => {
+			const card1 = createCard({ passcode: "123" });
+			const card2 = createCard({ passcode: "456" });
+			const card3 = createCard({ passcode: "789" });
+			const card4 = createCard({ passcode: "999999999" });
+
+			const result = deckUriEncodingService.toUrlQueryParamValue({
+				name: "foo",
+				parts: {
+					[DeckPart.MAIN]: [card1],
+					[DeckPart.EXTRA]: [card2, card2],
+					[DeckPart.SIDE]: [card3, card4, card1, card1, card1],
+				},
+			});
+			expect(result).toEqual(
+				"ewAAAA==!yAEAAMgBAAA=!FQMAAP/Jmjt7AAAAewAAAHsAAAA=!foo"
+			);
+		});
+
+		it("works with null name", () => {
+			const card1 = createCard({ passcode: "123" });
+			const card2 = createCard({ passcode: "456" });
+			const card3 = createCard({ passcode: "789" });
+
+			const result = deckUriEncodingService.toUrlQueryParamValue({
+				name: null,
+				parts: {
+					[DeckPart.MAIN]: [card1],
+					[DeckPart.EXTRA]: [card2],
+					[DeckPart.SIDE]: [card3],
+				},
+			});
+			expect(result).toEqual("ewAAAA==!yAEAAA==!FQMAAA==!");
+		});
+
+		it("works with special name", () => {
+			const card1 = createCard({ passcode: "123" });
+			const card2 = createCard({ passcode: "456" });
+			const card3 = createCard({ passcode: "789" });
+
+			const result = deckUriEncodingService.toUrlQueryParamValue({
+				name: "Danger! (Special Characters) & More",
+				parts: {
+					[DeckPart.MAIN]: [card1],
+					[DeckPart.EXTRA]: [card2],
+					[DeckPart.SIDE]: [card3],
+				},
+			});
+			expect(result).toEqual(
+				"ewAAAA==!yAEAAA==!FQMAAA==!Danger! (Special Characters) & More"
+			);
+		});
+	});
+
 	describe("fromUrlQueryParamValue", () => {
+		it("reads value", () => {
+			const card1 = createCard({ passcode: "123" });
+			when(
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
+			).thenReturn(card1);
+
+			const card2 = createCard({ passcode: "456" });
+			when(
+				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
+			).thenReturn(card2);
+
+			const card3 = createCard({ passcode: "789" });
+			when(
+				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
+			).thenReturn(card3);
+
+			const card4 = createCard({ passcode: "999999999" });
+			when(
+				cardDatabaseMock.hasCard("999999999", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("999999999", FindCardBy.PASSCODE)
+			).thenReturn(card4);
+
+			const result = deckUriEncodingService.fromUrlQueryParamValue(
+				"ewAAAA==!yAEAAMgBAAA=!FQMAAP/Jmjt7AAAAewAAAHsAAAA=!foo"
+			);
+
+			expect(result).toEqual({
+				name: "foo",
+				parts: {
+					[DeckPart.MAIN]: [card1],
+					[DeckPart.EXTRA]: [card2, card2],
+					[DeckPart.SIDE]: [card3, card4, card1, card1, card1],
+				},
+			});
+		});
+
+		it("works with null name", () => {
+			const card1 = createCard({ passcode: "123" });
+			when(
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
+			).thenReturn(card1);
+
+			const card2 = createCard({ passcode: "456" });
+			when(
+				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
+			).thenReturn(card2);
+
+			const card3 = createCard({ passcode: "789" });
+			when(
+				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
+			).thenReturn(card3);
+
+			const result = deckUriEncodingService.fromUrlQueryParamValue(
+				"ewAAAA==!yAEAAA==!FQMAAA==!"
+			);
+
+			expect(result).toEqual({
+				name: null,
+				parts: {
+					[DeckPart.MAIN]: [card1],
+					[DeckPart.EXTRA]: [card2],
+					[DeckPart.SIDE]: [card3],
+				},
+			});
+		});
+
+		it("works with special name", () => {
+			const card1 = createCard({ passcode: "123" });
+			when(
+				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
+			).thenReturn(card1);
+
+			const card2 = createCard({ passcode: "456" });
+			when(
+				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
+			).thenReturn(card2);
+
+			const card3 = createCard({ passcode: "789" });
+			when(
+				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
+			).thenReturn(true);
+			when(
+				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
+			).thenReturn(card3);
+
+			const result = deckUriEncodingService.fromUrlQueryParamValue(
+				"ewAAAA==!yAEAAA==!FQMAAA==!Danger! (Special Characters) & More"
+			);
+
+			expect(result).toEqual({
+				name: "Danger! (Special Characters) & More",
+				parts: {
+					[DeckPart.MAIN]: [card1],
+					[DeckPart.EXTRA]: [card2],
+					[DeckPart.SIDE]: [card3],
+				},
+			});
+		});
+	});
+
+	describe("fromLegacyUrlQueryParamValue", () => {
 		it("reads value", () => {
 			const card1 = createCard({ passcode: "123" });
 			when(
