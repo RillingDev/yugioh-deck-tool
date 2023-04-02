@@ -75,8 +75,7 @@ export class DeckUriEncodingService {
 			}
 			encodedDeckParts.push(
 				this.#encodingService.encodeBase64String(
-					Uint8Array.from(encodedCards),
-					false
+					Uint8Array.from(encodedCards)
 				)
 			);
 		}
@@ -145,8 +144,7 @@ export class DeckUriEncodingService {
 			const deckPartCards = deck.parts[DECK_PART_ARR[deckPartIndex]];
 			const decodedDeckPartCards =
 				this.#encodingService.decodeBase64String(
-					uriParts[deckPartIndex],
-					false
+					uriParts[deckPartIndex]
 				);
 			for (
 				let blockStart = 0;
@@ -190,10 +188,8 @@ export class DeckUriEncodingService {
 	fromLegacyUrlQueryParamValue(queryParamValue: string): Deck {
 		const deck = this.#deckService.createEmptyDeck();
 
-		const decoded = this.#encodingService.decodeBase64String(
-			queryParamValue,
-			true
-		);
+		const decoded =
+			this.#encodingService.decodeBase64String(queryParamValue);
 		const inflated = inflateRaw(decoded);
 
 		let deckPartIndex = 0;
