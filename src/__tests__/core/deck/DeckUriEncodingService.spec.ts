@@ -31,7 +31,7 @@ describe("DeckUriEncodingService", () => {
 			const card3 = createCard({ passcode: "789" });
 			const card4 = createCard({ passcode: "999999999" });
 
-			const result = deckUriEncodingService.toUrlQueryParamValue({
+			const result = deckUriEncodingService.toLegacyUrlQueryParamValue({
 				name: "foo",
 				parts: {
 					[DeckPart.MAIN]: [card1],
@@ -47,7 +47,7 @@ describe("DeckUriEncodingService", () => {
 			const card2 = createCard({ passcode: "456" });
 			const card3 = createCard({ passcode: "789" });
 
-			const result = deckUriEncodingService.toUrlQueryParamValue({
+			const result = deckUriEncodingService.toLegacyUrlQueryParamValue({
 				name: null,
 				parts: {
 					[DeckPart.MAIN]: [card1],
@@ -93,7 +93,7 @@ describe("DeckUriEncodingService", () => {
 				cardDatabaseMock.getCard("999999999", FindCardBy.PASSCODE)
 			).thenReturn(card4);
 
-			const result = deckUriEncodingService.fromUrlQueryParamValue(
+			const result = deckUriEncodingService.fromLegacyUrlQueryParamValue(
 				"q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB"
 			);
 
@@ -132,7 +132,7 @@ describe("DeckUriEncodingService", () => {
 				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
 			).thenReturn(card3);
 
-			const result = deckUriEncodingService.fromUrlQueryParamValue(
+			const result = deckUriEncodingService.fromLegacyUrlQueryParamValue(
 				"q2aAgBOMEFqUGUIDAA~~"
 			);
 

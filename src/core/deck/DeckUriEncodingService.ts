@@ -132,8 +132,9 @@ export class DeckUriEncodingService {
 	 *
 	 * @param deck Deck to encode.
 	 * @return Value that can be decoded to yield the same deck.
+	 * @deprecated
 	 */
-	toUrlQueryParamValue(deck: Deck): string {
+	toLegacyUrlQueryParamValue(deck: Deck): string {
 		const result: number[] = []; // Array of unsigned 8-bit numbers, using this over Uint8Array for convenience.
 
 		for (const deckPart of DECK_PART_ARR) {
@@ -153,12 +154,13 @@ export class DeckUriEncodingService {
 	}
 
 	/**
-	 * Creates a deck from a query parameter value created by {@link toUrlQueryParamValue}.
+	 * Creates a deck from a query parameter value created by {@link toLegacyUrlQueryParamValue}.
 	 *
 	 * @param queryParamValue query parameter value.
 	 * @return Deck.
+	 * @deprecated
 	 */
-	fromUrlQueryParamValue(queryParamValue: string): Deck {
+	fromLegacyUrlQueryParamValue(queryParamValue: string): Deck {
 		const deck = this.#deckService.createEmptyDeck();
 
 		const decoded = this.#encodingService.decodeBase64String(

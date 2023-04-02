@@ -55,7 +55,7 @@ export class DeckUrlController {
 			DeckUrlController.#PARAM_ENCODED_URI_DECK
 		);
 		if (uriEncodedDeck != null) {
-			return this.#deckUriEncodingService.fromUrlQueryParamValue(
+			return this.#deckUriEncodingService.fromLegacyUrlQueryParamValue(
 				uriEncodedDeck
 			);
 		}
@@ -75,7 +75,7 @@ export class DeckUrlController {
 		if (this.#deckService.getAllCards(deck).length > 0) {
 			url.searchParams.append(
 				DeckUrlController.#PARAM_ENCODED_URI_DECK,
-				this.#deckUriEncodingService.toUrlQueryParamValue(deck)
+				this.#deckUriEncodingService.toLegacyUrlQueryParamValue(deck)
 			);
 		}
 		return url;
