@@ -7,7 +7,6 @@ import {
 	DeckRandomizationService,
 	DeckService,
 	DeckUriEncodingService,
-	EncodingService,
 	FilterService,
 	PriceService,
 	SortingService,
@@ -42,8 +41,7 @@ const deckExportService = new DeckExportService(
 );
 const deckUriEncodingService = new DeckUriEncodingService(
 	cardDatabase,
-	deckService,
-	new EncodingService()
+	deckService
 );
 const deckFileService = new DeckFileService(cardDatabase, deckService);
 const deckRandomizationService = new DeckRandomizationService(

@@ -2,12 +2,11 @@ import type { Deck } from "./Deck";
 import { DECK_PART_ARR } from "./Deck";
 import type { CardDatabase } from "../card/CardDatabase";
 import { FindCardBy } from "../card/CardDatabase";
-
 import type { Card } from "../card/Card";
 import { isEqual } from "lodash-es";
 import type { DeckService } from "./DeckService";
 import { inflateRaw } from "pako";
-import type { EncodingService } from "../util/EncodingService";
+import { fromByteArray, toByteArray } from "base64-js";
 
 export class DeckUriEncodingService {
 	// A 32-bit integer is able to store all 8 digit passcodes
@@ -25,16 +24,10 @@ export class DeckUriEncodingService {
 
 	readonly #cardDatabase: CardDatabase;
 	readonly #deckService: DeckService;
-	readonly #encodingService: EncodingService;
 
-	constructor(
-		cardDatabase: CardDatabase,
-		deckService: DeckService,
-		encodingService: EncodingService
-	) {
+	constructor(cardDatabase: CardDatabase, deckService: DeckService) {
 		this.#deckService = deckService;
 		this.#cardDatabase = cardDatabase;
-		this.#encodingService = encodingService;
 	}
 
 	/**
@@ -73,11 +66,7 @@ export class DeckUriEncodingService {
 			for (const card of deck.parts[deckPart]) {
 				encodedCards.push(...this.#encodeCardBlock(card));
 			}
-			encodedDeckParts.push(
-				this.#encodingService.encodeBase64String(
-					Uint8Array.from(encodedCards)
-				)
-			);
+			encodedDeckParts.push(fromByteArray(Uint8Array.from(encodedCards)));
 		}
 		return (
 			encodedDeckParts.join(DeckUriEncodingService.#YDKE_DELIMITER) +
@@ -142,10 +131,7 @@ export class DeckUriEncodingService {
 			deckPartIndex++
 		) {
 			const deckPartCards = deck.parts[DECK_PART_ARR[deckPartIndex]];
-			const decodedDeckPartCards =
-				this.#encodingService.decodeBase64String(
-					uriParts[deckPartIndex]
-				);
+			const decodedDeckPartCards = toByteArray(uriParts[deckPartIndex]);
 			for (
 				let blockStart = 0;
 				blockStart < decodedDeckPartCards.length;
@@ -188,8 +174,7 @@ export class DeckUriEncodingService {
 	fromLegacyUrlQueryParamValue(queryParamValue: string): Deck {
 		const deck = this.#deckService.createEmptyDeck();
 
-		const decoded =
-			this.#encodingService.decodeBase64String(queryParamValue);
+		const decoded = toByteArray(queryParamValue);
 		const inflated = inflateRaw(decoded);
 
 		let deckPartIndex = 0;
@@ -222,7 +207,7 @@ export class DeckUriEncodingService {
 			}
 		}
 		if (metaDataStart != null && metaDataStart < inflated.length) {
-			deck.name = this.#encodingService.decodeText(
+			deck.name = new TextDecoder().decode(
 				inflated.subarray(metaDataStart)
 			);
 		}

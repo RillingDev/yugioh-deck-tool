@@ -15,12 +15,11 @@ describe("DeckUriEncodingService", () => {
 		cardDatabaseMock = mock(MockCardDatabase);
 		const cardDatabase = instance(cardDatabaseMock);
 
-		const { encodingService, deckService } = createServices(cardDatabase);
+		const { deckService } = createServices(cardDatabase);
 
 		deckUriEncodingService = new DeckUriEncodingService(
 			cardDatabase,
-			deckService,
-			encodingService
+			deckService
 		);
 	});
 

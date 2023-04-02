@@ -6,12 +6,10 @@ import { CardPredicateService } from "@/core/card/CardPredicateService";
 import { CardService } from "@/core/card/CardService";
 import type { CardDatabase } from "@/core/card/CardDatabase";
 import { DeckService } from "@/core/deck/DeckService";
-import { EncodingService } from "@/core/util/EncodingService";
 
 export const createServices = (
 	cardDatabase: CardDatabase
 ): {
-	encodingService: EncodingService;
 	cardService: CardService;
 	priceService: PriceService;
 	banlistService: BanlistService;
@@ -20,7 +18,6 @@ export const createServices = (
 	sortingService: SortingService;
 	deckService: DeckService;
 } => {
-	const encodingService = new EncodingService();
 	const cardService = new CardService();
 	const cardPredicateService = new CardPredicateService();
 	const banlistService = new BanlistService();
@@ -34,7 +31,6 @@ export const createServices = (
 	);
 
 	return {
-		encodingService,
 		cardService,
 		cardPredicateService,
 		banlistService,

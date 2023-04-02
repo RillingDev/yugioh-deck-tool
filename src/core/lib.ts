@@ -36,7 +36,6 @@ export { BanlistService } from "./card/format/BanlistService";
 export { DeckExportService } from "./deck/DeckExportService";
 export { DeckService } from "./deck/DeckService";
 export { DeckUriEncodingService } from "./deck/DeckUriEncodingService";
-export { EncodingService } from "./util/EncodingService";
 export type { SortingOptions } from "./card/SortingService";
 export {
 	SortingService,
