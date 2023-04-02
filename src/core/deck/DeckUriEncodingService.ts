@@ -46,6 +46,22 @@ export class DeckUriEncodingService {
 	 * @return `ydke` URI.
 	 */
 	toUri(deck: Deck): URL {
+		return new URL(
+			DeckUriEncodingService.#YDKE_URI_PROTOCOL + this.#encodeDeck(deck)
+		);
+	}
+
+	/**
+	 * Encodes a deck to a URI query parameter value safe string.
+	 *
+	 * @param deck Deck to encode.
+	 * @return Value that can be decoded to yield the same deck.
+	 */
+	toUrlQueryParamValue(deck: Deck): string {
+		return this.#encodeDeck(deck); // TODO deck name
+	}
+
+	#encodeDeck(deck: Deck): string {
 		const encodedDeckParts: string[] = [];
 		for (const deckPart of DECK_PART_ARR) {
 			const encodedCards: number[] = [];
@@ -59,10 +75,9 @@ export class DeckUriEncodingService {
 				)
 			);
 		}
-		return new URL(
-			DeckUriEncodingService.#YDKE_URI_PROTOCOL +
-				encodedDeckParts.join(DeckUriEncodingService.#YDKE_DELIMITER) +
-				DeckUriEncodingService.#YDKE_DELIMITER
+		return (
+			encodedDeckParts.join(DeckUriEncodingService.#YDKE_DELIMITER) +
+			DeckUriEncodingService.#YDKE_DELIMITER
 		);
 	}
 
@@ -76,9 +91,23 @@ export class DeckUriEncodingService {
 	 * @return Deck.
 	 */
 	fromUri(uri: string): Deck {
-		const uriParts = uri
-			.slice(DeckUriEncodingService.#YDKE_URI_PROTOCOL.length)
-			.split(DeckUriEncodingService.#YDKE_DELIMITER);
+		return this.#decodeDeck(
+			uri.slice(DeckUriEncodingService.#YDKE_URI_PROTOCOL.length)
+		);
+	}
+
+	/**
+	 * Creates a deck from a query parameter value created by {@link toUrlQueryParamValue}.
+	 *
+	 * @param queryParamValue query parameter value.
+	 * @return Deck.
+	 */
+	fromUrlQueryParamValue(queryParamValue: string): Deck {
+		return this.#decodeDeck(queryParamValue); // TODO deck name
+	}
+
+	#decodeDeck(data: string): Deck {
+		const uriParts = data.split(DeckUriEncodingService.#YDKE_DELIMITER);
 		uriParts.pop(); // uriParts is always one longer than there are deck parts due to trailing delimiter.
 
 		if (uriParts.length !== DECK_PART_ARR.length) {
