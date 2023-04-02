@@ -9,7 +9,14 @@ import { getLogger } from "@/core/lib";
 export class DeckUrlController {
 	static readonly #logger = getLogger(DeckUrlController);
 
-	static readonly #PARAM_ENCODED_URI_DECK = "e";
+	static readonly #PARAM_ENCODED_URI_DECK = "y";
+	/**
+	 * @deprecated
+	 */
+	static readonly #PARAM_LEGACY_ENCODED_URI_DECK = "e";
+	/**
+	 * @deprecated
+	 */
 	static readonly #PARAM_REMOTE_DECK = "u";
 
 	readonly #deckService: DeckService;
@@ -55,8 +62,18 @@ export class DeckUrlController {
 			DeckUrlController.#PARAM_ENCODED_URI_DECK
 		);
 		if (uriEncodedDeck != null) {
-			return this.#deckUriEncodingService.fromLegacyUrlQueryParamValue(
+			return this.#deckUriEncodingService.fromUrlQueryParamValue(
 				uriEncodedDeck
+			);
+		}
+
+		// Load legacy encoded uri deck
+		const legacyUriEncodedDeck = url.searchParams.get(
+			DeckUrlController.#PARAM_LEGACY_ENCODED_URI_DECK
+		);
+		if (legacyUriEncodedDeck != null) {
+			return this.#deckUriEncodingService.fromLegacyUrlQueryParamValue(
+				legacyUriEncodedDeck
 			);
 		}
 
@@ -75,7 +92,7 @@ export class DeckUrlController {
 		if (this.#deckService.getAllCards(deck).length > 0) {
 			url.searchParams.append(
 				DeckUrlController.#PARAM_ENCODED_URI_DECK,
-				this.#deckUriEncodingService.toLegacyUrlQueryParamValue(deck)
+				this.#deckUriEncodingService.toUrlQueryParamValue(deck)
 			);
 		}
 		return url;
