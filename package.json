@@ -21,12 +21,12 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "run-p build-only",
-		"preview": "vite preview --port 4173",
-		"test": "run-p test:unit",
+		"preview": "vite preview",
 		"test:unit": "vitest --environment jsdom",
 		"build-only": "vite build",
 		"type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+		"format": "prettier --write src/"
 	},
 	"dependencies": {
 		"base64-js": "^1.5.1",
