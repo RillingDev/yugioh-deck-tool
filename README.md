@@ -24,7 +24,6 @@ Then perform the following steps:
 
 #### Build Output
 
--   `common.js` contains code required for both the tooltip and the deck-tool to work, **and has to be loaded before these**.
 -   `tooltip.js` and `tooltip.css` contain code for the tooltips.
 -   `app.js` and `app.css` contain code for the actual deck-tool.
 -   `index.html` contains a basic setup loading the aforementioned files and starts the deck-tool with tooltips.

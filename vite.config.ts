@@ -26,22 +26,18 @@ export default defineConfig({
 	build: {
 		rollupOptions: {
 			input: {
-				app: "src/application/main.ts",
-				tooltip: "src/tooltip/main.ts",
+				tooltip: "src/tooltip/main.ts", // Tooltip, can be used on its own.
+				app: "index.html", // Standalone and embeddable application.
 			},
 			output: {
 				// Remove hashes from file name for easier manual inclusion.
-				chunkFileNames: "common.js", // We only have one chunk, and it is the common code between the entry points.
 				entryFileNames: "[name].js",
 				assetFileNames: (chunkInfo) => {
+					// use filenames consistent with entry point
 					if (chunkInfo.name == "main.css") {
-						// Use name of associated entry-point.
-						if (
-							typeof chunkInfo.source == "string" &&
-							chunkInfo.source.includes(".card-tooltip") // Guess entry point based on content
-						) {
-							return "tooltip.css";
-						}
+						return "tooltip.css";
+					}
+					if (chunkInfo.name == "index.css") {
 						return "app.css";
 					}
 
