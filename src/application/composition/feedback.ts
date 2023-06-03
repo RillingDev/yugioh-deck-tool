@@ -8,6 +8,7 @@ export const useToast = (): BvToast => {
 	if (!app) {
 		throw new TypeError("Could not find app.");
 	}
+	// @ts-ignore FIXME after vue 3 migration
 	return app.proxy.$root.$bvToast;
 };
 

@@ -22,6 +22,7 @@ Vue.use(VBTogglePlugin);
 
 new Vue({
 	render: (h) => h(App),
+	// @ts-ignore FIXME after vue 3 migration
 	pinia,
 })
 	.$mount("#deckToolApplication")
