@@ -69,9 +69,8 @@ export class DeckUrlController {
 	 */
 	getShareLink(deck: Deck): URL {
 		const url = new URL(location.href);
-		url.search = "";
 		if (this.#deckService.getAllCards(deck).length > 0) {
-			url.searchParams.append(
+			url.searchParams.set(
 				DeckUrlController.#PARAM_ENCODED_URI_DECK,
 				this.#deckUriEncodingService.toUrlQueryParamValue(deck)
 			);
