@@ -31,13 +31,18 @@ export class DeckUriEncodingService {
 	}
 
 	/**
-	 * Encodes a deck to a `ydke` URI.
+	 * Encodes a deck to a YDKE URI.
+	 *
+	 * YDKE is a format used in EDOPro for encoding deck contents as URIs.
+	 * See <https://github.com/edo9300/edopro/issues/171> and
+	 * <https://github.com/AlphaKretin/bastion-bot/commit/0349cdced8ad2d2de5c4758ea7312197505e94ef> for details.
+	 *
 	 * Note that the deck name is not stored in the URI.
 	 *
 	 * @see #fromUri
 	 *
 	 * @param deck Deck to encode.
-	 * @return `ydke` URI.
+	 * @return YDKE URI.
 	 */
 	toUri(deck: Deck): URL {
 		return new URL(
@@ -48,10 +53,11 @@ export class DeckUriEncodingService {
 	/**
 	 * Encodes a deck as a URI query parameter value.
 	 *
-	 * The value contains the deck contents encoded in the same fashion as ydke, plus the deck name it.
+	 * The value contains the deck contents encoded in the same fashion as YDKE, plus the name of it.
 	 *
 	 * Consumer should ensure this value is URL-encoded.
 	 *
+	 * @see #toUri
 	 * @param deck Deck to encode.
 	 * @return Value that can be decoded to yield the same deck.
 	 */
@@ -75,12 +81,10 @@ export class DeckUriEncodingService {
 	}
 
 	/**
-	 * Decodes a deck from a `ydke` URI.
+	 * Decodes a deck from a YDKE URI.
 	 *
-	 * @see https://github.com/edo9300/edopro/issues/171
-	 * @see https://github.com/AlphaKretin/bastion-bot/commit/0349cdced8ad2d2de5c4758ea7312197505e94ef
-	 *
-	 * @param uri `ydke` URI to decode
+	 * @see #toUri
+	 * @param uri YDKE URI to decode
 	 * @return Deck.
 	 */
 	fromUri(uri: string): Deck {
@@ -92,6 +96,7 @@ export class DeckUriEncodingService {
 	/**
 	 * Creates a deck from a decoded query parameter value created by {@link toUrlQueryParamValue}.
 	 *
+	 * @see #toUrlQueryParamValue
 	 * @param queryParamValue query parameter value.
 	 * @return Deck.
 	 */

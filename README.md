@@ -34,9 +34,15 @@ The `.map` files are optional and only used for debugging.
 
 See [Architecture.md](./ARCHITECTURE.md).
 
-## JavaScript API
+## API
 
-Both tooltip and application instances expose an API that can be interacted with via JavaScript. See `./src/tooltip/api.ts` and `./src/application/api.ts` for their documentation.
+### JavaScript
+
+The tooltip and the application instances expose an API that can be interacted with via JavaScript. See `./src/tooltip/api.ts` and `./src/application/api.ts` for their documentation.
+
+### URL Parameters
+
+When the application starts, it checks for the existence of the `y` URL query parameter. If it is present, it will be parsed as the data portion of a [YDKE](https://github.com/edo9300/edopro/issues/171) URI with an optional deck name at the end of it. The parsed data will then be loaded as the active deck.
 
 ## YGOPRODeck Exclusive Features
 

@@ -9,7 +9,9 @@ import { getLogger } from "@/core/lib";
 export class DeckUrlController {
 	static readonly #logger = getLogger(DeckUrlController);
 
+	// Note that this parameter may be supplied by a third party, so the format should not be changed.
 	static readonly #PARAM_ENCODED_URI_DECK = "y";
+
 	/**
 	 * @deprecated
 	 */
@@ -57,7 +59,7 @@ export class DeckUrlController {
 			return importResult.deck;
 		}
 
-		// Load encoded uri deck
+		// Load encoded URI deck
 		const uriEncodedDeck = url.searchParams.get(
 			DeckUrlController.#PARAM_ENCODED_URI_DECK
 		);
@@ -67,7 +69,7 @@ export class DeckUrlController {
 			);
 		}
 
-		// Load legacy encoded uri deck
+		// Load legacy encoded URI deck
 		const legacyUriEncodedDeck = url.searchParams.get(
 			DeckUrlController.#PARAM_LEGACY_ENCODED_URI_DECK
 		);
