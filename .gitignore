@@ -34,3 +34,4 @@ tsconfig.*.tsbuildinfo
 
 # Build Output files
 dist/
+coverage/
