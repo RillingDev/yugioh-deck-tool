@@ -10,7 +10,6 @@ import { defineComponent } from "vue";
 import type { ImportResult } from "@/core/lib";
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
-import { readFile } from "../../../composition/io/readFile";
 import { uploadFile } from "../../../composition/io/uploadFile";
 import {
 	showError,
@@ -33,7 +32,7 @@ export default defineComponent({
 		const toast = useToast();
 
 		const importDeckFile = async (file: File): Promise<ImportResult> => {
-			const fileContent = await readFile(file);
+			const fileContent = await file.text();
 			const result = deckFileService.fromFile({
 				fileContent,
 				fileName: file.name,
