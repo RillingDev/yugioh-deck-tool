@@ -31,6 +31,52 @@ export class DeckFileService {
 	}
 
 	/**
+	 * Loads a deck from a remote .ydk file URL. The name is inferred from the URL.
+	 *
+	 * @param currentUrl The current URL to ensure same-site loading will take place.
+	 * @param remoteUrl URL to load from, MUST be the same origin as currentOrigin.
+	 * @throws Error if origins do not match.
+	 * @return Loaded deck.
+	 * @deprecated
+	 */
+	async fromRemoteFile(
+		currentUrl: URL,
+		remoteUrl: URL
+	): Promise<ImportResult> {
+		if (currentUrl.origin !== remoteUrl.origin) {
+			throw new Error("Decks can only be loaded from the same origin.");
+		}
+
+		const fileName = this.#getFileNameFromUrl(remoteUrl);
+		const fileContent = await fetch(remoteUrl, {
+			method: "GET",
+		}).then((res) => {
+			if (res.status != 200) {
+				throw new Error(`Unexpected status code: ${res.status}`);
+			}
+			return res.text();
+		});
+		return this.fromFile({
+			fileName,
+			fileContent,
+		});
+	}
+
+	/**
+	 * Gets the file name of a request to a file, or an empty is string if none is found.
+	 *
+	 * @param url URL to check.
+	 * @return File name or empty string.
+	 */
+	#getFileNameFromUrl(url: URL): string {
+		const pathname = url.pathname;
+		if (!pathname.includes("/")) {
+			return "";
+		}
+		return pathname.substring(pathname.lastIndexOf("/") + 1);
+	}
+
+	/**
 	 * Loads deck from a.ydk file.
 	 *
 	 * @param deckFile File to load.
