@@ -66,8 +66,8 @@
 		"prettier": "^3.0.2",
 		"sass": "^1.53.0",
 		"ts-mockito": "^2.6.1",
-		"typescript": "~5.0.3",
-		"vite": "^4.0.4",
+		"typescript": "~5.1.6",
+		"vite": "^5.0.0",
 		"vitest": "^0.34.0",
 		"vue-template-compiler": "^2.7.7",
 		"vue-tsc": "^0.38.8"
