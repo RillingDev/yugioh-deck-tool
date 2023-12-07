@@ -19,14 +19,16 @@ Prerequisites:
 Then perform the following steps:
 
 1. Clone the repository.
-2. Execute `npm ci` inside the cloned directory.
-3. Execute `npm run serve` inside the cloned directory.
+2. Execute `npm ci` inside the cloned directory to install dependencies.
+3. Execute `npm run serve` inside the cloned directory to start the development server.
+
+If you are ready to deploy the application, build it by executing `npm run build`.
 
 #### Build Output
 
 -   `tooltip.js` and `tooltip.css` contain code for the tooltips.
 -   `app.js` and `app.css` contain code for the actual deck-tool.
--   `index.html` contains a basic setup loading the aforementioned files and starts the deck-tool with tooltips.
+-   `index.html` contains a basic setup loading the these files and starts the deck-tool with tooltips.
 
 The `.map` files are optional and only used for debugging.
 
@@ -38,7 +40,8 @@ See [Architecture.md](./ARCHITECTURE.md).
 
 ### JavaScript
 
-The tooltip and the application instances expose an API that can be interacted with via JavaScript. See `./src/tooltip/api.ts` and `./src/application/api.ts` for their documentation.
+The tooltip and the application instances expose an API that can be interacted with via JavaScript.
+See `./src/tooltip/api.ts` and `./src/application/api.ts` for their documentation.
 
 ### URL Parameters
 
