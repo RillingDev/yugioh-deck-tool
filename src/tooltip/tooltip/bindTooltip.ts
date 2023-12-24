@@ -37,7 +37,6 @@ const showTooltip = (
 				// Start request, but do not wait for it to finish.
 				ygoprodeckService
 					.increaseCardViewCount(card)
-					.then(() => logger.trace("Updated view count."))
 					.catch((err) =>
 						logger.warn("Could not update view count.", err)
 					);

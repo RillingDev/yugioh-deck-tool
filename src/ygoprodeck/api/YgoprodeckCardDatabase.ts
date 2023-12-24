@@ -1,11 +1,11 @@
-import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
-import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
-import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
-import type { RawCard } from "@/ygoprodeck/api/mapping/mapCard";
-import { mapCard } from "@/ygoprodeck/api/mapping/mapCard";
-import { mapArchetype } from "@/ygoprodeck/api/mapping/mapArchetype";
-import { mapCardSet } from "@/ygoprodeck/api/mapping/mapCardSet";
-import { mapCardValues } from "@/ygoprodeck/api/mapping/mapCardValues";
+import type {Card, CardDatabase, CardSet, CardType} from "@/core/lib";
+import {CardTypeCategory, FindCardBy, getLogger} from "@/core/lib";
+import type {YgoprodeckApiService} from "@/ygoprodeck/api/YgoprodeckApiService";
+import type {RawCard} from "@/ygoprodeck/api/mapping/mapCard";
+import {mapCard} from "@/ygoprodeck/api/mapping/mapCard";
+import {mapArchetype} from "@/ygoprodeck/api/mapping/mapArchetype";
+import {mapCardSet} from "@/ygoprodeck/api/mapping/mapCardSet";
+import {mapCardValues} from "@/ygoprodeck/api/mapping/mapCardValues";
 
 export class YgoprodeckCardDatabase implements CardDatabase {
 	static readonly #logger = getLogger(YgoprodeckCardDatabase);
@@ -278,10 +278,6 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		if (card.betaName != null) {
 			this.#cardsByName.set(card.betaName, card);
 		}
-
-		YgoprodeckCardDatabase.#logger.trace(
-			`Registered card '${card.passcode}'.`
-		);
 	}
 
 	#getCardMap(findCardBy: FindCardBy): Map<string, Card> {
