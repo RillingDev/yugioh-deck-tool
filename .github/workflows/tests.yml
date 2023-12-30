@@ -16,6 +16,6 @@ jobs:
               with:
                   node-version: 20
             - run: npm ci
-            #- run: npm run lint # broken until update to vue 3
+            - run: npm run lint
             - run: npm run type-check
             - run: npm run test:unit
