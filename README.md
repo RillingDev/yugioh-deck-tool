@@ -19,8 +19,8 @@ Prerequisites:
 Then perform the following steps:
 
 1. Clone the repository.
-2. Execute `npm ci` inside the cloned directory to install dependencies.
-3. Execute `npm run serve` inside the cloned directory to start the development server.
+2. Execute `npm i` inside the cloned directory to install dependencies.
+3. Execute `npm run dev` inside the cloned directory to start the development server.
 
 If you are ready to deploy the application, build it by executing `npm run build`.
 
