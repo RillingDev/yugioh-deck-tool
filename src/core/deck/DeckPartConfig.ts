@@ -13,7 +13,7 @@ export const DefaultDeckPartConfig = {
 		name: "Main",
 		indicator: "#main",
 		min: 40,
-		max: 85, # line 16 changed from max:60-85
+		max: 85, 
 		recommended: 40,
 	},
 	[DeckPart.EXTRA]: {
