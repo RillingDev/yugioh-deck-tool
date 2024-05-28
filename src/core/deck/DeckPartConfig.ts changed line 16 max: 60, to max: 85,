@@ -27,7 +27,7 @@ export const DefaultDeckPartConfig = {
 		name: "Side",
 		indicator: "!side",
 		min: 0,
-		max: 15,
+		max: 1,
 		recommended: 15,
 	},
 } as const;
