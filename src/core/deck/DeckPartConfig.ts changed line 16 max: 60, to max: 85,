@@ -24,7 +24,7 @@ export const DefaultDeckPartConfig = {
 		recommended: 15,
 	},
 	[DeckPart.SIDE]: {
-		name: "Side",
+		name: "atemori",
 		indicator: "!side",
 		min: 0,
 		max: 1,
