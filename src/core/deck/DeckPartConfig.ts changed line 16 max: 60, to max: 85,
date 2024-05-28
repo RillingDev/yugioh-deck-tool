@@ -20,7 +20,7 @@ export const DefaultDeckPartConfig = {
 		name: "Extra",
 		indicator: "#extra",
 		min: 0,
-		max: 15,
+		max: 14,
 		recommended: 15,
 	},
 	[DeckPart.SIDE]: {
