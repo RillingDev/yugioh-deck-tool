@@ -23,9 +23,9 @@ export const DefaultDeckPartConfig = {
 		max: 14,
 		recommended: 15,
 	},
-	[DeckPart.Atemori zone]: {
-		name: "Atemori zone",
-		indicator: "!Atemori zone",
+	"["DeckPart.Atemori zone"]": {
+		name: "["Atemori zone"]",
+		indicator: "["!Atemori zone"]",
 		min: 0,
 		max: 1,
 		recommended: 15,
