@@ -4,11 +4,11 @@
 	"private": true,
 	"type": "module",
 	"description": "A tool to view deck prices, share and edit decks, create random decks and much more",
-	"author": "FelixRilling",
+	"author": "F. Rilling",
 	"bugs": {
-		"url": "https://github.com/FelixRilling/yugioh-deck-tool/issues"
+		"url": "https://github.com/RillingDev/yugioh-deck-tool/issues"
 	},
-	"homepage": "https://github.com/FelixRilling/yugioh-deck-tool#readme",
+	"homepage": "https://github.com/RillingDev/yugioh-deck-tool#readme",
 	"keywords": [
 		"yugioh",
 		"deck",
@@ -17,7 +17,7 @@
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/FelixRilling/yugioh-deck-tool.git"
+		"url": "https://github.com/RillingDev/yugioh-deck-tool.git"
 	},
 	"scripts": {
 		"dev": "vite",
@@ -42,7 +42,7 @@
 		"tippy.js": "^6.3.7",
 		"vue": "^2.7.13",
 		"vue-select": "^3.18.3",
-		"vuedraggable": "github:FelixRilling/Vue.Draggable#fb1243deb651bc3d97f9df71834d0aeab98e4dd2"
+		"vuedraggable": "github:RillingDev/Vue.Draggable#fb1243deb651bc3d97f9df71834d0aeab98e4dd2"
 	},
 	"devDependencies": {
 		"@rushstack/eslint-patch": "^1.2.0",
