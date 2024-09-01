@@ -1,21 +1,35 @@
-import { createCard, createCardType } from "../../helper/dataFactories";
-import { CardTypeCategory, DeckExportService, DeckPart } from "@/core/lib";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { beforeEach, describe, expect, it } from "vitest";
-import { createServices } from "@/__tests__/helper/serviceFactories";
+import {createCard, createCardType} from "../../helper/dataFactories";
+import {
+	BanlistService,
+	CardService,
+	CardTypeCategory,
+	DeckExportService,
+	DeckPart,
+	DeckService,
+	FilterService,
+	SortingService,
+} from "@/core/lib";
+import {MockCardDatabase} from "../../helper/MockCardDatabase";
+import {beforeEach, describe, expect, it} from "vitest";
 
 describe("DeckExportService", () => {
 	let deckExportService: DeckExportService;
 
 	beforeEach(() => {
-		const cardDatabase = new MockCardDatabase();
-		const { cardService, filterService, deckService } =
-			createServices(cardDatabase);
+		const cardDatabaseMock = new MockCardDatabase();
+
+		const cardService = new CardService();
+		const banlistService = new BanlistService();
+		const deckService = new DeckService(
+			cardService,
+			new SortingService(cardDatabaseMock),
+			banlistService,
+		);
 
 		deckExportService = new DeckExportService(
 			deckService,
 			cardService,
-			filterService
+			new FilterService(cardService, banlistService),
 		);
 	});
 
@@ -76,7 +90,7 @@ Side:
 				{
 					medium: "deck-builder",
 					source: "YGOPRODeck",
-				}
+				},
 			);
 
 			const expected = new URL("https://www.tcgplayer.com/massentry");

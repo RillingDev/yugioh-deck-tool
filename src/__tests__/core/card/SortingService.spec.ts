@@ -1,19 +1,15 @@
-import { createCard } from "../../helper/dataFactories";
-import {
-	Format,
-	SortingOrder,
-	SortingService,
-	SortingStrategy,
-} from "@/core/lib";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { beforeEach, describe, expect, it } from "vitest";
+import {createCard} from "../../helper/dataFactories";
+import {Format, SortingOrder, SortingService, SortingStrategy,} from "@/core/lib";
+import {MockCardDatabase} from "../../helper/MockCardDatabase";
+import {beforeEach, describe, expect, it} from "vitest";
 
 describe("SortingService", () => {
 	let sortingService: SortingService;
 
 	beforeEach(() => {
-		const cardDatabase = new MockCardDatabase();
-		sortingService = new SortingService(cardDatabase);
+		const cardDatabaseMock = new MockCardDatabase();
+
+		sortingService = new SortingService(cardDatabaseMock);
 	});
 
 	describe("sort", () => {

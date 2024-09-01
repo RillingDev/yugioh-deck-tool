@@ -1,16 +1,8 @@
-import { createCard } from "../../helper/dataFactories";
-import { anything, instance, mock, when } from "ts-mockito";
-import type { CardPredicate } from "@/core/lib";
-import {
-	BanlistService,
-	CardService,
-	CardTypeCategory,
-	DeckPart,
-	DefaultBanState,
-	FilterService,
-	Format,
-} from "@/core/lib";
-import { beforeEach, describe, expect, it } from "vitest";
+import {createCard} from "../../helper/dataFactories";
+import type {BanlistService, CardPredicate, CardService} from "@/core/lib";
+import {CardTypeCategory, DeckPart, DefaultBanState, FilterService, Format,} from "@/core/lib";
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
+import {UnsupportedInvocationError} from "@/__tests__/helper/UnsupportedInvocationError";
 
 describe("FilterService", () => {
 	let filterService: FilterService;
@@ -19,13 +11,25 @@ describe("FilterService", () => {
 	let banlistServiceMock: BanlistService;
 
 	beforeEach(() => {
-		cardServiceMock = mock(CardService);
-		banlistServiceMock = mock(BanlistService);
+		cardServiceMock = {
+			getAllNames: vi.fn(),
+			isTreatedAsSame: vi.fn(),
+			countByCard: vi.fn(),
+			countByType: vi.fn(),
+			countByTypeCategory: vi.fn(),
+			createFormattedCardCountList: vi.fn(),
+		};
 
-		filterService = new FilterService(
-			instance(cardServiceMock),
-			instance(banlistServiceMock)
-		);
+		banlistServiceMock = {
+			hasBanlist: vi.fn(),
+			getBanStateByFormat: vi.fn(),
+		};
+
+		filterService = new FilterService(cardServiceMock, banlistServiceMock);
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
 	});
 
 	describe("filter", () => {
@@ -56,13 +60,22 @@ describe("FilterService", () => {
 					name: "bar",
 				});
 
-				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
-				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
+				vi.mocked(cardServiceMock.getAllNames).mockImplementation(
+					(card) => {
+						if (card == card1) {
+							return ["foo"];
+						}
+						if (card == card2) {
+							return ["bar"];
+						}
+						throw new UnsupportedInvocationError();
+					},
+				);
 
 				expect(
 					filterService.filter([card1, card2], {
 						name: "fo",
-					})
+					}),
 				).toEqual([card1]);
 			});
 
@@ -76,13 +89,22 @@ describe("FilterService", () => {
 					name: "bar",
 				});
 
-				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
-				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
+				vi.mocked(cardServiceMock.getAllNames).mockImplementation(
+					(card) => {
+						if (card == card1) {
+							return ["foo"];
+						}
+						if (card == card2) {
+							return ["bar"];
+						}
+						throw new UnsupportedInvocationError();
+					},
+				);
 
 				expect(
 					filterService.filter([card1, card2], {
 						name: "fO",
-					})
+					}),
 				).toEqual([card1]);
 			});
 
@@ -96,16 +118,22 @@ describe("FilterService", () => {
 					name: "bar",
 				});
 
-				when(cardServiceMock.getAllNames(card1)).thenReturn([
-					"foo",
-					"föö",
-				]);
-				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
+				vi.mocked(cardServiceMock.getAllNames).mockImplementation(
+					(card) => {
+						if (card == card1) {
+							return ["foo", "föö"];
+						}
+						if (card == card2) {
+							return ["bar"];
+						}
+						throw new UnsupportedInvocationError();
+					},
+				);
 
 				expect(
 					filterService.filter([card1, card2], {
 						name: "fö",
-					})
+					}),
 				).toEqual([card1]);
 			});
 		});
@@ -121,13 +149,22 @@ describe("FilterService", () => {
 					description: "bar",
 				});
 
-				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
-				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
+				vi.mocked(cardServiceMock.getAllNames).mockImplementation(
+					(card) => {
+						if (card == card1) {
+							return ["foo"];
+						}
+						if (card == card2) {
+							return ["bar"];
+						}
+						throw new UnsupportedInvocationError();
+					},
+				);
 
 				expect(
 					filterService.filter([card1, card2], {
 						description: "fo",
-					})
+					}),
 				).toEqual([card1]);
 			});
 
@@ -141,13 +178,22 @@ describe("FilterService", () => {
 					description: "bar",
 				});
 
-				when(cardServiceMock.getAllNames(card1)).thenReturn(["foo"]);
-				when(cardServiceMock.getAllNames(card2)).thenReturn(["bar"]);
+				vi.mocked(cardServiceMock.getAllNames).mockImplementation(
+					(card) => {
+						if (card == card1) {
+							return ["foo"];
+						}
+						if (card == card2) {
+							return ["bar"];
+						}
+						throw new UnsupportedInvocationError();
+					},
+				);
 
 				expect(
 					filterService.filter([card1, card2], {
 						description: "fO",
-					})
+					}),
 				).toEqual([card1]);
 			});
 		});
@@ -175,7 +221,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2], {
 					typeCategory: CardTypeCategory.MONSTER,
-				})
+				}),
 			).toEqual([card1]);
 		});
 
@@ -204,7 +250,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2], {
 					type: type1,
-				})
+				}),
 			).toEqual([card1]);
 		});
 
@@ -221,7 +267,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2], {
 					subType: "foo",
-				})
+				}),
 			).toEqual([card1]);
 		});
 
@@ -242,7 +288,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2, card3], {
 					level: 1,
-				})
+				}),
 			).toEqual([card1]);
 		});
 
@@ -263,7 +309,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2, card3], {
 					attribute: "foo",
-				})
+				}),
 			).toEqual([card1]);
 		});
 
@@ -288,7 +334,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2, card3, card4], {
 					linkMarkers: ["Top"],
-				})
+				}),
 			).toEqual([card1, card2]);
 		});
 
@@ -305,7 +351,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2], {
 					archetype: "Foo",
-				})
+				}),
 			).toEqual([card1]);
 		});
 
@@ -326,7 +372,7 @@ describe("FilterService", () => {
 			expect(
 				filterService.filter([card1, card2, card3], {
 					format: Format.TCG,
-				})
+				}),
 			).toEqual([card1, card2]);
 		});
 
@@ -339,18 +385,25 @@ describe("FilterService", () => {
 					passcode: "789",
 				});
 
-				when(
-					banlistServiceMock.getBanStateByFormat(card1, Format.TCG)
-				).thenReturn(DefaultBanState.LIMITED);
-				when(
-					banlistServiceMock.getBanStateByFormat(card2, Format.TCG)
-				).thenReturn(DefaultBanState.BANNED);
+				vi.mocked(
+					banlistServiceMock.getBanStateByFormat,
+				).mockImplementation((card, format) => {
+					if (format == Format.TCG) {
+						if (card == card1) {
+							return DefaultBanState.LIMITED;
+						}
+						if (card == card2) {
+							return DefaultBanState.BANNED;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				});
 
 				expect(
 					filterService.filter([card1, card2], {
 						banState: DefaultBanState.LIMITED,
 						format: Format.TCG,
-					})
+					}),
 				).toEqual([card1]);
 			});
 
@@ -362,23 +415,23 @@ describe("FilterService", () => {
 					passcode: "789",
 				});
 
-				when(
-					banlistServiceMock.getBanStateByFormat(
-						card1,
-						anything() as Format
-					)
-				).thenReturn(DefaultBanState.LIMITED);
-				when(
-					banlistServiceMock.getBanStateByFormat(
-						card2,
-						anything() as Format
-					)
-				).thenReturn(DefaultBanState.BANNED);
+				vi.mocked(
+					banlistServiceMock.getBanStateByFormat,
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				).mockImplementation((card, _format) => {
+					if (card == card1) {
+						return DefaultBanState.LIMITED;
+					}
+					if (card == card2) {
+						return DefaultBanState.BANNED;
+					}
+					throw new UnsupportedInvocationError();
+				});
 
 				expect(
 					filterService.filter([card1, card2], {
 						banState: DefaultBanState.LIMITED,
-					})
+					}),
 				).toEqual([card1, card2]);
 			});
 		});
@@ -403,7 +456,7 @@ describe("FilterService", () => {
 				expect(
 					filterService.filter([card1, card2, card3], {
 						sets: [set1],
-					})
+					}),
 				).toEqual([card1, card2]);
 			});
 
@@ -431,7 +484,7 @@ describe("FilterService", () => {
 				expect(
 					filterService.filter([card1, card2, card3, card4], {
 						sets: [set1, set2],
-					})
+					}),
 				).toEqual([card1, card2, card3]);
 			});
 		});
@@ -457,7 +510,7 @@ describe("FilterService", () => {
 				expect(
 					filterService.filter([card1, card2, card3, card4], {
 						customPredicates: [predicate],
-					})
+					}),
 				).toEqual([card1, card4]);
 			});
 
@@ -483,7 +536,7 @@ describe("FilterService", () => {
 				expect(
 					filterService.filter([card1, card2, card3, card4], {
 						customPredicates: [predicate1, predicate2],
-					})
+					}),
 				).toEqual([card4]);
 			});
 		});

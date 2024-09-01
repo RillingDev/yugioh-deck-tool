@@ -1,51 +1,28 @@
-import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
+import type {CardDatabase} from "@/core/lib";
+import {vi} from "vitest";
 
 export class MockCardDatabase implements CardDatabase {
-	getArchetypes(): string[] {
-		return [];
-	}
+	getArchetypes = vi.fn();
 
-	getAttributes(): string[] {
-		return [];
-	}
+	getAttributes = vi.fn();
 
-	getCard(): Card | null {
-		return null;
-	}
+	getCard = vi.fn();
 
-	getCards(): Card[] {
-		return [];
-	}
+	getCards = vi.fn();
 
-	getLevels(): number[] {
-		return [];
-	}
+	getLevels = vi.fn();
 
-	getLinkMarkers(): string[] {
-		return [];
-	}
+	getLinkMarkers = vi.fn();
 
-	getSets(): CardSet[] {
-		return [];
-	}
+	getSets = vi.fn();
 
-	getSubTypes(): string[] {
-		return [];
-	}
+	getSubTypes = vi.fn();
 
-	getTypes(): CardType[] {
-		return [];
-	}
+	getTypes = vi.fn();
 
-	hasCard(): boolean {
-		return false;
-	}
+	hasCard = vi.fn();
 
-	prepareAll(): Promise<void> {
-		return Promise.resolve(undefined);
-	}
+	prepareAll = vi.fn();
 
-	prepareCard(): Promise<string | null> {
-		return Promise.resolve(null);
-	}
+	prepareCard = vi.fn();
 }

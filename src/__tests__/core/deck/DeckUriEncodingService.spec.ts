@@ -1,10 +1,17 @@
-import { createCard } from "../../helper/dataFactories";
-import { instance, mock, when } from "ts-mockito";
-import type { CardDatabase } from "@/core/lib";
-import { DeckPart, DeckUriEncodingService, FindCardBy } from "@/core/lib";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { beforeEach, describe, expect, it } from "vitest";
-import { createServices } from "@/__tests__/helper/serviceFactories";
+import {createCard} from "../../helper/dataFactories";
+import type {CardDatabase} from "@/core/lib";
+import {
+	BanlistService,
+	CardService,
+	DeckPart,
+	DeckService,
+	DeckUriEncodingService,
+	FindCardBy,
+	SortingService,
+} from "@/core/lib";
+import {MockCardDatabase} from "../../helper/MockCardDatabase";
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
+import {UnsupportedInvocationError} from "@/__tests__/helper/UnsupportedInvocationError";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;
@@ -12,15 +19,22 @@ describe("DeckUriEncodingService", () => {
 	let cardDatabaseMock: CardDatabase;
 
 	beforeEach(() => {
-		cardDatabaseMock = mock(MockCardDatabase);
-		const cardDatabase = instance(cardDatabaseMock);
+		cardDatabaseMock = new MockCardDatabase();
 
-		const { deckService } = createServices(cardDatabase);
+		const deckService = new DeckService(
+			new CardService(),
+			new SortingService(cardDatabaseMock),
+			new BanlistService(),
+		);
 
 		deckUriEncodingService = new DeckUriEncodingService(
-			cardDatabase,
-			deckService
+			cardDatabaseMock,
+			deckService,
 		);
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
 	});
 
 	describe("toUrlQueryParamValue", () => {
@@ -39,7 +53,7 @@ describe("DeckUriEncodingService", () => {
 				},
 			});
 			expect(result).toEqual(
-				"ewAAAA==!yAEAAMgBAAA=!FQMAAP/Jmjt7AAAAewAAAHsAAAA=!foo"
+				"ewAAAA==!yAEAAMgBAAA=!FQMAAP/Jmjt7AAAAewAAAHsAAAA=!foo",
 			);
 		});
 
@@ -73,7 +87,7 @@ describe("DeckUriEncodingService", () => {
 				},
 			});
 			expect(result).toEqual(
-				"ewAAAA==!yAEAAA==!FQMAAA==!Danger! (Special Characters) & More"
+				"ewAAAA==!yAEAAA==!FQMAAA==!Danger! (Special Characters) & More",
 			);
 		});
 	});
@@ -81,39 +95,47 @@ describe("DeckUriEncodingService", () => {
 	describe("fromUrlQueryParamValue", () => {
 		it("reads value", () => {
 			const card1 = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card1);
-
 			const card2 = createCard({ passcode: "456" });
-			when(
-				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
-			).thenReturn(card2);
-
 			const card3 = createCard({ passcode: "789" });
-			when(
-				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
-			).thenReturn(card3);
-
 			const card4 = createCard({ passcode: "999999999" });
-			when(
-				cardDatabaseMock.hasCard("999999999", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("999999999", FindCardBy.PASSCODE)
-			).thenReturn(card4);
+
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (
+							cardKey == "123" ||
+							cardKey == "456" ||
+							cardKey == "789" ||
+							cardKey == "999999999"
+						) {
+							return true;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (cardKey == "123") {
+							return card1;
+						}
+						if (cardKey == "456") {
+							return card2;
+						}
+						if (cardKey == "789") {
+							return card3;
+						}
+						if (cardKey == "999999999") {
+							return card4;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckUriEncodingService.fromUrlQueryParamValue(
-				"ewAAAA==!yAEAAMgBAAA=!FQMAAP/Jmjt7AAAAewAAAHsAAAA=!foo"
+				"ewAAAA==!yAEAAMgBAAA=!FQMAAP/Jmjt7AAAAewAAAHsAAAA=!foo",
 			);
 
 			expect(result).toEqual({
@@ -128,31 +150,41 @@ describe("DeckUriEncodingService", () => {
 
 		it("works with null name", () => {
 			const card1 = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card1);
-
 			const card2 = createCard({ passcode: "456" });
-			when(
-				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
-			).thenReturn(card2);
-
 			const card3 = createCard({ passcode: "789" });
-			when(
-				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
-			).thenReturn(card3);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (
+							cardKey == "123" ||
+							cardKey == "456" ||
+							cardKey == "789"
+						) {
+							return true;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (cardKey == "123") {
+							return card1;
+						}
+						if (cardKey == "456") {
+							return card2;
+						}
+						if (cardKey == "789") {
+							return card3;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckUriEncodingService.fromUrlQueryParamValue(
-				"ewAAAA==!yAEAAA==!FQMAAA==!"
+				"ewAAAA==!yAEAAA==!FQMAAA==!",
 			);
 
 			expect(result).toEqual({
@@ -167,31 +199,41 @@ describe("DeckUriEncodingService", () => {
 
 		it("works with special name", () => {
 			const card1 = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card1);
-
 			const card2 = createCard({ passcode: "456" });
-			when(
-				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
-			).thenReturn(card2);
-
 			const card3 = createCard({ passcode: "789" });
-			when(
-				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
-			).thenReturn(card3);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (
+							cardKey == "123" ||
+							cardKey == "456" ||
+							cardKey == "789"
+						) {
+							return true;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (cardKey == "123") {
+							return card1;
+						}
+						if (cardKey == "456") {
+							return card2;
+						}
+						if (cardKey == "789") {
+							return card3;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckUriEncodingService.fromUrlQueryParamValue(
-				"ewAAAA==!yAEAAA==!FQMAAA==!Danger! (Special Characters) & More"
+				"ewAAAA==!yAEAAA==!FQMAAA==!Danger! (Special Characters) & More",
 			);
 
 			expect(result).toEqual({
@@ -208,39 +250,47 @@ describe("DeckUriEncodingService", () => {
 	describe("fromLegacyUrlQueryParamValue", () => {
 		it("reads value", () => {
 			const card1 = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card1);
-
 			const card2 = createCard({ passcode: "456" });
-			when(
-				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
-			).thenReturn(card2);
-
 			const card3 = createCard({ passcode: "789" });
-			when(
-				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
-			).thenReturn(card3);
-
 			const card4 = createCard({ passcode: "999999999" });
-			when(
-				cardDatabaseMock.hasCard("999999999", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("999999999", FindCardBy.PASSCODE)
-			).thenReturn(card4);
+
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (
+							cardKey == "123" ||
+							cardKey == "456" ||
+							cardKey == "789" ||
+							cardKey == "999999999"
+						) {
+							return true;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (cardKey == "123") {
+							return card1;
+						}
+						if (cardKey == "456") {
+							return card2;
+						}
+						if (cardKey == "789") {
+							return card3;
+						}
+						if (cardKey == "999999999") {
+							return card4;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckUriEncodingService.fromLegacyUrlQueryParamValue(
-				"q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB"
+				"q2aAgBOMEAwCoswMDP9PzrKuBrJhGATS8vMB",
 			);
 
 			expect(result).toEqual({
@@ -255,31 +305,41 @@ describe("DeckUriEncodingService", () => {
 
 		it("works with null name", () => {
 			const card1 = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card1);
-
 			const card2 = createCard({ passcode: "456" });
-			when(
-				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
-			).thenReturn(card2);
-
 			const card3 = createCard({ passcode: "789" });
-			when(
-				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
-			).thenReturn(card3);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (
+							cardKey == "123" ||
+							cardKey == "456" ||
+							cardKey == "789"
+						) {
+							return true;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (cardKey == "123") {
+							return card1;
+						}
+						if (cardKey == "456") {
+							return card2;
+						}
+						if (cardKey == "789") {
+							return card3;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckUriEncodingService.fromLegacyUrlQueryParamValue(
-				"q2aAgBOMEFqUGUIDAA~~"
+				"q2aAgBOMEFqUGUIDAA~~",
 			);
 
 			expect(result).toEqual({
@@ -308,7 +368,7 @@ describe("DeckUriEncodingService", () => {
 				},
 			});
 			expect(result).toEqual(
-				new URL("ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!")
+				new URL("ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!"),
 			);
 		});
 	});
@@ -316,31 +376,41 @@ describe("DeckUriEncodingService", () => {
 	describe("fromUri", () => {
 		it("reads value", () => {
 			const card1 = createCard({ passcode: "5050644" });
-			when(
-				cardDatabaseMock.hasCard("5050644", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("5050644", FindCardBy.PASSCODE)
-			).thenReturn(card1);
-
 			const card2 = createCard({ passcode: "29189613" });
-			when(
-				cardDatabaseMock.hasCard("29189613", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("29189613", FindCardBy.PASSCODE)
-			).thenReturn(card2);
-
 			const card3 = createCard({ passcode: "38148100" });
-			when(
-				cardDatabaseMock.hasCard("38148100", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("38148100", FindCardBy.PASSCODE)
-			).thenReturn(card3);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (
+							cardKey == "5050644" ||
+							cardKey == "29189613" ||
+							cardKey == "38148100"
+						) {
+							return true;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (cardKey == "5050644") {
+							return card1;
+						}
+						if (cardKey == "29189613") {
+							return card2;
+						}
+						if (cardKey == "38148100") {
+							return card3;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckUriEncodingService.fromUri(
-				"ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!"
+				"ydke://FBFNAO1lvQHtZb0B!BBhGAg==!FBFNAA==!",
 			);
 
 			expect(result).toEqual({
