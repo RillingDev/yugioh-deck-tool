@@ -1,28 +1,28 @@
-import { createCard, createCardType } from "../../helper/dataFactories";
-import type { Deck } from "@/core/lib";
+import {createCard, createCardType} from "../../helper/dataFactories";
+import type {Deck} from "@/core/lib";
 import {
+	BanlistService,
+	CardService,
 	CardTypeCategory,
 	DeckPart,
 	DeckService,
 	DefaultBanState,
 	Format,
+	SortingService,
 } from "@/core/lib";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { beforeEach, describe, expect, it } from "vitest";
-import { createServices } from "@/__tests__/helper/serviceFactories";
+import {MockCardDatabase} from "../../helper/MockCardDatabase";
+import {beforeEach, describe, expect, it} from "vitest";
 
 describe("DeckService", () => {
 	let deckService: DeckService;
 
 	beforeEach(() => {
-		const cardDatabase = new MockCardDatabase();
-		const { cardService, banlistService, sortingService } =
-			createServices(cardDatabase);
+		const cardDatabaseMock = new MockCardDatabase();
 
 		deckService = new DeckService(
-			cardService,
-			sortingService,
-			banlistService
+			new CardService(),
+			new SortingService(cardDatabaseMock),
+			new BanlistService(),
 		);
 	});
 
@@ -52,7 +52,7 @@ describe("DeckService", () => {
 						[DeckPart.EXTRA]: [card2, card2],
 						[DeckPart.SIDE]: [card3],
 					},
-				})
+				}),
 			).toEqual([card1, card2, card2, card3]);
 		});
 	});
@@ -76,8 +76,8 @@ describe("DeckService", () => {
 						}),
 					}),
 					DeckPart.MAIN,
-					Format.TCG
-				)
+					Format.TCG,
+				),
 			).toBe(false);
 		});
 
@@ -90,14 +90,14 @@ describe("DeckService", () => {
 							[DeckPart.MAIN]: [],
 							[DeckPart.EXTRA]: [],
 							[DeckPart.SIDE]: new Array(15).fill(
-								createCard({ passcode: "123" })
+								createCard({ passcode: "123" }),
 							),
 						},
 					},
 					createCard({ passcode: "456" }),
 					DeckPart.SIDE,
-					Format.TCG
-				)
+					Format.TCG,
+				),
 			).toBe(false);
 		});
 
@@ -118,8 +118,8 @@ describe("DeckService", () => {
 					},
 					card,
 					DeckPart.SIDE,
-					Format.OCG
-				)
+					Format.OCG,
+				),
 			).toBe(false);
 		});
 
@@ -144,8 +144,8 @@ describe("DeckService", () => {
 					},
 					card,
 					DeckPart.SIDE,
-					Format.OCG
-				)
+					Format.OCG,
+				),
 			).toBe(false);
 		});
 
@@ -165,8 +165,8 @@ describe("DeckService", () => {
 					},
 					card,
 					DeckPart.SIDE,
-					Format.OCG
-				)
+					Format.OCG,
+				),
 			).toBe(true);
 		});
 	});

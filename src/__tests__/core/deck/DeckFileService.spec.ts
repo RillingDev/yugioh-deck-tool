@@ -1,22 +1,37 @@
-import { instance, mock, when } from "ts-mockito";
-import { createCard } from "../../helper/dataFactories";
-import type { CardDatabase } from "@/core/lib";
-import { DeckFileService, DeckPart, FindCardBy } from "@/core/lib";
-import { MockCardDatabase } from "../../helper/MockCardDatabase";
-import { beforeEach, describe, expect, it } from "vitest";
-import { createServices } from "@/__tests__/helper/serviceFactories";
+import {createCard} from "../../helper/dataFactories";
+import {
+	BanlistService,
+	type CardDatabase,
+	CardService,
+	DeckFileService,
+	DeckPart,
+	DeckService,
+	FindCardBy,
+	SortingService,
+} from "@/core/lib";
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
+import {UnsupportedInvocationError} from "@/__tests__/helper/UnsupportedInvocationError";
+import {MockCardDatabase} from "@/__tests__/helper/MockCardDatabase";
 
 describe("DeckFileService", () => {
-	let deckFileService: DeckFileService;
-
 	let cardDatabaseMock: CardDatabase;
 
-	beforeEach(() => {
-		cardDatabaseMock = mock(MockCardDatabase);
-		const cardDatabase = instance(cardDatabaseMock);
-		const { deckService } = createServices(cardDatabase);
+	let deckFileService: DeckFileService;
 
-		deckFileService = new DeckFileService(cardDatabase, deckService);
+	beforeEach(() => {
+		cardDatabaseMock = new MockCardDatabase();
+
+		const deckService = new DeckService(
+			new CardService(),
+			new SortingService(cardDatabaseMock),
+			new BanlistService(),
+		);
+
+		deckFileService = new DeckFileService(cardDatabaseMock, deckService);
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
 	});
 
 	describe("fromFile", () => {
@@ -25,7 +40,7 @@ describe("DeckFileService", () => {
 				deckFileService.fromFile({
 					fileContent: "",
 					fileName: "foo.ydk",
-				}).deck.name
+				}).deck.name,
 			).toBe("foo");
 		});
 
@@ -46,12 +61,22 @@ describe("DeckFileService", () => {
 #main
 123`;
 			const card = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return true;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return card;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckFileService.fromFile({
 				fileContent,
@@ -69,12 +94,22 @@ describe("DeckFileService", () => {
 123
 123`;
 			const card = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return true;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return card;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckFileService.fromFile({
 				fileContent,
@@ -101,28 +136,38 @@ describe("DeckFileService", () => {
 789`;
 
 			const card1 = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card1);
-
 			const card2 = createCard({ passcode: "456" });
-			when(
-				cardDatabaseMock.hasCard("456", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("456", FindCardBy.PASSCODE)
-			).thenReturn(card2);
-
 			const card3 = createCard({ passcode: "789" });
-			when(
-				cardDatabaseMock.hasCard("789", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("789", FindCardBy.PASSCODE)
-			).thenReturn(card3);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (
+							cardKey == "123" ||
+							cardKey == "456" ||
+							cardKey == "789"
+						) {
+							return true;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (findCardBy == FindCardBy.PASSCODE) {
+						if (cardKey == "123") {
+							return card1;
+						}
+						if (cardKey == "456") {
+							return card2;
+						}
+						if (cardKey == "789") {
+							return card3;
+						}
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckFileService.fromFile({
 				fileContent,
@@ -143,12 +188,22 @@ describe("DeckFileService", () => {
 #main
 123`;
 			const card = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return true;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return card;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckFileService.fromFile({
 				fileContent,
@@ -164,12 +219,22 @@ describe("DeckFileService", () => {
 #main
 0000123`;
 			const card = createCard({ passcode: "123" });
-			when(
-				cardDatabaseMock.hasCard("123", FindCardBy.PASSCODE)
-			).thenReturn(true);
-			when(
-				cardDatabaseMock.getCard("123", FindCardBy.PASSCODE)
-			).thenReturn(card);
+			vi.mocked(cardDatabaseMock.hasCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return true;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
+			vi.mocked(cardDatabaseMock.getCard).mockImplementation(
+				(cardKey, findCardBy) => {
+					if (cardKey == "123" && findCardBy == FindCardBy.PASSCODE) {
+						return card;
+					}
+					throw new UnsupportedInvocationError();
+				},
+			);
 
 			const result = deckFileService.fromFile({
 				fileContent,
@@ -190,7 +255,7 @@ describe("DeckFileService", () => {
 						[DeckPart.EXTRA]: [],
 						[DeckPart.SIDE]: [],
 					},
-				}).fileName
+				}).fileName,
 			).toBe("foo.ydk");
 		});
 
@@ -203,10 +268,10 @@ describe("DeckFileService", () => {
 						[DeckPart.EXTRA]: [],
 						[DeckPart.SIDE]: [],
 					},
-				}).fileContent
+				}).fileContent,
 			).toContain(
 				`#main
-123`
+123`,
 			);
 		});
 
@@ -219,7 +284,7 @@ describe("DeckFileService", () => {
 						[DeckPart.EXTRA]: [createCard({ passcode: "456" })],
 						[DeckPart.SIDE]: [createCard({ passcode: "789" })],
 					},
-				}).fileContent
+				}).fileContent,
 			).toBe(
 				`#main
 123
@@ -229,7 +294,7 @@ describe("DeckFileService", () => {
 
 !side
 789
-`
+`,
 			);
 		});
 	});
