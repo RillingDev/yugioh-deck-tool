@@ -1,4 +1,4 @@
-import type { Options } from "html2canvas";
+import type {Options} from "html2canvas";
 import html2canvas from "html2canvas";
 
 const SCREENSHOT_IMAGE_MIME_TYPE = "image/png";
@@ -8,7 +8,7 @@ const SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION = "png";
  * Creates a screenshot of the given element.
  *
  * @param el Element to screenshot.
- * @param filenameBase Filename up until extension (e.g. "foo" to receive a file with the name "foo.png")
+ * @param filenameBase Filename up until extension (e.g., "foo" to receive a file with the name "foo.png")
  * @param options Canvas options.
  * @return Image file.
  */

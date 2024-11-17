@@ -1,15 +1,15 @@
-import { random, sampleSize, shuffle, words } from "lodash-es";
-import type { Card } from "../card/Card";
-import type { CardDatabase } from "../card/CardDatabase";
-import type { CardService } from "../card/CardService";
-import type { CardFilter, FilterService } from "../card/FilterService";
-import type { Format } from "../card/format/Format";
-import type { SortingService } from "../card/SortingService";
-import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import type { Deck } from "./Deck";
-import { DECK_PART_ARR, DeckPart } from "./Deck";
-import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import type { DeckService } from "./DeckService";
+import {random, sampleSize, shuffle, words} from "lodash-es";
+import type {Card} from "../card/Card";
+import type {CardDatabase} from "../card/CardDatabase";
+import type {CardService} from "../card/CardService";
+import type {CardFilter, FilterService} from "../card/FilterService";
+import type {Format} from "../card/format/Format";
+import type {SortingService} from "../card/SortingService";
+import {CardTypeCategory} from "../card/type/CardTypeCategory";
+import type {Deck} from "./Deck";
+import {DECK_PART_ARR, DeckPart} from "./Deck";
+import {DefaultDeckPartConfig} from "./DeckPartConfig";
+import type {DeckService} from "./DeckService";
 
 export enum RandomizationStrategy {
 	NORMAL = "Normal",
@@ -26,7 +26,7 @@ export type TypeCategoryWeighting = ReadonlyMap<
 
 export type RandomizationOptions = Partial<{
 	/**
-	 * Filter to apply to card pool before randomization (e.g. a certain format).
+	 * Filter to apply to card pool before randomization (e.g., a certain format).
 	 */
 	readonly filter: CardFilter;
 
@@ -247,7 +247,7 @@ export class DeckRandomizationService {
 				strategy,
 				preferPlaySet
 			);
-			// Attempt to add n cards, stopping if one of the additions is not possible.
+			// Attempt to add n cards, stopping if one of the additions is impossible.
 			for (let i = 0; i < randomCardCount; i++) {
 				if (!this.#deckService.canAdd(deck, card, deckPart, format)) {
 					break;

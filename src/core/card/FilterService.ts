@@ -1,17 +1,17 @@
-import { intersection, isEmpty } from "lodash-es";
-import type { BanlistService } from "./format/BanlistService";
-import type { BanState } from "./format/BanState";
-import type { Card } from "./Card";
-import type { CardPredicate } from "./CardPredicateService";
-import type { CardService } from "./CardService";
-import type { Format } from "./format/Format";
-import type { CardSet } from "./set/CardSet";
-import type { CardType } from "./type/CardType";
-import type { CardTypeCategory } from "./type/CardTypeCategory";
+import {intersection, isEmpty} from "lodash-es";
+import type {BanlistService} from "./format/BanlistService";
+import type {BanState} from "./format/BanState";
+import type {Card} from "./Card";
+import type {CardPredicate} from "./CardPredicateService";
+import type {CardService} from "./CardService";
+import type {Format} from "./format/Format";
+import type {CardSet} from "./set/CardSet";
+import type {CardType} from "./type/CardType";
+import type {CardTypeCategory} from "./type/CardTypeCategory";
 
 export type CardFilter = Partial<{
 	/**
-	 * Custom filter parts (e.g. user owned cards).
+	 * Custom filter parts (e.g., user owned cards).
 	 * Executed in order.
 	 * If all predicates return true, the card is included in the result.
 	 */

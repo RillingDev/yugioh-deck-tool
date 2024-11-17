@@ -1,16 +1,16 @@
-import { DefaultDeckPartConfig } from "./DeckPartConfig";
-import type { Card } from "../card/Card";
-import type { Deck } from "./Deck";
-import { DECK_PART_ARR, DeckPart } from "./Deck";
-import type { CardService } from "../card/CardService";
-import type { Format } from "../card/format/Format";
-import { insertAt, pullFirst } from "lightdash";
-import { sampleSize, shuffle } from "lodash-es";
-import type { SortingService } from "../card/SortingService";
-import { SortingStrategy } from "../card/SortingService";
+import {DefaultDeckPartConfig} from "./DeckPartConfig";
+import type {Card} from "../card/Card";
+import type {Deck} from "./Deck";
+import {DECK_PART_ARR, DeckPart} from "./Deck";
+import type {CardService} from "../card/CardService";
+import type {Format} from "../card/format/Format";
+import {insertAt, pullFirst} from "lightdash";
+import {sampleSize, shuffle} from "lodash-es";
+import type {SortingService} from "../card/SortingService";
+import {SortingStrategy} from "../card/SortingService";
 
-import { CardTypeCategory } from "../card/type/CardTypeCategory";
-import type { BanlistService } from "../card/format/BanlistService";
+import {CardTypeCategory} from "../card/type/CardTypeCategory";
+import type {BanlistService} from "../card/format/BanlistService";
 
 export class DeckService {
 	readonly #cardService: CardService;
@@ -30,7 +30,7 @@ export class DeckService {
 	/**
 	 * Checks if a given card can be moved in the deck.
 	 * Similar to {@link #canAdd}, with the difference that in this case
-	 * the check is done against a copy of the deck with the card removed in order to correctly test the card count.
+	 * the check is done against a copy of the deck with the card removed to correctly test the card count.
 	 *
 	 * @param deck Deck to check.
 	 * @param card Card to check.
@@ -55,7 +55,7 @@ export class DeckService {
 	/**
 	 * Checks if a given card can be added to the deck.
 	 * Checks done include deck size check, banlist check, max count of card check
-	 * and special handling for certain card types (e.g. skill cards)
+	 * and special handling for certain card types (e.g., skill cards)
 	 *
 	 * @param deck Deck to check addition for.
 	 * @param card Card to check.

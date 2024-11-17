@@ -1,15 +1,15 @@
-import type { Deck } from "./Deck";
-import { DECK_PART_ARR } from "./Deck";
-import type { CardDatabase } from "../card/CardDatabase";
-import { FindCardBy } from "../card/CardDatabase";
-import type { Card } from "../card/Card";
-import { isEqual } from "lodash-es";
-import type { DeckService } from "./DeckService";
-import { inflateRaw } from "pako";
-import { fromByteArray, toByteArray } from "base64-js";
+import type {Deck} from "./Deck";
+import {DECK_PART_ARR} from "./Deck";
+import type {CardDatabase} from "../card/CardDatabase";
+import {FindCardBy} from "../card/CardDatabase";
+import type {Card} from "../card/Card";
+import {isEqual} from "lodash-es";
+import type {DeckService} from "./DeckService";
+import {inflateRaw} from "pako";
+import {fromByteArray, toByteArray} from "base64-js";
 
 export class DeckUriEncodingService {
-	// A 32-bit integer is able to store all 8 digit passcodes
+	// A 32-bit integer can store all 8 digit passcodes
 	// Note that currently we assume only little endian systems are used.
 	static readonly #BLOCK_BYTE_SIZE = Uint32Array.BYTES_PER_ELEMENT;
 	static readonly #LIMIT = 2 ** (DeckUriEncodingService.#BLOCK_BYTE_SIZE * 8); // Max number that can be stored in BLOCK_BYTE_SIZE bytes.

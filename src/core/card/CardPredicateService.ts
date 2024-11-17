@@ -1,4 +1,4 @@
-import type { Card } from "./Card";
+import type {Card} from "./Card";
 
 export type CardPredicate = (card: Card) => boolean;
 
@@ -18,7 +18,7 @@ export class CardPredicateService {
 
 	/**
 	 * Creates a predicate only allowing cards which can be added to at least one deck part.
-	 * Useful to exclude e.g. tokens.
+	 * Useful to exclude e.g., tokens.
 	 *
 	 * @return a predicate only allowing cards which can be added to at least one deck part.
 	 */
@@ -28,7 +28,7 @@ export class CardPredicateService {
 
 	/**
 	 * Creates a predicate only allowing the first of each name.
-	 * Useful to avoid e.g. alternate artworks.
+	 * Useful to avoid e.g., alternate artworks.
 	 *
 	 * @return a predicate only allowing the first of each name.
 	 */

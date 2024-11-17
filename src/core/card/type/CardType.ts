@@ -1,14 +1,14 @@
-import type { CardTypeCategory } from "./CardTypeCategory";
-import type { DeckPart } from "../../deck/Deck";
+import type {CardTypeCategory} from "./CardTypeCategory";
+import type {DeckPart} from "../../deck/Deck";
 
 /**
- * Card type, e.g. "Spell" or "Xyz Monster"
+ * Card type, e.g., "Spell" or "Xyz Monster"
  */
 export interface CardType {
 	readonly name: string;
 
 	/**
-	 * The general kind of type, e.g. "Spell" or "Monster"
+	 * The general kind of type, e.g., "Spell" or "Monster"
 	 */
 	readonly category: CardTypeCategory;
 

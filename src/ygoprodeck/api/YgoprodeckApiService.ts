@@ -1,11 +1,11 @@
-import type { RawCard } from "./mapping/mapCard";
-import type { RawCardSet } from "./mapping/mapCardSet";
-import type { PaginatedResponse } from "./PaginatedResponse";
-import { createEmptyPaginatedResponse } from "./PaginatedResponse";
-import type { RawCardValues } from "./mapping/mapCardValues";
-import type { RawArchetype } from "./mapping/mapArchetype";
-import type { Card, EnvironmentConfig } from "@/core/lib";
-import { Environment } from "@/core/lib";
+import type {RawCard} from "./mapping/mapCard";
+import type {RawCardSet} from "./mapping/mapCardSet";
+import type {PaginatedResponse} from "./PaginatedResponse";
+import {createEmptyPaginatedResponse} from "./PaginatedResponse";
+import type {RawCardValues} from "./mapping/mapCardValues";
+import type {RawArchetype} from "./mapping/mapArchetype";
+import type {Card, EnvironmentConfig} from "@/core/lib";
+import {Environment} from "@/core/lib";
 
 interface CardInfoOptions {
 	readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
@@ -67,7 +67,7 @@ export class YgoprodeckApiService {
 		if (data == null) {
 			return null;
 		}
-		// If a match is found, we take the very first item (best match).
+		// If a match is found, we take the first item (best match).
 		return data.data[0];
 	}
 
