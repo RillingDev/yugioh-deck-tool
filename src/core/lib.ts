@@ -1,4 +1,3 @@
-export { DEVELOPMENT_MODE } from "./mode";
 export { getLogger } from "./logger";
 
 export { Environment } from "./EnvironmentConfig";
