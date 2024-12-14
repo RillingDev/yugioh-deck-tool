@@ -1,2 +1,0 @@
-# Force LF newlines for all textual files (https://stackoverflow.com/a/42136008/6454249).
-* text=auto eol=lf
