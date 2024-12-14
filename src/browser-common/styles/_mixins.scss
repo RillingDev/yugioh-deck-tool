@@ -1,8 +1,9 @@
-@import "variables";
+@use "sass:map";
+@use "variables";
 
 @mixin screen-min-width($breakpoint) {
-	@if map-has-key($grid-breakpoints, $breakpoint) {
-		@media (min-width: #{map-get($grid-breakpoints, $breakpoint)}) {
+	@if map.has-key(variables.$grid-breakpoints, $breakpoint) {
+		@media (min-width: #{map.get(variables.$grid-breakpoints, $breakpoint)}) {
 			@content;
 		}
 	} @else {

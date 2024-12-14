@@ -1,4 +1,4 @@
-@import "../variables";
+@use "../variables";
 
 @mixin price {
 	display: flex;
@@ -13,25 +13,25 @@
 	}
 
 	&__vendor {
-		font-size: $font-size-sm;
+		font-size: variables.$font-size-sm;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 0.325rem;
 		text-align: center;
-		color: $white;
+		color: variables.$white;
 
 		&--tcgplayer {
-			background-color: $color-vendor-tcgplayer;
+			background-color: variables.$color-vendor-tcgplayer;
 		}
 
 		&--cardmarket {
-			background-color: $color-vendor-cardmarket;
+			background-color: variables.$color-vendor-cardmarket;
 		}
 
 		&--coolstuffinc {
-			background-color: $color-vendor-coolstuffinc;
-			color: $black;
+			background-color: variables.$color-vendor-coolstuffinc;
+			color: variables.$black;
 		}
 	}
 }
