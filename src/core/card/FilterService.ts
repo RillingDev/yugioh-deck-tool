@@ -1,13 +1,13 @@
-import {intersection, isEmpty} from "lodash-es";
-import type {BanlistService} from "./format/BanlistService";
-import type {BanState} from "./format/BanState";
-import type {Card} from "./Card";
-import type {CardPredicate} from "./CardPredicateService";
-import type {CardService} from "./CardService";
-import type {Format} from "./format/Format";
-import type {CardSet} from "./set/CardSet";
-import type {CardType} from "./type/CardType";
-import type {CardTypeCategory} from "./type/CardTypeCategory";
+import { intersection, isEmpty } from "lodash-es";
+import type { BanlistService } from "./format/BanlistService";
+import type { BanState } from "./format/BanState";
+import type { Card } from "./Card";
+import type { CardPredicate } from "./CardPredicateService";
+import type { CardService } from "./CardService";
+import type { Format } from "./format/Format";
+import type { CardSet } from "./set/CardSet";
+import type { CardType } from "./type/CardType";
+import type { CardTypeCategory } from "./type/CardTypeCategory";
 
 export type CardFilter = Partial<{
 	/**
@@ -86,7 +86,7 @@ export class FilterService {
 				!this.#cardService
 					.getAllNames(card)
 					.some((name) =>
-						name.toLowerCase().includes(filter.name!.toLowerCase())
+						name.toLowerCase().includes(filter.name!.toLowerCase()),
 					)
 			) {
 				return false;
@@ -129,7 +129,7 @@ export class FilterService {
 				filter.linkMarkers.length > 0 &&
 				(card.linkMarkers == null ||
 					filter.linkMarkers.some(
-						(linkMarker) => !card.linkMarkers!.includes(linkMarker)
+						(linkMarker) => !card.linkMarkers!.includes(linkMarker),
 					))
 			) {
 				return false;
@@ -152,7 +152,7 @@ export class FilterService {
 				filter.format != null &&
 				this.#banlistService.getBanStateByFormat(
 					card,
-					filter.format
+					filter.format,
 				) !== filter.banState
 			) {
 				return false;

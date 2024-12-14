@@ -1,5 +1,5 @@
-import type {CardTypeCategory} from "./CardTypeCategory";
-import type {DeckPart} from "../../deck/Deck";
+import type { CardTypeCategory } from "./CardTypeCategory";
+import type { DeckPart } from "../../deck/Deck";
 
 /**
  * Card type, e.g., "Spell" or "Xyz Monster"

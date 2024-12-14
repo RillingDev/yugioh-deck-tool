@@ -10,7 +10,7 @@
 export const uploadFile = (
 	accept: string,
 	callback: (files: null | FileList) => void,
-	context: Document
+	context: Document,
 ): void => {
 	const el = context.createElement("input");
 

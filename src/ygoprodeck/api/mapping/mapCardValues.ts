@@ -54,8 +54,8 @@ const mapTypes = (typeNames: string[], types: CardType[]): CardType[] =>
 	typeNames.map((typeName) =>
 		requireNonNilElseThrow(
 			types.find((type) => type.name === typeName),
-			() => new TypeError(`Could not find type '${typeName}'.`)
-		)
+			() => new TypeError(`Could not find type '${typeName}'.`),
+		),
 	);
 
 export const mapCardValues = (data: RawCardValues): CardValues => {

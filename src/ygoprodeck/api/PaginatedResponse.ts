@@ -16,7 +16,7 @@ export interface PaginatedResponse<T> {
 }
 
 export const createEmptyPaginatedResponse = <T>(
-	data: T
+	data: T,
 ): PaginatedResponse<T> => {
 	return {
 		data: data,

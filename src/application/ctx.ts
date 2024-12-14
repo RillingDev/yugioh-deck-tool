@@ -32,16 +32,16 @@ const filterService = new FilterService(cardService, banlistService);
 const deckService = new DeckService(
 	cardService,
 	sortingService,
-	banlistService
+	banlistService,
 );
 const deckExportService = new DeckExportService(
 	deckService,
 	cardService,
-	filterService
+	filterService,
 );
 const deckUriEncodingService = new DeckUriEncodingService(
 	cardDatabase,
-	deckService
+	deckService,
 );
 const deckFileService = new DeckFileService(cardDatabase, deckService);
 const deckRandomizationService = new DeckRandomizationService(
@@ -49,14 +49,14 @@ const deckRandomizationService = new DeckRandomizationService(
 	deckService,
 	filterService,
 	sortingService,
-	cardService
+	cardService,
 );
 
 const deckController = new DeckController(cardDatabase, cardService);
 const deckUrlController = new DeckUrlController(
 	deckService,
 	deckUriEncodingService,
-	deckFileService
+	deckFileService,
 );
 const ygoprodeckController = new YgoprodeckController(ygoprodeckService);
 

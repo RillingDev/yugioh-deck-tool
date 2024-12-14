@@ -41,15 +41,15 @@ export default defineComponent({
 					showSuccess(
 						toast,
 						"Successfully copied share link to clipboard.",
-						"deck-tool__portal"
-					)
+						"deck-tool__portal",
+					),
 				)
 				.catch((err) => {
 					logger.error("Could not copy share link!", err);
 					showError(
 						toast,
 						"Could not copy share link.",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 				});
 		};

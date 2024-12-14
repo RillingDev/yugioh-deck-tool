@@ -255,24 +255,24 @@ export default defineComponent({
 
 		const sets = computed<CardSet[]>(() => cardDatabase.getSets());
 		const archetypes = computed<string[]>(() =>
-			cardDatabase.getArchetypes()
+			cardDatabase.getArchetypes(),
 		);
 		const types = computed<CardType[]>(() =>
 			internalFilter.typeCategory != null
 				? cardDatabase.getTypes(internalFilter.typeCategory)
-				: []
+				: [],
 		);
 		const subTypes = computed<string[]>(() =>
 			internalFilter.typeCategory != null
 				? cardDatabase.getSubTypes(internalFilter.typeCategory)
-				: []
+				: [],
 		);
 		const attributes = computed<string[]>(() =>
-			cardDatabase.getAttributes()
+			cardDatabase.getAttributes(),
 		);
 		const levels = computed<number[]>(() => cardDatabase.getLevels());
 		const linkMarkers = computed<string[]>(() =>
-			cardDatabase.getLinkMarkers()
+			cardDatabase.getLinkMarkers(),
 		);
 
 		const hasBanStates = computed<boolean>(() => {
@@ -282,12 +282,12 @@ export default defineComponent({
 			return banlistService.hasBanlist(format.value);
 		});
 		const isMonster = computed<boolean>(
-			() => internalFilter.typeCategory === CardTypeCategory.MONSTER
+			() => internalFilter.typeCategory === CardTypeCategory.MONSTER,
 		);
 		const showCollectionFilter = computed<boolean>(
 			() =>
 				environmentConfig.getEnvironment() == Environment.YGOPRODECK &&
-				ygoprodeckController.hasCredentials()
+				ygoprodeckController.hasCredentials(),
 		);
 
 		const { cardCountFunction } = storeToRefs(useCollectionStore());
@@ -295,8 +295,8 @@ export default defineComponent({
 			return cardCountFunction.value == null
 				? null
 				: cardPredicateService.createAtLeastOneAvailablePredicate(
-						cardCountFunction.value
-				  );
+						cardCountFunction.value,
+					);
 		});
 
 		const resetFilter = (): void => {
@@ -335,13 +335,13 @@ export default defineComponent({
 				internalFilter.attribute = null;
 				internalFilter.level = null;
 				internalFilter.linkMarkers = [];
-			}
+			},
 		);
 		watch(
 			() => hasBanStates.value,
 			() => {
 				internalFilter.banState = null;
-			}
+			},
 		);
 
 		return {

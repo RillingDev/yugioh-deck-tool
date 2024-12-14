@@ -54,7 +54,7 @@ export default defineComponent({
 				.then(() => {
 					logger.info("Loaded data.");
 					return deckUrlController.loadUriDeck(
-						new URL(location.href)
+						new URL(location.href),
 					);
 				})
 				.then((result) => {
@@ -63,7 +63,7 @@ export default defineComponent({
 						logger.info("Loaded deck from URI.");
 					} else {
 						logger.info(
-							"No URI deck loaded, starting with empty deck."
+							"No URI deck loaded, starting with empty deck.",
 						);
 					}
 				})
@@ -72,7 +72,7 @@ export default defineComponent({
 					showError(
 						toast,
 						"Could not start the application!",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 				})
 				.finally(() => (loading.value = false));

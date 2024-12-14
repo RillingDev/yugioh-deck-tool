@@ -1,12 +1,12 @@
-import type {Deck} from "./Deck";
-import {DECK_PART_ARR} from "./Deck";
-import type {CardDatabase} from "../card/CardDatabase";
-import {FindCardBy} from "../card/CardDatabase";
-import type {Card} from "../card/Card";
-import {isEqual} from "lodash-es";
-import type {DeckService} from "./DeckService";
-import {inflateRaw} from "pako";
-import {fromByteArray, toByteArray} from "base64-js";
+import type { Deck } from "./Deck";
+import { DECK_PART_ARR } from "./Deck";
+import type { CardDatabase } from "../card/CardDatabase";
+import { FindCardBy } from "../card/CardDatabase";
+import type { Card } from "../card/Card";
+import { isEqual } from "lodash-es";
+import type { DeckService } from "./DeckService";
+import { inflateRaw } from "pako";
+import { fromByteArray, toByteArray } from "base64-js";
 
 export class DeckUriEncodingService {
 	// A 32-bit integer can store all 8 digit passcodes
@@ -46,7 +46,7 @@ export class DeckUriEncodingService {
 	 */
 	toUri(deck: Deck): URL {
 		return new URL(
-			DeckUriEncodingService.#YDKE_URI_PROTOCOL + this.#encodeDeck(deck)
+			DeckUriEncodingService.#YDKE_URI_PROTOCOL + this.#encodeDeck(deck),
 		);
 	}
 
@@ -89,7 +89,7 @@ export class DeckUriEncodingService {
 	 */
 	fromUri(uri: string): Deck {
 		return this.#decodeDeck(
-			uri.slice(DeckUriEncodingService.#YDKE_URI_PROTOCOL.length)
+			uri.slice(DeckUriEncodingService.#YDKE_URI_PROTOCOL.length),
 		);
 	}
 
@@ -105,7 +105,7 @@ export class DeckUriEncodingService {
 			this.#nthIndexOf(
 				queryParamValue,
 				DeckUriEncodingService.#YDKE_DELIMITER,
-				DeckUriEncodingService.#YDKE_DELIMITER_COUNT
+				DeckUriEncodingService.#YDKE_DELIMITER_COUNT,
 			) + 1;
 		const ydke = queryParamValue.substring(0, additionalDataStartIndex);
 		const deckName = queryParamValue.substring(additionalDataStartIndex);
@@ -125,7 +125,7 @@ export class DeckUriEncodingService {
 			throw new Error(
 				`Expected URI to have ${
 					DeckUriEncodingService.#YDKE_DELIMITER_COUNT
-				} delimiters but found ${uriParts.length}.`
+				} delimiters but found ${uriParts.length}.`,
 			);
 		}
 
@@ -144,7 +144,7 @@ export class DeckUriEncodingService {
 			) {
 				const block = decodedDeckPartCards.slice(
 					blockStart,
-					blockStart + DeckUriEncodingService.#BLOCK_BYTE_SIZE
+					blockStart + DeckUriEncodingService.#BLOCK_BYTE_SIZE,
 				);
 				deckPartCards.push(this.#decodeCardBlock(block));
 			}
@@ -197,7 +197,7 @@ export class DeckUriEncodingService {
 				isEqual(
 					block,
 					DeckUriEncodingService
-						.#URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK
+						.#URL_QUERY_PARAM_VALUE_DELIMITER_BLOCK,
 				)
 			) {
 				// After the last deck part, metadata starts
@@ -213,7 +213,7 @@ export class DeckUriEncodingService {
 		}
 		if (metaDataStart != null && metaDataStart < inflated.length) {
 			deck.name = new TextDecoder().decode(
-				inflated.subarray(metaDataStart)
+				inflated.subarray(metaDataStart),
 			);
 		}
 		return deck;
@@ -227,7 +227,7 @@ export class DeckUriEncodingService {
 		const passcode = String(this.#decodeNumber(block));
 		if (!this.#cardDatabase.hasCard(passcode, FindCardBy.PASSCODE)) {
 			throw new TypeError(
-				`Could not find card for passcode '${passcode}'.`
+				`Could not find card for passcode '${passcode}'.`,
 			);
 		}
 
@@ -239,7 +239,7 @@ export class DeckUriEncodingService {
 			throw new TypeError(
 				`Number '${number} is of range (has to be > 0 and < ${
 					DeckUriEncodingService.#LIMIT
-				})'.`
+				})'.`,
 			);
 		}
 		// Use a data view to set a 32 bit to the buffer, which is then returned as 8 bit array.
@@ -247,7 +247,7 @@ export class DeckUriEncodingService {
 		new DataView(buffer).setUint32(
 			0,
 			number,
-			DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
+			DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN,
 		);
 		return new Uint8Array(buffer);
 	}
@@ -256,7 +256,7 @@ export class DeckUriEncodingService {
 		// See #encodeNumber for details
 		return new DataView(block.buffer).getUint32(
 			0,
-			DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN
+			DeckUriEncodingService.#URL_QUERY_PARAM_VALUE_LITTLE_ENDIAN,
 		);
 	}
 }

@@ -1,15 +1,15 @@
-import {random, sampleSize, shuffle, words} from "lodash-es";
-import type {Card} from "../card/Card";
-import type {CardDatabase} from "../card/CardDatabase";
-import type {CardService} from "../card/CardService";
-import type {CardFilter, FilterService} from "../card/FilterService";
-import type {Format} from "../card/format/Format";
-import type {SortingService} from "../card/SortingService";
-import {CardTypeCategory} from "../card/type/CardTypeCategory";
-import type {Deck} from "./Deck";
-import {DECK_PART_ARR, DeckPart} from "./Deck";
-import {DefaultDeckPartConfig} from "./DeckPartConfig";
-import type {DeckService} from "./DeckService";
+import { random, sampleSize, shuffle, words } from "lodash-es";
+import type { Card } from "../card/Card";
+import type { CardDatabase } from "../card/CardDatabase";
+import type { CardService } from "../card/CardService";
+import type { CardFilter, FilterService } from "../card/FilterService";
+import type { Format } from "../card/format/Format";
+import type { SortingService } from "../card/SortingService";
+import { CardTypeCategory } from "../card/type/CardTypeCategory";
+import type { Deck } from "./Deck";
+import { DECK_PART_ARR, DeckPart } from "./Deck";
+import { DefaultDeckPartConfig } from "./DeckPartConfig";
+import type { DeckService } from "./DeckService";
 
 export enum RandomizationStrategy {
 	NORMAL = "Normal",
@@ -88,7 +88,7 @@ export class DeckRandomizationService {
 		deckService: DeckService,
 		filterService: FilterService,
 		sortingService: SortingService,
-		cardService: CardService
+		cardService: CardService,
 	) {
 		this.#deckService = deckService;
 		this.#cardDatabase = cardDatabase;
@@ -106,7 +106,7 @@ export class DeckRandomizationService {
 	 */
 	randomize(
 		strategy: RandomizationStrategy,
-		options: RandomizationOptions = {}
+		options: RandomizationOptions = {},
 	): Deck {
 		const typeCategoryWeighting =
 			options.typeCategoryWeighting ??
@@ -125,7 +125,7 @@ export class DeckRandomizationService {
 		const archetypeCount = this.#getArchetypeCount(strategy);
 		if (archetypeCount > 0) {
 			primaryPools.push(
-				...this.#getRandomArchetypeCardPools(cards, archetypeCount)
+				...this.#getRandomArchetypeCardPools(cards, archetypeCount),
 			);
 		}
 
@@ -142,7 +142,7 @@ export class DeckRandomizationService {
 						primaryPool,
 						deckPart === DeckPart.MAIN,
 						cardCountPerPool,
-						typeCategoryWeighting
+						typeCategoryWeighting,
 					);
 				}
 			}
@@ -155,7 +155,7 @@ export class DeckRandomizationService {
 				secondaryPool,
 				false,
 				null,
-				typeCategoryWeighting
+				typeCategoryWeighting,
 			);
 		}
 		deck.name = this.#createName(deck);
@@ -164,7 +164,7 @@ export class DeckRandomizationService {
 
 	#getRandomArchetypeCardPools(
 		cards: Card[],
-		archetypeCount: number
+		archetypeCount: number,
 	): Card[][] {
 		const pool: Card[][] = [];
 		const archetypes = shuffle(this.#cardDatabase.getArchetypes());
@@ -203,7 +203,7 @@ export class DeckRandomizationService {
 		pool: Card[],
 		preferPlaySet: boolean,
 		limit: number | null,
-		typeCategoryWeighting: TypeCategoryWeighting
+		typeCategoryWeighting: TypeCategoryWeighting,
 	): void {
 		const deckPartCards = deck.parts[deckPart];
 		const initialLength = deckPartCards.length;
@@ -232,7 +232,7 @@ export class DeckRandomizationService {
 					typeCategoryWeighting.get(card.type.category) ?? null;
 				const cardsOfTypeCategoryCount = deckPartCards.filter(
 					(deckPartCard) =>
-						deckPartCard.type.category === card.type.category
+						deckPartCard.type.category === card.type.category,
 				).length;
 				if (
 					typeCategoryRatio != null &&
@@ -245,7 +245,7 @@ export class DeckRandomizationService {
 
 			const randomCardCount = this.#getRandomCardCount(
 				strategy,
-				preferPlaySet
+				preferPlaySet,
 			);
 			// Attempt to add n cards, stopping if one of the additions is impossible.
 			for (let i = 0; i < randomCardCount; i++) {
@@ -275,7 +275,7 @@ export class DeckRandomizationService {
 		// Currently, only archetype strategies can use the primary pool.
 		if (archetypeCount === 0) {
 			throw new TypeError(
-				"Cannot determine card count per pool for this strategy."
+				"Cannot determine card count per pool for this strategy.",
 			);
 		}
 		return Math.ceil(30 / archetypeCount);
@@ -283,7 +283,7 @@ export class DeckRandomizationService {
 
 	#getDeckPartLimit(
 		strategy: RandomizationStrategy,
-		deckPart: DeckPart
+		deckPart: DeckPart,
 	): number {
 		if (strategy === RandomizationStrategy.HIGHLANDER) {
 			if (deckPart === DeckPart.SIDE) {
@@ -297,7 +297,7 @@ export class DeckRandomizationService {
 
 	#getRandomCardCount(
 		strategy: RandomizationStrategy,
-		preferPlaySet: boolean
+		preferPlaySet: boolean,
 	): number {
 		if (strategy === RandomizationStrategy.HIGHLANDER) {
 			return 1;
@@ -329,7 +329,7 @@ export class DeckRandomizationService {
 		]);
 
 		const countRequiredForPlaySet = Math.max(
-			...Array.from(countedCards.values())
+			...Array.from(countedCards.values()),
 		);
 
 		const wordPool = new Set<string>();
@@ -338,7 +338,7 @@ export class DeckRandomizationService {
 				for (const word of words(card.name)) {
 					if (
 						!DeckRandomizationService.#IGNORED_WORDS.has(
-							word.toLowerCase()
+							word.toLowerCase(),
 						)
 					) {
 						wordPool.add(word);
@@ -348,7 +348,7 @@ export class DeckRandomizationService {
 		}
 		return sampleSize(
 			Array.from(wordPool.values()),
-			random(2, 3, false)
+			random(2, 3, false),
 		).join(" ");
 	}
 }

@@ -1,7 +1,12 @@
-import {createCard} from "../../helper/dataFactories";
-import {Format, SortingOrder, SortingService, SortingStrategy,} from "@/core/lib";
-import {MockCardDatabase} from "../../helper/MockCardDatabase";
-import {beforeEach, describe, expect, it} from "vitest";
+import { createCard } from "../../helper/dataFactories";
+import {
+	Format,
+	SortingOrder,
+	SortingService,
+	SortingStrategy,
+} from "@/core/lib";
+import { MockCardDatabase } from "../../helper/MockCardDatabase";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe("SortingService", () => {
 	let sortingService: SortingService;
@@ -28,7 +33,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1], {
 						strategy: SortingStrategy.NAME,
 						order: SortingOrder.DESC,
-					})
+					}),
 				).toEqual([card1, card1, card2]);
 			});
 
@@ -46,7 +51,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1], {
 						strategy: SortingStrategy.NAME,
 						order: SortingOrder.ASC,
-					})
+					}),
 				).toEqual([card2, card1, card1]);
 			});
 		});
@@ -70,7 +75,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1, card3], {
 						strategy: SortingStrategy.ATK,
 						order: SortingOrder.DESC,
-					})
+					}),
 				).toEqual([card2, card1, card1, card3]);
 			});
 
@@ -92,7 +97,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1, card3], {
 						strategy: SortingStrategy.ATK,
 						order: SortingOrder.ASC,
-					})
+					}),
 				).toEqual([card3, card1, card1, card2]);
 			});
 		});
@@ -116,7 +121,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1, card3], {
 						strategy: SortingStrategy.DEF,
 						order: SortingOrder.DESC,
-					})
+					}),
 				).toEqual([card2, card1, card1, card3]);
 			});
 
@@ -138,7 +143,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1, card3], {
 						strategy: SortingStrategy.DEF,
 						order: SortingOrder.ASC,
-					})
+					}),
 				).toEqual([card3, card1, card1, card2]);
 			});
 		});
@@ -162,7 +167,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1, card3], {
 						strategy: SortingStrategy.LEVEL,
 						order: SortingOrder.DESC,
-					})
+					}),
 				).toEqual([card2, card1, card1, card3]);
 			});
 
@@ -184,7 +189,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1, card3], {
 						strategy: SortingStrategy.LEVEL,
 						order: SortingOrder.ASC,
-					})
+					}),
 				).toEqual([card3, card1, card1, card2]);
 			});
 		});
@@ -204,7 +209,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1], {
 						strategy: SortingStrategy.VIEWS,
 						order: SortingOrder.DESC,
-					})
+					}),
 				).toEqual([card2, card1, card1]);
 			});
 
@@ -222,7 +227,7 @@ describe("SortingService", () => {
 					sortingService.sort([card1, card2, card1], {
 						strategy: SortingStrategy.VIEWS,
 						order: SortingOrder.ASC,
-					})
+					}),
 				).toEqual([card1, card1, card2]);
 			});
 		});
@@ -233,7 +238,7 @@ describe("SortingService", () => {
 					passcode: "123",
 					release: {
 						[Format.TCG]: new Date(
-							"2001-01-01T00:00:00.0000"
+							"2001-01-01T00:00:00.0000",
 						).getTime(),
 						[Format.OCG]: null,
 					},
@@ -242,7 +247,7 @@ describe("SortingService", () => {
 					passcode: "789",
 					release: {
 						[Format.TCG]: new Date(
-							"2020-01-01T00:00:00.0000"
+							"2020-01-01T00:00:00.0000",
 						).getTime(),
 						[Format.OCG]: null,
 					},
@@ -260,7 +265,7 @@ describe("SortingService", () => {
 					{
 						strategy: SortingStrategy.RELEASE_TCG,
 						order: SortingOrder.DESC,
-					}
+					},
 				);
 				expect(actual).toEqual([card2, card1, card1, card3]);
 			});
@@ -270,7 +275,7 @@ describe("SortingService", () => {
 					passcode: "123",
 					release: {
 						[Format.TCG]: new Date(
-							"2001-01-01T00:00:00.0000"
+							"2001-01-01T00:00:00.0000",
 						).getTime(),
 						[Format.OCG]: null,
 					},
@@ -279,7 +284,7 @@ describe("SortingService", () => {
 					passcode: "789",
 					release: {
 						[Format.TCG]: new Date(
-							"2020-01-01T00:00:00.0000"
+							"2020-01-01T00:00:00.0000",
 						).getTime(),
 						[Format.OCG]: null,
 					},
@@ -297,7 +302,7 @@ describe("SortingService", () => {
 					{
 						strategy: SortingStrategy.RELEASE_TCG,
 						order: SortingOrder.ASC,
-					}
+					},
 				);
 				expect(actual).toEqual([card1, card1, card2, card3]);
 			});
@@ -310,7 +315,7 @@ describe("SortingService", () => {
 					release: {
 						[Format.TCG]: null,
 						[Format.OCG]: new Date(
-							"2001-01-01T00:00:00.0000"
+							"2001-01-01T00:00:00.0000",
 						).getTime(),
 					},
 				});
@@ -319,7 +324,7 @@ describe("SortingService", () => {
 					release: {
 						[Format.TCG]: null,
 						[Format.OCG]: new Date(
-							"2020-01-01T00:00:00.0000"
+							"2020-01-01T00:00:00.0000",
 						).getTime(),
 					},
 				});
@@ -336,7 +341,7 @@ describe("SortingService", () => {
 					{
 						strategy: SortingStrategy.RELEASE_OCG,
 						order: SortingOrder.DESC,
-					}
+					},
 				);
 				expect(actual).toEqual([card2, card1, card1, card3]);
 			});
@@ -347,7 +352,7 @@ describe("SortingService", () => {
 					release: {
 						[Format.TCG]: null,
 						[Format.OCG]: new Date(
-							"2001-01-01T00:00:00.0000"
+							"2001-01-01T00:00:00.0000",
 						).getTime(),
 					},
 				});
@@ -356,7 +361,7 @@ describe("SortingService", () => {
 					release: {
 						[Format.TCG]: null,
 						[Format.OCG]: new Date(
-							"2020-01-01T00:00:00.0000"
+							"2020-01-01T00:00:00.0000",
 						).getTime(),
 					},
 				});
@@ -373,7 +378,7 @@ describe("SortingService", () => {
 					{
 						strategy: SortingStrategy.RELEASE_OCG,
 						order: SortingOrder.ASC,
-					}
+					},
 				);
 				expect(actual).toEqual([card1, card1, card2, card3]);
 			});

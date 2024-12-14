@@ -1,16 +1,16 @@
-import {DefaultDeckPartConfig} from "./DeckPartConfig";
-import type {Card} from "../card/Card";
-import type {Deck} from "./Deck";
-import {DECK_PART_ARR, DeckPart} from "./Deck";
-import type {CardService} from "../card/CardService";
-import type {Format} from "../card/format/Format";
-import {insertAt, pullFirst} from "lightdash";
-import {sampleSize, shuffle} from "lodash-es";
-import type {SortingService} from "../card/SortingService";
-import {SortingStrategy} from "../card/SortingService";
+import { DefaultDeckPartConfig } from "./DeckPartConfig";
+import type { Card } from "../card/Card";
+import type { Deck } from "./Deck";
+import { DECK_PART_ARR, DeckPart } from "./Deck";
+import type { CardService } from "../card/CardService";
+import type { Format } from "../card/format/Format";
+import { insertAt, pullFirst } from "lightdash";
+import { sampleSize, shuffle } from "lodash-es";
+import type { SortingService } from "../card/SortingService";
+import { SortingStrategy } from "../card/SortingService";
 
-import {CardTypeCategory} from "../card/type/CardTypeCategory";
-import type {BanlistService} from "../card/format/BanlistService";
+import { CardTypeCategory } from "../card/type/CardTypeCategory";
+import type { BanlistService } from "../card/format/BanlistService";
 
 export class DeckService {
 	readonly #cardService: CardService;
@@ -20,7 +20,7 @@ export class DeckService {
 	constructor(
 		cardService: CardService,
 		sortingService: SortingService,
-		banlistService: BanlistService
+		banlistService: BanlistService,
 	) {
 		this.#cardService = cardService;
 		this.#sortingService = sortingService;
@@ -44,7 +44,7 @@ export class DeckService {
 		card: Card,
 		oldDeckPart: DeckPart,
 		newDeckPart: DeckPart,
-		format: Format | null
+		format: Format | null,
 	): boolean {
 		const deckWithoutCard = this.#cloneDeck(deck);
 		this.removeCard(deckWithoutCard, card, oldDeckPart);
@@ -67,7 +67,7 @@ export class DeckService {
 		deck: Deck,
 		card: Card,
 		deckPart: DeckPart,
-		format: Format | null
+		format: Format | null,
 	): boolean {
 		// If the card is not allowed in this deck part, return false
 		if (!card.type.deckParts.has(deckPart)) {
@@ -85,7 +85,7 @@ export class DeckService {
 			card.type.category === CardTypeCategory.SKILL &&
 			this.getAllCards(deck).some(
 				(existingCard) =>
-					existingCard.type.category === CardTypeCategory.SKILL
+					existingCard.type.category === CardTypeCategory.SKILL,
 			)
 		) {
 			return false;
@@ -94,7 +94,7 @@ export class DeckService {
 		// If adding this card would make the total count of this card in this deck
 		// be larger than allowed by the banlist, return false
 		const count = this.getAllCards(deck).filter((existingCard) =>
-			this.#cardService.isTreatedAsSame(existingCard, card)
+			this.#cardService.isTreatedAsSame(existingCard, card),
 		).length;
 		const banState = this.#banlistService.getBanStateByFormat(card, format);
 		return count < banState.count;
@@ -111,11 +111,11 @@ export class DeckService {
 	findAvailableDeckPart(
 		deck: Deck,
 		card: Card,
-		format: Format | null
+		format: Format | null,
 	): DeckPart | null {
 		return (
 			DECK_PART_ARR.find((currentDeckPart) =>
-				this.canAdd(deck, card, currentDeckPart, format)
+				this.canAdd(deck, card, currentDeckPart, format),
 			) ?? null
 		);
 	}
@@ -133,7 +133,7 @@ export class DeckService {
 		deck: Deck,
 		card: Card,
 		deckPart: DeckPart,
-		newIndex?: number
+		newIndex?: number,
 	): void {
 		const current = deck.parts[deckPart];
 		if (newIndex != null) {
@@ -155,13 +155,13 @@ export class DeckService {
 		deck: Deck,
 		card: Card,
 		deckPart: DeckPart,
-		oldIndex?: number
+		oldIndex?: number,
 	): void {
 		const cards = deck.parts[deckPart];
 		if (oldIndex != null) {
 			if (cards[oldIndex] !== card) {
 				throw new TypeError(
-					"The given card does not exist at this index."
+					"The given card does not exist at this index.",
 				);
 			}
 			cards.splice(oldIndex, 1);
@@ -184,7 +184,7 @@ export class DeckService {
 		card: Card,
 		deckPart: DeckPart,
 		oldIndex: number,
-		newIndex: number
+		newIndex: number,
 	): void {
 		const cards = deck.parts[deckPart];
 		if (cards[oldIndex] !== card) {
@@ -207,7 +207,7 @@ export class DeckService {
 				deckClone.parts[deckPart],
 				{
 					strategy: SortingStrategy.DEFAULT,
-				}
+				},
 			);
 		}
 		return deckClone;

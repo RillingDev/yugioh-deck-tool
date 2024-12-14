@@ -17,7 +17,7 @@ export class TooltipController {
 	async loadCard(cardKey: string): Promise<Card> {
 		let resolvedCardKey = await this.#cardDatabase.prepareCard(
 			cardKey,
-			FindCardBy.NAME
+			FindCardBy.NAME,
 		);
 		if (
 			resolvedCardKey != null &&
@@ -25,12 +25,12 @@ export class TooltipController {
 		) {
 			return this.#cardDatabase.getCard(
 				resolvedCardKey,
-				FindCardBy.NAME
+				FindCardBy.NAME,
 			)!;
 		}
 		resolvedCardKey = await this.#cardDatabase.prepareCard(
 			cardKey,
-			FindCardBy.PASSCODE
+			FindCardBy.PASSCODE,
 		);
 		if (
 			resolvedCardKey != null &&
@@ -38,7 +38,7 @@ export class TooltipController {
 		) {
 			return this.#cardDatabase.getCard(
 				resolvedCardKey,
-				FindCardBy.PASSCODE
+				FindCardBy.PASSCODE,
 			)!;
 		}
 		throw new Error(`Could not find card '${cardKey}'.`);

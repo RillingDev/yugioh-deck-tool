@@ -1,5 +1,5 @@
-import type {CardDatabase} from "@/core/lib";
-import {vi} from "vitest";
+import type { CardDatabase } from "@/core/lib";
+import { vi } from "vitest";
 
 export class MockCardDatabase implements CardDatabase {
 	getArchetypes = vi.fn();

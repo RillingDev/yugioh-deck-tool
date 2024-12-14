@@ -25,7 +25,7 @@ export default defineComponent({
 
 		const downloadDeck = (): void => {
 			const { fileContent, fileName } = deckFileService.toFile(
-				deck.value
+				deck.value,
 			);
 			const file = new File([fileContent], fileName, {
 				type: DeckFileService.DECK_FILE_MIME_TYPE,
@@ -34,7 +34,7 @@ export default defineComponent({
 			showSuccess(
 				toast,
 				"Successfully exported deck file.",
-				"deck-tool__portal"
+				"deck-tool__portal",
 			);
 		};
 

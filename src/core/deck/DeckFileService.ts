@@ -47,7 +47,7 @@ export class DeckFileService {
 		let currentDeckPart: DeckPart | null = null;
 		for (const line of lines) {
 			const foundDeckPart = DECK_PART_ARR.find(
-				(part) => DefaultDeckPartConfig[part].indicator === line
+				(part) => DefaultDeckPartConfig[part].indicator === line,
 			);
 			if (foundDeckPart != null) {
 				currentDeckPart = foundDeckPart;
@@ -65,7 +65,7 @@ export class DeckFileService {
 				} else {
 					const card = this.#cardDatabase.getCard(
 						passcode,
-						FindCardBy.PASSCODE
+						FindCardBy.PASSCODE,
 					)!;
 					deck.parts[currentDeckPart].push(card);
 				}

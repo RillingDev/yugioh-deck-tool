@@ -1,4 +1,4 @@
-import {createCard} from "../../helper/dataFactories";
+import { createCard } from "../../helper/dataFactories";
 import {
 	BanlistService,
 	type CardDatabase,
@@ -9,9 +9,9 @@ import {
 	FindCardBy,
 	SortingService,
 } from "@/core/lib";
-import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import {UnsupportedInvocationError} from "@/__tests__/helper/UnsupportedInvocationError";
-import {MockCardDatabase} from "@/__tests__/helper/MockCardDatabase";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { UnsupportedInvocationError } from "@/__tests__/helper/UnsupportedInvocationError";
+import { MockCardDatabase } from "@/__tests__/helper/MockCardDatabase";
 
 describe("DeckFileService", () => {
 	let cardDatabaseMock: CardDatabase;

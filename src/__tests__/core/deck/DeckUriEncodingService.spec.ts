@@ -1,5 +1,5 @@
-import {createCard} from "../../helper/dataFactories";
-import type {CardDatabase} from "@/core/lib";
+import { createCard } from "../../helper/dataFactories";
+import type { CardDatabase } from "@/core/lib";
 import {
 	BanlistService,
 	CardService,
@@ -9,9 +9,9 @@ import {
 	FindCardBy,
 	SortingService,
 } from "@/core/lib";
-import {MockCardDatabase} from "../../helper/MockCardDatabase";
-import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import {UnsupportedInvocationError} from "@/__tests__/helper/UnsupportedInvocationError";
+import { MockCardDatabase } from "../../helper/MockCardDatabase";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { UnsupportedInvocationError } from "@/__tests__/helper/UnsupportedInvocationError";
 
 describe("DeckUriEncodingService", () => {
 	let deckUriEncodingService: DeckUriEncodingService;

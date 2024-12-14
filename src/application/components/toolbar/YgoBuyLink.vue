@@ -35,7 +35,7 @@ export default defineComponent({
 					? {
 							medium: "deck-builder",
 							source: "YGOPRODeck",
-					  }
+						}
 					: null;
 			return deckExportService
 				.toBuyLink(deck.value, affiliate)

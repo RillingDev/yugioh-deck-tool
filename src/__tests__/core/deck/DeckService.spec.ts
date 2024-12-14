@@ -1,5 +1,5 @@
-import {createCard, createCardType} from "../../helper/dataFactories";
-import type {Deck} from "@/core/lib";
+import { createCard, createCardType } from "../../helper/dataFactories";
+import type { Deck } from "@/core/lib";
 import {
 	BanlistService,
 	CardService,
@@ -10,8 +10,8 @@ import {
 	Format,
 	SortingService,
 } from "@/core/lib";
-import {MockCardDatabase} from "../../helper/MockCardDatabase";
-import {beforeEach, describe, expect, it} from "vitest";
+import { MockCardDatabase } from "../../helper/MockCardDatabase";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe("DeckService", () => {
 	let deckService: DeckService;

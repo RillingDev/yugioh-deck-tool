@@ -22,7 +22,7 @@ export class DeckController {
 	 */
 	calculateDetailedTypeStats(
 		deckPart: DeckPart,
-		cards: ReadonlyArray<Card>
+		cards: ReadonlyArray<Card>,
 	): [string, number][] {
 		if (deckPart === DeckPart.EXTRA) {
 			const countedByType = this.#cardService.countByType(cards);
@@ -31,7 +31,7 @@ export class DeckController {
 				.filter(
 					(cardType) =>
 						countedByType.has(cardType) &&
-						countedByType.get(cardType)! > 0
+						countedByType.get(cardType)! > 0,
 				)
 				.map((cardType) => [
 					removeEnd(cardType.name, " Monster"),
@@ -45,7 +45,7 @@ export class DeckController {
 			.filter(
 				(typeCategory) =>
 					countedByTypeCategory.has(typeCategory) &&
-					countedByTypeCategory.get(typeCategory)! > 0
+					countedByTypeCategory.get(typeCategory)! > 0,
 			)
 			.map((typeCategory) => [
 				typeCategory,

@@ -13,13 +13,13 @@ export default defineConfig({
 			 * SCSS rewrites
 			 */
 			"~bootstrap": fileURLToPath(
-				new URL("./node_modules/bootstrap", import.meta.url)
+				new URL("./node_modules/bootstrap", import.meta.url),
 			),
 			"~bootstrap-vue": fileURLToPath(
-				new URL("./node_modules/bootstrap-vue", import.meta.url)
+				new URL("./node_modules/bootstrap-vue", import.meta.url),
 			),
 			"~vue-select": fileURLToPath(
-				new URL("./node_modules/vue-select", import.meta.url)
+				new URL("./node_modules/vue-select", import.meta.url),
 			),
 		},
 	},

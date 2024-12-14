@@ -46,7 +46,7 @@ export default defineComponent({
 			showInfo(
 				toast,
 				"Creating screenshot, please wait.",
-				"deck-tool__portal"
+				"deck-tool__portal",
 			);
 			createScreenshot(deckEl, deck.value.name ?? "Deck Screenshot", {
 				scale: 2,
@@ -59,7 +59,7 @@ export default defineComponent({
 					showSuccess(
 						toast,
 						"Screenshot created.",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 					downloadFile(file, document);
 				})
@@ -68,7 +68,7 @@ export default defineComponent({
 					showError(
 						toast,
 						"Could not create screenshot.",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 				});
 		};

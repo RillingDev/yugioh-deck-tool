@@ -112,7 +112,7 @@ export default defineComponent({
 			useInfiniteScrolling(
 				computed(() => props.matches),
 				50,
-				25
+				25,
 			);
 
 		const getTypeText = (card: Card): string =>
@@ -132,14 +132,14 @@ export default defineComponent({
 			const deckPart = deckService.findAvailableDeckPart(
 				deckStore.deck,
 				card,
-				format.value
+				format.value,
 			);
 			if (deckPart != null) {
 				deckStore.addCard({ card, deckPart });
 				showSuccess(
 					toast,
 					"Successfully added card to deck.",
-					"deck-tool__portal"
+					"deck-tool__portal",
 				);
 			}
 		};
@@ -154,7 +154,7 @@ export default defineComponent({
 				deckStore.deck,
 				card,
 				newDeckPart,
-				format.value
+				format.value,
 			);
 		};
 

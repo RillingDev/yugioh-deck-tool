@@ -83,7 +83,7 @@ export default defineComponent({
 	emits: [],
 	setup(props) {
 		const deckPartConfig = computed<DeckPartConfig>(
-			() => DefaultDeckPartConfig[props.deckPart]
+			() => DefaultDeckPartConfig[props.deckPart],
 		);
 
 		const deckStore = useDeckStore();
@@ -91,7 +91,7 @@ export default defineComponent({
 		const { format } = storeToRefs(useFormatStore());
 
 		const cards = computed<Card[]>(
-			() => deckStore.deck.parts[props.deckPart]
+			() => deckStore.deck.parts[props.deckPart],
 		);
 		const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
 		const deckPartStats = computed<string>(() => {
@@ -121,7 +121,7 @@ export default defineComponent({
 		const reorderCard = (
 			card: Card,
 			oldIndex: number,
-			newIndex: number
+			newIndex: number,
 		): void =>
 			deckStore.reorderCard({
 				deckPart: props.deckPart,
@@ -138,7 +138,7 @@ export default defineComponent({
 				reorderCard(
 					e.moved.element,
 					e.moved.oldIndex,
-					e.moved.newIndex
+					e.moved.newIndex,
 				);
 			} else {
 				logger.warn("Unexpected drag event type.", e);
@@ -157,7 +157,7 @@ export default defineComponent({
 				card,
 				oldDeckPart,
 				newDeckPart,
-				format.value
+				format.value,
 			);
 		};
 

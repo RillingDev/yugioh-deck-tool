@@ -1,11 +1,11 @@
-import type {Card, CardDatabase, CardSet, CardType} from "@/core/lib";
-import {CardTypeCategory, FindCardBy, getLogger} from "@/core/lib";
-import type {YgoprodeckApiService} from "@/ygoprodeck/api/YgoprodeckApiService";
-import type {RawCard} from "@/ygoprodeck/api/mapping/mapCard";
-import {mapCard} from "@/ygoprodeck/api/mapping/mapCard";
-import {mapArchetype} from "@/ygoprodeck/api/mapping/mapArchetype";
-import {mapCardSet} from "@/ygoprodeck/api/mapping/mapCardSet";
-import {mapCardValues} from "@/ygoprodeck/api/mapping/mapCardValues";
+import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
+import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
+import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
+import type { RawCard } from "@/ygoprodeck/api/mapping/mapCard";
+import { mapCard } from "@/ygoprodeck/api/mapping/mapCard";
+import { mapArchetype } from "@/ygoprodeck/api/mapping/mapArchetype";
+import { mapCardSet } from "@/ygoprodeck/api/mapping/mapCardSet";
+import { mapCardValues } from "@/ygoprodeck/api/mapping/mapCardValues";
 
 export class YgoprodeckCardDatabase implements CardDatabase {
 	static readonly #logger = getLogger(YgoprodeckCardDatabase);
@@ -55,13 +55,13 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 			Object.values(CardTypeCategory).map((typeCategory) => [
 				typeCategory,
 				[],
-			])
+			]),
 		);
 		this.#subTypes = new Map(
 			Object.values(CardTypeCategory).map((typeCategory) => [
 				typeCategory,
 				[],
-			])
+			]),
 		);
 		this.#attributes = [];
 		this.#linkMarkers = [];
@@ -80,7 +80,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 	async prepareCard(
 		cardKey: string,
-		findCardBy: FindCardBy
+		findCardBy: FindCardBy,
 	): Promise<string | null> {
 		await Promise.all([this.#loadSets(), this.#loadCardValues()]);
 
@@ -133,7 +133,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 	async #loadCard(
 		cardKey: string,
-		findCardBy: FindCardBy
+		findCardBy: FindCardBy,
 	): Promise<Card | null> {
 		if (!this.hasCard(cardKey, findCardBy)) {
 			let loadedCard;
@@ -179,7 +179,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 					this.#archetypes.push(...archetypes);
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered archetypes.",
-						this.#archetypes
+						this.#archetypes,
 					);
 				});
 		}
@@ -198,7 +198,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered sets.",
-						this.#setsByName
+						this.#setsByName,
 					);
 				});
 		}
@@ -212,7 +212,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.then(mapCardValues)
 				.then((cardValues) => {
 					for (const typeCategory of Object.values(
-						CardTypeCategory
+						CardTypeCategory,
 					)) {
 						const cardTypes = this.#types.get(typeCategory)!;
 						cardTypes.push(...cardValues[typeCategory].types);
@@ -224,29 +224,29 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 					Array.from(this.#types.values())
 						.flat()
 						.forEach((type) =>
-							this.#typesByName.set(type.name, type)
+							this.#typesByName.set(type.name, type),
 						);
 
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered types and sub-types.",
 						this.#types,
-						this.#subTypes
+						this.#subTypes,
 					);
 
 					this.#attributes.push(
-						...cardValues[CardTypeCategory.MONSTER].attributes
+						...cardValues[CardTypeCategory.MONSTER].attributes,
 					);
 					this.#levels.push(
-						...cardValues[CardTypeCategory.MONSTER].levels
+						...cardValues[CardTypeCategory.MONSTER].levels,
 					);
 					this.#linkMarkers.push(
-						...cardValues[CardTypeCategory.MONSTER].linkMarkers
+						...cardValues[CardTypeCategory.MONSTER].linkMarkers,
 					);
 					YgoprodeckCardDatabase.#logger.debug(
 						"Registered monster values.",
 						this.#attributes,
 						this.#levels,
-						this.#linkMarkers
+						this.#linkMarkers,
 					);
 				});
 		}
@@ -263,7 +263,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 		) {
 			YgoprodeckCardDatabase.#logger.warn(
 				`Refusing to add already registered card passcode.`,
-				card
+				card,
 			);
 			return;
 		}

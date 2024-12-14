@@ -41,15 +41,15 @@ export default defineComponent({
 					showSuccess(
 						toast,
 						"Successfully copied YDKe to clipboard.",
-						"deck-tool__portal"
-					)
+						"deck-tool__portal",
+					),
 				)
 				.catch((err) => {
 					logger.error("Could not copy YDKe!", err);
 					showError(
 						toast,
 						"Could not copy YDKe.",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 				});
 		};

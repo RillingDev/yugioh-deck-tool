@@ -38,7 +38,7 @@ export const useDeckStore = defineStore("deck", {
 				this.deck,
 				payload.card,
 				payload.deckPart,
-				payload.newIndex
+				payload.newIndex,
 			);
 		},
 		removeCard(payload: {
@@ -50,7 +50,7 @@ export const useDeckStore = defineStore("deck", {
 				this.deck,
 				payload.card,
 				payload.deckPart,
-				payload.oldIndex
+				payload.oldIndex,
 			);
 		},
 		reorderCard(payload: {
@@ -64,7 +64,7 @@ export const useDeckStore = defineStore("deck", {
 				payload.card,
 				payload.deckPart,
 				payload.oldIndex,
-				payload.newIndex
+				payload.newIndex,
 			);
 		},
 	},

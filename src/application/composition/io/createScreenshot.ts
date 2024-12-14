@@ -1,4 +1,4 @@
-import type {Options} from "html2canvas";
+import type { Options } from "html2canvas";
 import html2canvas from "html2canvas";
 
 const SCREENSHOT_IMAGE_MIME_TYPE = "image/png";
@@ -15,7 +15,7 @@ const SCREENSHOT_IMAGE_MIME_TYPE_EXTENSION = "png";
 export const createScreenshot = async (
 	el: HTMLElement,
 	filenameBase: string,
-	options: Partial<Options>
+	options: Partial<Options>,
 ): Promise<File> => {
 	const canvas = await html2canvas(el, options);
 
@@ -28,7 +28,7 @@ export const createScreenshot = async (
 			resolve(
 				new File([blob!], fileName, {
 					type: blob!.type,
-				})
+				}),
 			);
 		}, SCREENSHOT_IMAGE_MIME_TYPE);
 	});

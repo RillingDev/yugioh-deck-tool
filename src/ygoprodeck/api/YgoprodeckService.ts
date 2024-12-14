@@ -9,7 +9,7 @@ export class YgoprodeckService {
 
 	constructor(
 		ygoprodeckApiService: YgoprodeckApiService,
-		environmentConfig: EnvironmentConfig
+		environmentConfig: EnvironmentConfig,
 	) {
 		this.#ygoprodeckApiService = ygoprodeckApiService;
 		this.#environmentConfig = environmentConfig;
@@ -26,7 +26,7 @@ export class YgoprodeckService {
 	}
 
 	async getCollectionCardCountFunction(
-		credentials: Credentials
+		credentials: Credentials,
 	): Promise<CardCountFunction> {
 		this.validateEnv();
 		const unlinkedCards = await this.#ygoprodeckApiService.getCards({
@@ -37,13 +37,13 @@ export class YgoprodeckService {
 			toMapBy(
 				unlinkedCards,
 				(_key, unlinkedCard) => String(unlinkedCard.id),
-				(_key, unlinkedCard) => unlinkedCard.cardq!
-			)
+				(_key, unlinkedCard) => unlinkedCard.cardq!,
+			),
 		);
 	}
 
 	#createCardCountFunction(
-		countedByPasscode: Map<string, number>
+		countedByPasscode: Map<string, number>,
 	): CardCountFunction {
 		return (card: Card) =>
 			countedByPasscode.has(card.passcode)

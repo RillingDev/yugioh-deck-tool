@@ -20,7 +20,7 @@ const logger = getLogger("bindTooltip");
 const showTooltip = (
 	instance: Instance,
 	target: HTMLElement | HTMLAnchorElement,
-	cardKey: string
+	cardKey: string,
 ): void => {
 	logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
 	tooltipController
@@ -38,13 +38,13 @@ const showTooltip = (
 				ygoprodeckService
 					.increaseCardViewCount(card)
 					.catch((err) =>
-						logger.warn("Could not update view count.", err)
+						logger.warn("Could not update view count.", err),
 					);
 			}
 		})
 		.catch((err) => {
 			instance.setContent(
-				createErrorTooltip("Error while loading card.")
+				createErrorTooltip("Error while loading card."),
 			);
 			logger.error("Error while loading card.", err);
 		});

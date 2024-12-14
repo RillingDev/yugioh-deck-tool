@@ -120,13 +120,13 @@ const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
 		return [];
 	}
 	return rawMiscInfo.formats.map((format) =>
-		getExistingElseThrow(formatMap, format)
+		getExistingElseThrow(formatMap, format),
 	);
 };
 
 const mapCardSets = (
 	rawCard: RawCard,
-	setsByName: ReadonlyMap<string, CardSet>
+	setsByName: ReadonlyMap<string, CardSet>,
 ): CardSet[] => {
 	if (rawCard.card_sets == null) {
 		return [];
@@ -187,7 +187,7 @@ const mapRelease = (miscInfo: RawMiscInfo | null): ReleaseInfo => {
 
 const mapType = (
 	typeName: string,
-	typesByName: ReadonlyMap<string, CardType>
+	typesByName: ReadonlyMap<string, CardType>,
 ): CardType => {
 	if (!typesByName.has(typeName)) {
 		throw new TypeError(`Could not find type '${typeName}'.`);
@@ -198,7 +198,7 @@ const mapType = (
 export const mapCard = (
 	rawCard: RawCard,
 	setsByName: ReadonlyMap<string, CardSet>,
-	typesByName: ReadonlyMap<string, CardType>
+	typesByName: ReadonlyMap<string, CardType>,
 ): Card => {
 	const miscInfo: RawMiscInfo | null =
 		rawCard.misc_info != null ? rawCard.misc_info[0] : null;

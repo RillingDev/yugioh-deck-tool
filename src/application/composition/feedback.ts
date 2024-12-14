@@ -16,7 +16,7 @@ const showToast = (
 	$bvToast: BvToast,
 	message: string,
 	cssClass: string,
-	variant: Variant
+	variant: Variant,
 ): void => {
 	$bvToast.toast(message, {
 		variant: variant,
@@ -35,23 +35,23 @@ enum Variant {
 export const showInfo = (
 	$bvToast: BvToast,
 	message: string,
-	cssClass: string
+	cssClass: string,
 ): void => showToast($bvToast, message, cssClass, Variant.INFO);
 
 export const showSuccess = (
 	$bvToast: BvToast,
 	message: string,
-	cssClass: string
+	cssClass: string,
 ): void => showToast($bvToast, message, cssClass, Variant.SUCCESS);
 
 export const showWarning = (
 	$bvToast: BvToast,
 	message: string,
-	cssClass: string
+	cssClass: string,
 ): void => showToast($bvToast, message, cssClass, Variant.WARNING);
 
 export const showError = (
 	$bvToast: BvToast,
 	message: string,
-	cssClass: string
+	cssClass: string,
 ): void => showToast($bvToast, message, cssClass, Variant.DANGER);

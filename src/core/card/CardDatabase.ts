@@ -22,7 +22,7 @@ export interface CardDatabase {
 	 */
 	prepareCard: (
 		cardKey: string,
-		findCardBy: FindCardBy
+		findCardBy: FindCardBy,
 	) => Promise<string | null>;
 
 	hasCard: (cardKey: string, findCardBy: FindCardBy) => boolean;

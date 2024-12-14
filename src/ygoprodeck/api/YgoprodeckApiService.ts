@@ -1,11 +1,11 @@
-import type {RawCard} from "./mapping/mapCard";
-import type {RawCardSet} from "./mapping/mapCardSet";
-import type {PaginatedResponse} from "./PaginatedResponse";
-import {createEmptyPaginatedResponse} from "./PaginatedResponse";
-import type {RawCardValues} from "./mapping/mapCardValues";
-import type {RawArchetype} from "./mapping/mapArchetype";
-import type {Card, EnvironmentConfig} from "@/core/lib";
-import {Environment} from "@/core/lib";
+import type { RawCard } from "./mapping/mapCard";
+import type { RawCardSet } from "./mapping/mapCardSet";
+import type { PaginatedResponse } from "./PaginatedResponse";
+import { createEmptyPaginatedResponse } from "./PaginatedResponse";
+import type { RawCardValues } from "./mapping/mapCardValues";
+import type { RawArchetype } from "./mapping/mapArchetype";
+import type { Card, EnvironmentConfig } from "@/core/lib";
+import { Environment } from "@/core/lib";
 
 interface CardInfoOptions {
 	readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
@@ -29,7 +29,7 @@ const assertStatusOk = (res: Response): Response => {
 		return res;
 	}
 	throw new Error(
-		`Unexpected status code: ${res.status} - ${res.statusText}.`
+		`Unexpected status code: ${res.status} - ${res.statusText}.`,
 	);
 };
 
@@ -55,7 +55,7 @@ export class YgoprodeckApiService {
 
 		const data = await this.#getJsonResponse(
 			url,
-			this.#createAuthHeaders(options)
+			this.#createAuthHeaders(options),
 		).then((res) => {
 			if (res.status === YgoprodeckApiService.#HTTP_STATUS_NO_MATCHES) {
 				return null;
@@ -76,7 +76,7 @@ export class YgoprodeckApiService {
 		this.#putCardInfoParams(urlBase.searchParams, options);
 		urlBase.searchParams.set(
 			"num",
-			YgoprodeckApiService.#CHUNK_SIZE.toString()
+			YgoprodeckApiService.#CHUNK_SIZE.toString(),
 		);
 
 		const authHeaders = this.#createAuthHeaders(options);
@@ -99,7 +99,7 @@ export class YgoprodeckApiService {
 
 	#putCardInfoParams(
 		params: URLSearchParams,
-		options: CardInfoOptions
+		options: CardInfoOptions,
 	): void {
 		params.set("misc", "yes"); // Always needed
 		if (options.includeAliased) {
@@ -123,7 +123,7 @@ export class YgoprodeckApiService {
 
 	async getCardSets(): Promise<RawCardSet[]> {
 		return this.#getJsonResponse(
-			new URL("cardsets.php", this.#getBaseUrl())
+			new URL("cardsets.php", this.#getBaseUrl()),
 		)
 			.then(assertStatusOk)
 			.then((res) => res.json() as Promise<RawCardSet[]>);
@@ -131,7 +131,7 @@ export class YgoprodeckApiService {
 
 	getCardValues(): Promise<RawCardValues> {
 		return this.#getJsonResponse(
-			new URL("cardvalues.php", this.#getBaseUrl())
+			new URL("cardvalues.php", this.#getBaseUrl()),
 		)
 			.then(assertStatusOk)
 			.then((res) => res.json() as Promise<RawCardValues>);
@@ -139,7 +139,7 @@ export class YgoprodeckApiService {
 
 	async getArchetypes(): Promise<RawArchetype[]> {
 		return this.#getJsonResponse(
-			new URL("archetypes.php", this.#getBaseUrl())
+			new URL("archetypes.php", this.#getBaseUrl()),
 		)
 			.then(assertStatusOk)
 			.then((res) => res.json() as Promise<RawArchetype[]>);
@@ -158,7 +158,7 @@ export class YgoprodeckApiService {
 	}
 
 	async #loadPaginated<T>(
-		fetcher: (offset: number) => Promise<PaginatedResponse<T[]>>
+		fetcher: (offset: number) => Promise<PaginatedResponse<T[]>>,
 	): Promise<T[]> {
 		const result: T[] = [];
 		let offset = 0;
@@ -183,7 +183,7 @@ export class YgoprodeckApiService {
 		}
 		// See https://tools.ietf.org/html/rfc7617 and https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme
 		const encodedCredentials = btoa(
-			`${options.auth.username}:${options.auth.token}`
+			`${options.auth.username}:${options.auth.token}`,
 		);
 		return {
 			// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -202,7 +202,7 @@ export class YgoprodeckApiService {
 
 	async #getJsonResponse(
 		url: URL,
-		headers: Record<string, string> = {}
+		headers: Record<string, string> = {},
 	): Promise<Response> {
 		return fetch(url, {
 			method: "GET",

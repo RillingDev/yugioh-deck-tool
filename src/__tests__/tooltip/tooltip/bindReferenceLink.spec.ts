@@ -10,7 +10,7 @@ describe("bindReferenceLink", () => {
 		bindReferenceLink(anchorElement, card1);
 
 		expect(anchorElement.href).toEqual(
-			"https://ygoprodeck.com/card/?search=Foo+Bar"
+			"https://ygoprodeck.com/card/?search=Foo+Bar",
 		);
 		expect(anchorElement.target).toEqual("_blank");
 		expect(anchorElement.rel).toEqual("noopener");

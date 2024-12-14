@@ -15,7 +15,7 @@ export interface ApplicationApi {
 	 * May only be called after `ready` event was emitted.
 	 */
 	readonly setDeck: (
-		newDeck: ExternalDeck<SlimExternalCard>
+		newDeck: ExternalDeck<SlimExternalCard>,
 	) => SetDeckResult;
 
 	/**

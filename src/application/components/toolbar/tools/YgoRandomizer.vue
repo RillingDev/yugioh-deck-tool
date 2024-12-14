@@ -65,7 +65,7 @@ export default defineComponent({
 		const strategies = Object.values(RandomizationStrategy);
 
 		const strategy = ref<RandomizationStrategy>(
-			RandomizationStrategy.ARCHETYPE_2
+			RandomizationStrategy.ARCHETYPE_2,
 		);
 		const filter = ref<CardFilter>({
 			sets: [],
@@ -81,7 +81,7 @@ export default defineComponent({
 						...filter.value,
 						format: format.value,
 					},
-				}
+				},
 			);
 			deckStore.replace({ deck: randomizedDeck });
 		};

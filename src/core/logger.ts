@@ -1,7 +1,7 @@
-import type {Logger} from "loglevel";
-import {getLogger as getLoglevelLogger, levels} from "loglevel";
-import {DEBUG} from "./mode";
-import {name as getName} from "lightdash";
+import type { Logger } from "loglevel";
+import { getLogger as getLoglevelLogger, levels } from "loglevel";
+import { DEBUG } from "./mode";
+import { name as getName } from "lightdash";
 
 export const getLogger = (consumer: unknown): Logger => {
 	const name = getName(consumer);

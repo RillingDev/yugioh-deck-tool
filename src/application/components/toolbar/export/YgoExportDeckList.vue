@@ -38,15 +38,15 @@ export default defineComponent({
 					showSuccess(
 						toast,
 						"Successfully copied deck list to clipboard.",
-						"deck-tool__portal"
-					)
+						"deck-tool__portal",
+					),
 				)
 				.catch((err) => {
 					logger.error("Could not copy deck list!", err);
 					showError(
 						toast,
 						"Could not copy deck list.",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 				});
 		};

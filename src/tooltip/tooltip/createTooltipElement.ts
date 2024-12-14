@@ -19,9 +19,9 @@ export const createLoadingTooltip = (): HTMLElement =>
 				[
 					createSpan(["fas", "fa-spinner", "fa-spin"], ""),
 					createSpan([], "Loading..."),
-				]
+				],
 			),
-		]
+		],
 	);
 
 const createMonsterStats = (card: Card): HTMLElement => {
@@ -44,12 +44,12 @@ const createSubType = (card: Card): HTMLElement => {
 
 	if (card.type.category === CardTypeCategory.MONSTER) {
 		subTypeChildren.push(
-			createImg([], resourceService.getAttributeImageUrl(card), "")
+			createImg([], resourceService.getAttributeImageUrl(card), ""),
 		);
 		subTypeChildren.push(createSpan([], `Attribute: ${card.attribute!}`));
 	}
 	subTypeChildren.push(
-		createImg([], resourceService.getSubTypeImageUrl(card), "")
+		createImg([], resourceService.getSubTypeImageUrl(card), ""),
 	);
 	subTypeChildren.push(createSpan([], `Type: ${card.subType}`));
 
@@ -70,8 +70,8 @@ const createPrice = (card: Card): HTMLElement => {
 			],
 			`${vendor.name}: ${priceService.formatPrice(
 				lookupResult.price,
-				vendor.currency
-			)}`
+				vendor.currency,
+			)}`,
 		);
 		priceItems.push(priceItem);
 	}
@@ -81,7 +81,7 @@ const createPrice = (card: Card): HTMLElement => {
 const createDescription = (card: Card): HTMLElement =>
 	createDiv(
 		["card-tooltip__description"],
-		card.description.split("\n").map((paragraph) => createP([], paragraph))
+		card.description.split("\n").map((paragraph) => createP([], paragraph)),
 	);
 
 const createCardDetailsCol = (card: Card): HTMLElement => {
@@ -94,15 +94,15 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 			createImg(
 				[],
 				resourceService.getTypeImageUrl(card),
-				`Type: ${card.type.name}`
+				`Type: ${card.type.name}`,
 			),
 			createSpan(["card-tooltip__name"], card.name),
 			createImg(
 				[],
 				resourceService.getBanStateImageUrl(card, format),
-				`Ban State: ${card.banlist[format].name}`
+				`Ban State: ${card.banlist[format].name}`,
 			),
-		]
+		],
 	);
 	children.push(primaryDetails);
 
@@ -121,7 +121,7 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 				[
 					createImg([], resourceService.getLevelImageUrl(), ""),
 					createSpan([], `Level/Rank: ${card.level}`),
-				]
+				],
 			);
 			children.push(level);
 		} else if (card.linkMarkers != null) {
@@ -131,9 +131,9 @@ const createCardDetailsCol = (card: Card): HTMLElement => {
 					createImg([], resourceService.getLinkMarkerImageUrl(), ""),
 					createSpan(
 						[],
-						`Link Markers: ${card.linkMarkers.join(", ")}`
+						`Link Markers: ${card.linkMarkers.join(", ")}`,
 					),
-				]
+				],
 			);
 			children.push(linkMarkers);
 		}
@@ -150,7 +150,7 @@ const createCardImageCol = (card: Card): HTMLElement => {
 	const cardImage = createImg(
 		["card-tooltip__image"],
 		card.image?.url ?? "#",
-		""
+		"",
 	);
 	return createDiv(["card-tooltip__image__col"], [cardImage]);
 };
@@ -161,9 +161,9 @@ export const createTooltipElement = (card: Card): HTMLElement =>
 		[
 			createDiv(
 				["card-tooltip__content"],
-				[createCardDetailsCol(card), createCardImageCol(card)]
+				[createCardDetailsCol(card), createCardImageCol(card)],
 			),
-		]
+		],
 	);
 
 export const createErrorTooltip = (message: string): HTMLElement =>
@@ -172,7 +172,7 @@ export const createErrorTooltip = (message: string): HTMLElement =>
 		[
 			createDiv(
 				["card-tooltip__error"],
-				[createSpan(["fas", "fa-times"], ""), createSpan([], message)]
+				[createSpan(["fas", "fa-times"], ""), createSpan([], message)],
 			),
-		]
+		],
 	);

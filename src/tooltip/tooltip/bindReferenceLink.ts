@@ -21,7 +21,7 @@ const getReferenceLink = (card: Card): URL => {
 
 export const bindReferenceLink = (
 	target: HTMLAnchorElement,
-	card: Card
+	card: Card,
 ): void => {
 	if (
 		!browserSupportsTouch() && // On touch devices binding a link causes issues with tooltips.

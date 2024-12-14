@@ -33,7 +33,7 @@ export default defineComponent({
 		const imgSrc = computed<string>(
 			() =>
 				props.card.image?.urlSmall ??
-				resourceService.getPlaceholderCardImageUrl()
+				resourceService.getPlaceholderCardImageUrl(),
 		);
 
 		return { imgSrc };

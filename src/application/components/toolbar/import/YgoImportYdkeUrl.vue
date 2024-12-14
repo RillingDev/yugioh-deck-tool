@@ -66,7 +66,7 @@ export default defineComponent({
 				showError(
 					toast,
 					"Could not read YDKe URL.",
-					"deck-tool__portal"
+					"deck-tool__portal",
 				);
 				return;
 			}
@@ -76,7 +76,7 @@ export default defineComponent({
 			showSuccess(
 				toast,
 				"Successfully imported YDKe URL.",
-				"deck-tool__portal"
+				"deck-tool__portal",
 			);
 			modal.value!.hide();
 		};

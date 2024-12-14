@@ -24,7 +24,7 @@ export class DeckUrlController {
 	constructor(
 		deckService: DeckService,
 		deckUriEncodingService: DeckUriEncodingService,
-		deckFileService: DeckFileService
+		deckFileService: DeckFileService,
 	) {
 		this.#deckService = deckService;
 		this.#deckUriEncodingService = deckUriEncodingService;
@@ -40,21 +40,21 @@ export class DeckUrlController {
 	async loadUriDeck(url: URL): Promise<Deck | null> {
 		// Load encoded URI deck
 		const uriEncodedDeck = url.searchParams.get(
-			DeckUrlController.#PARAM_ENCODED_URI_DECK
+			DeckUrlController.#PARAM_ENCODED_URI_DECK,
 		);
 		if (uriEncodedDeck != null) {
 			return this.#deckUriEncodingService.fromUrlQueryParamValue(
-				uriEncodedDeck
+				uriEncodedDeck,
 			);
 		}
 
 		// Load legacy encoded URI deck
 		const legacyUriEncodedDeck = url.searchParams.get(
-			DeckUrlController.#PARAM_LEGACY_ENCODED_URI_DECK
+			DeckUrlController.#PARAM_LEGACY_ENCODED_URI_DECK,
 		);
 		if (legacyUriEncodedDeck != null) {
 			return this.#deckUriEncodingService.fromLegacyUrlQueryParamValue(
-				legacyUriEncodedDeck
+				legacyUriEncodedDeck,
 			);
 		}
 
@@ -72,7 +72,7 @@ export class DeckUrlController {
 		if (this.#deckService.getAllCards(deck).length > 0) {
 			url.searchParams.set(
 				DeckUrlController.#PARAM_ENCODED_URI_DECK,
-				this.#deckUriEncodingService.toUrlQueryParamValue(deck)
+				this.#deckUriEncodingService.toUrlQueryParamValue(deck),
 			);
 		}
 		return url;

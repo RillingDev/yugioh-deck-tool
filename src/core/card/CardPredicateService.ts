@@ -1,4 +1,4 @@
-import type {Card} from "./Card";
+import type { Card } from "./Card";
 
 export type CardPredicate = (card: Card) => boolean;
 
@@ -11,7 +11,7 @@ export class CardPredicateService {
 	 * @return a predicate based on the CardCountFunction.
 	 */
 	createAtLeastOneAvailablePredicate(
-		cardCodeFunction: CardCountFunction
+		cardCodeFunction: CardCountFunction,
 	): CardPredicate {
 		return (card) => cardCodeFunction(card) > 0;
 	}

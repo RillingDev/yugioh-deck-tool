@@ -68,13 +68,13 @@ export default defineComponent({
 		const drawnCards = ref<Card[]>([]);
 
 		const hasMainDeckCards = computed<boolean>(
-			() => deck.value.parts[DeckPart.MAIN].length > 0
+			() => deck.value.parts[DeckPart.MAIN].length > 0,
 		);
 
 		const draw = (): void => {
 			drawnCards.value = deckService.getSimulatedStartingHand(
 				deck.value,
-				goingFirst.value
+				goingFirst.value,
 			);
 		};
 		const setGoingFirst = (val: boolean): void => {

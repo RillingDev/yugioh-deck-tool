@@ -1,7 +1,7 @@
 const createElement = (
 	type: string,
 	classes: string[],
-	children: HTMLElement[]
+	children: HTMLElement[],
 ): HTMLElement => {
 	const element = document.createElement(type);
 	if (classes.length > 0) {
@@ -13,18 +13,18 @@ const createElement = (
 
 export const createDiv = (
 	classes: string[],
-	children: HTMLElement[]
+	children: HTMLElement[],
 ): HTMLDivElement => createElement("div", classes, children) as HTMLDivElement;
 
 export const createUl = (
 	classes: string[],
-	children: HTMLElement[]
+	children: HTMLElement[],
 ): HTMLUListElement =>
 	createElement("ul", classes, children) as HTMLUListElement;
 
 export const createLi = (
 	classes: string[],
-	textContent: string
+	textContent: string,
 ): HTMLLIElement => {
 	const element = createElement("li", classes, []) as HTMLLIElement;
 	element.textContent = textContent;
@@ -33,7 +33,7 @@ export const createLi = (
 
 export const createSpan = (
 	classes: string[],
-	textContent: string
+	textContent: string,
 ): HTMLSpanElement => {
 	const element = createElement("span", classes, []) as HTMLSpanElement;
 	element.textContent = textContent;
@@ -42,7 +42,7 @@ export const createSpan = (
 
 export const createP = (
 	classes: string[],
-	textContent: string
+	textContent: string,
 ): HTMLSpanElement => {
 	const element = createElement("p", classes, []) as HTMLParagraphElement;
 	element.textContent = textContent;
@@ -52,7 +52,7 @@ export const createP = (
 export const createImg = (
 	classes: string[],
 	src: string,
-	alt: string
+	alt: string,
 ): HTMLImageElement => {
 	const element = createElement("img", classes, []) as HTMLImageElement;
 	element.src = src;

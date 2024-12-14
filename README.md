@@ -12,9 +12,9 @@ The live version can be found on [YGOPRODeck](https://ygoprodeck.com/card-databa
 
 Prerequisites:
 
--   Git
--   Node.js
--   NPM
+- Git
+- Node.js
+- NPM
 
 Then perform the following steps:
 
@@ -28,9 +28,9 @@ If you are ready to deploy the application, build it by executing `npm run build
 
 The build output can be found in the `dist` directory.
 
--   `tooltip.js` and `tooltip.css` contain code for the tooltips.
--   `app.js` and `app.css` contain code for the actual deck-tool.
--   `index.html` contains a basic setup loading the these files and starts the deck-tool with tooltips.
+- `tooltip.js` and `tooltip.css` contain code for the tooltips.
+- `app.js` and `app.css` contain code for the actual deck-tool.
+- `index.html` contains a basic setup loading the these files and starts the deck-tool with tooltips.
 
 The `.map` files are optional and only used for debugging.
 
@@ -53,12 +53,12 @@ When the application starts, it checks for the existence of the `y` URL query pa
 
 The following features are only available when the tool is running on <https://ygoprodeck.com/>.
 
--   Showing only cards in your collection
+- Showing only cards in your collection
 
 ## Credits
 
--   Thanks to Alan from <https://ygoprodeck.com/> for providing the API for all card data, as well as supporting the development.
--   Thanks to the awesome people at <https://github.com/edo9300/edopro> for the great duel simulator that this application is inspired by.
+- Thanks to Alan from <https://ygoprodeck.com/> for providing the API for all card data, as well as supporting the development.
+- Thanks to the awesome people at <https://github.com/edo9300/edopro> for the great duel simulator that this application is inspired by.
 
 ## License
 

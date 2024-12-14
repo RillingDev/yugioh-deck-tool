@@ -14,16 +14,16 @@ interface YgoprodeckModule {
  * Module containing ygoprodeck.com providers.
  */
 export const createYgoprodeckModule = (
-	environmentConfig: EnvironmentConfig
+	environmentConfig: EnvironmentConfig,
 ): YgoprodeckModule => {
 	const resourceService = new ResourceService(environmentConfig);
 	const ygoprodeckApiService = new YgoprodeckApiService(environmentConfig);
 	const ygoprodeckService = new YgoprodeckService(
 		ygoprodeckApiService,
-		environmentConfig
+		environmentConfig,
 	);
 	const ygoprodeckCardDatabase = new YgoprodeckCardDatabase(
-		ygoprodeckApiService
+		ygoprodeckApiService,
 	);
 
 	return {

@@ -47,7 +47,7 @@ export default defineComponent({
 	emits: ["change"],
 	setup(props, context) {
 		const internalSortingOptions = reactive<SortingOptions>(
-			clone(props.sortingOptions)
+			clone(props.sortingOptions),
 		);
 
 		const sortingStrategies = Object.values(SortingStrategy);

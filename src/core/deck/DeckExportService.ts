@@ -15,7 +15,7 @@ export class DeckExportService {
 	constructor(
 		deckService: DeckService,
 		cardService: CardService,
-		filterService: FilterService
+		filterService: FilterService,
 	) {
 		this.#deckService = deckService;
 		this.#cardService = cardService;
@@ -51,16 +51,16 @@ export class DeckExportService {
 							typeCategory,
 							this.#filterService.filter(cards, {
 								typeCategory: typeCategory,
-							})
-						)
+							}),
+						),
 					);
 				}
 			} else {
 				result.push(
 					...this.#createCardList(
 						DefaultDeckPartConfig[deckPart].name,
-						cards
-					)
+						cards,
+					),
 				);
 			}
 		}
@@ -88,10 +88,10 @@ export class DeckExportService {
 	 */
 	toBuyLink(
 		deck: Deck,
-		affiliate: { medium: string; source: string } | null
+		affiliate: { medium: string; source: string } | null,
 	): URL {
 		const countedCards: Map<Card, number> = this.#cardService.countByCard(
-			this.#deckService.getAllCards(deck)
+			this.#deckService.getAllCards(deck),
 		);
 		const cardListUriParam =
 			Array.from(countedCards.entries())

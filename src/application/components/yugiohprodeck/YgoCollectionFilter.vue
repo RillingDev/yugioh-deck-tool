@@ -49,7 +49,7 @@ export default defineComponent({
 			() => cardCountFunction.value,
 			() => {
 				checked.value = cardCountFunction.value != null;
-			}
+			},
 		);
 
 		const loadCollection = async (): Promise<CardCountFunction | null> => {
@@ -57,7 +57,7 @@ export default defineComponent({
 				return null;
 			}
 			return ygoprodeckService.getCollectionCardCountFunction(
-				ygoprodeckController.getCredentials()
+				ygoprodeckController.getCredentials(),
 			);
 		};
 		const reload = (): void => {
@@ -73,7 +73,7 @@ export default defineComponent({
 					showError(
 						toast,
 						"Could not load user collection!",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 				})
 				.finally(() => (loading.value = false));

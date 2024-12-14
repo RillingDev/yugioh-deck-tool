@@ -24,8 +24,8 @@ describe("BanlistService", () => {
 			expect(
 				banlistService.getBanStateByFormat(
 					createCard({ passcode: "123" }),
-					null
-				)
+					null,
+				),
 			).toBe(DefaultBanState.UNLIMITED);
 		});
 
@@ -33,8 +33,8 @@ describe("BanlistService", () => {
 			expect(
 				banlistService.getBanStateByFormat(
 					createCard({ passcode: "123", formats: [Format.GOAT] }),
-					Format.RUSH_DUEL
-				)
+					Format.RUSH_DUEL,
+				),
 			).toBe(DefaultBanState.BANNED);
 		});
 
@@ -50,8 +50,8 @@ describe("BanlistService", () => {
 							[Format.GOAT]: DefaultBanState.LIMITED,
 						},
 					}),
-					Format.RUSH_DUEL
-				)
+					Format.RUSH_DUEL,
+				),
 			).toBe(DefaultBanState.UNLIMITED);
 		});
 
@@ -67,8 +67,8 @@ describe("BanlistService", () => {
 							[Format.GOAT]: DefaultBanState.LIMITED,
 						},
 					}),
-					Format.TCG
-				)
+					Format.TCG,
+				),
 			).toBe(DefaultBanState.LIMITED);
 		});
 	});

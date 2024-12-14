@@ -15,7 +15,7 @@ const SCROLL_THROTTLE_TIMEOUT = 100;
 export const useInfiniteScrolling = <T>(
 	fullArr: Ref<ReadonlyArray<T>>,
 	initialLimit: number,
-	increment: number
+	increment: number,
 ): {
 	scrollHandler: (e: Event) => void;
 	limitedArr: Readonly<Ref<ReadonlyArray<T>>>;
@@ -23,7 +23,7 @@ export const useInfiniteScrolling = <T>(
 	const limitRef = ref<number>(initialLimit);
 
 	const limitedArr = computed<ReadonlyArray<T>>(() =>
-		fullArr.value.slice(0, limitRef.value)
+		fullArr.value.slice(0, limitRef.value),
 	);
 
 	const scrollHandler = throttle((e: Event) => {
@@ -36,7 +36,7 @@ export const useInfiniteScrolling = <T>(
 		if (distanceToBottom < distanceToBottomTrigger) {
 			limitRef.value = Math.min(
 				limitRef.value + increment,
-				fullArr.value.length
+				fullArr.value.length,
 			);
 		}
 	}, SCROLL_THROTTLE_TIMEOUT);
@@ -45,7 +45,7 @@ export const useInfiniteScrolling = <T>(
 		() => fullArr.value,
 		() => {
 			limitRef.value = initialLimit;
-		}
+		},
 	);
 
 	return { scrollHandler, limitedArr };

@@ -64,17 +64,17 @@ export default defineComponent({
 					DEFAULT_VENDOR_ARR.map((vendor) => {
 						const lookupResult = priceService.getPrice(
 							props.cards,
-							vendor
+							vendor,
 						);
 						return [vendor, lookupResult];
-					})
-				)
+					}),
+				),
 		);
 		const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
 			cardService.createFormattedCardCountList(lookupResult.missing);
 		const formatPrice = (
 			lookupResult: PriceLookupResult,
-			vendor: Vendor
+			vendor: Vendor,
 		): string =>
 			priceService.formatPrice(lookupResult.price, vendor.currency);
 

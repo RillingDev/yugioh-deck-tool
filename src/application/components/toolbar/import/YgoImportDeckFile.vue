@@ -51,13 +51,13 @@ export default defineComponent({
 						showWarning(
 							toast,
 							`${result.missing.length} cards could not be imported!`,
-							"deck-tool__portal"
+							"deck-tool__portal",
 						);
 					} else {
 						showSuccess(
 							toast,
 							"Successfully imported deck file.",
-							"deck-tool__portal"
+							"deck-tool__portal",
 						);
 					}
 				})
@@ -66,7 +66,7 @@ export default defineComponent({
 					showError(
 						toast,
 						"Could not read deck file.",
-						"deck-tool__portal"
+						"deck-tool__portal",
 					);
 				});
 		};
@@ -79,7 +79,7 @@ export default defineComponent({
 						processUpload(files[0]);
 					}
 				},
-				document
+				document,
 			);
 
 		return { openFileDialog };

@@ -17,8 +17,8 @@ describe("CardService", () => {
 						name: "foo",
 						treatedAs: "bar",
 						betaName: "fizz",
-					})
-				)
+					}),
+				),
 			).toEqual(["foo", "bar", "fizz"]);
 		});
 
@@ -29,8 +29,8 @@ describe("CardService", () => {
 						name: "foo",
 						treatedAs: null,
 						betaName: null,
-					})
-				)
+					}),
+				),
 			).toEqual(["foo"]);
 		});
 	});
@@ -65,13 +65,13 @@ describe("CardService", () => {
 					card3,
 					card3,
 					card3,
-				])
+				]),
 			).toEqual(
 				new Map([
 					[card1, 2],
 					[card2, 1],
 					[card3, 3],
-				])
+				]),
 			);
 		});
 	});
@@ -87,7 +87,7 @@ describe("CardService", () => {
 					card2,
 					card1,
 					card1,
-				])
+				]),
 			).toEqual(["3x Foo Bar", "1x Fizz"]);
 		});
 	});

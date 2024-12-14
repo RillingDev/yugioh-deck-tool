@@ -13,7 +13,7 @@ describe("PriceService", () => {
 	describe("formatPrice", () => {
 		it("formats", () => {
 			expect(
-				priceService.formatPrice(10.1234, DefaultCurrency.USD)
+				priceService.formatPrice(10.1234, DefaultCurrency.USD),
 			).toEqual("$10.12");
 		});
 	});
@@ -27,7 +27,7 @@ describe("PriceService", () => {
 				]),
 			});
 			expect(
-				priceService.getPrice([card1], DefaultVendor.TCG_PLAYER)
+				priceService.getPrice([card1], DefaultVendor.TCG_PLAYER),
 			).toEqual({
 				price: 0,
 				missing: [card1],
@@ -43,7 +43,7 @@ describe("PriceService", () => {
 				]),
 			});
 			expect(
-				priceService.getPrice([card1], DefaultVendor.COOL_STUFF_INC)
+				priceService.getPrice([card1], DefaultVendor.COOL_STUFF_INC),
 			).toEqual({
 				price: 1000,
 				missing: [],
@@ -70,8 +70,8 @@ describe("PriceService", () => {
 			expect(
 				priceService.getPrice(
 					[card1, card1, card2, card3],
-					DefaultVendor.TCG_PLAYER
-				)
+					DefaultVendor.TCG_PLAYER,
+				),
 			).toEqual({
 				price: 1100,
 				missing: [card3],

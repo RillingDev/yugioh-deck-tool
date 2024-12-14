@@ -37,7 +37,7 @@ const fromExternalDeck = ({
 	const missing: string[] = [];
 
 	const fromExternalCards = (
-		externalCards: ReadonlyArray<SlimExternalCard>
+		externalCards: ReadonlyArray<SlimExternalCard>,
 	): Card[] => {
 		return externalCards
 			.filter(({ passcode }) => {
@@ -49,7 +49,7 @@ const fromExternalDeck = ({
 			})
 			.map(
 				({ passcode }) =>
-					cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!
+					cardDatabase.getCard(passcode, FindCardBy.PASSCODE)!,
 			);
 	};
 
@@ -76,7 +76,7 @@ class EventEmitter<TEvent> {
 
 	constructor(events: Set<TEvent>) {
 		this.#eventCallbacks = new Map(
-			Array.from(events.values()).map((event) => [event, []])
+			Array.from(events.values()).map((event) => [event, []]),
 		);
 	}
 
@@ -88,7 +88,7 @@ class EventEmitter<TEvent> {
 	emit(event: TEvent): void {
 		this.#logger.trace(`Emitting '${event}' event.`);
 		getExistingElseThrow(this.#eventCallbacks, event).forEach((callback) =>
-			callback()
+			callback(),
 		);
 	}
 }
@@ -98,7 +98,7 @@ class EventEmitter<TEvent> {
  */
 export const useBridge = (): ApplicationApi => {
 	const eventEmitter = new EventEmitter<ApplicationEvent>(
-		new Set(["change", "ready"])
+		new Set(["change", "ready"]),
 	);
 
 	const dataStore = useDataStore();
@@ -137,7 +137,7 @@ export const useBridge = (): ApplicationApi => {
 		},
 		on(event: ApplicationEvent, callback: Callback) {
 			logger.debug(
-				`Registering event subscription for event '${event}'...`
+				`Registering event subscription for event '${event}'...`,
 			);
 			eventEmitter.on(event, callback);
 		},

@@ -1,8 +1,14 @@
-import {createCard} from "../../helper/dataFactories";
-import type {BanlistService, CardPredicate, CardService} from "@/core/lib";
-import {CardTypeCategory, DeckPart, DefaultBanState, FilterService, Format,} from "@/core/lib";
-import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import {UnsupportedInvocationError} from "@/__tests__/helper/UnsupportedInvocationError";
+import { createCard } from "../../helper/dataFactories";
+import type { BanlistService, CardPredicate, CardService } from "@/core/lib";
+import {
+	CardTypeCategory,
+	DeckPart,
+	DefaultBanState,
+	FilterService,
+	Format,
+} from "@/core/lib";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { UnsupportedInvocationError } from "@/__tests__/helper/UnsupportedInvocationError";
 
 describe("FilterService", () => {
 	let filterService: FilterService;

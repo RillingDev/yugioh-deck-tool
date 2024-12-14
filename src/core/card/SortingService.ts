@@ -50,14 +50,14 @@ export class SortingService {
 	sort(cards: Card[], options: SortingOptions): Card[] {
 		const comparator = this.#findComparator(
 			options.strategy,
-			options.order ?? SortingOrder.DESC
+			options.order ?? SortingOrder.DESC,
 		);
 		return cards.sort(comparator);
 	}
 
 	#findComparator(
 		strategy: SortingStrategy,
-		order: SortingOrder
+		order: SortingOrder,
 	): Comparator<Card> {
 		if (strategy === SortingStrategy.NAME) {
 			return this.#createNameComparator(order);
@@ -148,12 +148,12 @@ export class SortingService {
 
 	#compareReleaseDate(
 		order: SortingOrder,
-		format: Format.TCG | Format.OCG
+		format: Format.TCG | Format.OCG,
 	): Comparator<Card> {
 		const fallbackRelease = order === SortingOrder.ASC ? Infinity : 0;
 		return this.#createComparator(
 			(card) => card.release[format] ?? fallbackRelease,
-			order
+			order,
 		);
 	}
 
@@ -175,7 +175,7 @@ export class SortingService {
 
 	#createComparator(
 		selector: (card: Card) => number,
-		order: SortingOrder
+		order: SortingOrder,
 	): Comparator<Card> {
 		return (a: Card, b: Card) =>
 			(selector(b) - selector(a)) * this.#getOrderModifier(order);
