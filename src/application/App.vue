@@ -4,7 +4,7 @@
 			<VProgressCircular v-if="loading" />
 			<div v-else>
 				<div>
-					toolbar
+					<YgoToolbar />
 					<hr />
 					deck
 				</div>
@@ -18,6 +18,7 @@
 import { VApp } from "vuetify/components/VApp";
 import { VMain } from "vuetify/components/VMain";
 import { VProgressCircular } from "vuetify/components/VProgressCircular";
+import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import { getLogger } from "@/core/lib";
 import { onMounted } from "vue";
 import { showError, useToast } from "@/application/composition/feedback";
