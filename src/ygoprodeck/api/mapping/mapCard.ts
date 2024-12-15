@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+ 
 
 import { getExistingElseThrow } from "lightdash";
 import type {

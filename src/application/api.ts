@@ -47,9 +47,9 @@ export interface ApplicationApi {
 export interface ExternalDeck<TCard> {
 	readonly name: string | null;
 	readonly parts: {
-		readonly main: ReadonlyArray<TCard>;
-		readonly extra: ReadonlyArray<TCard>;
-		readonly side: ReadonlyArray<TCard>;
+		readonly main: readonly TCard[];
+		readonly extra: readonly TCard[];
+		readonly side: readonly TCard[];
 	};
 }
 
@@ -73,5 +73,5 @@ export interface SetDeckResult {
 	/**
 	 * Missing passcodes.
 	 */
-	readonly missing: ReadonlyArray<string>;
+	readonly missing: readonly string[];
 }

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+ 
 
 // https://jvilk.com/MakeTypes/
 export interface RawArchetype {

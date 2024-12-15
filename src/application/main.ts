@@ -1,31 +1,33 @@
-import Vue from "vue";
+import "vuetify/styles";
+import "./assets/main.css";
 import type { ApplicationApi } from "./api";
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 import App from "./App.vue";
-import { createPinia, PiniaVuePlugin } from "pinia";
-import "./styles/main.scss";
-import { ToastPlugin, VBModalPlugin, VBTogglePlugin } from "bootstrap-vue";
-import { useBridge } from "@/application/bridge";
+import { useBridge } from "./bridge";
+import { createVuetify } from "vuetify";
+import { aliases, fa } from "vuetify/iconsets/fa";
 
 declare global {
 	interface Window {
 		yugiohDeckToolApplication?: ApplicationApi;
 	}
 }
-Vue.config.productionTip = false;
 
-Vue.use(PiniaVuePlugin);
-const pinia = createPinia();
-
-Vue.use(ToastPlugin);
-Vue.use(VBModalPlugin);
-Vue.use(VBTogglePlugin);
-
-new Vue({
-	render: (h) => h(App),
-	// @ts-ignore FIXME after vue 3 migration
-	pinia,
-})
-	.$mount("#deckToolApplication")
+createApp(App)
+	.use(createPinia())
+	.use(
+		createVuetify({
+			icons: {
+				defaultSet: "fa",
+				aliases,
+				sets: {
+					fa,
+				},
+			},
+		}),
+	)
+	.mount("#deckToolApplication")
 	.$nextTick(() => {
 		window.yugiohDeckToolApplication = useBridge();
 	});

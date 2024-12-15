@@ -10,7 +10,7 @@ export const DefaultBanState = {
 	BANNED: { name: "Banned", count: 0 },
 } as const;
 
-export const DEFAULT_BAN_STATE_ARR: ReadonlyArray<BanState> = [
+export const DEFAULT_BAN_STATE_ARR: readonly BanState[] = [
 	DefaultBanState.UNLIMITED,
 	DefaultBanState.SEMI_LIMITED,
 	DefaultBanState.LIMITED,

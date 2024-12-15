@@ -22,7 +22,7 @@ export class DeckController {
 	 */
 	calculateDetailedTypeStats(
 		deckPart: DeckPart,
-		cards: ReadonlyArray<Card>,
+		cards: readonly Card[],
 	): [string, number][] {
 		if (deckPart === DeckPart.EXTRA) {
 			const countedByType = this.#cardService.countByType(cards);

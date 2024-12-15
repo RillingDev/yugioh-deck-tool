@@ -2,14 +2,14 @@ import type { CardTypeCategory } from "./CardTypeCategory";
 import type { CardType } from "./CardType";
 
 interface TypeCategoryValues {
-	readonly subTypes: ReadonlyArray<string>;
-	readonly types: ReadonlyArray<CardType>;
+	readonly subTypes: readonly string[];
+	readonly types: readonly CardType[];
 }
 
 interface MonsterTypeCategoryValues extends TypeCategoryValues {
-	readonly attributes: ReadonlyArray<string>;
-	readonly levels: ReadonlyArray<number>;
-	readonly linkMarkers: ReadonlyArray<string>;
+	readonly attributes: readonly string[];
+	readonly levels: readonly number[];
+	readonly linkMarkers: readonly string[];
 }
 
 export interface CardValues {

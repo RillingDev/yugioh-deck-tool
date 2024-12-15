@@ -4,7 +4,7 @@ import type { Currency } from "./Currency";
 
 export interface PriceLookupResult {
 	readonly price: number;
-	readonly missing: ReadonlyArray<Card>;
+	readonly missing: readonly Card[];
 }
 
 export class PriceService {
@@ -30,7 +30,7 @@ export class PriceService {
 	 * @return Object containing total sum for this vendor's currency, as well as a list of cards for which no price
 	 * could be found.
 	 */
-	getPrice(cards: ReadonlyArray<Card>, vendor: Vendor): PriceLookupResult {
+	getPrice(cards: readonly Card[], vendor: Vendor): PriceLookupResult {
 		let price = 0;
 		const missing: Card[] = [];
 		for (const card of cards) {

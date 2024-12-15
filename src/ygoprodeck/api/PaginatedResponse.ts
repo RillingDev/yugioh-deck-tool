@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+ 
 
 export interface PaginatedResponse<T> {
 	readonly data: T;

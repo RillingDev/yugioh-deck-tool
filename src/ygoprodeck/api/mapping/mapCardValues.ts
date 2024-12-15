@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+ 
 
 import { getExistingElseThrow, requireNonNilElseThrow } from "lightdash";
 import type { CardType, CardValues } from "@/core/lib";

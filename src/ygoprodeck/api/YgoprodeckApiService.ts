@@ -186,7 +186,7 @@ export class YgoprodeckApiService {
 			`${options.auth.username}:${options.auth.token}`,
 		);
 		return {
-			// eslint-disable-next-line @typescript-eslint/naming-convention
+			 
 			"X-Authorization": `Basic ${encodedCredentials}`,
 		};
 	}

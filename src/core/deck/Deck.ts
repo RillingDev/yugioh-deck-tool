@@ -6,7 +6,7 @@ export enum DeckPart {
 	SIDE = "side",
 }
 
-export const DECK_PART_ARR: ReadonlyArray<DeckPart> = Object.values(DeckPart);
+export const DECK_PART_ARR: readonly DeckPart[] = Object.values(DeckPart);
 
 export interface Deck {
 	name: string | null;

@@ -71,7 +71,7 @@ export class FilterService {
 	 * @param filter Filter to apply. Generally null or empty array properties mean a check should be skipped.
 	 * @return Filtered cards.
 	 */
-	filter(cards: ReadonlyArray<Card>, filter: CardFilter): Card[] {
+	filter(cards: readonly Card[], filter: CardFilter): Card[] {
 		return cards.filter((card) => {
 			if (
 				filter.customPredicates != null &&

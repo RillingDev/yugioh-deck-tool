@@ -11,7 +11,7 @@ export interface ImportResult {
 	/**
 	 * Missing passcodes.
 	 */
-	readonly missing: ReadonlyArray<string>;
+	readonly missing: readonly string[];
 }
 
 interface DeckFile {

@@ -52,7 +52,7 @@ export interface Card {
 	readonly level: number | null;
 	readonly pendulumScale: number | null;
 	readonly linkRating: number | null;
-	readonly linkMarkers: ReadonlyArray<string> | null;
+	readonly linkMarkers: readonly string[] | null;
 
 	readonly treatedAs: string | null;
 	readonly archetype: string | null;
@@ -61,8 +61,8 @@ export interface Card {
 	readonly betaName: string | null;
 
 	readonly release: ReleaseInfo;
-	readonly sets: ReadonlyArray<CardSet>;
-	readonly formats: ReadonlyArray<Format>;
+	readonly sets: readonly CardSet[];
+	readonly formats: readonly Format[];
 	readonly banlist: BanlistInfo;
 
 	readonly image: CardImage | null;

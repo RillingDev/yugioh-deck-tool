@@ -37,7 +37,7 @@ const fromExternalDeck = ({
 	const missing: string[] = [];
 
 	const fromExternalCards = (
-		externalCards: ReadonlyArray<SlimExternalCard>,
+		externalCards: readonly SlimExternalCard[],
 	): Card[] => {
 		return externalCards
 			.filter(({ passcode }) => {
