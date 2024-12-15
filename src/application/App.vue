@@ -6,7 +6,7 @@
 				<div>
 					<YgoToolbar />
 					<hr />
-					deck
+					<YgoDeck v-show="!loading" />
 				</div>
 				<div>builder</div>
 			</div>
@@ -19,6 +19,7 @@ import { VApp } from "vuetify/components/VApp";
 import { VMain } from "vuetify/components/VMain";
 import { VProgressCircular } from "vuetify/components/VProgressCircular";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
+import YgoDeck from "./components/deck/YgoDeck.vue";
 import { getLogger } from "@/core/lib";
 import { onMounted } from "vue";
 import { showError, useToast } from "@/application/composition/feedback";
