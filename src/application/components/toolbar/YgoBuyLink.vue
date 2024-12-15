@@ -15,7 +15,6 @@ import { Environment } from "@/core/lib";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckExportService, environmentConfig } from "@/application/ctx";
-import { VIcon } from "vuetify/components/VIcon";
 import { VBtn } from "vuetify/components/VBtn";
 
 const { deck, deckEmpty } = storeToRefs(useDeckStore());

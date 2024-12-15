@@ -1,12 +1,38 @@
 <template>
 	<div class="toolbar form-group">
-		<div role="group" class="toolbar__items">
-			<YgoBuyLink />
-		</div>
+		<VToolbar>
+			<VToolbarItems>
+				<VBtn
+					prepend-icon="fas fa-file-import"
+					:disabled="!essentialDataLoaded"
+				>
+					Import
+				</VBtn>
+				<VBtn
+					prepend-icon="fas fa-file-export"
+					:disabled="!essentialDataLoaded || deckEmpty"
+				>
+					Export
+				</VBtn>
+				<VBtn
+					prepend-icon="fas fa-edit"
+					:disabled="!essentialDataLoaded || deckEmpty"
+				>
+					Edit
+				</VBtn>
+				<VBtn
+					prepend-icon="fas fa-magic"
+					:disabled="!essentialDataLoaded"
+				>
+					Tools
+				</VBtn>
+				<YgoBuyLink />
+			</VToolbarItems>
+		</VToolbar>
 
 		<div class="toolbar__items" role="group">
-			<YgoDeckName class="w-100" />
-			<YgoFormat class="w-50" />
+			<YgoDeckName />
+			<YgoFormat />
 		</div>
 	</div>
 </template>
@@ -18,6 +44,8 @@ import YgoBuyLink from "./YgoBuyLink.vue";
 
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
+import { VToolbar, VToolbarItems } from "vuetify/components/VToolbar";
+import { VBtn } from "vuetify/components/VBtn";
 import { storeToRefs } from "pinia";
 
 const { deckEmpty } = storeToRefs(useDeckStore());
@@ -25,23 +53,4 @@ const { deckEmpty } = storeToRefs(useDeckStore());
 const { essentialDataLoaded } = storeToRefs(useDataStore());
 </script>
 
-<style lang="scss">
-@import "../../../browser-common/styles/variables";
-@import "../../../browser-common/styles/mixins";
-
-.deck-tool {
-	.toolbar__items {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-
-		gap: $margin-md;
-
-		margin-bottom: $margin-md;
-
-		@include screen-min-width(lg) {
-			flex-direction: row;
-		}
-	}
-}
-</style>
+<style lang="scss"></style>
