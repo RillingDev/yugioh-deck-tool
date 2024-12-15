@@ -43,54 +43,35 @@
 	</BDropdownItemButton>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import YgoCard from "../../YgoCard.vue";
 import type { Card } from "@/core/lib";
 import { DeckPart } from "@/core/lib";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
-import { computed, defineComponent, ref } from "vue";
+import { computed, ref } from "vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckService } from "@/application/ctx";
 
-export default defineComponent({
-	components: {
-		YgoCard,
-		BModal,
-		BDropdownItemButton,
-	},
-	props: {},
-	emits: [],
-	setup() {
-		const { deck } = storeToRefs(useDeckStore());
+const { deck } = storeToRefs(useDeckStore());
 
-		const goingFirst = ref<boolean>(true);
-		const drawnCards = ref<Card[]>([]);
+const goingFirst = ref<boolean>(true);
+const drawnCards = ref<Card[]>([]);
 
-		const hasMainDeckCards = computed<boolean>(
-			() => deck.value.parts[DeckPart.MAIN].length > 0,
-		);
+const hasMainDeckCards = computed<boolean>(
+	() => deck.value.parts[DeckPart.MAIN].length > 0,
+);
 
-		const draw = (): void => {
-			drawnCards.value = deckService.getSimulatedStartingHand(
-				deck.value,
-				goingFirst.value,
-			);
-		};
-		const setGoingFirst = (val: boolean): void => {
-			goingFirst.value = val;
-			draw();
-		};
-
-		return {
-			goingFirst,
-			hasMainDeckCards,
-			drawnCards,
-			setGoingFirst,
-			draw,
-		};
-	},
-});
+const draw = (): void => {
+	drawnCards.value = deckService.getSimulatedStartingHand(
+		deck.value,
+		goingFirst.value,
+	);
+};
+const setGoingFirst = (val: boolean): void => {
+	goingFirst.value = val;
+	draw();
+};
 </script>
 
 <style lang="scss">

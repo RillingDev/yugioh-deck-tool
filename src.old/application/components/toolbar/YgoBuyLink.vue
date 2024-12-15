@@ -15,34 +15,23 @@
 	</a>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import { Environment } from "@/core/lib";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckExportService, environmentConfig } from "@/application/ctx";
 
-export default defineComponent({
-	components: {},
-	props: {},
-	emits: [],
-	setup() {
-		const { deck, deckEmpty } = storeToRefs(useDeckStore());
+const { deck, deckEmpty } = storeToRefs(useDeckStore());
 
-		const buyLink = computed<string>(() => {
-			const affiliate =
-				environmentConfig.getEnvironment() == Environment.YGOPRODECK
-					? {
-							medium: "deck-builder",
-							source: "YGOPRODeck",
-						}
-					: null;
-			return deckExportService
-				.toBuyLink(deck.value, affiliate)
-				.toString();
-		});
-
-		return { deckEmpty, buyLink };
-	},
+const buyLink = computed<string>(() => {
+	const affiliate =
+		environmentConfig.getEnvironment() == Environment.YGOPRODECK
+			? {
+					medium: "deck-builder",
+					source: "YGOPRODeck",
+				}
+			: null;
+	return deckExportService.toBuyLink(deck.value, affiliate).toString();
 });
 </script>

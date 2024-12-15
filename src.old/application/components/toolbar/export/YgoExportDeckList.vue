@@ -5,8 +5,7 @@
 	</BDropdownItemButton>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
@@ -20,38 +19,25 @@ import { deckExportService } from "@/application/ctx";
 
 const logger = getLogger("YgoExportDeckList");
 
-export default defineComponent({
-	components: { BDropdownItemButton },
-	props: {},
-	emits: [],
-	setup() {
-		const { deck } = storeToRefs(useDeckStore());
+const { deck } = storeToRefs(useDeckStore());
 
-		const toast = useToast();
+const toast = useToast();
 
-		const copyList = (): void => {
-			const deckList = deckExportService.toShareableText(deck.value);
+const copyList = (): void => {
+	const deckList = deckExportService.toShareableText(deck.value);
 
-			navigator.clipboard
-				.writeText(deckList)
-				.then(() =>
-					showSuccess(
-						toast,
-						"Successfully copied deck list to clipboard.",
-						"deck-tool__portal",
-					),
-				)
-				.catch((err) => {
-					logger.error("Could not copy deck list!", err);
-					showError(
-						toast,
-						"Could not copy deck list.",
-						"deck-tool__portal",
-					);
-				});
-		};
-
-		return { copyList };
-	},
-});
+	navigator.clipboard
+		.writeText(deckList)
+		.then(() =>
+			showSuccess(
+				toast,
+				"Successfully copied deck list to clipboard.",
+				"deck-tool__portal",
+			),
+		)
+		.catch((err) => {
+			logger.error("Could not copy deck list!", err);
+			showError(toast, "Could not copy deck list.", "deck-tool__portal");
+		});
+};
 </script>

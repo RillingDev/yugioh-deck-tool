@@ -29,8 +29,8 @@
 	</BDropdownItemButton>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import type { Deck } from "@/core/lib";
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton, BModal } from "bootstrap-vue";
@@ -44,56 +44,31 @@ import { useDeckStore } from "@/application/store/deck";
 import { deckUriEncodingService } from "@/application/ctx";
 
 const logger = getLogger("YgoImportYdkeUrl");
+const deckStore = useDeckStore();
 
-export default defineComponent({
-	components: { BDropdownItemButton, BModal },
-	props: {},
-	emits: [],
-	setup() {
-		const deckStore = useDeckStore();
+const toast = useToast();
 
-		const toast = useToast();
+const modal = ref<BModal>();
+const ydkeUrl = ref<string>("");
 
-		const modal = ref<BModal>();
-		const ydkeUrl = ref<string>("");
+const onInput = (): void => {
+	let deck: Deck;
+	try {
+		deck = deckUriEncodingService.fromUri(ydkeUrl.value);
+	} catch (e) {
+		logger.error("Could not read YDKe URL!", e);
+		showError(toast, "Could not read YDKe URL.", "deck-tool__portal");
+		return;
+	}
+	deckStore.replace({
+		deck,
+	});
+	showSuccess(toast, "Successfully imported YDKe URL.", "deck-tool__portal");
+	modal.value!.hide();
+};
+const onHide = (): void => {
+	ydkeUrl.value = "";
+};
 
-		const onInput = (): void => {
-			let deck: Deck;
-			try {
-				deck = deckUriEncodingService.fromUri(ydkeUrl.value);
-			} catch (e) {
-				logger.error("Could not read YDKe URL!", e);
-				showError(
-					toast,
-					"Could not read YDKe URL.",
-					"deck-tool__portal",
-				);
-				return;
-			}
-			deckStore.replace({
-				deck,
-			});
-			showSuccess(
-				toast,
-				"Successfully imported YDKe URL.",
-				"deck-tool__portal",
-			);
-			modal.value!.hide();
-		};
-		const onHide = (): void => {
-			ydkeUrl.value = "";
-		};
-
-		return {
-			ydkeUrlId: useId(),
-
-			ydkeUrl,
-
-			modal,
-
-			onInput,
-			onHide,
-		};
-	},
-});
+const ydkeUrlId = useId();
 </script>

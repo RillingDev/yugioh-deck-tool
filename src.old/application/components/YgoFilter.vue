@@ -189,7 +189,7 @@
 	</form>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type {
 	BanState,
 	CardFilter,
@@ -203,7 +203,7 @@ import {
 	Environment,
 } from "@/core/lib";
 import type { PropType } from "vue";
-import { computed, defineComponent, reactive, watch } from "vue";
+import { computed, reactive, watch } from "vue";
 import { clone } from "lodash";
 
 import VSelect from "vue-select";
@@ -222,157 +222,114 @@ import {
 	ygoprodeckController,
 } from "@/application/ctx";
 
-export default defineComponent({
-	components: {
-		VSelect,
-		YgoCollectionFilter,
+// TODO use defineModel
+const props = defineProps({
+	filter: {
+		required: true,
+		type: Object as PropType<CardFilter>,
 	},
-	model: {
-		prop: "filter",
-		event: "change",
-	},
-	props: {
-		filter: {
-			required: true,
-			type: Object as PropType<CardFilter>,
-		},
-		showOnly: {
-			required: false,
-			type: Array as PropType<string[] | null>,
-			default: null,
-		},
-	},
-	emits: ["change"],
-	setup: function (props, context) {
-		const { format } = storeToRefs(useFormatStore());
-
-		const { essentialDataLoaded } = storeToRefs(useDataStore());
-
-		const banStates = DEFAULT_BAN_STATE_ARR;
-		const cardTypeCategories = Object.values(CardTypeCategory);
-
-		const internalFilter = reactive<CardFilter>(clone(props.filter));
-
-		const sets = computed<CardSet[]>(() => cardDatabase.getSets());
-		const archetypes = computed<string[]>(() =>
-			cardDatabase.getArchetypes(),
-		);
-		const types = computed<CardType[]>(() =>
-			internalFilter.typeCategory != null
-				? cardDatabase.getTypes(internalFilter.typeCategory)
-				: [],
-		);
-		const subTypes = computed<string[]>(() =>
-			internalFilter.typeCategory != null
-				? cardDatabase.getSubTypes(internalFilter.typeCategory)
-				: [],
-		);
-		const attributes = computed<string[]>(() =>
-			cardDatabase.getAttributes(),
-		);
-		const levels = computed<number[]>(() => cardDatabase.getLevels());
-		const linkMarkers = computed<string[]>(() =>
-			cardDatabase.getLinkMarkers(),
-		);
-
-		const hasBanStates = computed<boolean>(() => {
-			if (format.value == null) {
-				return false;
-			}
-			return banlistService.hasBanlist(format.value);
-		});
-		const isMonster = computed<boolean>(
-			() => internalFilter.typeCategory === CardTypeCategory.MONSTER,
-		);
-		const showCollectionFilter = computed<boolean>(
-			() =>
-				environmentConfig.getEnvironment() == Environment.YGOPRODECK &&
-				ygoprodeckController.hasCredentials(),
-		);
-
-		const { cardCountFunction } = storeToRefs(useCollectionStore());
-		const collectionPredicate = computed<CardPredicate | null>(() => {
-			return cardCountFunction.value == null
-				? null
-				: cardPredicateService.createAtLeastOneAvailablePredicate(
-						cardCountFunction.value,
-					);
-		});
-
-		const resetFilter = (): void => {
-			cardCountFunction.value = null;
-			Object.assign(internalFilter, filterService.createDefaultFilter());
-			onFilterChanged();
-		};
-
-		const isFieldVisible = (fieldName: string): boolean =>
-			props.showOnly == null || props.showOnly.includes(fieldName);
-
-		const onFilterChanged = (): void =>
-			context.emit("change", clone(internalFilter));
-
-		const onCollectionFilterChange = (): void => {
-			// TODO use composition API instead of manual event handling + assignment
-			if (collectionPredicate.value != null) {
-				internalFilter.customPredicates = [collectionPredicate.value];
-			} else {
-				internalFilter.customPredicates = [];
-			}
-			onFilterChanged();
-		};
-
-		const getBanStateName = (banState: BanState): string => banState.name;
-		const getSetName = (set: CardSet): string => set.name;
-		const getTypeName = (type: CardType): string => type.name;
-		const getTypeLabel = (type: CardType): string =>
-			type.name.replace(" Monster", "");
-
-		watch(
-			() => internalFilter.typeCategory,
-			() => {
-				internalFilter.type = null;
-				internalFilter.subType = null;
-				internalFilter.attribute = null;
-				internalFilter.level = null;
-				internalFilter.linkMarkers = [];
-			},
-		);
-		watch(
-			() => hasBanStates.value,
-			() => {
-				internalFilter.banState = null;
-			},
-		);
-
-		return {
-			nameId: useId(),
-			descriptionId: useId(),
-
-			banStates,
-			sets,
-			archetypes,
-			cardTypeCategories,
-			types,
-			subTypes,
-			attributes,
-			levels,
-			linkMarkers,
-
-			internalFilter,
-
-			essentialDataLoaded,
-			hasBanStates,
-			showCollectionFilter,
-			isMonster,
-			resetFilter,
-			onCollectionFilterChange,
-			onFilterChanged,
-			isFieldVisible,
-			getBanStateName,
-			getSetName,
-			getTypeName,
-			getTypeLabel,
-		};
+	showOnly: {
+		required: false,
+		type: Array as PropType<string[] | null>,
+		default: null,
 	},
 });
+const emit = defineEmits(["update:filter"]);
+
+const { format } = storeToRefs(useFormatStore());
+
+const { essentialDataLoaded } = storeToRefs(useDataStore());
+
+const banStates = DEFAULT_BAN_STATE_ARR;
+const cardTypeCategories = Object.values(CardTypeCategory);
+
+const internalFilter = reactive<CardFilter>(clone(props.filter));
+
+const sets = computed<CardSet[]>(() => cardDatabase.getSets());
+const archetypes = computed<string[]>(() => cardDatabase.getArchetypes());
+const types = computed<CardType[]>(() =>
+	internalFilter.typeCategory != null
+		? cardDatabase.getTypes(internalFilter.typeCategory)
+		: [],
+);
+const subTypes = computed<string[]>(() =>
+	internalFilter.typeCategory != null
+		? cardDatabase.getSubTypes(internalFilter.typeCategory)
+		: [],
+);
+const attributes = computed<string[]>(() => cardDatabase.getAttributes());
+const levels = computed<number[]>(() => cardDatabase.getLevels());
+const linkMarkers = computed<string[]>(() => cardDatabase.getLinkMarkers());
+
+const hasBanStates = computed<boolean>(() => {
+	if (format.value == null) {
+		return false;
+	}
+	return banlistService.hasBanlist(format.value);
+});
+const isMonster = computed<boolean>(
+	() => internalFilter.typeCategory === CardTypeCategory.MONSTER,
+);
+const showCollectionFilter = computed<boolean>(
+	() =>
+		environmentConfig.getEnvironment() == Environment.YGOPRODECK &&
+		ygoprodeckController.hasCredentials(),
+);
+
+const { cardCountFunction } = storeToRefs(useCollectionStore());
+const collectionPredicate = computed<CardPredicate | null>(() => {
+	return cardCountFunction.value == null
+		? null
+		: cardPredicateService.createAtLeastOneAvailablePredicate(
+				cardCountFunction.value,
+			);
+});
+
+const resetFilter = (): void => {
+	cardCountFunction.value = null;
+	Object.assign(internalFilter, filterService.createDefaultFilter());
+	onFilterChanged();
+};
+
+const isFieldVisible = (fieldName: string): boolean =>
+	props.showOnly == null || props.showOnly.includes(fieldName);
+
+const onFilterChanged = (): void =>
+	emit("update:filter", clone(internalFilter));
+
+const onCollectionFilterChange = (): void => {
+	// TODO use composition API instead of manual event handling + assignment
+	if (collectionPredicate.value != null) {
+		internalFilter.customPredicates = [collectionPredicate.value];
+	} else {
+		internalFilter.customPredicates = [];
+	}
+	onFilterChanged();
+};
+
+const getBanStateName = (banState: BanState): string => banState.name;
+const getSetName = (set: CardSet): string => set.name;
+const getTypeName = (type: CardType): string => type.name;
+const getTypeLabel = (type: CardType): string =>
+	type.name.replace(" Monster", "");
+
+const nameId = useId();
+const descriptionId = useId();
+
+watch(
+	() => internalFilter.typeCategory,
+	() => {
+		internalFilter.type = null;
+		internalFilter.subType = null;
+		internalFilter.attribute = null;
+		internalFilter.level = null;
+		internalFilter.linkMarkers = [];
+	},
+);
+watch(
+	() => hasBanStates.value,
+	() => {
+		internalFilter.banState = null;
+	},
+);
 </script>

@@ -76,8 +76,7 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { BDropdown, BDropdownDivider } from "bootstrap-vue";
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
@@ -98,36 +97,9 @@ import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 
-export default defineComponent({
-	components: {
-		YgoFormat,
-		YgoDeckName,
-		YgoBuyLink,
-		YgoRandomizer,
-		YgoDrawSim,
-		BDropdown,
-		BDropdownDivider,
-		YgoDeckSortButton,
-		YgoDeckShuffleButton,
-		YgoDeckClearButton,
-		YgoImportFile,
-		YgoImportYdkeUrl,
-		YgoExportDeckFile,
-		YgoExportDeckYdkeUrl,
-		YgoExportDeckList,
-		YgoExportShareLink,
-		YgoExportScreenshot,
-	},
-	props: {},
-	emits: [],
-	setup() {
-		const { deckEmpty } = storeToRefs(useDeckStore());
+const { deckEmpty } = storeToRefs(useDeckStore());
 
-		const { essentialDataLoaded } = storeToRefs(useDataStore());
-
-		return { essentialDataLoaded, deckEmpty };
-	},
-});
+const { essentialDataLoaded } = storeToRefs(useDataStore());
 </script>
 
 <style lang="scss">

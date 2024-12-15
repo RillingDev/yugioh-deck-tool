@@ -5,23 +5,14 @@
 	</BDropdownItemButton>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import { BDropdownItemButton } from "bootstrap-vue";
 import { useDeckStore } from "@/application/store/deck";
 
-export default defineComponent({
-	components: { BDropdownItemButton },
-	props: {},
-	emits: [],
-	setup() {
-		const deckStore = useDeckStore();
+const deckStore = useDeckStore();
 
-		const deckEmpty = computed(() => deckStore.deckEmpty);
+const deckEmpty = computed(() => deckStore.deckEmpty);
 
-		const shuffle = (): void => deckStore.shuffle();
-
-		return { deckEmpty, shuffle };
-	},
-});
+const shuffle = (): void => deckStore.shuffle();
 </script>

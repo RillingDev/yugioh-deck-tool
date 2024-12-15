@@ -14,11 +14,10 @@
 		</button>
 	</div>
 </template>
-
-<script lang="ts">
+<script setup lang="ts">
 import type { CardCountFunction } from "@/core/lib";
 import { getLogger } from "@/core/lib";
-import { defineComponent, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { BFormCheckbox } from "bootstrap-vue";
 import { showError, useToast } from "../../composition/feedback";
 import { ygoprodeckController, ygoprodeckService } from "@/application/ctx";
@@ -31,59 +30,51 @@ const logger = getLogger("YgoCollectionFilter");
 /**
  * Should only be mounted if running in ygoprodeck env and having credentials available.
  */
-export default defineComponent({
-	components: { BFormCheckbox },
-	props: {},
-	emits: ["change"],
-	setup(props, context) {
-		const { loading } = storeToRefs(useDataStore());
+const emit = defineEmits(["change"]);
 
-		const { cardCountFunction } = storeToRefs(useCollectionStore());
+const { loading } = storeToRefs(useDataStore());
 
-		const toast = useToast();
+const { cardCountFunction } = storeToRefs(useCollectionStore());
 
-		const checked = ref<boolean>(cardCountFunction.value != null);
+const toast = useToast();
 
-		// TODO find a way to link ref with vuex state without watch
-		watch(
-			() => cardCountFunction.value,
-			() => {
-				checked.value = cardCountFunction.value != null;
-			},
-		);
+const checked = ref<boolean>(cardCountFunction.value != null);
 
-		const loadCollection = async (): Promise<CardCountFunction | null> => {
-			if (!checked.value) {
-				return null;
-			}
-			return ygoprodeckService.getCollectionCardCountFunction(
-				ygoprodeckController.getCredentials(),
-			);
-		};
-		const reload = (): void => {
-			Promise.resolve()
-				.then(() => (loading.value = true))
-				.then(() => loadCollection())
-				.then((loadedCollectionCardCountFunction) => {
-					cardCountFunction.value = loadedCollectionCardCountFunction;
-				})
-				.then(() => context.emit("change"))
-				.catch((err) => {
-					logger.error("Could not load user collection!", err);
-					showError(
-						toast,
-						"Could not load user collection!",
-						"deck-tool__portal",
-					);
-				})
-				.finally(() => (loading.value = false));
-		};
-
-		return { checked, reload };
+// TODO find a way to link ref with vuex state without watch
+watch(
+	() => cardCountFunction.value,
+	() => {
+		checked.value = cardCountFunction.value != null;
 	},
-});
-</script>
+);
 
+const loadCollection = async (): Promise<CardCountFunction | null> => {
+	if (!checked.value) {
+		return null;
+	}
+	return ygoprodeckService.getCollectionCardCountFunction(
+		ygoprodeckController.getCredentials(),
+	);
+};
+const reload = (): void => {
+	Promise.resolve()
+		.then(() => (loading.value = true))
+		.then(() => loadCollection())
+		.then((loadedCollectionCardCountFunction) => {
+			cardCountFunction.value = loadedCollectionCardCountFunction;
+		})
+		.then(() => emit("change"))
+		.catch((err) => {
+			logger.error("Could not load user collection!", err);
+			showError(
+				toast,
+				"Could not load user collection!",
+				"deck-tool__portal",
+			);
+		})
+		.finally(() => (loading.value = false));
+};
+</script>
 <style lang="scss">
 @import "../../../browser-common/styles/variables";
 @import "../../../browser-common/styles/mixins";

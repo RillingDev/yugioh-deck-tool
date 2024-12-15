@@ -5,8 +5,7 @@
 	</BDropdownItemButton>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import type { ImportResult } from "@/core/lib";
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
@@ -22,67 +21,54 @@ import { deckFileService } from "@/application/ctx";
 
 const logger = getLogger("YgoImportDeckFile");
 
-export default defineComponent({
-	components: { BDropdownItemButton },
-	props: {},
-	emits: [],
-	setup() {
-		const deckStore = useDeckStore();
+const deckStore = useDeckStore();
 
-		const toast = useToast();
+const toast = useToast();
 
-		const importDeckFile = async (file: File): Promise<ImportResult> => {
-			const fileContent = await file.text();
-			const result = deckFileService.fromFile({
-				fileContent,
-				fileName: file.name,
-			});
-			deckStore.replace({
-				deck: result.deck,
-			});
+const importDeckFile = async (file: File): Promise<ImportResult> => {
+	const fileContent = await file.text();
+	const result = deckFileService.fromFile({
+		fileContent,
+		fileName: file.name,
+	});
+	deckStore.replace({
+		deck: result.deck,
+	});
 
-			return result;
-		};
+	return result;
+};
 
-		const processUpload = (file: File): void => {
-			importDeckFile(file)
-				.then((result: ImportResult) => {
-					if (result.missing.length > 0) {
-						showWarning(
-							toast,
-							`${result.missing.length} cards could not be imported!`,
-							"deck-tool__portal",
-						);
-					} else {
-						showSuccess(
-							toast,
-							"Successfully imported deck file.",
-							"deck-tool__portal",
-						);
-					}
-				})
-				.catch((e) => {
-					logger.error("Could not read deck file!", e);
-					showError(
-						toast,
-						"Could not read deck file.",
-						"deck-tool__portal",
-					);
-				});
-		};
+const processUpload = (file: File): void => {
+	importDeckFile(file)
+		.then((result: ImportResult) => {
+			if (result.missing.length > 0) {
+				showWarning(
+					toast,
+					`${result.missing.length} cards could not be imported!`,
+					"deck-tool__portal",
+				);
+			} else {
+				showSuccess(
+					toast,
+					"Successfully imported deck file.",
+					"deck-tool__portal",
+				);
+			}
+		})
+		.catch((e) => {
+			logger.error("Could not read deck file!", e);
+			showError(toast, "Could not read deck file.", "deck-tool__portal");
+		});
+};
 
-		const openFileDialog = (): void =>
-			uploadFile(
-				".ydk",
-				(files) => {
-					if (files != null && files.length > 0) {
-						processUpload(files[0]);
-					}
-				},
-				document,
-			);
-
-		return { openFileDialog };
-	},
-});
+const openFileDialog = (): void =>
+	uploadFile(
+		".ydk",
+		(files) => {
+			if (files != null && files.length > 0) {
+				processUpload(files[0]);
+			}
+		},
+		document,
+	);
 </script>

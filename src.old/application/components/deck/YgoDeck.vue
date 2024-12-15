@@ -9,44 +9,31 @@
 			v-for="deckPart in deckParts"
 			:key="deckPart"
 			:deck-part="deckPart"
-			:drag-group="dragGroup"
+			:drag-group="props.dragGroup"
 		/>
 	</div>
 </template>
-<script lang="ts">
+
+<script setup lang="ts">
 import { DECK_PART_ARR } from "@/core/lib";
 import type { PropType } from "vue";
-import { computed, defineComponent } from "vue";
+import { computed } from "vue";
 import YgoPrice from "../YgoPrice.vue";
 import YgoDeckPart from "./YgoDeckPart.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckService } from "@/application/ctx";
 
-export default defineComponent({
-	components: {
-		YgoDeckPart,
-		YgoPrice,
-	},
-	props: {
-		dragGroup: {
-			required: true,
-			type: String as PropType<string>,
-		},
-	},
-	emits: [],
-	setup() {
-		const deckParts = DECK_PART_ARR;
-
-		const { deck } = storeToRefs(useDeckStore());
-		const allCards = computed(() => deckService.getAllCards(deck.value));
-
-		return {
-			deckParts,
-			allCards,
-		};
+const props = defineProps({
+	dragGroup: {
+		required: true,
+		type: String as PropType<string>,
 	},
 });
+const deckParts = DECK_PART_ARR;
+
+const { deck } = storeToRefs(useDeckStore());
+const allCards = computed(() => deckService.getAllCards(deck.value));
 </script>
 
 <style lang="scss">

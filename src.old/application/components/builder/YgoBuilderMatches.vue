@@ -21,7 +21,7 @@
 				<template v-else>
 					<Draggable
 						:group="{
-							name: dragGroup,
+							name: props.dragGroup,
 							pull: 'clone',
 							put: false,
 						}"
@@ -61,9 +61,9 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, defineComponent } from "vue";
+import { computed } from "vue";
 import { browserSupportsTouch } from "@/browser-common/lib";
 import type { Card } from "@/core/lib";
 import { CardTypeCategory } from "@/core/lib";
@@ -82,101 +82,69 @@ import { useCollectionStore } from "@/application/store/collection";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
 import { deckService } from "@/application/ctx";
-
-export default defineComponent({
-	components: {
-		YgoCard,
-		Draggable,
+const props = defineProps({
+	matches: {
+		required: true,
+		type: Array as PropType<Card[]>,
 	},
-	props: {
-		matches: {
-			required: true,
-			type: Array as PropType<Card[]>,
-		},
-		dragGroup: {
-			required: true,
-			type: String as PropType<string>,
-		},
-	},
-	emits: [],
-	setup(props) {
-		const deckStore = useDeckStore();
-
-		const { cardCountFunction } = storeToRefs(useCollectionStore());
-
-		const { format } = storeToRefs(useFormatStore());
-
-		const toast = useToast();
-
-		const { limitedArr: limitedMatches, scrollHandler } =
-			useInfiniteScrolling(
-				computed(() => props.matches),
-				50,
-				25,
-			);
-
-		const getTypeText = (card: Card): string =>
-			card.type.category === CardTypeCategory.MONSTER
-				? card.type.name
-				: card.type.category;
-		const getSubTypeText = (card: Card): string =>
-			card.type.category === CardTypeCategory.MONSTER
-				? `${card.attribute!}/${card.subType}`
-				: card.subType;
-		const getCardCount = (card: Card): number | null =>
-			cardCountFunction.value?.(card) ?? null;
-
-		const isTouchDevice = computed(browserSupportsTouch);
-
-		const addCard = (card: Card): void => {
-			const deckPart = deckService.findAvailableDeckPart(
-				deckStore.deck,
-				card,
-				format.value,
-			);
-			if (deckPart != null) {
-				deckStore.addCard({ card, deckPart });
-				showSuccess(
-					toast,
-					"Successfully added card to deck.",
-					"deck-tool__portal",
-				);
-			}
-		};
-
-		const canMove = (e: DraggableMoveValidatorData): boolean => {
-			const card = findCardForDraggableValidatorData(e);
-			const newDeckPart = findDeckPartForDraggableValidatorData(e);
-			if (newDeckPart == null) {
-				return false;
-			}
-			return deckService.canAdd(
-				deckStore.deck,
-				card,
-				newDeckPart,
-				format.value,
-			);
-		};
-
-		const { disableTooltip, enableTooltip } = useTooltip();
-
-		return {
-			limitedMatches,
-			getTypeText,
-			getSubTypeText,
-			getCardCount,
-			canMove,
-			addCard,
-
-			isTouchDevice,
-
-			enableTooltip,
-			disableTooltip,
-
-			scrollHandler,
-		};
+	dragGroup: {
+		required: true,
+		type: String as PropType<string>,
 	},
 });
+const deckStore = useDeckStore();
+
+const { cardCountFunction } = storeToRefs(useCollectionStore());
+
+const { format } = storeToRefs(useFormatStore());
+
+const toast = useToast();
+
+const { limitedArr: limitedMatches, scrollHandler } = useInfiniteScrolling(
+	computed(() => props.matches),
+	50,
+	25,
+);
+
+const getTypeText = (card: Card): string =>
+	card.type.category === CardTypeCategory.MONSTER
+		? card.type.name
+		: card.type.category;
+const getSubTypeText = (card: Card): string =>
+	card.type.category === CardTypeCategory.MONSTER
+		? `${card.attribute!}/${card.subType}`
+		: card.subType;
+const getCardCount = (card: Card): number | null =>
+	cardCountFunction.value?.(card) ?? null;
+
+const isTouchDevice = computed(browserSupportsTouch);
+
+const addCard = (card: Card): void => {
+	const deckPart = deckService.findAvailableDeckPart(
+		deckStore.deck,
+		card,
+		format.value,
+	);
+	if (deckPart != null) {
+		deckStore.addCard({ card, deckPart });
+		showSuccess(
+			toast,
+			"Successfully added card to deck.",
+			"deck-tool__portal",
+		);
+	}
+};
+
+const canMove = (e: DraggableMoveValidatorData): boolean => {
+	const card = findCardForDraggableValidatorData(e);
+	const newDeckPart = findDeckPartForDraggableValidatorData(e);
+	if (newDeckPart == null) {
+		return false;
+	}
+	return deckService.canAdd(deckStore.deck, card, newDeckPart, format.value);
+};
+
+const { disableTooltip, enableTooltip } = useTooltip();
 </script>
 
 <style lang="scss">

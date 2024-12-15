@@ -9,36 +9,29 @@
 	</a>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, defineComponent } from "vue";
+import { computed } from "vue";
 import type { Card } from "@/core/lib";
 import { resourceService } from "@/application/ctx";
 
-export default defineComponent({
-	components: {},
-	props: {
-		card: {
-			required: true,
-			type: Object as PropType<Card>,
-		},
-		scaleVertically: {
-			required: false,
-			type: Boolean as PropType<boolean>,
-			default: false,
-		},
+const props = defineProps({
+	card: {
+		required: true,
+		type: Object as PropType<Card>,
 	},
-	emits: [],
-	setup(props) {
-		const imgSrc = computed<string>(
-			() =>
-				props.card.image?.urlSmall ??
-				resourceService.getPlaceholderCardImageUrl(),
-		);
-
-		return { imgSrc };
+	scaleVertically: {
+		required: false,
+		type: Boolean as PropType<boolean>,
+		default: false,
 	},
 });
+
+const imgSrc = computed<string>(
+	() =>
+		props.card.image?.urlSmall ??
+		resourceService.getPlaceholderCardImageUrl(),
+);
 </script>
 
 <style lang="scss">

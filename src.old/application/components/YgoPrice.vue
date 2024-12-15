@@ -40,54 +40,35 @@
 	</ul>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { Card, PriceLookupResult, Vendor } from "@/core/lib";
 import { DEFAULT_VENDOR_ARR } from "@/core/lib";
 import type { PropType } from "vue";
-import { computed, defineComponent, ref } from "vue";
+import { computed, ref } from "vue";
 import { BTooltip } from "bootstrap-vue";
 import { cardService, priceService } from "@/application/ctx";
 
-export default defineComponent({
-	components: { BTooltip },
-	props: {
-		cards: {
-			required: true,
-			type: Array as PropType<Card[]>,
-		},
-	},
-	emits: [],
-	setup(props) {
-		const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(
-			() =>
-				new Map(
-					DEFAULT_VENDOR_ARR.map((vendor) => {
-						const lookupResult = priceService.getPrice(
-							props.cards,
-							vendor,
-						);
-						return [vendor, lookupResult];
-					}),
-				),
-		);
-		const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
-			cardService.createFormattedCardCountList(lookupResult.missing);
-		const formatPrice = (
-			lookupResult: PriceLookupResult,
-			vendor: Vendor,
-		): string =>
-			priceService.formatPrice(lookupResult.price, vendor.currency);
-
-		const missingCardButtons = ref<HTMLElement[]>([]);
-
-		return {
-			missingCardButtons,
-			priceByVendor,
-			formatPrice,
-			listMissingCards,
-		};
+const props = defineProps({
+	cards: {
+		required: true,
+		type: Array as PropType<Card[]>,
 	},
 });
+const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(
+	() =>
+		new Map(
+			DEFAULT_VENDOR_ARR.map((vendor) => {
+				const lookupResult = priceService.getPrice(props.cards, vendor);
+				return [vendor, lookupResult];
+			}),
+		),
+);
+const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
+	cardService.createFormattedCardCountList(lookupResult.missing);
+const formatPrice = (lookupResult: PriceLookupResult, vendor: Vendor): string =>
+	priceService.formatPrice(lookupResult.price, vendor.currency);
+
+const missingCardButtons = ref<HTMLElement[]>([]);
 </script>
 
 <style lang="scss">

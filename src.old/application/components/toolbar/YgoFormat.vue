@@ -13,24 +13,13 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
+<script setup lang="ts">
 import VSelect from "vue-select";
 import { Format } from "@/core/lib";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
 
-export default defineComponent({
-	components: { VSelect },
-	props: {},
-	emits: [],
-	setup() {
-		const formats = Object.values(Format);
+const formats = Object.values(Format);
 
-		const { format } = storeToRefs(useFormatStore());
-
-		return { formats, format };
-	},
-});
+const { format } = storeToRefs(useFormatStore());
 </script>

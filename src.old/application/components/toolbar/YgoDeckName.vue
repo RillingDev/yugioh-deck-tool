@@ -11,23 +11,15 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import { useId } from "@/application/composition/id";
 import { useDeckStore } from "@/application/store/deck";
 
-export default defineComponent({
-	components: {},
-	props: {},
-	emits: [],
-	setup() {
-		const deckStore = useDeckStore();
-		const deckName = computed({
-			get: () => deckStore.deck.name,
-			set: (newName) => (deckStore.deck.name = newName),
-		});
-
-		return { deckNameId: useId(), deckName };
-	},
+const deckStore = useDeckStore();
+const deckName = computed({
+	get: () => deckStore.deck.name,
+	set: (newName) => (deckStore.deck.name = newName),
 });
+const deckNameId = useId();
 </script>

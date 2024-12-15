@@ -8,8 +8,7 @@
 	</BDropdownItemButton>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
 	showError,
@@ -23,38 +22,25 @@ import { deckUrlController } from "@/application/ctx";
 
 const logger = getLogger("YgoExportShareLink");
 
-export default defineComponent({
-	components: { BDropdownItemButton },
-	props: {},
-	emits: [],
-	setup() {
-		const { deck } = storeToRefs(useDeckStore());
+const { deck } = storeToRefs(useDeckStore());
 
-		const toast = useToast();
+const toast = useToast();
 
-		const copyLink = (): void => {
-			const shareLink = deckUrlController.getShareLink(deck.value);
+const copyLink = (): void => {
+	const shareLink = deckUrlController.getShareLink(deck.value);
 
-			navigator.clipboard
-				.writeText(shareLink.toString())
-				.then(() =>
-					showSuccess(
-						toast,
-						"Successfully copied share link to clipboard.",
-						"deck-tool__portal",
-					),
-				)
-				.catch((err) => {
-					logger.error("Could not copy share link!", err);
-					showError(
-						toast,
-						"Could not copy share link.",
-						"deck-tool__portal",
-					);
-				});
-		};
-
-		return { copyLink };
-	},
-});
+	navigator.clipboard
+		.writeText(shareLink.toString())
+		.then(() =>
+			showSuccess(
+				toast,
+				"Successfully copied share link to clipboard.",
+				"deck-tool__portal",
+			),
+		)
+		.catch((err) => {
+			logger.error("Could not copy share link!", err);
+			showError(toast, "Could not copy share link.", "deck-tool__portal");
+		});
+};
 </script>

@@ -8,8 +8,7 @@
 	</BDropdownItemButton>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { getLogger } from "@/core/lib";
 import { BDropdownItemButton } from "bootstrap-vue";
 import {
@@ -23,38 +22,25 @@ import { deckUriEncodingService } from "@/application/ctx";
 
 const logger = getLogger("YgoExportDeckYdkeUrl");
 
-export default defineComponent({
-	components: { BDropdownItemButton },
-	props: {},
-	emits: [],
-	setup() {
-		const { deck } = storeToRefs(useDeckStore());
+const { deck } = storeToRefs(useDeckStore());
 
-		const toast = useToast();
+const toast = useToast();
 
-		const copyYdke = (): void => {
-			const ydke = deckUriEncodingService.toUri(deck.value);
+const copyYdke = (): void => {
+	const ydke = deckUriEncodingService.toUri(deck.value);
 
-			navigator.clipboard
-				.writeText(ydke.toString())
-				.then(() =>
-					showSuccess(
-						toast,
-						"Successfully copied YDKe to clipboard.",
-						"deck-tool__portal",
-					),
-				)
-				.catch((err) => {
-					logger.error("Could not copy YDKe!", err);
-					showError(
-						toast,
-						"Could not copy YDKe.",
-						"deck-tool__portal",
-					);
-				});
-		};
-
-		return { copyYdke };
-	},
-});
+	navigator.clipboard
+		.writeText(ydke.toString())
+		.then(() =>
+			showSuccess(
+				toast,
+				"Successfully copied YDKe to clipboard.",
+				"deck-tool__portal",
+			),
+		)
+		.catch((err) => {
+			logger.error("Could not copy YDKe!", err);
+			showError(toast, "Could not copy YDKe.", "deck-tool__portal");
+		});
+};
 </script>

@@ -22,50 +22,32 @@
 	</form>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { PropType } from "vue";
-import { defineComponent, reactive } from "vue";
+import { reactive } from "vue";
 import type { SortingOptions } from "@/core/lib";
 import { SortingOrder, SortingStrategy } from "@/core/lib";
 import { clone } from "lodash";
 import VSelect from "vue-select";
 
-export default defineComponent({
-	components: {
-		VSelect,
-	},
-	model: {
-		prop: "sortingOptions",
-		event: "change",
-	},
-	props: {
-		sortingOptions: {
-			required: true,
-			type: Object as PropType<SortingOptions>,
-		},
-	},
-	emits: ["change"],
-	setup(props, context) {
-		const internalSortingOptions = reactive<SortingOptions>(
-			clone(props.sortingOptions),
-		);
-
-		const sortingStrategies = Object.values(SortingStrategy);
-		const sortingOrders = Object.values(SortingOrder);
-
-		const onOptionsChanged = (): void =>
-			context.emit("change", clone(internalSortingOptions));
-
-		return {
-			sortingStrategies,
-			sortingOrders,
-
-			internalSortingOptions,
-
-			onOptionsChanged,
-		};
+// TODO use defineModel
+const props = defineProps({
+	sortingOptions: {
+		required: true,
+		type: Object as PropType<SortingOptions>,
 	},
 });
+const emit = defineEmits(["update:sortingOptions"]);
+
+const internalSortingOptions = reactive<SortingOptions>(
+	clone(props.sortingOptions),
+);
+
+const sortingStrategies = Object.values(SortingStrategy);
+const sortingOrders = Object.values(SortingOrder);
+
+const onOptionsChanged = (): void =>
+	emit("update:sortingOptions", clone(internalSortingOptions));
 </script>
 <style lang="scss">
 @import "../../../browser-common/styles/variables";

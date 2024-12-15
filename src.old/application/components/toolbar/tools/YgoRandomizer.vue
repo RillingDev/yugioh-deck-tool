@@ -30,17 +30,21 @@
 						</template>
 					</VSelect>
 				</div>
-				<YgoFilter v-model="filter" :show-only="['sets']" />
+				<YgoFilter
+					:filter="filter"
+					:show-only="['sets']"
+					@update:filter="(newFilter) => (filter = newFilter)"
+				/>
 			</BModal>
 		</BDropdownItemButton>
 	</BDropdownGroup>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { CardFilter } from "@/core/lib";
 import { RandomizationStrategy } from "@/core/lib";
 import { BDropdownGroup, BDropdownItemButton, BModal } from "bootstrap-vue";
-import { defineComponent, ref } from "vue";
+import { ref } from "vue";
 import YgoFilter from "../../YgoFilter.vue";
 import VSelect from "vue-select";
 import { useDataStore } from "@/application/store/data";
@@ -49,56 +53,28 @@ import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckRandomizationService } from "@/application/ctx";
 
-export default defineComponent({
-	components: {
-		YgoFilter,
-		VSelect,
-		BModal,
-		BDropdownItemButton,
-		BDropdownGroup,
-	},
-	props: {},
-	emits: [],
-	setup() {
-		const deckStore = useDeckStore();
+const deckStore = useDeckStore();
 
-		const strategies = Object.values(RandomizationStrategy);
+const strategies = Object.values(RandomizationStrategy);
 
-		const strategy = ref<RandomizationStrategy>(
-			RandomizationStrategy.ARCHETYPE_2,
-		);
-		const filter = ref<CardFilter>({
-			sets: [],
-		});
-
-		const { format } = storeToRefs(useFormatStore());
-
-		const randomize = (): void => {
-			const randomizedDeck = deckRandomizationService.randomize(
-				strategy.value,
-				{
-					filter: {
-						...filter.value,
-						format: format.value,
-					},
-				},
-			);
-			deckStore.replace({ deck: randomizedDeck });
-		};
-
-		const { essentialDataLoaded } = storeToRefs(useDataStore());
-
-		return {
-			strategy,
-			strategies,
-			filter,
-
-			essentialDataLoaded,
-
-			randomize,
-		};
-	},
+const strategy = ref<RandomizationStrategy>(RandomizationStrategy.ARCHETYPE_2);
+const filter = ref<CardFilter>({
+	sets: [],
 });
+
+const { format } = storeToRefs(useFormatStore());
+
+const randomize = (): void => {
+	const randomizedDeck = deckRandomizationService.randomize(strategy.value, {
+		filter: {
+			...filter.value,
+			format: format.value,
+		},
+	});
+	deckStore.replace({ deck: randomizedDeck });
+};
+
+const { essentialDataLoaded } = storeToRefs(useDataStore());
 </script>
 
 <style lang="scss">
