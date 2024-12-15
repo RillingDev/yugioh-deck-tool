@@ -1,37 +1,30 @@
-# Numerous always-ignore extensions
-*.diff
-*.err
+# Logs
+logs
 *.log
-*.orig
-*.rej
-*.swo
-*.swp
-*.vi
-*.zip
-*~
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# OS or Editor folders
-._*
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+/cypress/videos/
+/cypress/screenshots/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
-.project
-.settings
-.tmproj
-*.esproj
-*.sublime-project
-*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Vendor Files
-node_modules/
-
-# Debug Files
-npm-debug.*
-
-# Temp Files
-tsconfig.tsbuildinfo
-tsconfig.*.tsbuildinfo
-
-
-
-# Build Output files
-dist/
-coverage/
+*.tsbuildinfo

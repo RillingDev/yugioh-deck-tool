@@ -1,5 +1,0 @@
-# don't lint dependencies
-./node_modules/
-
-# don't lint build output
-./dist/
