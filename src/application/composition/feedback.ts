@@ -1,29 +1,17 @@
 import { getCurrentInstance } from "vue";
-import type { BvToast } from "bootstrap-vue";
 
 // https://github.com/bootstrap-vue/bootstrap-vue/issues/7005#issuecomment-1245836595
-export const useToast = (): BvToast => {
-	const app = getCurrentInstance();
-
-	if (!app) {
-		throw new TypeError("Could not find app.");
-	}
-	// @ts-ignore FIXME after vue 3 migration
-	return app.proxy.$root.$bvToast;
+export const useToast = () => {
+	// TODO
 };
 
 const showToast = (
-	$bvToast: BvToast,
+	$unknown: unknown,
 	message: string,
 	cssClass: string,
 	variant: Variant,
 ): void => {
-	$bvToast.toast(message, {
-		variant: variant,
-		noCloseButton: true,
-		solid: true,
-		toastClass: cssClass,
-	});
+	// TODO
 };
 enum Variant {
 	INFO = "info",
@@ -33,25 +21,25 @@ enum Variant {
 }
 
 export const showInfo = (
-	$bvToast: BvToast,
+	$unknown: unknown,
 	message: string,
 	cssClass: string,
-): void => showToast($bvToast, message, cssClass, Variant.INFO);
+): void => showToast($unknown, message, cssClass, Variant.INFO);
 
 export const showSuccess = (
-	$bvToast: BvToast,
+	$unknown: unknown,
 	message: string,
 	cssClass: string,
-): void => showToast($bvToast, message, cssClass, Variant.SUCCESS);
+): void => showToast($unknown, message, cssClass, Variant.SUCCESS);
 
 export const showWarning = (
-	$bvToast: BvToast,
+	$unknown: unknown,
 	message: string,
 	cssClass: string,
-): void => showToast($bvToast, message, cssClass, Variant.WARNING);
+): void => showToast($unknown, message, cssClass, Variant.WARNING);
 
 export const showError = (
-	$bvToast: BvToast,
+	$unknown: unknown,
 	message: string,
 	cssClass: string,
-): void => showToast($bvToast, message, cssClass, Variant.DANGER);
+): void => showToast($unknown, message, cssClass, Variant.DANGER);
