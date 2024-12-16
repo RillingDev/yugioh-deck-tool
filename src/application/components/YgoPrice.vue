@@ -1,7 +1,7 @@
 <template>
 	<ul class="price price--group">
 		<li
-			v-for="([vendor, lookupResult], index) in priceByVendor.entries()"
+			v-for="[vendor, lookupResult] in priceByVendor.entries()"
 			:key="vendor.id"
 			:class="`price__vendor--${vendor.id}`"
 			:title="`${vendor.name} Price`"
@@ -11,10 +11,7 @@
 				>{{ vendor.name }}:
 				{{ formatPrice(lookupResult, vendor) }}</span
 			>
-			<VTooltip
-				custom-class="deck-tool__portal"
-				:target="() => missingCardButtons[index]"
-			>
+			<VTooltip custom-class="deck-tool__portal">
 				<template #activator="{ props }">
 					<VBtn
 						v-show="lookupResult.missing.length > 0"
@@ -68,8 +65,6 @@ const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
 	cardService.createFormattedCardCountList(lookupResult.missing);
 const formatPrice = (lookupResult: PriceLookupResult, vendor: Vendor): string =>
 	priceService.formatPrice(lookupResult.price, vendor.currency);
-
-const missingCardButtons = ref<HTMLElement[]>([]);
 </script>
 
 <style lang="scss"></style>
