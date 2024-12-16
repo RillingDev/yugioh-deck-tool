@@ -14,19 +14,35 @@ declare global {
 	}
 }
 
+const pinia = createPinia();
+
+const vuetify = createVuetify({
+	icons: {
+		defaultSet: "fa",
+		aliases,
+		sets: {
+			fa,
+		},
+	},
+	defaults: {
+		VBtn: {
+			size: "small",
+		},
+		VTextField: {
+			density: "compact",
+		},
+		VFileInput: {
+			density: "compact",
+		},
+		VAlert: {
+			density: "compact",
+		},
+	},
+});
+
 createApp(App)
-	.use(createPinia())
-	.use(
-		createVuetify({
-			icons: {
-				defaultSet: "fa",
-				aliases,
-				sets: {
-					fa,
-				},
-			},
-		}),
-	)
+	.use(pinia)
+	.use(vuetify)
 	.mount("#deckToolApplication")
 	.$nextTick(() => {
 		window.yugiohDeckToolApplication = useBridge();
