@@ -1,7 +1,11 @@
 <template>
 	<VDialog max-width="1100">
 		<template #activator="{ props: activatorProps }">
-			<VBtn v-bind="activatorProps" prepend-icon="fas fa-file-export">
+			<VBtn
+				v-bind="activatorProps"
+				prepend-icon="fas fa-file-export"
+				:disabled="!essentialDataLoaded || deckEmpty"
+			>
 				Export
 			</VBtn>
 		</template>
@@ -130,10 +134,7 @@
 				</VCardText>
 
 				<VCardActions>
-					<VBtn
-						text="Close Dialog"
-						@click="isActive.value = false"
-					></VBtn>
+					<VBtn @click="isActive.value = false">Close Dialog</VBtn>
 				</VCardActions>
 			</VCard>
 		</template>
@@ -163,8 +164,12 @@ import { storeToRefs } from "pinia";
 import { deckExportService } from "@/application/ctx";
 import { createScreenshot } from "@/application/composition/io/createScreenshot";
 import { useObjectUrl } from "@vueuse/core";
+import { useDataStore } from "@/application/store/data";
 
 const logger = getLogger("YgoExport");
+
+const { deckEmpty } = storeToRefs(useDeckStore());
+const { essentialDataLoaded } = storeToRefs(useDataStore());
 
 const { deck } = storeToRefs(useDeckStore());
 

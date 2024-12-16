@@ -28,6 +28,9 @@ const vuetify = createVuetify({
 		VBtn: {
 			size: "small",
 		},
+		VBtnGroup: {
+			density: "compact",
+		},
 		VTextField: {
 			density: "compact",
 		},

@@ -2,20 +2,15 @@
 	<div class="toolbar form-group">
 		<VToolbar>
 			<VToolbarItems>
-				<YgoImport :disabled="!essentialDataLoaded" />
-				<YgoExport :disabled="!essentialDataLoaded || deckEmpty" />
+				<YgoImport />
+				<YgoExport />
 				<VBtn
 					prepend-icon="fas fa-edit"
 					:disabled="!essentialDataLoaded || deckEmpty"
 				>
 					Edit
 				</VBtn>
-				<VBtn
-					prepend-icon="fas fa-magic"
-					:disabled="!essentialDataLoaded"
-				>
-					Simulate
-				</VBtn>
+				<YgoDrawSim />
 				<YgoBuyLink />
 			</VToolbarItems>
 		</VToolbar>
@@ -31,9 +26,9 @@
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
 import YgoBuyLink from "./YgoBuyLink.vue";
+import YgoDrawSim from "./YgoDrawSim.vue";
 import YgoImport from "./YgoImport.vue";
 import YgoExport from "./YgoExport.vue";
-
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
 import { VToolbar, VToolbarItems } from "vuetify/components/VToolbar";

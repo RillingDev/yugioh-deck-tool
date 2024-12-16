@@ -1,7 +1,11 @@
 <template>
 	<VDialog max-width="1100">
 		<template #activator="{ props: activatorProps }">
-			<VBtn v-bind="activatorProps" prepend-icon="fas fa-file-import">
+			<VBtn
+				v-bind="activatorProps"
+				prepend-icon="fas fa-file-import"
+				:disabled="!essentialDataLoaded"
+			>
 				Import
 			</VBtn>
 		</template>
@@ -75,10 +79,7 @@
 				</VCardText>
 
 				<VCardActions>
-					<VBtn
-						text="Close Dialog"
-						@click="isActive.value = false"
-					></VBtn>
+					<VBtn @click="isActive.value = false">Close Dialog</VBtn>
 				</VCardActions>
 			</VCard>
 		</template>
@@ -104,9 +105,12 @@ import { useDeckStore } from "@/application/store/deck";
 import { deckFileService } from "@/application/ctx";
 import { deckUriEncodingService } from "@/application/ctx";
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useDataStore } from "@/application/store/data";
 
 const logger = getLogger("YgoImport");
 
+const { essentialDataLoaded } = storeToRefs(useDataStore());
 const deckStore = useDeckStore();
 
 const importResultState = ref<undefined | "success" | "missingCards" | "error">(
