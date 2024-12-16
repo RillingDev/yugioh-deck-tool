@@ -34,6 +34,9 @@ const vuetify = createVuetify({
 		VFileInput: {
 			density: "compact",
 		},
+		VTextarea: {
+			density: "compact",
+		},
 		VAlert: {
 			density: "compact",
 		},

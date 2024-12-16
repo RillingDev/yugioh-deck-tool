@@ -3,12 +3,7 @@
 		<VToolbar>
 			<VToolbarItems>
 				<YgoImport :disabled="!essentialDataLoaded" />
-				<VBtn
-					prepend-icon="fas fa-file-export"
-					:disabled="!essentialDataLoaded || deckEmpty"
-				>
-					Export
-				</VBtn>
+				<YgoExport :disabled="!essentialDataLoaded || deckEmpty" />
 				<VBtn
 					prepend-icon="fas fa-edit"
 					:disabled="!essentialDataLoaded || deckEmpty"
@@ -37,6 +32,7 @@ import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
 import YgoBuyLink from "./YgoBuyLink.vue";
 import YgoImport from "./YgoImport.vue";
+import YgoExport from "./YgoExport.vue";
 
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";

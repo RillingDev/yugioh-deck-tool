@@ -1,5 +1,5 @@
 <template>
-	<VDialog max-width="900">
+	<VDialog max-width="1100">
 		<template #activator="{ props: activatorProps }">
 			<VBtn v-bind="activatorProps" prepend-icon="fas fa-file-import">
 				Import
@@ -14,6 +14,38 @@
 				<VCardText>
 					<VContainer class="p0">
 						<VRow>
+							<VCol cols="12" md="6">
+								<VCard density="compact">
+									<VCardTitle>From a Deck File</VCardTitle>
+									<VCardText>
+										<p class="mb-3">
+											Upload a .ydk deck file created by a
+											tool such as EDOPro.
+										</p>
+										<VFileInput
+											label="Deck File"
+											accept=".ydk"
+											:clearable="false"
+											@update:model-value="onYdkFileInput"
+										/>
+									</VCardText>
+								</VCard>
+							</VCol>
+							<VCol cols="12" md="6">
+								<VCard>
+									<VCardTitle>From a YDKe URI</VCardTitle>
+									<VCardText>
+										<p class="mb-3">
+											Paste a YDKe URI created by a tool
+											such as EDOPro.
+										</p>
+										<VTextField
+											label="YDKe URI"
+											@update:model-value="onYdkeUriInput"
+										/>
+									</VCardText>
+								</VCard>
+							</VCol>
 							<VCol cols="12">
 								<VAlert
 									v-if="importResultState === 'error'"
@@ -37,39 +69,6 @@
 								>
 									The deck was imported successfully.
 								</VAlert>
-							</VCol>
-							<VCol cols="12" md="6">
-								<VCard density="compact">
-									<VCardTitle>
-										Import a Deck File
-									</VCardTitle>
-									<VCardText>
-										<p class="mb-4">
-											Here you can upload a .ydk deck file
-											created by a tool such as EDOPro.
-										</p>
-										<VFileInput
-											label="Deck File"
-											accept=".ydk"
-											@update:model-value="onYdkFileInput"
-											:clearable="false"
-										/> </VCardText
-								></VCard>
-							</VCol>
-							<VCol cols="12" md="6">
-								<VCard>
-									<VCardTitle> Import a YDKe URL </VCardTitle>
-									<VCardText>
-										<p class="mb-4">
-											Here you can upload a YDKe URL
-											created by a tool such as EDOPro.
-										</p>
-										<VTextField
-											label="YDKe URL"
-											@update:model-value="onYdkeUrlInput"
-										/>
-									</VCardText>
-								</VCard>
 							</VCol>
 						</VRow>
 					</VContainer>
@@ -106,7 +105,7 @@ import { deckFileService } from "@/application/ctx";
 import { deckUriEncodingService } from "@/application/ctx";
 import { ref } from "vue";
 
-const logger = getLogger("YgoImportDeckFile");
+const logger = getLogger("YgoImport");
 
 const deckStore = useDeckStore();
 
@@ -147,7 +146,7 @@ function onYdkFileInput(input: File | File[] | undefined): void {
 	);
 }
 
-function onYdkeUrlInput(text: string): void {
+function onYdkeUriInput(text: string): void {
 	handleImport(
 		new Promise((resolve) => {
 			resolve({
