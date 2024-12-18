@@ -40,7 +40,13 @@ const vuetify = createVuetify({
 		VTextarea: {
 			density: "compact",
 		},
+		VSelect: {
+			density: "compact",
+		},
 		VAlert: {
+			density: "compact",
+		},
+		VToolbar: {
 			density: "compact",
 		},
 	},

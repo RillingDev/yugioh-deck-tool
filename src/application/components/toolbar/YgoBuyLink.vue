@@ -3,9 +3,8 @@
 		:disabled="deckEmpty"
 		:href="buyLink"
 		prepend-icon="fas fa-shopping-cart"
-		size="small"
 	>
-		Buy Deck
+		Buy
 	</VBtn>
 </template>
 

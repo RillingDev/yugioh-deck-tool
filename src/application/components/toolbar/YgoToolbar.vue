@@ -1,21 +1,17 @@
 <template>
-	<div class="toolbar form-group">
+	<div>
 		<VToolbar>
 			<VToolbarItems>
+				<YgoDeckClear />
+				<YgoDeckSort />
 				<YgoImport />
 				<YgoExport />
-				<VBtn
-					prepend-icon="fas fa-edit"
-					:disabled="!essentialDataLoaded || deckEmpty"
-				>
-					Edit
-				</VBtn>
 				<YgoDrawSim />
 				<YgoBuyLink />
 			</VToolbarItems>
 		</VToolbar>
 
-		<div class="toolbar__items" role="group">
+		<div>
 			<YgoDeckName />
 			<YgoFormat />
 		</div>
@@ -26,18 +22,12 @@
 import YgoFormat from "./YgoFormat.vue";
 import YgoDeckName from "./YgoDeckName.vue";
 import YgoBuyLink from "./YgoBuyLink.vue";
-import YgoDrawSim from "./YgoDrawSim.vue";
-import YgoImport from "./YgoImport.vue";
-import YgoExport from "./YgoExport.vue";
-import { useDataStore } from "@/application/store/data";
-import { useDeckStore } from "@/application/store/deck";
+import YgoDrawSim from "./YgoDrawSimButton.vue";
+import YgoImport from "./YgoDeckImportButton.vue";
+import YgoExport from "./YgoDeckExportButton.vue";
+import YgoDeckClear from "./YgoDeckClearButton.vue";
+import YgoDeckSort from "./YgoDeckSortButton.vue";
 import { VToolbar, VToolbarItems } from "vuetify/components/VToolbar";
-import { VBtn } from "vuetify/components/VBtn";
-import { storeToRefs } from "pinia";
-
-const { deckEmpty } = storeToRefs(useDeckStore());
-
-const { essentialDataLoaded } = storeToRefs(useDataStore());
 </script>
 
 <style lang="scss"></style>

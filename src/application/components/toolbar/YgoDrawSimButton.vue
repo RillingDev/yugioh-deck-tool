@@ -41,7 +41,7 @@
 						/>
 					</div>
 					<div class="d-flex justify-center">
-						<VBtn @click="simulateStartHand" color="primary">
+						<VBtn color="primary" @click="simulateStartHand">
 							Draw a New Hand
 						</VBtn>
 					</div>
@@ -62,7 +62,6 @@ import { VBtn } from "vuetify/components/VBtn";
 import { VBtnGroup } from "vuetify/components/VBtnGroup";
 import { VDialog } from "vuetify/components/VDialog";
 import { VCardActions, VCard, VCardText } from "vuetify/components/VCard";
-import { VCheckbox } from "vuetify/components/VCheckbox";
 import { computed, ref } from "vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
