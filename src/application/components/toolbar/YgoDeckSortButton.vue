@@ -1,5 +1,11 @@
 <template>
-	<VBtn prepend-icon="fas fa-sort" :disabled="deckEmpty" @click="sort">
+	<VBtn
+		:disabled="deckEmpty"
+		prepend-icon="fas fa-sort"
+		color="primary"
+		variant="outlined"
+		@click="sort"
+	>
 		Sort
 	</VBtn>
 </template>

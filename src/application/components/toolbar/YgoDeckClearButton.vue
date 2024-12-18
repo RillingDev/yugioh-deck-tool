@@ -3,8 +3,10 @@
 		<template #activator="{ props: activatorProps }">
 			<VBtn
 				v-bind="activatorProps"
-				prepend-icon="fas fa-trash"
 				:disabled="deckEmpty"
+				prepend-icon="fas fa-trash"
+				color="primary"
+				variant="outlined"
 			>
 				Clear
 			</VBtn>

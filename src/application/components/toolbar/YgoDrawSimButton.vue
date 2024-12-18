@@ -3,8 +3,10 @@
 		<template #activator="{ props: activatorProps }">
 			<VBtn
 				v-bind="activatorProps"
-				prepend-icon="fas fa-magic"
 				:disabled="!hasMainDeckCards"
+				prepend-icon="fas fa-magic"
+				color="primary"
+				variant="outlined"
 			>
 				Simulate
 			</VBtn>

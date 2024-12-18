@@ -1,8 +1,10 @@
 <template>
 	<VBtn
-		:disabled="deckEmpty"
 		:href="buyLink"
+		:disabled="deckEmpty"
 		prepend-icon="fas fa-shopping-cart"
+		color="primary"
+		variant="outlined"
 	>
 		Buy
 	</VBtn>

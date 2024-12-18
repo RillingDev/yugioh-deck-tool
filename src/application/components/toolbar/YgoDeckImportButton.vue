@@ -3,8 +3,10 @@
 		<template #activator="{ props: activatorProps }">
 			<VBtn
 				v-bind="activatorProps"
-				prepend-icon="fas fa-file-import"
 				:disabled="!essentialDataLoaded"
+				prepend-icon="fas fa-file-import"
+				color="primary"
+				variant="outlined"
 			>
 				Import
 			</VBtn>

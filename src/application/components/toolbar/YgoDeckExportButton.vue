@@ -3,8 +3,10 @@
 		<template #activator="{ props: activatorProps }">
 			<VBtn
 				v-bind="activatorProps"
-				prepend-icon="fas fa-file-export"
 				:disabled="!essentialDataLoaded || deckEmpty"
+				prepend-icon="fas fa-file-export"
+				color="primary"
+				variant="outlined"
 			>
 				Export
 			</VBtn>
