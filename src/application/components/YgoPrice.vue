@@ -1,5 +1,5 @@
 <template>
-	<ul class="price price--group">
+	<ul class="d-flex price price--group">
 		<li
 			v-for="[vendor, lookupResult] in priceByVendor.entries()"
 			:key="vendor.id"
@@ -7,24 +7,26 @@
 			:title="`${vendor.name} Price`"
 			class="price__vendor"
 		>
-			<span
-				>{{ vendor.name }}:
-				{{ formatPrice(lookupResult, vendor) }}</span
-			>
-			<VTooltip custom-class="deck-tool__portal">
+			<span>
+				{{ vendor.name }}:
+				{{ formatPrice(lookupResult, vendor) }}
+			</span>
+			<VTooltip v-if="lookupResult.missing.length > 0">
 				<template #activator="{ props }">
 					<VBtn
-						v-show="lookupResult.missing.length > 0"
 						v-bind="props"
 						icon="fas fa-exclamation"
 						title="Some cards have no price data"
+						size="x-small"
+						color="warning"
+						class="ms-2"
 					/>
 				</template>
 				<span>
 					Missing prices for
 					{{ lookupResult.missing.length }} card(s):
 				</span>
-				<ul class="price__warning__missing">
+				<ul>
 					<li
 						v-for="line in listMissingCards(lookupResult)"
 						:key="line"
@@ -41,7 +43,7 @@
 import type { Card, PriceLookupResult, Vendor } from "@/core/lib";
 import { DEFAULT_VENDOR_ARR } from "@/core/lib";
 import type { PropType } from "vue";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { VTooltip } from "vuetify/components/VTooltip";
 import { VBtn } from "vuetify/components/VBtn";
 import { cardService, priceService } from "@/application/ctx";
@@ -67,4 +69,13 @@ const formatPrice = (lookupResult: PriceLookupResult, vendor: Vendor): string =>
 	priceService.formatPrice(lookupResult.price, vendor.currency);
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@use "../../browser-common/styles/component/price";
+@use "../../browser-common/styles/variables";
+
+.deck-tool {
+	.price {
+		@include price.price();
+	}
+}
+</style>
