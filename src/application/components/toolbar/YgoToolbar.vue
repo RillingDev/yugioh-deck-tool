@@ -41,7 +41,7 @@ import YgoDeckSort from "./YgoDeckSortButton.vue";
 		"name format"
 		"tools tools";
 
-	@media (min-width: map.get(vuetify.$grid-breakpoints,"lg")) {
+	@media (min-width: map.get(vuetify.$grid-breakpoints, "lg")) {
 		grid-template-columns:
 			minmax(250px, 1fr) minmax(200px, 1fr)
 			1fr max-content;

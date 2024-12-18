@@ -1,22 +1,15 @@
 <template>
-	<section
-		:class="[
-			`deck-part--${deckPart}`,
-			{ 'deck-part--empty': deckPartEmpty },
-		]"
-		class="deck-part"
-	>
-		<header class="deck-part__header">
-			<div class="deck-part__details">
-				<h2 class="deck-part__name h5">
-					{{ deckPartConfig.name }} Deck
-				</h2>
-				<small class="deck-part__stats">{{ deckPartStats }}</small>
+	<section :class="`ygo-deck-part--${deckPart}`">
+		<header class="d-flex justify-space-between mb-2">
+			<div class="d-flex ga-3 align-center">
+				<h2 class="text-h5">{{ deckPartConfig.name }} Deck</h2>
+				<small>{{ deckPartStats }}</small>
 			</div>
 			<YgoPrice :cards="cards" />
 		</header>
-		<!-- Spill is set to 'revert', actual removal is done in custom draggable variant -->
-		<!-- <Draggable
+		<div class="ygo-deck-part__content pa-2 ga-2">
+			<!-- Spill is set to 'revert', actual removal is done in custom draggable variant -->
+			<!-- <Draggable
 			class="deck-part__content"
 			tag="div"
 			:value="cards"
@@ -28,13 +21,13 @@
 			@start="() => disableTooltip()"
 			@end="() => enableTooltip()"
 		> -->
-		<YgoCard
-			v-for="(card, cardIndex) in cards"
-			:key="`${cardIndex}_${card.passcode}`"
-			:card="card"
-		>
-		</YgoCard>
-		<!-- </Draggable> -->
+			<YgoCard
+				v-for="(card, cardIndex) in cards"
+				:key="`${cardIndex}_${card.passcode}`"
+				:card="card"
+			/>
+			<!-- </Draggable> -->
+		</div>
 	</section>
 </template>
 <script setup lang="ts">
@@ -57,6 +50,7 @@ import { useDeckStore } from "@/application/store/deck";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
 import { deckController, deckService } from "@/application/ctx";
+import { VDivider } from "vuetify/components/VDivider";
 
 const logger = getLogger("YgoDeckPart");
 
@@ -75,7 +69,6 @@ const deckStore = useDeckStore();
 const { format } = storeToRefs(useFormatStore());
 
 const cards = computed<Card[]>(() => deckStore.deck.parts[props.deckPart]);
-const deckPartEmpty = computed<boolean>(() => cards.value.length === 0);
 const deckPartStats = computed<string>(() => {
 	const currentCards = cards.value;
 	const base = `${currentCards.length} Cards`;
@@ -137,4 +130,52 @@ const canMove = (e: DraggableMoveValidatorData): boolean => {
 
 const { disableTooltip, enableTooltip } = useTooltip();
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+@use "sass:color";
+@use "sass:map";
+@use "vuetify";
+@use "../../../browser-common/styles/_variables.scss";
+@use "../../../browser-common/styles/_mixins.scss";
+
+.ygo-deck-part {
+	&__content {
+		min-height: 6rem; // Add a little space for cards to be dragged to
+
+		border: 3px solid variables.$black;
+		background-color: variables.$color-deck-part-side;
+
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		@media (min-width: map.get(vuetify.$grid-breakpoints, "md")) {
+			grid-template-columns: repeat(8, 1fr);
+		}
+		@media (min-width: map.get(vuetify.$grid-breakpoints, "lg")) {
+			grid-template-columns: repeat(10, 1fr);
+		}
+	}
+
+	&--main .ygo-deck-part__content {
+		border-color: color.adjust(
+			variables.$color-deck-part-main,
+			$lightness: -13.25%
+		);
+		background-color: variables.$color-deck-part-main;
+	}
+
+	&--extra .ygo-deck-part__content {
+		border-color: color.adjust(
+			variables.$color-deck-part-extra,
+			$lightness: -13.25%
+		);
+		background-color: variables.$color-deck-part-extra;
+	}
+
+	&--side .ygo-deck-part__content {
+		border-color: color.adjust(
+			variables.$color-deck-part-side,
+			$lightness: -13.25%
+		);
+		background-color: variables.$color-deck-part-side;
+	}
+}
+</style>

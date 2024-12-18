@@ -71,7 +71,7 @@ const formatPrice = (lookupResult: PriceLookupResult, vendor: Vendor): string =>
 
 <style lang="scss">
 @use "../../browser-common/styles/component/price";
-@use "../../browser-common/styles/variables";
+@use "../../browser-common/styles/_variables.scss";
 
 .deck-tool {
 	.price {

@@ -1,6 +1,6 @@
 <template>
-	<a :data-name="card.name" tabindex="0">
-		<img :alt="card.name" :src="imgSrc" :width="width" />
+	<a :data-name="card.name" tabindex="0" class="ygo-card">
+		<img :alt="card.name" :src="imgSrc" />
 	</a>
 </template>
 
@@ -10,17 +10,10 @@ import { computed } from "vue";
 import type { Card } from "@/core/lib";
 import { resourceService } from "@/application/ctx";
 
-type Size = "small" | "medium";
-
 const props = defineProps({
 	card: {
 		required: true,
 		type: Object as PropType<Card>,
-	},
-	size: {
-		required: false,
-		default: "small",
-		type: String as PropType<Size>,
 	},
 	scaleVertically: {
 		required: false,
@@ -34,8 +27,17 @@ const imgSrc = computed<string>(
 		props.card.image?.urlSmall ??
 		resourceService.getPlaceholderCardImageUrl(),
 );
-
-const width = computed(() => (props.size === "medium" ? 150 : 100));
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.ygo-card {
+	display: block; // Make sure link covers full card
+
+	img {
+		width: 100%;
+		height: auto;
+		pointer-events: none; // Allow "clicking through" to parent link.
+		vertical-align: middle;
+	}
+}
+</style>

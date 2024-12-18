@@ -1,7 +1,7 @@
 <template>
 	<div id="deckToolDeck" class="deck">
-		<header class="deck__header">
-			<h1 class="deck__total h4">Total</h1>
+		<header class="d-flex justify-space-between mb-2">
+			<h2 class="deck__total text-h5">Total</h2>
 			<YgoPrice :cards="allCards" />
 		</header>
 		<hr />
@@ -21,6 +21,7 @@ import YgoDeckPart from "./YgoDeckPart.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckService } from "@/application/ctx";
+import { VDivider } from "vuetify/components/VDivider";
 
 const deckParts = DECK_PART_ARR;
 
