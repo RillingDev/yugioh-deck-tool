@@ -1,37 +1,34 @@
 <template>
 	<div class="ygo-builder-matches">
-		<ol
-			v-show="matches.length > 0"
+		<VInfiniteScroll
+			:item="limitedMatches"
+			side="end"
+			height="50rem"
 			class="ygo-builder-matches__list"
-			@scroll.passive="(e) => scrollHandler(e)"
+			@load="load"
 		>
-			<li
-				v-for="card in limitedMatches"
-				:key="card.passcode"
-				class="ygo-builder-matches__match d-flex ga-2 pa-2"
-			>
-				<!-- re-add draggable -->
-				<YgoCard :card="card" class="flex-shrink-0" />
+			<template v-for="card in limitedMatches" :key="card.passcode">
+				<li class="ygo-builder-matches__match d-flex ga-2 pa-2">
+					<!--  re-add draggable -->
+					<YgoCard :card="card" class="flex-shrink-0" />
 
-				<div>
-					<p>{{ card.name }}</p>
-					<p>
-						<small>{{ getTypeText(card) }}</small>
-					</p>
-					<p>
-						<small>{{ getSubTypeText(card) }}</small>
-					</p>
-					<p>
-						<small v-show="getCardCount(card) != null">
-							{{ getCardCount(card) }} in Collection
-						</small>
-					</p>
-				</div>
-			</li>
-		</ol>
-		<div v-show="matches.length === 0" class="ygo-builder-matches__empty">
-			No matching cards found.
-		</div>
+					<div>
+						<p>{{ card.name }}</p>
+						<p>
+							<small>{{ getTypeText(card) }}</small>
+						</p>
+						<p>
+							<small>{{ getSubTypeText(card) }}</small>
+						</p>
+						<p>
+							<small v-show="getCardCount(card) != null">
+								{{ getCardCount(card) }} in Collection
+							</small>
+						</p>
+					</div>
+				</li></template
+			>
+		</VInfiniteScroll>
 	</div>
 </template>
 
@@ -42,7 +39,6 @@ import { browserSupportsTouch } from "@/browser-common/lib";
 import type { Card, DeckPart } from "@/core/lib";
 import { CardTypeCategory } from "@/core/lib";
 import { showSuccess, useToast } from "../../composition/feedback";
-import { useInfiniteScrolling } from "../../composition/infiniteScrolling";
 import { useTooltip } from "../../composition/tooltip";
 import YgoCard from "../YgoCard.vue";
 import { useDeckStore } from "@/application/store/deck";
@@ -51,38 +47,46 @@ import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
 import { deckService } from "@/application/ctx";
 import { useCardDraggable } from "@/application/composition/dragging";
+import { VInfiniteScroll } from "vuetify/components/VInfiniteScroll";
 
 const props = defineProps({
 	matches: {
 		required: true,
-		type: Array as PropType<Card[]>,
+		type: Array as PropType<readonly Card[]>,
 	},
 });
 
 const { cardCountFunction } = storeToRefs(useCollectionStore());
 
-// TODO replace
-const { limitedArr: limitedMatches, scrollHandler } = useInfiniteScrolling(
-	computed(() => props.matches),
-	50,
-	25,
-);
+const limitedMatches = ref(props.matches.slice(0, 50));
+const load: VInfiniteScroll["onLoad"] = async function ({ done }) {
+	const nextChunkStart = limitedMatches.value.length;
+	const nextChunk = props.matches.slice(nextChunkStart, nextChunkStart + 25);
+	if (nextChunk.length === 0) {
+		done("empty");
+	} else {
+		limitedMatches.value.push(...nextChunk);
+		done("ok");
+	}
+};
 
-const getTypeText = (card: Card): string =>
-	card.type.category === CardTypeCategory.MONSTER
+function getTypeText(card: Card): string {
+	return card.type.category === CardTypeCategory.MONSTER
 		? card.type.name
 		: card.type.category;
-const getSubTypeText = (card: Card): string =>
-	card.type.category === CardTypeCategory.MONSTER
+}
+function getSubTypeText(card: Card): string {
+	return card.type.category === CardTypeCategory.MONSTER
 		? `${card.attribute!}/${card.subType}`
 		: card.subType;
-const getCardCount = (card: Card): number | null =>
-	cardCountFunction.value?.(card) ?? null;
+}
+function getCardCount(card: Card): number | null {
+	return cardCountFunction.value?.(card) ?? null;
+}
 </script>
 
 <style lang="scss">
-@import "../../../browser-common/styles/variables";
-@import "../../../browser-common/styles/mixins";
+@use "../../../browser-common/styles/variables";
 
 .ygo-builder-matches {
 	.ygo-card {
@@ -90,18 +94,16 @@ const getCardCount = (card: Card): number | null =>
 	}
 
 	&__list {
-		overflow-y: scroll;
-		max-height: 50rem;
-		border: 1px solid $gray-400;
+		border: 1px solid variables.$gray-400;
 	}
 
 	&__match {
-		border-bottom: 1px solid $gray-400;
+		border-bottom: 1px solid variables.$gray-400;
 	}
 
 	&__empty {
 		text-align: center;
-		color: $gray-600;
+		color: variables.$gray-600;
 	}
 }
 </style>
