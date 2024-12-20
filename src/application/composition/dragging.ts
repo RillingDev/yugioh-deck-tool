@@ -1,28 +1,43 @@
-import type { Card, DeckPart } from "@/core/lib";
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Card } from "@/core/lib";
+import type { Ref } from "vue";
+import {
+	useDraggable,
+	type DraggableEvent,
+	type RefOrElement,
+	type UseDraggableOptions,
+	type UseDraggableReturn,
+} from "vue-draggable-plus";
+import { useTooltip } from "./tooltip";
+import type { GroupOptions } from "sortablejs";
 
-// TODO: Replace with real types
-export type DraggableChangeEventData = any;
-export type DraggableSpillEventData = any;
-export type DraggableMoveValidatorData = any;
+const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 
-/**
- * Contract:
- * Draggable element drop zone MAY have the attribute 'data-deck-part-area'.
- * If it does, the value MUST be one of {@link DeckPart}.
- */
-export const findDeckPartForDraggableValidatorData = (
-	e: DraggableMoveValidatorData,
-): DeckPart | null => {
-	const targetEl: HTMLElement = e.to;
-	const areaMarker = targetEl.dataset["deckPartArea"];
-	return areaMarker != null ? (areaMarker as DeckPart) : null;
-};
-
-/**
- * Contract:
- * MUST only be used for drag move validation if the draggable element data is a {@link Card}.
- */
-export const findCardForDraggableValidatorData = (
-	e: DraggableMoveValidatorData,
-): Card => e.draggedContext.element;
+export function useCardDraggable(
+	el: RefOrElement,
+	list: Ref<Card[]>,
+	options: Omit<
+		UseDraggableOptions<Card>,
+		"group" | "clone" | "onStart" | "onEnd" | "onMove"
+	> & {
+		pull: GroupOptions["pull"];
+		put: GroupOptions["put"];
+	},
+	onMove: (evt: DraggableEvent<Card>, originalEvent: Event) => boolean,
+): UseDraggableReturn {
+	const { disableTooltip, enableTooltip } = useTooltip();
+	return useDraggable(el, list, {
+		group: { name: dragGroup, pull: options.pull, put: options.put },
+		// We never actually need new instances of cards, we just reference the old one in a new place
+		clone: (a) => a,
+		onStart: disableTooltip,
+		onEnd: enableTooltip,
+		onMove: (evt, originalEvent) =>
+			onMove(
+				// Because vue-draggable-plus extends the parameter with its custom type, which isn't visible in the typing declarations
+				// https://github.com/Alfred-Skyblue/vue-draggable-plus/issues/166
+				evt as unknown as DraggableEvent<Card>,
+				originalEvent,
+			),
+		...options,
+	});
+}

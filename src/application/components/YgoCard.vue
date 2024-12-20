@@ -1,5 +1,10 @@
 <template>
-	<a :data-name="card.name" tabindex="0" class="ygo-card">
+	<a
+		:data-name="card.name"
+		:data-passcode="card.passcode"
+		tabindex="0"
+		class="ygo-card"
+	>
 		<img :alt="card.name" :src="imgSrc" />
 	</a>
 </template>

@@ -1,4 +1,4 @@
-import type { Card, Deck, DeckPart } from "@/core/lib";
+import { DeckPart, type Card, type Deck } from "@/core/lib";
 import { defineStore } from "pinia";
 import { deckService } from "@/application/ctx";
 
@@ -29,6 +29,10 @@ export const useDeckStore = defineStore("deck", {
 			this.deck = deckService.createEmptyDeck();
 		},
 
+		// TODO use this to replace the following actions
+		replacePart(payload: { deckPart: DeckPart; newCards: Card[] }) {
+			this.deck.parts[payload.deckPart] = payload.newCards;
+		},
 		addCard(payload: {
 			card: Card;
 			deckPart: DeckPart;
