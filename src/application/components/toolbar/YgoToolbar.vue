@@ -1,5 +1,5 @@
 <template>
-	<div class="ygo-toolbar ga-2 mb-3">
+	<div class="ygo-toolbar ga-2">
 		<div class="ygo-toolbar__name">
 			<YgoDeckName />
 		</div>

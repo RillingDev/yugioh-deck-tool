@@ -7,6 +7,8 @@ import type { RawArchetype } from "./mapping/mapArchetype";
 import type { Card, EnvironmentConfig } from "@/core/lib";
 import { Environment } from "@/core/lib";
 
+// TODO use zod
+
 interface CardInfoOptions {
 	readonly includeAliased: boolean; // If all versions of cards with the same name should be shown (alternate artworks)
 
@@ -186,7 +188,6 @@ export class YgoprodeckApiService {
 			`${options.auth.username}:${options.auth.token}`,
 		);
 		return {
-			 
 			"X-Authorization": `Basic ${encodedCredentials}`,
 		};
 	}

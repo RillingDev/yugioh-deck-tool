@@ -1,15 +1,15 @@
 <template>
 	<VApp>
-		<VMain>
-			<VProgressCircular v-if="loading" />
-			<div v-else>
-				<div>
-					<YgoToolbar />
-					<hr />
-					<YgoDeck v-show="!loading" />
-				</div>
-				<div>builder</div>
-			</div>
+		<VMain
+			class="ygo-main ga-6"
+			:class="loading ? 'ygo-main--loading' : ''"
+		>
+			<VProgressCircular v-if="loading" color="primary" indeterminate />
+			<template v-else>
+				<YgoToolbar class="ygo-main__toolbar" />
+				<YgoDeck class="ygo-main__deck" />
+				<div class="ygo-main__builder">builder</div>
+			</template>
 		</VMain>
 	</VApp>
 </template>
@@ -63,4 +63,42 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@use "vuetify";
+@use "sass:map";
+
+.ygo-main {
+	display: grid;
+
+	grid-template-columns: 1;
+	grid-template-rows: min-content 1fr 1fr;
+	grid-template-areas:
+		"toolbar"
+		"deck"
+		"builder";
+
+	@media (min-width: map.get(vuetify.$grid-breakpoints, "md")) {
+		grid-template-columns: 1fr 340px;
+	grid-template-rows: min-content 1fr;
+	grid-template-areas:
+		"toolbar toolbar"
+		"deck builder";
+	}
+
+	&__toolbar {
+		grid-area: toolbar;
+	}
+	&__deck {
+		grid-area: deck;
+	}
+	&__builder {
+		grid-area: builder;
+	}
+
+	&--loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+</style>
