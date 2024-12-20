@@ -8,7 +8,7 @@
 			<!-- TODO: filter -->
 		</div>
 		<YgoSortingOptions v-model="sortingOptions" />
-		<!-- TODO: matches-->
+		<YgoBuilderMatches :matches="filteredCards" />
 	</div>
 </template>
 
@@ -16,6 +16,7 @@
 import type { SortingOptions } from "@/core/lib";
 import { SortingOrder, SortingStrategy } from "@/core/lib";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
+import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import { computed, ref } from "vue";
 import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
