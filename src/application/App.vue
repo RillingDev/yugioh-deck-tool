@@ -8,7 +8,7 @@
 			<template v-else>
 				<YgoToolbar class="ygo-main__toolbar" />
 				<YgoDeck class="ygo-main__deck" />
-				<div class="ygo-main__builder">builder</div>
+				<YgoBuilder class="ygo-main__builder" />
 			</template>
 		</VMain>
 	</VApp>
@@ -20,6 +20,7 @@ import { VMain } from "vuetify/components/VMain";
 import { VProgressCircular } from "vuetify/components/VProgressCircular";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import YgoDeck from "./components/deck/YgoDeck.vue";
+import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import { getLogger } from "@/core/lib";
 import { onMounted } from "vue";
 import { showError, useToast } from "@/application/composition/feedback";
@@ -79,10 +80,10 @@ onMounted(() => {
 
 	@media (min-width: map.get(vuetify.$grid-breakpoints, "md")) {
 		grid-template-columns: 1fr 340px;
-	grid-template-rows: min-content 1fr;
-	grid-template-areas:
-		"toolbar toolbar"
-		"deck builder";
+		grid-template-rows: min-content 1fr;
+		grid-template-areas:
+			"toolbar toolbar"
+			"deck builder";
 	}
 
 	&__toolbar {
