@@ -9,6 +9,7 @@
 			v-for="deckPart in deckParts"
 			:key="deckPart"
 			:deck-part="deckPart"
+			class="mb-6"
 		/>
 	</div>
 </template>
@@ -21,7 +22,6 @@ import YgoDeckPart from "./YgoDeckPart.vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckService } from "@/application/ctx";
-import { VDivider } from "vuetify/components/VDivider";
 
 const deckParts = DECK_PART_ARR;
 
