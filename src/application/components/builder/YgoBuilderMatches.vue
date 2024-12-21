@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, ref } from "vue";
+import { computed, ref, shallowRef } from "vue";
 import { browserSupportsTouch } from "@/browser-common/lib";
 import type { Card, DeckPart } from "@/core/lib";
 import { CardTypeCategory } from "@/core/lib";
@@ -57,7 +57,7 @@ const props = defineProps({
 
 const { cardCountFunction } = storeToRefs(useCollectionStore());
 
-const limitedMatches = ref(props.matches.slice(0, 50));
+const limitedMatches = shallowRef(props.matches.slice(0, 50));
 const load: VInfiniteScroll["onLoad"] = async function ({ done }) {
 	const nextChunkStart = limitedMatches.value.length;
 	const nextChunk = props.matches.slice(nextChunkStart, nextChunkStart + 25);

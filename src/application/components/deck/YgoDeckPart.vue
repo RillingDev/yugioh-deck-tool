@@ -23,7 +23,7 @@
 </template>
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, ref } from "vue";
+import { computed, ref, toRaw, unref } from "vue";
 import type { Card, DeckPart, DeckPartConfig } from "@/core/lib";
 import { DefaultDeckPartConfig } from "@/core/lib";
 import YgoCard from "../YgoCard.vue";
@@ -60,7 +60,8 @@ const deckPartStats = computed(() => {
 		return base;
 	}
 	const details = deckController
-		.calculateDetailedTypeStats(props.deckPart, currentCards)
+		// The vue proxy breaks functionality here, so use the raw value
+		.calculateDetailedTypeStats(props.deckPart, toRaw(currentCards))
 		.map(([type, count]) => `${count} ${type}`);
 	return `${base} (${details.join(" | ")})`;
 });
@@ -76,7 +77,7 @@ const draggable = useCardDraggable(
 		put: true,
 	},
 	(e) => {
-		const areaMarker = e.to.dataset["deckPartArea"];
+		const areaMarker = e.to.dataset.deckPartArea;
 		if (areaMarker == null) {
 			return false;
 		}
