@@ -6,9 +6,24 @@
 					Result: {{ filteredCards.length }} of
 					{{ formatCards.length }} Cards
 				</small>
-				<YgoFilter v-model="filter" />
+				<YgoFilter
+					v-model:name="filter.name"
+					v-model:description="filter.description"
+					v-model:type-category="filter.typeCategory"
+					v-model:type="filter.type"
+					v-model:sub-type="filter.subType"
+					v-model:attribute="filter.attribute"
+					v-model:level="filter.level"
+					v-model:link-markers="filter.linkMarkers"
+					v-model:archetype="filter.archetype"
+					v-model:ban-state="filter.banState"
+					v-model:sets="filter.sets"
+				/>
 			</div>
-			<YgoSortingOptions v-model="sortingOptions" />
+			<YgoSortingOptions
+				v-model:strategy="sortingOptions.strategy"
+				v-model:order="sortingOptions.order"
+			/>
 			<YgoBuilderMatches :matches="filteredCards" />
 		</div>
 	</div>
@@ -29,8 +44,9 @@ import {
 	filterService,
 	sortingService,
 } from "@/application/ctx";
-import YgoFilter from "../YgoFilter.vue";
+import YgoFilter from "./YgoFilter.vue";
 
+// FIXME: deeply nested proxies break things
 const filter = ref(filterService.createDefaultFilter());
 
 const sortingOptions = ref<SortingOptions>({
