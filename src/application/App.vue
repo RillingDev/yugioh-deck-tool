@@ -2,9 +2,17 @@
 	<VApp>
 		<VMain
 			class="ygo-main ga-6"
-			:class="loading ? 'ygo-main--loading' : ''"
+			:class="loading || startupFailed ? 'ygo-main--not-ready' : ''"
 		>
-			<VProgressCircular v-if="loading" color="primary" indeterminate />
+			<VAlert v-if="startupFailed" type="error" :max-width="500">
+				Failed to start the application. Please check the developer
+				console for details.
+			</VAlert>
+			<VProgressCircular
+				v-else-if="loading"
+				color="primary"
+				indeterminate
+			/>
 			<template v-else>
 				<YgoToolbar class="ygo-main__toolbar" />
 				<YgoDeck class="ygo-main__deck" />
@@ -18,22 +26,23 @@
 import { VApp } from "vuetify/components/VApp";
 import { VMain } from "vuetify/components/VMain";
 import { VProgressCircular } from "vuetify/components/VProgressCircular";
+import { VAlert } from "vuetify/components/VAlert";
 import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
 import { getLogger } from "@/core/lib";
-import { onMounted } from "vue";
-import { showError, useToast } from "@/application/composition/feedback";
+import { onMounted, ref } from "vue";
 import { useDataStore } from "@/application/store/data";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { cardDatabase, deckUrlController } from "@/application/ctx";
 
 const logger = getLogger("App");
+
 const { loading, essentialDataLoaded } = storeToRefs(useDataStore());
 const deckStore = useDeckStore();
 
-const toast = useToast();
+const startupFailed = ref(false);
 
 onMounted(() => {
 	Promise.resolve()
@@ -54,11 +63,7 @@ onMounted(() => {
 		})
 		.catch((err) => {
 			logger.error("Could not start the application!", err);
-			showError(
-				toast,
-				"Could not start the application!",
-				"deck-tool__portal",
-			);
+			startupFailed.value = true;
 		})
 		.finally(() => (loading.value = false));
 });
@@ -96,7 +101,7 @@ onMounted(() => {
 		grid-area: builder;
 	}
 
-	&--loading {
+	&--not-ready {
 		display: flex;
 		justify-content: center;
 		align-items: center;
