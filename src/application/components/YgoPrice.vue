@@ -11,30 +11,46 @@
 				{{ vendor.name }}:
 				{{ formatPrice(lookupResult, vendor) }}
 			</span>
-			<VTooltip v-if="lookupResult.missing.length > 0">
-				<template #activator="{ props }">
+			<VDialog v-if="lookupResult.missing.length > 0" max-width="500">
+				<template #activator="{ props: activatorProps }">
 					<VBtn
-						v-bind="props"
+						v-bind="activatorProps"
 						icon="fas fa-exclamation"
 						title="Some cards have no price data"
 						size="x-small"
 						color="warning"
-						class="ms-2"
+						class="ms-2 price__vendor__missing"
 					/>
 				</template>
-				<span>
-					Missing prices for
-					{{ lookupResult.missing.length }} card(s):
-				</span>
-				<ul>
-					<li
-						v-for="line in listMissingCards(lookupResult)"
-						:key="line"
+				<template #default="{ isActive }">
+					<VCard
+						title="Missing Prices"
+						subtitle="Some cards have no price data"
 					>
-						{{ line }}
-					</li>
-				</ul>
-			</VTooltip>
+						<VCardText>
+							<p>
+								Missing prices for vendor {{ vendor.name }} for
+								{{ lookupResult.missing.length }} card(s):
+							</p>
+							<ul class="ms-6">
+								<li
+									v-for="line in listMissingCards(
+										lookupResult,
+									)"
+									:key="line"
+								>
+									{{ line }}
+								</li>
+							</ul>
+						</VCardText>
+						<VCardActions>
+							<VBtn @click="isActive.value = false">
+								Close Dialog
+							</VBtn>
+						</VCardActions>
+					</VCard>
+				</template>
+			</VDialog>
 		</li>
 	</ul>
 </template>
@@ -44,7 +60,8 @@ import type { Card, PriceLookupResult, Vendor } from "@/core/lib";
 import { DEFAULT_VENDOR_ARR } from "@/core/lib";
 import type { PropType } from "vue";
 import { computed } from "vue";
-import { VTooltip } from "vuetify/components/VTooltip";
+import { VDialog } from "vuetify/components/VDialog";
+import { VCard, VCardText, VCardActions } from "vuetify/components/VCard";
 import { VBtn } from "vuetify/components/VBtn";
 import { cardService, priceService } from "@/application/ctx";
 

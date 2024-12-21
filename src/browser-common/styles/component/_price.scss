@@ -33,5 +33,11 @@
 			background-color: variables.$color-vendor-coolstuffinc;
 			color: variables.$black;
 		}
+
+		&__missing {
+			height: 20px;
+			width: 20px;
+			font-size: 0.7em;
+		}
 	}
 }
