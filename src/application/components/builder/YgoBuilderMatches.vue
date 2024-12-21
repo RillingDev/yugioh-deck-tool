@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { shallowRef } from "vue";
+import { shallowRef, watch } from "vue";
 import type { Card } from "@/core/lib";
 import YgoBuilderMatch from "./YgoBuilderMatch.vue";
 import { VInfiniteScroll } from "vuetify/components/VInfiniteScroll";
@@ -29,10 +29,22 @@ const props = defineProps({
 	},
 });
 
-const limitedMatches = shallowRef(props.matches.slice(0, 50));
+const CHUNK_SIZE = 25;
+function getInitialMatches() {
+	return props.matches.slice(0, CHUNK_SIZE * 2);
+}
+const limitedMatches = shallowRef(getInitialMatches());
+watch(
+	() => props.matches,
+	() => (limitedMatches.value = getInitialMatches()),
+);
+
 const load: VInfiniteScroll["onLoad"] = async function ({ done }) {
 	const nextChunkStart = limitedMatches.value.length;
-	const nextChunk = props.matches.slice(nextChunkStart, nextChunkStart + 25);
+	const nextChunk = props.matches.slice(
+		nextChunkStart,
+		nextChunkStart + CHUNK_SIZE,
+	);
 	if (nextChunk.length === 0) {
 		done("empty");
 	} else {
