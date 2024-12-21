@@ -6,7 +6,7 @@
 					Result: {{ filteredCards.length }} of
 					{{ formatCards.length }} Cards
 				</small>
-				<!-- TODO: filter -->
+				<YgoFilter v-model="filter" />
 			</div>
 			<YgoSortingOptions v-model="sortingOptions" />
 			<YgoBuilderMatches :matches="filteredCards" />
@@ -29,6 +29,7 @@ import {
 	filterService,
 	sortingService,
 } from "@/application/ctx";
+import YgoFilter from "../YgoFilter.vue";
 
 const filter = ref(filterService.createDefaultFilter());
 

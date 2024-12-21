@@ -43,6 +43,9 @@ const vuetify = createVuetify({
 		VSelect: {
 			density: "compact",
 		},
+		VCombobox: {
+			density: "compact",
+		},
 		VAlert: {
 			density: "compact",
 		},
