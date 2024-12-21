@@ -1,10 +1,5 @@
 <template>
-	<a
-		:data-name="card.name"
-		:data-passcode="card.passcode"
-		tabindex="0"
-		class="ygo-card"
-	>
+	<a :data-name="card.name" tabindex="0" class="ygo-card">
 		<img :alt="card.name" :src="imgSrc" />
 	</a>
 </template>
@@ -20,14 +15,9 @@ const props = defineProps({
 		required: true,
 		type: Object as PropType<Card>,
 	},
-	scaleVertically: {
-		required: false,
-		type: Boolean as PropType<boolean>,
-		default: false,
-	},
 });
 
-const imgSrc = computed<string>(
+const imgSrc = computed(
 	() =>
 		props.card.image?.urlSmall ??
 		resourceService.getPlaceholderCardImageUrl(),

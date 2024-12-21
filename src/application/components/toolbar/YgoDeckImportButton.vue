@@ -137,7 +137,7 @@ function handleImport(importResult: Promise<ImportResult>) {
 		});
 }
 
-function onYdkFileInput(input: File | File[] | undefined): void {
+function onYdkFileInput(input: File | File[] | undefined) {
 	if (input == null) {
 		return;
 	}
@@ -152,7 +152,7 @@ function onYdkFileInput(input: File | File[] | undefined): void {
 	);
 }
 
-function onYdkeUriInput(text: string): void {
+function onYdkeUriInput(text: string) {
 	handleImport(
 		new Promise((resolve) => {
 			resolve({

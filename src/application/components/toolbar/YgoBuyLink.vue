@@ -20,7 +20,7 @@ import { VBtn } from "vuetify/components/VBtn";
 
 const { deck, deckEmpty } = storeToRefs(useDeckStore());
 
-const buyLink = computed<string>(() => {
+const buyLink = computed(() => {
 	const affiliate =
 		environmentConfig.getEnvironment() == Environment.YGOPRODECK
 			? {

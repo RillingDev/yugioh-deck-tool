@@ -69,15 +69,15 @@ import { VBtn } from "vuetify/components/VBtn";
 import { VBtnGroup } from "vuetify/components/VBtnGroup";
 import { VDialog } from "vuetify/components/VDialog";
 import { VCardActions, VCard, VCardText } from "vuetify/components/VCard";
-import { computed, ref } from "vue";
+import { computed, ref, shallowRef } from "vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { deckService } from "@/application/ctx";
 
 const { deck } = storeToRefs(useDeckStore());
 
-const goingFirst = ref<boolean>(true);
-const drawnCards = ref<Card[]>([]);
+const goingFirst = ref(true);
+const drawnCards = shallowRef<Card[]>([]);
 
 const hasMainDeckCards = computed(
 	() => deck.value.parts[DeckPart.MAIN].length > 0,

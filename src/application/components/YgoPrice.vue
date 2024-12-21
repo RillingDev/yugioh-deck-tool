@@ -51,10 +51,10 @@ import { cardService, priceService } from "@/application/ctx";
 const props = defineProps({
 	cards: {
 		required: true,
-		type: Array as PropType<Card[]>,
+		type: Array as PropType<readonly Card[]>,
 	},
 });
-const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(
+const priceByVendor = computed(
 	() =>
 		new Map(
 			DEFAULT_VENDOR_ARR.map((vendor) => {
@@ -63,10 +63,14 @@ const priceByVendor = computed<Map<Vendor, PriceLookupResult>>(
 			}),
 		),
 );
-const listMissingCards = (lookupResult: PriceLookupResult): string[] =>
-	cardService.createFormattedCardCountList(lookupResult.missing);
-const formatPrice = (lookupResult: PriceLookupResult, vendor: Vendor): string =>
-	priceService.formatPrice(lookupResult.price, vendor.currency);
+
+function listMissingCards(lookupResult: PriceLookupResult) {
+	return cardService.createFormattedCardCountList(lookupResult.missing);
+}
+
+function formatPrice(lookupResult: PriceLookupResult, vendor: Vendor) {
+	return priceService.formatPrice(lookupResult.price, vendor.currency);
+}
 </script>
 
 <style lang="scss">

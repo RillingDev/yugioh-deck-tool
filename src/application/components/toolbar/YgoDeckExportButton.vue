@@ -170,10 +170,8 @@ import { useDataStore } from "@/application/store/data";
 
 const logger = getLogger("YgoExport");
 
-const { deckEmpty } = storeToRefs(useDeckStore());
 const { essentialDataLoaded } = storeToRefs(useDataStore());
-
-const { deck } = storeToRefs(useDeckStore());
+const { deck, deckEmpty } = storeToRefs(useDeckStore());
 
 const deckList = computed(() => deckExportService.toShareableText(deck.value));
 
@@ -189,7 +187,7 @@ const deckFile = computed(() => {
 const deckFileHref = useObjectUrl(deckFile);
 
 const screenshotState = ref<undefined | "inProgress" | "error">(undefined);
-function onScreenshot(): void {
+function onScreenshot() {
 	const deckEl = document.getElementById("deckToolDeck");
 	if (deckEl == null) {
 		throw new TypeError("Could not get deck element!");

@@ -58,7 +58,7 @@ const cards = computed<Card[]>({
 	set: (newCards) =>
 		deckStore.replacePart({ deckPart: props.deckPart, newCards }),
 });
-const deckPartStats = computed<string>(() => {
+const deckPartStats = computed(() => {
 	const currentCards = cards.value;
 	const base = `${currentCards.length} Cards`;
 	if (currentCards.length === 0) {
