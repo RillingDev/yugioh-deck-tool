@@ -38,7 +38,6 @@ import { computed, ref } from "vue";
 import { browserSupportsTouch } from "@/browser-common/lib";
 import type { Card, DeckPart } from "@/core/lib";
 import { CardTypeCategory } from "@/core/lib";
-import { showSuccess, useToast } from "../../composition/feedback";
 import { useTooltip } from "../../composition/tooltip";
 import YgoCard from "../YgoCard.vue";
 import { useDeckStore } from "@/application/store/deck";

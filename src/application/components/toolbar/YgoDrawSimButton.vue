@@ -1,8 +1,8 @@
 <template>
 	<VDialog
 		max-width="1100"
-		@after-enter="simulateStartHand"
 		class="ygo-draw-sim"
+		@after-enter="simulateStartHand"
 	>
 		<template #activator="{ props: activatorProps }">
 			<VBtn

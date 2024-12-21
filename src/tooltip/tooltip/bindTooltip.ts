@@ -60,7 +60,7 @@ export const bindTooltipHandlers = (context: HTMLElement): TooltipInstance => {
 		content: () => createLoadingTooltip(),
 		onShow: (instance) => {
 			const target = instance.reference as HTMLElement;
-			const cardKey = target.dataset["name"]!;
+			const cardKey = target.dataset.name!;
 			showTooltip(instance, target, cardKey);
 		},
 	});

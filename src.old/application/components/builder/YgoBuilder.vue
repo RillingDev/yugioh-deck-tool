@@ -23,7 +23,7 @@
 		</div>
 		<YgoSortingOptions
 			:sorting-options="sortingOptions"
-			@update:sortingOptions="
+			@update:sorting-options="
 				(newOptions) => (sortingOptions = newOptions)
 			"
 		/>

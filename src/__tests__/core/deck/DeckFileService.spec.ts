@@ -175,9 +175,9 @@ describe("DeckFileService", () => {
 			});
 			expect(result.deck.parts[DeckPart.MAIN].length).toBe(1);
 			expect(result.deck.parts[DeckPart.MAIN]).toContain(card1);
-			expect(result.deck.parts[DeckPart.EXTRA]!.length).toBe(1);
+			expect(result.deck.parts[DeckPart.EXTRA].length).toBe(1);
 			expect(result.deck.parts[DeckPart.EXTRA]).toContain(card2);
-			expect(result.deck.parts[DeckPart.SIDE]!.length).toBe(1);
+			expect(result.deck.parts[DeckPart.SIDE].length).toBe(1);
 			expect(result.deck.parts[DeckPart.SIDE]).toContain(card3);
 			expect(result.missing.length).toBe(0);
 		});

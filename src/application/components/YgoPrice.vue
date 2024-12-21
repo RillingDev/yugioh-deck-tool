@@ -75,7 +75,6 @@ function formatPrice(lookupResult: PriceLookupResult, vendor: Vendor) {
 
 <style lang="scss">
 @use "../../browser-common/styles/component/price";
-@use "../../browser-common/styles/_variables.scss";
 
 .deck-tool {
 	.price {

@@ -117,7 +117,7 @@ const formatMap = new Map<string, Format>([
 	["Master Duel", Format.MASTER_DUEL],
 ]);
 const mapFormats = (rawMiscInfo: RawMiscInfo | null): Format[] => {
-	if (rawMiscInfo == null || rawMiscInfo.formats == null) {
+	if (rawMiscInfo?.formats == null) {
 		return [];
 	}
 	return rawMiscInfo.formats.map((format) =>

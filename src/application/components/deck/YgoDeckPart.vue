@@ -32,12 +32,7 @@ import { useDeckStore } from "@/application/store/deck";
 import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
 import { deckController, deckService } from "@/application/ctx";
-import {
-	asDraggableEvent,
-	findDeckPartForDraggableValidatorData,
-	useCardDraggable,
-} from "@/application/composition/dragging";
-import type { SortableEvent } from "vue-draggable-plus";
+import { useCardDraggable } from "@/application/composition/dragging";
 
 const props = defineProps({
 	deckPart: {
