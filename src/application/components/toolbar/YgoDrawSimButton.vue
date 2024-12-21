@@ -1,6 +1,6 @@
 <template>
 	<VDialog
-		max-width="1100"
+		max-width="900"
 		class="ygo-draw-sim"
 		@after-enter="simulateStartHand"
 	>
@@ -38,9 +38,7 @@
 							</VBtn>
 						</VBtnGroup>
 					</div>
-					<div
-						class="ygo-draw-sim__cards d-flex justify-center ga-2 mb-3"
-					>
+					<div class="d-flex justify-center ga-2 mb-3">
 						<YgoCard
 							v-for="(card, index) of drawnCards"
 							:key="`${index}_${card.passcode}`"
@@ -97,8 +95,8 @@ function setGoingFirst(val: boolean) {
 
 <style lang="scss">
 .ygo-draw-sim {
-	&__cards .ygo-card {
-		flex-basis: 150px;
+	.ygo-card {
+		flex-basis: 7rem;
 	}
 }
 </style>

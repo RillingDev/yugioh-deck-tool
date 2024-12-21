@@ -89,7 +89,7 @@ function getCardCount(card: Card): number | null {
 
 .ygo-builder-matches {
 	.ygo-card {
-		width: 4rem;
+		width: 3.75rem;
 	}
 
 	&__list {
