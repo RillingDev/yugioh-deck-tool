@@ -1,14 +1,9 @@
 import type { CardCountFunction } from "@/core/lib";
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
-interface CollectionState {
-	cardCountFunction: CardCountFunction | null;
-}
+export const useCollectionStore = defineStore("collection", () => {
+	const cardCountFunction = ref<CardCountFunction | null>(null);
 
-export const useCollectionStore = defineStore("collection", {
-	state(): CollectionState {
-		return {
-			cardCountFunction: null,
-		};
-	},
+	return { cardCountFunction };
 });

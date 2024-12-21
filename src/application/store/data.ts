@@ -1,15 +1,12 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
-interface DataState {
-	essentialDataLoaded: boolean;
-	loading: boolean;
-}
+export const useDataStore = defineStore("data", () => {
+	const essentialDataLoaded = ref(false);
+	const loading = ref(false);
 
-export const useDataStore = defineStore("data", {
-	state(): DataState {
-		return {
-			essentialDataLoaded: false,
-			loading: true,
-		};
-	},
+	return {
+		essentialDataLoaded,
+		loading,
+	};
 });
