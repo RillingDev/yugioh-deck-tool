@@ -23,7 +23,7 @@
 </template>
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, ref, toRaw, unref } from "vue";
+import { computed, ref, toRaw } from "vue";
 import type { Card, DeckPart, DeckPartConfig } from "@/core/lib";
 import { DefaultDeckPartConfig } from "@/core/lib";
 import YgoCard from "../YgoCard.vue";
@@ -67,9 +67,8 @@ const deckPartStats = computed(() => {
 });
 
 const draggableEl = ref<HTMLElement | null>(null);
-
 // TODO re-add possibility to remove via drag
-const draggable = useCardDraggable(
+useCardDraggable(
 	draggableEl,
 	cards,
 	{

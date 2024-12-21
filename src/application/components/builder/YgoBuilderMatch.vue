@@ -1,7 +1,8 @@
 <template>
 	<div class="ygo-builder-match d-flex ga-2 pa-2">
-		<!--  re-add draggable -->
-		<YgoCard :card="card" class="flex-shrink-0" />
+		<div ref="draggableEl" class="flex-shrink-0">
+			<YgoCard :card="card" />
+		</div>
 
 		<div>
 			<p>{{ card.name }}</p>
@@ -21,7 +22,6 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 import { computed, ref, shallowRef } from "vue";
-import { browserSupportsTouch } from "@/browser-common/lib";
 import type { Card, DeckPart } from "@/core/lib";
 import { CardTypeCategory } from "@/core/lib";
 import YgoCard from "../YgoCard.vue";
@@ -39,6 +39,8 @@ const props = defineProps({
 	},
 });
 
+const deckStore = useDeckStore();
+const { format } = storeToRefs(useFormatStore());
 const { cardCountFunction } = storeToRefs(useCollectionStore());
 
 const typeText = computed(() =>
@@ -52,6 +54,30 @@ const subTypeText = computed(() =>
 		: props.card.subType,
 );
 const cardCount = computed(() => cardCountFunction.value?.(props.card) ?? null);
+
+const draggableEl = ref<HTMLElement | null>(null);
+const cards = shallowRef([props.card]);
+useCardDraggable(
+	draggableEl,
+	cards,
+	{
+		pull: "clone",
+		put: false,
+	},
+	(e) => {
+		const areaMarker = e.to.dataset.deckPartArea;
+		if (areaMarker == null) {
+			return false;
+		}
+		const newDeckPart = areaMarker as DeckPart;
+		return deckService.canAdd(
+			deckStore.deck,
+			e.data,
+			newDeckPart,
+			format.value,
+		);
+	},
+);
 </script>
 
 <style lang="scss">
