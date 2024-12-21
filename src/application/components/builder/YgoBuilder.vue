@@ -1,14 +1,16 @@
 <template>
 	<div class="ygo-builder">
-		<div>
-			<small>
-				Result: {{ filteredCards.length }} of
-				{{ formatCards.length }} Cards
-			</small>
-			<!-- TODO: filter -->
+		<div class="position-sticky top-0">
+			<div>
+				<small>
+					Result: {{ filteredCards.length }} of
+					{{ formatCards.length }} Cards
+				</small>
+				<!-- TODO: filter -->
+			</div>
+			<YgoSortingOptions v-model="sortingOptions" />
+			<YgoBuilderMatches :matches="filteredCards" />
 		</div>
-		<YgoSortingOptions v-model="sortingOptions" />
-		<YgoBuilderMatches :matches="filteredCards" />
 	</div>
 </template>
 
@@ -61,8 +63,4 @@ const filteredCards = computed(() => {
 });
 </script>
 
-<style lang="scss">
-.ygo-builder {
-	position: sticky; // TODO
-}
-</style>
+<style lang="scss"></style>

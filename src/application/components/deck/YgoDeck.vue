@@ -1,7 +1,7 @@
 <template>
-	<div id="deckToolDeck" class="deck">
+	<div id="deckToolDeck">
 		<header class="d-flex justify-space-between mb-2">
-			<h2 class="deck__total text-h5">Total</h2>
+			<h2 class="text-h5">Total</h2>
 			<YgoPrice :cards="allCards" />
 		</header>
 		<hr />
