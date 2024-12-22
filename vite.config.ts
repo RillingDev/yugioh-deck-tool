@@ -10,18 +10,6 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url)),
-			/*
-			 * SCSS rewrites
-			 */
-			"~bootstrap": fileURLToPath(
-				new URL("./node_modules/bootstrap", import.meta.url),
-			),
-			"~bootstrap-vue": fileURLToPath(
-				new URL("./node_modules/bootstrap-vue", import.meta.url),
-			),
-			"~vue-select": fileURLToPath(
-				new URL("./node_modules/vue-select", import.meta.url),
-			),
 		},
 	},
 	build: {
