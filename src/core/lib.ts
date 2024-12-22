@@ -25,6 +25,7 @@ export type { CardType } from "./card/type/CardType";
 export { CardTypeCategory } from "./card/type/CardTypeCategory";
 export type { Vendor } from "./price/Vendor";
 export { DefaultVendor, DEFAULT_VENDOR_ARR } from "./price/Vendor";
+export { asConstant } from "./util";
 
 export type { CardDatabase } from "./card/CardDatabase";
 export { FindCardBy } from "./card/CardDatabase";

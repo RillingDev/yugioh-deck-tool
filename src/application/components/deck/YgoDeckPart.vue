@@ -23,7 +23,7 @@
 </template>
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, ref, toRaw } from "vue";
+import { computed, ref } from "vue";
 import type { Card, DeckPart, DeckPartConfig } from "@/core/lib";
 import { DefaultDeckPartConfig } from "@/core/lib";
 import YgoCard from "../YgoCard.vue";
@@ -60,8 +60,7 @@ const deckPartStats = computed(() => {
 		return base;
 	}
 	const details = deckController
-		// The vue proxy breaks functionality here, so use the raw value
-		.calculateDetailedTypeStats(props.deckPart, toRaw(currentCards))
+		.calculateDetailedTypeStats(props.deckPart, currentCards)
 		.map(([type, count]) => `${count} ${type}`);
 	return `${base} (${details.join(" | ")})`;
 });

@@ -1,3 +1,4 @@
+import { asConstant } from "../util";
 import { DeckPart } from "./Deck";
 
 export interface DeckPartConfig {
@@ -9,25 +10,25 @@ export interface DeckPartConfig {
 }
 
 export const DefaultDeckPartConfig = {
-	[DeckPart.MAIN]: {
+	[DeckPart.MAIN]: asConstant({
 		name: "Main",
 		indicator: "#main",
 		min: 40,
 		max: 60,
 		recommended: 40,
-	},
-	[DeckPart.EXTRA]: {
+	}),
+	[DeckPart.EXTRA]: asConstant({
 		name: "Extra",
 		indicator: "#extra",
 		min: 0,
 		max: 15,
 		recommended: 15,
-	},
-	[DeckPart.SIDE]: {
+	}),
+	[DeckPart.SIDE]: asConstant({
 		name: "Side",
 		indicator: "!side",
 		min: 0,
 		max: 15,
 		recommended: 15,
-	},
+	}),
 } as const;

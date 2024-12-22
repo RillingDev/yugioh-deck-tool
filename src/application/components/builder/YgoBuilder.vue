@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SortingOptions } from "@/core/lib";
+import type { CardFilter, SortingOptions } from "@/core/lib";
 import { SortingOrder, SortingStrategy } from "@/core/lib";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
@@ -46,8 +46,25 @@ import {
 } from "@/application/ctx";
 import YgoFilter from "./YgoFilter.vue";
 
-// FIXME: deeply nested proxies break things
-const filter = ref(filterService.createDefaultFilter());
+const filter = ref<CardFilter>({
+	customPredicates: [],
+
+	name: null,
+	description: null,
+
+	typeCategory: null,
+	type: null,
+	subType: null,
+
+	attribute: null,
+	level: null,
+	linkMarkers: [],
+
+	archetype: null,
+	banState: null,
+
+	sets: [],
+});
 
 const sortingOptions = ref<SortingOptions>({
 	strategy: SortingStrategy.DEFAULT,

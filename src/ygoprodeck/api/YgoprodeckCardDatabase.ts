@@ -1,5 +1,10 @@
 import type { Card, CardDatabase, CardSet, CardType } from "@/core/lib";
-import { CardTypeCategory, FindCardBy, getLogger } from "@/core/lib";
+import {
+	CardTypeCategory,
+	FindCardBy,
+	getLogger,
+	asConstant,
+} from "@/core/lib";
 import type { YgoprodeckApiService } from "@/ygoprodeck/api/YgoprodeckApiService";
 import type { RawCard } from "@/ygoprodeck/api/mapping/mapCard";
 import { mapCard } from "@/ygoprodeck/api/mapping/mapCard";
@@ -193,7 +198,7 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 				.then((rawSets) => {
 					for (const rawSet of rawSets) {
 						const set = mapCardSet(rawSet);
-						this.#setsByName.set(set.name, set);
+						this.#setsByName.set(set.name, asConstant(set));
 					}
 
 					YgoprodeckCardDatabase.#logger.debug(
@@ -215,7 +220,9 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 						CardTypeCategory,
 					)) {
 						const cardTypes = this.#types.get(typeCategory)!;
-						cardTypes.push(...cardValues[typeCategory].types);
+						cardTypes.push(
+							...cardValues[typeCategory].types.map(asConstant),
+						);
 
 						const cardSubTypes = this.#subTypes.get(typeCategory)!;
 						cardSubTypes.push(...cardValues[typeCategory].subTypes);
@@ -254,7 +261,9 @@ export class YgoprodeckCardDatabase implements CardDatabase {
 	}
 
 	#registerCard(rawCard: RawCard): void {
-		const card = mapCard(rawCard, this.#setsByName, this.#typesByName);
+		const card = asConstant(
+			mapCard(rawCard, this.#setsByName, this.#typesByName),
+		);
 
 		if (
 			this.#cardsByPasscode.has(card.passcode) ||

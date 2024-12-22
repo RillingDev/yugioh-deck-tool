@@ -217,7 +217,6 @@ const showCollectionFilter = computed(
 		ygoprodeckController.hasCredentials(),
 );
 
-//TODO
 const collectionPredicate = computed(() => {
 	return cardCountFunction.value == null
 		? null

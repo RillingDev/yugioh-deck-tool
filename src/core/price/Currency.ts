@@ -1,3 +1,5 @@
+import { asConstant } from "../util";
+
 export interface Currency {
 	/**
 	 * See {@link Intl.NumberFormatOptions#currency}.
@@ -6,10 +8,10 @@ export interface Currency {
 }
 
 export const DefaultCurrency: Record<string, Currency> = {
-	USD: {
+	USD: asConstant({
 		id: "USD",
-	},
-	EUR: {
+	}),
+	EUR: asConstant({
 		id: "EUR",
-	},
+	}),
 } as const;
