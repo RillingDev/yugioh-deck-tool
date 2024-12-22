@@ -1,29 +1,35 @@
 <template>
 	<div class="ygo-builder">
 		<div class="position-sticky top-0">
-			<div>
-				<small>
-					Result: {{ filteredCards.length }} of
-					{{ formatCards.length }} Cards
-				</small>
-				<YgoFilter
-					v-model:name="filter.name"
-					v-model:description="filter.description"
-					v-model:type-category="filter.typeCategory"
-					v-model:type="filter.type"
-					v-model:sub-type="filter.subType"
-					v-model:attribute="filter.attribute"
-					v-model:level="filter.level"
-					v-model:link-markers="filter.linkMarkers"
-					v-model:archetype="filter.archetype"
-					v-model:ban-state="filter.banState"
-					v-model:sets="filter.sets"
-				/>
-			</div>
 			<YgoSortingOptions
 				v-model:strategy="sortingOptions.strategy"
 				v-model:order="sortingOptions.order"
 			/>
+			<VExpansionPanels class="mb-4">
+				<VExpansionPanel title="Filter">
+					<template #text>
+						<YgoFilter
+							v-model:name="filter.name"
+							v-model:description="filter.description"
+							v-model:type-category="filter.typeCategory"
+							v-model:type="filter.type"
+							v-model:sub-type="filter.subType"
+							v-model:attribute="filter.attribute"
+							v-model:level="filter.level"
+							v-model:link-markers="filter.linkMarkers"
+							v-model:archetype="filter.archetype"
+							v-model:ban-state="filter.banState"
+							v-model:sets="filter.sets"
+						/>
+					</template>
+				</VExpansionPanel>
+			</VExpansionPanels>
+			<p>
+				<small>
+					Result: {{ filteredCards.length }} of
+					{{ formatCards.length }} Cards
+				</small>
+			</p>
 			<YgoBuilderMatches :matches="filteredCards" />
 		</div>
 	</div>
@@ -34,6 +40,10 @@ import type { CardFilter, SortingOptions } from "@/core/lib";
 import { SortingOrder, SortingStrategy } from "@/core/lib";
 import YgoSortingOptions from "./YgoSortingOptions.vue";
 import YgoBuilderMatches from "./YgoBuilderMatches.vue";
+import {
+	VExpansionPanel,
+	VExpansionPanels,
+} from "vuetify/components/VExpansionPanel";
 import { computed, ref } from "vue";
 import { useDataStore } from "@/application/store/data";
 import { useFormatStore } from "@/application/store/format";
