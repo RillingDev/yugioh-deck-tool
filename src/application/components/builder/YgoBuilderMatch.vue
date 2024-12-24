@@ -28,7 +28,7 @@ import { useFormatStore } from "@/application/store/format";
 import type { Card, DeckPart } from "@/core/lib";
 import { CardTypeCategory } from "@/core/lib";
 import { storeToRefs } from "pinia";
-import { computed, ref, shallowRef } from "vue";
+import { computed, ref } from "vue";
 import YgoCard from "../YgoCard.vue";
 
 const props = defineProps<{ card: Card }>();
@@ -50,7 +50,7 @@ const subTypeText = computed(() =>
 const cardCount = computed(() => cardCountFunction.value?.(props.card) ?? null);
 
 const draggableEl = ref<HTMLElement | null>(null);
-const cards = shallowRef([props.card]);
+const cards = computed(() => [props.card]);
 useCardDraggable(
 	draggableEl,
 	cards,
