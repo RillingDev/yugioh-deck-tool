@@ -13,6 +13,7 @@
 			<YgoExport />
 			<YgoDrawSim />
 			<YgoBuyLink />
+			<!-- TODO: possibly re-add randomizer -->
 		</div>
 	</div>
 </template>

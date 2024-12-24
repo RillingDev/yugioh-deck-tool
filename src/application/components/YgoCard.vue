@@ -10,6 +10,8 @@ import { computed } from "vue";
 import type { Card } from "@/core/lib";
 import { resourceService } from "@/application/ctx";
 
+// TODO: add slots for buttons, and possibly rework link to card database to go there
+
 const props = defineProps({
 	card: {
 		required: true,

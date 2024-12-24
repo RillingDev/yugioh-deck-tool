@@ -37,6 +37,9 @@ import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
 import { cardDatabase, deckUrlController } from "@/application/ctx";
 
+// TODO: double-check general accessibility
+// TODO: merge tooltip
+
 const logger = getLogger("App");
 
 const { loading, essentialDataLoaded } = storeToRefs(useDataStore());
