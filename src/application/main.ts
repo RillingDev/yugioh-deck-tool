@@ -1,5 +1,6 @@
 import "vuetify/styles";
-import "./assets/main.css";
+import "./assets/main.scss";
+
 import type { ApplicationApi } from "./api";
 import { createApp } from "vue";
 import { createPinia } from "pinia";

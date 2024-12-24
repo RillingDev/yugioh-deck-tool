@@ -164,7 +164,7 @@ import { computed, ref } from "vue";
 import { deckUrlController } from "@/application/ctx";
 import { storeToRefs } from "pinia";
 import { deckExportService } from "@/application/ctx";
-import { createScreenshot } from "@/application/composition/io/createScreenshot";
+import { createScreenshot } from "@/application/composition/createScreenshot";
 import { useObjectUrl } from "@vueuse/core";
 import { useDataStore } from "@/application/store/data";
 
