@@ -19,23 +19,23 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { getLogger } from "@/core/lib";
-import { ref, watch } from "vue";
 import { ygoprodeckController, ygoprodeckService } from "@/application/ctx";
 import { useCollectionStore } from "@/application/store/collection";
 import { useDataStore } from "@/application/store/data";
+import { getLogger } from "@/core/lib";
 import { storeToRefs } from "pinia";
-import { VCheckbox } from "vuetify/components/VCheckbox";
-import { VBtn } from "vuetify/components/VBtn";
+import { ref, watch } from "vue";
 import { VAlert } from "vuetify/components/VAlert";
+import { VBtn } from "vuetify/components/VBtn";
+import { VCheckbox } from "vuetify/components/VCheckbox";
+
+const emit = defineEmits<{ change: [] }>();
 
 /**
  * Should only be mounted if running in ygoprodeck env and having credentials available.
  */
 
 const logger = getLogger("YgoCollectionFilter");
-
-const emit = defineEmits(["change"]);
 
 const { cardCountFunction } = storeToRefs(useCollectionStore());
 

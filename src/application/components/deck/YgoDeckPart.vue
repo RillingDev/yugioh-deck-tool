@@ -22,33 +22,26 @@
 	</section>
 </template>
 <script setup lang="ts">
-import type { PropType } from "vue";
-import { computed, ref } from "vue";
-import type { Card, DeckPart, DeckPartConfig } from "@/core/lib";
-import { DefaultDeckPartConfig } from "@/core/lib";
-import YgoCard from "../YgoCard.vue";
-import YgoPrice from "../YgoPrice.vue";
+import { useCardDraggable } from "@/application/composition/dragging";
+import { deckController, deckService } from "@/application/ctx";
 import { useDeckStore } from "@/application/store/deck";
 import { useFormatStore } from "@/application/store/format";
+import type { DeckPart } from "@/core/lib";
+import { DefaultDeckPartConfig } from "@/core/lib";
 import { storeToRefs } from "pinia";
-import { deckController, deckService } from "@/application/ctx";
-import { useCardDraggable } from "@/application/composition/dragging";
+import { computed, ref } from "vue";
+import YgoCard from "../YgoCard.vue";
+import YgoPrice from "../YgoPrice.vue";
 
-const props = defineProps({
-	deckPart: {
-		required: true,
-		type: String as PropType<DeckPart>,
-	},
-});
-const deckPartConfig = computed<DeckPartConfig>(
-	() => DefaultDeckPartConfig[props.deckPart],
-);
+const props = defineProps<{ deckPart: DeckPart }>();
+
+const deckPartConfig = computed(() => DefaultDeckPartConfig[props.deckPart]);
 
 const deckStore = useDeckStore();
 
 const { format } = storeToRefs(useFormatStore());
 
-const cards = computed<Card[]>({
+const cards = computed({
 	get: () => deckStore.deck.parts[props.deckPart],
 	set: (newCards) =>
 		deckStore.replacePart({ deckPart: props.deckPart, newCards }),

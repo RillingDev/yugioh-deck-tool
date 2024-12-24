@@ -56,21 +56,16 @@
 </template>
 
 <script setup lang="ts">
+import { cardService, priceService } from "@/application/ctx";
 import type { Card, PriceLookupResult, Vendor } from "@/core/lib";
 import { DEFAULT_VENDOR_ARR } from "@/core/lib";
-import type { PropType } from "vue";
 import { computed } from "vue";
-import { VDialog } from "vuetify/components/VDialog";
-import { VCard, VCardText, VCardActions } from "vuetify/components/VCard";
 import { VBtn } from "vuetify/components/VBtn";
-import { cardService, priceService } from "@/application/ctx";
+import { VCard, VCardActions, VCardText } from "vuetify/components/VCard";
+import { VDialog } from "vuetify/components/VDialog";
 
-const props = defineProps({
-	cards: {
-		required: true,
-		type: Array as PropType<readonly Card[]>,
-	},
-});
+const props = defineProps<{ cards: readonly Card[] }>();
+
 const priceByVendor = computed(
 	() =>
 		new Map(

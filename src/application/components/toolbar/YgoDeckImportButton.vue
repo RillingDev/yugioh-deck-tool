@@ -89,26 +89,25 @@
 </template>
 
 <script setup lang="ts">
-import { VBtn } from "vuetify/components/VBtn";
-import { VDialog } from "vuetify/components/VDialog";
-import {
-	VCard,
-	VCardText,
-	VCardActions,
-	VCardTitle,
-} from "vuetify/components/VCard";
-import { VFileInput } from "vuetify/components/VFileInput";
-import { VTextField } from "vuetify/components/VTextField";
-import { VContainer, VRow, VCol } from "vuetify/components/VGrid";
-import { VAlert } from "vuetify/components/VAlert";
+import { deckFileService, deckUriEncodingService } from "@/application/ctx";
+import { useDataStore } from "@/application/store/data";
+import { useDeckStore } from "@/application/store/deck";
 import type { ImportResult } from "@/core/lib";
 import { getLogger } from "@/core/lib";
-import { useDeckStore } from "@/application/store/deck";
-import { deckFileService } from "@/application/ctx";
-import { deckUriEncodingService } from "@/application/ctx";
-import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import { useDataStore } from "@/application/store/data";
+import { ref } from "vue";
+import { VAlert } from "vuetify/components/VAlert";
+import { VBtn } from "vuetify/components/VBtn";
+import {
+	VCard,
+	VCardActions,
+	VCardText,
+	VCardTitle,
+} from "vuetify/components/VCard";
+import { VDialog } from "vuetify/components/VDialog";
+import { VFileInput } from "vuetify/components/VFileInput";
+import { VCol, VContainer, VRow } from "vuetify/components/VGrid";
+import { VTextField } from "vuetify/components/VTextField";
 
 const logger = getLogger("YgoImport");
 

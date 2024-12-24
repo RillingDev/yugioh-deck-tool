@@ -1,6 +1,6 @@
-import { DeckPart, type Card, type Deck } from "@/core/lib";
-import { defineStore } from "pinia";
 import { deckService } from "@/application/ctx";
+import { type Card, type Deck, DeckPart } from "@/core/lib";
+import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 export const useDeckStore = defineStore("deck", () => {

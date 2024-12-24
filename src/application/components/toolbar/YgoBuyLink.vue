@@ -11,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { Environment } from "@/core/lib";
-import { useDeckStore } from "@/application/store/deck";
-import { storeToRefs } from "pinia";
 import { deckExportService, environmentConfig } from "@/application/ctx";
+import { useDeckStore } from "@/application/store/deck";
+import { Environment } from "@/core/lib";
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
 import { VBtn } from "vuetify/components/VBtn";
 
 const { deck, deckEmpty } = storeToRefs(useDeckStore());

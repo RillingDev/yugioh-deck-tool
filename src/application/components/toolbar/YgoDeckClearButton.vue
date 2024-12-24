@@ -35,11 +35,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { VDialog } from "vuetify/components/VDialog";
-import { VBtn } from "vuetify/components/VBtn";
-import { VCardActions, VCard, VCardText } from "vuetify/components/VCard";
 import { useDeckStore } from "@/application/store/deck";
+import { computed } from "vue";
+import { VBtn } from "vuetify/components/VBtn";
+import { VCard, VCardActions, VCardText } from "vuetify/components/VCard";
+import { VDialog } from "vuetify/components/VDialog";
 
 const deckStore = useDeckStore();
 

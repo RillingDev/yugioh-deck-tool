@@ -20,24 +20,18 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
-import { computed, ref, shallowRef } from "vue";
+import { useCardDraggable } from "@/application/composition/dragging";
+import { deckService } from "@/application/ctx";
+import { useCollectionStore } from "@/application/store/collection";
+import { useDeckStore } from "@/application/store/deck";
+import { useFormatStore } from "@/application/store/format";
 import type { Card, DeckPart } from "@/core/lib";
 import { CardTypeCategory } from "@/core/lib";
-import YgoCard from "../YgoCard.vue";
-import { useDeckStore } from "@/application/store/deck";
-import { useCollectionStore } from "@/application/store/collection";
-import { useFormatStore } from "@/application/store/format";
 import { storeToRefs } from "pinia";
-import { deckService } from "@/application/ctx";
-import { useCardDraggable } from "@/application/composition/dragging";
+import { computed, ref, shallowRef } from "vue";
+import YgoCard from "../YgoCard.vue";
 
-const props = defineProps({
-	card: {
-		required: true,
-		type: Object as PropType<Card>,
-	},
-});
+const props = defineProps<{ card: Card }>();
 
 const deckStore = useDeckStore();
 const { format } = storeToRefs(useFormatStore());

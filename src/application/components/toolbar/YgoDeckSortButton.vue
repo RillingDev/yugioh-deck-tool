@@ -11,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
+import { useDeckStore } from "@/application/store/deck";
 import { computed } from "vue";
 import { VBtn } from "vuetify/components/VBtn";
-import { useDeckStore } from "@/application/store/deck";
 
 const deckStore = useDeckStore();
 

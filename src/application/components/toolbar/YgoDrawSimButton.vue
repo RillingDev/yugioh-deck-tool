@@ -66,7 +66,7 @@ import { DeckPart } from "@/core/lib";
 import { VBtn } from "vuetify/components/VBtn";
 import { VBtnGroup } from "vuetify/components/VBtnGroup";
 import { VDialog } from "vuetify/components/VDialog";
-import { VCardActions, VCard, VCardText } from "vuetify/components/VCard";
+import { VCard, VCardActions, VCardText } from "vuetify/components/VCard";
 import { computed, ref, shallowRef } from "vue";
 import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";

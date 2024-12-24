@@ -15,13 +15,13 @@
 </template>
 
 <script setup lang="ts">
+import { deckService } from "@/application/ctx";
+import { useDeckStore } from "@/application/store/deck";
 import { DECK_PART_ARR } from "@/core/lib";
+import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import YgoPrice from "../YgoPrice.vue";
 import YgoDeckPart from "./YgoDeckPart.vue";
-import { useDeckStore } from "@/application/store/deck";
-import { storeToRefs } from "pinia";
-import { deckService } from "@/application/ctx";
 
 const deckParts = DECK_PART_ARR;
 

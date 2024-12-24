@@ -144,29 +144,31 @@
 </template>
 
 <script setup lang="ts">
+import { createScreenshot } from "@/application/composition/createScreenshot";
+import {
+	deckExportService,
+	deckFileService,
+	deckUriEncodingService,
+	deckUrlController,
+} from "@/application/ctx";
+import { useDataStore } from "@/application/store/data";
+import { useDeckStore } from "@/application/store/deck";
+import { DeckFileService, getLogger } from "@/core/lib";
+import { useObjectUrl } from "@vueuse/core";
+import { storeToRefs } from "pinia";
+import { computed, ref } from "vue";
+import { VAlert } from "vuetify/components/VAlert";
 import { VBtn } from "vuetify/components/VBtn";
-import { VDialog } from "vuetify/components/VDialog";
 import {
 	VCard,
-	VCardText,
 	VCardActions,
+	VCardText,
 	VCardTitle,
 } from "vuetify/components/VCard";
-import { VTextField } from "vuetify/components/VTextField";
-import { VContainer, VRow, VCol } from "vuetify/components/VGrid";
+import { VDialog } from "vuetify/components/VDialog";
+import { VCol, VContainer, VRow } from "vuetify/components/VGrid";
 import { VTextarea } from "vuetify/components/VTextarea";
-import { VAlert } from "vuetify/components/VAlert";
-import { DeckFileService, getLogger } from "@/core/lib";
-import { useDeckStore } from "@/application/store/deck";
-import { deckFileService } from "@/application/ctx";
-import { deckUriEncodingService } from "@/application/ctx";
-import { computed, ref } from "vue";
-import { deckUrlController } from "@/application/ctx";
-import { storeToRefs } from "pinia";
-import { deckExportService } from "@/application/ctx";
-import { createScreenshot } from "@/application/composition/createScreenshot";
-import { useObjectUrl } from "@vueuse/core";
-import { useDataStore } from "@/application/store/data";
+import { VTextField } from "vuetify/components/VTextField";
 
 const logger = getLogger("YgoExport");
 

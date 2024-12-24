@@ -1,14 +1,14 @@
 import type { Card } from "@/core/lib";
+import { getTooltipApi } from "@/tooltip/lib";
+import type { GroupOptions } from "sortablejs";
 import type { Ref } from "vue";
 import {
-	useDraggable,
 	type DraggableEvent,
 	type RefOrElement,
 	type UseDraggableOptions,
 	type UseDraggableReturn,
+	useDraggable,
 } from "vue-draggable-plus";
-import type { GroupOptions } from "sortablejs";
-import { getTooltipApi } from "@/tooltip/lib";
 
 const dragGroup = "GLOBAL_CARD_DRAG_GROUP";
 

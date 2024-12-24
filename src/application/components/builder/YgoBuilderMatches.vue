@@ -16,18 +16,12 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
-import { shallowRef, watch } from "vue";
 import type { Card } from "@/core/lib";
-import YgoBuilderMatch from "./YgoBuilderMatch.vue";
+import { shallowRef, watch } from "vue";
 import { VInfiniteScroll } from "vuetify/components/VInfiniteScroll";
+import YgoBuilderMatch from "./YgoBuilderMatch.vue";
 
-const props = defineProps({
-	matches: {
-		required: true,
-		type: Array as PropType<readonly Card[]>,
-	},
-});
+const props = defineProps<{ matches: readonly Card[] }>();
 
 const CHUNK_SIZE = 25;
 function getInitialMatches() {

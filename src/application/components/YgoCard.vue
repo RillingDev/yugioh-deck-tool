@@ -5,19 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
-import { computed } from "vue";
-import type { Card } from "@/core/lib";
 import { resourceService } from "@/application/ctx";
+import type { Card } from "@/core/lib";
+import { computed } from "vue";
 
 // TODO: add slots for buttons, and possibly rework link to card database to go there
 
-const props = defineProps({
-	card: {
-		required: true,
-		type: Object as PropType<Card>,
-	},
-});
+const props = defineProps<{ card: Card }>();
 
 const imgSrc = computed(
 	() =>

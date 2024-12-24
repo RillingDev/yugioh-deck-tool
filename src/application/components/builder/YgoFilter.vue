@@ -117,6 +117,16 @@
 </template>
 
 <script setup lang="ts">
+import {
+	banlistService,
+	cardDatabase,
+	cardPredicateService,
+	environmentConfig,
+	ygoprodeckController,
+} from "@/application/ctx";
+import { useCollectionStore } from "@/application/store/collection";
+import { useDataStore } from "@/application/store/data";
+import { useFormatStore } from "@/application/store/format";
 import type {
 	BanState,
 	CardFilter,
@@ -129,24 +139,14 @@ import {
 	DEFAULT_BAN_STATE_ARR,
 	Environment,
 } from "@/core/lib";
-import { computed, ref, watch } from "vue";
-import YgoCollectionFilter from "../yugiohprodeck/YgoCollectionFilter.vue";
-import { useDataStore } from "@/application/store/data";
-import { useFormatStore } from "@/application/store/format";
-import { useCollectionStore } from "@/application/store/collection";
 import { storeToRefs } from "pinia";
-import {
-	banlistService,
-	cardDatabase,
-	cardPredicateService,
-	environmentConfig,
-	ygoprodeckController,
-} from "@/application/ctx";
-import { VForm } from "vuetify/components/VForm";
-import { VTextField } from "vuetify/components/VTextField";
-import { VSelect } from "vuetify/components/VSelect";
-import { VCombobox } from "vuetify/components/VCombobox";
+import { computed, ref, watch } from "vue";
 import { VBtn } from "vuetify/components/VBtn";
+import { VCombobox } from "vuetify/components/VCombobox";
+import { VForm } from "vuetify/components/VForm";
+import { VSelect } from "vuetify/components/VSelect";
+import { VTextField } from "vuetify/components/VTextField";
+import YgoCollectionFilter from "../yugiohprodeck/YgoCollectionFilter.vue";
 
 const name = defineModel<CardFilter["name"]>("name");
 const description = defineModel<CardFilter["description"]>("description");

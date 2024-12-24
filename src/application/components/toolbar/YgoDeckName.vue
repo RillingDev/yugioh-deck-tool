@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { useDeckStore } from "@/application/store/deck";
+import { computed } from "vue";
 import { VTextField } from "vuetify/components/VTextField";
 
 const deckStore = useDeckStore();

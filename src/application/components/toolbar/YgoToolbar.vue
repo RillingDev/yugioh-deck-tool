@@ -19,14 +19,14 @@
 </template>
 
 <script setup lang="ts">
-import YgoFormat from "./YgoFormat.vue";
-import YgoDeckName from "./YgoDeckName.vue";
 import YgoBuyLink from "./YgoBuyLink.vue";
-import YgoDrawSim from "./YgoDrawSimButton.vue";
-import YgoImport from "./YgoDeckImportButton.vue";
-import YgoExport from "./YgoDeckExportButton.vue";
 import YgoDeckClear from "./YgoDeckClearButton.vue";
+import YgoExport from "./YgoDeckExportButton.vue";
+import YgoImport from "./YgoDeckImportButton.vue";
+import YgoDeckName from "./YgoDeckName.vue";
 import YgoDeckSort from "./YgoDeckSortButton.vue";
+import YgoDrawSim from "./YgoDrawSimButton.vue";
+import YgoFormat from "./YgoFormat.vue";
 </script>
 
 <style lang="scss">

@@ -36,25 +36,25 @@
 </template>
 
 <script setup lang="ts">
-import type { CardFilter, SortingOptions } from "@/core/lib";
-import { SortingOrder, SortingStrategy } from "@/core/lib";
-import YgoSortingOptions from "./YgoSortingOptions.vue";
-import YgoBuilderMatches from "./YgoBuilderMatches.vue";
-import {
-	VExpansionPanel,
-	VExpansionPanels,
-} from "vuetify/components/VExpansionPanel";
-import { computed, ref } from "vue";
-import { useDataStore } from "@/application/store/data";
-import { useFormatStore } from "@/application/store/format";
-import { storeToRefs } from "pinia";
 import {
 	cardDatabase,
 	cardPredicateService,
 	filterService,
 	sortingService,
 } from "@/application/ctx";
+import { useDataStore } from "@/application/store/data";
+import { useFormatStore } from "@/application/store/format";
+import type { CardFilter, SortingOptions } from "@/core/lib";
+import { SortingOrder, SortingStrategy } from "@/core/lib";
+import { storeToRefs } from "pinia";
+import { computed, ref } from "vue";
+import {
+	VExpansionPanel,
+	VExpansionPanels,
+} from "vuetify/components/VExpansionPanel";
+import YgoBuilderMatches from "./YgoBuilderMatches.vue";
 import YgoFilter from "./YgoFilter.vue";
+import YgoSortingOptions from "./YgoSortingOptions.vue";
 
 const filter = ref<CardFilter>({
 	customPredicates: [],

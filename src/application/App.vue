@@ -23,19 +23,19 @@
 </template>
 
 <script setup lang="ts">
+import { cardDatabase, deckUrlController } from "@/application/ctx";
+import { useDataStore } from "@/application/store/data";
+import { useDeckStore } from "@/application/store/deck";
+import { getLogger } from "@/core/lib";
+import { storeToRefs } from "pinia";
+import { onMounted, ref } from "vue";
+import { VAlert } from "vuetify/components/VAlert";
 import { VApp } from "vuetify/components/VApp";
 import { VMain } from "vuetify/components/VMain";
 import { VProgressCircular } from "vuetify/components/VProgressCircular";
-import { VAlert } from "vuetify/components/VAlert";
-import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
-import YgoDeck from "./components/deck/YgoDeck.vue";
 import YgoBuilder from "./components/builder/YgoBuilder.vue";
-import { getLogger } from "@/core/lib";
-import { onMounted, ref } from "vue";
-import { useDataStore } from "@/application/store/data";
-import { useDeckStore } from "@/application/store/deck";
-import { storeToRefs } from "pinia";
-import { cardDatabase, deckUrlController } from "@/application/ctx";
+import YgoDeck from "./components/deck/YgoDeck.vue";
+import YgoToolbar from "./components/toolbar/YgoToolbar.vue";
 
 // TODO: double-check general accessibility
 // TODO: merge tooltip

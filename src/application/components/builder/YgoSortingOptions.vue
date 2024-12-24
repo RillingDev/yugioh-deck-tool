@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
 import { SortingOrder, SortingStrategy } from "@/core/lib";
+import type { PropType } from "vue";
 import { VSelect } from "vuetify/components/VSelect";
 
 const strategy = defineModel("strategy", {
