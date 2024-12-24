@@ -1,5 +1,3 @@
- 
-
 export interface PaginatedResponse<T> {
 	readonly data: T;
 	readonly meta: {

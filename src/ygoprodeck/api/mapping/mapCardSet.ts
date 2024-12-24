@@ -1,5 +1,3 @@
- 
-
 import type { CardSet } from "@/core/lib";
 
 // https://jvilk.com/MakeTypes/

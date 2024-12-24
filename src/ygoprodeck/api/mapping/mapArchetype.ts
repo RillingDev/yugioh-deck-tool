@@ -1,5 +1,3 @@
- 
-
 // https://jvilk.com/MakeTypes/
 export interface RawArchetype {
 	archetype_name: string;
