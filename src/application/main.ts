@@ -1,13 +1,13 @@
 import "vuetify/styles";
 import "./assets/main.scss";
 
-import type { ApplicationApi } from "./api";
-import { createApp } from "vue";
 import { createPinia } from "pinia";
-import App from "./App.vue";
-import { useBridge } from "./bridge";
+import { createApp } from "vue";
 import { createVuetify } from "vuetify";
 import { aliases, fa } from "vuetify/iconsets/fa";
+import type { ApplicationApi } from "./api";
+import App from "./App.vue";
+import { useBridge } from "./bridge";
 
 declare global {
 	interface Window {
@@ -32,6 +32,9 @@ const vuetify = createVuetify({
 		VBtnGroup: {
 			density: "compact",
 		},
+		VBtnToggle: {
+			density: "compact",
+		},
 		VTextField: {
 			density: "compact",
 		},
@@ -50,7 +53,7 @@ const vuetify = createVuetify({
 		VAlert: {
 			density: "compact",
 		},
-		VToolbar: {
+		VMenuItem: {
 			density: "compact",
 		},
 	},

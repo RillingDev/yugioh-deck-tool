@@ -23,20 +23,14 @@
 			>
 				<VCardText>
 					<div class="d-flex justify-end mb-3">
-						<VBtnGroup>
-							<VBtn
-								:active="goingFirst"
-								@click="() => setGoingFirst(true)"
-							>
-								Going First
-							</VBtn>
-							<VBtn
-								:active="!goingFirst"
-								@click="() => setGoingFirst(false)"
-							>
-								Going Second
-							</VBtn>
-						</VBtnGroup>
+						<VBtnToggle
+							v-model="startingHandMode"
+							mandatory
+							@update:model-value="simulateStartHand"
+						>
+							<VBtn value="goingFirst">Going First</VBtn>
+							<VBtn value="goingSecond">Going Second</VBtn>
+						</VBtnToggle>
 					</div>
 					<div class="d-flex justify-center ga-2 mb-3">
 						<YgoCard
@@ -60,21 +54,21 @@
 </template>
 
 <script setup lang="ts">
-import YgoCard from "../YgoCard.vue";
+import { deckService } from "@/application/ctx";
+import { useDeckStore } from "@/application/store/deck";
 import type { Card } from "@/core/lib";
 import { DeckPart } from "@/core/lib";
-import { VBtn } from "vuetify/components/VBtn";
-import { VBtnGroup } from "vuetify/components/VBtnGroup";
-import { VDialog } from "vuetify/components/VDialog";
-import { VCard, VCardActions, VCardText } from "vuetify/components/VCard";
-import { computed, ref, shallowRef } from "vue";
-import { useDeckStore } from "@/application/store/deck";
 import { storeToRefs } from "pinia";
-import { deckService } from "@/application/ctx";
+import { computed, ref, shallowRef } from "vue";
+import { VBtn } from "vuetify/components/VBtn";
+import { VBtnToggle } from "vuetify/components/VBtnToggle";
+import { VCard, VCardActions, VCardText } from "vuetify/components/VCard";
+import { VDialog } from "vuetify/components/VDialog";
+import YgoCard from "../YgoCard.vue";
 
 const { deck } = storeToRefs(useDeckStore());
 
-const goingFirst = ref(true);
+const startingHandMode = ref<"goingFirst" | "goingSecond">("goingFirst");
 const drawnCards = shallowRef<Card[]>([]);
 
 const hasMainDeckCards = computed(
@@ -84,12 +78,8 @@ const hasMainDeckCards = computed(
 function simulateStartHand() {
 	drawnCards.value = deckService.getSimulatedStartingHand(
 		deck.value,
-		goingFirst.value,
+		startingHandMode.value === "goingFirst",
 	);
-}
-function setGoingFirst(val: boolean) {
-	goingFirst.value = val;
-	simulateStartHand();
 }
 </script>
 
