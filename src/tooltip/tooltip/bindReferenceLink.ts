@@ -1,5 +1,5 @@
-import type { Card } from "@/core/lib";
 import { browserSupportsTouch } from "@/browser-common/lib";
+import type { Card } from "@/core/lib";
 
 const isHrefBlank = (target: HTMLAnchorElement): boolean => {
 	// We use this over HTMLAnchorElement.prototype.href as that returns the current URL if the value is empty.
@@ -13,7 +13,7 @@ const isHrefBlank = (target: HTMLAnchorElement): boolean => {
  * @param card Card to create a link for.
  * @return Link.
  */
-const getReferenceLink = (card: Card): URL => {
+export const getReferenceLink = (card: Card): URL => {
 	const url = new URL("https://ygoprodeck.com/card/");
 	url.searchParams.append("search", card.name);
 	return url;

@@ -9,7 +9,7 @@
 		</header>
 		<div
 			ref="draggableEl"
-			class="ygo-deck-part__content pa-2 ga-2"
+			class="ygo-deck-part__content pa-2 ga-2 cursor-grab"
 			:data-deck-part-area="deckPart"
 		>
 			<!-- re-add possibility to remove via mouse -->
@@ -17,7 +17,17 @@
 				v-for="(card, cardIndex) in cards"
 				:key="`${cardIndex}_${card.passcode}`"
 				:card="card"
-			/>
+			>
+				<template #buttons>
+					<VBtn
+						key="remove"
+						prepend-icon="fas fa-trash"
+						@click="() => onRemoveCard(card, cardIndex)"
+					>
+						Remove
+					</VBtn>
+				</template>
+			</YgoCard>
 		</div>
 	</section>
 </template>
@@ -26,10 +36,11 @@ import { useCardDraggable } from "@/application/composition/dragging";
 import { deckController, deckService } from "@/application/ctx";
 import { useDeckStore } from "@/application/store/deck";
 import { useFormatStore } from "@/application/store/format";
-import type { DeckPart } from "@/core/lib";
+import type { Card, DeckPart } from "@/core/lib";
 import { DefaultDeckPartConfig } from "@/core/lib";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
+import { VBtn } from "vuetify/components/VBtn";
 import YgoCard from "../YgoCard.vue";
 import YgoPrice from "../YgoPrice.vue";
 
@@ -57,6 +68,10 @@ const deckPartStats = computed(() => {
 		.map(([type, count]) => `${count} ${type}`);
 	return `${base} (${details.join(" | ")})`;
 });
+
+function onRemoveCard(card: Card, oldIndex: number) {
+	deckStore.removeCard({ card, oldIndex, deckPart: props.deckPart });
+}
 
 const draggableEl = ref<HTMLElement | null>(null);
 // TODO re-add possibility to remove via drag

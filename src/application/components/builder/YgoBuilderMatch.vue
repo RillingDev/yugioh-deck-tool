@@ -1,6 +1,6 @@
 <template>
 	<div class="ygo-builder-match d-flex ga-2 pa-2">
-		<div ref="draggableEl" class="flex-shrink-0">
+		<div ref="draggableEl" class="flex-shrink-0 cursor-grab">
 			<YgoCard :card="card" />
 		</div>
 
