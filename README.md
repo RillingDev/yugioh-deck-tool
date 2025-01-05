@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The live version can be found on [YGOPRODeck](https://ygoprodeck.com/card-database/deck-prices/).
+The live version can be found on [YGOPRODeck](https://ygoprodeck.com/deckbuilder/).
 
 ## Development
 
