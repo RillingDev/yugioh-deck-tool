@@ -1,5 +1,9 @@
+import { cardDatabase } from "@/application/ctx";
+import { useDataStore } from "@/application/store/data";
+import { useDeckStore } from "@/application/store/deck";
 import type { Card, Deck, ImportResult } from "@/core/lib";
 import { DeckPart, FindCardBy, getLogger } from "@/core/lib";
+import { getExistingElseThrow } from "lightdash";
 import type {
 	ApplicationApi,
 	ApplicationEvent,
@@ -8,10 +12,6 @@ import type {
 	ExternalDeck,
 	SlimExternalCard,
 } from "./api";
-import { useDataStore } from "@/application/store/data";
-import { useDeckStore } from "@/application/store/deck";
-import { getExistingElseThrow } from "lightdash";
-import { cardDatabase } from "@/application/ctx";
 
 const logger = getLogger("bridge");
 
@@ -81,12 +81,12 @@ class EventEmitter<TEvent> {
 	}
 
 	on(event: TEvent, callback: () => void): void {
-		this.#logger.trace(`Registering '${event}' event.`);
+		this.#logger.debug(`Registering '${event}' event.`);
 		getExistingElseThrow(this.#eventCallbacks, event).push(callback);
 	}
 
 	emit(event: TEvent): void {
-		this.#logger.trace(`Emitting '${event}' event.`);
+		this.#logger.debug(`Emitting '${event}' event.`);
 		getExistingElseThrow(this.#eventCallbacks, event).forEach((callback) =>
 			callback(),
 		);

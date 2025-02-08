@@ -22,11 +22,11 @@ const showTooltip = (
 	target: HTMLElement | HTMLAnchorElement,
 	cardKey: string,
 ): void => {
-	logger.trace(`Attempting to show tooltip for '${cardKey}'.`);
+	logger.debug(`Attempting to show tooltip for '${cardKey}'.`);
 	tooltipController
 		.loadCard(cardKey)
 		.then((card) => {
-			logger.trace("Loaded card.", card);
+			logger.debug("Loaded card.", card);
 			instance.setContent(createTooltipElement(card));
 
 			if (target instanceof HTMLAnchorElement) {
