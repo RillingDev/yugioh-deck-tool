@@ -19,6 +19,7 @@
 *.esproj
 *.sublime-project
 *.sublime-workspace
+.vscode
 
 # Vendor Files
 node_modules/
@@ -35,3 +36,5 @@ tsconfig.*.tsbuildinfo
 # Build Output files
 dist/
 coverage/
+
+.local
