@@ -10,6 +10,8 @@ import {
 	createUl,
 } from "./domHelper";
 
+// TODO rewrite this in Vue
+
 export const createLoadingTooltip = (): HTMLElement =>
 	createDiv(
 		["card-tooltip__content", "card-tooltip__content--loading"],

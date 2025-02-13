@@ -1,10 +1,12 @@
+import { useBridge } from "@/application/bridge";
+import { ToastPlugin, VBModalPlugin, VBTogglePlugin } from "bootstrap-vue";
+import { createPinia, PiniaVuePlugin } from "pinia";
 import Vue from "vue";
 import type { ApplicationApi } from "./api";
 import App from "./App.vue";
-import { createPinia, PiniaVuePlugin } from "pinia";
 import "./styles/main.scss";
-import { ToastPlugin, VBModalPlugin, VBTogglePlugin } from "bootstrap-vue";
-import { useBridge } from "@/application/bridge";
+
+import "../tooltip/main";
 
 declare global {
 	interface Window {
