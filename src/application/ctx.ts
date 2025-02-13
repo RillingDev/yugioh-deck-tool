@@ -1,3 +1,4 @@
+import { HostEnvironmentConfig } from "@/browser-common/lib";
 import {
 	BanlistService,
 	CardPredicateService,
@@ -11,11 +12,11 @@ import {
 	PriceService,
 	SortingService,
 } from "@/core/lib";
+import { TooltipController } from "@/tooltip/controller/TooltipController";
+import { createYgoprodeckModule } from "@/ygoprodeck/lib";
 import { DeckController } from "./controller/DeckController";
 import { DeckUrlController } from "./controller/DeckUrlController";
-import { HostEnvironmentConfig } from "@/browser-common/lib";
 import { YgoprodeckController } from "./controller/YgoprodeckController";
-import { createYgoprodeckModule } from "@/ygoprodeck/lib";
 
 export const environmentConfig = new HostEnvironmentConfig();
 
@@ -60,26 +61,25 @@ const deckUrlController = new DeckUrlController(
 );
 const ygoprodeckController = new YgoprodeckController(ygoprodeckService);
 
+const tooltipController = new TooltipController(cardDatabase);
+
 export {
-	// Base
-	cardService,
-	priceService,
 	banlistService,
-	filterService,
-	sortingService,
-	cardPredicateService,
 	cardDatabase,
-	// Deck
+	cardPredicateService,
+	cardService,
+	deckController,
+	deckExportService,
+	deckFileService,
 	deckRandomizationService,
 	deckService,
 	deckUriEncodingService,
-	deckFileService,
-	deckExportService,
-	// Ygoprodeck
-	resourceService,
-	ygoprodeckService,
-	// Application
-	deckController,
 	deckUrlController,
+	filterService,
+	priceService,
+	resourceService,
+	sortingService,
+	tooltipController,
 	ygoprodeckController,
+	ygoprodeckService,
 };

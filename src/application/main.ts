@@ -13,11 +13,6 @@ import "../tooltip/styles/tooltip.scss";
 declare global {
 	interface Window {
 		yugiohDeckToolTooltip?: TooltipInstance;
-	}
-}
-
-declare global {
-	interface Window {
 		yugiohDeckToolApplication?: ApplicationApi;
 	}
 }

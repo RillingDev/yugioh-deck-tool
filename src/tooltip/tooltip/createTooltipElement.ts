@@ -1,6 +1,6 @@
+import { priceService, resourceService } from "@/application/ctx";
 import type { Card } from "@/core/lib";
 import { CardTypeCategory, DEFAULT_VENDOR_ARR, Format } from "@/core/lib";
-import { priceService, resourceService } from "../ctx";
 import {
 	createDiv,
 	createImg,
