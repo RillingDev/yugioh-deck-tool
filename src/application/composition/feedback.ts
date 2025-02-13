@@ -1,5 +1,5 @@
-import { getCurrentInstance } from "vue";
 import type { BvToast } from "bootstrap-vue";
+import { getCurrentInstance } from "vue";
 
 // https://github.com/bootstrap-vue/bootstrap-vue/issues/7005#issuecomment-1245836595
 export const useToast = (): BvToast => {
