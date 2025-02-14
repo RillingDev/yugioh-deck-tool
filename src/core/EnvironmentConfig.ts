@@ -1,6 +1,7 @@
 /**
  * Specifies the current environment the system is using.
  */
+// Replace all enums in project with 'regular' JS enum equivalents
 export enum Environment {
 	/**
 	 * No special handling.

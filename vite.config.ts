@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from "vite";
 import vue2 from "@vitejs/plugin-vue2";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,24 +25,10 @@ export default defineConfig({
 	},
 	build: {
 		rollupOptions: {
-			input: {
-				tooltip: "src/tooltip/main.ts", // Tooltip, can be used on its own.
-				app: "index.html", // Standalone and embeddable application.
-			},
 			output: {
 				// Remove hashes from file name for easier manual inclusion.
 				entryFileNames: "[name].js",
-				assetFileNames: (chunkInfo) => {
-					// use filenames consistent with entry point
-					if (chunkInfo.name == "main.css") {
-						return "tooltip.css";
-					}
-					if (chunkInfo.name == "index.css") {
-						return "app.css";
-					}
-
-					return "[name][extname]";
-				},
+				assetFileNames: "[name][extname]",
 			},
 		},
 	},
