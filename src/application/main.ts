@@ -1,16 +1,21 @@
-import "vuetify/styles";
-import "./assets/main.scss";
-
+import { useBridge } from "@/application/bridge";
+import { environmentConfig } from "@/application/ctx";
+import { Environment } from "@/core/EnvironmentConfig";
+import type { TooltipInstance } from "@/tooltip/api";
+import "@/tooltip/styles/tooltip.scss";
+import { bindTooltipHandlers } from "@/tooltip/tooltip/bindTooltip";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
 import { createVuetify } from "vuetify";
 import { aliases, fa } from "vuetify/iconsets/fa";
+import "vuetify/styles";
 import type { ApplicationApi } from "./api";
 import App from "./App.vue";
-import { useBridge } from "./bridge";
+import "./assets/main.scss";
 
 declare global {
 	interface Window {
+		yugiohDeckToolTooltip?: TooltipInstance;
 		yugiohDeckToolApplication?: ApplicationApi;
 	}
 }
@@ -64,5 +69,9 @@ createApp(App)
 	.use(vuetify)
 	.mount("#deckToolApplication")
 	.$nextTick(() => {
+		if (environmentConfig.getEnvironment() !== Environment.YGOPRODECK) {
+			window.yugiohDeckToolTooltip = bindTooltipHandlers(document.body);
+		}
+
 		window.yugiohDeckToolApplication = useBridge();
 	});

@@ -26,13 +26,7 @@ If you are ready to deploy the application, build it by executing `npm run build
 
 #### Build Output
 
-The build output can be found in the `dist` directory.
-
-- `tooltip.js` and `tooltip.css` contain code for the tooltips.
-- `app.js` and `app.css` contain code for the actual deck-tool.
-- `index.html` contains a basic setup loading the these files and starts the deck-tool with tooltips.
-
-The `.map` files are optional and only used for debugging.
+The build output can be found in the `dist` directory. The `.map` files are optional and only used for debugging.
 
 ### Architecture
 

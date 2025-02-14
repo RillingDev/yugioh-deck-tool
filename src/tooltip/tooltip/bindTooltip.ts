@@ -1,12 +1,12 @@
-import { Environment, getLogger } from "@/core/lib";
-import type { Instance } from "tippy.js";
-import { delegate } from "tippy.js";
-import type { TooltipInstance } from "../api";
 import {
 	environmentConfig,
 	tooltipController,
 	ygoprodeckService,
-} from "../ctx";
+} from "@/application/ctx";
+import { Environment, getLogger } from "@/core/lib";
+import type { Instance } from "tippy.js";
+import { delegate } from "tippy.js";
+import type { TooltipInstance } from "../api";
 
 import { bindReferenceLink } from "./bindReferenceLink";
 import {
