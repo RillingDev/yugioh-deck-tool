@@ -1,0 +1,43 @@
+From 3a01f714736c33395b66b073f11eecefdbf336cb Mon Sep 17 00:00:00 2001
+From: RillingDev <contact@rilling.dev>
+Date: Sun, 24 Aug 2025 14:49:02 +0200
+Subject: [PATCH] Properly handle spill event
+
+---
+ src/vuedraggable.js | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/src/vuedraggable.js b/src/vuedraggable.js
+index 8470220..99c8c35 100644
+--- a/src/vuedraggable.js
++++ b/src/vuedraggable.js
+@@ -98,7 +98,7 @@ function getComponentAttributes($attrs, componentData) {
+   return attributes;
+ }
+ 
+-const eventsListened = ["Start", "Add", "Remove", "Update", "End"];
++const eventsListened = ["Start", "Add", "Remove", "Update", "End", "Spill"];
+ const eventsToEmit = ["Choose", "Unchoose", "Sort", "Filter", "Clone"];
+ const readonlyProperties = ["Move", ...eventsListened, ...eventsToEmit].map(
+   evt => "on" + evt
+@@ -474,8 +474,15 @@ const draggableComponent = {
+     onDragEnd() {
+       this.computeIndexes();
+       draggingElement = null;
+-    }
+-  }
++    },
++
++    onDragSpill(evt) {
++      const oldIndex = this.context.index;
++      const removed = { element: this.context.element, oldIndex };
++      this.resetTransitionData(oldIndex);
++      this.emitChanges({ removed });
++    },
++  },
+ };
+ 
+ if (typeof window !== "undefined" && "Vue" in window) {
+-- 
+2.50.1
+
