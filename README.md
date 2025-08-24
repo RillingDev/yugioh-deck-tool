@@ -24,6 +24,10 @@ Then perform the following steps:
 
 If you are ready to deploy the application, build it by executing `npm run build`.
 
+##### Patches
+
+Some 3rd-party packages require additional patches (See `./patches/`).
+
 #### Build Output
 
 The build output can be found in the `dist` directory. The `.map` files are optional and only used for debugging.
